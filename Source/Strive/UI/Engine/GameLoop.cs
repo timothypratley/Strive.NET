@@ -55,6 +55,7 @@ namespace Strive.UI.Engine
 			}
 			ProcessAnimations();
 			Render();
+			System.Threading.Thread.Sleep( 10 );
 		}
 
 		void ProcessOutstandingMessages() {
