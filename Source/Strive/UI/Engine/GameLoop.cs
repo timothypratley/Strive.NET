@@ -79,6 +79,7 @@ namespace Strive.UI.Engine
 			while(_connection.MessageCount > 0) 
 			{
 				IMessage m = _connection.PopNextMessage();
+				if ( m == null ) break;
 				_message_processor.Process( m );
 				i++;
 				if ( i>5 ) break;

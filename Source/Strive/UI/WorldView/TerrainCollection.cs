@@ -82,7 +82,13 @@ namespace Strive.UI.WorldView
 
 						if ( tptmp.model == null && tptmp.xplusKnown && tptmp.zplusKnown && tptmp.xpluszplusKnown ) {
 							if ( tptmp.model != null ) _scene.Models.Remove( tptmp.instance_id );
-							tptmp.model = _engine.CreateTerrain( tptmp.instance_id.ToString(), _resource_manager.GetTexture(tptmp.texture_id), tptmp.physicalObject.Rotation.Y, tptmp.altitude, tptmp.xplus, tptmp.zplus, tptmp.xpluszplus );
+							try {
+								tptmp.model = _engine.CreateTerrain( tptmp.instance_id.ToString(), _resource_manager.GetTexture(tptmp.texture_id), tptmp.physicalObject.Rotation.Y, tptmp.altitude, tptmp.xplus, tptmp.zplus, tptmp.xpluszplus );
+							} catch ( Exception e ) {
+								Exception xe = new Exception( "Failed to create terrain peice.", e );
+								Strive.Logging.Log.ErrorMessage( xe );
+								return;
+							}
 							tptmp.model.Position = new Vector3D( tptmp.x, 0, tptmp.z );
 							_scene.Models.Add( tptmp.instance_id, tptmp.model );
 						}
