@@ -67,9 +67,13 @@ namespace Strive.Rendering.TV3D
 		}
 
 		public void SetSky( ITexture texture ) {
-			Engine.Atmosphere.SkyBox_SetDistance( 1000 );
-			Engine.Atmosphere.SkyBox_SetTexture( texture.ID,texture.ID,texture.ID,texture.ID,texture.ID,texture.ID );
-			Engine.Atmosphere.SkyBox_Enable(true, true);
+			Engine.Atmosphere.SkySphere_SetRadius( 1000 );
+			Engine.Atmosphere.SkySphere_SetTexture( texture.ID );
+			Engine.Atmosphere.SkySphere_Enable( true );
+
+//			Engine.Atmosphere.SkyBox_SetDistance( 1000 );
+//			Engine.Atmosphere.SkyBox_SetTexture( texture.ID,texture.ID,texture.ID,texture.ID,texture.ID,texture.ID );
+//			Engine.Atmosphere.SkyBox_Enable(true, true);
 		}
 
 		public void SetClouds( ITexture texture ) {

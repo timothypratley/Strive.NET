@@ -353,11 +353,11 @@ namespace Strive.Server.Shared {
 					int tbz = Helper.DivTruncate( (int)newPosition.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
 
 					// Normalise to a 'grid' point
-					tbx = Helper.DivTruncate( tbx, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
-					tbz = Helper.DivTruncate( tbz, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
+					tbx = Helper.DivTruncate( tbx, Constants.scale[k] ) * Constants.scale[k];
+					tbz = Helper.DivTruncate( tbz, Constants.scale[k] ) * Constants.scale[k];
 
-					for ( i=0; i<=Constants.xRadius[k]*2; i+=Constants.chunkHeights[k] ) {
-						for ( j=0; j<=Constants.zRadius[k]*2; j+=Constants.chunkHeights[k] ) {
+					for ( i=0; i<=Constants.xRadius[k]*2; i+=Constants.scale[k] ) {
+						for ( j=0; j<=Constants.zRadius[k]*2; j+=Constants.scale[k] ) {
 							int tx = tbx+i;
 							int tz = tbz+j;
 							if ( (Math.Abs(tx - tx1) > Constants.xRadius[k]) || (Math.Abs(tz - tz1) > Constants.zRadius[k]) ) {
@@ -370,7 +370,7 @@ namespace Strive.Server.Shared {
 											// there is no higher zoom order
 											k == (Constants.terrainZoomOrder-1)
 											// this is not a higher order point
-											|| (t.Position.X % Constants.chunkHeights[k]) != 0 || (t.Position.Z % Constants.chunkHeights[k]) != 0
+											|| (tx % Constants.scale[k+1]) != 0 || (tz % Constants.scale[k+1]) != 0
 										) {
 											ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
 										}
@@ -566,11 +566,11 @@ namespace Strive.Server.Shared {
 					int tbz = Helper.DivTruncate( (int)mob.Position.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
 
 					// Normalise to a 'grid' point
-					tbx = Helper.DivTruncate( tbx, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
-					tbz = Helper.DivTruncate( tbz, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
+					tbx = Helper.DivTruncate( tbx, Constants.scale[k] ) * Constants.scale[k];
+					tbz = Helper.DivTruncate( tbz, Constants.scale[k] ) * Constants.scale[k];
 
-					for ( i=0; i<=Constants.xRadius[k]*2; i+=Constants.chunkHeights[k] ) {
-						for ( j=0; j<=Constants.zRadius[k]*2; j+=Constants.chunkHeights[k] ) {
+					for ( i=0; i<=Constants.xRadius[k]*2; i+=Constants.scale[k] ) {
+						for ( j=0; j<=Constants.zRadius[k]*2; j+=Constants.scale[k] ) {
 							int tx = tbx+i;
 							int tz = tbz+j;
 							int terrainX = tx - (int)lowX/Constants.terrainPieceSize;
@@ -578,7 +578,14 @@ namespace Strive.Server.Shared {
 							if ( terrainX >= 0 && terrainX < squaresInX*Square.squareSize/Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < squaresInZ*Square.squareSize/Constants.terrainPieceSize ) {
 								Terrain t = terrain[ terrainX, terrainZ ];
 								if ( t != null ) {
-									client.Send( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
+									if (
+										// there is no higher zoom order
+										k == (Constants.terrainZoomOrder-1)
+										// this is not a higher order point
+										|| (tx % Constants.scale[k+1]) != 0 || (tz % Constants.scale[k+1]) != 0
+									) {
+										client.Send( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
+									}
 								}
 							}
 						}

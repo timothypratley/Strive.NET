@@ -66,17 +66,21 @@ namespace Strive.UI.WorldView {
 			foreach ( Vector2D key in arrayList ) {
 				for ( k=0; k<Constants.terrainZoomOrder; k++ ) {
 					if (
-						key.X > x+Constants.xRadius[k] || key.Y > z+Constants.zRadius[k]
-						|| key.X < x-Constants.xRadius[k] || key.Y < z-Constants.zRadius[k]
+						key.X > x+Constants.xRadius[k]*ts || key.Y > z+Constants.zRadius[k]*ts
+						|| key.X < x-Constants.xRadius[k]*ts || key.Y < z-Constants.zRadius[k]*ts
 					) {
 						if (
 							// there is no higher zoom order
 							k == (Constants.terrainZoomOrder-1)
 							// this is not a higher order point
-							|| (key.X % Constants.chunkHeights[k]) != 0 || (key.Y % Constants.chunkHeights[k]) != 0
+							|| (key.X % (ts*Constants.scale[k+1])) != 0 || (key.Y % (ts*Constants.scale[k+1])) != 0
 						) {
-							terrainPiecesXYIndex.Remove( key );
+							// TODO: why doesn't this wurk??? umg
+							//terrainPiecesXYIndex.Remove( key );
+							break;
 						}
+					} else {
+						break;
 					}
 				}
 			}

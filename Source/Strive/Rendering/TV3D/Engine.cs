@@ -122,8 +122,8 @@ namespace Strive.Rendering.TV3D {
 			Gl = new TVGlobals();
 			Camera = new TVCamera();
 			Atmosphere = new TVAtmosphere();
-			//Atmosphere.Fog_SetParameters( 100F, 10000F, 0.001F );
-			//Atmosphere.Fog_Enable( true );
+			Atmosphere.Fog_SetParameters( 100F, 10000F, 0.0005F );
+			Atmosphere.Fog_Enable( true );
 			Input = new TVInputEngine();
 			FontIndex = Screen2DText.TextureFont_Create("font", "Verdana", 20, true, false, false, false);
 		}
