@@ -155,6 +155,14 @@
                     Project = "{34B1BDF7-749D-4595-9F39-64A9D8FDA883}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "DxVBLibA"
+                    Guid = "{E1211242-8E94-11D1-8808-00C04FC2C603}"
+                    VersionMajor = "1"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
+                />
             </References>
         </Build>
         <Files>

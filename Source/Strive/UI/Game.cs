@@ -9,7 +9,7 @@ using Strive.Rendering;
 using Strive.Resources;
 using Strive.UI.WorldView;
 using Strive.UI.Engine;
-
+using Strive.Logging;
 using Strive.Network.Client;
 
 namespace Strive.UI
@@ -31,6 +31,8 @@ namespace Strive.UI
 		public static IEngine RenderingFactory = Strive.Rendering.Activator.GetEngine();
         public static int CurrentPlayerID;
 		public static DateTime now;
+		public static string userName;
+		public static string password;
 
 		#endregion
 
@@ -67,9 +69,27 @@ namespace Strive.UI
 			CurrentServerConnection.Stop();
 			CurrentGameLoop.Stop();
 			CurrentWorld.InitialiseView( RenderTarget );
-			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName).AddressList[0], Port ) );
-			CurrentServerConnection.Login(LoginName, Password);
+			Log.LogMessage( "Connecting to " + ServerName + ":" + Port );
+			Game.CurrentServerConnection.OnConnect += new ServerConnection.OnConnectHandler( HandleConnect );
+			Game.CurrentServerConnection.OnDisconnect += new ServerConnection.OnDisconnectHandler( HandleDisconnect );
+			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName ).AddressList[0], Port ) );
 			CurrentGameLoop.Start(CurrentServerConnection);
+			userName = LoginName;
+			password = Password;
+		}
+
+		public static void HandleConnect() {
+			Strive.Logging.Log.LogMessage( "Connected." );
+			CurrentServerConnection.Login(userName, password);
+			password = null;
+			// TODO: what if login was rejected?
+			System.Threading.Thread.Sleep(1000);
+			CurrentServerConnection.RequestPossessable();
+		}
+
+		public static void HandleDisconnect() {
+			Strive.Logging.Log.LogMessage( "Disconnected." );
+			password = null;
 		}
 	}
 }

@@ -72,7 +72,6 @@ namespace Strive.UI.Engine {
 				Strive.Network.Messages.ToClient.Position p = (Strive.Network.Messages.ToClient.Position)m;
 				PhysicalObjectInstance poi = Game.CurrentWorld.Find( p.instance_id );
 				if ( poi == null ) {
-					Game.CurrentServerConnection.QueryPhysicalObject(p.instance_id);
 					Log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
 					return;
 				}
@@ -136,7 +135,6 @@ namespace Strive.UI.Engine {
 				
 				#region 1.1.1 Check that the model exists
 				if ( poi == null || poi.model == null || !(poi.model is IActor ) ) {
-					Game.CurrentServerConnection.QueryPhysicalObject(ms.ObjectInstanceID);
 					Log.ErrorMessage( "Actor for " + ms.ObjectInstanceID + " has not been loaded" );
 					return;
 				}
@@ -171,8 +169,11 @@ namespace Strive.UI.Engine {
 				Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
 				//Log.LogMessage( "Weather update recieved" );
 				ITexture t = ResourceManager.LoadTexture(w.SkyTextureID);
+
+				// TODO: don't hardcode the clouds textureid
+				ITexture ct = ResourceManager.LoadTexture( 46 );
 				Game.CurrentWorld.SetSky( t );
-				Game.CurrentWorld.SetClouds( t );
+				Game.CurrentWorld.SetClouds( ct );
 			}
 				#endregion
 			#region SkillList

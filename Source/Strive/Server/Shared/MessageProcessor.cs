@@ -12,10 +12,10 @@ using Strive.Logging;
 namespace Strive.Server.Shared {
 	public class MessageProcessor {
 		World world;
-		UdpHandler listener;
+		Listener listener;
 
 		public MessageProcessor(
-			World world, UdpHandler listener
+			World world, Listener listener
 		) {
 			this.world = world;
 			this.listener = listener;
@@ -100,10 +100,6 @@ namespace Strive.Server.Shared {
 			{
 				ProcessWhoList(client, message as Network.Messages.ToServer.GameCommand.WhoList);
 			}
-			else if ( message is Network.Messages.ToServer.QueryPhysicalObject )
-			{
-				ProcessQueryPhysicalObject(client, message as Network.Messages.ToServer.QueryPhysicalObject );
-			}
 			else 
 			{
 				Log.WarningMessage(
@@ -127,16 +123,6 @@ namespace Strive.Server.Shared {
 					"Login failed for username " + loginMessage.username
 				);
 			}
-		}
-
-		void ProcessQueryPhysicalObject(Client client, Strive.Network.Messages.ToServer.QueryPhysicalObject message )
-		{
-			PhysicalObject po = (PhysicalObject)world.physicalObjects[message.instance_id];
-			if( po != null)
-			{
-				client.Send(Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage(po));
-			}
-
 		}
 
 		void ProcessRequestPossessable( Client client, Strive.Network.Messages.ToServer.RequestPossessable message ) {
@@ -176,6 +162,9 @@ namespace Strive.Server.Shared {
 					Log.WarningMessage( "A client " + client.ToString() + " attempted to take control of the same mobile " + a.ObjectInstanceID + " twice... ignoring request." );
 				} else if ( a.client != null ) {
 					Log.LogMessage( "Mobile " + a.ObjectInstanceID + " has been taken over by a new connection." );
+					a.client.Avatar = null;
+					a.client.Close();
+					listener.Clients.Remove( a.client.EndPoint );
 					a.client = client;
 					client.Avatar = a;
 				} else {
@@ -281,20 +270,6 @@ namespace Strive.Server.Shared {
 				}
 			}
 			client.Send( new Strive.Network.Messages.ToClient.SkillList( (int [])skillIDs.ToArray( typeof( int ) ), (float [])competancy.ToArray( typeof( float ) ) ) );
-		}
-
-		public void CleanupDeadConnections() {
-			// Make a list of dead connections and remove them all
-			ArrayList al = new ArrayList();
-			foreach ( Client c in listener.Clients.Values ) {
-				if ( (DateTime.Now - c.LastMessageTimestamp).Seconds > 60 ) {
-					al.Add( c.EndPoint );
-				}
-			}
-			foreach ( IPEndPoint ep in al ) {
-				Log.LogMessage( "Dropping connection to "+ep+" due to inactivity" );
-				listener.Clients.Remove( ep );
-			}
 		}
 	}
 }

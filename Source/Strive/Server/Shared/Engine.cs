@@ -11,10 +11,9 @@ namespace Strive.Server.Shared {
 	/// <summary>
 	/// </summary>
 	public class Engine {
-		int world_id = 1;
 		int port = 1337;
 		Queue packetQueue = new Queue();
-		UdpHandler listener;
+		Listener networkhandler;
 		World world;
 		MessageProcessor mp;
 		StoppableThread engine_thread;
@@ -27,20 +26,20 @@ namespace Strive.Server.Shared {
 		public Engine() {
 			Global.ReadConfiguration();
 			engine_thread = new StoppableThread( new StoppableThread.WhileRunning( UpdateLoop ) );
-			listener = new UdpHandler( new IPEndPoint( IPAddress.Any, port ) );
+			networkhandler = new Listener( new IPEndPoint( IPAddress.Any, port ) );
 		}
 
 		public void Start() {
 			Log.LogMessage( "Starting game engine..." );
-			world = new World( world_id );
-			mp = new MessageProcessor( world, listener	);
+			world = new World( Global.world_id );
+			mp = new MessageProcessor( world, networkhandler );
 			engine_thread.Start();
-			Log.LogMessage( "Listening to new connections..." );
-			listener.Start();
+			Log.LogMessage( "Listening to new tcp connections..." );
+			networkhandler.Start();
 		}
 
 		public void Stop() {
-			listener.Stop();
+			networkhandler.Stop();
 			engine_thread.Stop();
 			Log.LogMessage( "Server terminated." );
 		}
@@ -61,10 +60,14 @@ namespace Strive.Server.Shared {
 				}
 
 				// handle incomming messages
-				while ( listener.MessageCount > 0 ) {
+
+				// TODO: where should the message queue live?
+				while ( networkhandler.MessageCount > 0 ) {
 					mp.ProcessNextMessage();
 				}
-				mp.CleanupDeadConnections();
+
+				// TODO: don't cleanup so regularly?
+				networkhandler.CleanupDeadConnections();
 
 				if ( (DateTime.Now - Global.now) > TimeSpan.FromSeconds(1) ) {
 					Log.WarningMessage( "An update cycle took longer than one second." );
@@ -85,11 +88,8 @@ namespace Strive.Server.Shared {
 				{
 					CurrentBeat += BeatIncrement;
 					CurrentMilliseconds += BeatIncrement * MillisecondsPerBeat;
-					listener.SendToAll(new Strive.Network.Messages.ToClient.Beat(CurrentBeat));
+					networkhandler.SendToAll(new Strive.Network.Messages.ToClient.Beat(CurrentBeat));
 				}
-
-				
-
 			} catch ( Exception e ) {
 				// Just log exceptions and stop all threads
 				Log.ErrorMessage( e );

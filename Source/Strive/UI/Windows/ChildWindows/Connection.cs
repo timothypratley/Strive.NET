@@ -5,6 +5,8 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using Strive.Network.Client;
+
 namespace Strive.UI.Windows.ChildWindows
 {
 	/// <summary>
@@ -28,6 +30,7 @@ namespace Strive.UI.Windows.ChildWindows
 		
 		private Connection.ConnectionWindowState windowState;
 
+
 		public bool Connected = false;
 		/// <summary>
 		/// Required designer variable.
@@ -43,6 +46,10 @@ namespace Strive.UI.Windows.ChildWindows
 			RecentServers.ImageList = Icons.IconManager.GlobalImageList;
 			loadRecentServers();
 			StriveWindowState = ConnectionWindowState.NotConnected;
+			Game.CurrentGameLoop._message_processor.OnCanPossess
+				+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
+			Game.CurrentServerConnection.OnConnect += new ServerConnection.OnConnectHandler( HandleConnect );
+			Game.CurrentServerConnection.OnDisconnect += new ServerConnection.OnDisconnectHandler( HandleDisconnect );
 		}
 
 		/// <summary>
@@ -300,20 +307,10 @@ namespace Strive.UI.Windows.ChildWindows
 					Application.DoEvents();
 					Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), Game.CurrentMainWindow.RenderTarget);
 					Connected = true;
-					Game.CurrentGameLoop._message_processor.OnCanPossess
-						+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
-
-					Game.CurrentServerConnection.RequestPossessable();
 					break;
 				}
 				case ConnectionWindowState.Connecting:
-				{
-					goto case ConnectionWindowState.Playing;
-				}
 				case ConnectionWindowState.Connected:
-				{
-					goto case ConnectionWindowState.Playing;
-				}
 				case ConnectionWindowState.Playing:
 				{
 					// disconnect:
@@ -327,6 +324,14 @@ namespace Strive.UI.Windows.ChildWindows
 				}
 
 			}
+		}
+
+		void HandleConnect() {
+			StriveWindowState = ConnectionWindowState.Connected;
+		}
+
+		void HandleDisconnect() {
+			StriveWindowState = ConnectionWindowState.NotConnected;
 		}
 
 		void HandleCanPossessThreadSafe( Strive.Network.Messages.ToClient.CanPossess cp ) 

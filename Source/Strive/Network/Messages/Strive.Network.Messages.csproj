@@ -267,11 +267,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToServer\QueryPhysicalObject.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "ToServer\ReloadWorld.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

@@ -73,7 +73,7 @@ namespace Strive.UI.WorldView
 				}
 			}
 			if ( tp.xplusKnown && tp.zplusKnown && tp.xpluszplusKnown ) {
-				if ( tp.model != null ) _scene.Models.Remove( tp.instance_id );
+				if ( tp.model != null || _scene.Models.Contains( tp.instance_id ) ) _scene.Models.Remove( tp.instance_id );
 				tp.model = _engine.CreateTerrain( tp.instance_id.ToString(), ResourceManager.LoadTexture( tp.texture_id ), tp.altitude, tp.xplus, tp.zplus, tp.xpluszplus );
 				tp.model.Position = new Vector3D( tp.x, 0, tp.z );
 				_scene.Models.Add( tp.instance_id, tp.model );

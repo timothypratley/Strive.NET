@@ -104,9 +104,9 @@ namespace Strive.UI.Windows
 			this.ViewSkillList = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewChat = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewCommand = new Crownwood.Magic.Menus.MenuCommand();
-			this.MainStatus = new System.Windows.Forms.StatusBar();
 			this.ViewFirstPerson = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewChaseCam = new Crownwood.Magic.Menus.MenuCommand();
+			this.MainStatus = new System.Windows.Forms.StatusBar();
 			this.MainTabs.SuspendLayout();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
@@ -119,7 +119,7 @@ namespace Strive.UI.Windows
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(612, 680);
+			this.MainTabs.Size = new System.Drawing.Size(612, 665);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -129,7 +129,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				  this.RenderTarget});
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(612, 655);
+			this.GameTab.Size = new System.Drawing.Size(612, 640);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -138,7 +138,7 @@ namespace Strive.UI.Windows
 			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Location = new System.Drawing.Point(256, 1992);
+			this.RenderTarget.Location = new System.Drawing.Point(256, 2667);
 			this.RenderTarget.Name = "RenderTarget";
 			this.RenderTarget.Size = new System.Drawing.Size(116, 0);
 			this.RenderTarget.TabIndex = 0;
@@ -233,13 +233,6 @@ namespace Strive.UI.Windows
 			this.ViewCommand.Text = "Command";
 			this.ViewCommand.Click += new System.EventHandler(this.ViewCommand_Click);
 			// 
-			// MainStatus
-			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 707);
-			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(612, 44);
-			this.MainStatus.TabIndex = 1;
-			// 
 			// ViewFirstPerson
 			// 
 			this.ViewFirstPerson.Description = "First Person Mode";
@@ -251,6 +244,13 @@ namespace Strive.UI.Windows
 			this.ViewChaseCam.Description = "Chase Camera";
 			this.ViewChaseCam.Text = "Chase Camera";
 			this.ViewChaseCam.Click += new System.EventHandler(this.ViewChaseCam_Click);
+			// 
+			// MainStatus
+			// 
+			this.MainStatus.Location = new System.Drawing.Point(2, 692);
+			this.MainStatus.Name = "MainStatus";
+			this.MainStatus.Size = new System.Drawing.Size(612, 59);
+			this.MainStatus.TabIndex = 1;
 			// 
 			// Main
 			// 
@@ -290,6 +290,7 @@ namespace Strive.UI.Windows
 		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			saveSettings();
+			Game.CurrentServerConnection.Stop();
 			Application.Exit();
 		}
 

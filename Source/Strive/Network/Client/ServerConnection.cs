@@ -5,7 +5,6 @@ using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-using Strive.Common;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Logging;
@@ -16,71 +15,188 @@ namespace Strive.Network.Client {
 		Queue messageQueue;
 		IPEndPoint remoteEndPoint;
 		IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
-		UdpClient serverConnection;
-		//BinaryFormatter formatter = new BinaryFormatter();
-		StoppableThread myThread;
-		
+		Socket udpsocket;
+		Socket tcpsocket;
+		byte[] udpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
+		byte[] tcpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
+		bool connected = false;
+
+		public delegate void OnConnectHandler();
+		public delegate void OnDisconnectHandler();
+		public event OnConnectHandler OnConnect;
+		public event OnDisconnectHandler OnDisconnect;
+
+
 		public ServerConnection() {
-			myThread = new StoppableThread( new StoppableThread.WhileRunning( Run ) );
 		}
 
 		public class AlreadyRunningException : Exception{}
 		public void Start( IPEndPoint remoteEndPoint ) {
 			this.remoteEndPoint = remoteEndPoint;
 			messageQueue = new Queue();
-			Log.LogMessage( "remoteEndPoint " + remoteEndPoint );
-			serverConnection = new UdpClient();
-			myThread.Start();
+
+			// Connect to the remote endpoint.
+			tcpsocket = new Socket(AddressFamily.InterNetwork,
+				SocketType.Stream, ProtocolType.Tcp);
+			udpsocket = new Socket(AddressFamily.InterNetwork,
+				SocketType.Dgram, ProtocolType.Udp);
+			tcpsocket.BeginConnect( remoteEndPoint, 
+				new AsyncCallback(ConnectTCPCallback), this);
 		}
 
 		public void Stop() {
-			if ( serverConnection != null ) {
-				serverConnection.Close();
-				serverConnection = null;
+			if ( tcpsocket != null ) {
+				tcpsocket.Close();
+				tcpsocket = null;
 			}
-			myThread.Stop();
+			if ( udpsocket != null ) {
+				udpsocket.Close();
+				udpsocket = null;
+			}
+			if ( connected ) {
+				OnDisconnect();
+				connected = false;
+			}
 		}
 
-		public void Run() {
-			byte[] receivedBytes;
+		private static void ConnectTCPCallback(IAsyncResult ar) {
+			ServerConnection client = (ServerConnection) ar.AsyncState;
 			try {
-				// Blocks until a message returns on this socket from a remote host.
-				receivedBytes = serverConnection.Receive(ref endpoint);
-			} catch ( Exception ) {
-				// do nothing, user has quit the client, causing the
-				// connection to be closed
-				return;
-			}
-			// Generic serialization
-			//IMessage message = (IMessage)formatter.Deserialize(
-			//	new MemoryStream( receivedBytes )
-			//);
 
-			// Custom serialization
-			IMessage message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
-			messageQueue.Enqueue( message );
-			//Log.LogMessage( "enqueued " + message.GetType() + " message" );
+				// Complete the connection.
+				client.tcpsocket.EndConnect(ar);
+				client.connected = true;
+				client.OnConnect();
+
+				// Begin reading.
+				client.tcpsocket.BeginReceive( client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
+					new AsyncCallback(ReceiveTCPCallback), client );
+
+				client.udpsocket.Bind( client.tcpsocket.LocalEndPoint );
+				client.udpsocket.BeginConnect( client.tcpsocket.RemoteEndPoint,
+					new AsyncCallback(ConnectUDPCallback), client );
+			} catch (Exception) {
+				client.Stop();
+			}
 		}
 
-		protected void Send( IMessage message ) {
-			// Generic serialization
-			//MemoryStream ms = new MemoryStream();
-			//formatter.Serialize( ms, message );
+		private static void ConnectUDPCallback(IAsyncResult ar) {
+			ServerConnection client = (ServerConnection) ar.AsyncState;
+			try {
 
-			// NR 26 Mar 2003
-			// Makes UI less sensitive to crashes when disconnected
-			if(serverConnection != null)
-			{
-				// Custom serialization
-				byte [] buffer = CustomFormatter.Serialize( message );
-				try 
-				{
-					serverConnection.Send( buffer, buffer.Length, remoteEndPoint );
-				} 
-				catch ( ObjectDisposedException ) 
-				{
-					// do nothing, socket has been closed by another thread
+				// Complete the connection.
+				client.udpsocket.EndConnect(ar);
+
+				// Begin reading.
+				client.udpsocket.BeginReceive( client.udpbuffer, 0, MessageTypeMap.BufferSize, 0,
+					new AsyncCallback(ReceiveUDPCallback), client );
+			} catch (Exception) {
+				client.Stop();
+			}
+		}
+
+		private static void ReceiveTCPCallback( IAsyncResult ar ) {
+			// Retrieve the state object and the client socket 
+			// from the async state object.
+			ServerConnection client = (ServerConnection) ar.AsyncState;
+			try {
+				// Read data from the remote device.
+				int bytesRead = client.tcpsocket.EndReceive(ar);
+
+				// There might be more data, so store the data received so far.
+				IMessage message = (IMessage)CustomFormatter.Deserialize( client.tcpbuffer );
+				client.messageQueue.Enqueue( message );
+				//Log.LogMessage( "enqueued " + message.GetType() + " message" );
+
+				// the next message
+				client.tcpsocket.BeginReceive( client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
+					new AsyncCallback(ReceiveTCPCallback), client );
+			} catch ( Exception ) {
+				client.Stop();
+			}
+		}
+
+		private static void ReceiveUDPCallback( IAsyncResult ar ) {
+			// Retrieve the state object and the client socket 
+			// from the async state object.
+			ServerConnection client = (ServerConnection) ar.AsyncState;
+
+			// TODO: is this wrong? shouldn't we endreceive?
+			if ( client.udpsocket == null ) return;
+			try {
+				// Read data from the remote device.
+				int bytesRead = client.udpsocket.EndReceive(ar);
+
+				// There might be more data, so store the data received so far.
+				IMessage message = (IMessage)CustomFormatter.Deserialize( client.udpbuffer );
+				client.messageQueue.Enqueue( message );
+				//Log.LogMessage( "enqueued " + message.GetType() + " message" );
+
+				// Get the next message
+				client.udpsocket.BeginReceive( client.udpbuffer, 0, MessageTypeMap.BufferSize, 0,
+					new AsyncCallback(ReceiveUDPCallback), client );
+			} catch ( Exception ) {
+				client.Stop();
+			}
+		}
+
+		public void Send( IMessage message ) {
+			if ( !connected ) {
+				// TODO: don't return, just throw
+				return;
+				throw new Exception( "Sending message while not connected." );
+			}
+			//try {
+				// TODO: some clients may not want to send UDP messages
+				if ( message is Strive.Network.Messages.ToServer.Position ) {
+					SendUDP( message );
+				} else {
+					SendTCP( message );
 				}
+			//} catch ( Exception ) {
+				//Stop();
+			//}
+		}
+
+		void SendTCP( IMessage message ) {
+			// Custom serialization
+			byte [] buffer = CustomFormatter.Serialize( message );
+			try {
+				tcpsocket.BeginSend( buffer, 0, buffer.Length, 0,
+					new AsyncCallback(SendTCPCallback), this );
+			} catch ( Exception ) {
+				Stop();
+			}
+		}
+
+		private static void SendTCPCallback(IAsyncResult ar) {
+			ServerConnection client = (ServerConnection) ar.AsyncState;
+			try {
+				// Complete sending the data to the remote device.
+				int bytesSent = client.tcpsocket.EndSend(ar);
+			} catch ( Exception ) {
+				client.Stop();
+			}
+		}
+
+		void SendUDP( IMessage message ) {
+			// Custom serialization
+			byte [] buffer = CustomFormatter.Serialize( message );
+			//try {
+				udpsocket.BeginSend( buffer, 0, buffer.Length, 0,
+					new AsyncCallback(SendUDPCallback), this );
+			//} catch ( Exception ) {
+			//	Stop();
+			//}
+		}
+
+		private static void SendUDPCallback(IAsyncResult ar) {
+			ServerConnection client = (ServerConnection) ar.AsyncState;
+			try {
+				// Complete sending the data to the remote device.
+				int bytesSent = client.udpsocket.EndSend(ar);
+			} catch ( Exception ) {
+				client.Stop();
 			}
 		}
 
@@ -151,11 +267,6 @@ namespace Strive.Network.Client {
 		public void RequestPossessable()
 		{
 			Send(new RequestPossessable());
-		}
-
-		public void QueryPhysicalObject(int instance_id)
-		{
-			Send(new QueryPhysicalObject(instance_id));
 		}
 
 		#endregion

@@ -83,27 +83,6 @@
                     HintPath = "C:\WINNT\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
                 />
                 <Reference
-                    Name = "DxVBLibA"
-                    Guid = "{E1211242-8E94-11D1-8808-00C04FC2C603}"
-                    VersionMajor = "1"
-                    VersionMinor = "0"
-                    Lcid = "0"
-                    WrapperTool = "tlbimp"
-                />
-                <Reference
-                    Name = "Revolution3D8087b"
-                    Guid = "{599E9200-4AE4-4D0C-9675-F15F10D96AD6}"
-                    VersionMajor = "1"
-                    VersionMinor = "0"
-                    Lcid = "0"
-                    WrapperTool = "tlbimp"
-                />
-                <Reference
-                    Name = "Microsoft.VisualBasic"
-                    AssemblyName = "Microsoft.VisualBasic"
-                    HintPath = "C:\WINNT\Microsoft.NET\Framework\v1.0.3705\Microsoft.VisualBasic.dll"
-                />
-                <Reference
                     Name = "stdole"
                     Guid = "{00020430-0000-0000-C000-000000000046}"
                     VersionMajor = "2"
