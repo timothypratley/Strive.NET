@@ -42,6 +42,8 @@ namespace Strive.UI.WorldView {
 				for ( i=0; i<xorder; i++ ) {
 					for ( j=0; j<zorder; j++ ) {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
+						ITexture texture = engine.CreateTexture( "land", 256*hpc, 256*hpc );
+						TC[i,j,k].SetTexture( texture );
 
 						// TODO: fix this don't hardcode it... and don't set it per terrain chunk
 						//if ( k == zoomorder-1 ){
@@ -218,7 +220,7 @@ namespace Strive.UI.WorldView {
 									t1 = (Terrain)terrainPiecesXYIndex[loc];
 									if ( t1 != null ) {
 										//if ( k==0 )
-										TC[i,j,k].SetTexture( _resource_manager.GetTexture( t1.ResourceID ), px, pz, t1.Rotation.Y );
+										TC[i,j,k].DrawTexture( _resource_manager.GetTexture( t1.ResourceID ), px, pz, t1.Rotation.Y );
 									}
 								}
 							}
@@ -246,7 +248,7 @@ namespace Strive.UI.WorldView {
 			Vector2D loc = new Vector2D( x, z );
 			Terrain t = (Terrain)terrainPiecesXYIndex[loc];
 			if ( t!=null ) {
-				TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ), x, z, t.Rotation.Y );
+				TC[i,j,k].DrawTexture( _resource_manager.GetTexture( t.ResourceID ), x, z, t.Rotation.Y );
 			}
 		}
 		
@@ -255,7 +257,7 @@ namespace Strive.UI.WorldView {
 			int i = Helper.DivTruncate( (int)x, cs ) - CX[k];
 			int j = Helper.DivTruncate( (int)z, cs ) - CZ[k];
 			// TODO: need a default 'invis' texture
-			TC[i,j,k].SetTexture( _engine.GetInvisible(), x, z, 0 );
+			TC[i,j,k].Clear( x, z, 256, 256 );
 		}
 
 		public void Set( float x, float z, float altitude, ITexture texture, float rotation ) {
@@ -295,7 +297,7 @@ namespace Strive.UI.WorldView {
 
 					// set the texture for higher order terrain or not
 					//if ( k==0 )
-					TC[xdiff,zdiff,k].SetTexture( texture, x, z, rotation );
+					TC[xdiff,zdiff,k].DrawTexture( texture, x, z, rotation );
 				}
 
 				// edges need to update both chunks

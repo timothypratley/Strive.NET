@@ -138,29 +138,29 @@ namespace Strive.UI
 			CurrentInputProcessor.ProcessPlayerInput();
 
 			// display the new world if the form is maximised
-			if(Game.CurrentMainWindow.WindowState != FormWindowState.Minimized)
-			{
+			if(Game.CurrentMainWindow.WindowState != FormWindowState.Minimized)	{
 				Game.CurrentWorld.Render();
 				// TODO: UMG this hack is because TV3D updates its relative mouse state
 				// on every render (ghey) AND their absolute mouse pos is shit.
 				CurrentInputProcessor.AccumulateMouse();
 				Game.CurrentWorld.RenderMiniMap();
-			}
-			else
-			{
-				System.Threading.Thread.Sleep(1000);
+			} else {
+				System.Threading.Thread.Sleep(100);
 			}
 		}
 
 		static void ProcessOutstandingMessages() {
-			// TODO: we need to avoid flooding
-			int i = 0;
-			while(CurrentServerConnection.MessageCount > 0) {
+			while(
+				CurrentServerConnection.MessageCount > 0
+			) {
 				IMessage m = CurrentServerConnection.PopNextMessage();
 				if ( m == null ) break;
 				CurrentMessageProcessor.Process( m );
-				i++;
-				//if ( i>5 ) break;
+				if ( CurrentInputProcessor.movementTimer.ElapsedSecondsSoFar() > 1 ) {
+					Log.DebugMessage( "Processing messages for more than 1 second." );
+					// give the engine a chance to render what we have so far
+					break;
+				}
 			}
 		}
 
