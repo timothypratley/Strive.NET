@@ -220,6 +220,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Channels\ChannelManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Cursors\CursorManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

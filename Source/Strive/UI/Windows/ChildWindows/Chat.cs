@@ -20,29 +20,25 @@ namespace Strive.UI.Windows.ChildWindows
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public Chat()
+		public Chat(Strive.Network.Messages.CommunicationType communicationType, string characterName)
 		{
-			//
-			// Required for Windows Form Designer support
-			//
 			InitializeComponent();
-			
-			// register for chats
-			Game.CurrentMessageProcessor.OnChat += new MessageProcessor.ChatHandler(ProcessChat);
-
+			this.Text = Game.CurrentMainWindow.CurrentChannelManager.CalculateChannelKey(communicationType, characterName);
+			Game.CurrentMainWindow.CurrentChannelManager.RegisterChannel(communicationType, characterName, new Channels.ChannelManager.MessageReceived(ProcessCommunication));
 		}
 
-		private void ProcessChat(Strive.Network.Messages.ToClient.Communication chatMessage)
+		public Chat() : this(Strive.Network.Messages.CommunicationType.Chat, "")
 		{
-			
-			ChatOutput.AppendText( chatMessage.name + ": " + chatMessage.message + Environment.NewLine );
 		}
-
+		private void ProcessCommunication(Strive.Network.Messages.ToClient.Communication message)
+		{
+			ChatOutput.AppendText(message.name + " says:" + message.message + Environment.NewLine);
+		}
 		private void ProcessClientChat(string message)
 		{
-//			ChatOutput.AppendText( "You say: " );
-//			ChatOutput.AppendText( message );
-//			ChatOutput.AppendText( Environment.NewLine );
+			ChatOutput.AppendText( "You say: " );
+			ChatOutput.AppendText( message );
+			ChatOutput.AppendText( Environment.NewLine );
 			ChatInput.SelectAll();
 			// send the text
 			Game.CurrentServerConnection.Chat(message);

@@ -7,7 +7,8 @@ namespace Strive.Network.Messages {
 		Yell,
 		Chat,
 		ClanTalk,
-		PartyTalk
+		PartyTalk,
+		Tell
 	}
 
 }

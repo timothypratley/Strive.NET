@@ -43,6 +43,8 @@ namespace Strive.UI.Windows
 		private System.Windows.Forms.StatusBarPanel Information;
 		private System.Windows.Forms.StatusBarPanel AreaInformation;
 
+		public Channels.ChannelManager CurrentChannelManager;
+
 		private System.ComponentModel.IContainer components = null;
 
 		public Main()
@@ -471,6 +473,7 @@ namespace Strive.UI.Windows
 			#endregion
 
 			#region Our Initialisation
+			CurrentChannelManager = new Channels.ChannelManager(DockingManager);
 			
 			#region RenderContainer
 
@@ -520,6 +523,7 @@ namespace Strive.UI.Windows
 			RenderTarget.LostFocus += new EventHandler( RenderTarget_LostFocus );
 			RenderTarget.Click += new EventHandler( RenderTarget_Click );
 			#endregion
+
 
 			#endregion		
 		}

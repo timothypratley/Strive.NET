@@ -43,7 +43,7 @@ namespace Strive.UI.WorldView {
 				this.MiniMapTarget = MiniMapTarget;
 			}
 			//WorldTerrain = RenderingEngine.GetTerrain();
-			RenderingScene.SetLighting( 100 );
+			RenderingScene.SetLighting( 10 );
 			RenderingScene.SetFog( 500.0f );
 			renderViewport.Camera.ViewDistance = 10000;
 			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
