@@ -137,8 +137,6 @@ namespace Strive.Server.Shared
 				return false;
 			}
 			
-			// TODO: test saves
-
 			switch ( (EnumActivationType)esr.EnumActivationTypeID ) {
 				case EnumActivationType.AttackSpell:
 					float damage = esr.EnergyCost;
@@ -159,8 +157,8 @@ namespace Strive.Server.Shared
 				case EnumActivationType.Skill:
 					if ( esr.EnumSkillID ==  (int)EnumSkill.Kill ) {
 						DoKill( caster, target);
-					} else if ( esr.EnumSkillID ==  (int)EnumSkill.Flee ) {	
-						DoFlee( caster );
+					} else if ( esr.EnumSkillID ==  (int)EnumSkill.Kick ) {	
+						DoKick( caster, target );
 					} else {
 						Log.WarningMessage( "Unhandled SkillID " + esr.EnumSkillID );
 					}
@@ -177,12 +175,12 @@ namespace Strive.Server.Shared
 			return true;
 		}
 
-		public static void DoKill( MobileAvatar caster, MobileAvatar target ) {
-			caster.Attack( target.ObjectInstanceID );
+		public static void DoKill( MobileAvatar caster, PhysicalObject target ) {
+			caster.Attack( target );
 		}
 
-		public static void DoFlee( MobileAvatar caster ) {
-			caster.Flee();
+		public static void DoKick( MobileAvatar caster, PhysicalObject target ) {
+			caster.Kick( target );
 		}
 	}
 }

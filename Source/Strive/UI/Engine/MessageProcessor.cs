@@ -96,14 +96,6 @@ namespace Strive.UI.Engine {
 						Log.LogMessage(
 							cr.targetObjectInstanceID.ToString() + " avoids " + cr.attackerObjectInstanceID.ToString() + "." );
 						break;
-					case EnumCombatEvent.FleeFails:
-						Log.LogMessage(
-							cr.attackerObjectInstanceID.ToString() + " attempts to flee but fails." );
-						break;
-					case EnumCombatEvent.FleeSuccess:
-						Log.LogMessage(
-							cr.attackerObjectInstanceID.ToString() + " flees!" );
-						break;
 					case EnumCombatEvent.Hits:
 						Log.LogMessage(
 							cr.attackerObjectInstanceID.ToString() + " hits " + cr.targetObjectInstanceID.ToString() + " for " + cr.damage + " damage." );

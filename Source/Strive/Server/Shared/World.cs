@@ -256,6 +256,10 @@ namespace Strive.Server.Shared {
 			InformNearby( po, new Strive.Network.Messages.ToClient.DropPhysicalObject( po ) );
 			square[squareX,squareZ].Remove( po );
 			physicalObjects.Remove( po.ObjectInstanceID );
+			if ( po is MobileAvatar ) 
+			{
+				mobilesArrayList.Remove( po );
+			}
 			Log.LogMessage( "Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world." );
 		}
 
@@ -308,33 +312,26 @@ namespace Strive.Server.Shared {
 				// ignoring terrain and yourself
 				if ( spo is Terrain || spo == po ) continue;
 
-				// don't check pcs, they do clientside check
-				if ( ma != null && ma.client != null ) break;
-
 				// distance between two objects in 2d space
 				float dx = newPosition.X - spo.Position.X;
 				float dy = newPosition.Y - spo.Position.Y;
 				float dz = newPosition.Z - spo.Position.Z;
 				float distance_squared = dx*dx + dy*dy + dz*dz;
 				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
-					// Log.LogMessage( "Collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID + "." );
-					// objects would be touching, reject the move
-					// if its a player, slap their wrist with a position update
-					if ( ma != null ) {
-						// only if not already collided!
-						float dx1 = ma.Position.X - spo.Position.X;
-						float dy1 = ma.Position.Y - spo.Position.Y;
-						float dz1 = ma.Position.Z - spo.Position.Z;
-						float distance_squared1 = dx1*dx1 + dy1*dy1 + dz1*dz1;
-						if ( distance_squared1 <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
-							return;
-						}
-						if ( ma.client != null ) {
+					// only if not already collided!
+					float dx1 = po.Position.X - spo.Position.X;
+					float dy1 = po.Position.Y - spo.Position.Y;
+					float dz1 = po.Position.Z - spo.Position.Z;
+					float distance_squared2 = dx1*dx1 + dy1*dy1 + dz1*dz1;
+					if ( distance_squared2 <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
+						continue;
+					}
+					if ( ma != null && ma.client != null ) 
+					{
 							ma.client.Send(
 								new Strive.Network.Messages.ToClient.Position( ma ) );
-						}
+							return;
 					}
-					return;
 				}
 			}
 

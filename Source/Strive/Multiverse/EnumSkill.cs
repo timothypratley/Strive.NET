@@ -7,6 +7,6 @@ namespace Strive.Multiverse
 	/// </summary>
 	public enum EnumSkill
 	{
-		None = 0, Kill = 1, Flee, AcidBlast, Levitation
+		None = 0, Kill = 1, AcidBlast, Kick, Levitate
 	}
 }

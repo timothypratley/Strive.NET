@@ -11,7 +11,6 @@ using Crownwood.Magic.Docking;
 
 using Strive.Logging;
 using Strive.UI.WorldView;
-using Strive.UI.Icons;
 using Strive.Multiverse;
 
 
@@ -322,25 +321,42 @@ namespace Strive.UI.Windows
 		}
 
 		private void RenderTarget_Click( object sender, System.EventArgs e ) {
-			if ( Game.GameControlMode ) {
+			if ( Game.CurrentWorld.CurrentAvatar == null ) 
+			{
+				if ( Game.GameControlMode ) 
+				{
+					ReleaseGameControlMode();
+				}
+				return;
+			}
+			if ( Game.GameControlMode ) 
+			{
+				if ( Game.CurrentGameCommand == EnumSkill.None ) 
+				{
+					return;
+				}
 				//ReleaseGameControlMode();
 				EnumSkill skill = Game.CurrentGameCommand;
                 //if ( targettypeof( skill ) == targetmobil ) {
 				Game.RenderingFactory.Mouse.GetAbsState();
-				Strive.Rendering.Models.IModel m = Game.CurrentWorld.RenderingScene.MousePick( Game.RenderingFactory.Mouse.X, Game.RenderingFactory.Mouse.Y );
-				if ( m != null ) {
-					MessageBox.Show( this, m.Name );
-					PhysicalObject po = ((PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[int.Parse(m.Name)]).physicalObject;
-					int [] targets = new int[1];
-					targets[0] = po.ObjectInstanceID;
-					// TODO: use InvokationID to track casting and allow for cancelations
-					Game.CurrentServerConnection.Send(
-						new Strive.Network.Messages.ToServer.GameCommand.UseSkill(
-							Game.CurrentGameCommand, 0, targets )
-					);
-				} else {
-					MessageBox.Show( this, "No target" );
+				Strive.Rendering.Models.IModel m = Game.CurrentWorld.RenderingScene.MousePick();
+				if ( m == null ) 
+				{
+					return;
 				}
+				PhysicalObjectInstance poi = Game.CurrentWorld.physicalObjectInstances[int.Parse(m.Name)] as PhysicalObjectInstance;
+				if ( poi == null ) 
+				{
+					return;
+				}
+				int [] targets = new int[1];
+				targets[0] = poi.physicalObject.ObjectInstanceID;
+				// TODO: use InvokationID to track casting and allow for cancelations
+				Game.CurrentServerConnection.Send(
+					new Strive.Network.Messages.ToServer.GameCommand.UseSkill(
+						Game.CurrentGameCommand, 0, targets )
+				);
+				MessageBox.Show( this, "Using skill " + Game.CurrentGameCommand + " on " + m.Name );
 			} else {
 				SetGameControlMode();
 			}
@@ -349,17 +365,9 @@ namespace Strive.UI.Windows
 		public void SetGameControlMode() {
 			if ( !Game.GameControlMode ) 
 			{
-				RenderTarget.Focus();
 				Game.GameControlMode = true;
-				/*Point center = new Point(
-					RenderTarget.Left + RenderTarget.Width / 2,
-					RenderTarget.Top + RenderTarget.Height / 2
-					);
-				Cursor.Position = RenderTarget.PointToScreen( center );
-				Rectangle r = new Rectangle( center, new System.Drawing.Size( 0, 0 ) );
-				Cursor.Clip = RenderTarget.RectangleToScreen( r );
-				RenderTarget.Capture = true;
-				Cursor.Hide();*/
+				RenderTarget.Focus();
+				Cursor.Clip = RenderTarget.RectangleToScreen( RenderTarget.ClientRectangle );
 				Game.RenderingFactory.Mouse.ShowCursor(false);
 				Game.CurrentGameCommand = EnumSkill.None;
 			}
@@ -368,13 +376,7 @@ namespace Strive.UI.Windows
 		public void ReleaseGameControlMode() {
 			if ( Game.GameControlMode ) {
 				Game.GameControlMode = false;
-				RenderTarget.Capture = false;
-/*				Cursor.Position = RenderTarget.PointToScreen(
-					new Point(
-					RenderTarget.Left + RenderTarget.Width / 2,
-					RenderTarget.Top + RenderTarget.Height / 2
-					)
-				);*/
+				Cursor.Clip = new Rectangle( 0, 0, 0, 0 );
 				Game.RenderingFactory.Mouse.ShowCursor(true);
 			}
 		}

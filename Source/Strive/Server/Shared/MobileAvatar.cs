@@ -186,22 +186,14 @@ namespace Strive.Server.Shared
 			UpdateState();
 		}
 
-		public void Attack( int ObjectInstanceID ) {
-			target = world.physicalObjects[ObjectInstanceID] as PhysicalObject;
-			if ( target == null ) {
-				SendLog( "Target " + ObjectInstanceID + " not found." );
-				return;
-			}
-			Attack( target );
+		public void Damage( float damage ) 
+		{
+			HitPoints -= damage;
+			UpdateState();
 		}
 
 		public void Attack( PhysicalObject target ) {
-			Vector3D distance = target.Position - Position;
-			if ( distance.GetMagnitude() > 5.0F	) {
-				// too far away!
-				SendLog( target.ObjectTemplateName + " is out of range." );
-				return;
-			}
+			this.target = target;
 			world.InformNearby(
 				this,
 				new Strive.Network.Messages.ToClient.CombatReport(
@@ -210,34 +202,10 @@ namespace Strive.Server.Shared
 			);
 		}
 
-		public void Flee() {
-			target = null;
-			if ( Global.random.Next( Dexterity ) > 10 ) {
-				// success
-				world.InformNearby(
-					this,
-					new Strive.Network.Messages.ToClient.CombatReport(
-						this, null, EnumCombatEvent.FleeSuccess, 0
-					)
-				);
-				// EEERRR could do this just for nearby mobs?
-				foreach ( PhysicalObject po in world.physicalObjects ) {
-					if ( po is MobileAvatar ) {
-						MobileAvatar ma = po as MobileAvatar;
-						if ( ma.target == this ) {
-							ma.target = null;
-						}
-					}
-				}
-			} else {
-				// failed
-				world.InformNearby(
-					this,
-					new Strive.Network.Messages.ToClient.CombatReport(
-						this, null, EnumCombatEvent.FleeFails, 0
-					)
-				);
-			}
+		public void Kick( PhysicalObject target ) {
+			// TODO: would be nice to have a baseclass physical object with damage function,
+			// but needs multiple inheritance
+			target.HitPoints -= 20;
 		}
 
 		public void PhysicalAttack( PhysicalObject po ) {
@@ -280,6 +248,7 @@ namespace Strive.Server.Shared
 					damage -= 8; // opponent.ArmourRating
 				}
 				if ( damage < 0 ) damage = 0;
+
 				opponent.HitPoints -= damage * Strength/opponent.Constitution;
 				opponent.UpdateState();
 				world.InformNearby(

@@ -162,9 +162,9 @@ namespace Strive.Resources
 			ITexture texture = (ITexture)_textures[CursorID];
 			if ( texture == null ) {
 				// load from file
-				string filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".dds" );
+				string filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".bmp" );
 				if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
-					filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".dds" );
+					filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".bmp" );
 					if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
 						throw new ResourceNotLoadedException( CursorID, ResourceType.Texture );
 					}

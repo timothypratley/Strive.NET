@@ -85,6 +85,9 @@ namespace Strive.UI.Engine
 		float pitch = 0;
 		void ProcessPlayerInput() 
 		{
+			// no avatar... no nothing
+			if ( Game.CurrentWorld.CurrentAvatar == null ) return;
+
 			if ( keyboard.GetKeyState( Key.key_F5 ) ) 
 			{
 				Game.CurrentMainWindow.SetGameControlMode();
@@ -102,17 +105,22 @@ namespace Strive.UI.Engine
 				else if ( keyboard.GetKeyState( Key.key_1 ) ) 
 				{
 					Game.CurrentGameCommand = EnumSkill.Kill;
-					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Kill;
 				} 
 				else if ( keyboard.GetKeyState( Key.key_2 ) ) 
 				{
-					Game.CurrentGameCommand = EnumSkill.Flee;
-					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Default;
+					Game.CurrentGameCommand = EnumSkill.AcidBlast;
+				} 
+				else if ( keyboard.GetKeyState( Key.key_3 ) ) 
+				{
+					Game.CurrentGameCommand = EnumSkill.Kick;
+				} 
+				else if ( keyboard.GetKeyState( Key.key_4 ) ) 
+				{
+					Game.CurrentGameCommand = EnumSkill.Levitate;
 				} 
 				else if ( keyboard.GetKeyState( Key.key_0 ) ) 
 				{
 					Game.CurrentGameCommand = EnumSkill.None;
-					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Default;
 				}
 			}
 
@@ -122,8 +130,6 @@ namespace Strive.UI.Engine
 				return;
 			}
 			
-			// no avatar... no movement
-			if ( Game.CurrentWorld.CurrentAvatar == null ) return;
 			
 			#region ProcessRotationInput
 

@@ -77,7 +77,7 @@ namespace Strive.Network.Server {
 
 				handler.udpsocket.BeginReceiveFrom( handler.udpbuffer, 0, MessageTypeMap.BufferSize, 0, ref handler.remoteEndPoint,
 					new AsyncCallback(ReceiveFromUDPCallback), handler );
-			} catch ( ObjectDisposedException ) {
+			} catch ( Exception ) {
 				// the underlying socket was closed
 			}
 		}

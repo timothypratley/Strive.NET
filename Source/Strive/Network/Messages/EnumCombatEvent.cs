@@ -6,6 +6,6 @@ namespace Strive.Network.Messages
 	/// Summary description for EnumCombatEvent.
 	/// </summary>
 	public enum EnumCombatEvent {
-		Attacks, Avoids, Misses, Hits, FleeFails, FleeSuccess,
+		Attacks, Avoids, Misses, Hits
 	}
 }

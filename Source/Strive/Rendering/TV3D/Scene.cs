@@ -219,11 +219,11 @@ namespace Strive.Rendering.TV3D
 			DxVBLibA.D3DVECTOR dxd = new DxVBLibA.D3DVECTOR();
 			Engine.Gl.MousePickVector( x, y, ref dxo, ref dxd );
 			TV_COLLISIONRESULT cr = new TV_COLLISIONRESULT();
-			if ( Engine.TV3DScene.AdvancedCollision( ref dxo, ref dxd, ref cr, CONST_TV_OBJECT_TYPE.TV_COLLIDE_MESH | CONST_TV_OBJECT_TYPE.TV_COLLIDE_ACTOR, CONST_TV_TESTTYPE.TV_TESTTYPE_ACCURATETESTING, true) ) {
+			if ( Engine.TV3DScene.AdvancedCollision( ref dxo, ref dxd, ref cr, 0, CONST_TV_TESTTYPE.TV_TESTTYPE_ACCURATETESTING, true) ) {
 				// TODO: don't loop through, a userdata field?
 				foreach ( IModel m in Models.Values ) {
 					if (
-						(cr.collidedobjecttype == 1 && (m is IActor) && m.ID == cr.MeshID)
+						(cr.collidedobjecttype == 1 && (m is IActor) && m.ID == cr.entityid)
 						|| (cr.collidedobjecttype != 1 && !(m is IActor) && m.ID == cr.MeshID)
 					) {
 						return m;
@@ -231,6 +231,14 @@ namespace Strive.Rendering.TV3D
 				}
 			}
 			return null;
+		}
+
+		public IModel MousePick() 
+		{
+			TVViewport vp = Engine.TV3DEngine.GetViewport();
+			int x = (int)vp.Width/2;
+			int y = (int)vp.Height/2;
+			return MousePick( x, y );
 		}
 
 		public ICameraCollection CameraCollection {

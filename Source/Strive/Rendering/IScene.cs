@@ -26,6 +26,7 @@ namespace Strive.Rendering
 		void Display();
 		int RayCollision( Vector3D start_point, Vector3D end_point, int collision_type );
 		IModel MousePick( int x, int y );
+		IModel MousePick();
 		void SetCursor( ITexture texture );
 
 		#endregion
