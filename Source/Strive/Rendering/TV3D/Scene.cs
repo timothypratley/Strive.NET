@@ -129,7 +129,9 @@ namespace Strive.Rendering.TV3D
 				Engine.TV3DScene.RenderAllMeshes( false );
 
 				// render character models and object labels
-				Engine.Screen2DText.ACTION_BeginText();
+	/*** TODO bug in TV3D, so disabled for now
+	 * 
+	 * 			Engine.Screen2DText.ACTION_BeginText();
 				//string header = "X:"+View.Position.X+",Y:"+View.Position.Y+",Z:"+View.Position.Z+" - heading:"+View.Rotation.Y;
 				//Engine.Screen2DText.NormalFont_DrawTextFontID( header, 0, 0, Engine.Gl.RGBA(1f, 0f, 1f, 1f), Engine.FontIndex );
 
@@ -174,6 +176,7 @@ namespace Strive.Rendering.TV3D
 					Engine.Screen2DImmediate.DRAW_Texture( cursorTextureID, x-8, y-8, x+8, y+8, -2, -2, -2, -2, 0, 0, 1, 1 ); 
 					Engine.Screen2DImmediate.ACTION_End2D();
 				}
+				*/
 			} catch(Exception e) {
 				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
 			}
