@@ -118,10 +118,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "foo.xml"
-                    BuildAction = "Content"
-                />
-                <File
                     RelPath = "WinMain.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
