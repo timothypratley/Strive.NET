@@ -97,6 +97,16 @@ namespace Crownwood.Magic.Collections
             return base.List.Contains(value as object);
         }
 
+		// NTR 26 Jun 2004
+		public bool Contains(string title)
+		{
+			foreach(Content c in base.List)
+				if (c.Title.Equals(title))
+					return true;
+					
+			return false;
+		}
+
         public Content this[int index]
         {
             // Use base class to process actual collection operation
