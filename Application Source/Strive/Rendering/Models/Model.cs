@@ -203,6 +203,10 @@ namespace Strive.Rendering.Models
 
 		public int AnimationSequence {
 			set {
+				if ( _format != ModelFormat.MDL ) {
+					throw new Exception( "n0rty n0rty" );
+				}
+				setPointer();
 				string sequence;		
 				switch( value ) {
 					case 1:

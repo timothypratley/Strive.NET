@@ -166,7 +166,7 @@ namespace Strive.UI.Engine
 				cameraHeading.Y,
 				cameraHeading.Z
 			);
-			Game.CurrentLog.LogMessage( "Sending position message rotation " + _scene.View.Rotation );
+//			Game.CurrentLog.LogMessage( "Sending position message rotation " + _scene.View.Rotation );
 			_connection.Send(pos);
 		}
 

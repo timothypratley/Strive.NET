@@ -80,13 +80,13 @@ namespace Strive.Server.Shared
 					int rand = Global.random.Next( 5 ) - 2;
 					if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
 						MobileState--;
-						System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState );
+						//System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState );
 						world.InformNearby( this,
 							new Strive.Network.Messages.ToClient.MobileState( this )
 						);
 					} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
 						MobileState++;
-						System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState );
+						//System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState );
 						world.InformNearby( this,
 							new Strive.Network.Messages.ToClient.MobileState( this )
 						);

@@ -194,7 +194,7 @@ namespace Strive.Server.Shared {
 			// physical object has entered the world
 			InformNearby( po, new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
 
-			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - square("+squareX+","+squareZ+")" );
+			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
 		}
 
 		public void Remove( PhysicalObject po ) {
@@ -263,6 +263,7 @@ namespace Strive.Server.Shared {
 								foreach( PhysicalObject toDrop in squares[fromSquareX+i, fromSquareZ+j].physicalObjects ) {
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.DropPhysicalObject( toDrop ) );
+									System.Console.WriteLine( "told client to drop " + toDrop.ObjectInstanceID );
 								}
 							}
 						}
@@ -270,17 +271,18 @@ namespace Strive.Server.Shared {
 						// add to
 						if (
 							// check the square exists
-							toSquareX+i >= 0 && toSquareX+i < squaresInX
-							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
+							toSquareX-i >= 0 && toSquareX-i < squaresInX
+							&& toSquareZ-j >= 0 && toSquareZ-j < squaresInZ
 						) {
-							squares[toSquareX+i, toSquareZ+j].NotifyClients(
+							squares[toSquareX-i, toSquareZ-j].NotifyClients(
 								new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
 							// if the object is a player, it needs to be made aware
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
-								foreach( PhysicalObject toAdd in squares[toSquareX+i, toSquareZ+j].physicalObjects ) {
+								foreach( PhysicalObject toAdd in squares[toSquareX-i, toSquareZ-j].physicalObjects ) {
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.AddPhysicalObject( toAdd ) );
+									System.Console.WriteLine( "told client to add " + toAdd.ObjectInstanceID );
 								}
 							}
 						}

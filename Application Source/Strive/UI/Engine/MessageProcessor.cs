@@ -41,16 +41,18 @@ namespace Strive.UI.Engine {
 					Game.CurrentLog.LogMessage( "Initial rotation is " + Game.CurrentScene.View.Rotation );
 					return;
 				}
+				Model model;
 				try {
-					Model model = ResourceManager.LoadModel(apo.instance_id, apo.model_id);
+					model = ResourceManager.LoadModel(apo.instance_id, apo.model_id);
 					Game.CurrentScene.Models.Add( model );
-				} catch ( Exception ) {
-					Game.CurrentLog.ErrorMessage( "Could not add model " + model.Key );
+				} catch ( Exception e ) {
+					Game.CurrentLog.ErrorMessage( "Could not add model " + apo.instance_id );
+					Game.CurrentLog.ErrorMessage( e.Message );
 					return;
 				}
 				model.Position = new Vector3D( apo.x, apo.y, apo.z );
 				model.Rotation = Helper.GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
-				Game.CurrentLog.LogMessage( "Added " + model.Key );
+				Game.CurrentLog.LogMessage( "Added " + model.Key + " at " + model.Position );
 
 			}
 					#endregion
