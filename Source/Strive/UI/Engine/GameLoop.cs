@@ -297,7 +297,7 @@ namespace Strive.UI.Engine
 		{
 			PhysicalObjectInstance poi = Game.CurrentWorld.CurrentAvatar;
 			poi.Move( oldPosition, velocity, newRotation );
-			Log.LogMessage( "Now at ("+poi.model.Position.X+", "+poi.model.Position.Y+", "+poi.model.Position.Z+")" );
+			//Log.LogMessage( "Now at ("+poi.model.Position.X+", "+poi.model.Position.Y+", "+poi.model.Position.Z+")" );
 			if ( poi.NeedsUpdate( Game.now ) ) 
 			{
 				_connection.Position(

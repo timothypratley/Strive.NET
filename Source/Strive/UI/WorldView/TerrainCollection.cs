@@ -239,8 +239,12 @@ namespace Strive.UI.WorldView {
 			int cs;
 			bool renderright;
 			bool renderup;
+
+			// Disable Z for the higher order landscapes, but for the best detail one,
+			// re-enable Z (we want it on top, and to hide objects etc as normal
 			_engine.DisableZ();
 			for ( k=zoomorder-1; k>=0; k-- ) {
+				if ( k==0 ) _engine.EnableZ();
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 
 				if ( center_x - CX[k]*cs < ( CX[k]+xorder-1)*cs - center_x ) {
@@ -273,7 +277,6 @@ namespace Strive.UI.WorldView {
 
 				}
 			}
-			_engine.EnableZ();
 		}
 
 		public class InvalidLocationException : Exception {}
