@@ -25,6 +25,7 @@ namespace Strive.Resources
 		public static string _cursorPath = "";
 		public static string _resourceServer = "";
 		public static Hashtable _textures = new Hashtable();
+		public static Hashtable _cursors = new Hashtable();
 		public static IEngine factory;
 
 		public static void SetPath( string path ) {
@@ -159,18 +160,15 @@ namespace Strive.Resources
 		/// <returns></returns>
 		public static ITexture LoadCursor( int CursorID ) {
 			// see if its already loaded
-			ITexture texture = (ITexture)_textures[CursorID];
+			ITexture texture = (ITexture)_cursors[CursorID];
 			if ( texture == null ) {
 				// load from file
 				string filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".bmp" );
-				if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
-					filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".bmp" );
-					if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
-						throw new ResourceNotLoadedException( CursorID, ResourceType.Texture );
-					}
+				if ( !System.IO.File.Exists( filename ) ) {
+					filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".dds" );
 				}
-				texture = factory.LoadTexture( CursorID.ToString(), filename );
-				_textures.Add( CursorID, texture );
+				texture = factory.LoadTexture( "cursor"+CursorID.ToString(), filename );
+				_cursors.Add( CursorID, texture );
 			}
 			return texture;
 		}
@@ -179,6 +177,7 @@ namespace Strive.Resources
 		// maybe resourcemanager should be in rendering
 		public static void DropAll() {
 			_textures.Clear();
+			_cursors.Clear();
 		}
 	}
 }

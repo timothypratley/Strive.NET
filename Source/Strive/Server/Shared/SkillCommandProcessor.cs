@@ -100,7 +100,7 @@ namespace Strive.Server.Shared
 					}
 					target = (MobileAvatar)Global.world.physicalObjects[ message.TargetPhysicalObjectIDs[0] ];
 					if ( target == null ) {
-						caster.SendLog( "Target not found." );
+						caster.SendLog( "Target " + message.TargetPhysicalObjectIDs[0] + " not found." );
 						return;
 					}
 					if ( (caster.Position - target.Position).GetMagnitude() > esr.Range ) 

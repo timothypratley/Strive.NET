@@ -32,6 +32,7 @@ namespace Strive.Server.Shared {
 			Log.LogMessage( "Starting game engine..." );
 			world = new World( Global.world_id );
 			mp = new MessageProcessor( world, networkhandler );
+			Global.world = world;
 			engine_thread.Start();
 			Log.LogMessage( "Listening to new tcp connections..." );
 			networkhandler.Start();
