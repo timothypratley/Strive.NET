@@ -54,6 +54,13 @@ namespace Strive.Server.Shared
 			}
 		}
 
+		public void NotifyClientsExcept( IMessage message, Client client ) {
+			foreach ( Client c in clients ) {
+				if ( c == client ) continue;
+				c.Send( message );
+			}
+		}
+
 		public void CalculateHeightMap() {
 			// create a tempory local scene of the terrain in this square
 //			Scene scene = new Scene();

@@ -63,7 +63,8 @@ namespace Strive.UI.Engine {
 							
 						#region 1.1.1 Check that the model exists
 				if ( p.instance_id == Game.CurrentPlayerID) {
-					// ignoring self positions for now
+					Game.CurrentScene.View.Position = new Vector3D( p.position_x, p.position_y, p.position_z );
+					Game.CurrentScene.View.Rotation = Helper.GetRotationFromHeading( p.heading_x, p.heading_y, p.heading_z );
 					return;
 				}
 				try {

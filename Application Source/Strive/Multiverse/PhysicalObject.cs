@@ -17,6 +17,7 @@ namespace Strive.Multiverse
 		public Vector3D Heading;
 		public float HitPoints = 0;
 		public int MaxHitPoints = 0;
+		public float BoundingSphereRadiusSquared;
 
 		public PhysicalObject(
 			Schema.ObjectTemplateRow template,
@@ -36,6 +37,8 @@ namespace Strive.Multiverse
 				(float)instance.HeadingZ
 			);
 			ModelID = template.ModelID;
+			// can we get r^2 from modelID?
+			BoundingSphereRadiusSquared = 100;
 			AreaID = template.AreaID;
 		}
 	}

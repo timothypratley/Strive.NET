@@ -148,6 +148,30 @@ namespace Strive.UI.Engine
 			}				
 
 			if(WasKeyboardInput) {
+				// check that we can go there
+				foreach ( Model m in _scene.Models.Values ) {
+					if ( m.ModelFormat != ModelFormat.MDL ) {
+						// only check other players for now
+						continue;
+					}
+					float dx1 = _scene.View.Position.X - m.Position.X;
+					float dy1 = _scene.View.Position.Y - m.Position.Y;
+					float dz1 = _scene.View.Position.Z - m.Position.Z;
+					float distance_squared1 = dx1*dx1 + dy1*dy1 + dz1*dz1;
+					if ( distance_squared1 < m.BoundingSphereRadiusSquared + 100 ) {
+						// already a collision
+						continue;
+					}
+					float dx = cameraPosition.X - m.Position.X;
+					float dy = cameraPosition.Y - m.Position.Y;
+					float dz = cameraPosition.Z - m.Position.Z;
+					float distance_squared = dx*dx + dy*dy + dz*dz;
+					// assumes my radius is root 100
+					if ( distance_squared < m.BoundingSphereRadiusSquared + 100 ) {
+						Game.CurrentLog.LogMessage( "Canceled move due to collision" );
+						return;
+					}
+				}
 				_scene.View.Position = cameraPosition;
 				_scene.View.Rotation = cameraRotation;
 				SendCurrentPosition();

@@ -233,6 +233,41 @@ namespace Strive.Server.Shared {
 			int toSquareZ = (int)(newPos.Z - lowZ)/Square.squareSize;
 			int i, j;
 
+			MobileAvatar ma;
+			if ( po is MobileAvatar ) {
+				ma = (MobileAvatar)po;
+			} else {
+				ma = null;
+			}
+
+			// check that the object can fit there
+			foreach ( PhysicalObject spo in squares[toSquareX,toSquareZ].physicalObjects ) {
+				// ignoring terrain for now
+				if ( spo is Terrain ) continue;
+				// distance between two objects in 3d space
+				float dx = newPos.X - spo.Position.X;
+				float dy = newPos.Y - spo.Position.Y;
+				float dz = newPos.Z - spo.Position.Z;
+				float distance_squared = dx*dx + dy*dy + dz*dz;
+				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
+					// objects would be touching, reject the move
+					// if its a player, slap their wrist with a position update
+					if ( ma != null && ma.client != null ) {
+						// only if not already collided!
+						float dx1 = ma.Position.X - spo.Position.X;
+						float dy1 = ma.Position.Y - spo.Position.Y;
+						float dz1 = ma.Position.Z - spo.Position.Z;
+						float distance_squared1 = dx1*dx1 + dy1*dy1 + dz1*dz1;
+						if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
+							return;
+						}
+						ma.client.Send(
+							new Strive.Network.Messages.ToClient.Position( ma ) );
+					}
+					return;
+				}
+			}
+
 			po.Position.X = newPos.X;
 			po.Position.Y = newPos.Y;
 			po.Position.Z = newPos.Z;
@@ -240,13 +275,6 @@ namespace Strive.Server.Shared {
 			po.Heading.Y = newHeading.Y;
 			po.Heading.Z = newHeading.Z;
 
-			MobileAvatar ma;
-			
-			if ( po is MobileAvatar ) {
-				ma = (MobileAvatar)po;
-			} else {
-				ma = null;
-			}
 			for ( i=-1; i<=1; i++ ) {
 				for ( j=-1; j<=1; j++ ) {
 					if (
@@ -271,7 +299,7 @@ namespace Strive.Server.Shared {
 								foreach( PhysicalObject toDrop in squares[fromSquareX+i, fromSquareZ+j].physicalObjects ) {
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.DropPhysicalObject( toDrop ) );
-									System.Console.WriteLine( "told client to drop " + toDrop.ObjectInstanceID );
+									//System.Console.WriteLine( "told client to drop " + toDrop.ObjectInstanceID );
 								}
 							}
 						}
@@ -290,7 +318,7 @@ namespace Strive.Server.Shared {
 								foreach( PhysicalObject toAdd in squares[toSquareX-i, toSquareZ-j].physicalObjects ) {
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.AddPhysicalObject( toAdd ) );
-									System.Console.WriteLine( "told client to add " + toAdd.ObjectInstanceID );
+									//System.Console.WriteLine( "told client to add " + toAdd.ObjectInstanceID );
 								}
 							}
 						}
@@ -302,8 +330,14 @@ namespace Strive.Server.Shared {
 							toSquareX+i >= 0 && toSquareX+i < squaresInX
 							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
 						) {
-							squares[toSquareX+i, toSquareZ+j].NotifyClients(
-								new Strive.Network.Messages.ToClient.Position( po )	);
+							if ( ma != null && ma.client != null ) {
+								squares[toSquareX+i, toSquareZ+j].NotifyClientsExcept(
+									new Strive.Network.Messages.ToClient.Position( po ),
+									ma.client );
+							} else {
+								squares[toSquareX+i, toSquareZ+j].NotifyClients(
+									new Strive.Network.Messages.ToClient.Position( po ) );
+							}
 						}
 					}
 				}

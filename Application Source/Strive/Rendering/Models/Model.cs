@@ -13,6 +13,8 @@ namespace Strive.Rendering.Models
 	public class Model : IManeuverable {
 
 		#region "Fields"
+		public float BoundingSphereRadiusSquared;
+
 		private ModelFormat _format = ModelFormat.Unspecified;
 		private string _key;
 		private int _id;
@@ -47,6 +49,9 @@ namespace Strive.Rendering.Models
 			created._key = name;
 			created._id = id;
 			created._format = ModelFormat._3DS;
+			// todo: fix this hax,
+			// atm set to 0 as this is assumed to be terrain...
+			created.BoundingSphereRadiusSquared = 0;
 			return created;
 		}
 
@@ -56,6 +61,11 @@ namespace Strive.Rendering.Models
 			Model created = new Model();
 			created._key = name;
 			created._id = id;
+			R3DVector3D center = new R3DVector3D();
+			bool worldspace = false;
+			Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref created.BoundingSphereRadiusSquared, ref worldspace );
+			// square it ofc
+			created.BoundingSphereRadiusSquared = created.BoundingSphereRadiusSquared * created.BoundingSphereRadiusSquared;
 			return created;
 		}
 
@@ -88,6 +98,8 @@ namespace Strive.Rendering.Models
 					try {
 						Interop._instance.MdlSystem.MDL_Load(key, path);
 						Interop._instance.MdlSystem.MDL_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
+						// todo: fix this hax, what is the real value?
+						loadedModel.BoundingSphereRadiusSquared = 10;
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -108,6 +120,11 @@ namespace Strive.Rendering.Models
 						System.Environment.CurrentDirectory = path.Substring(0, path.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
 						Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
 						Interop._instance.Meshbuilder.Mesh_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
+						R3DVector3D center = new R3DVector3D();
+						bool worldspace = false;
+						Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref loadedModel.BoundingSphereRadiusSquared, ref worldspace );
+						// square it ofc
+						loadedModel.BoundingSphereRadiusSquared = loadedModel.BoundingSphereRadiusSquared * loadedModel.BoundingSphereRadiusSquared;
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -190,16 +207,6 @@ namespace Strive.Rendering.Models
 			}
 		}
 
-		public float BoundingSphereRadius {
-			get {
-				R3DVector3D center = new R3DVector3D();
-				float radius = 10;
-				bool worldspace = false;
-				setPointer();
-				Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref radius, ref worldspace );
-				return radius;
-			}
-		}
 
 		public int AnimationSequence {
 			set {
