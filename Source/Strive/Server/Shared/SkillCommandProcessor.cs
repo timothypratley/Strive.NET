@@ -88,6 +88,13 @@ namespace Strive.Server.Shared
 				return;
 			}
 
+			// TODO: mek this wurk
+			/*
+			if ( esr.EnumMobileState > caster.MobileState ) {
+				caster.SendLog( "Not while " + caster.MobileState.Name );
+			}
+			*/
+
 			MobileAvatar target = null;
 			switch ( (EnumTargetType)esr.EnumTargetTypeID ) {
 				case EnumTargetType.TargetSelf:

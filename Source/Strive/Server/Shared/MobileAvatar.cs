@@ -107,7 +107,7 @@ namespace Strive.Server.Shared
 		}
 
 		public void CombatUpdate() {
-			if ( lastAttackUpdate - Global.now > TimeSpan.FromSeconds(3) ) {
+			if ( Global.now - lastAttackUpdate > TimeSpan.FromSeconds(3) ) {
 				// combat
 				lastAttackUpdate = Global.now;
 				PhysicalAttack( target );
@@ -190,6 +190,7 @@ namespace Strive.Server.Shared
 
 		public void Attack( PhysicalObject target ) {
 			this.target = target;
+			MobileState = EnumMobileState.Fighting;
 			world.InformNearby(
 				this,
 				new Strive.Network.Messages.ToClient.CombatReport(
@@ -202,10 +203,24 @@ namespace Strive.Server.Shared
 			// TODO: would be nice to have a baseclass physical object with damage function,
 			// but needs multiple inheritance
 			target.HitPoints -= 20;
+			world.InformNearby(
+				this,
+				new Strive.Network.Messages.ToClient.CombatReport(
+					this, target, EnumCombatEvent.Hits, 20
+				)
+			);
+			((MobileAvatar)target).UpdateState();
 		}
 
 		public void PhysicalAttack( PhysicalObject po ) {
-			if ( po is MobileAvatar ) {
+			// TODO use the real range of kill
+			if ( (Position - po.Position).GetMagnitude() > 100 ) {
+				// target is out of range
+				SendLog( target.TemplateObjectName + " is out of range." );
+				return;
+			}
+			if ( po is MobileAvatar ) 
+			{
 				MobileAvatar opponent = po as MobileAvatar;
 
 				// if not already in a fight, your opponent automatically
@@ -245,7 +260,9 @@ namespace Strive.Server.Shared
 				}
 				if ( damage < 0 ) damage = 0;
 
-				opponent.HitPoints -= damage * Strength/opponent.Constitution;
+				damage *= Strength/opponent.Constitution;
+				opponent.HitPoints -= damage;
+				opponent.MobileState = EnumMobileState.Fighting;
 				opponent.UpdateState();
 				world.InformNearby(
 					this,

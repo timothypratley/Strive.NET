@@ -42,8 +42,8 @@ namespace Strive.Rendering.TV3D {
 			return new Scene();
 		}
 
-		public ITerrain CreateTerrain( string name, ITexture texture, float y, float xy, float zy, float xzy ) {
-			return Terrain.CreateTerrain( name, texture, y, xy, zy, xzy );
+		public ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy ) {
+			return Terrain.CreateTerrain( name, texture, texture_rotation, y, xy, zy, xzy );
 		}
 		public IActor LoadActor(string name, string path, float height) {
 			return Actor.LoadActor( name, path, height );

@@ -18,7 +18,7 @@ namespace Strive.Rendering
 	{
 		IScene CreateScene();
 
-		ITerrain CreateTerrain( string name, ITexture texture, float y, float xy, float zy, float xzy );
+		ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy );
 		IModel LoadStaticModel(string name, string path, float height);
 		IModel CreateBox( string name, float width, float height, float depth, ITexture texture );
 		IModel CreatePlane( string name, ITexture texture, Vector3D p1, Vector3D p2, Vector3D p3, Vector3D p4 );

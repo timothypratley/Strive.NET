@@ -352,7 +352,7 @@ namespace Strive.UI.Windows
 					new Strive.Network.Messages.ToServer.GameCommand.UseSkill(
 						Game.CurrentGameCommand, 0, targets )
 				);
-				MessageBox.Show( this, "Using skill " + Game.CurrentGameCommand + " on " + m.Name );
+				Log.LogMessage( "Using skill " + Game.CurrentGameCommand + " on " + m.Name );
 			} else {
 				SetGameControlMode();
 			}

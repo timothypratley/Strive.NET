@@ -67,14 +67,14 @@ namespace Strive.UI.WorldView
 				}
 				if ( (tmptpdirty || tmptp.model == null) && tmptp.xplusKnown && tmptp.zplusKnown && tmptp.xpluszplusKnown ) {
 					if ( tmptp.model != null ) _scene.Models.Remove( tmptp.instance_id );
-					tmptp.model = _engine.CreateTerrain( tmptp.instance_id.ToString(), ResourceManager.LoadTexture( tmptp.texture_id), tmptp.altitude, tmptp.xplus, tmptp.zplus, tmptp.xpluszplus );
+					tmptp.model = _engine.CreateTerrain( tmptp.instance_id.ToString(), ResourceManager.LoadTexture( tmptp.texture_id), tmptp.physicalObject.Rotation.Y, tmptp.altitude, tmptp.xplus, tmptp.zplus, tmptp.xpluszplus );
 					tmptp.model.Position = new Vector3D( tmptp.x, 0, tmptp.z );
 					_scene.Models.Add( tmptp.instance_id, tmptp.model );
 				}
 			}
 			if ( tp.xplusKnown && tp.zplusKnown && tp.xpluszplusKnown ) {
 				if ( tp.model != null || _scene.Models.Contains( tp.instance_id ) ) _scene.Models.Remove( tp.instance_id );
-				tp.model = _engine.CreateTerrain( tp.instance_id.ToString(), ResourceManager.LoadTexture( tp.texture_id ), tp.altitude, tp.xplus, tp.zplus, tp.xpluszplus );
+				tp.model = _engine.CreateTerrain( tp.instance_id.ToString(), ResourceManager.LoadTexture( tp.texture_id ), tp.physicalObject.Rotation.Y, tp.altitude, tp.xplus, tp.zplus, tp.xpluszplus );
 				tp.model.Position = new Vector3D( tp.x, 0, tp.z );
 				_scene.Models.Add( tp.instance_id, tp.model );
 			}
