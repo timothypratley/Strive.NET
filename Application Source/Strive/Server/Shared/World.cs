@@ -58,7 +58,7 @@ namespace Strive.Server.Shared {
 			squaresInZ = (int)(highZ-lowZ)/Square.squareSize + 1;
 
 			if ( squaresInX * squaresInZ > 10000 ) {
-				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize );
+				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize + ". Please fix the database." );
 			}
 
 			// allocate the grid of squares used for grouping
