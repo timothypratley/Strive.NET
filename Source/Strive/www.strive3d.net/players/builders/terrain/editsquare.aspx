@@ -37,6 +37,16 @@
 		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ - 100))%>">[SE]</a></td>
 	</tr>		
 </table>
+<%
+if(Request.QueryString["view"] != null && Request.QueryString["view"] != "")
+{
+	%><a href="<%=Request.Url.ToString().Replace("view=object", "")%>">Object View</a><%
+}
+else
+{
+	%><a href="<%=Request.Url.ToString() + "&amp;view=object"%>">Terrain View</a><%
+}
+%>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 
@@ -64,7 +74,7 @@ foreach(DataRow t in this.terrain.Rows)
 <%
 	}
 %>
-		<td height="<%=Strive.Common.Constants.worldBuilderTerrainPieceSize%>" width="<%=Strive.Common.Constants.worldBuilderTerrainPieceSize%>" valign="middle" align="center"><iframe id="frame<%=c.ToString()%>" src="showterrainpiece.aspx?FrameID=frame<%=c.ToString()%>&ObjectInstanceID=<%=t["ObjectInstanceID"]%>&X=<%=t["X"]%>&Z=<%=t["Z"]%><%=www.strive3d.net.Utils.TabHref%>" marginwidth=0 marginheight=0 hspace=0 vspace=0 width="75" height="75" frameborder=0 scrolling=no></iframe></td>
+		<td height="<%=Strive.Common.Constants.worldBuilderTerrainPieceSize%>" width="<%=Strive.Common.Constants.worldBuilderTerrainPieceSize%>" valign="middle" align="center"><iframe id="frame<%=c.ToString()%>" src="showterrainpiece<%=Request.QueryString["view"]%>.aspx?FrameID=frame<%=c.ToString()%>&ObjectInstanceID=<%=t["ObjectInstanceID"]%>&X=<%=t["X"]%>&Z=<%=t["Z"]%><%=www.strive3d.net.Utils.TabHref%>" marginwidth=0 marginheight=0 hspace=0 vspace=0 width="75" height="75" frameborder=0 scrolling=no></iframe></td>
 <%
 	c++;
 }

@@ -105,10 +105,67 @@ namespace www.strive3d.net.players.builders.terrain
 		{    
 
 			this.Load += new System.EventHandler(this.Page_Load);
-
-
+			this.Higher.Click += new System.EventHandler(this.Higher_Click);
+			this.Lower.Click += new System.EventHandler(this.Lower_Click);
+			this.Rotate.Click += new System.EventHandler(this.Rotate_Click);
 		}
 		#endregion
+
+		private void Higher_Click(object sender, System.EventArgs e)
+		{
+			CommandFactory cmd = new CommandFactory();
+			try 
+			{
+				cmd.RaiseTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
+
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
+			Response.Redirect(Request.Url.ToString());
+		}
+
+		private void Lower_Click(object sender, System.EventArgs e)
+		{
+			CommandFactory cmd = new CommandFactory();
+			try 
+			{
+				cmd.LowerTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
+
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
+			Response.Redirect(Request.Url.ToString());
+		}
+
+		private void Rotate_Click(object sender, System.EventArgs e)
+		{
+			CommandFactory cmd = new CommandFactory();
+			try 
+			{
+				cmd.RotateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"), 90).ExecuteNonQuery();
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
+			Response.Redirect(Request.Url.ToString());		
+		}
 
 	
 	}

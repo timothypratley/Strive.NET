@@ -31,4 +31,7 @@
 			<%}%>
 		</tr>
 	</table>
+	<asp:Button ID="Higher" Text="+" Runat="server" visible="false" />
+	<asp:Button ID="Lower" Text="-" Runat="server" visible="false" />
+	<asp:Button ID="Rotate" Text="/" Runat="server" visible="false"  />
 </form>
