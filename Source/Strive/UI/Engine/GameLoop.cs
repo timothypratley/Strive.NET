@@ -207,7 +207,5 @@ namespace Strive.UI.Engine
 			_scene.Render();
 			_scene.Display();
 		}
-
-
 	}
 }

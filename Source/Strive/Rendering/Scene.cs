@@ -155,8 +155,8 @@ namespace Strive.Rendering
 			black.b = 255;
 			black.r = 255;
 			black.g = 255;
-			Interop._instance.Interface2D.Primitive_SetDrawColor(ref black);
-	        Interop._instance.Interface2D.Primitive_DrawText(ref zero, "Fp/S: " + Interop._instance.PowerMonitor.lGetFramesPerSecond().ToString() +
+			Interop._instance.Interface5D.Primitive_SetDrawColor(ref black);
+	        Interop._instance.Interface5D.Primitive_DrawText(ref zero, "Fp/S: " + Interop._instance.PowerMonitor.lGetFramesPerSecond().ToString() +
                                                             ", Vertices: " + Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame().ToString() + 
                                                             ", Verts/Sec:  " + (Interop._instance.PowerMonitor.lGetFramesPerSecond() * Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame()).ToString() );
 //			Interop._instance.Interface2D.Primitive_DrawText(0,0, (Interop._instance.PowerMonitor.lGetFramesPerSecond()).ToString());

@@ -161,7 +161,7 @@ namespace Strive.Server.Shared {
 				weatherChanged = true;
 			}
 			if ( Global.random.NextDouble() > 0.995 ) {
-				weather.SkyTextureID = (weather.SkyTextureID + 1) % 3;
+				weather.SkyTextureID = (weather.SkyTextureID + 1) % 9 + 1;
 				weatherChanged = true;
 			}
 			if ( weatherChanged ) {

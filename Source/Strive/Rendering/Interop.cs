@@ -61,7 +61,7 @@ namespace Strive.Rendering
 		/// <summary>
 		/// Revolution3D 2d drawing class
 		/// </summary>
-		internal R3D_Interface5D Interface2D = new R3D_Interface5DClass();
+		internal R3D_Interface5D Interface5D = new R3D_Interface5DClass();
 		/// <summary>
 		/// Revolution3D power monitor
 		/// </summary>
