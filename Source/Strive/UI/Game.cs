@@ -37,9 +37,36 @@ namespace Strive.UI
 
 		#endregion
 
+		static void OnThreadException(object sender, System.Threading.ThreadExceptionEventArgs args)
+		{
+			Exit();
+		}
+		static void OnApplicationExit(object sender, EventArgs args)
+		{
+			Exit();
+		}
+
+
+		static void Exit()
+		{
+			if(CurrentServerConnection != null)
+			{
+				CurrentServerConnection.Stop();
+
+			}
+			if(CurrentGameLoop != null)
+			{
+				CurrentGameLoop.Stop();
+			}
+			Application.ExitThread();
+		}
+
 		[STAThread]
 		static void Main(string[] args)
 		{
+			// deal with exceptions
+			//Application.ApplicationExit += new EventHandler(OnApplicationExit);
+			//Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(OnThreadException);
 			// todo: umg refactor this out of existance
 			ResourceManager.factory = RenderingFactory;
 

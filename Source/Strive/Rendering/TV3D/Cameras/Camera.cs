@@ -54,6 +54,7 @@ namespace Strive.Rendering.TV3D.Cameras
 			}
 			set
 			{
+				Engine.Camera.SetViewFrustum(value, _viewDistance, 0f);
 				_fieldOfView = value;
 			}
 		}
@@ -71,8 +72,8 @@ namespace Strive.Rendering.TV3D.Cameras
 			{
 				try
 				{
+					Engine.Camera.SetViewFrustum(_fieldOfView, value, 0f);
 
-					//Engine.Cameras.Class_SetPointer(_key);
 				}
 				catch(Exception e)
 				{

@@ -52,6 +52,7 @@ namespace Strive.Rendering.TV3D
 
 		#region "Methods"
 		public void DropAll() {
+			this.Views.Clear();
 			_models = new ModelCollection();
 			_views = new Cameras.CameraCollection();
 			if ( Engine.TV3DScene != null ) {

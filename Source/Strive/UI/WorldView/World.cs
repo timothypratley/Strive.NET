@@ -32,10 +32,11 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void InitialiseView( IWin32Window RenderTarget ) {
+			
 			RenderingEngine.Initialise( RenderTarget, EnumRenderTarget.PictureBox, Resolution.Automatic );
-			RenderingScene.View.FieldOfView = 60;
-			RenderingScene.View.ViewDistance = 1000;
-			RenderingScene.SetLighting( 255 );
+			RenderingScene.View.FieldOfView = 90;
+			RenderingScene.View.ViewDistance = 4000;
+			RenderingScene.SetLighting( 100 );
 			RenderingScene.SetFog( 500.0f );
 		}
 
@@ -137,7 +138,7 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Clear() {
-			physicalObjectInstances = new Hashtable();
+			physicalObjectInstances.Clear();
 			TerrainPieces.Clear();
 			CurrentAvatar = null;
 			RenderingScene.DropAll();

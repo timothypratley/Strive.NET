@@ -94,27 +94,36 @@ namespace Strive.Rendering.TV3D {
 			Camera = new TVCamera();
 			Atmosphere = new TVAtmosphere();
 			Input = new TVInputEngine();
-			FontIndex = Screen2DText.TextureFont_Create("font", "Arial", 20, true, false, false, false);
+			FontIndex = Screen2DText.TextureFont_Create("font", "Verdana", 20, true, false, false, false);
 		}
 
 		public void Terminate() {
-			TV3DEngine.ReleaseAll();
+			if(TV3DEngine != null)
+				TV3DEngine.ReleaseAll();
 			TV3DEngine = null;
-			TV3DScene.DestroyAllMeshes();
+			if(TV3DScene != null)
+				TV3DScene.DestroyAllMeshes();
 			TV3DScene = null;
-			TexFactory.DeleteAll();
+			if(TexFactory != null)
+				TexFactory.DeleteAll();
 			TexFactory = null;
-			Land.DeleteAll();
+			if(Land != null)
+				Land.DeleteAll();
 			Land = null;
-			Screen2DImmediate = null;
+			if(Screen2DImmediate != null)
+				Screen2DImmediate = null;
 			Screen2DText = null;
-			LightEngine.DeleteAllLights();
+			if(LightEngine != null)
+				LightEngine.DeleteAllLights();
 			LightEngine = null;
 			Gl = null;
+			
 			Camera = null;
-			Atmosphere.Unload();
+			if(Atmosphere != null)
+				Atmosphere.Unload();
 			Atmosphere = null;
-			Input.UnloadDevices();
+			if(Input != null)
+				Input.UnloadDevices();
 			Input = null;
 		}
 
