@@ -42,18 +42,20 @@ namespace Strive.Rendering.TV3D.Models {
 					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 10, xzy, 10, 0, y, 0, -1, 1, true, false );
 					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 0, y, 0, 10, xzy, 10, 1, -1, true, false );
 					break;
-				case 90:
-					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, -1, 1, true, false );
-					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, 1, -1, true, false );
-					break;
 				case 180:
 					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 10, xzy, 10, 0, y, 0, 1, -1, true, false );
 					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 0, y, 0, 10, xzy, 10, -1, 1, true, false );
 					break;
-				case 270:
-					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, 1, -1, true, false );
-					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, -1, 1, true, false );
+
+				case 90:
+					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, 1, 1, true, false );
+					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, -1, -1, true, false );
 					break;
+				case 270:
+					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, -1, -1, true, false );
+					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, 1, 1, true, false );
+					break;
+
 				default:
 					throw new Exception( "We aren't 1337 yet umg, use the buff texturemod stuffs etc" );
 			}
@@ -70,8 +72,6 @@ namespace Strive.Rendering.TV3D.Models {
 			t._height = (y + zy + xy + xzy)/2;
 			return t;
 		}
-
-
 		#endregion
 
 		#region "Methods"

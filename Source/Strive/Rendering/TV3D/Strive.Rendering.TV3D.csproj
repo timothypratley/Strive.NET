@@ -111,7 +111,7 @@
                     Name = "TrueVision3D"
                     Guid = "{FA9B475D-C97F-4CFA-AAF7-2D71467D6101}"
                     VersionMajor = "1"
-                    VersionMinor = "1"
+                    VersionMinor = "3"
                     Lcid = "0"
                     WrapperTool = "tlbimp"
                 />
