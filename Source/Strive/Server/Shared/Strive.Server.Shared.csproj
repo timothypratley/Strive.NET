@@ -102,6 +102,16 @@
                     Project = "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "Strive.Logging"
+                    Project = "{3781C605-0BA3-4DD2-91BB-F01368CD060F}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "System.Windows.Forms"
+                    AssemblyName = "System.Windows.Forms"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Windows.Forms.dll"
+                />
             </References>
         </Build>
         <Files>

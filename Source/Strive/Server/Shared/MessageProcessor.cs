@@ -33,7 +33,7 @@ namespace Strive.Server.Shared {
 						client, (Network.Messages.ToServer.Login)message
 					);
 				} else {
-					Console.WriteLine( "Non-login message " + message.GetType() + " from " + client.EndPoint );
+					Global.log.WarningMessage( "Non-login message " + message.GetType() + " from " + client.EndPoint );
 				}
 				return;
 			}
@@ -57,7 +57,7 @@ namespace Strive.Server.Shared {
 				else
 				{
 
-					Console.WriteLine( "ERROR: Non-posses message " + message.GetType() + " from " + client.EndPoint );
+					Global.log.WarningMessage( "ERROR: Non-posses message " + message.GetType() + " from " + client.EndPoint );
 				}
 				return;
 			}
@@ -101,7 +101,7 @@ namespace Strive.Server.Shared {
 			}
 			else 
 			{
-				System.Console.WriteLine(
+				Global.log.WarningMessage(
 					"ERROR: Unknown message " + message.GetType()
 					);
 			}
@@ -113,12 +113,12 @@ namespace Strive.Server.Shared {
 			if (
 				world.UserLookup( loginMessage.username, loginMessage.password, ref client.PlayerID )
 			) {
-				System.Console.WriteLine(
+				Global.log.LogMessage(
 					"User " + loginMessage.username + " logged in"
 					);
 				client.AuthenticatedUsername = loginMessage.username;
 			} else {
-				System.Console.WriteLine(
+				Global.log.LogMessage(
 					"Login failed for username " + loginMessage.username
 				);
 			}
@@ -138,7 +138,7 @@ namespace Strive.Server.Shared {
 				// remove from world.
 				world.Remove(client.Avatar);
 			}
-			System.Console.WriteLine("Logged out '" + client.AuthenticatedUsername +"'.");
+			Global.log.LogMessage("Logged out '" + client.AuthenticatedUsername +"'.");
 			client.Close(); 
 		}
 
@@ -156,14 +156,14 @@ namespace Strive.Server.Shared {
 				if ( o is MobileAvatar ) {
 					a = (MobileAvatar)o;
 				} else {
-					System.Console.WriteLine( "ERROR: can only possess mobiles" );
+					Global.log.WarningMessage( "Can only possess mobiles." );
 					return;
 				}
 				if ( a.client == client ) {
-					System.Console.WriteLine( "ERROR: a client " + client.ToString() + " attempted to take control of the same mobile " + a.ObjectInstanceID + " twice... ignoring request." );
+					Global.log.WarningMessage( "A client " + client.ToString() + " attempted to take control of the same mobile " + a.ObjectInstanceID + " twice... ignoring request." );
 				} else if ( a.client != null ) {
 					// EEERRR print reconnected message to clients
-					System.Console.WriteLine( "Mobile " + a.ObjectInstanceID + " has been taken over by a new connection." );
+					Global.log.LogMessage( "Mobile " + a.ObjectInstanceID + " has been taken over by a new connection." );
 					a.client = client;
 					client.Avatar = a;
 				} else {
@@ -174,7 +174,7 @@ namespace Strive.Server.Shared {
 				// try to load the character
 				a = world.LoadMobile( message.InstanceID );
 				if ( a == null ) {
-					Console.WriteLine( "ERROR: Character "+message.InstanceID+" not found." );
+					Global.log.WarningMessage( "Character "+message.InstanceID+" not found." );
 					client.Close();
 					return;
 				}
@@ -222,7 +222,7 @@ namespace Strive.Server.Shared {
 		void ProcessReloadWorldMessage(
 			Client client, Strive.Network.Messages.ToServer.ReloadWorld message
 		) {
-			System.Console.WriteLine( "ReloadWorld received" );
+			Global.log.LogMessage( "ReloadWorld received." );
 			world.Load();
 			foreach( Client c in listener.Clients.Values ) {
 				if ( c.Avatar != null ) {
@@ -272,7 +272,7 @@ namespace Strive.Server.Shared {
 				}
 			}
 			foreach ( IPEndPoint ep in al ) {
-				Console.WriteLine( "Dropping connection to "+ep+" due to inactivity" );
+				Global.log.LogMessage( "Dropping connection to "+ep+" due to inactivity" );
 				listener.Clients.Remove( ep );
 			}
 		}

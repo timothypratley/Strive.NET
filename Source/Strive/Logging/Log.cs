@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -8,23 +9,38 @@ namespace Strive.Logging {
 	/// </summary>
 	public class Log {
 		private TextBoxBase output = null;
+		private TextWriter logFileWriter = null;
 
 		public Log() {
 		}
 
 		public Log( TextBoxBase output ) {
-			this.output = output;
+			SetLogOutput( output );
+		}
+
+		public Log( string filename ) {
+			SetLogOutput( filename );
 		}
 
 		public void SetLogOutput( TextBoxBase output ) {
 			this.output = output;
 		}
 
+		public void SetLogOutput( string filename ) {
+			FileStream fs = File.Open( filename, FileMode.Create, FileAccess.Write , FileShare.Read );
+			logFileWriter = new StreamWriter( fs );
+		}
+
 		public void LogMessage( string message ) {
-			message = "[" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":" 
-				+ DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":" 
-				+ DateTime.Now.Second.ToString().PadLeft(2, '0') + "]" + message;
+			message = "["
+				+ DateTime.Now.ToShortDateString() + " - "
+				+ DateTime.Now.ToLongTimeString()
+				+ "] " + message;
 			Trace.WriteLine( message );
+			if ( logFileWriter != null ) {
+				logFileWriter.WriteLine( message );	
+				logFileWriter.Flush();
+			}
 			StringAppendFinite( message );
 		}
 
@@ -49,6 +65,5 @@ namespace Strive.Logging {
 				}
 			}
 		}
-
 	}
 }

@@ -42,7 +42,7 @@ namespace Strive.Server.Shared
 					target = (MobileAvatar)Global.world.physicalObjects[ message.TargetPhysicalObjectIDs[0] ];
 					if ( (caster.Position - target.Position).GetMagnitude() > esr.Range ) {
 						// target is out of range
-						System.Console.WriteLine( "target is out of range" );
+						Global.log.LogMessage( "Target is out of range" );
 						return;
 					}
 					TargetSkill( caster, target, esr );
@@ -62,7 +62,7 @@ namespace Strive.Server.Shared
 					damage += esr.LifeAffinity * caster.AffinityLife / target.AffinityLife;
 					damage += esr.WaterAffinity * caster.AffinityWater / target.AffinityWater;
 					caster.MagicalAttack( target, damage );
-					System.Console.WriteLine( "Attack spell cast!" );
+					Global.log.LogMessage( "Attack spell cast!" );
 					break;
 				case EnumActivationType.Enchantment:
 					break;

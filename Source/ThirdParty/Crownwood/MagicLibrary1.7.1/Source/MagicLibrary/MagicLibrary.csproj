@@ -332,7 +332,7 @@
                 />
                 <File
                     RelPath = "Controls\WizardControl\WizardPage.cs"
-                    SubType = "Code"
+                    SubType = "Component"
                     BuildAction = "Compile"
                 />
                 <File

@@ -39,7 +39,7 @@ namespace Strive.Server.Shared {
 			world = new World( world_id );
 			listener.Start();
 			mp = new MessageProcessor( world, listener	);
-			System.Console.WriteLine( "Listening to new connections..." );
+			Global.log.LogMessage( "Listening to new connections..." );
 
 			engine_thread.Start();
 		}
@@ -64,7 +64,7 @@ namespace Strive.Server.Shared {
 				mp.CleanupDeadConnections();
 
 				if ( (DateTime.Now - Global.now) > TimeSpan.FromSeconds(1) ) {
-					System.Console.WriteLine( "WARNING: an update cycle took longer than one second" );
+					Global.log.WarningMessage( "An update cycle took longer than one second." );
 				} else {
 					System.Threading.Thread.Sleep( 100 );
 				}
