@@ -24,6 +24,13 @@ namespace Strive.UI.Windows.ChildWindows
 		private System.Windows.Forms.TextBox Email;
 		private System.Windows.Forms.TextBox Password;
 		private System.Windows.Forms.TreeView RecentServers;
+		
+		private Hashtable serverNodes = new Hashtable();
+		private Hashtable playerNodes = new Hashtable();
+		private Hashtable characterNodes = new Hashtable();
+		private Connection.ConnectionWindowState windowState;
+
+		public bool Connected = false;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -38,8 +45,10 @@ namespace Strive.UI.Windows.ChildWindows
 			ImageList i = new ImageList();
 			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StoppedServer));
 			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StartedServer));
+			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Player));
 			RecentServers.ImageList = i;
 			synchRecentServers();
+			WindowState = ConnectionWindowState.NotConnected;
 		}
 
 		/// <summary>
@@ -94,7 +103,7 @@ namespace Strive.UI.Windows.ChildWindows
 																					this.PortNumber,
 																					this.ServerAddress,
 																					this.label1});
-			this.groupBox1.Location = new System.Drawing.Point(0, 200);
+			this.groupBox1.Location = new System.Drawing.Point(0, 216);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(192, 168);
 			this.groupBox1.TabIndex = 0;
@@ -183,10 +192,10 @@ namespace Strive.UI.Windows.ChildWindows
 			this.groupBox2.Controls.AddRange(new System.Windows.Forms.Control[] {
 																					this.RecentServers});
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(192, 200);
+			this.groupBox2.Size = new System.Drawing.Size(192, 216);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Recent Servers";
+			this.groupBox2.Text = "Recent Connections";
 			// 
 			// RecentServers
 			// 
@@ -197,14 +206,14 @@ namespace Strive.UI.Windows.ChildWindows
 			this.RecentServers.Location = new System.Drawing.Point(4, 16);
 			this.RecentServers.Name = "RecentServers";
 			this.RecentServers.SelectedImageIndex = -1;
-			this.RecentServers.Size = new System.Drawing.Size(184, 176);
+			this.RecentServers.Size = new System.Drawing.Size(184, 192);
 			this.RecentServers.TabIndex = 0;
 			this.RecentServers.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.RecentServers_AfterSelect);
 			// 
 			// Connection
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(192, 373);
+			this.ClientSize = new System.Drawing.Size(192, 389);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.groupBox2,
 																		  this.groupBox1});
@@ -219,28 +228,47 @@ namespace Strive.UI.Windows.ChildWindows
 
 		private void ConnectNow_Click(object sender, System.EventArgs e)
 		{
-			if(ServerAddress.Text == "")
+			if(windowState == ConnectionWindowState.NotConnected)
 			{
-				ServerAddress.Focus();
-				MessageBox.Show("You must enter a server.");
-				return;
+				if(ServerAddress.Text == "")
+				{
+					ServerAddress.Focus();
+					MessageBox.Show("You must enter a server.");
+					return;
+				}
+				if(PortNumber.Text == "")
+				{
+					PortNumber.Focus();
+					MessageBox.Show("You must enter a port.");
+					return;
+				}
+				if(Email.Text == "")
+				{
+					Email.Focus();
+					MessageBox.Show("You must enter an e-mail.");
+					return;
+				}
+				Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text));
+				Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
+				Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), Game.CurrentMainWindow.RenderTarget);
+				setConnectedImage();
+				Connected = true;
+				Game.CurrentGameLoop._message_processor.OnCanPossess
+					+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
+
+				Game.CurrentServerConnection.Send(
+					new Strive.Network.Messages.ToServer.RequestPossessable() );
+
+				WindowState = ConnectionWindowState.Connected;
 			}
-			if(PortNumber.Text == "")
+			else if(windowState == ConnectionWindowState.Connected)
 			{
-				PortNumber.Focus();
-				MessageBox.Show("You must enter a port.");
-				return;
+				// disconnect:
+				Game.CurrentServerConnection.Send(new Strive.Network.Messages.ToServer.Logout());
+				WindowState = ConnectionWindowState.NotConnected;
+
+
 			}
-			if(Email.Text == "")
-			{
-				Email.Focus();
-				MessageBox.Show("You must enter an e-mail.");
-				return;
-			}
-			Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
-			synchRecentServers();
-			Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), Game.CurrentMainWindow.RenderTarget);
-			setConnectedImage();
 		}
 
 		private void setConnectedImage()
@@ -254,28 +282,165 @@ namespace Strive.UI.Windows.ChildWindows
 			}
 		}
 
+		void HandleCanPossessThreadSafe( Strive.Network.Messages.ToClient.CanPossess cp ) 
+		{
+			this.Invoke( new Engine.MessageProcessor.CanPossessHandler( HandleCanPossess ),
+				new object [] { cp } );
+		}
+
+		void HandleCanPossess( Strive.Network.Messages.ToClient.CanPossess cp ) 
+		{
+			if ( cp.possesable.Length < 1 ) 
+			{
+				throw new Exception("No characters available.");
+			}
+			foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) 
+			{
+				Settings.SettingsManager.AddRecentCharacter(ServerAddress.Text, 
+					int.Parse(PortNumber.Text),
+					Email.Text,
+					Password.Text,
+					tuple.id,
+					tuple.name);
+			}
+
+			synchRecentServers();
+		}
+
+
 		private void synchRecentServers()
 		{
 			RecentServers.Nodes.Clear();
+			serverNodes.Clear();
+			playerNodes.Clear();
+			characterNodes.Clear();
 			// Initialise Recent Servers
 			foreach(DataRow serverRow in Settings.SettingsManager.RecentServers.Rows)
 			{
 				TreeNode n = new TreeNode(serverRow["serveraddress"] + ":" + serverRow["serverport"]);
 				n.Tag = serverRow;
-				n.ImageIndex = 0;
+				//n.ImageIndex = 0;
+
+				serverNodes.Add(serverRow["serveraddress"] + ":" + serverRow["serverport"],
+					n);
+
+				foreach(DataRow playerRow in serverRow.GetChildRows("ServerPlayers"))
+				{
+					TreeNode p = new TreeNode(playerRow["emailaddress"].ToString());
+					p.Tag = playerRow;
+					p.ImageIndex = 2;
+
+					playerNodes.Add(playerRow["emailaddress"].ToString(),
+						p);
+
+					if(Connected)
+					{
+						foreach(DataRow characterRow in playerRow.GetChildRows("PlayerCharacters"))
+						{
+							TreeNode c = new TreeNode(characterRow["charactername"].ToString());
+							c.Tag = characterRow;
+							p.Nodes.Add(c);
+
+							characterNodes.Add(characterRow["charactername"].ToString(),
+								c);
+						}
+					}
+
+					n.Nodes.Add(p);
+				}
 				RecentServers.Nodes.Add(n);
 			}
+
+			RecentServers.ExpandAll();
 
 		}
 
 		private void RecentServers_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
 		{
 			DataRow serverSetting = (DataRow)e.Node.Tag;
-			ServerAddress.Text = serverSetting["serveraddress"].ToString();
-			PortNumber.Text = serverSetting["serverport"].ToString();
-			Email.Text = serverSetting["emailaddress"].ToString();
-			Password.Text = serverSetting["password"].ToString();
+
+			// How to do this and stay sane
+			// this is a character node
+			if(serverSetting.Table.Columns.Contains("charactername"))
+			{
+				Game.CurrentServerConnection.Send(
+					new Strive.Network.Messages.ToServer.EnterWorldAsMobile( int.Parse(serverSetting["characterid"].ToString())) );
+				return;
+			}
+			if(serverSetting.Table.Columns.Contains("playerkey"))
+			{
+				Email.Text = serverSetting["emailaddress"].ToString();
+				Password.Text = serverSetting["password"].ToString();
+				DataRow serverRow = serverSetting.GetParentRow("ServerPlayers");
+				ServerAddress.Text = serverRow["serveraddress"].ToString();
+				PortNumber.Text = serverRow["serverport"].ToString();
+
+				e.Node.ImageIndex = 2;
+				return;
+			}
+			if(serverSetting.Table.Columns.Contains("serverkey"))
+			{
+				ServerAddress.Text = serverSetting["serveraddress"].ToString();
+				PortNumber.Text = serverSetting["serverport"].ToString();
+			}
 		}
+
+
+		private void setWindowState()
+		{
+			switch(windowState)
+			{
+				case ConnectionWindowState.NotConnected:
+				{
+					ConnectNow.Text = "Connect";
+					Email.Enabled = true;
+					ServerAddress.Enabled = true;
+					PortNumber.Enabled = true;
+					Password.Enabled = true;
+					break;
+				}
+				case ConnectionWindowState.Connected:
+				{
+					ConnectNow.Text = "Disconnect";
+					Email.Enabled = false;
+					ServerAddress.Enabled = false;
+					PortNumber.Enabled = false;
+					Password.Enabled = false;
+
+					// 1.  set the icon for the connected server
+
+					string connectedServerKey = ServerAddress.Text + ":" + PortNumber.Text;
+
+					((TreeNode)serverNodes[connectedServerKey]).ImageIndex = 1;
+
+					break;
+				}
+				case ConnectionWindowState.Playing:
+				{
+					break;
+				}
+				
+			}
+		}
+
+		
+		protected enum ConnectionWindowState
+		{
+			NotConnected,
+			Connected,
+			Playing
+		}
+
+
+		protected Connection.ConnectionWindowState  WindowState
+		{
+			set
+			{
+				windowState = value;
+				setWindowState();
+			}
+		}
+
 
 	}
 }

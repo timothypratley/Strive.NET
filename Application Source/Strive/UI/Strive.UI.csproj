@@ -151,6 +151,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Engine\Character.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Engine\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -168,6 +173,10 @@
                     RelPath = "Icons\IconManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Icons\Player.bmp"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "Icons\StartedServer.bmp"
@@ -200,16 +209,6 @@
                 <File
                     RelPath = "Windows\SystemFormBase.resx"
                     DependentUpon = "SystemFormBase.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Windows\ChildWindows\CharacterSelector.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Windows\ChildWindows\CharacterSelector.resx"
-                    DependentUpon = "CharacterSelector.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

@@ -94,32 +94,155 @@ namespace Strive.UI.Settings
 					recentServers.PrimaryKey = new DataColumn[] {c};
 					recentServers.Columns.Add("serveraddress");
 					recentServers.Columns.Add("serverport");
-					recentServers.Columns.Add("emailaddress");
-					recentServers.Columns.Add("password");
+
+					DataTable recentPlayers = new DataTable("RecentPlayers");
+					DataColumn pk = recentPlayers.Columns.Add("playerkey");
+					DataColumn pk2 = recentPlayers.Columns.Add("serverkey");
+					recentPlayers.PrimaryKey = new DataColumn[] {pk, pk2 };
+					
+					recentPlayers.Columns.Add("emailaddress");
+					recentPlayers.Columns.Add("password");
+					
+					DataTable recentCharacters = new DataTable("RecentCharacters");
+					DataColumn ck = recentCharacters.Columns.Add("charactername");
+					DataColumn ck2 = recentCharacters.Columns.Add("playerkey");
+					DataColumn ck3 = recentCharacters.Columns.Add("serverkey");
+
+					recentCharacters.PrimaryKey = new DataColumn[] {ck, ck2, ck3};
+
+					recentCharacters.Columns.Add("characterid");
+
 					RawSettings.Tables.Add(recentServers);
+					RawSettings.Tables.Add(recentPlayers);
+					RawSettings.Tables.Add(recentCharacters);
+
+					DataRelation serverPlayers = new DataRelation("ServerPlayers", 
+						RawSettings.Tables["RecentServers"].Columns["serverkey"], 
+						RawSettings.Tables["RecentPlayers"].Columns["serverkey"],
+						true);
+
+					RawSettings.Relations.Add(serverPlayers);
+
+					DataRelation playerCharacters = new DataRelation("PlayerCharacters",
+						new DataColumn[] {RawSettings.Tables["RecentPlayers"].Columns["playerkey"],
+											 RawSettings.Tables["RecentPlayers"].Columns["serverkey"]},
+						new DataColumn[] {RawSettings.Tables["RecentCharacters"].Columns["playerkey"],
+											 RawSettings.Tables["RecentCharacters"].Columns["serverkey"]},
+						true);
+
+					RawSettings.Relations.Add(playerCharacters);
 				}
 				return RawSettings.Tables["RecentServers"];
 			}
 		}
 
 		public static void AddRecentServer(string serverAddress, 
-			int serverPort,
-			string emailaddress,
-			string password)
+			int serverPort)
 		{
-			string serverKey = serverAddress + serverPort + emailaddress + password;
+			string serverKey = serverAddress + serverPort;
 			DataRow newRow = RecentServers.NewRow();
 			newRow["serverkey"] = serverKey;
 			newRow["serveraddress"] = serverAddress;
 			newRow["serverport"] = serverPort;
-			newRow["emailaddress"] = emailaddress;
-			newRow["password"] = password;
 
 			if(!RecentServers.Rows.Contains(serverKey))
 			{
 				RecentServers.Rows.Add(newRow);
+				RecentServers.AcceptChanges();
 			}
+
+			Game.CurrentLog.LogMessage("Added server '" + serverAddress + ":" + serverPort + "' to recent servers");
 		}
+
+		public static void AddRecentPlayer(string serverAddress,
+			int serverPort,
+			string emailaddress,
+			string password)
+		{
+			string serverKey = serverAddress + serverPort;
+			DataRow serverRow;
+			if(!RecentServers.Rows.Contains(serverKey))
+			{
+				AddRecentServer(serverAddress, serverPort);
+				serverRow = RecentServers.Rows.Find(serverKey);
+				DataRow newPlayerRow = RawSettings.Tables["RecentPlayers"].NewRow();
+				newPlayerRow["serverkey"] = serverKey;
+				newPlayerRow["emailaddress"] = emailaddress;
+				newPlayerRow["password"] = password;
+				RawSettings.Tables["RecentPlayers"].Rows.Add(newPlayerRow);
+				RawSettings.AcceptChanges();
+			}
+			else
+			{
+				serverRow = RecentServers.Rows.Find(serverKey);
+			}
+
+			DataRow playerRow;
+			string playerKey = emailaddress + password;
+			if(RawSettings.Tables["RecentPlayers"].Rows.Contains(new string[] {playerKey, serverKey}))
+			{
+				playerRow = RawSettings.Tables["RecentPlayers"].Rows.Find(new string[] {playerKey, serverKey});
+				playerRow["emailaddress"] = emailaddress;
+				playerRow["password"] = password;
+				
+			}
+			else
+			{
+				playerRow = RawSettings.Tables["RecentPlayers"].NewRow();
+				playerRow["playerkey"] = playerKey;
+				playerRow["serverkey"] = serverKey;
+				playerRow["emailaddress"] = emailaddress;
+				playerRow["password"] = password;
+				RawSettings.Tables["RecentPlayers"].Rows.Add(playerRow);
+			}
+
+			RawSettings.Tables["RecentPlayers"].AcceptChanges();
+			Game.CurrentLog.LogMessage("Added player '" + emailaddress + "' to recent players");
+		}
+
+		public static void AddRecentCharacter(string serverAddress,
+			int serverPort,
+			string emailaddress,
+			string password,
+			int characterid,
+			string charactername)
+		{
+
+			string serverKey = serverAddress +  serverPort;
+			if(!RecentServers.Rows.Contains(serverKey))
+			{
+				AddRecentServer(serverAddress, serverPort);
+			}
+			DataRow serverRow = RecentServers.Rows.Find(serverKey);
+
+			string playerKey = emailaddress + password;
+			if(!RawSettings.Tables["RecentPlayers"].Rows.Contains(new string[] {playerKey, serverKey}))
+			{
+				AddRecentPlayer(serverAddress, serverPort, emailaddress, password);
+			}
+
+			if(!RawSettings.Tables["RecentCharacters"].Rows.Contains(new string[] { charactername, playerKey, serverKey}))
+			{
+				DataRow charrow= RawSettings.Tables["RecentCharacters"].NewRow();
+				charrow["charactername"] = charactername;
+				charrow["playerkey"] = playerKey;
+				charrow["serverkey"] = serverKey;
+				charrow["characterid"] = characterid;
+				RawSettings.Tables["RecentCharacters"].Rows.Add(charrow);
+			}
+			else
+			{
+				DataRow charrow = RawSettings.Tables["RecentCharacters"].Rows.Find(new string[] {charactername, playerKey, serverKey});
+				charrow["charactername"] = charactername;
+				charrow["playerkey"] = playerKey;
+				charrow["serverkey"] = serverKey;
+				charrow["characterid"] = characterid;
+			}
+
+			RawSettings.Tables["RecentCharacters"].AcceptChanges();
+			Game.CurrentLog.LogMessage("Added character '" + charactername+ "' to recent characters");
+		}	
+
 
 		private static bool foundSettingInTable(DataRow setting, DataTable settingTable)
 		{

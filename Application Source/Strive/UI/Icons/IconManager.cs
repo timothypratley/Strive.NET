@@ -42,6 +42,7 @@ namespace Strive.UI.Icons
 	{
 		Connection,
 		StartedServer,
-		StoppedServer
+		StoppedServer,
+		Player
 	}
 }

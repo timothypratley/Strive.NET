@@ -44,9 +44,19 @@ namespace Strive.Server.Shared {
 
 			if ( client.Avatar == null ) {
 				// no character selected yet... only allow posses
-				if ( message is Network.Messages.ToServer.EnterWorldAsMobile ) {
+				// and logout
+				if ( message is Network.Messages.ToServer.EnterWorldAsMobile ) 
+				{
 					ProcessEnterWorldAsMobile( client, (Network.Messages.ToServer.EnterWorldAsMobile)message );
-				} else {
+				} 
+				else if(message is Network.Messages.ToServer.Logout)
+				{
+					// todo: add logout code here:
+					ProcessLogout(client);
+				}
+				else
+				{
+
 					Console.WriteLine( "ERROR: Non-posses message " + message.GetType() + " from " + client.EndPoint );
 				}
 				return;
@@ -94,6 +104,19 @@ namespace Strive.Server.Shared {
 				world.getPossessable( client.AuthenticatedUsername ) );
 			client.Send( canPossess );
 		}
+
+		void ProcessLogout( Client client) 
+		{
+			if(client.Avatar != null)
+			{
+				// remove from world.
+				world.physicalObjects.Remove(client.Avatar.ObjectInstanceID);
+			}
+			System.Console.WriteLine("Logged out '" + client.AuthenticatedUsername +"'.");
+			client.Close(); 
+		}
+
+			
 
 		void ProcessEnterWorldAsMobile( Client client, Strive.Network.Messages.ToServer.EnterWorldAsMobile message ) {
 			MobileAvatar a;
