@@ -331,16 +331,18 @@ namespace Strive.UI.Windows
 		}
 		
 		private void ReleaseGameControlMode() {
-			Game.GameControlMode = false;
-			RenderTarget.Capture = false;
-			Cursor.Position = RenderTarget.PointToScreen(
-				new Point(
+			if ( Game.GameControlMode ) {
+				Game.GameControlMode = false;
+				RenderTarget.Capture = false;
+				Cursor.Position = RenderTarget.PointToScreen(
+					new Point(
 					RenderTarget.Left + RenderTarget.Width / 2,
 					RenderTarget.Top + RenderTarget.Height / 2
-				)
-			);
-			Cursor.Clip = new Rectangle( new Point(0,0), new Size(0,0) );
-			Cursor.Show();
+					)
+					);
+				Cursor.Clip = new Rectangle( new Point(0,0), new Size(0,0) );
+				Cursor.Show();
+			}
 		}
 	}
 }
