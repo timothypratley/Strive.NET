@@ -34,6 +34,7 @@ namespace Strive.Network.Client {
 		public void Stop() {
 			if ( serverConnection != null ) {
 				serverConnection.Close();
+				serverConnection = null;
 			}
 			myThread.Stop();
 		}
@@ -43,7 +44,7 @@ namespace Strive.Network.Client {
 			try {
 				// Blocks until a message returns on this socket from a remote host.
 				receivedBytes = serverConnection.Receive(ref endpoint);
-			} catch ( ObjectDisposedException ) {
+			} catch ( Exception ) {
 				// do nothing, user has quit the client, causing the
 				// connection to be closed
 				return;

@@ -243,26 +243,30 @@ namespace Strive.Server.Shared {
 			// check that the object can fit there
 			foreach ( PhysicalObject spo in squares[toSquareX,toSquareZ].physicalObjects ) {
 				// ignoring terrain for now
-				if ( spo is Terrain ) continue;
-				// distance between two objects in 3d space
+				if ( spo is Terrain || spo == po ) continue;
+				// distance between two objects in 2d space
+				// todo, convert to 3d space when object centers is sorted
 				float dx = newPos.X - spo.Position.X;
-				float dy = newPos.Y - spo.Position.Y;
 				float dz = newPos.Z - spo.Position.Z;
-				float distance_squared = dx*dx + dy*dy + dz*dz;
+				//float dy = newPos.Y - spo.Position.Y;
+				float distance_squared = dx*dx + dz*dz; // + dy*dy;
 				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
+					System.Console.WriteLine( "collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID );
 					// objects would be touching, reject the move
 					// if its a player, slap their wrist with a position update
-					if ( ma != null && ma.client != null ) {
+					if ( ma != null ) {
 						// only if not already collided!
 						float dx1 = ma.Position.X - spo.Position.X;
-						float dy1 = ma.Position.Y - spo.Position.Y;
 						float dz1 = ma.Position.Z - spo.Position.Z;
-						float distance_squared1 = dx1*dx1 + dy1*dy1 + dz1*dz1;
+						//float dy1 = ma.Position.Y - spo.Position.Y;
+						float distance_squared1 = dx1*dx1 + dz1*dz1;// + dy1*dy1;
 						if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
 							return;
 						}
-						ma.client.Send(
-							new Strive.Network.Messages.ToClient.Position( ma ) );
+						if ( ma.client != null ) {
+							ma.client.Send(
+								new Strive.Network.Messages.ToClient.Position( ma ) );
+						}
 					}
 					return;
 				}

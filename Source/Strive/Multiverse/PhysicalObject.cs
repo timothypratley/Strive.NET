@@ -38,7 +38,8 @@ namespace Strive.Multiverse
 			);
 			ModelID = template.ModelID;
 			// can we get r^2 from modelID?
-			BoundingSphereRadiusSquared = 100;
+			// todo: make this the proper 3d radius^2
+			BoundingSphereRadiusSquared = 10;
 			AreaID = template.AreaID;
 		}
 	}

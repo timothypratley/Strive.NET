@@ -154,18 +154,19 @@ namespace Strive.UI.Engine
 						// only check other players for now
 						continue;
 					}
+					//todo  convert to 3d when centers is sorted
 					float dx1 = _scene.View.Position.X - m.Position.X;
-					float dy1 = _scene.View.Position.Y - m.Position.Y;
 					float dz1 = _scene.View.Position.Z - m.Position.Z;
-					float distance_squared1 = dx1*dx1 + dy1*dy1 + dz1*dz1;
+					//float dy1 = _scene.View.Position.Y - m.Position.Y;
+					float distance_squared1 = dx1*dx1 + dz1*dz1;// + dy1*dy1;
 					if ( distance_squared1 < m.BoundingSphereRadiusSquared + 100 ) {
 						// already a collision
 						continue;
 					}
 					float dx = cameraPosition.X - m.Position.X;
-					float dy = cameraPosition.Y - m.Position.Y;
 					float dz = cameraPosition.Z - m.Position.Z;
-					float distance_squared = dx*dx + dy*dy + dz*dz;
+					//float dy = cameraPosition.Y - m.Position.Y;
+					float distance_squared = dx*dx + dz*dz;// + dy*dy;
 					// assumes my radius is root 100
 					if ( distance_squared < m.BoundingSphereRadiusSquared + 100 ) {
 						Game.CurrentLog.LogMessage( "Canceled move due to collision" );

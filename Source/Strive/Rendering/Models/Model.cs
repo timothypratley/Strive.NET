@@ -91,6 +91,8 @@ namespace Strive.Rendering.Models
 			// 1.2 Initialise fields
 			loadedModel._format = format;
 			loadedModel._key = key;
+			// todo: fix bounding radius
+			loadedModel.BoundingSphereRadiusSquared = 100;
 
 			// 2.0 Create appropriate model in interop layer
 			switch(format) {
@@ -98,8 +100,6 @@ namespace Strive.Rendering.Models
 					try {
 						Interop._instance.MdlSystem.MDL_Load(key, path);
 						Interop._instance.MdlSystem.MDL_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
-						// todo: fix this hax, what is the real value?
-						loadedModel.BoundingSphereRadiusSquared = 10;
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -112,19 +112,20 @@ namespace Strive.Rendering.Models
 					{
 						// Changed for 8088c
 						R3D_3DSFile _3dsfile = new R3D_3DSFileClass();
-						_3dsfile.File_Open(path);
+						//_3dsfile.File_Open(path);
 											
-						_3dsfile.File_Close();
+						//_3dsfile.File_Close();
 
 						Interop._instance.Meshbuilder.Mesh_Create(key);
-						System.Environment.CurrentDirectory = path.Substring(0, path.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
-						Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
+						//System.Environment.CurrentDirectory = path.Substring(0, path.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
+						//Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
+						// todo: fix texture loading here
+						Interop._instance.Meshbuilder.Mesh_Add3DS( path, false, false, false, true);
 						Interop._instance.Meshbuilder.Mesh_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
-						R3DVector3D center = new R3DVector3D();
-						bool worldspace = false;
-						Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref loadedModel.BoundingSphereRadiusSquared, ref worldspace );
+						//R3DVector3D center = new R3DVector3D();
+						//bool worldspace = false;
+						//Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref loadedModel.BoundingSphereRadiusSquared, ref worldspace );
 						// square it ofc
-						loadedModel.BoundingSphereRadiusSquared = loadedModel.BoundingSphereRadiusSquared * loadedModel.BoundingSphereRadiusSquared;
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -211,7 +212,7 @@ namespace Strive.Rendering.Models
 		public int AnimationSequence {
 			set {
 				if ( _format != ModelFormat.MDL ) {
-					throw new Exception( "n0rty n0rty" );
+					throw new Exception( "n0rty n0rty there is a mobile with a non mdl model in the database" );
 				}
 				setPointer();
 				string sequence;		

@@ -46,9 +46,9 @@ namespace Strive.Resources
 				string texture = LoadTexture( ModelID );
 				return Model.CreatePlane(InstanceID.ToString(),
 					new Vector3D(-50,0,-50), 
-					new Vector3D(-50,0,50), 
-					new Vector3D(50,0,50), 
 					new Vector3D(50,0,-50),
+					new Vector3D(50,0,50), 
+					new Vector3D(-50,0,50), 
 					texture, "");
 			}
 

@@ -45,7 +45,7 @@ namespace Strive.UI.Windows.ChildWindows
 			ImageList i = new ImageList();
 			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StoppedServer));
 			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StartedServer));
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Player));
+			//i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Player));
 			RecentServers.ImageList = i;
 			synchRecentServers();
 			StriveWindowState = ConnectionWindowState.NotConnected;
@@ -364,6 +364,7 @@ namespace Strive.UI.Windows.ChildWindows
 			if(serverSetting.Table.Columns.Contains("charactername"))
 			{
 				Game.CurrentServerConnection.PossessMobile(int.Parse(serverSetting["characterid"].ToString()));
+				Game.CurrentPlayerID = int.Parse(serverSetting["characterid"].ToString() );
 				StriveWindowState = ConnectionWindowState.Playing;
 				return;
 			}
@@ -411,7 +412,12 @@ namespace Strive.UI.Windows.ChildWindows
 
 					string connectedServerKey = ServerAddress.Text + ":" + PortNumber.Text;
 
-					((TreeNode)serverNodes[connectedServerKey]).ImageIndex = 1;
+					if ( serverNodes[connectedServerKey] == null ) {
+						TreeNode n = new TreeNode(connectedServerKey);
+						serverNodes.Add( connectedServerKey, n );
+					} else {
+						((TreeNode)serverNodes[connectedServerKey]).ImageIndex = 1;
+					}
 
 					break;
 				}

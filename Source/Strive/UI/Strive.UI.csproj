@@ -170,6 +170,10 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Icons\Player.bmp"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "Icons\StartedServer.bmp"
                     BuildAction = "EmbeddedResource"
                 />

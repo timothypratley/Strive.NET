@@ -41,6 +41,7 @@ namespace Strive.Network.Server {
 		public void Stop() {
 			if ( receivingUdpClient != null ) {
 				receivingUdpClient.Close();
+				receivingUdpClient = null;
 			}
 			myThread.Stop();
 		}
@@ -50,7 +51,7 @@ namespace Strive.Network.Server {
 			try {
 				// Blocks until a message returns on this socket from a remote host.
 				receivedBytes = receivingUdpClient.Receive(ref endpoint);
-			} catch ( ObjectDisposedException ) {
+			} catch ( Exception ) {
 				// do nothing, socket was closed by another thread
 				return;
 			}
