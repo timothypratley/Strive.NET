@@ -95,7 +95,7 @@ namespace Strive.Utils
 						selectList = selectList.Substring(0, selectList.Length -2);
 					}
 
-					selectList += " FROM " + enumTable.Name + " WHERE 1 = 2";
+					selectList += " FROM [" + enumTable.Name + "] WHERE 1 = 2";
 
 					SqlCommand com = new SqlCommand(selectList, con);
 

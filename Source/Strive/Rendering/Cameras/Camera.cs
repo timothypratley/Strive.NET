@@ -38,16 +38,34 @@ namespace Strive.Rendering.Cameras
 		/// <returns>The newly created camera</returns>
 		public static Camera CreateCamera(string cameraKey, CameraCollection cameras )
 		{
-			Camera c = new Camera();
+			// handle the default view
+			if(cameraKey == CommonCameraView.Default.ToString())
+			{
+				Camera c = new Camera();
+				c._key = cameraKey;
+				c.Position = Vector3D.Origin;
+				cameras.Add(cameraKey, c);
+				return c;
+			}
+			else
+			{
 			
-			c._key = cameraKey;
-			c.Position = Vector3D.Origin;
-			cameras.Add(cameraKey, c);
-			Interop._instance.Cameras.Camera_Create(cameraKey);
-			Interop._instance.Cameras.Class_SetPointer(cameraKey);
-			
-			return c;
+				Camera c = new Camera();			
+				c._key = cameraKey;
+				c.Position = Vector3D.Origin;
+				cameras.Add(cameraKey, c);
+				Interop._instance.Cameras.Camera_Create(cameraKey);
+				Interop._instance.Cameras.Class_SetPointer(cameraKey);
+				return c;
+			}
 		}
+
+		public static Camera CreateCamera(CommonCameraView view, CameraCollection cameras )
+		{
+			return CreateCamera(view.ToString(), cameras);
+		}
+
+
 
 		#endregion
 
@@ -70,7 +88,10 @@ namespace Strive.Rendering.Cameras
 
 		protected void initialisePointer()
 		{
-			Interop._instance.Cameras.Class_SetPointer(_key);
+			if(_key != CommonCameraView.Default.ToString())
+			{
+				Interop._instance.Cameras.Class_SetPointer(_key);
+			}
 		}
 
 
@@ -114,7 +135,7 @@ namespace Strive.Rendering.Cameras
 				try
 				{
 
-					Interop._instance.Cameras.Class_SetPointer(_key);
+					//Interop._instance.Cameras.Class_SetPointer(_key);
 				}
 				catch(Exception e)
 				{
@@ -194,12 +215,14 @@ namespace Strive.Rendering.Cameras
 			}
 			set 
 			{
-				try {
+				try 
+				{
 					initialisePointer();
 					R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(value);
 					Interop._instance.Cameras.Camera_SetPosition(ref r);
 				}
-				catch(Exception e) {
+				catch(Exception e) 
+				{
 					throw new RenderingException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for camera.", e);
 				}
 				_position = value;				
@@ -234,5 +257,11 @@ namespace Strive.Rendering.Cameras
 			}
 		}
 		#endregion
+	}
+
+	public enum CommonCameraView
+	{
+		Default,
+		Shoulder
 	}
 }

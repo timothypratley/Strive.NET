@@ -147,10 +147,10 @@ namespace Strive.Rendering
 			{
 				throw new RenderingException("Call to 'Clear()' failed", e);
 			}
-#if DEBUG
+//#if DEBUG
 			R3DVector2D zero = new R3DVector2D();
-			zero.x = 0;
-			zero.y = 0;
+			zero.x = 20;
+			zero.y = 20;
 			R3DColor black = new R3DColor();
 			black.b = 255;
 			black.r = 255;
@@ -160,7 +160,7 @@ namespace Strive.Rendering
                                                             ", Vertices: " + Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame().ToString() + 
                                                             ", Verts/Sec:  " + (Interop._instance.PowerMonitor.lGetFramesPerSecond() * Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame()).ToString() );
 //			Interop._instance.Interface2D.Primitive_DrawText(0,0, (Interop._instance.PowerMonitor.lGetFramesPerSecond()).ToString());
-#endif
+//#endif
 
 			try
 			{
@@ -297,11 +297,11 @@ namespace Strive.Rendering
 			get
 			{
 				checkInitialised();
-				if(!Views.Contains("DefaultView"))
+				if(!Views.Contains(Cameras.CommonCameraView.Default.ToString()))
 				{
-					return Cameras.Camera.CreateCamera("DefaultView", this.Views);
+					return Cameras.Camera.CreateCamera(Cameras.CommonCameraView.Default.ToString(), this.Views);
 				} else {
-					return this.Views["DefaultView"];
+					return this.Views[Cameras.CommonCameraView.Default.ToString()];
 				}
 			}
 		}

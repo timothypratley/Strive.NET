@@ -152,8 +152,6 @@ namespace Strive.Rendering.Models
 						_3dsfile.File_ReadTextures();
 						//_3dsfile.File_ReadScene(loadedModel.Key, true, false, true);
 						_3dsfile.File_ReadMeshes(key, true, true,true,true,true);	
-
-						
 						_3dsfile.File_Close();
 						
 						Interop._instance.Meshbuilder.Class_SetPointer(key);
