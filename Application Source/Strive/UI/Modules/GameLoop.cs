@@ -32,7 +32,13 @@ namespace Strive.UI.Modules
 			if ( _isMainRunning ) {
 				throw new Exception( "already running" );
 			}
-			ResourceManager.SetPath( "D:/projects/Strive/Application Source/Strive/UI/Resources" );
+
+			if ( System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"] == null ) {
+				throw new System.Configuration.ConfigurationException( "ResourcePath" );
+			}
+			string path = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
+
+			ResourceManager.SetPath( path );
 			_scene = scene;
 			_screen = screen;
 			_connection = connection;

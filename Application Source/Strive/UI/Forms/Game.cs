@@ -462,17 +462,8 @@ namespace Strive.UI.Forms
 				_scene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
 				_scene.View.FieldOfView = 60;
 				_scene.View.ViewDistance = 20000;
-				_scene.View.Position = new Vector3D(0, -50, 70);
-				Modules.GameLoop.Start(_scene, RenderTarget, Global._serverConnection);
-				
-				// testing stuffs
-				Model model = Model.Load( "foo", "D:\\projects\\YardView\\GUI\\media\\models\\straddle.3ds", ModelFormat._3DS );
-				System.Console.WriteLine(  model.BoundingSphereRadius );
-				model.Position = new Vector3D( 0, 0, 100 );
-//				Model model = Model.Load( "foo", "D:/downloads/windows/Bdroid_c.mdl", ModelFormat.MDL );
-
-				_scene.Models.Add( model );
 				_scene.View.Position = new Vector3D( 0, 0, 0 );
+				Modules.GameLoop.Start(_scene, RenderTarget, Global._serverConnection);
 				Mouse.ShowCursor( _mouseCaptured );
 			} catch ( Exception ex) {
 				System.Console.WriteLine( ex );
