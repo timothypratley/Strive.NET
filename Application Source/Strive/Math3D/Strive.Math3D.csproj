@@ -82,6 +82,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Helper.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Math3D.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

@@ -21,9 +21,13 @@ namespace Strive.UI.Windows
 		private Crownwood.Magic.Menus.MenuControl MainMenu;
 		private Crownwood.Magic.Menus.MenuCommand FileMenu;
 		private System.Windows.Forms.StatusBar MainStatus;
-		private Crownwood.Magic.Menus.MenuCommand FileQuit;
 		public System.Windows.Forms.PictureBox RenderTarget;
+		private Crownwood.Magic.Menus.MenuCommand ViewMenu;
+		private Crownwood.Magic.Menus.MenuCommand ViewCharacters;
+		private Crownwood.Magic.Menus.MenuCommand FileQuit;
 		private Crownwood.Magic.Menus.MenuCommand FileSave;
+		private Crownwood.Magic.Menus.MenuCommand ViewLog;
+		private Crownwood.Magic.Menus.MenuCommand ViewConnect;
 
 		private System.ComponentModel.IContainer components = null;
 
@@ -139,7 +143,11 @@ namespace Strive.UI.Windows
 			this.FileMenu = new Crownwood.Magic.Menus.MenuCommand();
 			this.FileSave = new Crownwood.Magic.Menus.MenuCommand();
 			this.FileQuit = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewMenu = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewCharacters = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
+			this.ViewLog = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewConnect = new Crownwood.Magic.Menus.MenuCommand();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -185,7 +193,8 @@ namespace Strive.UI.Windows
 			this.MainMenu.HighlightTextColor = System.Drawing.SystemColors.MenuText;
 			this.MainMenu.Location = new System.Drawing.Point(2, 2);
 			this.MainMenu.MenuCommands.AddRange(new Crownwood.Magic.Menus.MenuCommand[] {
-																							this.FileMenu});
+																							this.FileMenu,
+																							this.ViewMenu});
 			this.MainMenu.Name = "MainMenu";
 			this.MainMenu.Size = new System.Drawing.Size(596, 25);
 			this.MainMenu.Style = Crownwood.Magic.Common.VisualStyle.IDE;
@@ -202,15 +211,30 @@ namespace Strive.UI.Windows
 			// 
 			// FileSave
 			// 
-			this.FileSave.Description = "Saves your current window";
-			this.FileSave.Text = "&Save";
+			this.FileSave.Description = "MenuItem";
+			this.FileSave.Text = "Save";
 			this.FileSave.Click += new System.EventHandler(this.FileSave_Click);
 			// 
 			// FileQuit
 			// 
 			this.FileQuit.Description = "MenuItem";
-			this.FileQuit.Text = "&Quit";
+			this.FileQuit.Text = "Quit";
 			this.FileQuit.Click += new System.EventHandler(this.FileQuit_Click);
+			// 
+			// ViewMenu
+			// 
+			this.ViewMenu.Description = "MenuItem";
+			this.ViewMenu.MenuCommands.AddRange(new Crownwood.Magic.Menus.MenuCommand[] {
+																							this.ViewLog,
+																							this.ViewConnect,
+																							this.ViewCharacters});
+			this.ViewMenu.Text = "&View";
+			// 
+			// ViewCharacters
+			// 
+			this.ViewCharacters.Description = "MenuItem";
+			this.ViewCharacters.Text = "Characters";
+			this.ViewCharacters.Click += new System.EventHandler(this.ViewCharacters_Click);
 			// 
 			// MainStatus
 			// 
@@ -218,6 +242,18 @@ namespace Strive.UI.Windows
 			this.MainStatus.Name = "MainStatus";
 			this.MainStatus.Size = new System.Drawing.Size(596, 22);
 			this.MainStatus.TabIndex = 1;
+			// 
+			// ViewLog
+			// 
+			this.ViewLog.Description = "MenuItem";
+			this.ViewLog.Text = "Log";
+			this.ViewLog.Click += new System.EventHandler(this.ViewLog_Click);
+			// 
+			// ViewConnect
+			// 
+			this.ViewConnect.Description = "MenuItem";
+			this.ViewConnect.Text = "Connect";
+			this.ViewConnect.Click += new System.EventHandler(this.ViewConnect_Click);
 			// 
 			// Main
 			// 
@@ -273,7 +309,26 @@ namespace Strive.UI.Windows
 			this.Close();
 		}
 
+		private void ViewCharacters_Click(object sender, System.EventArgs e) {
+			// Log
+			Content characterWindow = DockingManager.Contents.Add(new ChildWindows.CharacterSelector(), "Character", new ImageList(), -1);
+			DockingManager.AddContentWithState(characterWindow, State.Floating);
+		}
 
+		private void ViewConnect_Click(object sender, System.EventArgs e) {
+			// Connection
+			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
+			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
+			connectionWindow.CaptionBar = true;
+			connectionWindow.CloseButton = false;
+			DockingManager.AddContentWithState(connectionWindow, State.DockLeft);
+		}
+
+		private void ViewLog_Click(object sender, System.EventArgs e) {
+			// Log
+			Content logWindow = DockingManager.Contents.Add(new ChildWindows.Log(), "Log", new ImageList(), -1);
+			DockingManager.AddContentWithState(logWindow, State.DockBottom);
+		}
 
 	}
 }

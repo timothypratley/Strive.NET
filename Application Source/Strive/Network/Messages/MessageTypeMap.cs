@@ -11,7 +11,6 @@ namespace Strive.Network.Messages {
 		public enum EnumMessageID {
 			ToClientAcknowledge = 1,
 			ToClientAddPhysicalObject,
-			ToClientAddPhysicalObjects,
 			ToClientCanPossess,
 			ToClientCombatReport,
 			ToClientCommunication,
@@ -36,13 +35,13 @@ namespace Strive.Network.Messages {
 			ToServerLogin,
 			ToServerLogout,
 			ToServerReloadWorld,
+			ToServerRequestPossessable,
 			ToServerPosition
 		}
 		public MessageTypeMap()	{
 			// build the mapping between message_id and message_type
 			messageTypeFromID.Add( EnumMessageID.ToClientAcknowledge, typeof( ToClient.Acknowledge ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientAddPhysicalObject, typeof( ToClient.AddPhysicalObject ) );
-			messageTypeFromID.Add( EnumMessageID.ToClientAddPhysicalObjects, typeof( ToClient.AddPhysicalObjects ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCanPossess, typeof( ToClient.CanPossess ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCombatReport, typeof( ToClient.CombatReport ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCommunication, typeof( ToClient.Communication ) );
@@ -68,6 +67,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToServerLogin, typeof( ToServer.Login ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerLogout, typeof( ToServer.Logout ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerReloadWorld, typeof( ToServer.ReloadWorld ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerRequestPossessable, typeof( ToServer.RequestPossessable ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerPosition, typeof( ToServer.Position ) );
 
 			// build the reverse lookup

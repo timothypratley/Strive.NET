@@ -147,6 +147,16 @@ namespace Strive.Rendering.Models
 
 		#region "Methods"
 
+		public void Delete() {
+			if ( _format == ModelFormat.MDL ) {
+				Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
+				Interop._instance.MdlSystem.MDL_Delete();
+			} else  {
+				Interop._instance.Meshbuilder.Mesh_SetPointer(this.Key);
+				Interop._instance.Meshbuilder.Mesh_Delete();
+			}
+		}
+
 		public void applyTexture( string texture ) {
 			setPointer();
 			Interop._instance.Meshbuilder.Mesh_SetTexture( 0, texture );

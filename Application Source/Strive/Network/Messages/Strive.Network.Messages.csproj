@@ -127,11 +127,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToClient\AddPhysicalObjects.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "ToClient\CanPossess.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -208,6 +203,11 @@
                 />
                 <File
                     RelPath = "ToServer\ReloadWorld.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\RequestPossessable.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

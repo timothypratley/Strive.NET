@@ -32,6 +32,15 @@ namespace Strive.Rendering.Models
 			base.Add(model.Key, model);
 		}
 
+		public void Remove( string key )
+		{
+			Model indexedModel = (Model)base[key];
+			if ( indexedModel != null ) {
+				indexedModel.Delete();
+				base.Remove(key);
+			}
+		}
+
 		/// <summary>
 		/// Model indexer
 		/// </summary>

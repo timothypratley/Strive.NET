@@ -232,39 +232,74 @@ namespace Strive.Server.Shared {
 			po.Heading.Y = newHeading.Y;
 			po.Heading.Z = newHeading.Z;
 
+			MobileAvatar ma;
+			
+			if ( po is MobileAvatar ) {
+				ma = (MobileAvatar)po;
+			} else {
+				ma = null;
+			}
 			for ( i=-1; i<=1; i++ ) {
 				for ( j=-1; j<=1; j++ ) {
 					if (
 						Math.Abs(fromSquareX+i - toSquareX) > 1
-						&& Math.Abs(fromSquareZ+j - toSquareZ) > 1
+						|| Math.Abs(fromSquareZ+j - toSquareZ) > 1
 					) {
+						// squares which need to have their clients
+						// add or remove the object
+						// as the jump has brought the object in or out of focus
+
+						// remove from
 						if (
+							// check the square exists
 							fromSquareX+i >= 0 && fromSquareX+i < squaresInX
 							&& fromSquareZ+j >= 0 && fromSquareZ+j < squaresInZ
 						) {
 							squares[fromSquareX+i, fromSquareZ+j].NotifyClients(
-								new Strive.Network.Messages.ToClient.DropPhysicalObject( po )
-							);
+								new Strive.Network.Messages.ToClient.DropPhysicalObject( po ) );
+							// if the object is a mobile, it needs to be made aware
+							// of its new world view
+							if ( ma != null && ma.client != null ) {
+								foreach( PhysicalObject toDrop in squares[fromSquareX+i, fromSquareZ+j].physicalObjects ) {
+									ma.client.Send(
+										new Strive.Network.Messages.ToClient.DropPhysicalObject( toDrop ) );
+								}
+							}
 						}
+
+						// add to
 						if (
+							// check the square exists
 							toSquareX+i >= 0 && toSquareX+i < squaresInX
 							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
 						) {
 							squares[toSquareX+i, toSquareZ+j].NotifyClients(
-								new Strive.Network.Messages.ToClient.DropPhysicalObject( po )
-							);
+								new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
+							// if the object is a player, it needs to be made aware
+							// of its new world view
+							if ( ma != null && ma.client != null ) {
+								foreach( PhysicalObject toAdd in squares[toSquareX+i, toSquareZ+j].physicalObjects ) {
+									ma.client.Send(
+										new Strive.Network.Messages.ToClient.AddPhysicalObject( toAdd ) );
+								}
+							}
 						}
-					}
-					if (
-						toSquareX+i >= 0 && toSquareX+i < squaresInX
-						&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
-					) {
-						squares[toSquareX+i, toSquareZ+j].NotifyClients(
-							new Strive.Network.Messages.ToClient.Position( po )
-						);
+					} else {
+						// clients that have the object already in scope need to be
+						// told its new position
+						if (
+							// check the square exists
+							toSquareX+i >= 0 && toSquareX+i < squaresInX
+							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
+						) {
+							squares[toSquareX+i, toSquareZ+j].NotifyClients(
+								new Strive.Network.Messages.ToClient.Position( po )	);
+						}
 					}
 				}
 			}
+
+			// transition the object to its new square if it changed squares
 			if ( fromSquareX != toSquareX || fromSquareZ != toSquareZ ) {
 				squares[fromSquareX,fromSquareZ].Remove( po );
 				squares[toSquareX,toSquareZ].Add( po );

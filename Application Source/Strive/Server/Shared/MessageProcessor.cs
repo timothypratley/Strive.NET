@@ -37,6 +37,11 @@ namespace Strive.Server.Shared {
 				return;
 			}
 
+			if ( message is Network.Messages.ToServer.RequestPossessable ) {
+				ProcessRequestPossessable( client, message as Network.Messages.ToServer.RequestPossessable );
+				return;
+			}
+
 			if ( client.Avatar == null ) {
 				// no character selected yet... only allow posses
 				if ( message is Network.Messages.ToServer.EnterWorldAsMobile ) {
@@ -82,11 +87,13 @@ namespace Strive.Server.Shared {
 					"Login failed for username " + loginMessage.username
 				);
 			}
+		}
+
+		void ProcessRequestPossessable( Client client, Strive.Network.Messages.ToServer.RequestPossessable message ) {
 			Strive.Network.Messages.ToClient.CanPossess canPossess = new Strive.Network.Messages.ToClient.CanPossess(
-				world.getPossessable( loginMessage.username )
-			);
+				world.getPossessable( client.AuthenticatedUsername ) );
 			client.Send( canPossess );
-	}
+		}
 
 		void ProcessEnterWorldAsMobile( Client client, Strive.Network.Messages.ToServer.EnterWorldAsMobile message ) {
 			MobileAvatar a;

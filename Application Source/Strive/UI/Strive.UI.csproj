@@ -128,9 +128,9 @@
                     HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Design.dll"
                 />
                 <Reference
-                    Name = "magiclibrary1"
-                    AssemblyName = "MagicLibrary"
-                    HintPath = "..\..\..\..\..\..\program files\crownwood consulting ltd\magic library 1.7.1\bin\magiclibrary.dll"
+                    Name = "MagicLibrary"
+                    Project = "{92F94EA0-9910-4895-B8A1-FED1543A9DA1}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
         </Build>
@@ -152,6 +152,11 @@
                 />
                 <File
                     RelPath = "Engine\GameLoop.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Engine\MessageProcessor.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -195,6 +200,16 @@
                 <File
                     RelPath = "Windows\SystemFormBase.resx"
                     DependentUpon = "SystemFormBase.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\CharacterSelector.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\CharacterSelector.resx"
+                    DependentUpon = "CharacterSelector.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
