@@ -16,10 +16,10 @@ using Strive.Logging;
 
 namespace Strive.Server.Shared {
 	public class World {
-		double highX = 500.0;
-		double highZ = 500.0;
-		double lowX = -500.0;
-		double lowZ = -500.0;
+		double highX = 0.0;
+		double highZ = 0.0;
+		double lowX = 0.0;
+		double lowZ = 0.0;
 		int squaresInX;		// see squareSize in Square
 		int squaresInZ;
 		int world_id;
@@ -321,6 +321,7 @@ namespace Strive.Server.Shared {
 							// check the square exists
 							fromSquareX+i >= 0 && fromSquareX+i < squaresInX
 							&& fromSquareZ+j >= 0 && fromSquareZ+j < squaresInZ
+							&& square[fromSquareX+i, fromSquareZ+j] != null
 						) {
 							square[fromSquareX+i, fromSquareZ+j].NotifyClients(
 								new Strive.Network.Messages.ToClient.DropPhysicalObject( po ) );
@@ -340,6 +341,7 @@ namespace Strive.Server.Shared {
 							// check the square exists
 							toSquareX-i >= 0 && toSquareX-i < squaresInX
 							&& toSquareZ-j >= 0 && toSquareZ-j < squaresInZ
+							&& square[toSquareX-i, toSquareZ-j] != null
 						) {
 							square[toSquareX-i, toSquareZ-j].NotifyClients( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( po ) );
 							// if the object is a player, it needs to be made aware
@@ -358,6 +360,7 @@ namespace Strive.Server.Shared {
 							// check the square exists
 							toSquareX+i >= 0 && toSquareX+i < squaresInX
 							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
+							&& square[toSquareX+i, toSquareZ+j] != null
 						) {
 							if ( ma != null && ma.client != null ) {
 								square[toSquareX+i, toSquareZ+j].NotifyClientsExcept(
@@ -375,6 +378,9 @@ namespace Strive.Server.Shared {
 			// transition the object to its new square if it changed squares
 			if ( fromSquareX != toSquareX || fromSquareZ != toSquareZ ) {
 				square[fromSquareX,fromSquareZ].Remove( po );
+				if ( square[toSquareX,toSquareZ] == null ) {
+					square[toSquareX,toSquareZ] = new Square();
+				}
 				square[toSquareX,toSquareZ].Add( po );
 			}
 		}
@@ -417,14 +423,13 @@ namespace Strive.Server.Shared {
 					if (
 						squareX+i < 0 || squareX+i >= squaresInX
 						|| squareZ+j < 0 || squareZ+j >= squaresInZ
+						|| square[squareX+i, squareZ+j] == null
 					) {
 						continue;
 					}
 					// need to send a message to all nearby clients
 					// so long as the square isn't empty
-					if ( square[squareX+i, squareZ+j] != null ) {
-						square[squareX+i, squareZ+j].NotifyClients( message );
-					}
+					square[squareX+i, squareZ+j].NotifyClients( message );
 				}
 			}
 		}
@@ -447,6 +452,7 @@ namespace Strive.Server.Shared {
 						if (
 							squareX+i < 0 || squareX+i >= squaresInX
 							|| squareZ+j < 0 || squareZ+j >= squaresInZ
+							|| square[squareX+i,squareZ+j] == null
 						) {
 							continue;
 						}

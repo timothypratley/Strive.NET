@@ -45,6 +45,10 @@ namespace Strive.UI.WorldView {
 				TerrainPieces.Add( new TerrainPiece( t ) );
 				return null;
 			} else {
+				if ( RenderingScene.Models.Contains( po.ObjectInstanceID ) ) {
+					Log.WarningMessage( "Trying to add existing PhysicalObject " + po.ObjectInstanceID );
+					return (PhysicalObjectInstance)RenderingScene.Models[po.ObjectInstanceID];
+				}
 				PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 				RenderingScene.Models.Add( po.ObjectInstanceID, poi.model );
@@ -57,7 +61,7 @@ namespace Strive.UI.WorldView {
 		public void Remove( int ObjectInstanceID ) {
 			TerrainPieces.Remove( ObjectInstanceID );
 			physicalObjectInstances.Remove( ObjectInstanceID );
-			RenderingScene.Models.Remove( ObjectInstanceID.ToString() );
+			RenderingScene.Models.Remove( ObjectInstanceID );
 		}
 
 		public void RemoveAll() {

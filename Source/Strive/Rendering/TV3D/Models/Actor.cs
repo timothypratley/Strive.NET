@@ -58,7 +58,8 @@ namespace Strive.Rendering.TV3D.Models {
 			loadedModel._key = name;
 
 			try {
-				loadedModel._model = Engine.TV3DScene.CreateActorTVM( name );
+				//loadedModel._model = Engine.TV3DScene.CreateActorTVM( name );
+				loadedModel._model = new TVActor2();
 				loadedModel._model.Load( path, name, true, true );
 			}
 			catch(Exception e) {
