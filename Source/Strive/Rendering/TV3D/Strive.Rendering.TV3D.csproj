@@ -125,6 +125,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Camera.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Engine.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -135,12 +140,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Cameras\Camera.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Cameras\CameraCollection.cs"
+                    RelPath = "Viewport.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -117,12 +117,22 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "EnumCommonCameraView.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "EnumRenderTarget.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Exceptions.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ICamera.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -142,22 +152,12 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "IViewport.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Resolution.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Cameras\EnumCommonCameraView.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Cameras\ICamera.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Cameras\ICameraCollection.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

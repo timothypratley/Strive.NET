@@ -42,6 +42,10 @@ namespace Strive.Rendering.TV3D {
 			return new Scene();
 		}
 
+		public IViewport CreateViewport( System.Windows.Forms.IWin32Window window, string name ) {
+			return new Viewport( window, name );
+		}
+
 		public ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy ) {
 			return Terrain.CreateTerrain( name, texture, texture_rotation, y, xy, zy, xzy );
 		}
@@ -97,6 +101,7 @@ namespace Strive.Rendering.TV3D {
 			}
 			TV3DEngine.SetAngleSystem( CONST_TV_ANGLE.TV_ANGLE_DEGREE );
 			TV3DEngine.SetVSync( true );
+			TV3DEngine.DisplayFPS = true;
 			TV3DScene = new TVScene();
 			TV3DScene.SetDepthBuffer( CONST_TV_DEPTHBUFFER.TV_WBUFFER );
 			Land = new TVLandscape();
@@ -146,6 +151,5 @@ namespace Strive.Rendering.TV3D {
 				return _renderTarget;
 			}
 		}
-
 	}
 }

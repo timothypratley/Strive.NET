@@ -140,6 +140,9 @@ namespace Strive.UI.Engine
 				moveunit *= 2.5F;
 			}
 
+			// TODO hack due to double rendering, replace with a setpoint time
+			moveunit *= 2;
+
 			
 			#region ProcessRotationInput
 

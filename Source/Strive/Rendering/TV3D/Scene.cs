@@ -3,7 +3,6 @@ using System.Threading;
 using System.Windows.Forms;
 
 using Strive.Rendering;
-using Strive.Rendering.Cameras;
 using Strive.Rendering.Models;
 using Strive.Rendering.Textures;
 using Strive.Rendering.TV3D.Models;
@@ -23,8 +22,8 @@ namespace Strive.Rendering.TV3D
 		private static bool _constructed = false;
 		private bool _isRendering = false;
 		private ModelCollection _models = new ModelCollection();
-		private Cameras.CameraCollection _views = new Cameras.CameraCollection();
 		private int cursorTextureID = 0;
+		Camera _camera;
 
 		#endregion
 
@@ -40,6 +39,7 @@ namespace Strive.Rendering.TV3D
 				throw new SceneAlreadyExistsException();
 			}			
 
+			_camera = new Camera( Engine.TV3DScene.GetCamera() );
 			Scene._constructed = true;
 		}
 		/// <summary>
@@ -98,6 +98,15 @@ namespace Strive.Rendering.TV3D
 			cursorTextureID = texture.ID;
 		}
 
+		public void RenderToOtherWindow( System.Windows.Forms.IWin32Window hwnd ) {
+			Engine.TV3DEngine.RenderToOtherHwnd( hwnd.Handle.ToInt32() );
+		}
+
+		public void AddViewport( System.Windows.Forms.IWin32Window hwnd ) {
+			TVViewport vp = Engine.TV3DEngine.CreateViewport( hwnd.Handle.ToInt32(), "viewport" );
+			vp.SetAutoResize( true );
+		}
+
 		/// <summary>
 		/// Public rendering routine
 		/// </summary>
@@ -121,9 +130,11 @@ namespace Strive.Rendering.TV3D
 
 				// render character models and object labels
 				Engine.Screen2DText.ACTION_BeginText();
-				string header = "X:"+View.Position.X+",Y:"+View.Position.Y+",Z:"+View.Position.Z+" - heading:"+View.Rotation.Y;
-				Engine.Screen2DText.NormalFont_DrawTextFontID( header, 0, 0, Engine.Gl.RGBA(1f, 0f, 1f, 1f), Engine.FontIndex );
+				//string header = "X:"+View.Position.X+",Y:"+View.Position.Y+",Z:"+View.Position.Z+" - heading:"+View.Rotation.Y;
+				//Engine.Screen2DText.NormalFont_DrawTextFontID( header, 0, 0, Engine.Gl.RGBA(1f, 0f, 1f, 1f), Engine.FontIndex );
 
+				Vector3D cameraPosition = Camera.Position;
+				Vector3D cameraRotation = Camera.Rotation;
 				foreach( IModel m in _models.Values ) {
 					if ( m is Actor ) {
 						((Actor)m).Render();
@@ -137,9 +148,8 @@ namespace Strive.Rendering.TV3D
 						//Using FieldOfView of 90degrees,
 						//so things offscreen infront will still be labeled.
 						
-						Vector3D v1 = m.Position - View.Position;
-						if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(View.Rotation) ) <= Math.Cos( View.FieldOfView * Math.PI / 180 ) ) 
-						{
+						Vector3D v1 = m.Position - cameraPosition;
+						if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(cameraRotation) ) <= Math.Cos( Camera.FieldOfView * Math.PI / 180 ) ) {
 							continue;
 						}
 
@@ -241,8 +251,8 @@ namespace Strive.Rendering.TV3D
 			return MousePick( x, y );
 		}
 
-		public ICameraCollection CameraCollection {
-			get { return _views; }
+		public ICamera Camera {
+			get { return _camera; }
 		}
 
 		#endregion
@@ -274,33 +284,6 @@ namespace Strive.Rendering.TV3D
 			}
 		}
 
-		/// <summary>
-		/// Returns the View of the current scene.
-		/// </summary>
-		public ICameraCollection Views
-		{
-			get
-			{
-				return _views;
-			}
-		}
-
-		/// <summary>
-		/// Returns the default view
-		/// </summary>
-		public ICamera View
-		{
-			get
-			{
-				if(!Views.Contains(EnumCommonCameraView.Default.ToString()))
-				{
-					return Views.CreateCamera( EnumCommonCameraView.Default );
-				} else {
-					return (ICamera)this.Views[EnumCommonCameraView.Default.ToString()];
-				}
-			}
-		}
-		
 
 		#endregion
 

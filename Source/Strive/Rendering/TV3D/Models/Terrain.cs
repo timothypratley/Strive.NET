@@ -61,7 +61,7 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 
 
-			t._mesh.Optimize();
+			//t._mesh.Optimize();
 			t._mesh.ComputeBoundingVolumes();
 
 			// TODO: bumpmapping would be cool :)

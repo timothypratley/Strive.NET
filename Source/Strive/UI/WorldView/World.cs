@@ -25,19 +25,35 @@ namespace Strive.UI.WorldView {
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
 		Vector3D cameraPosition = new Vector3D( 0, 0, 0 );
 		Vector3D cameraRotation = new Vector3D( 0, 0, 0 );
+		IViewport renderViewport;
+		IViewport miniMapViewport;
 
-		public World( ResourceManager resources, IEngine engine, IWin32Window RenderTarget ) {
+		public World( ResourceManager resources, IEngine engine, IWin32Window parent, IWin32Window RenderTarget, IWin32Window MiniMapTarget ) {
 			Resources = resources;
 			RenderingEngine = engine;
+			RenderingEngine.Initialise( parent, EnumRenderTarget.PictureBox, Resolution.Automatic );
 			RenderingScene = engine.CreateScene();
+			renderViewport = engine.CreateViewport( RenderTarget, "RenderTarget" );
+			if ( MiniMapTarget != null ) {
+				this.MiniMapTarget = MiniMapTarget;
+			}
 			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
-			RenderingEngine.Initialise( RenderTarget, EnumRenderTarget.PictureBox, Resolution.Automatic );
-			//RenderingScene.View.FieldOfView = 90;
-			//RenderingScene.View.ViewDistance = 400;
 			RenderingScene.SetLighting( 100 );
 			RenderingScene.SetFog( 500.0f );
-			RenderingScene.View.ViewDistance = 10000;
+			renderViewport.Camera.ViewDistance = 10000;
 		}
+
+		public IWin32Window MiniMapTarget {
+			set {
+				if ( miniMapViewport != null ) {
+					throw new Exception( "Already have set a minimap" );
+				}
+				miniMapViewport = RenderingEngine.CreateViewport( value, "Minimap" );
+				miniMapViewport.Camera.Rotation = new Vector3D( 90, 0, 0 );
+				miniMapViewport.Camera.ViewDistance = 10000;
+			}
+		}
+
 
 		public PhysicalObjectInstance Add( PhysicalObject po ) {
 			if ( po is Terrain ) {
@@ -97,7 +113,11 @@ namespace Strive.UI.WorldView {
 		public Vector3D CameraPosition {
 			set {
 				cameraPosition.Set( value );
-				RenderingScene.View.Position = cameraPosition;
+				renderViewport.Camera.Position = cameraPosition;
+				if ( miniMapViewport != null ) {
+					cameraPosition.Y += 100;
+					miniMapViewport.Camera.Position = cameraPosition;
+				}
 			}
 			get{ return cameraPosition; }
 		}
@@ -105,7 +125,7 @@ namespace Strive.UI.WorldView {
 		public Vector3D CameraRotation {
 			set {
 				cameraRotation.Set( value );
-				RenderingScene.View.Rotation = cameraRotation;
+				renderViewport.Camera.Rotation = cameraRotation;
 			}
 			get{ return cameraRotation; }
 		}
@@ -132,8 +152,14 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Render() {
+			renderViewport.SetFocus();
 			RenderingScene.Render();
 			RenderingScene.Display();
+			if ( miniMapViewport != null ) {
+				miniMapViewport.SetFocus();
+				RenderingScene.Render();
+				RenderingScene.Display();
+			}
 		}
 
 		public void Clear() {

@@ -354,6 +354,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "Windows\ChildWindows\MiniMap.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\MiniMap.resx"
+                    DependentUpon = "MiniMap.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "Windows\ChildWindows\SkillSelector.cs"
                     SubType = "Form"
                     BuildAction = "Compile"

@@ -17,6 +17,7 @@ namespace Strive.Rendering
 	public interface IEngine
 	{
 		IScene CreateScene();
+		IViewport CreateViewport( IWin32Window window, string name );
 
 		ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy );
 		IModel LoadStaticModel(string name, string path, float height);

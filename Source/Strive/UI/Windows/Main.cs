@@ -36,6 +36,9 @@ namespace Strive.UI.Windows
 		private Crownwood.Magic.Menus.MenuCommand ViewFirstPerson;
 		private Crownwood.Magic.Menus.MenuCommand ViewChaseCam;
 		public System.Windows.Forms.Panel RenderTarget;
+		public ChildWindows.MiniMap miniMap;
+
+		private Crownwood.Magic.Menus.MenuCommand ViewMiniMap;
 
 		private System.ComponentModel.IContainer components = null;
 
@@ -108,6 +111,7 @@ namespace Strive.UI.Windows
 			this.ViewFirstPerson = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewChaseCam = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
+			this.ViewMiniMap = new Crownwood.Magic.Menus.MenuCommand();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -118,7 +122,7 @@ namespace Strive.UI.Windows
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(612, 864);
+			this.MainTabs.Size = new System.Drawing.Size(612, 933);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -128,7 +132,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.Add(this.RenderTarget);
 			this.GameTab.Location = new System.Drawing.Point(0, 0);
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(612, 839);
+			this.GameTab.Size = new System.Drawing.Size(612, 908);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -137,9 +141,9 @@ namespace Strive.UI.Windows
 			this.RenderTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
-			this.RenderTarget.Location = new System.Drawing.Point(16, 18);
+			this.RenderTarget.Location = new System.Drawing.Point(16, 19);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(576, 462);
+			this.RenderTarget.Size = new System.Drawing.Size(576, 502);
 			this.RenderTarget.TabIndex = 1;
 			// 
 			// MainMenu
@@ -192,9 +196,9 @@ namespace Strive.UI.Windows
 																							this.ViewChat,
 																							this.ViewCommand,
 																							this.ViewFirstPerson,
-																							this.ViewChaseCam});
+																							this.ViewChaseCam,
+																							this.ViewMiniMap});
 			this.ViewMenu.Text = "&View";
-			this.ViewMenu.Click += new System.EventHandler(this.ViewMenu_Click);
 			// 
 			// ViewLog
 			// 
@@ -246,15 +250,21 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 891);
+			this.MainStatus.Location = new System.Drawing.Point(2, 960);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(612, 46);
+			this.MainStatus.Size = new System.Drawing.Size(612, 49);
 			this.MainStatus.TabIndex = 1;
+			// 
+			// ViewMiniMap
+			// 
+			this.ViewMiniMap.Description = "MenuItem";
+			this.ViewMiniMap.Text = "Mini Map";
+			this.ViewMiniMap.Click += new System.EventHandler(this.ViewMiniMap_Click);
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(616, 939);
+			this.ClientSize = new System.Drawing.Size(616, 1011);
 			this.Controls.Add(this.MainTabs);
 			this.Controls.Add(this.MainMenu);
 			this.Controls.Add(this.MainStatus);
@@ -288,7 +298,6 @@ namespace Strive.UI.Windows
 		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			saveSettings();
-			Game.CurrentServerConnection.Stop();
 			Application.Exit();
 		}
 
@@ -299,11 +308,9 @@ namespace Strive.UI.Windows
 
 		private void ViewConnect_Click(object sender, System.EventArgs e) {
 			// Connection
-			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
-			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
-			connectionWindow.CaptionBar = true;
-			connectionWindow.CloseButton = false;
-			DockingManager.AddContentWithState(connectionWindow, State.DockLeft);
+			Game.Stop();
+			ChildWindows.Connection con = new ChildWindows.Connection();
+			con.ShowDialog(this);
 		}
 
 		private void ViewLog_Click(object sender, System.EventArgs e) {
@@ -377,10 +384,6 @@ namespace Strive.UI.Windows
 			}
 		}
 
-		private void ViewMenu_Click(object sender, System.EventArgs e) {
-		
-		}
-
 		private void ViewWhoList_Click(object sender, System.EventArgs e) {
 			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GlobalImageList,-1);
 			DockingManager.AddContentWithState(whoWindow, State.Floating);
@@ -447,6 +450,7 @@ namespace Strive.UI.Windows
 
 			#region Add our windows
 
+
 			// Connection
 //			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
 //			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
@@ -465,7 +469,15 @@ namespace Strive.UI.Windows
 			// Chat
 			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Chat);
 			DockingManager.AddContentWithState(chatWindow, State.DockBottom);
+			// MiniMap
+			miniMap = new ChildWindows.MiniMap();
+			Content mapWindow = DockingManager.Contents.Add(miniMap, "Mini Map", Icons.IconManager.GlobalImageList,-1);
+			DockingManager.AddContentWithState(mapWindow, State.DockBottom);
+
+			
+			
 			this.Navigate("http://www.strive3d.net");
+
 
 			#endregion
 
@@ -478,7 +490,8 @@ namespace Strive.UI.Windows
 
 			this.Show();
 
-			Game.CurrentWorld = new World( Game.resources, Game.RenderingFactory, RenderTarget );
+			Game.CurrentWorld = new World( Game.resources, Game.RenderingFactory, this, RenderTarget, null );
+			Game.CurrentWorld.MiniMapTarget = miniMap.RenderTarget;
 
 			ChildWindows.Connection con = new ChildWindows.Connection();
 			con.ShowDialog(this);
@@ -522,6 +535,19 @@ namespace Strive.UI.Windows
 					Game.CurrentGameCommand = EnumSkill.None;
 				}
 			}
+		}
+
+		private void ViewMiniMap_Click(object sender, System.EventArgs e) {
+			if ( miniMap == null ) {
+				miniMap = new ChildWindows.MiniMap();
+			} else {
+				Strive.Logging.Log.ErrorMessage( "Only one minimap allowed." );
+				return;
+			}
+			//miniMap.Show();
+			Content mapWindow = DockingManager.Contents.Add(miniMap, "Mini Map");
+			DockingManager.AddContentWithState(mapWindow, State.Floating);
+			Game.CurrentWorld.MiniMapTarget = miniMap.RenderTarget;
 		}
 	}
 }

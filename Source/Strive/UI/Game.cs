@@ -120,6 +120,7 @@ namespace Strive.UI
 		}
 
 		public static void Stop() {
+			CurrentWorld.CurrentAvatar = null;
 			CurrentGameLoop.Stop();
 			CurrentServerConnection.Stop();
 			CurrentWorld.Clear();

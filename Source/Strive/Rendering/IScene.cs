@@ -22,6 +22,7 @@ namespace Strive.Rendering
 		void DrawText( Vector3D location, string message );
 		/// <remarks>Renders the scene into video memory.</remarks>
 		void Render();
+		void RenderToOtherWindow( System.Windows.Forms.IWin32Window hwnd );
 		/// <remarks>Displays the rendered screen.</remarks>
 		void Display();
 		int RayCollision( Vector3D start_point, Vector3D end_point, int collision_type );
@@ -43,14 +44,9 @@ namespace Strive.Rendering
 		IModelCollection Models { get; }
 
 		/// <summary>
-		/// Returns the View of the current scene.
-		/// </summary>
-		Cameras.ICameraCollection Views { get; }
-
-		/// <summary>
 		/// Returns the default view
 		/// </summary>
-		Cameras.ICamera View	{ get; }
+		ICamera Camera { get; }
 		
 
 		#endregion
