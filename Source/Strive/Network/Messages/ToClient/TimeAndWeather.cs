@@ -11,16 +11,15 @@ namespace Strive.Network.Messages.ToClient
 		public float Lighting;
 		public int Fog;
 		public int Rain;
-		public DateTime ServerNow;
+		public long ServerNow;
 		public int Latency;
 		public TimeAndWeather(){}
 		public TimeAndWeather( DateTime ServerNow, int Latency, int SkyTextureID, float Lighting, int Fog, int Rain ) {
-			this.ServerNow = ServerNow;
+			this.ServerNow = ServerNow.Ticks;
 			this.Latency = Latency;
 			this.SkyTextureID = SkyTextureID;
 			this.Lighting = Lighting;
 			this.Fog = Fog;
-			this.Rain = Rain;
-		}
+			this.Rain = Rain;		}
 	}
 }

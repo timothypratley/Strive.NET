@@ -180,11 +180,11 @@ namespace Strive.Server.Shared {
 		}
 
 		void WeatherUpdate() {
-			if ( (Global.now - weather.ServerNow).Seconds < 1 ) {
+			weather.ServerNow = Global.now.Ticks;
+			if ( (Global.now.Ticks - weather.ServerNow) < 1 ) {
 				return;
 			}
 
-			weather.ServerNow = Global.now;
 			bool weatherChanged = false;
 			if ( Global.random.NextDouble() > 0.995 ) {
 				weather.Fog++;

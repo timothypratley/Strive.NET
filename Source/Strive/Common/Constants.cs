@@ -9,6 +9,8 @@ namespace Strive.Common
 	{
 		public const int terrainPieceSize = 10;
 		public const int terrainHeightsPerChunk = 8;
+		public const int worldBuilderTerrainPieceSize = 75;
+		public const int worldBuilderTerrainSquareSize = 10;
 
 		// TODO: these should be settable per client
 		public const int terrainZoomOrder = 2;

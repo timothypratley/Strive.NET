@@ -63,29 +63,30 @@ namespace Strive.Network.Messages {
 		{
 			Type t = obj.GetType();
 			if ( t.IsEnum ) {
-				byte[] EncodedInt = BitConverter.GetBytes((Int32)obj);
+				byte[] EncodedInt = BitConverter.GetBytes((int)obj);
 				Buffer.Write(
 					EncodedInt,
 					0, EncodedInt.Length );
-					
-			} else if ( t == typeof( Int32 ) ) {
-				byte[] EncodedInt = BitConverter.GetBytes((Int32)obj);
+			} else if ( t == typeof( int ) ) {
+				byte[] EncodedInt = BitConverter.GetBytes((int)obj);
 				Buffer.Write(
 					EncodedInt,
-					0, EncodedInt.Length
-					);
+					0, EncodedInt.Length );
+			} else if ( t == typeof( long ) ) {
+				byte[] EncodedInt = BitConverter.GetBytes((long)obj);
+				Buffer.Write(
+					EncodedInt,
+					0, EncodedInt.Length );
 			} else if ( t == typeof( float ) ) {
 				byte[] EncodedFloat = BitConverter.GetBytes((float)obj);
 				Buffer.Write(
 					EncodedFloat,
-					0, EncodedFloat.Length
-					);
+					0, EncodedFloat.Length );
 			} else if ( t == typeof( bool ) ) {
 				byte[] EncodedBool = BitConverter.GetBytes((bool)obj);
 				Buffer.Write(
 					EncodedBool,
-					0, EncodedBool.Length
-				);
+					0, EncodedBool.Length );
 			} else if ( t == typeof( string ) ) {
 				byte[] EncodedString = Encoding.Unicode.GetBytes((string)obj);
 				byte[] EncodedInt = BitConverter.GetBytes( EncodedString.Length );
@@ -137,9 +138,12 @@ namespace Strive.Network.Messages {
 
 		public static Object DecodeBasicType( Type t, byte[] buffer, ref int Offset ) {
 			Object result = null;
-			if ( t == typeof( Int32 ) ) {
+			if ( t == typeof( int ) ) {
 				result = BitConverter.ToInt32( buffer, Offset );
 				Offset += 4;
+			} else if ( t == typeof( long ) ) {
+				result = BitConverter.ToInt64( buffer, Offset );
+				Offset += 8;
 			} else if ( t.IsEnum ) {
 				result = Enum.ToObject( t, BitConverter.ToInt32( buffer, Offset ) );
 				Offset += 4;
@@ -149,9 +153,7 @@ namespace Strive.Network.Messages {
 			} else if ( t == typeof( bool ) ) {
 				result = BitConverter.ToBoolean( buffer, Offset );
 				Offset += 1;
-			} 
-			else if ( t == typeof( string ) ) 
-			{
+			} else if ( t == typeof( string ) ) {
 				int StringLength = BitConverter.ToInt32( buffer, Offset );
 				Offset += 4;
 				result = Encoding.Unicode.GetString( buffer, Offset, StringLength );
