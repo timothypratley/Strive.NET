@@ -212,6 +212,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\LogMessage.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\Message.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -287,7 +292,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToServer\GameCommand\Attack.cs"
+                    RelPath = "ToServer\GameCommand\CancelSkill.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -303,11 +308,6 @@
                 />
                 <File
                     RelPath = "ToServer\GameCommand\Emote.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "ToServer\GameCommand\Flee.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

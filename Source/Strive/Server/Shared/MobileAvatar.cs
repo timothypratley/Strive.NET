@@ -69,11 +69,22 @@ namespace Strive.Server.Shared
 			return AreaID == 0;
 		}
 
+
+		public void SendLog( string message ) {
+			if ( client == null ) {
+				Log.WarningMessage( ObjectInstanceID + ", no client: " + message );
+			} else {
+				client.Send(
+					new Strive.Network.Messages.ToClient.LogMessage( message ) );
+			}
+		}
+
+
 		public void Update() {
 			// check for activating skills
 			if ( activatingSkill != null ) {
 				if ( activatingSkillTimestamp + activatingSkillLeadTime <= Global.now ) {
-					SkillCommandProcessor.UseSkillNow( client, activatingSkill );
+					SkillCommandProcessor.UseSkillNow( this, activatingSkill );
 					activatingSkill = null;
 				}
 			} else {
@@ -149,15 +160,24 @@ namespace Strive.Server.Shared
 				lastHealUpdate = Global.now;
 				if ( MobileState == EnumMobileState.Incapacitated ) {
 					HitPoints -= 0.5F;
+					Energy -= 0.5F;
 				} else if ( MobileState == EnumMobileState.Sleeping ) {
 					HitPoints += Constitution/10.0F;
 					if ( HitPoints > MaxHitPoints ) {
 						HitPoints = MaxHitPoints;
 					}
+					Energy += Constitution/10.0F;
+					if ( Energy > MaxEnergy ) {
+						Energy = MaxEnergy;
+					}
 				} else if ( MobileState == EnumMobileState.Resting ) {
 					HitPoints += Constitution/40.0F;
 					if ( HitPoints > MaxHitPoints ) {
 						HitPoints = MaxHitPoints;
+					}
+					Energy += Constitution/40.0F;
+					if ( Energy > MaxEnergy ) {
+						Energy = MaxEnergy;
 					}
 				}
 			}
@@ -169,12 +189,17 @@ namespace Strive.Server.Shared
 		public void Attack( int ObjectInstanceID ) {
 			target = world.physicalObjects[ObjectInstanceID] as PhysicalObject;
 			if ( target == null ) {
+				SendLog( "Target " + ObjectInstanceID + " not found." );
 				return;
 			}
+			Attack( target );
+		}
+
+		public void Attack( PhysicalObject target ) {
 			Vector3D distance = target.Position - Position;
 			if ( distance.GetMagnitude() > 5.0F	) {
 				// too far away!
-				Log.LogMessage( this.ObjectTemplateName + " tried to attack " + target.ObjectTemplateName + " but was too far away." );
+				SendLog( target.ObjectTemplateName + " is out of range." );
 				return;
 			}
 			world.InformNearby(
@@ -373,6 +398,15 @@ namespace Strive.Server.Shared
 				} else {
 					return Height;
 				}
+			}
+		}
+
+		public float GetCompetancy( EnumSkill skill ) {
+			Schema.MobileHasSkillRow mhs = Global.multiverse.MobileHasSkill.FindByObjectTemplateIDEnumSkillID( ObjectTemplateID, (int)skill );
+			if ( mhs != null ) {
+				return mhs.Rating;
+			} else {
+				return 0;
 			}
 		}
 	}

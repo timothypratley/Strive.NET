@@ -76,13 +76,8 @@ namespace Strive.Server.Shared {
 			{
 				SkillCommandProcessor.ProcessUseSkill( client, message as Network.Messages.ToServer.GameCommand.UseSkill );
 			} 
-			else if ( message is Network.Messages.ToServer.GameCommand.Attack ) 
-			{
-				ProcessAttackMessage( client, message as Network.Messages.ToServer.GameCommand.Attack );
-			} 
-			else if ( message is Network.Messages.ToServer.GameCommand.Flee ) 
-			{
-				ProcessFleeMessage( client, message as Network.Messages.ToServer.GameCommand.Flee );
+			else if ( message is Network.Messages.ToServer.GameCommand.CancelSkill ) {
+				SkillCommandProcessor.ProcessCancelSkill( client, message as Network.Messages.ToServer.GameCommand.CancelSkill );
 			} 
 			else if ( message is Network.Messages.ToServer.ReloadWorld ) 
 			{
@@ -225,18 +220,6 @@ namespace Strive.Server.Shared {
 			//Log.LogMessage( "Sent communication message" );
 		}
 
-		void ProcessAttackMessage(
-			Client client, Strive.Network.Messages.ToServer.GameCommand.Attack message
-		) {
-			(client.Avatar as MobileAvatar).Attack( message.targetObjectInstanceID );
-		}
-
-		void ProcessFleeMessage(
-			Client client, Strive.Network.Messages.ToServer.GameCommand.Flee message
-		) {
-			(client.Avatar as MobileAvatar).Flee();
-		}
-
 		void ProcessReloadWorldMessage(
 			Client client, Strive.Network.Messages.ToServer.ReloadWorld message
 		) {
@@ -269,6 +252,7 @@ namespace Strive.Server.Shared {
 		void ProcessSkillList(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.SkillList message
 		) {
+			// TODO: umg this seems a bit primitive, but I guess it works so :/
 			ArrayList skillIDs = new ArrayList();
 			ArrayList competancy = new ArrayList();
 			for ( int i = 1; i < Global.multiverse.EnumSkill.Count; i++ ) {

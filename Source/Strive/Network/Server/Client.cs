@@ -219,5 +219,9 @@ namespace Strive.Network.Server {
 		public EndPoint EndPoint {
 			get { return remoteEndPoint; }
 		}
+
+		public void SendLog( string message ) {
+			Send( new Strive.Network.Messages.ToClient.LogMessage( message ) );
+		}
 	}
 }

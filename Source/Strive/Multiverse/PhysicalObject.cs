@@ -21,6 +21,8 @@ namespace Strive.Multiverse
 		public Vector3D Rotation = new Vector3D(0,0,0);
 		public float HitPoints = 0;
 		public int MaxHitPoints = 0;
+		public float Energy = 0;
+		public int MaxEnergy = 0;
 		public float BoundingSphereRadiusSquared;
 
 		public PhysicalObject() {}
