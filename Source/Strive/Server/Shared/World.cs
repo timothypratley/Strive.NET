@@ -197,12 +197,7 @@ namespace Strive.Server.Shared {
 
 			// notify all nearby clients that a new
 			// physical object has entered the world
-			InformNearby( po, new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
-			if ( po is Mobile ) {
-				InformNearby( po, new Strive.Network.Messages.ToClient.MobileState( (Mobile)po )	);
-			}
-
-
+			InformNearby( po, CreateAddMessage( po ) );
 			Log.LogMessage( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
 		}
 
@@ -242,6 +237,7 @@ namespace Strive.Server.Shared {
 			}
 
 			// check that the object can fit there
+			/** TODO: enable collision detection
 			foreach ( PhysicalObject spo in squares[toSquareX,toSquareZ].physicalObjects ) {
 				// ignoring terrain for now
 				if ( spo is Terrain || spo == po ) continue;
@@ -271,7 +267,7 @@ namespace Strive.Server.Shared {
 					}
 					return;
 				}
-			}
+			} */
 
 			po.Position.X = newPos.X;
 			po.Position.Y = newPos.Y;
@@ -315,14 +311,12 @@ namespace Strive.Server.Shared {
 							toSquareX-i >= 0 && toSquareX-i < squaresInX
 							&& toSquareZ-j >= 0 && toSquareZ-j < squaresInZ
 						) {
-							squares[toSquareX-i, toSquareZ-j].NotifyClients(
-								new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
+							squares[toSquareX-i, toSquareZ-j].NotifyClients( CreateAddMessage( po ) );
 							// if the object is a player, it needs to be made aware
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
 								foreach( PhysicalObject toAdd in squares[toSquareX-i, toSquareZ-j].physicalObjects ) {
-									ma.client.Send(
-										new Strive.Network.Messages.ToClient.AddPhysicalObject( toAdd ) );
+									ma.client.Send(	CreateAddMessage( toAdd ) );
 									//Log.LogMessage( "Told client to add " + toAdd.ObjectInstanceID + "." );
 								}
 							}
@@ -437,14 +431,28 @@ namespace Strive.Server.Shared {
 				client.Send( message );
 				*/
 				foreach ( PhysicalObject p in nearbyPhysicalObjects ) {
-					Strive.Network.Messages.ToClient.AddPhysicalObject message = new Strive.Network.Messages.ToClient.AddPhysicalObject( p );
-					client.Send( message );
-					if ( p is Mobile ) {
-						client.Send(
-							new Strive.Network.Messages.ToClient.MobileState( (Mobile)p )
-						);
-					}
+					client.Send( CreateAddMessage( p ) );
 				}
+			}
+		}
+
+		public Strive.Network.Messages.ToClient.AddPhysicalObject CreateAddMessage( PhysicalObject po ) {
+			if ( po is Mobile ) {
+				return new Strive.Network.Messages.ToClient.AddMobile( po as Mobile );
+			} else if ( po is Quaffable ) {
+				return new Strive.Network.Messages.ToClient.AddQuaffable( po as Quaffable );
+			} else if ( po is Readable ) {
+				return new Strive.Network.Messages.ToClient.AddReadable( po as Readable );
+			} else if ( po is Wieldable ) {
+				return new Strive.Network.Messages.ToClient.AddWieldable( po as Wieldable );
+			} else if ( po is Equipable ) {
+				return new Strive.Network.Messages.ToClient.AddEquipable( po as Equipable );
+			} else if ( po is Junk ) {
+				return new Strive.Network.Messages.ToClient.AddJunk( po as Junk );
+			} else if ( po is Terrain ) {
+				return new Strive.Network.Messages.ToClient.AddTerrain( po as Terrain );
+			} else {
+				throw new Exception( "Unknown physical object type " + po.GetType() );
 			}
 		}
 

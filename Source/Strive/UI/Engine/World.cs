@@ -17,6 +17,8 @@ namespace Strive.UI.Engine {
 		Scene scene = new Scene();
 		public PhysicalObjectInstance CurrentAvatar;
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
+		Vector3D cameraHeading;
+		Vector3D cameraPosition;
 
 		public World() {
 			//
@@ -39,7 +41,6 @@ namespace Strive.UI.Engine {
 			scene.Models.Add( poi.model );
 			poi.model.Position = position;
 			poi.model.Rotation = rotation;
-			poi.model.label = po.ObjectTemplateName;
 		}
 
 		public void Remove( int ObjectInstanceID ) {
@@ -66,14 +67,16 @@ namespace Strive.UI.Engine {
 			if ( CurrentAvatar == null ) return;
 
 			if ( cameraMode == EnumCameraMode.FirstPerson ) {
-				scene.View.Position = CurrentAvatar.model.Position;
+				scene.View.Position = cameraPosition = CurrentAvatar.model.Position;
 				scene.View.Rotation = CurrentAvatar.model.Rotation;
+				cameraHeading = Helper.GetHeadingFromRotation( CurrentAvatar.model.Rotation );
 			} else if ( cameraMode == EnumCameraMode.Chase ) {
-				Vector3D camPos = CurrentAvatar.model.Position;
-				camPos.Y += 100;
-				camPos.Z += 100;
-				scene.View.Position = camPos;
-				scene.View.Rotation = CurrentAvatar.model.Rotation;				
+				cameraPosition = CurrentAvatar.model.Position;
+				cameraPosition.Y += 100;
+				cameraPosition.Z += 100;
+				scene.View.Position = cameraPosition;
+				scene.View.Rotation = CurrentAvatar.model.Rotation;
+				cameraHeading = Helper.GetHeadingFromRotation( CurrentAvatar.model.Rotation );
 			} else {
 				Log.ErrorMessage( "Unknown camera mode." );
 			}
@@ -90,7 +93,42 @@ namespace Strive.UI.Engine {
 		public void Render() {
 			ProcessAnimations();
 			scene.Render();
-			// label everything
+			foreach ( PhysicalObjectInstance poi in physicalObjectInstances.Values ) {
+				if ( poi.physicalObject is Mobile || poi.physicalObject is Item ) {
+					//Get the vector between camera and object, put in v1
+					//Get the direction vector of the camera (lookat - position normalized) put in v2
+					//Compute the Dot product.
+					//If Dot(V1, V2) > Cos(FOVInRadian) Then 
+					//You can see the object ! 
+					//Using FieldOfView of 90degrees,
+					//so things offscreen infront will still be labeled.
+
+					/** todo: fix this logic
+					 * problem is in cameraHeading I think?
+					 * rotation2heading is not purrfect
+					Vector3D v1 = poi.model.Position - cameraPosition;
+					if ( Vector3D.Dot( v1, cameraHeading ) <= Math.Cos( Math.PI ) ) {
+						continue;
+					}
+					 */
+
+					Vector3D labelPos = new Vector3D(
+                        poi.model.Position.X,
+                        poi.model.Position.Y+15,
+                        poi.model.Position.Z
+					);
+					Vector2D nameLoc = scene.View.ProjectPoint( labelPos );
+
+					// center the text
+					// todo: correct this
+					nameLoc.X -= poi.physicalObject.ObjectTemplateName.Length/2;
+
+					// nameDist = namePos - camPos; -> set font size
+					// todo: enable tis
+
+					scene.DrawText(nameLoc, poi.physicalObject.ObjectTemplateName );
+				}
+			}
 			scene.Display();
 		}
 

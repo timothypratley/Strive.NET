@@ -26,7 +26,6 @@ namespace Strive.UI.Engine {
 		public MessageProcessor() {
 		}
 
-
 		public void Process( IMessage m ) {
 			#region Communication Message
 			if ( m is Strive.Network.Messages.ToClient.Communication ) {
@@ -40,8 +39,34 @@ namespace Strive.UI.Engine {
 					#endregion
 			#region AddPhysicalObject Message
 			else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject) {
-				Strive.Network.Messages.ToClient.AddPhysicalObject apo = (Strive.Network.Messages.ToClient.AddPhysicalObject)m;
-				PhysicalObject po = new PhysicalObject();
+				PhysicalObject po;
+				if ( m is Strive.Network.Messages.ToClient.AddMobile ) {
+					Strive.Network.Messages.ToClient.AddMobile am = m as Strive.Network.Messages.ToClient.AddMobile;
+					po = new Mobile();
+					((Mobile)po).MobileState = am.state;
+				} else if ( m is Strive.Network.Messages.ToClient.AddQuaffable ) {
+					Strive.Network.Messages.ToClient.AddQuaffable aq = m as Strive.Network.Messages.ToClient.AddQuaffable;
+					po = new Quaffable();
+				} else if ( m is Strive.Network.Messages.ToClient.AddReadable ) {
+					Strive.Network.Messages.ToClient.AddReadable ar = m as Strive.Network.Messages.ToClient.AddReadable;
+					po = new Readable();
+				} else if ( m is Strive.Network.Messages.ToClient.AddEquipable ) {
+					Strive.Network.Messages.ToClient.AddEquipable ae = m as Strive.Network.Messages.ToClient.AddEquipable;
+					po = new Equipable();
+				} else if ( m is Strive.Network.Messages.ToClient.AddWieldable ) {
+					Strive.Network.Messages.ToClient.AddWieldable aw = m as Strive.Network.Messages.ToClient.AddWieldable;
+					po = new Wieldable();
+				} else if ( m is Strive.Network.Messages.ToClient.AddJunk ) {
+					Strive.Network.Messages.ToClient.AddJunk aj = m as Strive.Network.Messages.ToClient.AddJunk;
+					po = new Junk();
+				} else if ( m is Strive.Network.Messages.ToClient.AddTerrain ) {
+					Strive.Network.Messages.ToClient.AddTerrain at = m as Strive.Network.Messages.ToClient.AddTerrain;
+					po = new Terrain();
+				} else {
+					Log.ErrorMessage( "Unknown PhysicalObject received - " + m.GetType() );
+					return;
+				}
+				Strive.Network.Messages.ToClient.AddPhysicalObject apo = m as Strive.Network.Messages.ToClient.AddPhysicalObject;
 				po.ObjectInstanceID = apo.instance_id;
 				po.ModelID = apo.model_id;
 				po.ObjectTemplateName = apo.name;

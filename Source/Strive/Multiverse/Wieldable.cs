@@ -9,6 +9,7 @@ namespace Strive.Multiverse
 	{
 		public Schema.ItemWieldableRow wieldable;
 
+		public Wieldable(){}
 		public Wieldable(
 			Schema.ItemWieldableRow wieldable,
 			Schema.TemplateItemRow item,

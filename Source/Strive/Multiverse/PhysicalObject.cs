@@ -9,7 +9,7 @@ namespace Strive.Multiverse
 	/// that are client/server specific... as they
 	/// both store slightly different things.
 	/// </summary>
-	public /* todo: make abstract */ class PhysicalObject
+	public abstract class PhysicalObject
 	{
 		public int ObjectInstanceID;
 		public int ObjectTemplateID;

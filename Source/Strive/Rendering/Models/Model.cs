@@ -13,8 +13,6 @@ namespace Strive.Rendering.Models {
 
 		#region "Fields"
 		public float BoundingSphereRadiusSquared;
-		public bool ShowLabel = false;
-		public string label = "no name";
 
 		private ModelFormat _format = ModelFormat.Unspecified;
 		private string _key;
@@ -127,7 +125,6 @@ namespace Strive.Rendering.Models {
 			loadedModel._key = key;
 			// todo: fix bounding radius
 			loadedModel.BoundingSphereRadiusSquared = 100;
-			loadedModel.ShowLabel = true;
 
 			// 2.0 Create appropriate model in interop layer
 			switch(format) {

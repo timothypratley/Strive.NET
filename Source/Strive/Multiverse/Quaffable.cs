@@ -7,6 +7,7 @@ namespace Strive.Multiverse
 	/// </summary>
 	public class Quaffable : Item
 	{
+		public Quaffable(){}
 		public Quaffable(
 			Schema.ItemQuaffableRow quaffable,
 			Schema.TemplateItemRow item,

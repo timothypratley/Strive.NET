@@ -7,7 +7,7 @@ namespace Strive.Network.Messages.ToClient
 	/// Summary description for AddPhysicalObject.
 	/// </summary>
 	[Serializable]
-	public class AddPhysicalObject : IMessage
+	public abstract class AddPhysicalObject : IMessage
 	{
 		public AddPhysicalObject(){}
 		public AddPhysicalObject( PhysicalObject po ) {

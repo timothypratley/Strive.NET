@@ -17,9 +17,14 @@ namespace Strive.Network.Messages {
 
 			// message starts with unique type identifier
 			Type t = obj.GetType();
-			byte[] EncodedID = BitConverter.GetBytes(
-				(int)messageTypeMap.idFromMessageType[t]
-			);
+			byte[] EncodedID;
+			try {
+				EncodedID = BitConverter.GetBytes(
+					(int)messageTypeMap.idFromMessageType[t]
+				);
+			} catch ( Exception e ) {
+				throw new Exception( "Message " + t + " has not been added to MessageTypeMap" );
+			}
 			Buffer.Write( EncodedID, 0, EncodedID.Length );
 			Encode( obj, Buffer );
 			return Buffer.ToArray();

@@ -10,6 +10,7 @@ namespace Strive.Multiverse
 		public int Value;
 		public int Weight;
 
+		public Item(){}
 		public Item(
 			Schema.TemplateItemRow item,
 			Schema.ObjectTemplateRow template,

@@ -157,6 +157,19 @@ namespace Strive.Rendering.Cameras
 		*/
 		#endregion
 
+		#region "Methods"
+		public Vector2D ProjectPoint( Vector3D point ) {
+			R3DVector3D namePos = new R3DVector3D();
+			namePos.x = point.X;
+			namePos.y = point.Y;
+			namePos.z = point.Z;
+			R3DVector2D nameLoc = new R3DVector2D();
+			nameLoc = Interop._instance.Cameras.Camera_ProjectPoint( ref namePos );
+			return new Vector2D( nameLoc.x, nameLoc.y );
+		}
+
+		#endregion
+
 		#region "Implementation of IManeuverable"
 		/// <summary>
 		/// Moves the camera

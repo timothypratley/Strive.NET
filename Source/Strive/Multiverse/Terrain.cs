@@ -9,6 +9,7 @@ namespace Strive.Multiverse
 	{
 		public Schema.TemplateTerrainRow terrain;
 
+		public Terrain(){}
 		public Terrain (
 			Schema.TemplateTerrainRow terrain,
 			Schema.ObjectTemplateRow template,

@@ -149,6 +149,7 @@ namespace Strive.UI.Engine
 
 			if(WasKeyboardInput) {
 				// check that we can go there
+				/** TODO: enable collision detection
 				foreach ( PhysicalObjectInstance poi in Game.CurrentWorld.physicalObjectInstances.Values ) {
 					if ( poi.model.ModelFormat == ModelFormat.Scape ) {
 						continue;
@@ -175,9 +176,10 @@ namespace Strive.UI.Engine
 						Log.LogMessage( "Canceled move due to collision" );
 						return;
 					}
-				}
+				} */
 				Game.CurrentWorld.CurrentAvatar.model.Position = avatarPosition;
 				Game.CurrentWorld.CurrentAvatar.model.Rotation = avatarRotation;
+				Game.CurrentWorld.RepositionCamera();
 				SendCurrentPosition();
 			}
 
@@ -189,11 +191,11 @@ namespace Strive.UI.Engine
 			if ( Game.CurrentWorld.CurrentAvatar == null ) return;
 
 			Vector3D avatarHeading = Helper.GetHeadingFromRotation( Game.CurrentWorld.CurrentAvatar.model.Rotation );
-
+			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position;
 			_connection.Position(
-				Game.CurrentWorld.CurrentAvatar.model.Position.X,
-				Game.CurrentWorld.CurrentAvatar.model.Position.Y,
-				Game.CurrentWorld.CurrentAvatar.model.Position.Z,
+				avatarPosition.X,
+				avatarPosition.Y,
+				avatarPosition.Z,
 				avatarHeading.X,
 				avatarHeading.Y,
 				avatarHeading.Z);

@@ -17,6 +17,7 @@ namespace Strive.Multiverse
 		public EnumMobileSize MobileSize;
 		public EnumMobileState MobileState;
 
+		public Mobile() {}
 		public Mobile (
 			Schema.TemplateMobileRow mobile,
 			Schema.ObjectTemplateRow template,

@@ -132,6 +132,13 @@ namespace Strive.Rendering
 			Interop._instance.Pipeline.SetFog( ref FogColor, R3DFOGTYPE.R3DFOGTYPE_PIXELTABLE, R3DFOGMODE.R3DFOGMODE_LINEAR, 0, 200, level );
 		}
 
+		public void DrawText( Vector2D location, string message ) {
+			R3DVector2D nameLoc = new R3DVector2D();
+			nameLoc.x = location.X;
+			nameLoc.y = location.Y;
+			Interop._instance.Interface5D.Primitive_DrawText( ref nameLoc, message );
+		}
+
 		/// <summary>
 		/// Public rendering routine
 		/// </summary>
@@ -152,18 +159,6 @@ namespace Strive.Rendering
 			}
 			catch(Exception e) {
 				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
-			}
-			R3DVector3D namePos = new R3DVector3D();
-			R3DVector2D nameLoc = new R3DVector2D();
-			foreach ( Model m in Models.Values ) {
-				if ( m.ShowLabel ) {
-					namePos.x = m.Position.X;
-					namePos.y = m.Position.Y+5;
-					namePos.z = m.Position.Z;
-					nameLoc = Interop._instance.Cameras.Camera_ProjectPoint( ref namePos ) ;
-					// nameDist = namePos - camPos; -> set font size
-					Interop._instance.Interface5D.Primitive_DrawText( ref nameLoc, m.label );
-				}
 			}
 
 //#if DEBUG

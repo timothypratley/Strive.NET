@@ -7,9 +7,10 @@ namespace Strive.Multiverse
 	/// </summary>
 	public class Equipable : Item
 	{
-		EnumWearLocation WearLocationID;
-		int ArmourClass;
+		public EnumWearLocation WearLocationID;
+		public int ArmourClass;
 
+		public Equipable(){}
 		public Equipable(
 			Schema.ItemEquipableRow equipable,
 			Schema.TemplateItemRow item,

@@ -6,6 +6,7 @@ namespace Strive.Multiverse
 	/// Summary description for Junk.
 	/// </summary>
 	public class Junk : Item {
+		public Junk(){}
 		public Junk(
 			Schema.ItemJunkRow junk,
 			Schema.TemplateItemRow item,

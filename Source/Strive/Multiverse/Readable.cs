@@ -9,6 +9,7 @@ namespace Strive.Multiverse
 	{
 		public Schema.ItemReadableRow readable;
 
+		public Readable(){}
 		public Readable(
 			Schema.ItemReadableRow readable,
 			Schema.TemplateItemRow item,

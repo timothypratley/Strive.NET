@@ -10,7 +10,13 @@ namespace Strive.Network.Messages {
 		public Hashtable idFromMessageType = new Hashtable();
 		public enum EnumMessageID {
 			ToClientAcknowledge = 1,
-			ToClientAddPhysicalObject,
+			ToClientAddMobile,
+			ToClientAddReadable,
+			ToClientAddQuaffable,
+			ToClientAddEquipable,
+			ToClientAddJunk,
+			ToClientAddTerrain,
+			ToClientAddWieldable,
 			ToClientCanPossess,
 			ToClientCombatReport,
 			ToClientCommunication,
@@ -42,7 +48,13 @@ namespace Strive.Network.Messages {
 		public MessageTypeMap()	{
 			// build the mapping between message_id and message_type
 			messageTypeFromID.Add( EnumMessageID.ToClientAcknowledge, typeof( ToClient.Acknowledge ) );
-			messageTypeFromID.Add( EnumMessageID.ToClientAddPhysicalObject, typeof( ToClient.AddPhysicalObject ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientAddMobile, typeof( ToClient.AddMobile ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientAddReadable, typeof( ToClient.AddReadable ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientAddQuaffable, typeof( ToClient.AddQuaffable ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientAddEquipable, typeof( ToClient.AddEquipable ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientAddWieldable, typeof( ToClient.AddWieldable ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientAddJunk, typeof( ToClient.AddJunk ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientAddTerrain, typeof( ToClient.AddTerrain ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCanPossess, typeof( ToClient.CanPossess ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCombatReport, typeof( ToClient.CombatReport ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCommunication, typeof( ToClient.Communication ) );
