@@ -54,6 +54,8 @@ namespace Strive.UI.WorldView {
 			int xdiff, zdiff;
 			float tcx, tcz, px, pz;
 			int l, m;
+			Vector2D loc;
+			Terrain t;
 
 			// first loop through all chunks to see if any should be reused
 			int cx = Helper.DivTruncate( (int)x, ts );
@@ -93,8 +95,8 @@ namespace Strive.UI.WorldView {
 								for (m=0; m<=hpc; m++) {
 									px = tcx + l*cs/hpc;
 									pz = tcz + m*cs/hpc;
-									Vector2D loc = new Vector2D( px, pz );
-									Terrain t = (Terrain)terrainPiecesXYIndex[loc];
+									loc = new Vector2D( px, pz );
+									t = (Terrain)terrainPiecesXYIndex[loc];
 									if ( t != null ) {
 										TC[i,j,k].SetHeight( px, pz, t.Position.Y );
 										if ( k==0 ) TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ).ID, px, pz, t.Rotation.Y );
@@ -115,10 +117,10 @@ namespace Strive.UI.WorldView {
 
 			// Make sure we update the previous x,z heights for underlying landscapes
 			// to their correct values
-			Vector2D loc = new Vector2D( prev_x, prev_z );
-			Terrain t = (Terrain)terrainPiecesXYIndex[loc];
+			loc = new Vector2D( prev_x, prev_z );
+			t = (Terrain)terrainPiecesXYIndex[loc];
 			if ( t != null ) {
-				Set( t.Position.X, t.Position.Z, t.Position.Y, _resource_manager.GetTexture(t.ResourceID).ID, t.Rotation.Y );
+				Set( t.Position.X, t.Position.Z, t.Position.Y, -1, 0 );
 			}
 
 			// set underlying landscapes to 0 at x,z
@@ -140,7 +142,7 @@ namespace Strive.UI.WorldView {
 			int xdiff, zdiff;
 			int k;
 
-			if ( altitude == 0 && texture_id == -1 && rotation == 0 ) {
+			if ( texture_id == -1 ) {
 				// This should only be applied to the low detail landscapes
 				k=1;
 
@@ -155,6 +157,12 @@ namespace Strive.UI.WorldView {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 				cx = Helper.DivTruncate( cx, hpc );
 				cz = Helper.DivTruncate( cz, hpc );
+				if ( texture_id == -1 ) {
+					if ( x - (cx*cs) > (cx+1)*cs - x ) cx++;
+					if ( z - (cz*cs) > (cz+1)*cs - z ) cz++;
+					x = cx * cs;
+					z = cz * cs;
+				}
 				xdiff = cx - CX[k];
 				zdiff = cz - CZ[k];
 				if ( xdiff < 0 || xdiff >= xorder || zdiff < 0 || zdiff >= zorder ) {
@@ -182,7 +190,11 @@ namespace Strive.UI.WorldView {
 						TC[xdiff-1,zdiff-1,k].SetHeight( x, z, altitude );
 					}
 				} else {
-					break;	// only corners matter for higher orders
+					if ( texture_id == -1 ) {
+						// keep going
+					} else {
+						break;	// only corners matter for higher orders
+					}
 				}
 			}
 		}
