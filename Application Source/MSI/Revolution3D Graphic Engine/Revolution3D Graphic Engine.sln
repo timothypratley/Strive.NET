@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Revolution3D Graphic Engine", "Revolution3D Graphic Engine.vdproj", "{1DEEB2FE-7480-40BA-B3D2-342404C5FEDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{1DEEB2FE-7480-40BA-B3D2-342404C5FEDF}.Debug.ActiveCfg = Release
+		{1DEEB2FE-7480-40BA-B3D2-342404C5FEDF}.Debug.Build.0 = Release
+		{1DEEB2FE-7480-40BA-B3D2-342404C5FEDF}.Release.ActiveCfg = Release
+		{1DEEB2FE-7480-40BA-B3D2-342404C5FEDF}.Release.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
