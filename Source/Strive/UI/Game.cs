@@ -1,8 +1,8 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-
 using System.Windows.Forms;
+
 using Strive.Common;
 using Strive.Math3D;
 using Strive.Rendering;
@@ -24,7 +24,7 @@ namespace Strive.UI
 		public static ServerConnection CurrentServerConnection;// = new ServerConnection();
 		public static GameLoop CurrentGameLoop;// = new GameLoop();
 		public static Windows.Main CurrentMainWindow;// = new Windows.Main();
-		public static Scene CurrentScene;// = new Scene();
+		public static World CurrentWorld;// = new Scene();
 		public static Logging.Log CurrentLog;// = new Logging.Log();
 		public static bool GameControlMode = false;
 
@@ -38,7 +38,7 @@ namespace Strive.UI
 			// Initialise required objects
 			CurrentServerConnection = new ServerConnection();
 			CurrentGameLoop = new GameLoop();
-			CurrentScene = new Scene();
+			CurrentWorld = new World();
 			CurrentLog = new Logging.Log();
 			CurrentMainWindow = new Windows.Main();
 			// Configure Resource manager
@@ -53,7 +53,7 @@ namespace Strive.UI
 			// must terminate all threads to quit
 			CurrentGameLoop.Stop();
 			CurrentServerConnection.Stop();
-			CurrentScene.DropAll();
+			CurrentWorld.Clear();
 		}
 
 
@@ -61,20 +61,10 @@ namespace Strive.UI
 		{
 			CurrentServerConnection.Stop();
 			CurrentGameLoop.Stop();
-			CurrentScene.DropAll();
-
-			short screenHeight = System.Convert.ToInt16(((PictureBox)RenderTarget).Height);
-			short screenWidth = System.Convert.ToInt16(((PictureBox)RenderTarget).Width);
-
-			CurrentScene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
-			CurrentScene.View.FieldOfView = 60;
-			CurrentScene.View.ViewDistance = 20000;
-			CurrentScene.View.Position = new Vector3D( 0, 200, 0 );
-			CurrentScene.SetLighting( 255 );
-			CurrentScene.SetFog( 1000.0f );
+			CurrentWorld.InitialiseView( RenderTarget );
 			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName).AddressList[0], Port ) );
 			CurrentServerConnection.Login(LoginName, Password);
-			CurrentGameLoop.Start(CurrentScene, RenderTarget, CurrentServerConnection);
+			CurrentGameLoop.Start(CurrentServerConnection);
 		}
 	}
 }

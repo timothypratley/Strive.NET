@@ -133,8 +133,6 @@ namespace Strive.Rendering.Models {
 				case ModelFormat.MDL: {
 					try {
 						Interop._instance.MdlSystem.Model_Load(key, path);
-						// TODO TIM: fix
-						//Interop._instance.MdlSystem.MDL_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -213,6 +211,34 @@ namespace Strive.Rendering.Models {
 				Interop._instance.Meshbuilder.Mesh_Release();
 			} else {
 				throw new Exception( "n0rty n0rty, unknown format for delete" );
+			}
+		}
+
+		public void Hide() {
+			if ( _format == ModelFormat.MDL ) {
+				Interop._instance.MdlSystem.Class_SetPointer(this.Key);
+				Interop._instance.MdlSystem.Model_SetActivate( false );
+			} else if ( _format == ModelFormat.Scape ) {
+				// no equivalent
+			} else if ( _format == ModelFormat.Mesh ) {
+				Interop._instance.Meshbuilder.Class_SetPointer(this.Key);
+				Interop._instance.Meshbuilder.Mesh_SetActivate( false );
+			} else {
+				throw new Exception( "n0rty n0rty, unknown format for hide" );
+			}
+		}
+
+		public void Show() {
+			if ( _format == ModelFormat.MDL ) {
+				Interop._instance.MdlSystem.Class_SetPointer(this.Key);
+				Interop._instance.MdlSystem.Model_SetActivate( true );
+			} else if ( _format == ModelFormat.Scape ) {
+				// no equivalent
+			} else if ( _format == ModelFormat.Mesh ) {
+				Interop._instance.Meshbuilder.Class_SetPointer(this.Key);
+				Interop._instance.Meshbuilder.Mesh_SetActivate( true );
+			} else {
+				throw new Exception( "n0rty n0rty, unknown format for show" );
 			}
 		}
 

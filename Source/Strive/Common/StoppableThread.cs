@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 
+using Strive.Logging;
+
 namespace Strive.Common
 {
 	/// <summary>
@@ -35,14 +37,12 @@ namespace Strive.Common
 
 		void ThreadLoop() {
 			while ( isRunning ) {
-				//try
-				//{
+				try	{
 					wr();
-				//}
-				//catch(Exception e)
-				//{
-				//	throw new Strive.Common.TracedException("TracedException[" + e.Message + "]", e);
-				//}
+				} catch(Exception e) {
+					Log.ErrorMessage( e );
+					isRunning = false;
+				}
 			}
 			iHaveStopped.Set();
 		}

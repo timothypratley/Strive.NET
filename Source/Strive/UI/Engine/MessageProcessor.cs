@@ -5,6 +5,7 @@ using Strive.Math3D;
 using Strive.Rendering.Models;
 using Strive.Resources;
 using Strive.Logging;
+using Strive.Multiverse;
 
 
 namespace Strive.UI.Engine {
@@ -40,57 +41,44 @@ namespace Strive.UI.Engine {
 			#region AddPhysicalObject Message
 			else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject) {
 				Strive.Network.Messages.ToClient.AddPhysicalObject apo = (Strive.Network.Messages.ToClient.AddPhysicalObject)m;
+				PhysicalObject po = new PhysicalObject();
+				po.ObjectInstanceID = apo.instance_id;
+				po.ModelID = apo.model_id;
+				po.ObjectTemplateName = apo.name;
+				Vector3D position = new Vector3D( apo.x, apo.y, apo.z );
+				Vector3D rotation = Helper.GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
+				try {
+					Game.CurrentWorld.Add( po, position, rotation );
+				} catch ( Exception e ) {
+					Log.ErrorMessage( "Got a double add message." );
+				}
 				if ( apo.instance_id == Game.CurrentPlayerID ) {
 					// load self... this contains the players initial position
-					Game.CurrentScene.View.Position = new Vector3D( apo.x, apo.y, apo.z );
-					Game.CurrentScene.View.Rotation = Helper.GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
-					Log.LogMessage( "Initial position is " + Game.CurrentScene.View.Position );
-					Log.LogMessage( "Initial rotation is " + Game.CurrentScene.View.Rotation );
+					Game.CurrentWorld.Possess( apo.instance_id );
+					Log.LogMessage( "Initial position is " + position );
+					Log.LogMessage( "Initial rotation is " + rotation );
 					return;
 				}
-				Model model;
-				try {
-					model = ResourceManager.LoadModel(apo.instance_id, apo.model_id);
-					Game.CurrentScene.Models.Add( model );
-				} catch ( Exception e ) {
-					Log.ErrorMessage( "Could not add model " + apo.instance_id );
-					Log.ErrorMessage( e.Message );
-					return;
-				}
-				model.Position = new Vector3D( apo.x, apo.y, apo.z );
-				model.Rotation = Helper.GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
-				Log.LogMessage( "Added object " + apo.instance_id + " with model " + apo.model_id + " at " + model.Position );
+				Log.LogMessage( "Added object " + apo.instance_id + " with model " + apo.model_id + " at " + position );
 			}
 					#endregion
 			#region Position Message
 
 			else if( m is Strive.Network.Messages.ToClient.Position) {
 				Strive.Network.Messages.ToClient.Position p = (Strive.Network.Messages.ToClient.Position)m;
-				Model workingModel;
-							
-						#region 1.1.1 Check that the model exists
-				if ( p.instance_id == Game.CurrentPlayerID) {
-					Game.CurrentScene.View.Position = new Vector3D( p.position_x, p.position_y, p.position_z );
-					Game.CurrentScene.View.Rotation = Helper.GetRotationFromHeading( p.heading_x, p.heading_y, p.heading_z );
-					return;
-				}
-				try {
-					workingModel = Game.CurrentScene.Models[p.instance_id.ToString()];
-				} catch (Exception) {
+				PhysicalObjectInstance poi = Game.CurrentWorld.Find( p.instance_id );
+				if ( poi == null ) {
 					Log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
 					return;
 				}
-						#endregion
-
-						#region 1.1.2 Move and rotate model
-						
-				workingModel.Position = new Vector3D(p.position_x, p.position_y, p.position_z);
-				workingModel.Rotation = Helper.GetRotationFromHeading(p.heading_x, p.heading_y, p.heading_z);
-				//				Log.LogMessage( "Position message applied to " + p.instance_id + " rotation " + workingModel.Rotation );
-						#endregion
+				poi.model.Position = new Vector3D( p.position_x, p.position_y, p.position_z );
+				poi.model.Rotation = Helper.GetRotationFromHeading( p.heading_x, p.heading_y, p.heading_z );
+				if ( poi == Game.CurrentWorld.CurrentAvatar ) {
+					Game.CurrentWorld.RepositionCamera();
+				}
+				//				Log.LogMessage( "Position message applied to " + p.instance_id + " rotation " + Rotation );
 			}
-
-					#endregion
+			#endregion
 			#region CombatReport Message
 			else if ( m is Strive.Network.Messages.ToClient.CombatReport ) {
 				Strive.Network.Messages.ToClient.CombatReport cr = m as Strive.Network.Messages.ToClient.CombatReport;
@@ -129,7 +117,7 @@ namespace Strive.UI.Engine {
 			#region DropPhysicalObject Message
 			else if ( m is Strive.Network.Messages.ToClient.DropPhysicalObject) {
 				Strive.Network.Messages.ToClient.DropPhysicalObject dpo = (Strive.Network.Messages.ToClient.DropPhysicalObject)m;
-				Game.CurrentScene.Models.Remove( dpo.instance_id.ToString() );
+				Game.CurrentWorld.Remove( dpo.instance_id );
 				Log.LogMessage( "Removed "+ dpo.instance_id.ToString() );
 			}
 				#endregion
@@ -137,21 +125,21 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.MobileState) {
 				Strive.Network.Messages.ToClient.MobileState ms = (Strive.Network.Messages.ToClient.MobileState)m;
 				//				Log.LogMessage( "Mobile " + ms.ObjectInstanceID + " is " + ms.State );
-					#region 1.1.1 Check that the model exists
-				if ( ms.ObjectInstanceID == Game.CurrentPlayerID ) {
+
+				PhysicalObjectInstance poi = Game.CurrentWorld.Find( ms.ObjectInstanceID );
+				
+				#region 1.1.1 Check that the model exists
+				if ( poi == Game.CurrentWorld.CurrentAvatar ) {
 					// ignoring self positions for now
 					return;
 				}
-				Model workingModel;
-				try {
-					workingModel = Game.CurrentScene.Models[ms.ObjectInstanceID.ToString()];
-				} catch (Exception) {
+				if ( poi == null ) {
 					Log.ErrorMessage( "Model for " + ms.ObjectInstanceID + " has not been loaded" );
 					return;
 				}
-					#endregion
+				#endregion
 
-				workingModel.AnimationSequence = (int)ms.State;
+				poi.model.AnimationSequence = (int)ms.State;
 			}
 				#endregion
 			#region CurrentHitpoints
@@ -170,7 +158,7 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.DropAll ) {
 				Strive.Network.Messages.ToClient.DropAll da = (Strive.Network.Messages.ToClient.DropAll)m;
 				Log.LogMessage( "DropAll recieved" );
-				Game.CurrentScene.DropAll();
+				Game.CurrentWorld.Clear();
 			}
 				#endregion
 			#region Weather
@@ -178,7 +166,7 @@ namespace Strive.UI.Engine {
 				Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
 				//Log.LogMessage( "Weather update recieved" );
 				string texture_name = ResourceManager.LoadTexture(w.SkyTextureID);
-				Game.CurrentScene.SetSky( "sky", texture_name );
+				Game.CurrentWorld.SetSky( texture_name );
 			}
 				#endregion
 			#region SkillList

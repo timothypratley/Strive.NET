@@ -1,12 +1,15 @@
 using System;
+
 using Strive.Math3D;
 
 namespace Strive.Multiverse
 {
 	/// <summary>
-	/// Summary description for PhysicalObject.
+	/// Maybe there should be two different multiverses
+	/// that are client/server specific... as they
+	/// both store slightly different things.
 	/// </summary>
-	public abstract class PhysicalObject
+	public /* todo: make abstract */ class PhysicalObject
 	{
 		public int ObjectInstanceID;
 		public int ObjectTemplateID;
@@ -18,6 +21,8 @@ namespace Strive.Multiverse
 		public float HitPoints = 0;
 		public int MaxHitPoints = 0;
 		public float BoundingSphereRadiusSquared;
+
+		public PhysicalObject() {}
 
 		public PhysicalObject(
 			Schema.ObjectTemplateRow template,

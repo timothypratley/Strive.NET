@@ -167,12 +167,27 @@
                     BuildAction = "None"
                 />
                 <File
+                    RelPath = "Engine\EnumCameraMode.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Engine\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Engine\MessageProcessor.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Engine\PhysicalObjectInstance.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Engine\World.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
