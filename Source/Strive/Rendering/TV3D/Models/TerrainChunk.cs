@@ -65,31 +65,37 @@ namespace Strive.Rendering.TV3D.Models {
 			return _mesh.GetHeight( x, z );
 		}
 
-		public void SetTexture( int texture_id ) {
-			_mesh.SetTexture( texture_id, -1 );
+		public void SetTexture( ITexture t ) {
+			_mesh.SetTexture( t.ID, -1 );
 		}
 
-		public void SetTexture( int texture_id, float x, float z, float rotation ) {
-			//_mesh.SetTexture( texture_id, -1 );
+		public void SetTexture( ITexture t, float x, float z, float rotation ) {
+			//_mesh.SetTexture( t.ID, -1 );
 			int rot = ((int)rotation)%360;
 			switch( rot ) {
 				default:
 					Logging.Log.ErrorMessage( "Invalid rotation " + rotation );
-					_mesh.DynDrawTexture( texture_id, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
+					_mesh.DynDrawTexture( t.ID, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 0:
-					_mesh.DynDrawTexture( texture_id, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
+					_mesh.DynDrawTexture( t.ID, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 90:
-					_mesh.DynDrawTexture( texture_id, x+_gap_size, z, x, z+_gap_size, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
+					_mesh.DynDrawTexture( t.ID, x+_gap_size, z, x, z+_gap_size, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 180:
-					_mesh.DynDrawTexture( texture_id, x+_gap_size, z+_gap_size, x, z, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
+					_mesh.DynDrawTexture( t.ID, x+_gap_size, z+_gap_size, x, z, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 270:
-					_mesh.DynDrawTexture( texture_id, x, z+_gap_size, x+_gap_size, z, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
+					_mesh.DynDrawTexture( t.ID, x, z+_gap_size, x+_gap_size, z, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 			}
+		}
+
+		public void SetClouds( ITexture texture ) {
+			// TODO: make clouds always above your head
+			_mesh.InitClouds( texture.ID, CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 500f, 1, 1, 1f, 1f, 1f);
+			_mesh.SetCloudVelocity(1, 0.01f, 0.01f);
 		}
 
 		public void Update() {

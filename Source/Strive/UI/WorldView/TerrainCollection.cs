@@ -4,6 +4,7 @@ using System.Collections;
 using Strive.Resources;
 using Strive.Rendering;
 using Strive.Rendering.Models;
+using Strive.Rendering.Textures;
 using Strive.Math3D;
 using Strive.Multiverse;
 using Strive.Common;
@@ -44,6 +45,12 @@ namespace Strive.UI.WorldView {
 				for ( i=0; i<xorder; i++ ) {
 					for ( j=0; j<zorder; j++ ) {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
+
+						// TODO: fix this don't hardcode it... and don't set it per terrain chunk
+						//if ( k == zoomorder-1 ){
+							// TODO:
+						//	TC[i,j,k].SetClouds(_resource_manager.GetTexture(8));
+						//}
 						//if ( k > 0 ) {
 							// TODO: bad, don't use hardcoded 20!
 							//TC[i,j,k].SetTexture( _resource_manager.GetTexture( 21 ).ID );
@@ -130,7 +137,7 @@ namespace Strive.UI.WorldView {
 									if ( t != null ) {
 										TC[i,j,k].SetHeight( px, pz, t.Position.Y );
 										//if ( k==0 )
-										TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ).ID, px, pz, t.Rotation.Y );
+										TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ), px, pz, t.Rotation.Y );
 									} else {
 										TC[i,j,k].SetHeight( px, pz, 0 );
 									}
@@ -170,14 +177,14 @@ namespace Strive.UI.WorldView {
 			}
 		}
 
-		public void Set( float x, float z, float altitude, int texture_id, float rotation ) {
+		public void Set( float x, float z, float altitude, ITexture texture, float rotation ) {
 			int cs = ts;
 			int cx = Helper.DivTruncate( (int)x, ts );
 			int cz = Helper.DivTruncate( (int)z, ts );
 			int xdiff, zdiff;
 			int k;
 
-			if ( texture_id == -1 ) {
+			if ( texture.ID == -1 ) {
 				// This should only be applied to the low detail landscapes
 				k=1;
 
@@ -190,7 +197,7 @@ namespace Strive.UI.WorldView {
 			}
 
 			for ( ; k<zoomorder; k++ ) {
-				if ( texture_id == -1 ) {
+				if ( texture.ID == -1 ) {
 					if ( x - (cx*cs) >= (cx+1)*cs - x ) cx++;
 					if ( z - (cz*cs) >= (cz+1)*cs - z ) cz++;
 					x = cx*cs;
@@ -207,7 +214,7 @@ namespace Strive.UI.WorldView {
 
 					// set the texture for higher order terrain or not
 					//if ( k==0 )
-					TC[xdiff,zdiff,k].SetTexture( texture_id, x, z, rotation );
+					TC[xdiff,zdiff,k].SetTexture( texture, x, z, rotation );
 				}
 
 				// edges need to update both chunks
@@ -228,7 +235,7 @@ namespace Strive.UI.WorldView {
 						TC[xdiff-1,zdiff-1,k].SetHeight( x, z, altitude );
 					}
 				} else {
-					if ( texture_id == -1 ) {
+					if ( texture.ID == -1 ) {
 						// keep going
 					} else {
 						break;	// only corners matter for higher orders
@@ -245,7 +252,7 @@ namespace Strive.UI.WorldView {
 			}
 			terrainPiecesXYIndex.Add( loc, t );
 
-			Set( t.Position.X, t.Position.Z, t.Position.Y, _resource_manager.GetTexture(t.ResourceID).ID, t.Rotation.Y );
+			Set( t.Position.X, t.Position.Z, t.Position.Y, _resource_manager.GetTexture(t.ResourceID), t.Rotation.Y );
 		}
 
 		public void Clear() {

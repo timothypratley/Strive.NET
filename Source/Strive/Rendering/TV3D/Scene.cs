@@ -77,21 +77,9 @@ namespace Strive.Rendering.TV3D
 		}
 
 		public void SetClouds( ITexture texture ) {
-			// TODO: make clouds always above your head
+			// TODO: this is done per terrain chunk atm, bit zanny, should be per scene?
 			//Engine.Land.InitClouds( texture.ID, CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
 			//Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
-		}
-
-		short sun_light_id = -1;
-		public void SetLighting( float level ) {
-			if ( sun_light_id >= 0 ) {
-				Engine.LightEngine.DeleteLight( sun_light_id );
-			}
-			DxVBLibA.D3DVECTOR dir = new DxVBLibA.D3DVECTOR();
-			dir.x = -1;
-			dir.y = -1;
-			dir.z = -1;
-			sun_light_id = Engine.LightEngine.CreateQuickDirectionalLight( ref dir, 1, 1, 1, "sun", level );
 		}
 
 		public void SetFog( float level ) {
@@ -134,7 +122,8 @@ namespace Strive.Rendering.TV3D
 		short _sunLight;
 		short _moonLight;
 		int _sunOrbitYOffset;
-		public void SetSky( ITexture night, ITexture day, ITexture cusp, ITexture sun ) {
+		int _sunOrbitZOffset;
+		public void SetSky( ITexture day, ITexture night, ITexture cusp, ITexture sun ) {
 			nightSkyTexture = night;
 			daySkyTexture = day;
 			cuspSkyTexture = cusp;
@@ -142,7 +131,7 @@ namespace Strive.Rendering.TV3D
 			Engine.Atmosphere.SkySphere_SetRadius( 1000 );
 
 			Engine.Atmosphere.Sun_SetTexture(sun.ID);
-			Engine.Atmosphere.Sun_SetBillboardSize(2);
+			Engine.Atmosphere.Sun_SetBillboardSize(0.5f);
 			Engine.Atmosphere.Sun_Enable(true);
 
 			DxVBLibA.D3DLIGHT8 sunLight = new DxVBLibA.D3DLIGHT8();
@@ -157,37 +146,37 @@ namespace Strive.Rendering.TV3D
 			_sunLight = Engine.LightEngine.CreateLight(ref sunLight, "sun", false);
 
 			_sunOrbitYOffset = 200;
+			_sunOrbitZOffset = 200;
 
 			DxVBLibA.D3DLIGHT8 moonLight = new DxVBLibA.D3DLIGHT8();
 			moonLight.Type = DxVBLibA.CONST_D3DLIGHTTYPE.D3DLIGHT_DIRECTIONAL;
 			moonLight.Direction = Engine.Gl.Vector3(1, -1, 0);
-			moonLight.ambient = Engine.Gl.DXColor(0.2f, 0.2f, 0.2f, 1);
-			moonLight.diffuse = Engine.Gl.DXColor(0.2f, 0.2f, 0.2f, 1);
-			moonLight.specular = Engine.Gl.DXColor(0.2f, 0.2f, 0.2f, 1);
+			moonLight.ambient = Engine.Gl.DXColor(0.1f, 0.1f, 0.1f, 1);
+			moonLight.diffuse = Engine.Gl.DXColor(0.1f, 0.1f, 0.1f, 1);
+			moonLight.specular = Engine.Gl.DXColor(0.1f, 0.1f, 0.1f, 1);
 			moonLight.Attenuation0 = 0;
 			moonLight.Attenuation1 = 0;
 			moonLight.Attenuation2 = 0;
 			_moonLight = Engine.LightEngine.CreateLight(ref moonLight, "moon", false);
 		}
 
-		float timeOfDay = 12;
+		float timeOfDay = 6;
 		public void SetTimeOfDay( float hour ) {
 			timeOfDay = hour;
 		}
 
 
 		const int SUN_ORBIT_RADIUS = 1000;
-		const int MILLISEC_PER_DAY = 1000*60*60*24;
+		const int HOURS_PER_DAY = 24;
 		public void RenderAtmosphere() {
 			// blend between three standard textures depending on the time of day
 			if ( nightSkyTexture != null && daySkyTexture != null && cuspSkyTexture != null ) {
-				float sunPositionY = (float)(SUN_ORBIT_RADIUS * System.Math.Sin(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5) + _sunOrbitYOffset);
-				float alpha = 2*(sunPositionY + SUN_ORBIT_RADIUS - _sunOrbitYOffset) / (SUN_ORBIT_RADIUS * 2);
-				//alpha now ranges from 0 to 2, so cap it at 1 again 
-				//The purpose of this is to avoid stars being visible during the day (the brightness of the day sky is 
-				//consistant) 
-				if ( alpha > 1 ) {
-					alpha = 1 ;
+				float sunPositionX = (float)(SUN_ORBIT_RADIUS * System.Math.Sin(2 * System.Math.PI * timeOfDay / HOURS_PER_DAY));
+				float sunPositionY = (float)(SUN_ORBIT_RADIUS * -System.Math.Cos(2*System.Math.PI * timeOfDay / HOURS_PER_DAY) + _sunOrbitYOffset);
+				float sunPositionZ = _sunOrbitZOffset; // offset from equator
+				float alpha = 1-4*Math.Abs(sunPositionY - _sunOrbitYOffset) / SUN_ORBIT_RADIUS;
+				if ( alpha < 0 ) {
+					alpha = 0;
 				}
 
 				// first render the furthest
@@ -198,9 +187,9 @@ namespace Strive.Rendering.TV3D
 				} else {
 					Engine.Atmosphere.SkySphere_SetTexture( daySkyTexture.ID );
 					DxVBLibA.D3DLIGHT8 sunLight = Engine.LightEngine.GetLightByIndex(_sunLight);
-					sunLight.Direction = Engine.Gl.Vector3((float)(-System.Math.Cos(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5)), (float)(-System.Math.Sin(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5)), 0);
-					float brightness = (float)(1.0 / (1 + System.Math.Pow(System.Math.E, -(alpha - 0.6) / 0.05)));
-					float ambient = alpha * 0.2F;
+					sunLight.Direction = Engine.Gl.Vector3(-sunPositionX, -sunPositionY, -sunPositionZ);
+					float brightness = (1-alpha)/4F;
+					float ambient = 0.2F;
 					sunLight.ambient.r = ambient;
 					sunLight.ambient.g = ambient;
 					sunLight.ambient.b = ambient;
@@ -225,7 +214,7 @@ namespace Strive.Rendering.TV3D
 				Engine.Atmosphere.SkySphere_SetColor(1,1,1,alpha);
 				Engine.Atmosphere.Atmosphere_Render();
 
-				Engine.Atmosphere.Sun_SetPosition((float)(SUN_ORBIT_RADIUS * System.Math.Cos(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5)), sunPositionY, 0);
+				Engine.Atmosphere.Sun_SetPosition(sunPositionX, sunPositionY, sunPositionZ);
 			}
 
 			// render the atmosphere

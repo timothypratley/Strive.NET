@@ -12,8 +12,9 @@ namespace Strive.Rendering.Models {
 	public interface ITerrainChunk : IModel {
 		void SetHeight( float x, float z, float altitude );
 		float GetHeight( float x, float z );
-		void SetTexture( int texture_id, float x, float z, float rotation );
-		void SetTexture( int texture_id );
+		void SetTexture( ITexture t, float x, float z, float rotation );
+		void SetTexture( ITexture t );
+		void SetClouds( ITexture t );
 		void Update();
 		void Render();
 	}

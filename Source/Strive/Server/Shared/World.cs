@@ -34,10 +34,10 @@ namespace Strive.Server.Shared {
 		public ArrayList mobilesArrayList;
 
 		// TODO: do we know the sun texture etc here?
-		const int DEFAULT_DAY = 1;
-		const int DEFAULT_NIGHT = 3;
-		const int DEFAULT_CUSP = 2;
-		const int DEFAULT_SUN = 4;
+		const int DEFAULT_DAY = 147;
+		const int DEFAULT_NIGHT = 148;
+		const int DEFAULT_CUSP = 5;
+		const int DEFAULT_SUN = 146;
 		public Strive.Network.Messages.ToClient.TimeAndWeather weather = new Strive.Network.Messages.ToClient.TimeAndWeather( Global.now, 0, DEFAULT_DAY, DEFAULT_NIGHT, DEFAULT_CUSP, DEFAULT_SUN, 0, 0 );
 
 		public World( int world_id ) {

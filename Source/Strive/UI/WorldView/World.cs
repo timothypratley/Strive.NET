@@ -43,7 +43,6 @@ namespace Strive.UI.WorldView {
 				this.MiniMapTarget = MiniMapTarget;
 			}
 			//WorldTerrain = RenderingEngine.GetTerrain();
-			RenderingScene.SetLighting( 10 );
 			RenderingScene.SetFog( 500.0f );
 			renderViewport.Camera.ViewDistance = 10000;
 			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
@@ -233,8 +232,8 @@ namespace Strive.UI.WorldView {
 			RenderingScene.SetClouds( texture );
 		}
 
-		DateTime baseWorldTime;
-		DateTime localTimestamp;
+		DateTime baseWorldTime = DateTime.Now;
+		DateTime localTimestamp = DateTime.Now;
 		public void SetTime( DateTime worldTime ) {
 			baseWorldTime = worldTime;
 			localTimestamp = DateTime.Now;
@@ -242,11 +241,12 @@ namespace Strive.UI.WorldView {
 
 		public float GetHour() {
 			DateTime worldNow = GetWorldTime();
-			return (((worldNow.Ticks*24L*60L)%(600000000L*24L))/600000000f);
+			return ((float)(worldNow.Ticks%TimeSpan.TicksPerDay)/TimeSpan.TicksPerHour);
 		}
 
-		TimeSpan worldTimeOffset = DateTime.Parse("20000101") - DateTime.Parse("00000101");
-		const long worldTimeRatio = 96;
+		// TODO: TimeSpan worldTimeOffset = DateTime.Parse("20000101") - DateTime.Parse("00000101");
+		TimeSpan worldTimeOffset = new TimeSpan(0);
+		const long worldTimeRatio = 960;
 		public DateTime GetWorldTime() {
 			TimeSpan ts = new TimeSpan((DateTime.Now - localTimestamp).Ticks*worldTimeRatio);  // time elapsed since last sync
 			DateTime worldNow = (baseWorldTime - worldTimeOffset + ts);

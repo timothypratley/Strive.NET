@@ -19,7 +19,6 @@ namespace Strive.Rendering
 		void SetSky( ITexture texture );
 		void SetSky( ITexture night, ITexture day, ITexture cusp, ITexture sun );
 		void SetClouds( ITexture texture );
-		void SetLighting( float level );
 		void SetFog( float level );
 		void DrawText( Vector3D location, string message );
 		void Clear();

@@ -92,7 +92,7 @@ namespace Strive.Rendering.TV3D.Models {
 				tc = TerrainChunk.CreateTerrainChunk( cx*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, cz*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, Constants.terrainPieceSize, Constants.terrainHeightsPerChunk );
 				terrainChunks.Add( loc, tc );
 			}
-			tc.SetTexture( texture.ID, x, z, rotation );
+			tc.SetTexture( texture, x, z, rotation );
 		}
 
 //		TVRenderSurface rs = Engine.TV3DScene.CreateRenderSurface(256,256,false,0,0);

@@ -362,6 +362,9 @@ Begin DataProject = "Database"
          Colorizer = 5
       End
    End
+   Begin Folder = "Massage Scripts"
+      Script = "TreeGen.sql"
+   End
    Begin Folder = "Queries"
    End
 End
