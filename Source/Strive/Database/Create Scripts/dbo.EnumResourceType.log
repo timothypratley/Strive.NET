@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[EnumResourceType]
+Destination: D:\projects\Strive\cvs.sourceforge.net\Strive\Source\Strive\Database\Create Scripts\dbo.EnumResourceType.dat
+Rows copied: 3
+Bulk Copy duration: 0 minutes and 0.0 seconds

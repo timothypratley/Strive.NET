@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[EnumTerrainType]
+Destination: D:\projects\Strive\cvs.sourceforge.net\Strive\Source\Strive\Database\Create Scripts\dbo.EnumTerrainType.dat
+Rows copied: 1
+Bulk Copy duration: 0 minutes and 0.0 seconds
