@@ -177,6 +177,14 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Icons\Chat.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Icons\Command.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "Icons\Connection.bmp"
                     BuildAction = "EmbeddedResource"
                 />

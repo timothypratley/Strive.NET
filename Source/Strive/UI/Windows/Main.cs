@@ -95,10 +95,10 @@ namespace Strive.UI.Windows
 			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GlobalImageList,-1);
 			DockingManager.AddContentWithState(whoWindow, State.DockRight);
 			// Command
-			Content commandWindow = DockingManager.Contents.Add(new ChildWindows.Command(), "Command", null, -1);
+			Content commandWindow = DockingManager.Contents.Add(new ChildWindows.Command(), "Command", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Command);
 			DockingManager.AddContentWithState(commandWindow, State.DockBottom);
 			// Chat
-			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", null, -1);
+			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Chat);
 			DockingManager.AddContentWithState(chatWindow, State.DockBottom);
 			#endregion
 

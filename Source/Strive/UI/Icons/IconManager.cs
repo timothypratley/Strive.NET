@@ -72,6 +72,8 @@ namespace Strive.UI.Icons
 		Mobile = 4,
 		MobilePossessed = 5,
 		Refresh = 6,
-		Log = 7
+		Log = 7,
+		Chat = 8,
+		Command = 9
 	}
 }
