@@ -31,6 +31,7 @@ namespace Strive.UI.WorldView {
 					for ( j=0; j<zorder; j++ ) {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
 						if ( k > 0 ) {
+							// TODO: bad, don't use hardcoded 20!
 							TC[i,j,k].SetTexture( _resource_manager.GetTexture( 20 ).ID );
 						}
 					}
@@ -46,6 +47,7 @@ namespace Strive.UI.WorldView {
 		int [] CZ = new int[zoomorder];
 		int ts = Constants.terrainPieceSize;
 		int hpc = Constants.terrainHeightsPerChunk;
+		float prev_x, prev_z;
 
 		public void Recenter( float x, float z ) {
 			int i, j, k, cs;
@@ -76,7 +78,7 @@ namespace Strive.UI.WorldView {
 							&& i+xdiff < xorder
 							&& j+zdiff >= 0
 							&& j+zdiff < zorder
-						) {
+							) {
 							// swap
 							ITerrainChunk tc = TC[i,j,k];
 							TC[i,j,k] = TC[i+xdiff,j+zdiff,k];
@@ -107,13 +109,22 @@ namespace Strive.UI.WorldView {
 					if ( xdiff<0 ) i--; else i++;
 				}
 
-				if ( k > 0 ) {
-					// TODO: Set( x, z, 0 );
-				}
-
 				CX[k] = cx;
 				CZ[k] = cz;
 			}
+
+			// Make sure we update the previous x,z heights for underlying landscapes
+			// to their correct values
+			Vector2D loc = new Vector2D( prev_x, prev_z );
+			Terrain t = (Terrain)terrainPiecesXYIndex[loc];
+			if ( t != null ) {
+				Set( t.Position.X, t.Position.Z, t.Position.Y, _resource_manager.GetTexture(t.ResourceID).ID, t.Rotation.Y );
+			}
+
+			// set underlying landscapes to 0 at x,z
+			Set( x, z, 0, -1, 0 );
+
+			prev_x = x; prev_z = z;
 		}
 
 		public void AddMany( float start_x, float start_z, int width, int height, int gap_size, Terrain [,] map ) {
@@ -127,7 +138,20 @@ namespace Strive.UI.WorldView {
 			int cz = Helper.DivTruncate( (int)z, ts );
 			int cs;
 			int xdiff, zdiff;
-			for ( int k=0; k<zoomorder; k++ ) {
+			int k;
+
+			if ( altitude == 0 && texture_id == -1 && rotation == 0 ) {
+				// This should only be applied to the low detail landscapes
+				k=1;
+
+				// miss one iteration, so prediv cx,cz
+				cx = Helper.DivTruncate( cx, hpc );
+				cz = Helper.DivTruncate( cz, hpc );
+			} else {
+				k=0;
+			}
+
+			for ( ; k<zoomorder; k++ ) {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 				cx = Helper.DivTruncate( cx, hpc );
 				cz = Helper.DivTruncate( cz, hpc );
@@ -171,12 +195,7 @@ namespace Strive.UI.WorldView {
 			}
 			terrainPiecesXYIndex.Add( loc, t );
 
-			// TODO: fix this
-			try {
-				Set( t.Position.X, t.Position.Z, t.Position.Y, _resource_manager.GetTexture(t.ResourceID).ID, t.Rotation.Y );
-			} catch {
-
-			}
+			Set( t.Position.X, t.Position.Z, t.Position.Y, _resource_manager.GetTexture(t.ResourceID).ID, t.Rotation.Y );
 		}
 
 		public void Clear() {
