@@ -12,6 +12,12 @@ namespace Strive.UI.Windows.ChildWindows
 	public class MiniMap : System.Windows.Forms.Form
 	{
 		public System.Windows.Forms.Panel RenderTarget;
+		private System.Windows.Forms.StatusBarPanel X;
+		private System.Windows.Forms.StatusBarPanel Y;
+		private System.Windows.Forms.StatusBarPanel Z;
+		private System.Windows.Forms.StatusBarPanel Information;
+		private System.Windows.Forms.StatusBar Status;
+		private System.Windows.Forms.StatusBarPanel RY;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -27,6 +33,18 @@ namespace Strive.UI.Windows.ChildWindows
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
+
+			Game.CurrentServerConnection.OnPositionSent += new Strive.Network.Client.ServerConnection.OnPositionSentHandler(MiniMap_Update);
+			
+		}
+
+		private void MiniMap_Update(Strive.Network.Messages.ToServer.Position newPosition)
+		{
+			Z.Text = ((int)newPosition.position.Z).ToString();
+			Y.Text = ((int)newPosition.position.Y).ToString();
+			X.Text = ((int)newPosition.position.X).ToString();
+			RY.Text = ((int)newPosition.rotation.Y).ToString();
+
 		}
 
 		/// <summary>
@@ -52,6 +70,17 @@ namespace Strive.UI.Windows.ChildWindows
 		private void InitializeComponent()
 		{
 			this.RenderTarget = new System.Windows.Forms.Panel();
+			this.Status = new System.Windows.Forms.StatusBar();
+			this.X = new System.Windows.Forms.StatusBarPanel();
+			this.Y = new System.Windows.Forms.StatusBarPanel();
+			this.Z = new System.Windows.Forms.StatusBarPanel();
+			this.Information = new System.Windows.Forms.StatusBarPanel();
+			this.RY = new System.Windows.Forms.StatusBarPanel();
+			((System.ComponentModel.ISupportInitialize)(this.X)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Y)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Z)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Information)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.RY)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// RenderTarget
@@ -62,16 +91,65 @@ namespace Strive.UI.Windows.ChildWindows
 			this.RenderTarget.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.RenderTarget.Location = new System.Drawing.Point(0, 0);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(304, 272);
+			this.RenderTarget.Size = new System.Drawing.Size(304, 248);
 			this.RenderTarget.TabIndex = 0;
+			// 
+			// Status
+			// 
+			this.Status.Location = new System.Drawing.Point(0, 256);
+			this.Status.Name = "Status";
+			this.Status.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
+																					  this.Information,
+																					  this.RY,
+																					  this.X,
+																					  this.Z,
+																					  this.Y});
+			this.Status.ShowPanels = true;
+			this.Status.Size = new System.Drawing.Size(304, 22);
+			this.Status.TabIndex = 1;
+			// 
+			// X
+			// 
+			this.X.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.X.ToolTipText = "Latitude";
+			this.X.Width = 10;
+			// 
+			// Y
+			// 
+			this.Y.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.Y.ToolTipText = "Altitude";
+			this.Y.Width = 10;
+			// 
+			// Z
+			// 
+			this.Z.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.Z.ToolTipText = "Longitude";
+			this.Z.Width = 10;
+			// 
+			// Information
+			// 
+			this.Information.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
+			this.Information.Width = 248;
+			// 
+			// RY
+			// 
+			this.RY.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.RY.ToolTipText = "Heading";
+			this.RY.Width = 10;
 			// 
 			// MiniMap
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(304, 277);
+			this.ClientSize = new System.Drawing.Size(304, 278);
+			this.Controls.Add(this.Status);
 			this.Controls.Add(this.RenderTarget);
 			this.Name = "MiniMap";
 			this.Text = "MiniMap";
+			((System.ComponentModel.ISupportInitialize)(this.X)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Y)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Z)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Information)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.RY)).EndInit();
 			this.ResumeLayout(false);
 
 		}

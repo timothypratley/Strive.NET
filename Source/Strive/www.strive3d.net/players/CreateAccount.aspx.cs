@@ -42,6 +42,10 @@ namespace www.strive3d.net.players
 		protected System.Web.UI.WebControls.RequiredFieldValidator Requiredfieldvalidator5;
 		protected System.Web.UI.WebControls.Button Save;
 		protected System.Web.UI.WebControls.CompareValidator CompareValidator1;
+		protected System.Web.UI.WebControls.Button Cancel;
+		protected System.Web.UI.WebControls.PlaceHolder Chargen;
+		protected System.Web.UI.WebControls.PlaceHolder Success;
+		protected System.Web.UI.WebControls.Button Help;
 			DataTable races = new DataTable("races");
 	
 		private void Page_Load(object sender, System.EventArgs e)
@@ -84,6 +88,8 @@ namespace www.strive3d.net.players
 		{    
 			this.EnumRaceID.SelectedIndexChanged += new System.EventHandler(this.EnumRaceID_SelectedIndexChanged);
 			this.Save.Click += new System.EventHandler(this.Save_Click);
+			this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
+			this.Help.Click += new System.EventHandler(this.Help_Click);
 			this.Load += new System.EventHandler(this.Page_Load);
 
 		}
@@ -142,12 +148,22 @@ namespace www.strive3d.net.players
 						t.Rollback();
 						throw new Exception("", ex);
 					}
-					
-					Response.Redirect(Utils.ApplicationPath + "/");
+					Chargen.Visible = false;
+					Success.Visible = true;
 					
 					
 				}
 			}		
+		}
+
+		private void Cancel_Click(object sender, System.EventArgs e)
+		{
+			Response.Redirect(Utils.ApplicationPath + "/");
+		}
+
+		private void Help_Click(object sender, System.EventArgs e)
+		{
+			Response.Redirect(Utils.ApplicationPath + "/");
 		}
 	}
 }

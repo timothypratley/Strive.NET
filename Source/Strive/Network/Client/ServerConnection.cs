@@ -27,6 +27,10 @@ namespace Strive.Network.Client {
 		public delegate void OnConnectHandler();
 		public delegate void OnConnectFailedHandler();
 		public delegate void OnDisconnectHandler();
+		public delegate void OnPositionSentHandler(Strive.Network.Messages.ToServer.Position Position);
+		public event OnPositionSentHandler OnPositionSent;
+		public delegate void OnEnterWorldAsMobileSentHandler(Strive.Network.Messages.ToServer.EnterWorldAsMobile EnterWorldAsMobile);
+		public event OnEnterWorldAsMobileSentHandler OnEnterWorldAsMobileSent;
 		public event OnConnectHandler OnConnect;
 		public event OnConnectFailedHandler OnConnectFailed;
 		public event OnDisconnectHandler OnDisconnect;
@@ -184,6 +188,7 @@ namespace Strive.Network.Client {
 		}
 
 		public void Send( IMessage message ) {
+
 			if ( !connected ) {
 				return;
 			}
@@ -208,6 +213,11 @@ namespace Strive.Network.Client {
 						}break;
 					}
 				}
+
+				if(message is Strive.Network.Messages.ToServer.Position && OnPositionSent != null) OnPositionSent((Strive.Network.Messages.ToServer.Position)message);
+				if(message is Strive.Network.Messages.ToServer.EnterWorldAsMobile && OnEnterWorldAsMobileSent != null) OnEnterWorldAsMobileSent((Strive.Network.Messages.ToServer.EnterWorldAsMobile)message);
+
+
 			} catch ( Exception e ) {
 				Log.ErrorMessage( e );
 				Stop();

@@ -13,6 +13,7 @@ namespace Strive.Logging {
 	public class Log {
 		static private TextBoxBase textBoxOutput = null;
 		static private TextWriter logFileWriter = null;
+		static private StatusBar statusWriter = null;
 
 		public static void SetLogOutput( TextBoxBase output ) {
 			textBoxOutput = output;
@@ -21,6 +22,16 @@ namespace Strive.Logging {
 		public static void SetLogOutput( string filename ) {
 			FileStream fs = File.Open( filename, FileMode.Create, FileAccess.Write , FileShare.Read );
 			logFileWriter = new StreamWriter( fs );
+		}
+
+		public static void SetStatusOutput(StatusBar output)
+		{
+			statusWriter = output;
+		}
+
+		public static void LogStatus(string message)
+		{
+			
 		}
 
 		public static void LogMessage( string message ) {
