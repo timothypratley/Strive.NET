@@ -174,7 +174,11 @@ namespace Strive.UI.Modules
 				#region CanPossess
 				else if ( m is Strive.Network.Messages.ToClient.CanPossess ) {
 					Strive.Network.Messages.ToClient.CanPossess cp = (Strive.Network.Messages.ToClient.CanPossess)m;
-					Global._log.LogMessage( "You can possess " + cp.ToString() );
+					Global._log.LogMessage( "You can possess... " );
+					foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) {
+						Global._log.LogMessage( "	" + tuple.id + " : " + tuple.name );
+					}
+
 				}
 				#endregion
 					#region Default

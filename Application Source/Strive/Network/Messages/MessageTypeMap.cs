@@ -12,6 +12,7 @@ namespace Strive.Network.Messages {
 			ToClientAcknowledge = 1,
 			ToClientAddPhysicalObject,
 			ToClientAddPhysicalObjects,
+			ToClientCanPossess,
 			ToClientCombatReport,
 			ToClientCommunication,
 			ToClientCurrentHitpoints,
@@ -38,6 +39,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientAcknowledge, typeof( ToClient.Acknowledge ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientAddPhysicalObject, typeof( ToClient.AddPhysicalObject ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientAddPhysicalObjects, typeof( ToClient.AddPhysicalObjects ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientCanPossess, typeof( ToClient.CanPossess ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCombatReport, typeof( ToClient.CombatReport ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCommunication, typeof( ToClient.Communication ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCurrentHitpoints, typeof( ToClient.CurrentHitpoints ) );
