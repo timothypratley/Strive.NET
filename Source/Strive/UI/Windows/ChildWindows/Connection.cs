@@ -450,15 +450,20 @@ namespace Strive.UI.Windows.ChildWindows
 				DataRow serverRow = serverSetting.GetParentRow("ServerPlayers");
 				ServerAddress.Text = serverRow["serveraddress"].ToString();
 				PortNumber.Text = serverRow["serverport"].ToString();
-				Strive.Network.Messages.NetworkProtocolType protocol = (Strive.Network.Messages.NetworkProtocolType)Enum.Parse(typeof(Strive.Network.Messages.NetworkProtocolType), serverRow["protocol"].ToString());
-				if(protocol == Strive.Network.Messages.NetworkProtocolType.UdpAndTcp)
+				// handle backward compatible
+				try
 				{
-					NetworkProtocolTypeUDP.Checked = true;
+					Strive.Network.Messages.NetworkProtocolType protocol = (Strive.Network.Messages.NetworkProtocolType)Enum.Parse(typeof(Strive.Network.Messages.NetworkProtocolType), serverRow["protocol"].ToString());
+					if(protocol == Strive.Network.Messages.NetworkProtocolType.UdpAndTcp)
+					{
+						NetworkProtocolTypeUDP.Checked = true;
+					}
+					else
+					{
+						NetworkProtocolTypeTCP.Checked = true;
+					}
 				}
-				else
-				{
-					NetworkProtocolTypeTCP.Checked = true;
-				}
+				catch{}
 				return;
 			}
 			if(serverSetting.Table.Columns.Contains("serverkey"))
