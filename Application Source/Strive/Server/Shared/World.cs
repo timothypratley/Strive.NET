@@ -13,12 +13,12 @@ using Strive.Data;
 
 namespace Strive.Server.Shared {
 	public class World {
-		double highX = 1000.0;
-		double highZ = 1000.0;
-		double lowX = -1000.0;
-		double lowZ = -1000.0;
-		int squaresInX = 1;
-		int squaresInZ = 1;
+		double highX = 500.0;
+		double highZ = 500.0;
+		double lowX = -500.0;
+		double lowZ = -500.0;
+		int squaresInX;		// see squareSize in Square
+		int squaresInZ;
 		int world_id;
 		
 		// the multiverse schema is used for dataset access
@@ -194,7 +194,7 @@ namespace Strive.Server.Shared {
 			// physical object has entered the world
 			InformNearby( po, new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
 
-			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ")" );
+			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - square("+squareX+","+squareZ+")" );
 		}
 
 		public void Remove( PhysicalObject po ) {
@@ -212,6 +212,12 @@ namespace Strive.Server.Shared {
 			}
 			if ( newPos.Z > highZ ) {
 				newPos.Z = (float)highZ;
+			}
+			if ( newPos.X < lowX ) {
+				newPos.X = (float)lowX;
+			}
+			if ( newPos.Z < lowZ ) {
+				newPos.Z = (float)lowZ;
 			}
 			int fromSquareX = (int)(po.Position.X - lowX)/Square.squareSize;
 			int fromSquareZ = (int)(po.Position.Z - lowZ)/Square.squareSize;

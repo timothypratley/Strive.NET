@@ -20,7 +20,7 @@ namespace Strive.Server.Shared
 	/// </summary>
 	public class Square
 	{
-		public static int squareSize = 1000;
+		public static int squareSize = 100;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
 		ArrayList[,] heightMap = new ArrayList[Square.squareSize,Square.squareSize];
