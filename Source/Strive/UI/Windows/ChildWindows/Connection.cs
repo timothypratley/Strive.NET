@@ -223,73 +223,91 @@ namespace Strive.UI.Windows.ChildWindows
 
 		private void ConnectNow_Click(object sender, System.EventArgs e)
 		{
-			if(windowState == ConnectionWindowState.NotConnected)
+			switch(windowState)
 			{
-				if(ServerAddress.Text == "")
+				case ConnectionWindowState.NotConnected:
 				{
-					ServerAddress.Focus();
-					MessageBox.Show("You must enter a server.");
-					return;
-				}
-				if(PortNumber.Text == "")
-				{
-					PortNumber.Focus();
-					MessageBox.Show("You must enter a port.");
-					return;
-				}
-				if(Email.Text == "")
-				{
-					Email.Focus();
-					MessageBox.Show("You must enter an e-mail.");
-					return;
-				}
-				// umg ghey check for existance cause umg
-				string label = ServerAddress.Text + ":" + PortNumber.Text;
-				TreeNode serverNode = null;
-				foreach ( TreeNode n in RecentServers.Nodes ) {
-					if ( n.Text == label ) {
-						serverNode = n;
-						break;
+					if(ServerAddress.Text == "")
+					{
+						ServerAddress.Focus();
+						MessageBox.Show("You must enter a server.");
+						return;
 					}
-				}
-				if ( serverNode == null ) {
-					serverNode = new TreeNode( label );
-					RecentServers.Nodes.Add( serverNode );
-				}
-				label = Email.Text;
-				TreeNode playerNode = null;
-				foreach ( TreeNode n in serverNode.Nodes ) {
-					if ( n.Text == label ) {
-						playerNode = n;
-						break;
+					if(PortNumber.Text == "")
+					{
+						PortNumber.Focus();
+						MessageBox.Show("You must enter a port.");
+						return;
 					}
-				}
-				if ( playerNode == null ) {
-					playerNode = new TreeNode( label );
-					serverNode.Nodes.Add( playerNode );
-				}
-				CurrentPlayerNode = playerNode;
+					if(Email.Text == "")
+					{
+						Email.Focus();
+						MessageBox.Show("You must enter an e-mail.");
+						return;
+					}
+					// umg ghey check for existance cause umg
+					string label = ServerAddress.Text + ":" + PortNumber.Text;
+					TreeNode serverNode = null;
+					foreach ( TreeNode n in RecentServers.Nodes ) 
+					{
+						if ( n.Text == label ) 
+						{
+							serverNode = n;
+							break;
+						}
+					}
+					if ( serverNode == null ) 
+					{
+						serverNode = new TreeNode( label );
+						RecentServers.Nodes.Add( serverNode );
+					}
+					label = Email.Text;
+					TreeNode playerNode = null;
+					foreach ( TreeNode n in serverNode.Nodes ) 
+					{
+						if ( n.Text == label ) 
+						{
+							playerNode = n;
+							break;
+						}
+					}
+					if ( playerNode == null ) 
+					{
+						playerNode = new TreeNode( label );
+						serverNode.Nodes.Add( playerNode );
+					}
+					CurrentPlayerNode = playerNode;
+					StriveWindowState = ConnectionWindowState.Connecting;
+					Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text));
+					Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
+					Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), Game.CurrentMainWindow.RenderTarget);
+					Connected = true;
+					Game.CurrentGameLoop._message_processor.OnCanPossess
+						+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
 
-				Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text));
-				Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
-				Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), Game.CurrentMainWindow.RenderTarget);
-				Connected = true;
-				Game.CurrentGameLoop._message_processor.OnCanPossess
-					+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
-
-				Game.CurrentServerConnection.RequestPossessable();
-
-				StriveWindowState = ConnectionWindowState.Connected;
-			}
-			else if(windowState == ConnectionWindowState.Connected ||
-				windowState == ConnectionWindowState.Playing)
-			{
-				// disconnect:
-				Game.CurrentServerConnection.Logout();
-				StriveWindowState = ConnectionWindowState.NotConnected;
-				if( CurrentPlayerNode != null ) {
-					CurrentPlayerNode.Nodes.Clear();
+					Game.CurrentServerConnection.RequestPossessable();
+					break;
 				}
+				case ConnectionWindowState.Connecting:
+				{
+					goto case ConnectionWindowState.Playing;
+				}
+				case ConnectionWindowState.Connected:
+				{
+					goto case ConnectionWindowState.Playing;
+				}
+				case ConnectionWindowState.Playing:
+				{
+					// disconnect:
+					Game.CurrentServerConnection.Logout();
+					StriveWindowState = ConnectionWindowState.NotConnected;
+					if( CurrentPlayerNode != null ) 
+					{
+						CurrentPlayerNode.Nodes.Clear();
+					}
+					break;
+				}
+
 			}
 		}
 
@@ -312,6 +330,7 @@ namespace Strive.UI.Windows.ChildWindows
 				CurrentPlayerNode.Nodes.Add( n );
 			}
 			CurrentPlayerNode.Expand();
+			StriveWindowState = ConnectionWindowState.Connected;
 		}
 
 
@@ -407,18 +426,31 @@ namespace Strive.UI.Windows.ChildWindows
 					}
 					break;
 				}
+				case ConnectionWindowState.Connecting:
+				{
+					ConnectNow.Text = "Cancel...";
+					Email.Enabled = false;
+					ServerAddress.Enabled = false;
+					PortNumber.Enabled = false;
+					Password.Enabled = false;
+					break;
+
+				}
 				case ConnectionWindowState.Playing:
 				{
 					break;
 				}
 				
+			
 			}
+			Application.DoEvents();
 		}
 
 		
 		protected enum ConnectionWindowState
 		{
 			NotConnected,
+			Connecting,
 			Connected,
 			Playing
 		}
