@@ -17,11 +17,14 @@ namespace Strive.Rendering.Models {
 
 		void Show();
 
+		void Normalise( float height );
+
 		#endregion
 
 		#region "Properties"
 		string Name { get; }
 		int ID { get; }
+		float BoundingSphereRadiusSquared { get; }
 
 		#endregion
 	}

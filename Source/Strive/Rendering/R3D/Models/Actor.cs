@@ -15,7 +15,7 @@ namespace Strive.Rendering.R3D.Models {
 	public class Actor : IActor {
 
 		#region "Fields"
-		public float BoundingSphereRadiusSquared;
+		float _BoundingSphereRadiusSquared;
 
 		private string _key;
 		private int _id;
@@ -35,7 +35,7 @@ namespace Strive.Rendering.R3D.Models {
 			Actor loadedModel = new Actor();
 			loadedModel._key = name;
 			// todo: fix bounding radius
-			loadedModel.BoundingSphereRadiusSquared = 100;
+			loadedModel._BoundingSphereRadiusSquared = 100;
 
 			try {
 				loadedModel._id = Engine.MD2System.Model_Load(path, name);
@@ -63,6 +63,9 @@ namespace Strive.Rendering.R3D.Models {
 		public void Show() {
 			Engine.MD2System.Class_SetPointer(this.Name);
 			Engine.MD2System.Model_SetActivate( true );
+		}
+
+		public void Normalise( float height ) {
 		}
 
 		public void applyTexture( ITexture texture ) {
@@ -137,6 +140,12 @@ namespace Strive.Rendering.R3D.Models {
 				}
 				// todo: fix meh!
 				//Engine.MD2System.Model_Animate();
+			}
+		}
+
+		public float BoundingSphereRadiusSquared {
+			get {
+				return _BoundingSphereRadiusSquared;
 			}
 		}
 

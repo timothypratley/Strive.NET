@@ -190,7 +190,7 @@ namespace Strive.Server.Shared {
 			// keep everything at ground level
 			if ( !(po is Terrain) ) {
 				float altitude = AltitudeAt( po.Position.X, po.Position.Z );
-				po.Position.Y = altitude + po.Height / 2;
+				po.Position.Y = altitude + po.Height;
 			}
 
 			// add the object to the world

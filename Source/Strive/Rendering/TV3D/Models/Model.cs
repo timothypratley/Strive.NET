@@ -1,9 +1,10 @@
 using System;
-using Strive.Math3D;
 
 using TrueVision3D;
 using Strive.Rendering.Models;
 using Strive.Rendering.TV3D;
+using Strive.Math3D;
+using Strive.Logging;
 
 namespace Strive.Rendering.TV3D.Models {
 	/// <summary>
@@ -13,13 +14,13 @@ namespace Strive.Rendering.TV3D.Models {
 	public class Model : IModel {
 
 		#region "Fields"
-		public float BoundingSphereRadiusSquared;
 
 		string _key;
 		int _id;
-		Vector3D _position;
-		Vector3D _rotation;
+		Vector3D _position = new Vector3D( 0, 0, 0 );
+		Vector3D _rotation = new Vector3D( 0, 0, 0 );
 		TVMesh _mesh;
+		float _BoundingSphereRadiusSquared;
 		#endregion
 
 		#region "Constructors"
@@ -35,16 +36,20 @@ namespace Strive.Rendering.TV3D.Models {
 
 			Model loadedModel = new Model();
 			loadedModel._key = name;
-			loadedModel.BoundingSphereRadiusSquared = 100;
-			
 			try {
 				loadedModel._mesh = Engine.TV3DScene.CreateMeshBuilder( name );
-				loadedModel._mesh.Load3DsMesh( path, true, true, true );
+				loadedModel._mesh.Load3DSMesh( path, true, true, true );
 			}
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);
 			}
-			loadedModel.BoundingSphereRadiusSquared = 1000;
+			float radius = 0;
+			DxVBLibA.D3DVECTOR center = new DxVBLibA.D3DVECTOR();
+			loadedModel._mesh.GetBoundingSphere( ref center, ref radius, false );
+			loadedModel._BoundingSphereRadiusSquared = radius * radius;
+			if ( center.x != 0 || center.y != 0 || center.z != 0 ) {
+				Log.WarningMessage( "Model " + name + " " + path + " is centered at " + center + " not at (0,0,0) where it should be." );
+			}
 			loadedModel.Position = Vector3D.Origin;
 			loadedModel._id = loadedModel._mesh.GetMeshIndex();
 			return loadedModel;
@@ -62,6 +67,15 @@ namespace Strive.Rendering.TV3D.Models {
 		}
 
 		public void Show() {
+		}
+
+		public void Normalise( float height ) {
+			// TODO: should also translate, not just scale
+			DxVBLibA.D3DVECTOR boxmin = new DxVBLibA.D3DVECTOR();
+			DxVBLibA.D3DVECTOR boxmax = new DxVBLibA.D3DVECTOR();
+			_mesh.GetBoundingBox( ref boxmin, ref boxmax, false );
+			float scale_factor = height / ( boxmax.y - boxmin.y );
+			_mesh.ScaleMesh( scale_factor, scale_factor, scale_factor );
 		}
 
 		public void applyTexture( string texture ) {
@@ -86,6 +100,12 @@ namespace Strive.Rendering.TV3D.Models {
 		public int ID {
 			get {
 				return _id;
+			}
+		}
+
+		public float BoundingSphereRadiusSquared {
+			get {
+				return _BoundingSphereRadiusSquared;
 			}
 		}
 		#endregion

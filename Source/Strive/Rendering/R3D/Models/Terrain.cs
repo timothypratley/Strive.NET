@@ -14,7 +14,7 @@ namespace Strive.Rendering.R3D.Models {
 	public class Terrain : ITerrain {
 
 		#region "Fields"
-		public float BoundingSphereRadiusSquared;
+		public float _BoundingSphereRadiusSquared;
 
 		private string _key;
 		private int _id;
@@ -47,7 +47,7 @@ namespace Strive.Rendering.R3D.Models {
 			Engine.MeshBuilder.Mesh_AddPlane( ref p1, ref p2, ref p3, ref p4, texture.Name, "", R3DBLENDMODE.R3DBLENDMODE_NONE, true);
 			// todo: fix this hax,
 			// atm set to 0 as this is assumed to be terrain...
-			created.BoundingSphereRadiusSquared = 0;
+			created._BoundingSphereRadiusSquared = 0;
 			return created;
 		}
 
@@ -70,6 +70,9 @@ namespace Strive.Rendering.R3D.Models {
 		public void Show() {
 				Engine.MeshBuilder.Class_SetPointer(this.Name);
 				Engine.MeshBuilder.Mesh_SetActivate( true );
+		}
+
+		public void Normalise( float height ) {
 		}
 
 		public void applyTexture( ITexture texture ) {
@@ -97,6 +100,12 @@ namespace Strive.Rendering.R3D.Models {
 		public int ID {
 			get {
 				return _id;
+			}
+		}
+
+		public float BoundingSphereRadiusSquared {
+			get {
+				return _BoundingSphereRadiusSquared;
 			}
 		}
 		#endregion

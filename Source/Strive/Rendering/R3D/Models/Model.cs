@@ -13,7 +13,7 @@ namespace Strive.Rendering.R3D.Models {
 	public class Model : IModel {
 
 		#region "Fields"
-		public float BoundingSphereRadiusSquared;
+		public float _BoundingSphereRadiusSquared;
 
 		private string _key;
 		private int _id;
@@ -33,10 +33,10 @@ namespace Strive.Rendering.R3D.Models {
 			Model loadedModel = new Model();
 			loadedModel._key = name;
 			// todo: fix bounding radius
-			loadedModel.BoundingSphereRadiusSquared = 100;
+			loadedModel._BoundingSphereRadiusSquared = 100;
 
 			try {
-				R3D_3DStudio _3dsfile = new R3D_3DStudioClass();
+				R3D_3DStudio _3dsfile = new R3D_3DStudio();
 				_3dsfile.File_Open(path);
 				_3dsfile.File_ReadMaterials();
 				_3dsfile.File_ReadTextures();
@@ -49,7 +49,7 @@ namespace Strive.Rendering.R3D.Models {
 				//Engine.Meshbuilder.Mesh_SetLayerConfig(0, R3DLAYERCONFIG.R3DLAYERCONFIG_MONOCHROME);
 				//System.Windows.Forms.MessageBox.Show(Engine.TextureLib.Class_GetNumTextures().ToString());
 						
-				loadedModel.BoundingSphereRadiusSquared = 1000;
+				loadedModel._BoundingSphereRadiusSquared = 1000;
 			}
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);
@@ -65,18 +65,21 @@ namespace Strive.Rendering.R3D.Models {
 		#region "Methods"
 
 		public void Delete() {
-				Engine.MeshBuilder.Class_SetPointer(this.Name);
-				Engine.MeshBuilder.Mesh_Release();
+			Engine.MeshBuilder.Class_SetPointer(this.Name);
+			Engine.MeshBuilder.Mesh_Release();
 		}
 
 		public void Hide() {
-				Engine.MeshBuilder.Class_SetPointer(this.Name);
-				Engine.MeshBuilder.Mesh_SetActivate( false );
+			Engine.MeshBuilder.Class_SetPointer(this.Name);
+			Engine.MeshBuilder.Mesh_SetActivate( false );
 		}
 
 		public void Show() {
-				Engine.MeshBuilder.Class_SetPointer(this.Name);
-				Engine.MeshBuilder.Mesh_SetActivate( true );
+			Engine.MeshBuilder.Class_SetPointer(this.Name);
+			Engine.MeshBuilder.Mesh_SetActivate( true );
+		}
+
+		public void Normalise( float height ) {
 		}
 
 		public void applyTexture( string texture ) {
@@ -99,6 +102,12 @@ namespace Strive.Rendering.R3D.Models {
 		public int ID {
 			get {
 				return _id;
+			}
+		}
+
+		public float BoundingSphereRadiusSquared {
+			get {
+				return _BoundingSphereRadiusSquared;
 			}
 		}
 

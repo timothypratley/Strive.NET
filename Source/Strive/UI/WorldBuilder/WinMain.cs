@@ -40,7 +40,11 @@ namespace Strive.UI.WorldBuilder
 		static Schema multiverse;
 		static IEngine engine;
 		static World world;
+		private System.Windows.Forms.MenuItem menuItem5;
+
 		string currentFileName;
+		private System.Windows.Forms.MenuItem menuItem6;
+		string currentConnectionString;
 
 
 		public WinMain()
@@ -107,6 +111,8 @@ namespace Strive.UI.WorldBuilder
 			this.menuItem3 = new System.Windows.Forms.MenuItem();
 			this.menuItem4 = new System.Windows.Forms.MenuItem();
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
+			this.menuItem5 = new System.Windows.Forms.MenuItem();
+			this.menuItem6 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -155,25 +161,39 @@ namespace Strive.UI.WorldBuilder
 			this.menuItem1.Index = 0;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.menuItem3,
-																					  this.menuItem4});
+																					  this.menuItem5,
+																					  this.menuItem4,
+																					  this.menuItem6});
 			this.menuItem1.Text = "File";
 			// 
 			// menuItem3
 			// 
 			this.menuItem3.Index = 0;
-			this.menuItem3.Text = "Open";
+			this.menuItem3.Text = "Open From File";
 			this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
 			// 
 			// menuItem4
 			// 
-			this.menuItem4.Index = 1;
-			this.menuItem4.Text = "Save";
+			this.menuItem4.Index = 2;
+			this.menuItem4.Text = "Save To File";
 			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
 			// 
 			// menuItem2
 			// 
 			this.menuItem2.Index = 1;
 			this.menuItem2.Text = "View";
+			// 
+			// menuItem5
+			// 
+			this.menuItem5.Index = 1;
+			this.menuItem5.Text = "Open From Database";
+			this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+			// 
+			// menuItem6
+			// 
+			this.menuItem6.Index = 3;
+			this.menuItem6.Text = "Save To Database";
+			this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
 			// 
 			// WinMain
 			// 
@@ -211,7 +231,7 @@ namespace Strive.UI.WorldBuilder
 			openFileDialog1.FilterIndex = 1;
 			openFileDialog1.RestoreDirectory = true;
 
-			if(openFileDialog1.ShowDialog() == DialogResult.OK) {
+			if(openFileDialog1.ShowDialog( this ) == DialogResult.OK) {
 				st.Stop();
 				world.RemoveAll();
 				currentFileName = openFileDialog1.FileName;
@@ -441,11 +461,35 @@ namespace Strive.UI.WorldBuilder
 		}
 
 		private void menuItem4_Click(object sender, System.EventArgs e) {
-			if ( currentFileName == null ) {
-				MessageBox.Show( this, "Not currently working on a world file." );
-			} else {
+			OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+			//openFileDialog1.InitialDirectory = "c:/" ;
+			openFileDialog1.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*" ;
+			openFileDialog1.FilterIndex = 1;
+			openFileDialog1.RestoreDirectory = true;
+
+			if(openFileDialog1.ShowDialog( this ) == DialogResult.OK) {
+				currentFileName = openFileDialog1.FileName;
 				MultiverseFactory.persistMultiverseToFile( multiverse, currentFileName );
 			}
+		}
+
+		private void menuItem5_Click(object sender, System.EventArgs e) {
+			OpenFromDatabase ofd = new OpenFromDatabase();
+			if ( ofd.ShowDialog( this ) == DialogResult.OK ) {
+				st.Stop();
+				world.RemoveAll();
+				currentConnectionString = ofd.connectionString;
+				multiverse = MultiverseFactory.getMultiverseFromDatabase( currentConnectionString );
+				renderMultiverse();
+				world.CameraPosition = new Vector3D( 0, 100, 0 );
+				world.CameraRotation = new Vector3D( 0, 90, 0 );
+				st.Start();
+			}
+		}
+
+		private void menuItem6_Click(object sender, System.EventArgs e) {
+		
 		}
 	}
 }

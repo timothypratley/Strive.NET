@@ -15,13 +15,13 @@ namespace Strive.Multiverse
 		public int ObjectTemplateID;
 		public string ObjectTemplateName = "";
 		public int ModelID;
+		public float Height;
 		public int AreaID;
 		public Vector3D Position = new Vector3D(0,0,0);
 		public Vector3D Rotation = new Vector3D(0,0,0);
 		public float HitPoints = 0;
 		public int MaxHitPoints = 0;
 		public float BoundingSphereRadiusSquared;
-		public float Height = 20;
 
 		public PhysicalObject() {}
 
@@ -47,8 +47,10 @@ namespace Strive.Multiverse
 				(float)instance.HeadingZ
 			);
 			ModelID = template.ModelID;
+			Height = template.Height;
 			// can we get r^2 from modelID?
-			// todo: make this the proper 3d radius^2
+			// TODO: make this the proper 3d radius^2
+			// store it in the database
 			BoundingSphereRadiusSquared = 10;
 			AreaID = template.AreaID;
 		}

@@ -5,6 +5,7 @@ using TrueVision3D;
 using Strive.Rendering.Models;
 using Strive.Rendering.Textures;
 using Strive.Rendering.TV3D;
+using Strive.Logging;
 
 namespace Strive.Rendering.TV3D.Models {
 	/// <summary>
@@ -14,14 +15,14 @@ namespace Strive.Rendering.TV3D.Models {
 	public class Actor : IActor {
 
 		#region "Fields"
-		public float BoundingSphereRadiusSquared;
+		float _BoundingSphereRadiusSquared;
 
 		// todo: shouldn't need a show variable, engine should do it for us
 		private bool _show = true;
 		private string _key;
 		private int _id;
-		private Vector3D _position;
-		private Vector3D _rotation;
+		private Vector3D _position = new Vector3D( 0, 0, 0);
+		private Vector3D _rotation = new Vector3D( 0, 0, 0);
 		TVActor2 _model;
 		#endregion
 
@@ -46,17 +47,25 @@ namespace Strive.Rendering.TV3D.Models {
 			Actor loadedModel = new Actor();
 
 			loadedModel._key = name;
-			loadedModel.BoundingSphereRadiusSquared = 100;
 
 			try {
 				loadedModel._model = Engine.TV3DScene.CreateActorTVM( name );
 				loadedModel._model.Load( path, name, true, true );
-				loadedModel.BoundingSphereRadiusSquared = 1000;
 			}
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);
 			}
-			loadedModel.Position = Vector3D.Origin;
+			// TODO: remove hardcoded initial rotation
+			loadedModel._rotation.Y += 90;
+			float radius = 0;
+			DxVBLibA.D3DVECTOR center = new DxVBLibA.D3DVECTOR();
+			// TODO: this will be fixed in release of next TV3D
+			//loadedModel._model.GetBoundingSphere( ref center, ref radius );
+			loadedModel._BoundingSphereRadiusSquared = 300;
+			//loadedModel._BoundingSphereRadiusSquared = radius * radius;
+			if ( center.x != 0 || center.y != 0 || center.z != 0 ) {
+				Log.WarningMessage( "Model " + name + " " + path + " is centered at " + center + " not at (0,0,0) where it should be." );
+			}
 			loadedModel._id = loadedModel._model.GetEntity();
 			return loadedModel;
 		}
@@ -74,6 +83,15 @@ namespace Strive.Rendering.TV3D.Models {
 			_show = false;
 			// todo: why doesn't this work?
 			//_model.Enable( false );
+		}
+
+		public void Normalise( float height ) {
+			// TODO: should also translate, not just scale
+			DxVBLibA.D3DVECTOR boxmin = new DxVBLibA.D3DVECTOR();
+			DxVBLibA.D3DVECTOR boxmax = new DxVBLibA.D3DVECTOR();
+			_model.GetBoundingBox( ref boxmin, ref boxmax );
+			float scale_factor = height / ( boxmax.y - boxmin.y );
+			_model.SetScale( scale_factor, scale_factor, scale_factor );
 		}
 
 		public void Show() {
@@ -118,6 +136,12 @@ namespace Strive.Rendering.TV3D.Models {
 		public int ID {
 			get {
 				return _id;
+			}
+		}
+
+		public float BoundingSphereRadiusSquared {
+			get {
+				return _BoundingSphereRadiusSquared;
 			}
 		}
 
@@ -218,7 +242,10 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 			set {
 				_rotation = value;
-				_model.SetRotation( _rotation.X, _rotation.Y, _rotation.Z );
+
+				//TODO: remove this hack to rotate the character,
+				// instead normalise the model.
+				_model.SetRotation( _rotation.X, _rotation.Y+90, _rotation.Z );
 			}
 		}
 		#endregion

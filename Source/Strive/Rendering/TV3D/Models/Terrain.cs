@@ -15,12 +15,12 @@ namespace Strive.Rendering.TV3D.Models {
 	public class Terrain : ITerrain {
 
 		#region "Fields"
-		public float BoundingSphereRadiusSquared;
 
 		private string _key;
 		private int _id;
-		private Vector3D _position;
-		private Vector3D _rotation;
+		private Vector3D _position = new Vector3D( 0, 0, 0 );
+		private Vector3D _rotation = new Vector3D( 0, 0, 0 );
+		float _BoundingSphereRadiusSquared;
 		TVMesh _mesh;
 		#endregion
 
@@ -35,8 +35,11 @@ namespace Strive.Rendering.TV3D.Models {
 			t._mesh.AddTriangle( texture.ID, 0, zy, 100, 100, xzy, 100, 0, y, 0, 1, 1, true, false );
 			t._mesh.AddTriangle( texture.ID, 0, y, 0, 100, xy, 0, 100, xzy, 100, 1, 1, true, false );
 			t._mesh.Optimize();
+			// TODO: bumpmapping would be cool :)
+			//t._mesh.SetBumpMapping( true, texture.ID, -1, -1, 10 );
 			t._key = name;
 			t._id = t._mesh.GetMeshIndex();
+			t._BoundingSphereRadiusSquared = 0;
 			return t;
 		}
 
@@ -54,6 +57,9 @@ namespace Strive.Rendering.TV3D.Models {
 		}
 
 		public void Show() {
+		}
+
+		public void Normalise( float height ) {
 		}
 
 		public void applyTexture( ITexture texture ) {
@@ -81,6 +87,12 @@ namespace Strive.Rendering.TV3D.Models {
 		public int ID {
 			get {
 				return _id;
+			}
+		}
+
+		public float BoundingSphereRadiusSquared {
+			get {
+				return _BoundingSphereRadiusSquared;
 			}
 		}
 

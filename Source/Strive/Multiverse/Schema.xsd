@@ -572,6 +572,7 @@
 								</xs:simpleType>
 							</xs:element>
 							<xs:element name="ModelID" type="xs:int" />
+							<xs:element name="Height" type="xs:float" />
 							<xs:element name="PlayerID" type="xs:int" />
 							<xs:element name="LastUpdatedBy" type="xs:int" />
 							<xs:element name="CreationTime" type="xs:dateTime" />

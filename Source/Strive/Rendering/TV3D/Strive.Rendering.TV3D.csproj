@@ -81,14 +81,6 @@
                     WrapperTool = "tlbimp"
                 />
                 <Reference
-                    Name = "TrueVision3D"
-                    Guid = "{E6241C9D-371E-44C7-9579-F208B7B5F89F}"
-                    VersionMajor = "9"
-                    VersionMinor = "2"
-                    Lcid = "0"
-                    WrapperTool = "tlbimp"
-                />
-                <Reference
                     Name = "Strive.Math3D"
                     Project = "{14818E27-DABB-4332-B572-21BA9983D886}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
@@ -107,6 +99,19 @@
                     Name = "System.Windows.Forms"
                     AssemblyName = "System.Windows.Forms"
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Windows.Forms.dll"
+                />
+                <Reference
+                    Name = "Strive.Logging"
+                    Project = "{3781C605-0BA3-4DD2-91BB-F01368CD060F}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "TrueVision3D"
+                    Guid = "{E6241C9D-371E-44C7-9579-F208B7B5F89F}"
+                    VersionMajor = "10"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
                 />
             </References>
         </Build>

@@ -22,7 +22,7 @@ namespace Strive.UI.Windows
 		private Crownwood.Magic.Menus.MenuControl MainMenu;
 		private Crownwood.Magic.Menus.MenuCommand FileMenu;
 		private System.Windows.Forms.StatusBar MainStatus;
-		public System.Windows.Forms.PictureBox RenderTarget;
+		public System.Windows.Forms.Panel RenderTarget;
 		private Crownwood.Magic.Menus.MenuCommand ViewMenu;
 		private Crownwood.Magic.Menus.MenuCommand FileQuit;
 		private Crownwood.Magic.Menus.MenuCommand FileSave;
@@ -158,7 +158,7 @@ namespace Strive.UI.Windows
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Main));
 			this.MainTabs = new Crownwood.Magic.Controls.TabControl();
 			this.GameTab = new Crownwood.Magic.Controls.TabPage();
-			this.RenderTarget = new System.Windows.Forms.PictureBox();
+			this.RenderTarget = new System.Windows.Forms.Panel();
 			this.MainMenu = new Crownwood.Magic.Menus.MenuControl();
 			this.FileMenu = new Crownwood.Magic.Menus.MenuCommand();
 			this.FileSave = new Crownwood.Magic.Menus.MenuCommand();
@@ -171,17 +171,19 @@ namespace Strive.UI.Windows
 			this.ViewChat = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewCommand = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
+			this.MainTabs.SuspendLayout();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MainTabs
 			// 
 			this.MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.MainTabs.IDEPixelArea = true;
 			this.MainTabs.Location = new System.Drawing.Point(2, 27);
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(612, 1128);
+			this.MainTabs.Size = new System.Drawing.Size(612, 691);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -191,16 +193,17 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				  this.RenderTarget});
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(612, 1103);
+			this.GameTab.Size = new System.Drawing.Size(612, 666);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
+
 			// 
 			// RenderTarget
 			// 
 			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Location = new System.Drawing.Point(256, 1286);
+			this.RenderTarget.Location = new System.Drawing.Point(256, 1488);
 			this.RenderTarget.Name = "RenderTarget";
 			this.RenderTarget.Size = new System.Drawing.Size(116, 0);
 			this.RenderTarget.TabIndex = 0;
@@ -296,15 +299,15 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 1155);
+			this.MainStatus.Location = new System.Drawing.Point(2, 718);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(612, 28);
+			this.MainStatus.Size = new System.Drawing.Size(612, 33);
 			this.MainStatus.TabIndex = 1;
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(616, 1185);
+			this.ClientSize = new System.Drawing.Size(616, 753);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.MainTabs,
 																		  this.MainMenu,
@@ -314,6 +317,7 @@ namespace Strive.UI.Windows
 			this.Name = "Main";
 			this.Text = "";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Main_Closing);
+			this.MainTabs.ResumeLayout(false);
 			this.GameTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
