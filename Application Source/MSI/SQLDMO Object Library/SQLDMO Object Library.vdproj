@@ -87,6 +87,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F15518AFC5C84C6FA3DE2DD3FE76E0B2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\DOCUMENTS AND SETTINGS\\NATHAN\\DESKTOP\\TEST SQLDMO OBJECT LIBRARY.WSF"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FDAEA793F97143648EE7BB875C0168FA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:C:\\PROGRAM FILES\\MICROSOFT SQL SERVER\\80\\TOOLS\\BINN\\SQLRESLD.DLL"
@@ -383,6 +389,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_F15518AFC5C84C6FA3DE2DD3FE76E0B2"
+            {
+            "SourcePath" = "8:C:\\Documents and Settings\\nathan\\Desktop\\Test SQLDMO Object Library.wsf"
+            "TargetName" = "8:Test SQLDMO Object Library.wsf"
+            "Tag" = "8:"
+            "Folder" = "8:_1F987B663BFE4B86BA4C68A2DB730209"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_FDAEA793F97143648EE7BB875C0168FA"
             {
             "SourcePath" = "8:C:\\Program Files\\Microsoft SQL Server\\80\\Tools\\Binn\\sqlresld.DLL"
@@ -463,6 +489,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{461E96AF-1495-11D3-8D6C-00A0C9CFCEE6}:_DCADFA6C2B4E42679418057C3199D2A3"
+                    {
+                    "Name" = "8:SQLDMO Object Library Installation"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_A2EF8119274F452B8494B6330176A4DC"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{777C097F-0ED8-11D3-8D6C-00A0C9CFCEE6}:_C2AE927525284DEA88508F49DA911BCC"
@@ -496,6 +533,20 @@
         }
         "Shortcut"
         {
+            "{D0C99CFE-1238-11D3-8E00-00C04F6837D0}:_25DBE793011843929CBCFD5F1A7BA1AF"
+            {
+            "Name" = "8:Test SQLDMO Object Library.wsf"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_F15518AFC5C84C6FA3DE2DD3FE76E0B2"
+            "Folder" = "8:_DCADFA6C2B4E42679418057C3199D2A3"
+            "WorkingFolder" = "8:_1F987B663BFE4B86BA4C68A2DB730209"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "Sequences"
         {
@@ -597,7 +648,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SQLDMO Object Library"
         "ProductCode" = "8:{276B296F-1555-43E8-9EDD-69E644A738ED}"
-        "PackageCode" = "8:{12C2F8F4-635E-4132-999C-A3F8F9BB2BE9}"
+        "PackageCode" = "8:{BD26794E-0CB0-4BA9-A125-BB72DB64C11D}"
         "UpgradeCode" = "8:{1BB3DF72-4FF2-4D0A-BCDC-6D854952E30B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
