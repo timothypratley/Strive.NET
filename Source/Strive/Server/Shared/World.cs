@@ -33,7 +33,12 @@ namespace Strive.Server.Shared {
 		public Hashtable physicalObjects;
 		public ArrayList mobilesArrayList;
 
-		public Strive.Network.Messages.ToClient.TimeAndWeather weather = new Strive.Network.Messages.ToClient.TimeAndWeather( Global.now, 0, 1, 0, 0, 0 );
+		// TODO: do we know the sun texture etc here?
+		const int DEFAULT_DAY = 1;
+		const int DEFAULT_NIGHT = 3;
+		const int DEFAULT_CUSP = 2;
+		const int DEFAULT_SUN = 4;
+		public Strive.Network.Messages.ToClient.TimeAndWeather weather = new Strive.Network.Messages.ToClient.TimeAndWeather( Global.now, 0, DEFAULT_DAY, DEFAULT_NIGHT, DEFAULT_CUSP, DEFAULT_SUN, 0, 0 );
 
 		public World( int world_id ) {
 			this.world_id = world_id;
@@ -191,13 +196,9 @@ namespace Strive.Server.Shared {
 				weatherChanged = true;
 			}
 			if ( Global.random.NextDouble() > 0.995 ) {
-				// TODO: make day/night cycle
-				weather.Lighting = (float)Global.random.NextDouble();
-				weatherChanged = true;
-			}
-			if ( Global.random.NextDouble() > 0.995 ) {
-				weather.SkyTextureID = (weather.SkyTextureID + 1) % 9 + 1;
-				weatherChanged = true;
+				// TODO: only change textures on new days
+				//weather.DaySkyTextureID = (weather.SkyTextureID + 1) % 9 + 1;
+				//weatherChanged = true;
 			}
 			if ( weatherChanged ) {
 				NotifyMobiles( weather );

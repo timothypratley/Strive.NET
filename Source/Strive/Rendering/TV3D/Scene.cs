@@ -129,7 +129,105 @@ namespace Strive.Rendering.TV3D
 			}
 		}
 
+
+		ITexture nightSkyTexture, daySkyTexture, cuspSkyTexture;
+		short _sunLight;
+		short _moonLight;
+		int _sunOrbitYOffset;
+		public void SetSky( ITexture night, ITexture day, ITexture cusp, ITexture sun ) {
+			nightSkyTexture = night;
+			daySkyTexture = day;
+			cuspSkyTexture = cusp;
+			Engine.Atmosphere.SkySphere_Enable( true );
+			Engine.Atmosphere.SkySphere_SetRadius( 1000 );
+
+			Engine.Atmosphere.Sun_SetTexture(sun.ID);
+			Engine.Atmosphere.Sun_SetBillboardSize(2);
+			Engine.Atmosphere.Sun_Enable(true);
+
+			DxVBLibA.D3DLIGHT8 sunLight = new DxVBLibA.D3DLIGHT8();
+			sunLight.Type = DxVBLibA.CONST_D3DLIGHTTYPE.D3DLIGHT_DIRECTIONAL;
+			sunLight.Direction = Engine.Gl.Vector3(1, -1, 0);
+			sunLight.ambient = Engine.Gl.DXColor(0, 0, 0, 1);
+			sunLight.diffuse = Engine.Gl.DXColor(1, 1, 1, 1);
+			sunLight.specular = Engine.Gl.DXColor(1, 1, 1, 1);
+			sunLight.Attenuation0 = 0;
+			sunLight.Attenuation1 = 0;
+			sunLight.Attenuation2 = 0;
+			_sunLight = Engine.LightEngine.CreateLight(ref sunLight, "sun", false);
+
+			_sunOrbitYOffset = 200;
+
+			DxVBLibA.D3DLIGHT8 moonLight = new DxVBLibA.D3DLIGHT8();
+			moonLight.Type = DxVBLibA.CONST_D3DLIGHTTYPE.D3DLIGHT_DIRECTIONAL;
+			moonLight.Direction = Engine.Gl.Vector3(1, -1, 0);
+			moonLight.ambient = Engine.Gl.DXColor(0.2f, 0.2f, 0.2f, 1);
+			moonLight.diffuse = Engine.Gl.DXColor(0.2f, 0.2f, 0.2f, 1);
+			moonLight.specular = Engine.Gl.DXColor(0.2f, 0.2f, 0.2f, 1);
+			moonLight.Attenuation0 = 0;
+			moonLight.Attenuation1 = 0;
+			moonLight.Attenuation2 = 0;
+			_moonLight = Engine.LightEngine.CreateLight(ref moonLight, "moon", false);
+		}
+
+		float timeOfDay = 12;
+		public void SetTimeOfDay( float hour ) {
+			timeOfDay = hour;
+		}
+
+
+		const int SUN_ORBIT_RADIUS = 1000;
+		const int MILLISEC_PER_DAY = 1000*60*60*24;
 		public void RenderAtmosphere() {
+			// blend between three standard textures depending on the time of day
+			if ( nightSkyTexture != null && daySkyTexture != null && cuspSkyTexture != null ) {
+				float sunPositionY = (float)(SUN_ORBIT_RADIUS * System.Math.Sin(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5) + _sunOrbitYOffset);
+				float alpha = 2*(sunPositionY + SUN_ORBIT_RADIUS - _sunOrbitYOffset) / (SUN_ORBIT_RADIUS * 2);
+				//alpha now ranges from 0 to 2, so cap it at 1 again 
+				//The purpose of this is to avoid stars being visible during the day (the brightness of the day sky is 
+				//consistant) 
+				if ( alpha > 1 ) {
+					alpha = 1 ;
+				}
+
+				// first render the furthest
+				if ( timeOfDay < 6 || timeOfDay >= 18 ) {
+					Engine.Atmosphere.SkySphere_SetTexture( nightSkyTexture.ID );
+					Engine.LightEngine.set_EnableLight( _sunLight, false );
+					Engine.LightEngine.set_EnableLight( _moonLight, true );
+				} else {
+					Engine.Atmosphere.SkySphere_SetTexture( daySkyTexture.ID );
+					DxVBLibA.D3DLIGHT8 sunLight = Engine.LightEngine.GetLightByIndex(_sunLight);
+					sunLight.Direction = Engine.Gl.Vector3((float)(-System.Math.Cos(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5)), (float)(-System.Math.Sin(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5)), 0);
+					float brightness = (float)(1.0 / (1 + System.Math.Pow(System.Math.E, -(alpha - 0.6) / 0.05)));
+					float ambient = alpha * 0.2F;
+					sunLight.ambient.r = ambient;
+					sunLight.ambient.g = ambient;
+					sunLight.ambient.b = ambient;
+					sunLight.ambient.a = ambient;
+					sunLight.diffuse.r = brightness;
+					sunLight.diffuse.g = brightness;
+					sunLight.diffuse.b = brightness;
+					sunLight.diffuse.a = brightness;
+					sunLight.specular.r = brightness;
+					sunLight.specular.g = brightness;
+					sunLight.specular.b = brightness;
+					sunLight.specular.a = brightness;
+					Engine.LightEngine.UpdateLight(_sunLight, ref sunLight);
+					Engine.LightEngine.set_EnableLight( _sunLight, true );
+					Engine.LightEngine.set_EnableLight( _moonLight, false );
+				}
+				Engine.Atmosphere.SkySphere_SetColor(1,1,1,1);
+				Engine.Atmosphere.Atmosphere_Render();
+
+				// now render the cusp, weighted by timeofday
+				Engine.Atmosphere.SkySphere_SetTexture( cuspSkyTexture.ID );
+				Engine.Atmosphere.SkySphere_SetColor(1,1,1,alpha);
+				Engine.Atmosphere.Atmosphere_Render();
+
+				Engine.Atmosphere.Sun_SetPosition((float)(SUN_ORBIT_RADIUS * System.Math.Cos(2 * System.Math.PI * timeOfDay / MILLISEC_PER_DAY - System.Math.PI * 0.5)), sunPositionY, 0);
+			}
+
 			// render the atmosphere
 			Engine.Atmosphere.Atmosphere_Render();
 		}

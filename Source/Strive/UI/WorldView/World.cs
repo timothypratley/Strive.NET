@@ -210,6 +210,7 @@ namespace Strive.UI.WorldView {
 		public void Render() {
 			renderViewport.SetFocus();
 			RenderingScene.Clear();
+			RenderingScene.SetTimeOfDay( GetHour() );
 			RenderingScene.RenderAtmosphere();
 			TerrainPieces.Render();
 			RenderingScene.Render();
@@ -224,16 +225,27 @@ namespace Strive.UI.WorldView {
 			Resources.DropAll();
 		}
 
-		public void SetSky( ITexture texture ) {
-			RenderingScene.SetSky( texture );
+		public void SetSky( ITexture day, ITexture night, ITexture cusp, ITexture sun ) {
+			RenderingScene.SetSky( day, night, cusp, sun );
 		}
 
 		public void SetClouds( ITexture texture ) {
 			RenderingScene.SetClouds( texture );
 		}
 
-		public void SetLighting( float level ) {
-			RenderingScene.SetLighting( level );
+		DateTime baseWorldTime;
+		DateTime localTimestamp;
+		public void SetTime( DateTime worldTime ) {
+			baseWorldTime = worldTime;
+			localTimestamp = DateTime.Now;
+		}
+
+		public float GetHour() {
+			TimeSpan ts = DateTime.Now - localTimestamp;
+			DateTime worldNow = baseWorldTime + ts;
+
+			// TODO: time scale... world time = real time*4
+			return (((worldNow.Ticks*24L*60L)%(600000000L*24L))/600000000f);
 		}
 
 		public EnumCameraMode CameraMode {

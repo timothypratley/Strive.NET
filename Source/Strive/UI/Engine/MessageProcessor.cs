@@ -176,13 +176,18 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.TimeAndWeather ) {
 				Strive.Network.Messages.ToClient.TimeAndWeather w = (Strive.Network.Messages.ToClient.TimeAndWeather)m;
 				//Log.LogMessage( "Weather update recieved" );
-				ITexture t = Game.resources.GetTexture(w.SkyTextureID);
+				ITexture td = Game.resources.GetTexture(w.DaySkyTextureID);
+				ITexture tn = Game.resources.GetTexture(w.NightSkyTextureID);
+				ITexture tc = Game.resources.GetTexture(w.CuspSkyTextureID);
+				ITexture ts = Game.resources.GetTexture(w.SunTextureID);
+
 
 				// TODO: don't hardcode the clouds textureid
 				ITexture ct = Game.resources.GetTexture( 46 );
-				_world.SetSky( t );
+				_world.SetSky( td, tn, tc, ts );
 				_world.SetClouds( ct );
-				_world.SetLighting( w.Lighting );
+				DateTime dt = new DateTime( w.ServerNow );
+				_world.SetTime( dt );
 			}
 			#endregion
 			#region Ping

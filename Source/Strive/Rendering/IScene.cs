@@ -15,17 +15,17 @@ namespace Strive.Rendering
 	{
 		#region "Methods"
 		void DropAll();
+		void SetTimeOfDay( float hour );
 		void SetSky( ITexture texture );
+		void SetSky( ITexture night, ITexture day, ITexture cusp, ITexture sun );
 		void SetClouds( ITexture texture );
 		void SetLighting( float level );
 		void SetFog( float level );
 		void DrawText( Vector3D location, string message );
-		/// <remarks>Renders the scene into video memory.</remarks>
 		void Clear();
 		void Render();
 		void RenderAtmosphere();
 		void RenderToOtherWindow( System.Windows.Forms.IWin32Window hwnd );
-		/// <remarks>Displays the rendered screen.</remarks>
 		void Display();
 		int RayCollision( Vector3D start_point, Vector3D end_point, int collision_type );
 		IModel MousePick( int x, int y );
