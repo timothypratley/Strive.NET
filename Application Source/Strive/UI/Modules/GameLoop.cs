@@ -171,6 +171,17 @@ namespace Strive.UI.Modules
 					Global._log.LogMessage( "You now have " + chp.HitPoints );
 				}
 				#endregion
+				#region CanPossess
+				else if ( m is Strive.Network.Messages.ToClient.CanPossess ) {
+					Strive.Network.Messages.ToClient.CanPossess cp = (Strive.Network.Messages.ToClient.CanPossess)m;
+					Global._log.LogMessage( "You can possess " + cp.ToString() );
+				}
+				#endregion
+					#region Default
+				else {
+					Global._log.ErrorMessage( "Unknown message of type " + m.GetType() );
+				}
+				#endregion
 			}
 
 				#endregion

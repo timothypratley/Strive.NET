@@ -80,6 +80,10 @@ namespace Strive.Server {
 					"Login failed for username " + loginMessage.username
 				);
 			}
+			Strive.Network.Messages.ToClient.CanPossess canPossess = new Strive.Network.Messages.ToClient.CanPossess(
+				world.getPossessable( loginMessage.username )
+			);
+			client.Send( canPossess );
 	}
 
 		void ProcessEnterWorldAsMobile( Client client, Strive.Network.Messages.ToServer.EnterWorldAsMobile message ) {

@@ -299,5 +299,19 @@ namespace Strive.Server {
 				}
 			}
 		}
+
+		public Strive.Network.Messages.ToClient.CanPossess.id_name_tuple[] getPossessable( string username ) {
+			DataRow[] dr = multiverse.Player.Select( "Email = '" + username + "'" );
+			Schema.PlayerRow pr = multiverse.Player.FindByPlayerID( (int)dr[0][0] );
+			Schema.MobilePossesableByPlayerRow [] mpbpr = pr.GetMobilePossesableByPlayerRows();
+			ArrayList list = new ArrayList();
+			foreach ( Schema.MobilePossesableByPlayerRow mpr in mpbpr ) {
+				Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple = new Strive.Network.Messages.ToClient.CanPossess.id_name_tuple(
+					mpr.ObjectInstanceID, mpr.ObjectInstanceRow.ObjectTemplateRow.ObjectTemplateName
+				);
+				list.Add( tuple );
+			}
+			return (Strive.Network.Messages.ToClient.CanPossess.id_name_tuple [])list.ToArray( typeof( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple ) );
+		}
 	}
 }

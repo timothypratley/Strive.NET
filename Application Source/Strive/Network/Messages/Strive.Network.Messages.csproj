@@ -132,6 +132,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\CanPossess.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\CombatReport.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
