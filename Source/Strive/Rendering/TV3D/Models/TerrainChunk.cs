@@ -58,7 +58,7 @@ namespace Strive.Rendering.TV3D.Models {
 			if ( x < 0 ) z = _height*_gap_size + z;
 			*/
 
-			_mesh.ChangePointAltitude( x, z, altitude, true, false, false );
+			_mesh.ChangePointAltitude( x+0.01f, z+0.01f, altitude, true, false, false );
 		}
 
 		public float GetHeight( float x, float z ) {
