@@ -36,13 +36,12 @@ namespace Strive.Rendering.Cameras
 		/// <param name="cameraKey">The specified Key for the camera</param>
 		/// <param name="cameras">The collection to add the camera too</param>
 		/// <returns>The newly created camera</returns>
-		public static Camera CreateCamera(string cameraKey, CameraCollection cameras)
+		public static Camera CreateCamera(string cameraKey, CameraCollection cameras )
 		{
 			Camera c = new Camera();
 			
 			c._key = cameraKey;
 			c.Position = Vector3D.Origin;
-			//c.Rotation = Vector3D;
 			cameras.Add(cameraKey, c);
 			Interop._instance.Cameras.Camera_Create(cameraKey);
 			Interop._instance.Cameras.Class_SetPointer(cameraKey);

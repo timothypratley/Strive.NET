@@ -1,5 +1,5 @@
 using System;
-using Revolution3D8088c;
+using R3D089_VBasic;
 
 namespace Strive.Rendering.Terrain
 {
@@ -9,6 +9,7 @@ namespace Strive.Rendering.Terrain
 	public class Landscape
 	{
 		public static void LoadLandscape( string name, string filename ) {
+			/*
 			Interop._instance.PolyVox.Scape_Create( name, filename, 100, true, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
 			R3DVector3D scale = new R3DVector3D();
 			scale.x = 1;
@@ -17,6 +18,7 @@ namespace Strive.Rendering.Terrain
 			Interop._instance.PolyVox.Scape_SetScale( ref scale );
 			Strive.Rendering.Textures.Texture.LoadTexture( "landtex", filename );
 			Interop._instance.PolyVox.Scape_SetTexture( 0, "landtex", R3DLAYERCONFIG.R3DLAYERCONFIG_COLOR );
+			*/
 		}
 	}
 }

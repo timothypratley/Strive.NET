@@ -1,6 +1,9 @@
 using System;
 using System.Data;
 
+using Strive.Logging;
+
+
 namespace Strive.UI.Settings
 {
 	/// <summary>
@@ -152,7 +155,7 @@ namespace Strive.UI.Settings
 				RecentServers.AcceptChanges();
 			}
 
-			Game.CurrentLog.LogMessage("Added server '" + serverAddress + ":" + serverPort + "' to recent servers");
+			Log.LogMessage("Added server '" + serverAddress + ":" + serverPort + "' to recent servers");
 		}
 
 		public static void AddRecentPlayer(string serverAddress,
@@ -198,7 +201,7 @@ namespace Strive.UI.Settings
 			}
 
 			RawSettings.Tables["RecentPlayers"].AcceptChanges();
-			Game.CurrentLog.LogMessage("Added player '" + emailaddress + "' to recent players");
+			Log.LogMessage("Added player '" + emailaddress + "' to recent players");
 		}
 
 		public static void AddRecentCharacter(string serverAddress,
@@ -241,7 +244,7 @@ namespace Strive.UI.Settings
 			}
 
 			RawSettings.Tables["RecentCharacters"].AcceptChanges();
-			Game.CurrentLog.LogMessage("Added character '" + charactername+ "' to recent characters");
+			Log.LogMessage("Added character '" + charactername+ "' to recent characters");
 		}	
 
 

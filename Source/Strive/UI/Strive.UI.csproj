@@ -140,14 +140,6 @@
                     Lcid = "0"
                     WrapperTool = "primary"
                 />
-                <Reference
-                    Name = "MSNChat"
-                    Guid = "{0DFE796E-8760-4CBE-BB08-49F589241800}"
-                    VersionMajor = "1"
-                    VersionMinor = "0"
-                    Lcid = "0"
-                    WrapperTool = "tlbimp"
-                />
             </References>
         </Build>
         <Files>
@@ -159,10 +151,6 @@
                 <File
                     RelPath = "App.ico"
                     BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "app.manifest"
-                    BuildAction = "None"
                 />
                 <File
                     RelPath = "AssemblyInfo.cs"

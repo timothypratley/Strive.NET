@@ -10,6 +10,7 @@ using Strive.Network.Messages;
 using Strive.Multiverse;
 using Strive.Math3D;
 using Strive.Data;
+using Strive.Logging;
 
 // todo: this object needs to be made threadsafe
 
@@ -42,16 +43,16 @@ namespace Strive.Server.Shared {
 
 			// todo: would be nice to be able to load only the
 			// world in question... but for now load them all
-			Global.log.LogMessage( "Loading Global.multiverse..." );
+			Log.LogMessage( "Loading Global.multiverse..." );
 			Global.multiverse = Strive.Data.MultiverseFactory.getMultiverse();
-			Global.log.LogMessage( "Global.multiverse loaded." );
+			Log.LogMessage( "Global.multiverse loaded." );
 
 			// find highX and lowX for our world dimensions
 			highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
 			lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
 			highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
 			lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
-			Global.log.LogMessage( "Global.multiverse bounds are " + lowX + "," + lowZ + " " + highX + "," + highZ );
+			Log.LogMessage( "Global.multiverse bounds are " + lowX + "," + lowZ + " " + highX + "," + highZ );
 
 			// figure out how many squares we need
 			squaresInX = (int)(highX-lowX)/Square.squareSize + 1;
@@ -75,9 +76,9 @@ namespace Strive.Server.Shared {
 				throw new Exception( "ERROR: World ID not valid!" );	
 			}
 			
-			Global.log.LogMessage( "Loading world \"" + wr.WorldName + "\"..." );
+			Log.LogMessage( "Loading world \"" + wr.WorldName + "\"..." );
 			foreach ( Schema.AreaRow ar in wr.GetAreaRows() ) {
-				Global.log.LogMessage( "Loading area \"" + ar.AreaName + "\"..." );
+				Log.LogMessage( "Loading area \"" + ar.AreaName + "\"..." );
 				// don't load area 0, its players and their eq
 				if ( ar.AreaID == 0 ) continue;
 				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
@@ -129,7 +130,7 @@ namespace Strive.Server.Shared {
 					}
 				}
 			}
-			Global.log.LogMessage( "Loaded world." );
+			Log.LogMessage( "Loaded world." );
 
 			// Calculate Terrain heightmaps
 			for ( int i=0; i<squaresInX; i++ ) {
@@ -181,7 +182,7 @@ namespace Strive.Server.Shared {
 				po.Position.X > highX || po.Position.Z > highZ
 				|| po.Position.X < lowX || po.Position.Z < lowZ
 			) {
-				Global.log.ErrorMessage( "Tried to add physical object outside the world." );
+				Log.ErrorMessage( "Tried to add physical object outside the world." );
 				return;
 			}
 
@@ -202,7 +203,7 @@ namespace Strive.Server.Shared {
 			}
 
 
-			Global.log.LogMessage( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
+			Log.LogMessage( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
 		}
 
 		public void Remove( PhysicalObject po ) {
@@ -211,7 +212,7 @@ namespace Strive.Server.Shared {
 			InformNearby( po, new Strive.Network.Messages.ToClient.DropPhysicalObject( po ) );
 			squares[squareX,squareZ].Remove( po );
 			physicalObjects.Remove( po.ObjectInstanceID );
-			Global.log.LogMessage( "Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world." );
+			Log.LogMessage( "Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world." );
 		}
 
 		public void Relocate( PhysicalObject po, Vector3D newPos, Vector3D newHeading ) {
@@ -251,7 +252,7 @@ namespace Strive.Server.Shared {
 				//float dy = newPos.Y - spo.Position.Y;
 				float distance_squared = dx*dx + dz*dz; // + dy*dy;
 				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
-					// Global.log.LogMessage( "Collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID + "." );
+					// Log.LogMessage( "Collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID + "." );
 					// objects would be touching, reject the move
 					// if its a player, slap their wrist with a position update
 					if ( ma != null ) {
@@ -303,7 +304,7 @@ namespace Strive.Server.Shared {
 								foreach( PhysicalObject toDrop in squares[fromSquareX+i, fromSquareZ+j].physicalObjects ) {
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.DropPhysicalObject( toDrop ) );
-									//Global.log.LogMessage( "Told client to drop " + toDrop.ObjectInstanceID + "." );
+									//Log.LogMessage( "Told client to drop " + toDrop.ObjectInstanceID + "." );
 								}
 							}
 						}
@@ -322,7 +323,7 @@ namespace Strive.Server.Shared {
 								foreach( PhysicalObject toAdd in squares[toSquareX-i, toSquareZ-j].physicalObjects ) {
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.AddPhysicalObject( toAdd ) );
-									//Global.log.LogMessage( "Told client to add " + toAdd.ObjectInstanceID + "." );
+									//Log.LogMessage( "Told client to add " + toAdd.ObjectInstanceID + "." );
 								}
 							}
 						}
@@ -368,14 +369,14 @@ namespace Strive.Server.Shared {
 			Strive.Data.MultiverseFactory.refreshPlayerList( Global.multiverse );
 			DataRow[] dr = Global.multiverse.Player.Select( "Email = '" + email + "'" );
 			if ( dr.Length != 1 ) {
-				Global.log.ErrorMessage( dr.Length + " players found with email '" + email + "'." );
+				Log.ErrorMessage( dr.Length + " players found with email '" + email + "'." );
 				return false;
 			} else {
 				if ( String.Compare( (string)dr[0]["Password"], password ) == 0 ) {
 					playerID = (int)dr[0]["PlayerID"];
 					return true;
 				} else {
-					Global.log.LogMessage( "Incorrect password for player with email '" + email + "'." );
+					Log.LogMessage( "Incorrect password for player with email '" + email + "'." );
 					return false;
 				}
 			}

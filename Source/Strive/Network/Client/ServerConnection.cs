@@ -8,6 +8,7 @@ using System.IO;
 using Strive.Common;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
+using Strive.Logging;
 
 namespace Strive.Network.Client {
 	public class ServerConnection {
@@ -26,7 +27,7 @@ namespace Strive.Network.Client {
 		public void Start( IPEndPoint remoteEndPoint ) {
 			this.remoteEndPoint = remoteEndPoint;
 			messageQueue = new Queue();
-			Console.WriteLine( "remoteEndPoint " + remoteEndPoint );
+			Log.LogMessage( "remoteEndPoint " + remoteEndPoint );
 			serverConnection = new UdpClient();
 			myThread.Start();
 		}
@@ -57,7 +58,7 @@ namespace Strive.Network.Client {
 			// Custom serialization
 			IMessage message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
 			messageQueue.Enqueue( message );
-			//Console.WriteLine( "enqueued " + message.GetType() + " message" );
+			//Log.LogMessage( "enqueued " + message.GetType() + " message" );
 		}
 
 		protected void Send( IMessage message ) {

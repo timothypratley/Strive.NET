@@ -1,8 +1,10 @@
 using System;
+
 using Strive.Multiverse;
 using Strive.Network.Server;
 using Strive.Network.Messages;
 using Strive.Math3D;
+using Strive.Logging;
 
 namespace Strive.Server.Shared
 {
@@ -98,13 +100,13 @@ namespace Strive.Server.Shared
 					int rand = Global.random.Next( 5 ) - 2;
 					if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
 						MobileState--;
-						//Global.log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState + "." );
+						//Log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState + "." );
 						world.InformNearby( this,
 							new Strive.Network.Messages.ToClient.MobileState( this )
 						);
 					} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
 						MobileState++;
-						//Global.log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState + "." );
+						//Log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState + "." );
 						world.InformNearby( this,
 							new Strive.Network.Messages.ToClient.MobileState( this )
 						);
@@ -146,7 +148,7 @@ namespace Strive.Server.Shared
 			Vector3D distance = target.Position - Position;
 			if ( distance.GetMagnitude() > 5.0F	) {
 				// too far away!
-				Global.log.LogMessage( this.ObjectTemplateName + " tried to attack " + target.ObjectTemplateName + " but was too far away." );
+				Log.LogMessage( this.ObjectTemplateName + " tried to attack " + target.ObjectTemplateName + " but was too far away." );
 				return;
 			}
 			world.InformNearby(

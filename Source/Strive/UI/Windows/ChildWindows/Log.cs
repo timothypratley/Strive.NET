@@ -27,7 +27,7 @@ namespace Strive.UI.Windows.ChildWindows
 			LogOutput.Width = this.Width - 5;
 			LogOutput.Height = this.Height - 25;
 
-			Game.CurrentLog.SetLogOutput(LogOutput);
+			Strive.Logging.Log.SetLogOutput(LogOutput);
 
 		}
 

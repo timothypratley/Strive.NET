@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 using Strive.Network.Messages;
 using Strive.Common;
+using Strive.Logging;
 
 namespace Strive.Network.Server {
 	/// <summary>
@@ -19,6 +20,9 @@ namespace Strive.Network.Server {
 		//BinaryFormatter formatter = new BinaryFormatter();
 		Hashtable clients = new Hashtable();
 		StoppableThread myThread;
+
+		public delegate void ExceptionHandler( Exception e );
+		public event ExceptionHandler ExceptionOccured;
 
 		//Creates a UdpClient for reading incoming data.
 		UdpClient receivingUdpClient;
@@ -47,41 +51,47 @@ namespace Strive.Network.Server {
 		}
 
 		public void Run() {
-			Byte[] receivedBytes;
 			try {
-				// Blocks until a message returns on this socket from a remote host.
-				receivedBytes = receivingUdpClient.Receive(ref endpoint);
-			} catch ( Exception ) {
-				// do nothing, socket was closed by another thread
-				return;
-			}
-			IMessage message;
-			try {
-				// Generic serialization
-				//message = (IMessage)formatter.Deserialize(
-				//	new MemoryStream( receivedBytes )
-				//);
+				Byte[] receivedBytes;
+				try {
+					// Blocks until a message returns on this socket from a remote host.
+					receivedBytes = receivingUdpClient.Receive(ref endpoint);
+				} catch ( Exception ) {
+					// do nothing, socket was closed by another thread
+					return;
+				}
+				IMessage message;
+				try {
+					// Generic serialization
+					//message = (IMessage)formatter.Deserialize(
+					//	new MemoryStream( receivedBytes )
+					//);
 	
-				// Custom serialization
-				message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
+					// Custom serialization
+					message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
+				} catch ( Exception e ) {
+					Log.ErrorMessage( e );
+					Log.ErrorMessage( "Invalid packet received" );
+					return;
+				}
+				Client client = (Client)clients[endpoint];
+				if ( client == null ) {
+					// new connection
+					Log.LogMessage(
+						"New connection from " + endpoint );
+					client = new Client( endpoint );
+					clients.Add( endpoint, client );
+				}
+				client.LastMessageTimestamp = DateTime.Now;
+				ClientMessage clientMessage = new ClientMessage(
+					client, message	);
+				clientMessageQueue.Enqueue( clientMessage );
+				//Log.LogMessage( message.GetType() + " message enqueued from " + endpoint );
 			} catch ( Exception e ) {
-				System.Console.WriteLine( e );
-				System.Console.WriteLine( "Invalid packet received" );
-				return;
+				Stop();
+				Log.ErrorMessage( e );
+				ExceptionOccured( e );
 			}
-			Client client = (Client)clients[endpoint];
-			if ( client == null ) {
-				// new connection
-				System.Console.WriteLine(
-					"New connection from " + endpoint );
-				client = new Client( endpoint );
-				clients.Add( endpoint, client );
-			}
-			client.LastMessageTimestamp = DateTime.Now;
-			ClientMessage clientMessage = new ClientMessage(
-				client, message	);
-			clientMessageQueue.Enqueue( clientMessage );
-			//Console.WriteLine( message.GetType() + " message enqueued from " + endpoint );
 		}
 
 		public int MessageCount {

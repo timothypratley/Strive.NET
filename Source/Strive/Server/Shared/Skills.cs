@@ -10,7 +10,7 @@ namespace Strive.Server.Shared
 	public class Skills
 	{
 		public static void Backstab( Client client, Mobile target ) {
-			Global.log.LogMessage( client.Avatar.ObjectTemplateName + " backstabs "+ target.ObjectTemplateName + "." );
+			Log.LogMessage( client.Avatar.ObjectTemplateName + " backstabs "+ target.ObjectTemplateName + "." );
 		}
 	}
 }

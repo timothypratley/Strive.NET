@@ -130,7 +130,7 @@ namespace Strive.UI.Windows
 			// TODO: process the command
 
 			// Log the command
-			Game.CurrentLog.LogMessage("Executed command '" + command + "'.");
+			Log.LogMessage("Executed command '" + command + "'.");
 
 			// Save the command for up-arrow completion
 			_previousCommands.Add(command);

@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 
+using Strive.Logging;
+
 namespace Strive.UI.Windows.Controls
 {
 	/// <summary>
@@ -131,7 +133,7 @@ namespace Strive.UI.Windows.Controls
 			// TODO: process the command
 
 			// Log the command
-			Game.CurrentLog.LogMessage("Executed command '" + command + "'.");
+			Log.LogMessage("Executed command '" + command + "'.");
 
 			// Save the command for up-arrow completion
 			_previousCommands.Add(command);

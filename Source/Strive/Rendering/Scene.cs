@@ -300,9 +300,7 @@ namespace Strive.Rendering
 				if(!Views.Contains("DefaultView"))
 				{
 					return Cameras.Camera.CreateCamera("DefaultView", this.Views);
-					}
-				else
-				{
+				} else {
 					return this.Views["DefaultView"];
 				}
 			}

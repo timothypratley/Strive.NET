@@ -104,14 +104,6 @@
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
                 />
                 <Reference
-                    Name = "Revolution3D8088c"
-                    Guid = "{F9026A6D-BB52-43C8-8439-586CE8DB3FAC}"
-                    VersionMajor = "1"
-                    VersionMinor = "0"
-                    Lcid = "0"
-                    WrapperTool = "tlbimp"
-                />
-                <Reference
                     Name = "R3D089_VBasic"
                     Guid = "{6124ED39-62F9-4D4B-8CA1-56499F5DC07B}"
                     VersionMajor = "1"
@@ -169,17 +161,9 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Cameras\Collections.xml"
-                    BuildAction = "Content"
-                    Generator = "SBCollectionGenerator"
-                    LastGenOutput = "Collections.cs"
-                />
-                <File
                     RelPath = "Cameras\Collections.cs"
-                    DependentUpon = "Collections.xml"
                     SubType = "Code"
                     BuildAction = "Compile"
-                    AutoGen = "True"
                 />
                 <File
                     RelPath = "Controls\Keyboard.cs"

@@ -9,6 +9,8 @@ using Crownwood.Magic.Common;
 using Crownwood.Magic.Controls;
 using Crownwood.Magic.Docking;
 
+using Strive.Logging;
+
 
 namespace Strive.UI.Windows
 {
@@ -108,7 +110,7 @@ namespace Strive.UI.Windows
 			if(System.IO.File.Exists(Settings.SettingsManager.MagicWindowSettingsPath))
 			{
 				DockingManager.LoadConfigFromFile(Settings.SettingsManager.MagicWindowSettingsPath);
-				Game.CurrentLog.LogMessage("Loaded Magic Window config from '" + Settings.SettingsManager.MagicWindowSettingsPath + "'");
+				Log.LogMessage("Loaded Magic Window config from '" + Settings.SettingsManager.MagicWindowSettingsPath + "'");
 			}
 
 			Settings.SettingsManager.InitialiseWindow(this);
@@ -326,10 +328,10 @@ namespace Strive.UI.Windows
 		private void saveSettings()
 		{
 			DockingManager.SaveConfigToFile(Settings.SettingsManager.MagicWindowSettingsPath);
-			Game.CurrentLog.LogMessage("Saved Magic Window config to '" + Settings.SettingsManager.MagicWindowSettingsPath + "'");
+			Log.LogMessage("Saved Magic Window config to '" + Settings.SettingsManager.MagicWindowSettingsPath + "'");
 			Settings.SettingsManager.SaveWindowSetting(this);			
 			Settings.SettingsManager.PersistStriveSettings();
-			Game.CurrentLog.LogMessage("Saved Strive config to '" + Settings.SettingsManager.StriveSettingsPath + "'");
+			Log.LogMessage("Saved Strive config to '" + Settings.SettingsManager.StriveSettingsPath + "'");
 		}
 
 		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e)

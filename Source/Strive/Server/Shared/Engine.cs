@@ -1,9 +1,11 @@
 using System;
 using System.Net;
 using System.Collections;
+using System.Configuration;
 
 using Strive.Network.Server;
 using Strive.Common;
+using Strive.Logging;
 
 namespace Strive.Server.Shared {
 	/// <summary>
@@ -19,33 +21,38 @@ namespace Strive.Server.Shared {
 
 		public Engine() {
 			engine_thread = new StoppableThread( new StoppableThread.WhileRunning( UpdateLoop ) );
+
+			#region read and apply configuration settings
+			if ( ConfigurationSettings.AppSettings["world_id"] == null ) {
+				throw new ConfigurationException( "world_id" );
+			}
+			world_id = int.Parse(System.Configuration.ConfigurationSettings.AppSettings["world_id"]);
+			if ( ConfigurationSettings.AppSettings["port"] == null ) {
+				throw new ConfigurationException( "port" );
+			}
+			port = int.Parse(ConfigurationSettings.AppSettings["port"]);
+			string logfilename = ConfigurationSettings.AppSettings["logFileName"];
+			if ( logfilename != null ) {
+				Log.SetLogOutput( logfilename );
+			}
+			#endregion
+
+			listener = new UdpHandler( new IPEndPoint( IPAddress.Any, port ) );
 		}
 
 		public void Start() {
-			// read and apply configuration settings
-			if ( System.Configuration.ConfigurationSettings.AppSettings["world_id"] == null ) {
-				throw new System.Configuration.ConfigurationException( "world_id" );
-			}
-			world_id = int.Parse(System.Configuration.ConfigurationSettings.AppSettings["world_id"]);
-			if ( System.Configuration.ConfigurationSettings.AppSettings["port"] == null ) {
-				throw new System.Configuration.ConfigurationException( "port" );
-			}
-			port = int.Parse(System.Configuration.ConfigurationSettings.AppSettings["port"]);
-
-			listener = new UdpHandler(
-				new IPEndPoint( IPAddress.Any, port )
-			);
-
+			Log.LogMessage( "Starting game engine..." );
 			world = new World( world_id );
-			listener.Start();
 			mp = new MessageProcessor( world, listener	);
-			Global.log.LogMessage( "Listening to new connections..." );
-
 			engine_thread.Start();
+			Log.LogMessage( "Listening to new connections..." );
+			listener.Start();
 		}
 
 		public void Stop() {
+			listener.Stop();
 			engine_thread.Stop();
+			Log.LogMessage( "Server terminated." );
 		}
 
 		public void Pause() {
@@ -53,6 +60,7 @@ namespace Strive.Server.Shared {
 		}
 
 		public void UpdateLoop() {
+			try {
 				// handle world changes
 				Global.now = DateTime.Now;
 				world.Update();
@@ -64,10 +72,15 @@ namespace Strive.Server.Shared {
 				mp.CleanupDeadConnections();
 
 				if ( (DateTime.Now - Global.now) > TimeSpan.FromSeconds(1) ) {
-					Global.log.WarningMessage( "An update cycle took longer than one second." );
+					Log.WarningMessage( "An update cycle took longer than one second." );
 				} else {
 					System.Threading.Thread.Sleep( 100 );
 				}
+			} catch ( Exception e ) {
+				// Just log exceptions and stop all threads
+				Log.ErrorMessage( e );
+				Stop();
+			}
 		}
 	}
 }

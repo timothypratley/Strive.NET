@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.IO;
 
-
 using Strive.Math3D;
 using Strive.Network.Client;
 using Strive.Network.Messages;
@@ -11,6 +10,7 @@ using Strive.Rendering.Controls;
 using Strive.Rendering.Models;
 using Strive.Resources;
 using Strive.Common;
+using Strive.Logging;
 
 namespace Strive.UI.Engine
 {
@@ -165,7 +165,7 @@ namespace Strive.UI.Engine
 					if ( m.ModelFormat == ModelFormat.Scape ) {
 						continue;
 					}
-					//Game.CurrentLog.LogMessage(	"CD2 model " + m.Key + " at " + m.Position + " from " + cameraPosition );
+					//Log.LogMessage(	"CD2 model " + m.Key + " at " + m.Position + " from " + cameraPosition );
 					//todo  convert to 3d when centers is sorted
 					float dx1 = _scene.View.Position.X - m.Position.X;
 					float dz1 = _scene.View.Position.Z - m.Position.Z;
@@ -181,7 +181,7 @@ namespace Strive.UI.Engine
 					float distance_squared = dx*dx + dz*dz;// + dy*dy;
 					// assumes my radius is root 100
 					if ( distance_squared < m.BoundingSphereRadiusSquared + 100 ) {
-						Game.CurrentLog.LogMessage( "Canceled move due to collision" );
+						Log.LogMessage( "Canceled move due to collision" );
 						return;
 					}
 				}
@@ -205,10 +205,8 @@ namespace Strive.UI.Engine
 		}
 
 		void Render() {
-			#region 3.0 Render
 			_scene.Render();
 			_scene.Display();
-				#endregion
 		}
 
 

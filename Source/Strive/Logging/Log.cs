@@ -8,30 +8,19 @@ namespace Strive.Logging {
 	/// Summary description for Log.
 	/// </summary>
 	public class Log {
-		private TextBoxBase output = null;
-		private TextWriter logFileWriter = null;
+		static private TextBoxBase textBoxOutput = null;
+		static private TextWriter logFileWriter = null;
 
-		public Log() {
+		public static void SetLogOutput( TextBoxBase output ) {
+			textBoxOutput = output;
 		}
 
-		public Log( TextBoxBase output ) {
-			SetLogOutput( output );
-		}
-
-		public Log( string filename ) {
-			SetLogOutput( filename );
-		}
-
-		public void SetLogOutput( TextBoxBase output ) {
-			this.output = output;
-		}
-
-		public void SetLogOutput( string filename ) {
+		public static void SetLogOutput( string filename ) {
 			FileStream fs = File.Open( filename, FileMode.Create, FileAccess.Write , FileShare.Read );
 			logFileWriter = new StreamWriter( fs );
 		}
 
-		public void LogMessage( string message ) {
+		public static void LogMessage( string message ) {
 			message = "["
 				+ DateTime.Now.ToShortDateString() + " - "
 				+ DateTime.Now.ToLongTimeString()
@@ -44,24 +33,28 @@ namespace Strive.Logging {
 			StringAppendFinite( message );
 		}
 
-		public void ErrorMessage( string message ) {
+		public static void ErrorMessage( Exception e ) {
+			ErrorMessage( e.ToString() );
+		}
+
+		public static void ErrorMessage( string message ) {
 			LogMessage( "ERROR: "+message );
 		}
 
-		public void WarningMessage( string message ) {
+		public static void WarningMessage( string message ) {
 			LogMessage( "WARNING: "+message );
 		}
 
-		public void DebugMessage( string message ) {
+		public static void DebugMessage( string message ) {
 			Debug.WriteLine( message );
 			StringAppendFinite( message );
 		}
 
-		private void StringAppendFinite( string message ) {
-			if ( output != null ) {
-				output.Text = message + Environment.NewLine + output.Text;
-				if ( output.Text.Length > 1000 ) {
-					output.Text = output.Text.Remove(1000, output.Text.Length - 1000);
+		private static void StringAppendFinite( string message ) {
+			if ( textBoxOutput != null ) {
+				textBoxOutput.Text = message + Environment.NewLine + textBoxOutput.Text;
+				if ( textBoxOutput.Text.Length > 1000 ) {
+					textBoxOutput.Text = textBoxOutput.Text.Remove(1000, textBoxOutput.Text.Length - 1000);
 				}
 			}
 		}

@@ -3,8 +3,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+
 using Strive.Multiverse;
 using Strive.Network.Messages;
+using Strive.Logging;
 
 namespace Strive.Network.Server {
 	/// <summary>
@@ -39,7 +41,7 @@ namespace Strive.Network.Server {
 
 		public void Send( IMessage message ) {
 			if ( !Connected ) {
-				Console.WriteLine( "ERROR: trying to send message without active connection" );
+				Log.LogMessage( "ERROR: trying to send message without active connection" );
 				return;
 			}
 				// Generic serialization
@@ -55,7 +57,7 @@ namespace Strive.Network.Server {
 				} catch ( ObjectDisposedException ) {
 					// do nothing, socket has been closed by another thread
 				}
-				// Console.WriteLine( "Sent " + message.GetType() + " message (" + EncodedMessage.Length + " bytes) to " + endPoint );
+				// Log.LogMessage( "Sent " + message.GetType() + " message (" + EncodedMessage.Length + " bytes) to " + endPoint );
 		}
 
 		public void Close() {
