@@ -181,6 +181,22 @@
                     Lcid = "0"
                     WrapperTool = "aximp"
                 />
+                <Reference
+                    Name = "MSComCtl2"
+                    Guid = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}"
+                    VersionMajor = "2"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
+                />
+                <Reference
+                    Name = "AxMSComCtl2"
+                    Guid = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}"
+                    VersionMajor = "2"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "aximp"
+                />
             </References>
         </Build>
         <Files>

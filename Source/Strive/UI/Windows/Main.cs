@@ -448,11 +448,11 @@ namespace Strive.UI.Windows
 			#region Add our windows
 
 			// Connection
-			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
-			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
-			connectionWindow.CaptionBar = true;
-			connectionWindow.CloseButton = false;
-			DockingManager.AddContentWithState(connectionWindow, State.DockLeft);
+//			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
+//			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
+//			connectionWindow.CaptionBar = true;
+//			connectionWindow.CloseButton = false;
+//			DockingManager.AddContentWithState(connectionWindow, State.DockLeft);
 			// Log
 			Content logWindow = DockingManager.Contents.Add(new ChildWindows.Log(), "Log", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Log);
 			DockingManager.AddContentWithState(logWindow, State.DockBottom);
@@ -479,6 +479,9 @@ namespace Strive.UI.Windows
 			this.Show();
 
 			Game.CurrentWorld = new World( Game.resources, Game.RenderingFactory, RenderTarget );
+
+			ChildWindows.Connection con = new ChildWindows.Connection();
+			con.ShowDialog(this);
 
 			#endregion		
 		}

@@ -25,15 +25,16 @@ namespace Strive.UI.Windows.ChildWindows
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox Email;
 		private System.Windows.Forms.TextBox Password;
-		private System.Windows.Forms.TreeView RecentServers;
-		private TreeNode CurrentPlayerNode;
 		
 		private Connection.ConnectionWindowState windowState;
 
-
-		public bool Connected = false;
 		private System.Windows.Forms.RadioButton NetworkProtocolTypeTCP;
 		private System.Windows.Forms.RadioButton NetworkProtocolTypeUDP;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ColumnHeader columnHeader3;
+		private System.Windows.Forms.ListView RecentConnections;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ProgressBar ConnectionProgress;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -45,7 +46,6 @@ namespace Strive.UI.Windows.ChildWindows
 			// Required for Windows Form Designer support
 			//
 			InitializeComponent();
-			RecentServers.ImageList = Icons.IconManager.GlobalImageList;
 			loadRecentServers();
 			StriveWindowState = ConnectionWindowState.NotConnected;
 			Game.CurrentGameLoop._message_processor.OnCanPossess
@@ -77,6 +77,8 @@ namespace Strive.UI.Windows.ChildWindows
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.NetworkProtocolTypeUDP = new System.Windows.Forms.RadioButton();
+			this.NetworkProtocolTypeTCP = new System.Windows.Forms.RadioButton();
 			this.Password = new System.Windows.Forms.TextBox();
 			this.Email = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
@@ -87,42 +89,60 @@ namespace Strive.UI.Windows.ChildWindows
 			this.ServerAddress = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.RecentServers = new System.Windows.Forms.TreeView();
-			this.NetworkProtocolTypeTCP = new System.Windows.Forms.RadioButton();
-			this.NetworkProtocolTypeUDP = new System.Windows.Forms.RadioButton();
+			this.RecentConnections = new System.Windows.Forms.ListView();
+			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+			this.ConnectionProgress = new System.Windows.Forms.ProgressBar();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right);
-			this.groupBox1.Controls.AddRange(new System.Windows.Forms.Control[] {
-																					this.NetworkProtocolTypeUDP,
-																					this.NetworkProtocolTypeTCP,
-																					this.Password,
-																					this.Email,
-																					this.label4,
-																					this.label3,
-																					this.ConnectNow,
-																					this.label2,
-																					this.PortNumber,
-																					this.ServerAddress,
-																					this.label1});
-			this.groupBox1.Location = new System.Drawing.Point(0, 216);
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.NetworkProtocolTypeUDP);
+			this.groupBox1.Controls.Add(this.NetworkProtocolTypeTCP);
+			this.groupBox1.Controls.Add(this.Password);
+			this.groupBox1.Controls.Add(this.Email);
+			this.groupBox1.Controls.Add(this.label4);
+			this.groupBox1.Controls.Add(this.label3);
+			this.groupBox1.Controls.Add(this.ConnectNow);
+			this.groupBox1.Controls.Add(this.label2);
+			this.groupBox1.Controls.Add(this.PortNumber);
+			this.groupBox1.Controls.Add(this.ServerAddress);
+			this.groupBox1.Controls.Add(this.label1);
+			this.groupBox1.Location = new System.Drawing.Point(0, 288);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(192, 168);
+			this.groupBox1.Size = new System.Drawing.Size(656, 176);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Server Details";
+			// 
+			// NetworkProtocolTypeUDP
+			// 
+			this.NetworkProtocolTypeUDP.Location = new System.Drawing.Point(224, 48);
+			this.NetworkProtocolTypeUDP.Name = "NetworkProtocolTypeUDP";
+			this.NetworkProtocolTypeUDP.Size = new System.Drawing.Size(46, 24);
+			this.NetworkProtocolTypeUDP.TabIndex = 3;
+			this.NetworkProtocolTypeUDP.Text = "UDP";
+			// 
+			// NetworkProtocolTypeTCP
+			// 
+			this.NetworkProtocolTypeTCP.Checked = true;
+			this.NetworkProtocolTypeTCP.Location = new System.Drawing.Point(176, 48);
+			this.NetworkProtocolTypeTCP.Name = "NetworkProtocolTypeTCP";
+			this.NetworkProtocolTypeTCP.Size = new System.Drawing.Size(46, 24);
+			this.NetworkProtocolTypeTCP.TabIndex = 2;
+			this.NetworkProtocolTypeTCP.TabStop = true;
+			this.NetworkProtocolTypeTCP.Text = "TCP";
 			// 
 			// Password
 			// 
 			this.Password.Location = new System.Drawing.Point(64, 112);
 			this.Password.Name = "Password";
 			this.Password.PasswordChar = '•';
-			this.Password.Size = new System.Drawing.Size(120, 20);
+			this.Password.Size = new System.Drawing.Size(200, 20);
 			this.Password.TabIndex = 5;
 			this.Password.Text = "";
 			// 
@@ -130,7 +150,7 @@ namespace Strive.UI.Windows.ChildWindows
 			// 
 			this.Email.Location = new System.Drawing.Point(64, 80);
 			this.Email.Name = "Email";
-			this.Email.Size = new System.Drawing.Size(120, 20);
+			this.Email.Size = new System.Drawing.Size(200, 20);
 			this.Email.TabIndex = 4;
 			this.Email.Text = "";
 			// 
@@ -152,9 +172,9 @@ namespace Strive.UI.Windows.ChildWindows
 			// 
 			// ConnectNow
 			// 
-			this.ConnectNow.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+			this.ConnectNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ConnectNow.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.ConnectNow.Location = new System.Drawing.Point(112, 138);
+			this.ConnectNow.Location = new System.Drawing.Point(112, 146);
 			this.ConnectNow.Name = "ConnectNow";
 			this.ConnectNow.TabIndex = 6;
 			this.ConnectNow.Text = "Connect";
@@ -172,7 +192,7 @@ namespace Strive.UI.Windows.ChildWindows
 			// 
 			this.PortNumber.Location = new System.Drawing.Point(64, 48);
 			this.PortNumber.Name = "PortNumber";
-			this.PortNumber.Size = new System.Drawing.Size(32, 20);
+			this.PortNumber.Size = new System.Drawing.Size(88, 20);
 			this.PortNumber.TabIndex = 1;
 			this.PortNumber.Text = "";
 			// 
@@ -180,7 +200,7 @@ namespace Strive.UI.Windows.ChildWindows
 			// 
 			this.ServerAddress.Location = new System.Drawing.Point(64, 16);
 			this.ServerAddress.Name = "ServerAddress";
-			this.ServerAddress.Size = new System.Drawing.Size(120, 20);
+			this.ServerAddress.Size = new System.Drawing.Size(200, 20);
 			this.ServerAddress.TabIndex = 0;
 			this.ServerAddress.Text = "";
 			// 
@@ -194,55 +214,65 @@ namespace Strive.UI.Windows.ChildWindows
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right);
-			this.groupBox2.Controls.AddRange(new System.Windows.Forms.Control[] {
-																					this.RecentServers});
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.RecentConnections);
+			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(192, 216);
+			this.groupBox2.Size = new System.Drawing.Size(656, 280);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Recent Connections";
 			// 
-			// RecentServers
+			// RecentConnections
 			// 
-			this.RecentServers.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.RecentConnections.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right);
-			this.RecentServers.ImageIndex = -1;
-			this.RecentServers.Location = new System.Drawing.Point(4, 16);
-			this.RecentServers.Name = "RecentServers";
-			this.RecentServers.SelectedImageIndex = -1;
-			this.RecentServers.Size = new System.Drawing.Size(184, 192);
-			this.RecentServers.TabIndex = 0;
-			this.RecentServers.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.RecentServers_AfterSelect);
+				| System.Windows.Forms.AnchorStyles.Right)));
+			this.RecentConnections.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+																								this.columnHeader2,
+																								this.columnHeader3,
+																								this.columnHeader1});
+			this.RecentConnections.FullRowSelect = true;
+			this.RecentConnections.Location = new System.Drawing.Point(16, 32);
+			this.RecentConnections.Name = "RecentConnections";
+			this.RecentConnections.Size = new System.Drawing.Size(624, 232);
+			this.RecentConnections.TabIndex = 0;
+			this.RecentConnections.View = System.Windows.Forms.View.Details;
+			this.RecentConnections.DoubleClick += new System.EventHandler(this.RecentConnections_DoubleClick);
+			this.RecentConnections.SelectedIndexChanged += new System.EventHandler(this.RecentConnections_SelectedIndexChanged);
 			// 
-			// NetworkProtocolTypeTCP
+			// columnHeader2
 			// 
-			this.NetworkProtocolTypeTCP.Checked = true;
-			this.NetworkProtocolTypeTCP.Location = new System.Drawing.Point(100, 48);
-			this.NetworkProtocolTypeTCP.Name = "NetworkProtocolTypeTCP";
-			this.NetworkProtocolTypeTCP.Size = new System.Drawing.Size(46, 24);
-			this.NetworkProtocolTypeTCP.TabIndex = 2;
-			this.NetworkProtocolTypeTCP.TabStop = true;
-			this.NetworkProtocolTypeTCP.Text = "TCP";
+			this.columnHeader2.Text = "Server";
+			this.columnHeader2.Width = 209;
 			// 
-			// NetworkProtocolTypeUDP
+			// columnHeader3
 			// 
-			this.NetworkProtocolTypeUDP.Location = new System.Drawing.Point(144, 48);
-			this.NetworkProtocolTypeUDP.Name = "NetworkProtocolTypeUDP";
-			this.NetworkProtocolTypeUDP.Size = new System.Drawing.Size(46, 24);
-			this.NetworkProtocolTypeUDP.TabIndex = 3;
-			this.NetworkProtocolTypeUDP.Text = "UDP";
+			this.columnHeader3.Text = "Port";
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "Email Address";
+			this.columnHeader1.Width = 268;
+			// 
+			// ConnectionProgress
+			// 
+			this.ConnectionProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
+			this.ConnectionProgress.Location = new System.Drawing.Point(0, 472);
+			this.ConnectionProgress.Name = "ConnectionProgress";
+			this.ConnectionProgress.Size = new System.Drawing.Size(648, 23);
+			this.ConnectionProgress.Step = 5;
+			this.ConnectionProgress.TabIndex = 2;
 			// 
 			// Connection
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(192, 389);
-			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.groupBox2,
-																		  this.groupBox1});
+			this.ClientSize = new System.Drawing.Size(656, 494);
+			this.Controls.Add(this.ConnectionProgress);
+			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox1);
 			this.Name = "Connection";
 			this.Text = "Connection";
 			this.groupBox1.ResumeLayout(false);
@@ -258,6 +288,7 @@ namespace Strive.UI.Windows.ChildWindows
 			{
 				case ConnectionWindowState.NotConnected:
 				{
+					ConnectionProgress.Visible = false;
 					if(ServerAddress.Text == "")
 					{
 						ServerAddress.Focus();
@@ -292,66 +323,28 @@ namespace Strive.UI.Windows.ChildWindows
 					{
 						protocol = Strive.Network.Messages.NetworkProtocolType.UdpAndTcp;
 					}
-					// umg ghey check for existance cause umg
-					string label = ServerAddress.Text + ":" + PortNumber.Text;
-					TreeNode serverNode = null;
-					foreach ( TreeNode n in RecentServers.Nodes ) 
-					{
-						if ( n.Text == label ) 
-						{
-							serverNode = n;
-							break;
-						}
-					}
-					if ( serverNode == null ) 
-					{
-						serverNode = new TreeNode( label );
-						
-						serverNode.Tag = Settings.SettingsManager.AddRecentServer(ServerAddress.Text, 
-							int.Parse(PortNumber.Text),
-							protocol);
-						RecentServers.Nodes.Add( serverNode );
-					}
-					else
-					{
-						Settings.SettingsManager.AddRecentServer(ServerAddress.Text, 
-							int.Parse(PortNumber.Text),
-							protocol);
-					}
-					label = Email.Text;
-					TreeNode playerNode = null;
-					foreach ( TreeNode n in serverNode.Nodes ) 
-					{
-						if ( n.Text == label ) 
-						{
-							playerNode = n;
-							break;
-						}
-					}
-					if ( playerNode == null ) 
-					{
-						playerNode = new TreeNode( label );
-						playerNode.Tag = Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), protocol, Email.Text, Password.Text);
-						serverNode.Nodes.Add( playerNode );
-						// build a datarow of these settings:
 
-					}
-					else
-					{
+					Settings.SettingsManager.AddRecentServer(ServerAddress.Text, 
+						int.Parse(PortNumber.Text),
+						protocol);
 						Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), protocol, Email.Text, Password.Text);
-					}
-					playerNode.ImageIndex = (int)Icons.AvailableIcons.Player;
-					playerNode.SelectedImageIndex = playerNode.ImageIndex;
-					serverNode.ImageIndex = (int)Icons.AvailableIcons.StoppedServer;
-					serverNode.SelectedImageIndex = serverNode.ImageIndex;
-					serverNode.ExpandAll();
-					playerNode.ExpandAll();
 
-					CurrentPlayerNode = playerNode;
+					// TODO: is this teh ghey? might flicker
+					loadRecentServers();
+
 					StriveWindowState = ConnectionWindowState.Connecting;
 					Application.DoEvents();
+
 					Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), protocol, Game.CurrentMainWindow.RenderTarget);
-					Connected = true;
+					ConnectionProgress.Visible = true;
+					ConnectionProgress.Value = 0;
+					for(int i = 0; i < 20; i++)
+					{
+						ConnectionProgress.PerformStep();
+						System.Threading.Thread.Sleep(1000);
+						
+					}
+					StriveWindowState = ConnectionWindowState.NotConnected;
 					break;
 				}
 				case ConnectionWindowState.Connecting:
@@ -361,10 +354,6 @@ namespace Strive.UI.Windows.ChildWindows
 					// disconnect:
 					Game.CurrentServerConnection.Logout();
 					StriveWindowState = ConnectionWindowState.NotConnected;
-					if( CurrentPlayerNode != null ) 
-					{
-						CurrentPlayerNode.Nodes.Clear();
-					}
 					Game.Stop();
 					break;
 				}
@@ -389,17 +378,19 @@ namespace Strive.UI.Windows.ChildWindows
 		void HandleCanPossess( Strive.Network.Messages.ToClient.CanPossess cp ) {
 			if ( cp.possesable.Length < 1 ) {
 				this.Text = "No characters available.";
+				return;
 			}
-			CurrentPlayerNode.Nodes.Clear();
 			foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) {
+				// TODO: this code does nothing, just here as a reminder to get the character name or whatever
 				TreeNode n = new TreeNode(tuple.name);
 				n.Tag = tuple.id;
 				n.ImageIndex = (int)Icons.AvailableIcons.Mobile;
 				n.SelectedImageIndex = n.ImageIndex;
-				CurrentPlayerNode.Nodes.Add( n );
 			}
-			CurrentPlayerNode.Expand();
 			StriveWindowState = ConnectionWindowState.Connected;
+			Game.CurrentServerConnection.PossessMobile(cp.possesable[0].id);
+			StriveWindowState = ConnectionWindowState.Playing;
+
 		}
 
 
@@ -408,79 +399,17 @@ namespace Strive.UI.Windows.ChildWindows
 			// Initialise Recent Servers
 			foreach(DataRow serverRow in Settings.SettingsManager.RecentServers.Rows)
 			{
-				TreeNode serverNode = new TreeNode( serverRow["serveraddress"] + ":" + serverRow["serverport"] );
-				serverNode.Tag = serverRow;
-				serverNode.ImageIndex = (int)Icons.AvailableIcons.StoppedServer;
-				serverNode.SelectedImageIndex = serverNode.ImageIndex;
-				RecentServers.Nodes.Add(serverNode);
 				foreach(DataRow playerRow in serverRow.GetChildRows("ServerPlayers")) {
-					TreeNode playerNode = new TreeNode( playerRow["emailaddress"].ToString() );
-					playerNode.Tag = playerRow;
-					playerNode.ImageIndex = (int)Icons.AvailableIcons.Player;
-					playerNode.SelectedImageIndex = playerNode.ImageIndex;
-					serverNode.Nodes.Add( playerNode );
+					ListViewItem li = new ListViewItem(  serverRow["serveraddress"].ToString() );
+					li.SubItems.Add( serverRow["serverport"].ToString() );
+					li.SubItems.Add( playerRow["emailaddress"].ToString() );
+					li.Tag = new object[] {serverRow, playerRow};
+					//RecentConnections.ImageList = Icons.IconManager.GlobalImageList;
+					//li.ImageIndex = (int)Icons.AvailableIcons.Player;
+					RecentConnections.Items.Add( li );
 				}
 			}
-			RecentServers.ExpandAll();
-		}
-
-		private void RecentServers_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
-		{
-			if( e.Node.Tag is int ) {
-				foreach ( TreeNode n in CurrentPlayerNode.Nodes ) {
-					n.ImageIndex = (int)Icons.AvailableIcons.Mobile;
-					n.SelectedImageIndex = n.ImageIndex;
-				}
-				Game.CurrentPlayerID = (int)e.Node.Tag;
-				Game.CurrentServerConnection.PossessMobile( Game.CurrentPlayerID );
-				StriveWindowState = ConnectionWindowState.Playing;
-				e.Node.ImageIndex = (int)Icons.AvailableIcons.MobilePossessed;
-				e.Node.SelectedImageIndex = e.Node.ImageIndex;
-				e.Node.Parent.Parent.ImageIndex = (int)Icons.AvailableIcons.StartedServer;
-				e.Node.Parent.Parent.SelectedImageIndex = e.Node.Parent.Parent.ImageIndex;
-				return;
-			}
-
-			DataRow serverSetting = (DataRow)e.Node.Tag;
-
-			// How to do this and stay sane
-			if(serverSetting.Table.Columns.Contains("playerkey"))
-			{
-				Email.Text = serverSetting["emailaddress"].ToString();
-				Password.Text = serverSetting["password"].ToString();
-				DataRow serverRow = serverSetting.GetParentRow("ServerPlayers");
-				ServerAddress.Text = serverRow["serveraddress"].ToString();
-				PortNumber.Text = serverRow["serverport"].ToString();
-				// handle backward compatible
-				try
-				{
-					Strive.Network.Messages.NetworkProtocolType protocol = (Strive.Network.Messages.NetworkProtocolType)Enum.Parse(typeof(Strive.Network.Messages.NetworkProtocolType), serverRow["protocol"].ToString());
-					if(protocol == Strive.Network.Messages.NetworkProtocolType.UdpAndTcp)
-					{
-						NetworkProtocolTypeUDP.Checked = true;
-					}
-					else
-					{
-						NetworkProtocolTypeTCP.Checked = true;
-					}
-				}
-				catch{}
-				return;
-			}
-			if(serverSetting.Table.Columns.Contains("serverkey"))
-			{
-				ServerAddress.Text = serverSetting["serveraddress"].ToString();
-				PortNumber.Text = serverSetting["serverport"].ToString();
-				Strive.Network.Messages.NetworkProtocolType protocol = (Strive.Network.Messages.NetworkProtocolType)Enum.Parse(typeof(Strive.Network.Messages.NetworkProtocolType), serverSetting["protocol"].ToString());
-				if(protocol == Strive.Network.Messages.NetworkProtocolType.UdpAndTcp)
-				{
-					NetworkProtocolTypeUDP.Checked = true;
-				}
-				else
-				{
-					NetworkProtocolTypeTCP.Checked = true;
-				}
-			}
+			RecentConnections.Refresh();
 		}
 
 
@@ -497,12 +426,6 @@ namespace Strive.UI.Windows.ChildWindows
 					Password.Enabled = true;
 					NetworkProtocolTypeTCP.Enabled = true;
 					NetworkProtocolTypeUDP.Enabled = true;
-
-					// 1.  set the icon for the connected server
-					if ( CurrentPlayerNode != null ) {
-						CurrentPlayerNode.Parent.ImageIndex = (int)Icons.AvailableIcons.StoppedServer;
-						CurrentPlayerNode.Parent.SelectedImageIndex = CurrentPlayerNode.Parent.ImageIndex;
-					}
 					break;
 				}
 				case ConnectionWindowState.Connected:
@@ -514,12 +437,7 @@ namespace Strive.UI.Windows.ChildWindows
 					Password.Enabled = false;
 					NetworkProtocolTypeTCP.Enabled = false;
 					NetworkProtocolTypeUDP.Enabled = false;
-
-					// 1.  set the icon for the connected server
-					if ( CurrentPlayerNode != null ) {
-						CurrentPlayerNode.Parent.ImageIndex = (int)Icons.AvailableIcons.StartedServer;
-						CurrentPlayerNode.Parent.SelectedImageIndex = CurrentPlayerNode.Parent.ImageIndex;
-					}
+					this.Text = "Connected";
 					break;
 				}
 				case ConnectionWindowState.Connecting:
@@ -531,17 +449,60 @@ namespace Strive.UI.Windows.ChildWindows
 					Password.Enabled = false;
 					NetworkProtocolTypeTCP.Enabled = false;
 					NetworkProtocolTypeUDP.Enabled = false;
+					this.Text = "Connecting";
 					break;
 
 				}
 				case ConnectionWindowState.Playing:
 				{
+					this.Text = "Playing";
+					this.Close();
 					break;
 				}
 				
 			
 			}
 			Application.DoEvents();
+		}
+
+		private void RecentConnections_DoubleClick(object sender, System.EventArgs e)
+		{
+			ConnectNow_Click(sender, e);
+		}
+
+		private void RecentConnections_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			try
+			{
+				ListViewItem lvi = RecentConnections.FocusedItem;
+				if ( lvi.Tag != null ) 
+				{
+					ServerAddress.Text = (string)((DataRow)((object[])lvi.Tag)[0])["serveraddress"];
+					PortNumber.Text = (string)((DataRow)((object[])lvi.Tag)[0])["serverport"];
+					Strive.Network.Messages.NetworkProtocolType protocol = (Strive.Network.Messages.NetworkProtocolType)Enum.Parse(typeof(Strive.Network.Messages.NetworkProtocolType), (string)((DataRow)((object[])lvi.Tag)[0])["protocol"]);
+					switch(protocol)
+					{
+						case Strive.Network.Messages.NetworkProtocolType.TcpOnly:
+						{
+							NetworkProtocolTypeTCP.Checked = true;
+							break;
+						}
+						case Strive.Network.Messages.NetworkProtocolType.UdpAndTcp:
+						{
+							NetworkProtocolTypeUDP.Checked = true;
+							break;
+						}
+					}
+					Email.Text = (string)((DataRow)((object[])lvi.Tag)[1])["emailaddress"];
+					Password.Text = (string)((DataRow)((object[])lvi.Tag)[1])["password"];
+					return;
+				}
+			}
+			catch(Exception ex)
+			{
+				Exception rx = new Exception("Your settings file may be corrupt", ex);
+				Strive.Logging.Log.ErrorMessage(rx);
+			}
 		}
 
 		
