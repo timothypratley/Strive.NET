@@ -152,6 +152,7 @@ namespace Strive.UI.Windows
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Main));
 			this.MainTabs = new Crownwood.Magic.Controls.TabControl();
 			this.GameTab = new Crownwood.Magic.Controls.TabPage();
 			this.RenderTarget = new System.Windows.Forms.PictureBox();
@@ -177,7 +178,7 @@ namespace Strive.UI.Windows
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(612, 1353);
+			this.MainTabs.Size = new System.Drawing.Size(612, 1128);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -187,7 +188,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				  this.RenderTarget});
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(612, 1328);
+			this.GameTab.Size = new System.Drawing.Size(612, 1103);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -196,9 +197,9 @@ namespace Strive.UI.Windows
 			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Location = new System.Drawing.Point(256, 1112);
+			this.RenderTarget.Location = new System.Drawing.Point(256, 1286);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(116, 155);
+			this.RenderTarget.Size = new System.Drawing.Size(116, 0);
 			this.RenderTarget.TabIndex = 0;
 			this.RenderTarget.TabStop = false;
 			// 
@@ -292,20 +293,21 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 1380);
+			this.MainStatus.Location = new System.Drawing.Point(2, 1155);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(612, 25);
+			this.MainStatus.Size = new System.Drawing.Size(612, 28);
 			this.MainStatus.TabIndex = 1;
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(616, 1407);
+			this.ClientSize = new System.Drawing.Size(616, 1185);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.MainTabs,
 																		  this.MainMenu,
 																		  this.MainStatus});
 			this.DockPadding.All = 2;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Main";
 			this.Text = "";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Main_Closing);

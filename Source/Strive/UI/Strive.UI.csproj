@@ -157,6 +157,10 @@
                     BuildAction = "None"
                 />
                 <File
+                    RelPath = "App.ico"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -225,10 +229,6 @@
                     RelPath = "Settings\SettingsManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Windows\Icon1.ico"
-                    BuildAction = "Content"
                 />
                 <File
                     RelPath = "Windows\Main.cs"
