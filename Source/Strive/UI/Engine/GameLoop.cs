@@ -25,9 +25,11 @@ namespace Strive.UI.Engine
 
 		public IKeyboard keyboard = Game.RenderingFactory.Keyboard;
 		public IMouse mouse = Game.RenderingFactory.Mouse;
+		public AccurateTimer movementTimer;
 
 		public GameLoop()
 		{
+			movementTimer = new AccurateTimer();
 			thisThread = new StoppableThread( new StoppableThread.WhileRunning( MainLoop ) );
 		}
 	
@@ -35,6 +37,9 @@ namespace Strive.UI.Engine
 		public void Start(ServerConnection connection)
 		{
 			_connection = connection;
+
+			// reset the movement timer
+			movementTimer.ElapsedSeconds();
 			thisThread.Start();
 		}
 
@@ -135,15 +140,11 @@ namespace Strive.UI.Engine
 				return;
 			}
 			
-			float moveunit = 1.39F * Game.RenderingFactory.TimeSinceLastFrame()/1000F;
+			float moveunit = 1.39F * (float)movementTimer.ElapsedSeconds();
 			if ( keyboard.GetKeyState(Key.key_LEFTSHIFT) ) {
 				moveunit *= 2.5F;
 			}
 
-			// TODO hack due to double rendering, replace with a setpoint time
-			moveunit *= 2;
-
-			
 			#region ProcessRotationInput
 
 			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position.Clone();
