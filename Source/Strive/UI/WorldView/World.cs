@@ -87,14 +87,12 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Remove( int ObjectInstanceID ) {
-			//TerrainPieces.Remove( ObjectInstanceID );
 			physicalObjectInstances.Remove( ObjectInstanceID );
 			RenderingScene.Models.Remove( ObjectInstanceID );
 		}
 
 		public void RemoveAll() {
 			TerrainPieces.Clear();
-			//WorldTerrain.Clear();
 			physicalObjectInstances.Clear();
 			RenderingScene.Models.Clear();
 		}
@@ -162,7 +160,22 @@ namespace Strive.UI.WorldView {
 			} else {
 				Log.ErrorMessage( "Unknown camera mode." );
 			}
-			TerrainPieces.Recenter( CurrentAvatar.model.Position.X, CurrentAvatar.model.Position.Z );
+			Recenter( CurrentAvatar.model.Position.X, CurrentAvatar.model.Position.Z );
+		}
+
+		void Recenter( float x, float z ) {
+			TerrainPieces.Recenter( x, z );
+			ArrayList arrayList = new ArrayList(physicalObjectInstances.Keys);
+			foreach ( object key in arrayList ) {
+				PhysicalObjectInstance poi = (PhysicalObjectInstance)physicalObjectInstances[key];
+				// TODO: some sort of LOD
+				// TODO: not a hard coded const
+				if (
+					Math.Abs( x-poi.model.Position.X ) > 100F
+				) {
+					Remove( poi.physicalObject.ObjectInstanceID );
+				}
+			}
 		}
 
 		/* TODO: probably should make more generic multiple views */

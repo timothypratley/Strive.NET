@@ -14,5 +14,19 @@ namespace Strive.Common
 		public const int terrainZoomOrder = 2;
 		public const int terrainXOrder = 4;
 		public const int terrainZOrder = 4;
+
+		public static int[] chunkHeights = new int[terrainZoomOrder];
+		public static int[] xRadius = new int[terrainZoomOrder];
+		public static int[] zRadius = new int[terrainZoomOrder];
+
+		static Constants() {
+			// set up terrain radius values
+			int k;
+			for ( k=0; k<terrainZoomOrder; k++ ) {
+				chunkHeights[k] = (int)Math.Pow(terrainHeightsPerChunk,k);
+				xRadius[k] = chunkHeights[k] * terrainHeightsPerChunk * terrainXOrder / 2 + 2*chunkHeights[k];
+				zRadius[k] = chunkHeights[k] * terrainHeightsPerChunk * terrainZOrder / 2 + 2*chunkHeights[k];
+			}
+		}
 	}
 }

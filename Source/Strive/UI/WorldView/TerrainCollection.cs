@@ -61,7 +61,27 @@ namespace Strive.UI.WorldView {
 			Vector2D loc;
 			Terrain t;
 
-			// first loop through all chunks to see if any should be reused
+			// drop all terrain data that is now out of scope
+			ArrayList arrayList = new ArrayList(terrainPiecesXYIndex.Keys);
+			foreach ( Vector2D key in arrayList ) {
+				for ( k=0; k<Constants.terrainZoomOrder; k++ ) {
+					if (
+						key.X > x+Constants.xRadius[k] || key.Y > z+Constants.zRadius[k]
+						|| key.X < x-Constants.xRadius[k] || key.Y < z-Constants.zRadius[k]
+					) {
+						if (
+							// there is no higher zoom order
+							k == (Constants.terrainZoomOrder-1)
+							// this is not a higher order point
+							|| (key.X % Constants.chunkHeights[k]) != 0 || (key.Y % Constants.chunkHeights[k]) != 0
+						) {
+							terrainPiecesXYIndex.Remove( key );
+						}
+					}
+				}
+			}
+
+			// first loop through all chunks to see if any can be reused
 			int cx = Helper.DivTruncate( (int)x, ts );
 			int cz = Helper.DivTruncate( (int)z, ts );
 			for ( k=0; k<zoomorder; k++ ) {
@@ -122,6 +142,8 @@ namespace Strive.UI.WorldView {
 			}
 
 			/***
+			// TODO:
+			//
 			// Make sure we update the previous x,z heights for underlying landscapes
 			// to their correct values
 			loc = new Vector2D( prev_x, prev_z );

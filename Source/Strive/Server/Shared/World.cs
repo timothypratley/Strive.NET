@@ -349,27 +349,31 @@ namespace Strive.Server.Shared {
 				int tx1 = Helper.DivTruncate( (int)po.Position.X, Constants.terrainPieceSize );
 				int tz1 = Helper.DivTruncate( (int)po.Position.Z, Constants.terrainPieceSize );
 				for ( int k=0; k<Constants.terrainZoomOrder; k++ ) {
-					int chs = (int)Math.Pow(Constants.terrainHeightsPerChunk,k);
-					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder / 2 + 2*chs;
-					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2 + 2*chs;
-					int tbx = Helper.DivTruncate( (int)newPosition.X, Constants.terrainPieceSize) - xradius;
-					int tbz = Helper.DivTruncate( (int)newPosition.Z, Constants.terrainPieceSize) - zradius;
+					int tbx = Helper.DivTruncate( (int)newPosition.X, Constants.terrainPieceSize) - Constants.xRadius[k];
+					int tbz = Helper.DivTruncate( (int)newPosition.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
 
 					// Normalise to a 'grid' point
-					tbx = Helper.DivTruncate( tbx, chs ) * chs;
-					tbz = Helper.DivTruncate( tbz, chs ) * chs;
+					tbx = Helper.DivTruncate( tbx, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
+					tbz = Helper.DivTruncate( tbz, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
 
-					for ( i=0; i<=xradius*2; i+=chs ) {
-						for ( j=0; j<=zradius*2; j+=chs ) {
+					for ( i=0; i<=Constants.xRadius[k]*2; i+=Constants.chunkHeights[k] ) {
+						for ( j=0; j<=Constants.zRadius[k]*2; j+=Constants.chunkHeights[k] ) {
 							int tx = tbx+i;
 							int tz = tbz+j;
-							if ( (Math.Abs(tx - tx1) > xradius) || (Math.Abs(tz - tz1) > zradius) ) {
+							if ( (Math.Abs(tx - tx1) > Constants.xRadius[k]) || (Math.Abs(tz - tz1) > Constants.zRadius[k]) ) {
 								int terrainX = tx - (int)lowX/Constants.terrainPieceSize;
 								int terrainZ = tz - (int)lowZ/Constants.terrainPieceSize;
 								if ( terrainX >= 0 && terrainX < squaresInX*Square.squareSize/Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < squaresInZ*Square.squareSize/Constants.terrainPieceSize ) {
 									Terrain t = terrain[ terrainX, terrainZ ];
 									if ( t != null ) {
-										ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
+										if (
+											// there is no higher zoom order
+											k == (Constants.terrainZoomOrder-1)
+											// this is not a higher order point
+											|| (t.Position.X % Constants.chunkHeights[k]) != 0 || (t.Position.Z % Constants.chunkHeights[k]) != 0
+										) {
+											ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
+										}
 									}
 								}
 							}
@@ -558,18 +562,15 @@ namespace Strive.Server.Shared {
 				}
 
 				for ( int k=0; k<Constants.terrainZoomOrder; k++ ) {
-					int chs = (int)Math.Pow(Constants.terrainHeightsPerChunk,k);
-					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder / 2 + 2*chs;
-					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2 + 2*chs;
-					int tbx = Helper.DivTruncate( (int)mob.Position.X, Constants.terrainPieceSize) - xradius;
-					int tbz = Helper.DivTruncate( (int)mob.Position.Z, Constants.terrainPieceSize) - zradius;
+					int tbx = Helper.DivTruncate( (int)mob.Position.X, Constants.terrainPieceSize) - Constants.xRadius[k];
+					int tbz = Helper.DivTruncate( (int)mob.Position.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
 
 					// Normalise to a 'grid' point
-					tbx = Helper.DivTruncate( tbx, chs ) * chs;
-					tbz = Helper.DivTruncate( tbz, chs ) * chs;
+					tbx = Helper.DivTruncate( tbx, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
+					tbz = Helper.DivTruncate( tbz, Constants.chunkHeights[k] ) * Constants.chunkHeights[k];
 
-					for ( i=0; i<=xradius*2; i+=chs ) {
-						for ( j=0; j<=zradius*2; j+=chs ) {
+					for ( i=0; i<=Constants.xRadius[k]*2; i+=Constants.chunkHeights[k] ) {
+						for ( j=0; j<=Constants.zRadius[k]*2; j+=Constants.chunkHeights[k] ) {
 							int tx = tbx+i;
 							int tz = tbz+j;
 							int terrainX = tx - (int)lowX/Constants.terrainPieceSize;

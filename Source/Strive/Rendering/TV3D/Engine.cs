@@ -101,13 +101,15 @@ namespace Strive.Rendering.TV3D {
 			TV3DEngine = new TVEngine();
 			try {
 				Engine.TV3DEngine.Init3DWindowedMode(window.Handle.ToInt32(), true);
+				//TV3DEngine.Init3DFullscreen( 800, 600, 16, true, false, CONST_TV_DEPTHMODE.TV_DEPTHBUFFER_BESTBUFFER, 1, 0 );
 				_renderTarget = window;
 			}
 			catch(Exception e) {
 				throw new EngineInitialisationException(e);
 			}
 			TV3DEngine.SetAngleSystem( CONST_TV_ANGLE.TV_ANGLE_DEGREE );
-			TV3DEngine.SetVSync( true );
+			// TODO:
+			//TV3DEngine.SetVSync( true );
 			TV3DEngine.DisplayFPS = true;
 			TV3DScene = new TVScene();
 			TV3DScene.SetDepthBuffer( CONST_TV_DEPTHBUFFER.TV_WBUFFER );

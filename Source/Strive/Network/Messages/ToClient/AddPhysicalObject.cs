@@ -21,8 +21,8 @@ namespace Strive.Network.Messages.ToClient
 				return new AddQuaffable( (Quaffable)po );
 			} else if ( po is Readable ) {
 				return new AddReadable( (Readable)po );
-			} else if ( po is Terrain ) {
-				return new AddTerrain( (Terrain)po );
+			//} else if ( po is Terrain ) {
+				//return new AddTerrain( (Terrain)po );
 			} else if ( po is Wieldable ) {
 				return new AddWieldable( (Wieldable)po );
 			} else {
