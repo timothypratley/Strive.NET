@@ -1,0 +1,274 @@
+<html>
+<head><title>Carpenter Skill List Page</title>
+</head>
+<body>
+<basefont face = "Times New Roman">
+<A Name="Top"><a href="http://www.geocities.com/strivemud/skills/skillsmain.html">Back to Main Page</a>
+<br>
+<br>
+<p>This page contains all the Carpenter skills. When you have looked through all of the skills and selected the check boxes for skills you are happy with you should submit these along with your comments.</p>
+<p>Remember, you should do at least one submission for EACH specialisation, including this one.</p>
+<br>
+
+<p>
+<FONT FACE="Times New Roman" SIZE="3">
+<form method=POST action="mailto:rhouston@ihug.com.au" NAME="" ENCTYPE="text/plain">
+<INPUT TYPE="hidden" NAME="subject" VALUE="Carpenter Skill Approval">
+</p>
+
+<table border="0">
+<tr>
+<td WIDTH="50"> Name: </td>
+<td WIDTH="200">
+<SELECT NAME="-S"><OPTION VALUE="Undefined">-- Select your name --</OPTION>
+<OPTION VALUE="Dantra">Dantra</OPTION>
+<OPTION VALUE="Isrejin">Isrejin</OPTION>
+<OPTION VALUE="Verrin">Verrin</OPTION>
+<OPTION VALUE="Fiory">Fiory</OPTION>
+<OPTION VALUE="Darion">Darion</OPTION>
+<OPTION VALUE="Isfael">Isfael</OPTION>
+<OPTION VALUE="Michael">Michael</OPTION>
+<OPTION VALUE="Wookash">Wookash</OPTION></SELECT></td>
+<td WIDTH="100"> Authentication:
+<td WIDTH="200"> <INPUT TYPE="text" NAME="Authentication" value=""></td>
+</tr>
+</table>
+<br>
+<br>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Carpenter Build Fence">
+        <a href="#BuildFence">Build Fence</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Carpenter Carve">
+        <a href="#Carve">Carve</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Carpenter Construct Building">
+        <a href="#ConstructBuilding">Construct Building</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Carpenter Build Door">
+        <a href="#BuildDoor">Build Door</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Carpenter Repair Door">
+        <a href="#RepairDoor">Repair Door</a></p>
+
+<br>
+<br>
+
+<p>Any overall comments, or suggestions for improvements for Carpenter skills?</p>
+<p><TEXTAREA NAME="-C" COLS="60" ROWS="10">
+</TEXTAREA></p>
+<p><INPUT TYPE="submit" NAME="Submit" VALUE="Send Feedback"><INPUT TYPE="reset" NAME="Reset" VALUE="Reset Form"></p>
+<p>Thankyou.</FONT></P></FORM><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<A Name="BuildFence"><A Name="Previous0">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next1">Next</a>
+<pre>
+Build Fence             Fences stop things from passing through easily.
+
+Duration                Until destroyed somehow (or reboot)
+Use                     Stop mobs primarily from entering or exiting 
+                        certain rooms.
+
+Syntax                  Build Fence (direction) 
+Affect                  This would create a fence in the specified 
+                        direction and that fence would be mirrored of 
+                        course in the next room (ie if you build a 
+                        fence north a fence will appear in the room 1 
+                        north of you built to the south). Fences would 
+                        prevent mobs in particular from passing.
+
+                        I have two ideas for the way in which fences could 
+                        work, the first is that fences can be opened (to 
+                        simulate a gate or just plain climbing the fence) 
+                        so that players can pass fences. 
+
+                        The second is to have the fence be a mob which can’t 
+                        hit you and with a fair amount of hit points that 
+                        blocks in the specified direction. You have to destroy 
+                        the fence to get past. Not sure which is the best 
+                        option.
+
+                        Fences would require 4 pieces of lumber to build and 
+                        can only be built outdoors.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               100 energy
+Required Components             2 pieces of lumber
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Carve"><A Name="Next1"><A Name="Previous1">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next2">Next</a>       <a href="#Previous0">Previous</a>
+<pre>
+Carve                   Create simple wooden objects that cannot be worn.
+
+Duration                Permanent
+Use                     Create items that will enhance rp, and can be sold
+Syntax                  carve (short desc) (long desc) 
+Affect                  Creates a wooden item with a short and long desc 
+                        as specified. These items would be takeable and 
+                        unable to be worn.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               Costs 20 energy
+Required Components             Lumber (1 piece per carving)
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="ConstructBuilding"><A Name="Next2"><A Name="Previous2">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next3">Next</a>       <a href="#Previous1">Previous</a>
+<pre>
+Construct Building      Allow carpenters to create new buildings from 
+                        scratch using a horde of raw materials. The imms 
+                        reserve the right to condemn any building unfit 
+                        for the Lu’Tamohr world.
+
+Duration                Permanent
+Use                     Create houses etc for players 
+Syntax                  Construct Building
+Affect                  If the builder has in their possession (or their 
+                        room) enough raw materials (about 20 pieces of 
+                        lumber for each room they wish to build in the 
+                        house with a maximum of 5 rooms to a house) they
+                        are granted builder access to the specified 
+                        number of rooms within the builders playpen. This 
+                        will require Tim coding something that allows 
+                        people with builders commands only the ability 
+                        to edit vnums they have been authorized to edit 
+                        (and in this case only redit). When the builder 
+                        has finished the house they will have to notify 
+                        the imms that they wish to place the house in 
+                        play. The imms (probably verrin) will have a 
+                        look at the house to decide if it fits in with 
+                        the world and copy it (we will need a copy command) 
+                        or maybe just link it to an appropriate place in 
+                        the real world.
+                                
+                        If you fail your construct building skill check 
+                        all your raw materials are lost and you do not 
+                        get granted access to the playpen. Rather then the 
+                        playpen we may need an actual separate are just for 
+                        players houses.
+
+                        We may need to code it so that you can’t redit 
+                        during combat, I know I abused that on DR (sheepish 
+                        grin).                  
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 95%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               Costs 500 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="BuildDoor"><A Name="Next3"><A Name="Previous3">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next4">Next</a>       <a href="#Previous2">Previous</a>
+<pre>
+Build Door              Temporary door on an inside exit, requires lumber
+
+Duration                Until destroyed somehow (or reboot)
+Use                     Creates a door to a room.
+Syntax                  Build Door (direction) 
+Affect                  Very similar to build fence, but you can build 
+                        doors inside.
+
+                        Doors would require 4 pieces of lumber to build 
+                        and can only be built inside.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               100 energy
+Required Components             2 pieces of lumber
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="RepairDoor"><A Name="Next4"><A Name="Previous4">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next5">Next</a>       <a href="#Previous3">Previous</a>
+<pre>
+Repair Door             requires lumber and repairs a broken door
+
+Duration                N/A
+Use                     Repairs broken doors
+Syntax                  Repair Door (direction) 
+Affect                  Perhaps this skill is not applicable. So 
+                        far I have not suggested a bash door skill 
+                        at all because I don’t like people bashing 
+                        down doors willy nilly. However it is 
+                        realistic, perhaps bash door should be a 
+                        townsfolk skill that you can only use if 
+                        your strength is above a certain number so 
+                        that strong people can bash down doors and 
+                        make the repair door skill useful? 
+
+Skills it counteracts           A bash door skill if one is implemented
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               100 energy
+Required Components             1 piece of lumber
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+
+
+
+</BODY>
+
+</HTML><!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet><script language="JavaScript" src="http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="http://domainpending.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.webhosting.yahoo.com/visit.gif?us1036465135" border=0 width=1 height=1></noscript>
+<IMG SRC="http://geo.yahoo.com/serv?s=76001072&t=1036465135" ALT=1 WIDTH=1 HEIGHT=1>

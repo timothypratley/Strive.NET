@@ -1,0 +1,69 @@
+Player characters start off alive. When the world bites them, they are
+hurt. If they are hurt sufficiently, they are incapacitated. 
+Incapacitated people can't really do anything. If left alone for long 
+enough without outside aid, they will eventually be able to crawl off,
+whimpering, to heal. Incapacitated people can be killed relatively
+easily. However, they are not dead. They retain all their equipment
+(unless a thief happens by whilst they are helpless) and all their
+statistics and scores. They probably lose a lot of experience.
+
+The fate of people who have lost fights, gone toe-to-toe with a 
+mountain bear, tried and failed to riddle one of the fabled booby
+traps of Cora'Lyst, or been captured and flogged to a pulp by the
+Cora'Tyl city guard for theft, is to be incapacitated.
+
+Incapacitation is a good time to have friends and/or clanmates.
+
+PC's, as a rule, die once. Once dead, their spirit component is freed
+from their flesh: as the Rehan peasants put it, they're a ghost.
+
+Ghosts are disembodied. Thus they cannot do anything which requires 
+one. As a rule, ghosts cannot be seen by mortal vision, because the
+other four elements are what reflects light. Nor can they touch the
+physical world; fairly soon they forget what doors are for. What
+sounds they make and smells they emit are too faint for mortal senses.
+They leave everything behind on their corpse; they can't use any of
+it anyway. They can only interact with each other. Fluxes of Earth,
+Fire and Water act on them as a running river does a cake of salt.
+Ghosts cannot leave the area where they were killed.
+
+Being a ghost is a bad thing, and to be avoided; hence the concept of
+incapacitation to provide a safety net. Once dead, there is NO
+standard in character method of reincarnation. All such will be on a
+case-by-case basis, mostly involving powerful magic or truly weird
+twists of fate. Actual ghosthood is supposed to be rare, and fairly
+permanent. Ghosthood is a really good time to have friends who are
+still alive. You'll need them.
+
+There are, of course, exceptions to these rules. Magic can do much to
+bridge the gap between the living and the dead, and if mortal senses
+cannot see them, other senses may. The Sephites have noticed ghosts,
+and have several experimental cures, none of which are reliable and
+all of which are incredibly expensive. 
+
+Despite most kinds of magic being as feasible as a cool refreshing 
+bath in a volcano, certain magicks using pure Spirit (mostly the 
+Lu'tamohrese analogs of psi) can be made to work, at a large cost in 
+energy. If you yell loud enough and long enought, they will eventually 
+hear something - but the chance is very, very low.
+
+Note that you may do whatever you can get away with to other ghosts.
+They're in the same boat you are.
+
+We will _consider_ possession, on a case-by-case basis. Ditto coming
+back as a zombie or other undead, if you have a LOT of favour points
+hoarded. Then again, we will also consider applications to have you
+come back as a zombie by the necromancer who just killed you. If you 
+have enough FP, we might even let you break free and turn on your 
+master. (-:
+
+Once the silver cord is cut or frayed, tying a spirit to a body again 
+akin to tying a fishing fly in a maelstrom. Maybe the first time. 
+After the tenth such, the subject will start looking decidedly 
+tattered. Eventually it won't work at all - and the longer a spirit is
+unanchored by a body, the more it dissipates. Eventually there is 
+nothing left but a memory - and a deleted PC.
+
+Ghosthood is meant to provide a safety net between dead and deleted,
+but one which no sane player will willingly fall into. If we have more
+than one or two ghosts at a time, something is wrong.

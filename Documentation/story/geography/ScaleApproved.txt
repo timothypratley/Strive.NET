@@ -1,0 +1,66 @@
+Each square on the map represents 20 miles.
+
+This means:
+
+Travelling by foot:
+		
+	You can travel 2 squares every 3 days, or roughly 13.5 miles a 	day.
+
+
+Travelling by slow horseback (includes wagons etc):
+
+	Your travel is dependant upon the terrain.
+
+	On a flat surface (assume all roads on the map are flat 	surfaces) you can travel 3 squares every 2 days, or roughly 30 	miles a day.
+
+	On most other surfaces you can travel approximately 1 square a 	day, or roughly 20 miles a day.
+
+
+Travelling by fast horseback (usually a single rider on a good horse):
+
+	Your travel is dependant upon the terrain.
+
+	On a flat surface (assume all roads on the map are flat 	surfaces) you can travel 5 squares every 2 days, or roughly 50 	miles a day.
+
+	On most other surfaces you can travel approximately 2 squares a 	day, or roughly 40 miles a day.
+
+
+Travelling by sea in a medium speed merchant vessel in view of land:
+
+	Travel often dependant upon the weather.
+
+	Approximately 2.5 squares a day, or roughly 50 miles a day. 
+
+
+
+This makes the journey from Cora'Tyl to Cora'Lyst take approximately:
+
+	13 days by foot
+	6-9 days by merchant caravan 
+	3-4 days by fast horse.
+
+Other notable journey lengths:
+
+Cora'Tyl to RuPsarn:
+	15 days by foot
+	8-11 days by merchant caravan 
+	4-5 days by fast horse.
+
+Cora'Tyl to Il'Cora'Dvan by Mountain Pass Way:
+	23 days by foot
+	17-20 days by merchant caravan 
+	9-10 days by fast horse.
+
+Cora'Lyst to Il'Cora'Dvan by boat:
+	10-14 days depending on boat speed and weather conditions.
+
+Cora'Lyst to Ru'Psarn:
+	17 days by foot
+	10-13 days by merchant caravan 
+	5-6 days by fast horse.
+
+Ru'Psarn to Ru'Katta
+	17 days by foot
+	9-13 days by merchant caravan 
+	4-6 days by fast horse.
+

@@ -1,0 +1,476 @@
+<html>
+<head>
+<title>Skill List Extra Details Page</title>
+</head>
+
+<basefont face = "Times New Roman">
+<a href="http://www.geocities.com/strivemud/skills/skillsmain.html">Back to Main Page</a>
+<br>
+
+<A Name="Top">
+<p>
+There are a number of things that I brought up in the skill list document that do not fit specifically with a single specialisation but are important to read nonetheless. Click on a topic to view more detail on that topic.</p>
+
+<p><a href="#WeaponTypes">Click here</a> to view specific details on <b>Weapon Types</b></p>
+<p><a href="#Stances">Click here</a> to view specific details relating to <b>Combat Stances</b></p>
+<p><a href="#SpellCasting">Click here</a> to view specific details on <b>Spell Casting</b></p>
+<p><a href="#Mysticism">Click here</a> to view specific details on <b>Mysticism</b></p>
+<p><a href="#Poisons">Click here</a> to view specific details on the <b>Poison System</b></p>
+<p><a href="#Crusader">Click here</a> to view specific details on <b>Crusaders</b></p>
+<p><a href="#Rank1">Click here</a> for a <b>comparison of all rank 1 specialisations</b></p>
+<p><a href="#Rank2">Click here</a> for a <b>comparison of all rank 2 specialisations</b></p>
+<p><a href="#Needed">Click here</a> to see what extra details are <b>needed</b></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<A Name="WeaponTypes">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+Weapon Types:
+
+We have several damage types at present they are:
+hit     slice   stab    slash   whip    claw    blast   pound   crush   
+grep    bite    pierce  suction chop    vorpal  cleave   wail               
+
+What I propose is that we split these weapon damage types into the 
+following weapon type categories. The reason I think we need to do 
+this is that anyone with enough strength to pick up any type of weapon 
+an use that weapon in combat, but only a person who has done some 
+training in the use of that type of weapon can actually make any use 
+of the weapon.
+
+I would like to classify the above damage types into the following categories:
+
+        short blade     stab, pierce
+                        this would include knives, daggers etc
+
+        long blade      slash, slice, cleave, chop
+                        this would include long swords, short swords, 
+                        axes, rapier, sabers etc
+
+        crushing        hit, crush, pound
+                        this would include the staff, mace, morning star, 
+                        war hammer etc                          
+
+        exotic          whip, suction, vorpal, wail, grep, blast
+
+                        well most of these damage types are pretty bizarre 
+                        and close to useless, perhaps we can come up with 
+                        some better ones to rename these to. What I imagine 
+                        exotic weapons as being are weapons like the whip.                              
+
+        physical        bite, claw, bare handed
+                        This is the damage you can do without a weapon, by 
+                        biting, clawing and punching / kicking with your 
+                        bare hands.             
+
+        Missile         crossbows, longbows etc 
+                        there are no specific damage types to really assign 
+                        to missile weapons we will need to code it so that 
+                        when arrows hit someone they don't actually do one 
+                        of the existing damage types, instead doing their 
+                        own form of damage. This will likely require us to 
+                        have a flag on weapons to allow them to be missile 
+                        weapons so that we can ignore the damage type of any 
+                        missile weapons when taking into account their weapon 
+                        type.
+                                                                
+        two handed      separate flag for the weapon to take up two hands to 
+                        use, can use any of the above damage types really. 
+                        Once again we would ignore the damage type and base 
+                        the damage etc on the fact that it is a two handed 
+                        sword. This would include weapons as a staff, a 
+                        two-handed sword, pole arm, pole axe, lance etc
+
+
+in order for this system to work we need to make sure that each weapon has 
+the correct weapon type, we cant have axes the crush for example as the 
+damage types is what we will need to base our decisions upon to decide  
+if a person is capable of using that weapon.
+</pre>
+
+<A Name="Stances">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+We wish to implement (Tim, Nathan and I) a stance system for physical combat
+whereby combat is modified based upon the stances of the combatants. This is 
+a list of the devised stances:
+
+        Weapon Attack   (Work on destroying your opponent's weapon)
+        Patience        (Wait for an opening and exploit it)
+        Fury            (All out attack, no holds barred)
+        Quick Attack    (Continual quick (yet weak) attacks giving your 
+                        opponent no chance to react)
+        Circle          (Move around, trying to disrupt opponents rhythm and 
+                        get an opening)
+        Counter Attack  (Use your opponents strength and imbalance against them)
+        Terrain Attack  (Make use of your surroundings to aid you)      
+
+From these stances we have developed the following table of what defeats what:
+
+        Fury beats Weapon
+        Fury beats Quick
+
+        Quick beats Terrain
+        Quick beats Counter
+
+        Terrain beats Patience
+        Terrain beats Circle
+
+        Counter beats Fury
+        Counter beats Weapon
+        
+        Weapon beats Patience
+        Weapon beats Terrain
+
+        Patience beats Circle
+        Patience beats Counter
+
+        Circle beats Fury
+        Circle beats Quick
+
+A bit like rock, paper scissors. Basically certain classes will be able 
+to train in the use of the above stances.  These stances are used as your 
+stance in combat. You can of course have no stance if you wish, but that 
+is not a good idea. Basically if your stance beats your opponents stance 
+you get advantages in that fight and they get   disadvantages. ANY stance 
+will beat no_stance which is the default and the stance that people without 
+access to any stances must fight in or that you fight in if you are 
+barehanded.. If you are fighting in the same stance as your opponent or your 
+stance is not beaten as displayed above by the stance of your opponent the 
+fight will continue as normal with no special affects. Some skills will 
+allow players to detect a players stance and to change their stance whilst 
+fighting. Other skills will counteract stances altogether (like mounted 
+combat). You cannot change your stance mid-fight unless you have the skill
+that allows you to.
+</pre>
+
+<A Name="SpellCasting">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+The system I would like to propose for the learning of magic through
+starting off the learning phase at the adept spec is as follows:
+
+In order for one to truly understand and use magic safely and 
+properly, I think that they will need INTENSIVE training. Remember 
+it was not in the too distant past that people went mad from intuitive 
+casting. Magic is something that is very easy to get wrong, and if you 
+do get it wrong, the results can be quite catastrophic. Remember the 
+time of uncertainty? Basically before magi, wizards, sorcerers and the 
+like can use magic to form powerful magical spells they must first have 
+a grounding in EACH element.
+
+Why each element? Surely a fire mage should just need to learn the fire 
+elemental base and just cast fire magic? I do not believe so, I think 
+that when someone attempts to form magic they choose the energy they 
+wish to place into the spell. A fire mage would certainly choose fire 
+to put into a fireball. However if they do not know much about the 
+other elements, and cannot control them correctly, small parts of the 
+other potentials may find their way into the spell. This is VERY 
+dangerous. The madness is caused by creating a potential imbalance 
+within oneself by drawing potentials from ones own self to form 
+magic. If you do not understand each potential and how to manipulate 
+each potential you are very likely to make a mistake. This is my 
+belief anyway.
+
+Having said this, one can learn each potential base as much as they wish, 
+but it will still be possible for them to make a mistake which may or 
+may not lead to the madness. What I am suggesting is that adepts must 
+train in the use of each potential. When they have done so they may 
+train the form magic skill which allows them to basically use the cast 
+command to cast magic. Like most skills form magic will have a max of 
+95%, so it will be possible to fail when you cast a spell. What I would 
+like to see implemented is that most of this 5% be simply an 
+unsuccessful casting of the spell with various weird and wonderful 
+side affects. But I would also like to see a very small chance 
+(about 0.05% divided by the casters cognition) of them erring so 
+badly in casting the spell as to cause the madness in themselves. 
+Perhaps they were careless, or tired or drunk. The madness is a 
+very real prospect, ever today. It is rarer only thanks to the 
+dedicated work of the ylanthlin to teach young mages properly in the 
+use of magic. 
+
+Some may believe that this is a lot of pracs for mages to have to spend 
+before they can learn spells. This may be the case, however a lot of the 
+spells in the 3rd level specs for mages are VERY powerful. I honestly 
+don’t think they are at a disadvantage when they get to the third spec rank. 
+</pre>
+
+<A Name="Mysticism">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+Mystics do not cast and form magic like the typical mages on Lu’Tamohr. 
+Mystics have been around since before people even knew magic, and their 
+practice has continued and if anything grown more powerful since the 
+advent of the coming. Basically mystics use magic to create their end 
+results, but they certainly don’t manipulate the magic as closely or 
+even as consciously. The only reason they don’t all turn mad is that 
+the magic they create is usually very small and it is well structured 
+so that new mystics learning magic have a set procedure by which to 
+learn a certain skill which has been handed down through the generations. 
+Much of the mystic identity is derived from Rehan culture and history. 
+Most experimental mystics eventually turn mad by making a mistake and 
+bringing the madness upon themselves.
+</pre>
+
+<A Name="Poisons">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+Poisons
+
+I mention this here because I will soon introduce the concept of skills 
+modifying base poisons and advanced poisons. What I would like as a 
+poison system is two levels of poisons. The first is "base poisons"
+these poisons are no where near as potent as higher level poisons and 
+are more easily cured. The second level is "advanced poisons", which 
+are more potent and a lot harder to cure.
+</pre>
+
+<A Name="Crusader">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+Crusader
+
+(Death Knights or Paladins)
+Crusaders are committed to goals of their own choosing. They are often 
+adventures who have trained hard in swordplay, determined to better 
+themselves and use their skills to achieve some purpose. Crusaders on 
+Lu'Tamohr have causes ranging from freeing slaves, to destroying 
+various religious factions. Their dedication and training mark them as 
+crusaders.  
+
+It seems as though many people are unhappy with or do not really like 
+the idea of the crusader class (I know Tim is one and some of the players). 
+I would like all the imms opinions on this. I would like to keep the class 
+personally but if the consensus is to drop it then that’s fine. I won’t 
+list out the skills I have come up with for a crusader in detail, instead 
+I will outline them, and if we decide to keep the class I will provide the 
+details. The reason I like crusaders as a class is that it provides a 
+powerful warrior class with some magic (like a paladin type person) which 
+is nice. Paladins are one of the most played classes in AD&D.
+</pre>
+
+<A Name="Rank1">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+It is obvious I think that the soldier spec has the advantage when 
+it comes to leveling as they will be the most powerful when fighting 
+one on one. There are some cases where this will not be true, for 
+example if the soldier has chosen a poor stance to fight a rogue they 
+will gain no advantage and the rogue will actually be dealing more 
+damage (through the taunt skill) and taking less damage (using the 
+avoid and cunning skills) per round of combat. As you would expect 
+it is the rogues and the soldiers which have the best chances in 
+fights, they are the most worldly and the most adventurous and 
+therefore the most likely to know anything about using weapons and 
+combat. Rogues of course gain some nice skills in terms of trail, 
+cunning, hide and camouflage.
+
+Labourers are not too bad in combat either with increased strength 
+and the ability to use crushing weapons and they possess a number 
+of skills that make them very worthwhile. The raw materials skills 
+are certainly required for various specs and skills and will increase 
+in benefit when a trade system can be implemented. Skills like haul, 
+peaceful rest and hardiness also give the labourer some excellent 
+advantages as a class.
+
+Students are easily the weakest levelers here and in terms of one on 
+one combat they are going to lose every time. But this is balanced a 
+little by the feign death command allowing them to avoid confrontation 
+in most cases. The availability to students of quick thinking and 
+concentrate will certainly benefit them in higher specs as spell 
+damage is reliant upon high cognition, and the damage dealt to you by 
+spells is reliant on willpower. 
+Skills like write, advanced write, transcribe and understanding will 
+certainly add a lot to the class and make the class fun to play.
+
+I think each of these rank 1 specs are quite useful and provide a good 
+base of skills that are realistic for the type of class they are and 
+are not too disjointed in terms of power across the board.
+</pre>
+
+<A Name="Rank2">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+Swordsman, swashbucklers and storm sworders would appear to be the 
+most powerful classes in terms of combat damage dealt in a one on one 
+situation. Caught by surprise though an archer, a bandit or even a 
+farmers stampede can bring them crashing back to earth.
+
+Tailors, smiths and carpenters though not possessing any leveling 
+skills will certainly be wealthy and have the ability to shape the 
+world a little through their creations which is definitely useful.
+
+Scouts have some useful skills and although they possess no extra 
+special combat power they are certainly useful to the game.
+
+Scholars are unlikely to take much damage from mages and possess some 
+handy skills to reduce practice costs and increase learning times. They 
+will also clearly be the safeguarders of information within the world 
+as no one can accurately fool them with fake letters or read their 
+important documents.
+
+Adepts though weak in comparison with other rank 2 specs will drastically 
+increase in power when they reach the higher level specs.
+
+Mystics and apothecarys have some quite useful skills, but will be more 
+powerful when they advance to alchemists, savants or oracles.
+
+Sailors are pretty weak at the moment, I struggled to devise skills for 
+them. The only reason I think we should keep them as a spec is that they 
+fill a very important niche within our world.
+
+Cutpurses also possess some useful skills and will be able to be an 
+interesting class to play.
+
+Minstrels at the moment seem more powerful then storytellers in some 
+ways, perhaps these two need to be evened up a bit. They both possess 
+some rather handy and powerful skills.
+
+Merchants will be even more influential when we devise a trade system 
+but already they will clearly be the money mongols.
+
+I think all the classes will be interesting to play and roleplay within 
+the world. Although the warrior type classes will obviously level the 
+quickest I don’t think this is a huge problem because it is realistic 
+and levels don’t have too much of an impact. And besides the other 
+classes can probably level quicker through rp, I for one would certainly 
+award fp to a merchant / tailor / scholar / carpenter / smith etc more 
+easily then others.
+</pre>
+
+<A Name="Needed">
+<hr>
+<a href="#Top">Back to Top</a> or <a href="#Submit">Submit Feedback</a>
+<pre>
+Obviously there are a number of things that still require far more detail, 
+thought and discussion amongst the imms even if the general skills that 
+use these components are accepted. These include:
+
+        A table of the different mineral ore raw materials and their 
+        combinations to form various alloys and metals to be used by 
+        the smith class
+
+        A list of the different types of wear locations and armour types 
+        that smiths are able to forge using forge armour
+
+        A similar list for forge weapon
+
+        A similar list for the tailor skill sew
+
+        A detailed table of all the herbs / ingredients on Lu’Tamohr and:
+                Their affects on their own
+                The combinations that create base poisons
+                The combinations that create base potions
+                The combinations that create advanced poisons
+                The combinations that create advanced potions
+                The affects (if any) that "harrow" has on the herbs found
+
+        A set of useful and realistic signals for scouts using the 
+        signaling command
+
+        A table of all the different gems in the world and the affects they 
+        have when applied to objects by an artisan. Also the affect on each 
+        gem of the "cut gem" skill and all the negative affects as well as 
+        positive (for devaluate).
+
+        A table of the rations provided by each kind of animal corpse
+
+        A list of commands that cannot be seen whilst you are stealthier
+
+        A comprehensive list of skills/spells that can be "chanted"
+
+        A comprehensive list of skills/spells that can be "played"
+
+        A list of spells that can be "dodged"
+
+        A list of wear locations that can be "concealed"
+
+        A comprehensive list of skills/spells that can be "learned"
+
+        List of commands for charmed people
+
+        List of commands for elementals and spirits
+
+        List of commands and mobprogs for hired mobs such as bodyguards, 
+        messengers and servants.
+</pre>
+
+<p>
+<FONT FACE="Times New Roman" SIZE="3">
+<form method=POST action="mailto:rhouston@ihug.com.au" NAME="" ENCTYPE="text/plain">
+<INPUT TYPE="hidden" NAME="subject" VALUE="Extras Comments">
+</p>
+
+<hr><br><A NAME="Submit"><A href="#top">Back To Top</a>
+<br>
+<br>
+
+<table border="0">
+<tr>
+<td WIDTH="50"> Name: </td>
+<td WIDTH="200">
+<SELECT NAME="-S">
+<OPTION VALUE="Undefined.">-- Select your name --</OPTION>
+<OPTION VALUE="Dantra">Dantra</OPTION>
+<OPTION VALUE="Isrejin">Isrejin</OPTION>
+<OPTION VALUE="Verrin">Verrin</OPTION>
+<OPTION VALUE="Fiory">Fiory</OPTION>
+<OPTION VALUE="Darion">Darion</OPTION>
+<OPTION VALUE="Isfael">Isfael</OPTION>
+<OPTION VALUE="Michael">Michael</OPTION>
+<OPTION VALUE="Wookash">Wookash</OPTION></SELECT></td>
+
+<td WIDTH="100"> Comment Area: </td>
+<td WIDTH="600"> 
+<SELECT NAME="-S">
+<OPTION VALUE="Undefined.">-- Select item to comment on --</OPTION>
+<OPTION VALUE="WeaponTypes">Weapon Types</OPTION>
+<OPTION VALUE="Stances">Combat Stances</OPTION>
+<OPTION VALUE="SpellCasting">Spell Casting</OPTION>
+<OPTION VALUE="Mysticism">Mysticism</OPTION>
+<OPTION VALUE="Poisons">Poison System</OPTION>
+<OPTION VALUE="Rank1Comp">Rank 1 Comparison</OPTION>
+<OPTION VALUE="Rank2Comp">Rank 2 Comparison</OPTION></SELECT></td>
+</tr>
+</table>
+
+<P>
+Any overall comments, or suggestions for improvements?
+</P>
+<P>
+<TEXTAREA NAME="-C" COLS="60" ROWS="10"> 
+</TEXTAREA>
+</P>
+<P>
+<INPUT TYPE="submit" NAME="Submit" VALUE="Send Feedback">  
+<INPUT TYPE="reset" NAME="Reset" VALUE="Reset Form">
+</P>
+<P>
+Thankyou.
+</FONT></P></FORM></BODY>
+</html><!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet><script language="JavaScript" src="http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="http://domainpending.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.webhosting.yahoo.com/visit.gif?us1036464856" border=0 width=1 height=1></noscript>
+<IMG SRC="http://geo.yahoo.com/serv?s=76001072&t=1036464856" ALT=1 WIDTH=1 HEIGHT=1>

@@ -1,0 +1,294 @@
+<html>
+<head><title>Merchant Skill List Page</title>
+</head>
+<body>
+<basefont face = "Times New Roman">
+<A Name="Top"><a href="http://www.geocities.com/strivemud/skills/skillsmain.html">Back to Main Page</a>
+<br>
+<br>
+<p>This page contains all the Merchant skills. When you have looked through all of the skills and selected the check boxes for skills you are happy with you should submit these along with your comments.</p>
+<p>Obviously merchants and master merchants will get some skills designed to give them advantages in any trade system we implement once we implement it. This is something we will implement later on down the track.
+</p>
+<p>Remember, you should do at least one submission for EACH specialisation, including this one.</p>
+<br>
+
+<p>
+<FONT FACE="Times New Roman" SIZE="3">
+<form method=POST action="mailto:rhouston@ihug.com.au" NAME="" ENCTYPE="text/plain">
+<INPUT TYPE="hidden" NAME="subject" VALUE="Merchant Skill Approval">
+</p>
+
+<table border="0">
+<tr>
+<td WIDTH="50"> Name: </td>
+<td WIDTH="200">
+<SELECT NAME="-S"><OPTION VALUE="Undefined">-- Select your name --</OPTION>
+<OPTION VALUE="Dantra">Dantra</OPTION>
+<OPTION VALUE="Isrejin">Isrejin</OPTION>
+<OPTION VALUE="Verrin">Verrin</OPTION>
+<OPTION VALUE="Fiory">Fiory</OPTION>
+<OPTION VALUE="Darion">Darion</OPTION>
+<OPTION VALUE="Isfael">Isfael</OPTION>
+<OPTION VALUE="Michael">Michael</OPTION>
+<OPTION VALUE="Wookash">Wookash</OPTION></SELECT></td>
+<td WIDTH="100"> Authentication:
+<td WIDTH="200"> <INPUT TYPE="text" NAME="Authentication" value=""></td>
+</tr>
+</table>
+<br>
+<br>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Merchant Bargain">
+        <a href="#Bargain">Bargain</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Merchant Hire">
+        <a href="#Hire">Hire</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Merchant Invest">
+        <a href="#Invest">Invest</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Merchant Haggle">
+        <a href="#Haggle">Haggle</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Merchant Value">
+        <a href="#Value">Value</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Merchant Vault">
+        <a href="#Vault">Vault</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Merchant Alertness">
+        <a href="#Alertness">Alertness</a></p>
+
+<br>
+<br>
+
+<p>Any overall comments, or suggestions for improvements for Merchant skills?</p>
+<p><TEXTAREA NAME="-C" COLS="60" ROWS="10">
+</TEXTAREA></p>
+<p><INPUT TYPE="submit" NAME="Submit" VALUE="Send Feedback"><INPUT TYPE="reset" NAME="Reset" VALUE="Reset Form"></p>
+<p>Thankyou.</FONT></P></FORM><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<A Name="Bargain"><A Name="Previous0">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next1">Next</a>
+<pre>
+Bargain                 Full value for sales at shops
+
+Duration                N/A
+Use                     See above
+Syntax                  Sell (item)
+Affect                  When selling items, merchants receive their 
+                        full value associated with the item.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Hire"><A Name="Next1"><A Name="Previous1">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next2">Next</a>       <a href="#Previous0">Previous</a>
+<pre>
+Hire                    Can hire bodyguards to protect the merchant.
+
+Duration                N/A
+Use                     See above
+Syntax                  Hire (bodyguard)
+Affect                  Bodyguards are spec swordsmen mobs and have a 
+                        level equal to the merchant. A merchant can 
+                        hire 1 bodyguard for every 25 levels he or she 
+                        has. Merchants can group with bodyguards and 
+                        order them to do some basic commands. Hiring 
+                        bodyguards of course costs money, 1 gold per 
+                        bodyguard per hour. Bodyguards leave if they 
+                        cannot be paid.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Invest"><A Name="Next2"><A Name="Previous2">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next3">Next</a>       <a href="#Previous1">Previous</a>
+<pre>
+Invest                  Get interest on any money in banks 
+
+Duration                N/A
+Use                     See above
+Syntax                  None
+Affect                  Any money in the bank for a merchant at reboot 
+                        gains 1% interest.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+Practice Cost                   Free to merchants
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Haggle"><A Name="Next3"><A Name="Previous3">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next4">Next</a>       <a href="#Previous2">Previous</a>
+<pre>
+Haggle                  Reduce price of goods at shops
+
+Duration                N/A
+Use                     See above
+Syntax                  Buy (item)
+Affect                  Merchants receive 10% off the normal purchase 
+                        price of any item from any shopkeeper they can 
+                        list at.
+        
+                        We will need some way to check that you cannot 
+                        buy something from a shopkeeper at 10% discount 
+                        and resell it to the shopkeeper at full price.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Value"><A Name="Next4"><A Name="Previous4">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next5">Next</a>       <a href="#Previous3">Previous</a>
+<pre>
+Value                   Determine an objects value
+
+Duration                N/A
+Use                     See above
+Syntax                  Value (item)
+Affect                  Can work out the gold value of any object.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Vault"><A Name="Next5"><A Name="Previous5">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next6">Next</a>       <a href="#Previous4">Previous</a>
+<pre>
+Vault                   Merchants have access to extra storage at 
+                        banks (more then lockers)
+
+Duration                N/A
+Use                     See above
+Syntax                  Depends how it is implemented
+Affect                  Either it can work as a second locker so you 
+                        can take things from your locker and your vault 
+                        at a bank or it just increases the size of the 
+                        merchants locker. Either way they should be 
+                        able to store twice as much as other players.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+Practice Cost                   Free with the merchant spec
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Alertness"><A Name="Next6"><A Name="Previous6">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next7">Next</a>       <a href="#Previous5">Previous</a>
+<pre>
+Alertness               Accustomed to dealing in large crowds (and 
+                        usually having bodyguards to help) merchants 
+                        are often able to find who it is they are 
+                        looking for.
+
+Duration                N/A
+Use                     Detect people who are using crowd blend
+Syntax                  None
+Affect                  Just looking in a room with a crowd blended 
+                        person will show you that they are there and 
+                        are hiding. You can even detect crowd 
+                        blended people in scan.
+
+			Alertness also works to make it so that you
+			cannot be lead astray by skills like 
+			diversion and distraction.
+
+Skills it counteracts           Crowd Blend
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Costs 1 prac per percent and can train 
+                                to 75% with a max of 95%
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             Yes
+</pre>
+
+
+
+
+</BODY>
+
+</HTML><!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet><script language="JavaScript" src="http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="http://domainpending.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.webhosting.yahoo.com/visit.gif?us1036465211" border=0 width=1 height=1></noscript>
+<IMG SRC="http://geo.yahoo.com/serv?s=76001072&t=1036465211" ALT=1 WIDTH=1 HEIGHT=1>

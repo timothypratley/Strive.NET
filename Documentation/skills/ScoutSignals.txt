@@ -1,0 +1,76 @@
+A list of Scout Signals compiled by William Tam (aka Tuc).
+
+Affirmative
+Negative
+ 
+A confirmation unique to the political faction
+i.e. Fists, Ylanthlin etc.
+
+Greeting Signal
+Begin messages signal
+
+Follow me
+Follow target - (trail target)
+You lead
+Lead target
+Move to my position
+Move to target
+Stay at your position 
+Fortify position
+ 
+Forward
+Halt
+Slow
+Double quick
+Left flank- (tells person to take the left flank)
+Right flank- (tells person to... you get the idea)
+Retreat- (Full retreat, otherwise known as "Runaway!!!!"
+Fall back- (Move to secondary position)
+Area Clear
+Clear Area
+ 
+Single file
+Double file
+
+Lights on 
+Check lights- (turn them off)
+Pull off- (trail or road)
+ 
+Target spotted
+Target enroute
+Eliminate Target
+Subdue Target
+Charge
+
+Target is mounted
+Target is armed
+Target is unarmed
+Target is hostile
+Target is neutral
+Target is friendly
+Target is male
+Target is female
+Target is Rehan (insert other races)
+
+Disarm target
+Draw steel!
+Draw bows!
+Hold fire
+Fire
+Ambush spotted
+Observe or Search area
+Scout (direction)
+Hide
+Move (direction)
+ 
+Target spotted (direction)
+Target enroute from (direction)
+Target moving (direction)
+    
+Move off
+Ready weapons
+Observe
+ 
+Report
+Status
+ 

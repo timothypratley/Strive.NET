@@ -1,0 +1,543 @@
+<html>
+<head><title>Townsfolk Skill List Page</title>
+</head>
+<body>
+<basefont face = "Times New Roman">
+<A Name="Top"><a href="http://www.geocities.com/strivemud/skills/skillsmain.html">Back to Main Page</a>
+<br>
+<br>
+<p>This page contains all the Townsfolk skills. When you have looked through all of the skills and selected the check boxes for skills you are happy with you should submit these along with your comments.</p>
+<p>Remember, you should do at least one submission for EACH specialisation, including this one.</p>
+<br>
+
+<p>
+<FONT FACE="Times New Roman" SIZE="3">
+<form method=POST action="mailto:rhouston@ihug.com.au" NAME="" ENCTYPE="text/plain">
+<INPUT TYPE="hidden" NAME="subject" VALUE="Townsfolk Skill Approval">
+</p>
+
+<table border="0">
+<tr>
+<td WIDTH="50"> Name: </td>
+<td WIDTH="200">
+<SELECT NAME="-S"><OPTION VALUE="Undefined">-- Select your name --</OPTION>
+<OPTION VALUE="Dantra">Dantra</OPTION>
+<OPTION VALUE="Isrejin">Isrejin</OPTION>
+<OPTION VALUE="Verrin">Verrin</OPTION>
+<OPTION VALUE="Fiory">Fiory</OPTION>
+<OPTION VALUE="Darion">Darion</OPTION>
+<OPTION VALUE="Isfael">Isfael</OPTION>
+<OPTION VALUE="Michael">Michael</OPTION>
+<OPTION VALUE="Wookash">Wookash</OPTION></SELECT></td>
+<td WIDTH="100"> Authentication:
+<td WIDTH="200"> <INPUT TYPE="text" NAME="Authentication" value=""></td>
+</tr>
+</table>
+<br>
+<br>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Seal Letter">
+        <a href="#SealLetter">Seal Letter</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Swim">
+        <a href="#Swim">Swim</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Dispose">
+        <a href="#Dispose">Dispose</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Recognise Terrain">
+        <a href="#RecogniseTerrain">Recognise Terrain</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Search">
+        <a href="#Search">Search</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Check Pulse">
+        <a href="#CheckPulse">Check Pulse</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Build Fire">
+        <a href="#BuildFire">Build Fire</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Cook">
+        <a href="#Cook">Cook</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Mount">
+        <a href="#Mount">Mount</a></p>
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Butcher">
+        <a href="#Butcher">Butcher</a></p>
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Townsfolk Combat Basics">
+        <a href="#CombatBasics">Combat Basics</a></p>
+<br>
+<br>
+
+<p>Any overall comments, or suggestions for improvements for Townsfolk skills?</p>
+<p><TEXTAREA NAME="-C" COLS="60" ROWS="10">
+</TEXTAREA></p>
+<p><INPUT TYPE="submit" NAME="Submit" VALUE="Send Feedback"><INPUT TYPE="reset" NAME="Reset" VALUE="Reset Form"></p>
+<p>Thankyou.</FONT></P></FORM><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<A Name="SealLetter"><A Name="Previous0">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next1">Next</a>
+<pre>
+Seal Letter             Create a unique seal on a letter object based on 
+                        the players name. 
+
+Duration                N/A
+Use                     So that letters sent have a unique seal, you know 
+                        that if you see a certain seal the letter has 
+                        remained unopened and is from that player.
+
+Syntax                  Seal (appropriate letter object)
+                        Seal (with no appropriate letter object sets the 
+                        text to the seal description)
+                        Open (sealed letter)
+
+Affect                  The letter object will have its short, long and 
+                        look at descriptions change based upon the players 
+                        name and seal type.
+
+                        i.e. Seal (Jeweled Sword)
+                             Seal (Letter)
+                        Will change the letter object to the following:
+                        Long description: A sealed letter is here.
+                        Short description: a sealed letter
+                        Look at description: A letter sealed with the 
+                        Jeweled Sword of Isrejin.
+                        Breaking the seal returns the original descriptions 
+                        to the object.                          
+
+Skills it counteracts           None, you can still break a sealed letter 
+                                and read it if you intercept it. But the 
+                                seal is broken.
+
+Skills it compliments           None really
+Level restrictions              None
+Major element                   N/A
+Prerequisites                   None
+Practice Cost                   1 percentage per practice point spent. 
+                                Can practice all the way up to 100%
+
+Casting costs etc               None
+Required Components             You need an appropriate letter object to be 
+                                able to seal it.
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Swim"><A Name="Next1"><A Name="Previous1">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next2">Next</a>       <a href="#Previous0">Previous</a>
+<pre>
+Swim                    Obviously not everyone has to train it, and it 
+                        will only entitle people to swim in shallow water I 
+                        should think. We certainly don’t want people just 
+                        swimming across oceans.
+
+Duration                It affects you in permanence
+Use                     To move over certain water squares.
+
+Syntax                  It’s a skill that is always in affect, so you don't 
+                        initiate it with a command.
+
+Affect                  Will be able to walk over and into squares that are 
+                        flagged water_surface. So they won't be able to swim 
+                        in squares flagged deep_water or underwater. This is 
+                        something we will need to tell the builders.
+
+Skills it counteracts           None
+Skills it compliments           Skills you are required to be in water rooms 
+                                to perform.
+
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   1 percentage per practice point spent. Can 
+                                practice only to 75% have to learn the rest up 
+                                to 95% max
+
+Casting costs etc               Costs double your energy to move using the swim 
+                                skill (ie in water)
+
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             Yes, to flee a fight in shallow water. Note that 
+                                all fights conducted in water_surface should have 
+                                severe restrictions on to hit and damage.
+</pre>
+
+<A Name="Dispose"><A Name="Next2"><A Name="Previous2">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next3">Next</a>       <a href="#Previous1">Previous</a>
+<pre>
+Dispose                 Allows you to get rid of corpses of animals or 
+                        even humans without leaving a trace of them for 
+                        others to find.
+
+Duration                N/A
+Use                     Remove corpses from cluttering up the room
+Syntax                  Dispose (corpse)
+Affect                  If a corpse is not disposed of it will stay there 
+                        for quite a long time until it decays.
+        
+                        Why a dispose command? I think because the sacrifice 
+                        command is too oriented towards sacrificing corpse 
+                        to the gods and in a realistic sense this doesn’t 
+                        get rid of all traces of a corpse anyway. We do need
+                        some way of getting rid of corpses though or they 
+                        will clutter up the mud as we have to face the fact 
+                        that lots of mobs will die over the course of the mud. 
+                        I would like it however if corpses stuck around until 
+                        reboot or until they are disposed of.
+
+                        This would not be a skill with a chance of failing.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   5 percentage per practice point spent. Can 
+                                practice to 100%
+
+Casting costs etc               20 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="RecogniseTerrain"><A Name="Next3"><A Name="Previous3">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next4">Next</a>       <a href="#Previous2">Previous</a>
+<pre>
+Recognise Terrain       Just from entering the room you can identify 
+                        what type of terrain you are in.
+
+Duration                N/A
+Use                     See Above
+Syntax                  None
+Affect                  Every time you do a look your recognise terrain 
+                        is tested and if successful the type of terrain 
+                        is displayed to you.
+
+                        Perhaps also, recognise terrain works when you
+                        cannot see also (blinded or its too dark).
+
+Skills it counteracts           None
+Skills it compliments           Stances, hide skills, herb finding skills 
+                                and more
+
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   1 percentage per practice point spent. Can 
+                                practice to 100%
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             Yes
+</pre>
+
+<A Name="Search"><A Name="Next4"><A Name="Previous4">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next5">Next</a>       <a href="#Previous3">Previous</a>
+<pre>
+Search                  You can search for people hidden in your room.
+
+Duration                N/A
+Use                     See above
+
+Syntax                  Search
+Affect                  Depending on how the person is hidden it will 
+                        determine if you can find them using this skill.
+
+                        The way this is proposed to work is that when
+                        a player wishes to search the room, they initiate
+                        the skill, and a message "Isrejin starts searching"
+                        is displayed to all in the room. This gives any hidden
+                        people a chance to escape undetected, otherwise they
+                        are discovered depending on the skill they have used
+                        to hide with, and if the search skill is successful.
+
+Skills it counteracts           Hide, Advanced Hide, Camouflage, 
+                                Advanced Camouflage, Roadside Concealment 
+                                to varying degrees of effectiveness.
+
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+Practice Cost                   1 percentage per practice point spent. Can 
+                                practice only to 75% have to learn the rest 
+                                up to 95% max
+
+Casting costs etc               200 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="CheckPulse"><A Name="Next5"><A Name="Previous5">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next6">Next</a>       <a href="#Previous4">Previous</a>
+<pre>
+Check Pulse             You can check a corpse to identify if it is 
+                        still alive.
+
+Duration                N/A
+Use                     To expose people using the feign death command, 
+                        unless they are found out using this skill they 
+                        are pretty much undetectable.
+
+Syntax                  Check (target corpse)
+Affect                  This will reveal any corpses that are actually 
+                        still alive (those using feign death).
+
+                        There are some problems with this and feign death
+                        but also solutions. I am sure the problems can be
+                        worked out if we want these two skills, otherwise
+                        we dont need to work them out.
+
+Skills it counteracts           Feign Death
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   1 percentage per practice point spent. 
+                                Can practice only to 75% have to learn the 
+                                rest up to 95% max
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="BuildFire"><A Name="Next6"><A Name="Previous6">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next7">Next</a>       <a href="#Previous5">Previous</a>
+<pre>
+Build Fire              Anyone should be able to build a fire so long 
+                        as they have a flint and tinderbox. Fires light 
+                        up darkened rooms and can only be built outdoors. 
+                        They cannot be built when the weather is rainy. 
+                        They enable you to sleep more comfortably or at 
+                        all.
+
+Duration                Dependent on weather, and raw materials used in 
+                        the fire.
+
+                        If its rainy any fire you build will last for half
+			the duration listed below.
+                        If its overcast your fire duration is 3/4
+                        If its clear your fire duration is normal
+                        
+                        For each piece of lumber used in the fire to 
+                        create it the fire stays for 2 hours based upon 
+                        the current game time we have. If our game 
+                        time changes so will this have to.
+
+                        If no lumber is used to start the fire then it lasts
+                        for 1 hour, explained by the gathering of twigs / 
+                        branches etc.
+
+Syntax                  Build Fire <number of pieces of lumber>
+
+Affect                  Creates a fire object in the room:
+                        If 0-1 piece of lumber spent the fire is a small fire
+                        If 2 -4 pieces of lumber spent the fire is a 
+                        If 4-6 pieces of lumber spent the fire is a large fire
+                        > 8 pieces spent the fire is a roaring fire
+
+                        If you use the build fire command in a room where 
+                        a fire already exists it will add the lumber you enter 
+                        to the current fire.
+
+                        What I would also like to propose is that we have a 
+                        temperature system associated with our weather system. 
+                        If the weather is cold and there is no fire built, 
+                        then players should not be able to sleep outdoors.
+
+                        The way I would like fires to work in terms of healing
+                        rates is as follows:
+
+                        Healing rate sleeping indoors = normal
+                        Healing rate sleeping indoors with a fire= +50%
+                        Healing rate sleeping outdoors = half
+                        Healing rate sleeping outdoors with a fire = normal
+			Healing rate sleeping outdoors in rain 25% or normal
+                        
+
+Skills it counteracts           None
+Skills it compliments           The labourer chop lumber skill and the cook 
+                                skill
+
+Level restrictions              None
+Major element                   N/A
+Prerequisites                   N/A
+
+Practice Cost                   1 practice point (pp) per %, can prac to 75% 
+                                with a learned max of 95%       
+
+Casting costs etc               Costs 50 energy to build a fire
+Required Components             Flint and tinder and some form of lumber.
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Cook"><A Name="Next7"><A Name="Previous7">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next8">Next</a>       <a href="#Previous6">Previous</a>
+<pre>
+Cook                    So long as there is a fire in the room you can turn 
+                        raw food stuffs into edible food.
+
+Duration                N/A
+Syntax                  Cook (target corpse)
+
+Affect                  I think we should remove the whole arms, turds and guts
+                        objects from existence entirely, and instead when
+                        someone dies they leave a corpse and some raw meat items
+                        that can be cooked. Either this of you use a "butcher"
+                        skill to turn a corpse into a bunch of cookable 
+                        components.
+
+Skills it counteracts           None
+Skills it compliments           Build Fire, Butcher
+Level restrictions              None
+Major element                   N/A
+Prerequisites                   N/A
+
+Practice Cost                   1 practice point per %, can prac to 75% with 
+                                a learned max of 95%    
+
+Casting costs etc               Costs 50 energy to cook a corpse
+Required Components             A fire and a wielded short blade or long 
+                                blade weapon.
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Mount"><A Name="Next8"><A Name="Previous8">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next9">Next</a>       <a href="#Previous7">Previous</a>
+<pre>
+Mount                   Allows you to ride mountable mobs.
+
+Duration                Until you dismount
+Use                     Allows you to mount animals that can be mounted
+Syntax                  Mount (target)
+                        Dismount
+
+Affect                  Mounting an animal allows you to move using its 
+                        energy instead of your own for movement. Failing 
+                        to mount or dismount an animal causes you a 
+                        small amount of damage (5% of your current hps). 
+                        If you are attacked or attack someone while mounted 
+                        you immediately dismount if you do not have the 
+                        mounted combat skill. 
+
+Skills it counteracts           None
+Skills it compliments           Mount
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice point 
+                                for every percent. Max % is 95.
+
+Casting costs etc               20 energy per mount or dismount
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Butcher"><A Name="Next9"><A Name="Previous9">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next10">Next</a>       <a href="#Previous8">Previous</a>
+<pre>
+Butcher                 Allows you to turn non-sentient corpses into raw food.
+
+Duration                N/A
+Use                     See Above
+Syntax                  Butcher <target corpse>
+                        
+Affect                  Perhaps depending on the race of the corpse, a different
+                        number / type of raw food items are created. These can
+                        then be cooked over a fire.
+
+Skills it counteracts           None
+Skills it compliments           Build Fire, Cook
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice point 
+                                for every percent. Max % is 95.
+
+Casting costs etc               20 energy per butcher
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="CombatBasics"><A Name="Next10"><A Name="Previous10">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next11">Next</a>       <a href="#Previous9">Previous</a>
+<pre>
+Combat Basics           This allows you to use the stance command. You must 
+                        train each stance individually however.
+
+Duration                None
+Use                     To give you the edge and to provide variation in 
+                        combat by allowing you to use stances.
+
+Syntax                  stance (stance type)
+Affect                  You can use the stance command. If you fail you 
+                        just fail to assume that stance for fighting and 
+                        retain your current stance. This would only have 
+                        an affect if you want to try and change your 
+                        stance whilst fighting using a more powerful skill.
+
+                        Note also that this skill gives you access to use
+                        the passive and normal stances.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+Practice Cost                   Can practice to 95%, costs 1 practice point 
+                                for every percent. 
+
+Casting costs etc               None
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             Yes if already in a stance you keep that stance
+                                for combat.
+
+
+</pre>
+
+
+
+</BODY>
+
+</HTML>
+<!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet><script language="JavaScript" src="http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="http://domainpending.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.webhosting.yahoo.com/visit.gif?us1036465213" border=0 width=1 height=1></noscript>
+<IMG SRC="http://geo.yahoo.com/serv?s=76001072&t=1036465213" ALT=1 WIDTH=1 HEIGHT=1>

@@ -1,0 +1,42 @@
+
+This is my view of the current immortal status and roles.
+
+Directors - Dantra, Isrejin.
+Coding - Dantra, Isrejin, Michael.
+Building - Verrin, Isrejin and Thaan.
+Natural Philosophy - Fiory, Michael, Darion, Isrejin.
+Game Systems - Isrejin, Fiory, Michael.
+Atmosphere - Fiory, Michael, Wookash.
+Storyline - Fiory.
+
+
+"Directors" is self-explanatory.
+
+"Coding" covers two things: bug hunting and coding new things. Isrejin is
+currently handling the bug hunting. Tim, when he gets back online, will be
+doing both, as will I if I ever get the time to get the concurrent versioning
+system up and working.
+
+"Building" - Verrin is in charge, but apparently buried alive by real life.
+Isrejin and Thaan are among the builders, both working on Cora'Lyst. I don't
+know the current builder roster, but I assume Armeli is on it and I hope 
+Teraysha will be soon.
+
+"Atmosphere" is basically tactical roleplay and preemptive FP spying. It's
+what Wookash signed up for. I'm mostly mucking about with the Academy and
+its' denizens.
+
+"Natural Philosophy" is how the world of Lu'Tamohr works - flora, fauna,
+weather, history, geography, peoples, places, herb lore. 
+
+"Game Systems" is how the game works. Death, rebirth, clan war, trade,
+levelling, statistics, skills, specializations, spells. Note the 
+heavy overlap with "natural philosophy".
+
+"Storyline" - long-term, strategic roleplay, and the things that underpin
+it.
+
+As Isrejin says, everybody helps out everywhere as and when. There are people
+I don't see very often, so there are inaccuracies.
+
+- Michael

@@ -1,0 +1,351 @@
+<html>
+<head><title>Tailor Skill List Page</title>
+</head>
+<body>
+<basefont face = "Times New Roman">
+<A Name="Top"><a href="http://www.geocities.com/strivemud/skills/skillsmain.html">Back to Main Page</a>
+<br>
+<br>
+<p>This page contains all the Tailor skills. When you have looked through all of the skills and selected the check boxes for skills you are happy with you should submit these along with your comments.</p>
+<p>Remember, you should do at least one submission for EACH specialisation, including this one.</p>
+<br>
+
+<p>
+<FONT FACE="Times New Roman" SIZE="3">
+<form method=POST action="mailto:rhouston@ihug.com.au" NAME="" ENCTYPE="text/plain">
+<INPUT TYPE="hidden" NAME="subject" VALUE="Tailor Skill Approval">
+</p>
+
+<table border="0">
+<tr>
+<td WIDTH="50"> Name: </td>
+<td WIDTH="200">
+<SELECT NAME="-S"><OPTION VALUE="Undefined">-- Select your name --</OPTION>
+<OPTION VALUE="Dantra">Dantra</OPTION>
+<OPTION VALUE="Isrejin">Isrejin</OPTION>
+<OPTION VALUE="Verrin">Verrin</OPTION>
+<OPTION VALUE="Fiory">Fiory</OPTION>
+<OPTION VALUE="Darion">Darion</OPTION>
+<OPTION VALUE="Isfael">Isfael</OPTION>
+<OPTION VALUE="Michael">Michael</OPTION>
+<OPTION VALUE="Wookash">Wookash</OPTION></SELECT></td>
+<td WIDTH="100"> Authentication:
+<td WIDTH="200"> <INPUT TYPE="text" NAME="Authentication" value=""></td>
+</tr>
+</table>
+<br>
+<br>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Dye">
+        <a href="#Dye">Dye</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Weave">
+        <a href="#Weave">Weave</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Sew">
+        <a href="#Sew">Sew</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Adjust Clothing">
+        <a href="#AdjustClothing">Adjust Clothing</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Remake">
+        <a href="#Remake">Remake</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Create Costume">
+        <a href="#CreateCostume">Create Costume</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Disguise">
+        <a href="#Disguise">Disguise</a></p>
+
+<p>     <INPUT TYPE="checkbox" NAME="-F" value="Tailor Bind">
+        <a href="#Bind">Bind</a></p>
+
+<br>
+<br>
+
+<p>Any overall comments, or suggestions for improvements for Tailor skills?</p>
+<p><TEXTAREA NAME="-C" COLS="60" ROWS="10">
+</TEXTAREA></p>
+<p><INPUT TYPE="submit" NAME="Submit" VALUE="Send Feedback"><INPUT TYPE="reset" NAME="Reset" VALUE="Reset Form"></p>
+<p>Thankyou.</FONT></P></FORM><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<A Name="Dye"><A Name="Previous0">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next1">Next</a>
+<pre>
+Dye                     Tailors can make a variety of wonderous 
+                        creations.
+
+Duration                N/A
+Use                     Can add colour to clothing.
+Syntax                  Dye (appropriate item) (colour choice)
+Affect                  If the target item is made of cloth or anything 
+                        that can be dyed, its short and long descs are 
+                        changed to be in the desired colour.
+        
+                        If you fail in dyeing an item of clothing it 
+                        could end up a random colour.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice point 
+                                for every percent. Max % is 95.
+
+Casting costs etc               25 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Weave"><A Name="Next1"><A Name="Previous1">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next2">Next</a>       <a href="#Previous0">Previous</a>
+<pre>
+Weave                   Creates a bolt of cloth from various raw materials 
+
+Duration                N/A
+Use                     See above
+Syntax                  Weave (appropriate material)
+Affect                  The weave command would be used to turn raw 
+                        materials such as cotton into cloth that will be 
+                        used to make clothing etc
+
+Skills it counteracts           None
+Skills it compliments           Skills requiring cloth
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               50 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Sew"><A Name="Next2"><A Name="Previous2">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next3">Next</a>       <a href="#Previous1">Previous</a>
+<pre>
+Sew                     Creates an item of clothing from a bolt of cloth
+
+Duration                N/A
+Use                     See above
+Syntax                  Sew (raw material) (desired item)
+Affect                  Can create a variety of items from simple raw 
+                        materials. This would include various wear 
+                        locations and allow the tailor to edit short, 
+                        long and look at descs using colour if they wish.
+        
+                        I’m unsure exactly how to implement except to 
+                        perhaps place items made by tailors in their own 
+                        vnums and allow them to use a cut down version of 
+                        oedit where they choose a wear location to make 
+                        an item for and are created a default object for 
+                        which they can edit the various descs. The name of 
+                        the item should include the tailors name and 
+                        likely the short desc. Tim or Verrin will likely 
+                        have some more detailed ideas on how best to 
+                        implement this.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               50 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="AdjustClothing"><A Name="Next3"><A Name="Previous3">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next4">Next</a>       <a href="#Previous2">Previous</a>
+<pre>
+Adjust Clothing         Personalises clothing to fit a person better 
+                        and hence make them more comfortable whilst 
+                        using it.
+
+Duration                N/A
+Use                     Increase benefits of clothing
+Syntax                  Adjust (clothing item)
+Affect                  If the clothing is of type armour then the armour 
+                        class of the item increases by 50% If the clothing 
+                        is not armour then it gains the affect of adding 2 
+                        hit roll to the person who wears it.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               25 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Remake"><A Name="Next4"><A Name="Previous4">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next5">Next</a>       <a href="#Previous3">Previous</a>
+<pre>
+Remake                  Renames an item of clothing
+
+Duration                N/A
+Use                     See above
+Syntax                  Remake (clothing item) (type of desc) (desc)
+Affect                  Can rename basically any item made of 
+                        appropriate materials i.e.
+
+                        Remake (vest) long (desc) changes the long 
+                        description
+
+                        Remake (vest) short (desc) changes the short 
+                        description
+
+                        Remake (vest) desc enters editor to change 
+                        look at description (ie extra desc)
+
+                        The (vest) argument would have to be one of
+                        the keywords in the objects name for the skill
+                        to be successful.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               25 energy
+Required Components             None
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="CreateCostume"><A Name="Next5"><A Name="Previous5">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next6">Next</a>       <a href="#Previous4">Previous</a>
+<pre>
+Create Costume          Create costumes for those who are able to wear 
+                        them effectively as disguises.
+
+Duration                N/A
+Use                     See Above
+Syntax                  Create Costume
+Affect                  Creates a costume object that is required for
+                        use with the disguise skill.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               25 energy
+Required Components             Cloth of some sort and quantity
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Disguise"><A Name="Next6"><A Name="Previous6">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next7">Next</a>       <a href="#Previous5">Previous</a>
+<pre>
+Disguise                Mislead people as to your true identity.
+
+Duration                N/A
+Use                     See Above
+Syntax                  Disguise (thing to change) (thing to change to)
+Affect                  The disguise skill for tailors is not as powerful 
+                        as that of a master thief or eluder. They are 
+                        able to change their sex, change their race, and 
+                        change their name to a name that does not already 
+                        exist however. I don’t think they should be able 
+                        to disguise as someone that already exists as the 
+                        skills of imitation do not really apply to a tailor 
+                        class.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   Create Costume at 95%
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               25 energy
+Required Components             Costume object
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+<A Name="Bind"><A Name="Next7"><A Name="Previous7">
+<hr>
+<a href="#Top">Back to Top</a>  <a href="#Next8">Next</a>       <a href="#Previous6">Previous</a>
+<pre>
+Bind                    Can bind sleeping players with strong ropes
+
+Duration                N/A
+Use                     See Above
+Syntax                  Bind (target)
+Affect                  Tailors can bind anyone who is sleeping 
+                        anywhere which automatically captures that 
+                        person. If the tailor fails their bind skill 
+                        you are immediately woken and receive a 
+                        message.
+
+Skills it counteracts           None
+Skills it compliments           None
+Level restrictions              None
+Major element                   None
+Prerequisites                   None
+
+Practice Cost                   Can practice to 75%, costs 1 practice 
+                                point for every percent. Max % is 95.
+
+Casting costs etc               25 energy
+Required Components             Rope object
+Starts Combat?                  No
+Used During Combat?             No
+</pre>
+
+
+
+
+</BODY>
+
+</HTML><!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet><script language="JavaScript" src="http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="http://domainpending.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.webhosting.yahoo.com/visit.gif?us1036465145" border=0 width=1 height=1></noscript>
+<IMG SRC="http://geo.yahoo.com/serv?s=76001072&t=1036465145" ALT=1 WIDTH=1 HEIGHT=1>

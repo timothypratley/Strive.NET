@@ -1,0 +1,72 @@
+
+It will be important to make sure that we communicate well with each
+ other. One problem before envy went down was lack of  communication.
+ What I mean by this is that in some cases, you can't just do your own
+ thing as some things are quite important and need the input of others
+ to progress. The best way to contact each other is via e-mail.
+ Obviously the new site will have an e-mail account, which will be used
+ for email concerning the mud. Email sent to this address will be
+ forwarded to all imms. There will be some instances however where
+ the imms should contact other individual imms to clarify an idea. 
+
+For example, making a new builder and approving a new area, it is
+ suggested that Verrin has input here as you might expect. The directors
+ would also like to have input. Its probably best to just email the
+ directors (unless they are online to talk about it) rather then email
+ all the imms.
+
+One big area is story. There has been a fair amount of work put into
+ defining the existing story for the mud. The directors are happy with
+ it, but that doesnt mean things can't change or evolve. It is suggested
+ Verrin and Sayell be involved in development of the story. What would
+ this entail? I would suggest coming up with plots, background
+ information, quests perhaps to be used in the mud. In this area the
+ directors would also like to have input. So basically ideas from Verrin
+ and Sayell would need to be run by the directors and vice versa.
+ E-mail would be good for this. This doesnt mean that other imms can't
+ suggest their ideas though. You should send email to those mentioned
+ above if you have an idea so it can be picked through.
+
+Obviously if you have been given a role, doing something that that role
+ suggests requires no "authorisation" as such. The roles at present are
+ a little loosely defined though, so it is important to understand that
+ things may change as to what defines your role. The biggest problems
+ come when the authority described by a persons role is uncertain. It
+ would be good to try and avoid this. It is probable that things have
+ been missed in terms of roles. If you notice anything or are unsure
+ about your apparent role then communicate!
+
+Everyones opinion is valued no matter what your role. If you are an imm
+ (no matter what level) then the directors beleive that your opinion and
+ input is essential for the success of the MUD. So although you may not
+ have formal 'authority' in an area, your input is still valuable. For
+ example, Torkin may beleive a certain skill is too powerful, even
+ though the responsibility lies with Isfael and Dantra to keep this area
+ ballanced. Torkins input will of course be valued, because Torkin has
+ been chosen to be an imm, so that means we respect his opinion. You get
+ the picture I hope.
+
+As for those who will hopefully be the imms interacting and creating
+ atmosphere for the mud they should feel free to be creative given the
+ constraints depicted by the story and the world. They would not have to
+ ask to do something unless they wished to develop a large impact plot
+ which had not been invented or approved yet. It is likely that
+ individual imms will be assigned to individual plots, and it will be
+ good to have constant updates (through a seperate note board I think)
+ as to the progress of these plots. It might even be best to assign
+ specific mobs to specific imms as it is always confusing when more then
+ one imm plays a particular mob.
+
+Basically use common sense. If you are unsure of something ask someone
+ higher up and so on. Use email where appropriate or notes, though if
+ its really important email is better as its easy to read a note then
+ forget its importance after reading 53 other notes after it. We intend
+ to implement a ToDoList on the mud which will have a list of things to
+ do which we can add and remove from. This would include things like
+ changes to code, changes to helps etc and would have some sort of
+ ranking system. This will hopefully help us remember what needs to be
+ done as it is often quite difficult to sort through notes. 
+
+
+
+

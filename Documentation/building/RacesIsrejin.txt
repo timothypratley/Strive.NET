@@ -1,0 +1,54 @@
+Going through the code has brought up the fact that currently pc / npc
+races within the world need some tweaking editing, there are a lot
+of remnants. In order to help builders in creating it would be nice
+to fix this problem and tailor the existing races to actually fit with 
+our mud. 
+
+Races I would like to remove:
+
+bear
+arachnid                
+snake
+undead
+vampiremist
+worm
+hydra
+lizard
+werewolf        
+goblin
+faerie
+troll
+orc
+giant
+ogre
+minotaur
+hobgoblin
+
+
+These are the races I propose:
+Malandrin
+Cvin
+Rehan
+Jlen
+El'Cvin
+Immloean
+Ximmerin
+Insect
+Dragon
+Animal
+Potential
+Corpse (to replace undead)
+Spirit
+Elemental
+Bat
+Plant
+Rodent
+Object
+Fish
+Horse
+Bird
+Reptile
+Canine
+Feline
+Mammal
+

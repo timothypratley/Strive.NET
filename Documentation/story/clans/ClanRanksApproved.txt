@@ -1,0 +1,68 @@
+[FISTS OF XLEVAN] Militaristic clan living for the spoils of war and trade.
+
+Rank 10: Consul or High Commander      
+Rank  9: General                       
+Rank  8: Advisor                       
+Rank  7: Captain                       
+Rank  6: Diplomat                      
+Rank  5: Sword Wielder                 
+Rank  4: Shield Bearer                 
+Rank  3: Bannerman                     
+Rank  2: Recruit                       
+Rank  1: Civilian 
+
+
+[SILVER TONGUES] The Merchant Council of Cora'Tyl
+
+Rank 10: High Chancellor               
+Rank  9: Chancellor                    
+Rank  8: General                       
+Rank  7: Councillor                    
+Rank  6: Diplomat                      
+Rank  5: Captain                       
+Rank  4: Envoy                         
+Rank  3: Tradesman                     
+Rank  2: Armsman                       
+Rank  1: Civil Servant
+
+
+[HOUSE SETH O PAR] The Noble Rulers of Il'Cora'Dvan
+
+Rank 10: High Prince or Princess       
+Rank  9: Administrator or General      
+Rank  8: Advisor                       
+Rank  7: Lord                          
+Rank  6: Merchant Councillor           
+Rank  5: Honor Guard                   
+Rank  4: Chevalier                     
+Rank  3: Armsman                       
+Rank  2: Bannerman                     
+Rank  1: Vassal
+
+
+[SEPHITES] Those who beleive in the way of the healer Jonaseph.
+
+Rank 10: Keeper                        
+Rank  9: Advisor                       
+Rank  8: Sage                          
+Rank  7: Captain                       
+Rank  6: Dedicated                     
+Rank  5: Honor Guard                   
+Rank  4: Devoted                       
+Rank  3: Assistant                     
+Rank  2: Armsman                       
+Rank  1: Believer
+
+
+[YLANTHLIN] Those who focus on the study of magic and its application.
+
+Rank 10: High Councillor               
+Rank  9: Mage Councillor               
+Rank  8: Magus                         
+Rank  7: Field Martial                 
+Rank  6: Instructor                    
+Rank  5: Wielder                       
+Rank  4: Warder                        
+Rank  3: Adept                         
+Rank  2: Armsman                       
+Rank  1: Scribe

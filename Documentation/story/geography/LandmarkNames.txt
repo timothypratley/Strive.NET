@@ -1,0 +1,71 @@
+Here is a list of names for the landmarks on the updated map of Lu'Tamohr. This is for the information of the imms so they know whats what!
+
+
+This document refers to the map that can be found at:
+
+http://www.geocities.com/strivemud/maps/lutamohr/LuTamohrTerrainApproved.gif
+
+
+Rivers 
+Main River:  				The Mighty Tzan River 
+River running from the 
+ mountains through the forrests:  	Rvell River (both forks) 
+River near Cora'Lyst:   		The Western Waterway 
+River in north east corner:   		Unnamed (Undiscovered) 
+River starting at small lake and 
+ flowing to larger lake in 
+ northeast corner: 			Ckar River 
+River flowing west of large lake 
+ on southeast of map: 			Western Dvan River 
+River flowing east of large lake 
+ on southeast of map: 			Eastern Dvan River 
+Only river left: 			Dareshk River 
+
+Lakes 
+Lake in the centre of falsta Tandar: 	Ior'Tandar 
+Cora'Tyl's Lake: 			Ior'Tyl 
+Lake at top of north east river: 	Ior'o'Ckar 
+Lake at bottom of north east river: 	Ior't'Ckar 
+Large lake on east side: 		Ior'Dvan 
+
+Forrests 
+Main Forrest:                           Falsta Tandar 
+Forrest west of Falsta Tandar:    	Falsta El 
+Other two forrest to the west:     	Part of the Western Wilds 
+Forrest just above the swamps:  	Falsta Caran 
+Forrest in the foothills near 
+ Ru'Psarn: 				Falsta Solste 
+Forrest on Ylanthlin Isle:              Falsta Ylanthlin 
+Forrest in north east corner:        	Unamed (Undiscovered) 
+Forrest on east coast (north one):	Falsta Terrallin 
+Forrest just below Il'Cora'Dvan:  	Falsta Dvan 
+Forrest in far south east corner:   	Falsta Sdin 
+  
+
+Mountains 
+Main mountain range running 
+ across north and west: 		Malandrin Mountain Range 
+Mountains near Cora'Lyst: 		The Dragons Peak Mountains 
+Island with only mountains: 		Mountain Home Mountains 
+
+Roads 
+Cora'Lyst to Cora'Tyl:   		The Traders Highway 
+Cora'Tyl to Ru'Psarn (north):   	Solste Road 
+Cora'Tyl to Ru'Psarn (south):   	Central Plains Road 
+Road leading up to the mountain pass: 	Mountain Pass Road 
+Ru'Psarn to Ru'Sil:  			River Road 
+Ru'Psarn to Ru'Katta:  			The Southern Road 
+Road to Port Ylanth: 			Ylanthlin Road (commissioned by the ylanthlin) 
+Road near Cora'Caran Ruins:   		Caran Road 
+Cora'Lyst to Ru'Psarn:   		Old Empire Road (from the old empire between 					 		 Il'Cora'Sentar and Cora'Caran 
+Road through swamps:    		The Coast Highway (from the old empire between 					 		Il'Cora'Sentar and another old empire city, who's ruins 					 are sunk beneath the swamps. Road extended to Ru'Katta 					 from  this place for trade also. 
+Road leading out of Il'Cora'Dvan:   	South Dvan Road 
+First fork on that road:   		Ckar Road 
+Second fork on that road:   		West Dvan Road 
+
+Other 
+Swamp: 					Nethran Swamps 
+Ruins 1: 				Il'Cora'Sentar, capital in the cvin empire times. 
+Ruins 2: 				Cora'Caran, also large city in cvin empire times. 
+The coming: 				Site of the the coming 
+  
