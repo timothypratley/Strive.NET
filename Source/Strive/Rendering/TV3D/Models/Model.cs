@@ -91,6 +91,7 @@ namespace Strive.Rendering.TV3D.Models {
 				(boxmax.z + boxmin.z)/2
 			);
 			loadedModel._id = loadedModel._mesh.GetMeshIndex();
+			loadedModel._mesh.InitLOD(0);
 			return loadedModel;
 		}
 
@@ -188,7 +189,8 @@ namespace Strive.Rendering.TV3D.Models {
 		public void nextFrame() {
 		}
 
-		public void SetLOD( float distance ) {
+		public void SetLOD( EnumLOD lod ) {
+			_mesh.SetLODIndex( (float)lod );
 		}
 
 		public void GetBoundingBox( Vector3D minbox, Vector3D maxbox ) {

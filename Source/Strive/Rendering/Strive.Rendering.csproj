@@ -122,6 +122,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "EnumLOD.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "EnumRenderTarget.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

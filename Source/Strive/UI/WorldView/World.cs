@@ -161,24 +161,35 @@ namespace Strive.UI.WorldView {
 			} else {
 				Log.ErrorMessage( "Unknown camera mode." );
 			}
-			Recenter( CurrentAvatar.model.Position.X, CurrentAvatar.model.Position.Z );
+			Recenter( CurrentAvatar.model.Position.X, CurrentAvatar.model.Position.Y, CurrentAvatar.model.Position.Z );
 		}
 
-		void Recenter( float x, float z ) {
+		const int _max_lod_index = 5;
+		const int _first_lod_index = 1;
+		void Recenter( float x, float y, float z ) {
 			TerrainPieces.Recenter( x, z );
 			ArrayList arrayList = new ArrayList(physicalObjectInstances.Keys);
 			foreach ( object key in arrayList ) {
 				PhysicalObjectInstance poi = (PhysicalObjectInstance)physicalObjectInstances[key];
-				// TODO: some sort of LOD
-				// TODO: not a hard coded const
-				float dist = Math.Abs( x-poi.model.Position.X );
 
-				// TODO: make this area the same as that used by the server,
-				// ie: square delimited
-				if ( dist > Constants.objectScopeRadius*2 ) {
+				float dist = Math.Max( Math.Abs( x-poi.model.Position.X ), Math.Abs( z-poi.model.Position.Z ) );
+				dist = Math.Max( dist, Math.Abs( y-poi.model.Position.Y ) );
+
+				// TODO: really big object should probabbly have a bigger objectscoperadius,
+				// and be visible from further away.
+				// For this to be efficient, you would probabbly want big objects stored in different memory structures.
+
+				if ( dist > Constants.objectScopeRadius ) {
+					// TODO: make this area the same as that used by the server,
+					// ie: square delimited
 					Remove( poi.physicalObject.ObjectInstanceID );
 				} else {
-					poi.model.SetLOD( dist );
+					int lod_index = (int)(_first_lod_index + (_max_lod_index-1) * dist / Constants.furthestLOD );
+					if ( lod_index > _max_lod_index ) {
+						lod_index = _max_lod_index;
+					}
+
+					poi.model.SetLOD( (EnumLOD)lod_index );
 				}
 			}
 		}
