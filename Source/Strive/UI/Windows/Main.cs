@@ -83,16 +83,16 @@ namespace Strive.UI.Windows
 			#region Add our windows
 
 			// Connection
-			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
+			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
 			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
 			connectionWindow.CaptionBar = true;
 			connectionWindow.CloseButton = false;
 			DockingManager.AddContentWithState(connectionWindow, State.DockLeft);
 			// Log
-			Content logWindow = DockingManager.Contents.Add(new ChildWindows.Log(), "Log", new ImageList(), -1);
+			Content logWindow = DockingManager.Contents.Add(new ChildWindows.Log(), "Log", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Log);
 			DockingManager.AddContentWithState(logWindow, State.DockBottom);
 			// Who
-			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection),0);
+			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GlobalImageList,-1);
 			DockingManager.AddContentWithState(whoWindow, State.DockRight);
 			// Command
 			Content commandWindow = DockingManager.Contents.Add(new ChildWindows.Command(), "Command", null, -1);
@@ -341,7 +341,7 @@ namespace Strive.UI.Windows
 
 		private void ViewConnect_Click(object sender, System.EventArgs e) {
 			// Connection
-			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
+			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
 			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
 			connectionWindow.CaptionBar = true;
 			connectionWindow.CloseButton = false;
@@ -397,12 +397,12 @@ namespace Strive.UI.Windows
 		}
 
 		private void ViewWhoList_Click(object sender, System.EventArgs e) {
-			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection),0);
+			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GlobalImageList,-1);
 			DockingManager.AddContentWithState(whoWindow, State.Floating);
 		}
 
 		private void ViewSkillList_Click(object sender, System.EventArgs e) {
-			Content skillWindow = DockingManager.Contents.Add(new ChildWindows.SkillSelector(), "Skills", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
+			Content skillWindow = DockingManager.Contents.Add(new ChildWindows.SkillSelector(), "Skills", Icons.IconManager.GlobalImageList, -1);
 			DockingManager.AddContentWithState(skillWindow, State.Floating);
 		}
 

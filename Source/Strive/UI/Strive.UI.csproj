@@ -186,6 +186,10 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Icons\Log.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "Icons\Mobile.bmp"
                     BuildAction = "EmbeddedResource"
                 />

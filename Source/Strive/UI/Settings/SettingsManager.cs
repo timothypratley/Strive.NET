@@ -80,6 +80,7 @@ namespace Strive.UI.Settings
 				window.Left = int.Parse(windowRow["windowleft"].ToString());
 
 				window.WindowState = (System.Windows.Forms.FormWindowState)Enum.Parse(typeof(System.Windows.Forms.FormWindowState), windowRow["windowstate"].ToString(), true);
+				window.Refresh();
 			}
 		}
 

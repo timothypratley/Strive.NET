@@ -40,14 +40,7 @@ namespace Strive.UI.Windows.ChildWindows
 			// Required for Windows Form Designer support
 			//
 			InitializeComponent();
-			ImageList i = new ImageList();
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Connection));
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StartedServer));
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StoppedServer));
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Player));
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Mobile));
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.MobilePossessed));
-			RecentServers.ImageList = i;
+			RecentServers.ImageList = Icons.IconManager.GlobalImageList;
 			loadRecentServers();
 			StriveWindowState = ConnectionWindowState.NotConnected;
 		}

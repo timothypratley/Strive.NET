@@ -11,8 +11,14 @@ namespace Strive.UI.Icons
 	/// </summary>
 	public class IconManager
 	{
+		private static ImageList _globalImageList;
 
-		public static Bitmap GetAsBitmap(AvailableIcons icon)
+		private static Bitmap GetAsBitmap(AvailableIcons icon)
+		{
+			return GetAsBitmap(icon.ToString());
+		}
+
+		private static Bitmap GetAsBitmap(string iconname)
 		{
 			// Get the assembly we are built into
 			Assembly myAssembly = 
@@ -20,7 +26,7 @@ namespace Strive.UI.Icons
  
 			// Get the resource stream containing the embedded resource
 			Stream imageStream = 
-				myAssembly.GetManifestResourceStream("Strive.UI.Icons." + icon.ToString() + ".bmp");
+				myAssembly.GetManifestResourceStream("Strive.UI.Icons." + iconname + ".bmp");
 
 			// Load the bitmap from the stream
 			Bitmap pics = new Bitmap(imageStream);
@@ -29,23 +35,43 @@ namespace Strive.UI.Icons
 			return pics;
 		}
 
-		public static ImageList GetAsImageList(AvailableIcons icon)
+		private static ImageList GetAsImageList(AvailableIcons icon)
 		{
 			ImageList returnList = new ImageList();
 			returnList.Images.Add(GetAsBitmap(icon));
 			return returnList;
 		}
 
+		public static ImageList GlobalImageList
+		{
+			get
+			{
+				if(_globalImageList == null)
+				{
+					_globalImageList = new ImageList();
+					System.Array values = Enum.GetValues(typeof(AvailableIcons));
+					foreach(object o in values)
+					{
+                        string name = Enum.GetName(typeof(AvailableIcons), o);
+						_globalImageList.Images.Add(GetAsBitmap(name));
+					}
+				}
+				return _globalImageList;
+			}
+
+		}
+
 	}
 
 	public enum AvailableIcons
 	{
-		Connection,
-		StartedServer,
-		StoppedServer,
-		Player,
-		Mobile,
-		MobilePossessed,
-		Refresh
+		Connection = 0,
+		StartedServer = 1,
+		StoppedServer = 2,
+		Player = 3,
+		Mobile = 4,
+		MobilePossessed = 5,
+		Refresh = 6,
+		Log = 7
 	}
 }
