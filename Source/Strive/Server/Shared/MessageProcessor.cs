@@ -103,6 +103,22 @@ namespace Strive.Server.Shared {
 			{
 				ProcessWhoList(client, message as Network.Messages.ToServer.GameCommand.WhoList);
 			}
+			else if ( message is Network.Messages.ToServer.GameCommand.Party.CreateParty )
+			{
+				ProcessCreateParty(client, message as Network.Messages.ToServer.GameCommand.Party.CreateParty);
+			}
+			else if ( message is Network.Messages.ToServer.GameCommand.Party.CreateParty ) {
+				ProcessLeaveParty(client, message as Network.Messages.ToServer.GameCommand.Party.LeaveParty);
+			}
+			else if ( message is Network.Messages.ToServer.GameCommand.Party.JoinParty ) {
+				ProcessJoinParty(client, message as Network.Messages.ToServer.GameCommand.Party.JoinParty);
+			}
+			else if ( message is Network.Messages.ToServer.GameCommand.Party.InviteToParty ) {
+				ProcessInviteToParty(client, message as Network.Messages.ToServer.GameCommand.Party.InviteToParty);
+			}
+			else if ( message is Network.Messages.ToServer.GameCommand.Party.TransferPartyLeadership ) {
+				ProcessTransferPartyLeadership(client, message as Network.Messages.ToServer.GameCommand.Party.TransferPartyLeadership);
+			}
 			else 
 			{
 				Log.WarningMessage(
@@ -255,6 +271,31 @@ namespace Strive.Server.Shared {
 				}
 			}
 			client.Send( new Strive.Network.Messages.ToClient.WhoList( (int[])MobileIDs.ToArray( typeof( int ) ), (string[])Names.ToArray( typeof( string ) ) ) );
+		}
+
+		void ProcessCreateParty(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.CreateParty message
+		) {
+		}
+
+		void ProcessTransferPartyLeadership(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.TransferPartyLeadership message
+		) {
+		}
+
+		void ProcessLeaveParty(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.LeaveParty message
+		) {
+		}
+
+		void ProcessJoinParty(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.JoinParty message
+		) {
+		}
+
+		void ProcessInviteToParty(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.InviteToParty message
+		) {
 		}
 
 		void ProcessSkillList(

@@ -28,6 +28,9 @@ namespace Strive.Server.Shared
 		// if fighting someone or something
 		public PhysicalObject target = null;
 
+		// if in a party
+		public Party party = null;
+
 		// currently invoking a skill
 		public Strive.Network.Messages.ToServer.GameCommand.UseSkill activatingSkill = null;
 		public DateTime activatingSkillTimestamp = Global.now;

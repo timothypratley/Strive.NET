@@ -194,10 +194,15 @@ namespace Strive.UI.Engine {
 			#region WhoList
 			else if ( m is Strive.Network.Messages.ToClient.WhoList ) {
 				Strive.Network.Messages.ToClient.WhoList wl = (Strive.Network.Messages.ToClient.WhoList)m;
-				Log.LogMessage( "WhoList recieved" );
 				OnWhoList( wl );
 			}
-				#endregion
+			#endregion
+			#region PartyInfo
+			else if ( m is Strive.Network.Messages.ToClient.PartyInfo ) {
+				Strive.Network.Messages.ToClient.PartyInfo pi = (Strive.Network.Messages.ToClient.PartyInfo)m;
+				Log.LogMessage( "PartyInfo received: " + pi );
+			}
+			#endregion
 			#region Beat
 			else if (m is Strive.Network.Messages.ToClient.Beat) {
 				Strive.Network.Messages.ToClient.Beat beat = (Strive.Network.Messages.ToClient.Beat)m;

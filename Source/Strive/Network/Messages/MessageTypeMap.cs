@@ -37,6 +37,7 @@ namespace Strive.Network.Messages {
 			ToClientSkillList,
 			ToClientWeather,
 			ToClientWhoList,
+			ToClientPartyInfo,
 			ToServerAttack,
 			ToServerChangeStance,
 			ToServerCommunication,
@@ -45,6 +46,12 @@ namespace Strive.Network.Messages {
 			ToServerSkillList,
 			ToServerUseSkill,
 			ToServerCancelSkill,
+			ToServerCreateParty,
+			ToServerLeaveParty,
+			ToServerJoinParty,
+			ToServerQueryParty,
+			ToServerTransferPartyLeadership,
+			ToServerInviteToParty,
 			ToServerWhoList,
 			ToServerEnterWorldAsMobile,
 			ToServerLogin,
@@ -80,6 +87,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientWeather, typeof( ToClient.Weather ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientWhoList, typeof( ToClient.WhoList ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientBeat, typeof( ToClient.Beat) );					
+			messageTypeFromID.Add( EnumMessageID.ToClientPartyInfo, typeof( ToClient.PartyInfo ) );
 
 			messageTypeFromID.Add( EnumMessageID.ToServerChangeStance, typeof( ToServer.GameCommand.ChangeStance ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerCommunication, typeof( ToServer.GameCommand.Communication ) );
@@ -87,6 +95,12 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToServerSkillList, typeof( ToServer.GameCommand.SkillList ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerUseSkill, typeof( ToServer.GameCommand.UseSkill ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerCancelSkill, typeof( ToServer.GameCommand.CancelSkill ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerCreateParty,typeof( ToServer.GameCommand.Party.CreateParty ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerLeaveParty,typeof( ToServer.GameCommand.Party.LeaveParty ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerJoinParty,typeof( ToServer.GameCommand.Party.JoinParty ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerTransferPartyLeadership,typeof( ToServer.GameCommand.Party.TransferPartyLeadership ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerInviteToParty,typeof( ToServer.GameCommand.Party.InviteToParty ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerQueryParty,typeof( ToServer.GameCommand.Party.QueryParty ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerWhoList, typeof( ToServer.GameCommand.WhoList ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerEnterWorldAsMobile, typeof( ToServer.EnterWorldAsMobile ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerLogin, typeof( ToServer.Login ) );

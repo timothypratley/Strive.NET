@@ -244,6 +244,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\PartyInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\Position.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -335,6 +340,36 @@
                 />
                 <File
                     RelPath = "ToServer\GameCommand\WhoList.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\GameCommand\Party\CreateParty.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\GameCommand\Party\InviteToParty.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\GameCommand\Party\JoinParty.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\GameCommand\Party\LeaveParty.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\GameCommand\Party\QueryParty.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\GameCommand\Party\TransferPartyLeadership.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
