@@ -125,7 +125,7 @@ namespace Strive.Server.Shared {
 				}
 				Log.LogMessage(
 					"User " + loginMessage.username + " logged in"
-					);
+				);
 				client.AuthenticatedUsername = loginMessage.username;
 				client.Protocol = loginMessage.protocol;
 			} else {

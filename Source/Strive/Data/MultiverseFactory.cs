@@ -30,7 +30,7 @@ namespace Strive.Data
 		private static void manualMerge(DataSet mergeTarget, DataSet mergeSource)
 		{
 			mergeTarget.EnforceConstraints = false;
-			mergeTarget.Merge(mergeSource);
+			mergeTarget.Merge(mergeSource, false);
 			mergeTarget.EnforceConstraints = true;
 		}
 
@@ -112,11 +112,14 @@ namespace Strive.Data
 			if ( connection == null ) return;
 			try 
 			{
+				Log.LogMessage( "refreshPlayerList begin" );
 				Schema updatedPlayerPartOfMultiverse = new Schema();
 				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
 				SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
 				playerFiller.Fill( updatedPlayerPartOfMultiverse.Player );
+				Log.LogMessage( "refreshPlayerList merge" );
 				manualMerge(multiverse, updatedPlayerPartOfMultiverse);
+				Log.LogMessage( "refreshPlayerList done" );
 			} 
 			catch ( SqlException e ) 
 			{
@@ -129,6 +132,7 @@ namespace Strive.Data
 			if ( connection == null ) return;
 			try 
 			{
+				Log.LogMessage( "refreshMultiverseForPlayer begining sql" );
 				Schema updatedPlayerPartOfMultiverse = new Schema();
 				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
 				SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
@@ -139,7 +143,9 @@ namespace Strive.Data
 				objectFiller.Fill(updatedPlayerPartOfMultiverse.ObjectInstance);
 				mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
 				possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
+				Log.LogMessage( "refreshMultiverseForPlayer begining merge" );
 				manualMerge(multiverse, updatedPlayerPartOfMultiverse);
+				Log.LogMessage( "refreshMultiverseForPlayer done" );
 			} 
 			catch ( SqlException e ) 
 			{
