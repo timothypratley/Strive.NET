@@ -22,8 +22,8 @@ namespace Strive.UI.WorldView {
 		public TerrainCollection TerrainPieces;
 		public PhysicalObjectInstance CurrentAvatar;
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
-		Vector3D cameraPosition;
-		Vector3D cameraRotation;
+		Vector3D cameraPosition = new Vector3D( 0, 0, 0 );
+		Vector3D cameraRotation = new Vector3D( 0, 0, 0 );
 
 		public World( IEngine engine ) {
 			RenderingEngine = engine;
@@ -39,16 +39,18 @@ namespace Strive.UI.WorldView {
 			RenderingScene.SetFog( 500.0f );
 		}
 
-		public void Add( PhysicalObject po ) {
+		public PhysicalObjectInstance Add( PhysicalObject po ) {
 			if ( po is Terrain ) {
 				Terrain t = (Terrain)po;
 				TerrainPieces.Add( new TerrainPiece( t ) );
+				return null;
 			} else {
 				PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 				RenderingScene.Models.Add( po.ObjectInstanceID, poi.model );
 				poi.model.Position = po.Position;
 				poi.model.Rotation = po.Rotation;
+				return poi;
 			}
 		}
 
@@ -75,7 +77,11 @@ namespace Strive.UI.WorldView {
 
 		public void Possess( int ObjectInstanceID ) {
 			Object o = physicalObjectInstances[ObjectInstanceID];
-			CurrentAvatar = o as PhysicalObjectInstance;
+			if ( o == null ) {
+				Log.ErrorMessage( "Failed to possess " + ObjectInstanceID );
+				return;
+			}
+			CurrentAvatar = (PhysicalObjectInstance)o;
 			if ( cameraMode == EnumCameraMode.FirstPerson ) {
 				CurrentAvatar.model.Hide();
 			} else {
@@ -86,7 +92,7 @@ namespace Strive.UI.WorldView {
 
 		public Vector3D CameraPosition {
 			set {
-				cameraPosition = value;
+				cameraPosition.Set( value );
 				RenderingScene.View.Position = cameraPosition;
 			}
 			get{ return cameraPosition; }
@@ -94,7 +100,7 @@ namespace Strive.UI.WorldView {
 
 		public Vector3D CameraRotation {
 			set {
-				cameraRotation = value;
+				cameraRotation.Set( value );
 				RenderingScene.View.Rotation = cameraRotation;
 			}
 			get{ return cameraRotation; }
@@ -105,7 +111,7 @@ namespace Strive.UI.WorldView {
 
 			if ( cameraMode == EnumCameraMode.FirstPerson ) {
 				Vector3D newPos = CurrentAvatar.model.Position.Clone();
-				newPos.Y += 10;
+				newPos.Y += CurrentAvatar.physicalObject.Height*2/5;
 				CameraPosition = newPos;
 				CameraRotation = CurrentAvatar.model.Rotation;
 			} else if ( cameraMode == EnumCameraMode.Chase ) {

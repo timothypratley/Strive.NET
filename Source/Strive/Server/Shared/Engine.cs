@@ -72,6 +72,11 @@ namespace Strive.Server.Shared {
 					System.Threading.Thread.Sleep( 100 );
 				}
 
+				// TODO: TJP imho we shouldn't have ticks at all,
+				// instead we should use actual time values.
+				// I don't think we need beats, but instead use
+				// the weather message to synchronize client/server time.
+
 				// calculate if message needs to be sent:
 				int CurrentTicks = Environment.TickCount;
 				int BeatIncrement = (CurrentTicks - CurrentMilliseconds) / MillisecondsPerBeat;

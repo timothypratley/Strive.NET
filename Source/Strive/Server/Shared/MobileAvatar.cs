@@ -20,10 +20,10 @@ namespace Strive.Server.Shared
 	{
 		public Client client = null;
 		public World world = null;
-		DateTime lastAttackUpdate = Global.now;
-		DateTime lastHealUpdate = Global.now;
-		DateTime lastBehaviourUpdate = Global.now;
-		DateTime lastMoveUpdate = Global.now;
+		public DateTime lastAttackUpdate = Global.now;
+		public DateTime lastHealUpdate = Global.now;
+		public DateTime lastBehaviourUpdate = Global.now;
+		public DateTime lastMoveUpdate = Global.now;
 		public PhysicalObject target = null;
 		public Strive.Network.Messages.ToServer.GameCommand.UseSkill activatingSkill = null;
 		public DateTime activatingSkillTimestamp = Global.now;
@@ -45,6 +45,11 @@ namespace Strive.Server.Shared
 			this.world = world;
 		}
 
+		public void SetMobileState( EnumMobileState ms ) {
+			MobileState = ms;
+			world.InformNearby( this, new Strive.Network.Messages.ToClient.MobileState( this ) );
+		}
+
 		public bool IsPlayer() {
 			return AreaID == 0;
 		}
@@ -62,6 +67,14 @@ namespace Strive.Server.Shared
 				CombatUpdate();
 			} else if ( !IsPlayer() ) {
 				BehaviourUpdate();
+			} else {
+				if (
+					Global.now - lastMoveUpdate > TimeSpan.FromSeconds( 1 )
+					&& ( MobileState == EnumMobileState.Running
+					|| MobileState == EnumMobileState.Walking)
+				) {
+					SetMobileState( EnumMobileState.Standing );
+				}
 			}
 			HealUpdate();
 		}
@@ -101,17 +114,11 @@ namespace Strive.Server.Shared
 				if ( MobileState > EnumMobileState.Incapacitated ) {
 					int rand = Global.random.Next( 5 ) - 2;
 					if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
-						MobileState--;
+						SetMobileState( MobileState-1 );
 						//Log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState + "." );
-						world.InformNearby( this,
-							new Strive.Network.Messages.ToClient.MobileState( this )
-						);
 					} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
-						MobileState++;
+						SetMobileState( MobileState+1 );
 						//Log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState + "." );
-						world.InformNearby( this,
-							new Strive.Network.Messages.ToClient.MobileState( this )
-						);
 					}
 				}
 			}
@@ -120,14 +127,8 @@ namespace Strive.Server.Shared
 		public void HealUpdate() {
 			if ( Global.now - lastHealUpdate > TimeSpan.FromSeconds( 1 ) ) {
 				lastHealUpdate = Global.now;
-				if ( MobileState == EnumMobileState.Dead ) {
-					// respawn!
-				} else if ( MobileState == EnumMobileState.Incapacitated ) {
+				if ( MobileState == EnumMobileState.Incapacitated ) {
 					HitPoints -= 0.5F;
-					if ( HitPoints < 100.0F ) {
-						// TODO more handling
-						MobileState = EnumMobileState.Dead;
-					}
 				} else if ( MobileState == EnumMobileState.Sleeping ) {
 					HitPoints += Constitution/10.0F;
 					if ( HitPoints > MaxHitPoints ) {
@@ -140,6 +141,9 @@ namespace Strive.Server.Shared
 					}
 				}
 			}
+
+			// we might have died, or recovered
+			UpdateState();
 		}
 
 		public void Attack( int ObjectInstanceID ) {
@@ -294,38 +298,37 @@ namespace Strive.Server.Shared
 		public void UpdateState() {
 			if ( MobileState >= EnumMobileState.Sleeping ) {
 				if ( HitPoints <= 0 ) {
-					MobileState = EnumMobileState.Incapacitated;
 					HitPoints = 0;
-					world.InformNearby(
-						this,
-						new Strive.Network.Messages.ToClient.MobileState( this )
-						);
+					SetMobileState( EnumMobileState.Incapacitated );
 				}
-			} else if ( MobileState <= EnumMobileState.Incapacitated ) {
+			} else if ( MobileState == EnumMobileState.Incapacitated ) {
 				if ( HitPoints <= -50 ) {
 					Death();
+				} else if ( HitPoints > 0 ) {
+					SetMobileState( EnumMobileState.Resting );
 				}
 			}
 		}
 
 		public void Death() {
-			this.MobileState = EnumMobileState.Dead;
-			world.InformNearby(
-				this,
-				new Strive.Network.Messages.ToClient.MobileState( this )
-			);
-			// EEERRR should load a corpse
+			// RIP
+			SetMobileState( EnumMobileState.Dead );
 
 			if ( IsPC() ) {
 				// respawn!
-				this.HitPoints = this.MaxHitPoints;
-				this.MobileState = EnumMobileState.Resting;
+				HitPoints = MaxHitPoints;
 
-				// EEERRR where should we respawn?
-				this.Position = new Vector3D( 0.0f, 0.0f, 0.0f );
-				this.Rotation = new Vector3D( 0.0f, 0.0f, 0.0f );
+				// TODO: where should we respawn?
+				Position.Set( 0, 0, 0 );
+				Rotation.Set( 0, 0, 0 );
+				world.Relocate( this, Position, Rotation );
+				
+				// set resting in new location to let everyone know
+				SetMobileState( EnumMobileState.Resting );
 			} else {
-				world.Remove( this );
+				// TODO: should probably stay around as a corpse
+				// world.Remove( this );
+				// but we need some decay/repop code
 			}
 		}
 
@@ -336,7 +339,5 @@ namespace Strive.Server.Shared
 				return false;
 			}
 		}
-
-
 	}
 }

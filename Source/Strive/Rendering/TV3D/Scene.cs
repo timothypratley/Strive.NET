@@ -57,6 +57,7 @@ namespace Strive.Rendering.TV3D
 		}
 
 		public void SetSky( string name, ITexture texture ) {
+			Engine.Atmosphere.SkyBox_SetDistance( 1000 );
 			Engine.Atmosphere.SkyBox_SetTexture( texture.ID,texture.ID,texture.ID,texture.ID,texture.ID,texture.ID );
 			Engine.Atmosphere.SkyBox_Enable(true, true);
 		}
@@ -110,6 +111,7 @@ namespace Strive.Rendering.TV3D
 			// hardcoded clouds
 			// New : for fun, we will also add some clouds, just over the water
 			// to give a creepy fog effect. Let's start by loading the clouds textures.
+			// TODO: get the clouds from resourcemanager instead
 			Engine.TexFactory.LoadTexture(@"C:\TV3DSDK\Media\cloud1.dds", "Clouds",-1 ,-1 , CONST_TV_COLORKEY.TV_COLORKEY_BLACK,true,true);
 
 			// Then, set the land's clouds.

@@ -10,13 +10,11 @@ using Strive.Resources;
 using Strive.UI.WorldView;
 
 
-namespace Strive.UI.Engine 
-{
+namespace Strive.UI.Engine {
 	/// <summary>
 	/// Summary description for MessageProcessor.
 	/// </summary>
-	public class MessageProcessor 
-	{
+	public class MessageProcessor {
 		public delegate void CanPossessHandler( Strive.Network.Messages.ToClient.CanPossess message );
 		public delegate void SkillListHandler( Strive.Network.Messages.ToClient.SkillList message );
 		public delegate void WhoListHandler( Strive.Network.Messages.ToClient.WhoList message );
@@ -27,85 +25,69 @@ namespace Strive.UI.Engine
 		public event WhoListHandler OnWhoList;
 		public event ChatHandler OnChat;
 
-		public MessageProcessor() 
-		{
+		public MessageProcessor() {
 		}
 
-		public void Process( IMessage m ) 
-		{
+		public void Process( IMessage m ) {
 			#region Communication Message
-			if ( m is Strive.Network.Messages.ToClient.Communication ) 
-			{
+			if ( m is Strive.Network.Messages.ToClient.Communication ) {
 				Strive.Network.Messages.ToClient.Communication c = (Strive.Network.Messages.ToClient.Communication)m;
-				if ( c.communicationType == CommunicationType.Chat ) 
-				{
+				if ( c.communicationType == CommunicationType.Chat ) {
 					OnChat(c);
 				} 
-				else 
-				{
+				else {
 					Log.ErrorMessage( "Bad communicationType" );
 				}
 			}
 					#endregion
 			#region AddPhysicalObject Message
-			else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject ) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject ) {
 				PhysicalObject po = Strive.Network.Messages.ToClient.AddPhysicalObject.GetPhysicalObject( (Strive.Network.Messages.ToClient.AddPhysicalObject)m );
-				PhysicalObjectInstance existing = (PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[po.ObjectInstanceID];
-				if ( existing != null ) 
-				{
+				PhysicalObjectInstance poi = (PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[po.ObjectInstanceID];
+				if ( poi != null ) {
 					// replace an existing physical object
-					existing.physicalObject = po;
+					poi.physicalObject = po;
 				} 
-				else 
-				{
+				else {
 					// add a new one
-					Game.CurrentWorld.Add( po );
+					poi = Game.CurrentWorld.Add( po );
 				}
-				if ( po.ObjectInstanceID == Game.CurrentPlayerID ) 
-				{
+				if ( po.ObjectInstanceID == Game.CurrentPlayerID ) {
 					// current player gets followed by camera etc.
 					Game.CurrentWorld.Possess( Game.CurrentPlayerID );
 					Log.LogMessage( "Initial position is " + po.Position );
 					Log.LogMessage( "Initial heading is " + Helper.GetHeadingFromRotation(po.Rotation) );
 				} 
-				else 
-				{
+				else {
 					Log.LogMessage( "Added object " + po.ObjectInstanceID + " with model " + po.ModelID + " at " + po.Position );
 				}
-				if ( m is Strive.Network.Messages.ToClient.AddMobile ) 
-				{
-					// todo: should set the animation sequence/play here
+				if ( poi != null && po is Mobile ) {
+					SetMobileState( ((Mobile)po).MobileState, (IActor)poi.model );
 				}
 			}
 					#endregion
 			#region Position Message
 
-			else if( m is Strive.Network.Messages.ToClient.Position) 
-			{
+			else if( m is Strive.Network.Messages.ToClient.Position) {
 				Strive.Network.Messages.ToClient.Position p = (Strive.Network.Messages.ToClient.Position)m;
 				PhysicalObjectInstance poi = Game.CurrentWorld.Find( p.instance_id );
-				if ( poi == null ) 
-				{
+				if ( poi == null ) {
 					Log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
 					return;
 				}
 
 				poi.model.Position = p.position;
 				poi.model.Rotation = p.rotation;
-				if ( poi == Game.CurrentWorld.CurrentAvatar ) 
-				{
+				if ( poi == Game.CurrentWorld.CurrentAvatar ) {
 					Game.CurrentWorld.RepositionCamera();
 				}
 				//				Log.LogMessage( "Position message applied to " + p.instance_id + " rotation " + Rotation );
 			}
 			#endregion
 			#region CombatReport Message
-			else if ( m is Strive.Network.Messages.ToClient.CombatReport ) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.CombatReport ) {
 				Strive.Network.Messages.ToClient.CombatReport cr = m as Strive.Network.Messages.ToClient.CombatReport;
-				switch ( cr.combat_event ) 
-				{
+				switch ( cr.combat_event ) {
 					case EnumCombatEvent.Attacks:
 						Log.LogMessage(
 							cr.attackerObjectInstanceID.ToString() + " attacks " + cr.targetObjectInstanceID.ToString() + "!" );
@@ -138,85 +120,51 @@ namespace Strive.UI.Engine
 			}
 				#endregion
 			#region DropPhysicalObject Message
-			else if ( m is Strive.Network.Messages.ToClient.DropPhysicalObject) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.DropPhysicalObject) {
 				Strive.Network.Messages.ToClient.DropPhysicalObject dpo = (Strive.Network.Messages.ToClient.DropPhysicalObject)m;
 				Game.CurrentWorld.Remove( dpo.instance_id );
 				Log.LogMessage( "Removed "+ dpo.instance_id.ToString() );
 			}
 				#endregion
 			#region MobileState
-			else if ( m is Strive.Network.Messages.ToClient.MobileState) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.MobileState) {
 				Strive.Network.Messages.ToClient.MobileState ms = (Strive.Network.Messages.ToClient.MobileState)m;
 				//				Log.LogMessage( "Mobile " + ms.ObjectInstanceID + " is " + ms.State );
 
 				PhysicalObjectInstance poi = Game.CurrentWorld.Find( ms.ObjectInstanceID );
 				
 				#region 1.1.1 Check that the model exists
-				if ( poi == Game.CurrentWorld.CurrentAvatar ) 
-				{
-					// ignoring self positions for now
-					return;
-				}
-				if ( poi == null || !(poi.model is IActor ) ) 
-				{
-					Log.ErrorMessage( "Model for " + ms.ObjectInstanceID + " has not been loaded" );
+				if ( poi == null || poi.model == null || !(poi.model is IActor ) ) {
+					Log.ErrorMessage( "Actor for " + ms.ObjectInstanceID + " has not been loaded" );
 					return;
 				}
 				#endregion
 
 				IActor actor = (IActor)poi.model;
-
-				switch( ms.State ) {
-					case EnumMobileState.Dead:
-						actor.AnimationSequence = "deadback"; break;
-					case EnumMobileState.Incapacitated:
-						actor.AnimationSequence = "deadback"; break;
-					case EnumMobileState.Sleeping:
-						actor.AnimationSequence = "deadstomach"; break;
-					case EnumMobileState.Resting:
-						actor.AnimationSequence = "deadsitting"; break;
-					case EnumMobileState.Standing:
-						actor.AnimationSequence = "idle"; break;
-					case EnumMobileState.Walking:
-						actor.AnimationSequence = "walk"; break;
-					case EnumMobileState.Running:
-						actor.AnimationSequence = "run"; break;
-					case EnumMobileState.Fighting:
-						actor.AnimationSequence = "ref_shoot_crowbar"; break;
-					default:
-						Log.ErrorMessage( "Unknown mobile state " + ms.State );
-						break;
-				}
-				actor.playAnimation();
+				SetMobileState( ms.State, actor );
 			}
 				#endregion
 			#region CurrentHitpoints
-			else if ( m is Strive.Network.Messages.ToClient.CurrentHitpoints) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.CurrentHitpoints) {
 				Strive.Network.Messages.ToClient.CurrentHitpoints chp = (Strive.Network.Messages.ToClient.CurrentHitpoints)m;
 				Log.LogMessage( "You now have " + chp.HitPoints );
 			}
 				#endregion
 			#region CanPossess
-			else if ( m is Strive.Network.Messages.ToClient.CanPossess ) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.CanPossess ) {
 				Strive.Network.Messages.ToClient.CanPossess cp = (Strive.Network.Messages.ToClient.CanPossess)m;
 				OnCanPossess( cp );
 			}
 				#endregion
 			#region DropAll
-			else if ( m is Strive.Network.Messages.ToClient.DropAll ) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.DropAll ) {
 				Strive.Network.Messages.ToClient.DropAll da = (Strive.Network.Messages.ToClient.DropAll)m;
 				Log.LogMessage( "DropAll recieved" );
 				Game.CurrentWorld.Clear();
 			}
 				#endregion
 			#region Weather
-			else if ( m is Strive.Network.Messages.ToClient.Weather ) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.Weather ) {
 				Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
 				//Log.LogMessage( "Weather update recieved" );
 				ITexture t = ResourceManager.LoadTexture(w.SkyTextureID);
@@ -224,34 +172,55 @@ namespace Strive.UI.Engine
 			}
 				#endregion
 			#region SkillList
-			else if ( m is Strive.Network.Messages.ToClient.SkillList ) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.SkillList ) {
 				Strive.Network.Messages.ToClient.SkillList sl = (Strive.Network.Messages.ToClient.SkillList)m;
 				Log.LogMessage( "SkillList recieved" );
 				OnSkillList( sl );
 			}
 				#endregion
 			#region WhoList
-			else if ( m is Strive.Network.Messages.ToClient.WhoList ) 
-			{
+			else if ( m is Strive.Network.Messages.ToClient.WhoList ) {
 				Strive.Network.Messages.ToClient.WhoList wl = (Strive.Network.Messages.ToClient.WhoList)m;
 				Log.LogMessage( "WhoList recieved" );
 				OnWhoList( wl );
 			}
 				#endregion
 			#region Beat
-			else if (m is Strive.Network.Messages.ToClient.Beat)
-			{
+			else if (m is Strive.Network.Messages.ToClient.Beat) {
 				Strive.Network.Messages.ToClient.Beat beat = (Strive.Network.Messages.ToClient.Beat)m;
 				Log.LogMessage("Beat [" + beat.BeatNumber.ToString() + "].");
 			}
 				#endregion
 			#region Default
-			else 
-			{
+			else {
 				Log.ErrorMessage( "Unknown message of type " + m.GetType() );
 			}
 				#endregion
+		}
+
+		void SetMobileState( EnumMobileState ms, IActor actor ) {
+			switch( ms ) {
+				case EnumMobileState.Dead:
+					actor.AnimationSequence = "deadback"; break;
+				case EnumMobileState.Incapacitated:
+					actor.AnimationSequence = "deadback"; break;
+				case EnumMobileState.Sleeping:
+					actor.AnimationSequence = "deadstomach"; break;
+				case EnumMobileState.Resting:
+					actor.AnimationSequence = "deadsitting"; break;
+				case EnumMobileState.Standing:
+					actor.AnimationSequence = "idle"; break;
+				case EnumMobileState.Walking:
+					actor.AnimationSequence = "walk"; break;
+				case EnumMobileState.Running:
+					actor.AnimationSequence = "run"; break;
+				case EnumMobileState.Fighting:
+					actor.AnimationSequence = "ref_shoot_crowbar"; break;
+				default:
+					Log.ErrorMessage( "Unknown mobile state " + ms );
+					break;
+			}
+			actor.playAnimation();
 		}
 	}
 

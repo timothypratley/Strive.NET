@@ -188,19 +188,29 @@ namespace Strive.Server.Shared {
 		void ProcessPositionMessage(
 			Client client, Strive.Network.Messages.ToServer.Position message
 		) {
+			if ( client.Avatar == null ) {
+				Log.WarningMessage( "Position message from client " + client.EndPoint + " who has no avatar." );
+				return;
+			}
+			MobileAvatar ma = (MobileAvatar)client.Avatar;
+
+			// don't go to running for pure heading changes
+			if ( message.position != client.Avatar.Position ) {
+				ma.lastMoveUpdate = Global.now;
+				if ( ma.MobileState != EnumMobileState.Running ) {
+					ma.SetMobileState( EnumMobileState.Running );
+				}
+			}
 			world.Relocate( client.Avatar, message.position, message.rotation );
 		}
 
 		void ProcessChatMessage(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Communication message
 		) {
-			foreach ( Client c in listener.Clients.Values ) {
-				if (  c == client ) continue;
-				c.Send(
-					new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )
-				);
-				//Log.LogMessage( "Sent communication message to " + c.AuthenticatedUsername );
-			}
+			world.NotifyMobiles(
+				new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )
+			);
+			//Log.LogMessage( "Sent communication message" );
 		}
 
 		void ProcessAttackMessage(
