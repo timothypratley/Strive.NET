@@ -27,5 +27,12 @@ namespace Strive.Common
 			CTRL_LOGOFF_EVENT = 5,
 			CTRL_SHUTDOWN_EVENT
 		}
+
+		[DllImport("Kernel32.dll")]
+		public static extern int QueryPerformanceFrequency( out long lpFrequency );
+
+		[DllImport("Kernel32.dll")]
+		public static extern int QueryPerformanceCounter( out long lpPerformanceCount );
+
 	}
 }
