@@ -4,10 +4,6 @@
         ProductVersion = "7.0.9466"
         SchemaVersion = "1.0"
         ProjectGuid = "{B3A3D529-39D6-4245-9404-6943098C1C58}"
-        SccProjectName = "SAK"
-        SccLocalPath = "SAK"
-        SccAuxPath = "SAK"
-        SccProvider = "SAK"
     >
         <Build>
             <Settings
