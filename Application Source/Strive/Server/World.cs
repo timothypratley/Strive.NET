@@ -13,10 +13,10 @@ using Strive.Data;
 
 namespace Strive.Server {
 	public class World {
-		double highX = 100000.0;
-		double highZ = 100000.0;
-		double lowX = -100000.0;
-		double lowZ = -100000.0;
+		double highX = 1000.0;
+		double highZ = 1000.0;
+		double lowX = -1000.0;
+		double lowZ = -1000.0;
 		int squaresInX = 1;
 		int squaresInZ = 1;
 		
@@ -30,7 +30,9 @@ namespace Strive.Server {
 
 		public World() {
 			System.Console.WriteLine( "Loading world..." );
+			System.Console.WriteLine( "starting... " + DateTime.Now );
 			multiverse = Strive.Data.MultiverseFactory.getMultiverse();
+			System.Console.WriteLine( "starting... " + DateTime.Now );
 
 			// find highX and lowX for our world dimensions
 			highX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;

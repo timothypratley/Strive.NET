@@ -16,7 +16,7 @@ namespace Strive.Server
 	/// </summary>
 	public class Square
 	{
-		public static int squareSize = 10000;
+		public static int squareSize = 100;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
 		ArrayList[,] heightMap = new ArrayList[Square.squareSize,Square.squareSize];
@@ -57,6 +57,7 @@ namespace Strive.Server
 					float [] occupiableSpace = new float[2];
 					occupiableSpace[0] = 0.0f;
 					occupiableSpace[1] = 100.0f;
+					heightMap[i,j] = new ArrayList();
 					heightMap[i,j].Add( occupiableSpace );
 				}
 			}
