@@ -9,11 +9,11 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class MobileState : IMessage {
 		public int ObjectInstanceID;
-		public int State;
+		public EnumMobileState State;
 		public MobileState(){}
 		public MobileState( Mobile mob ) {
 			this.ObjectInstanceID = mob.ObjectInstanceID;
-			this.State = (int)mob.MobileState;
+			this.State = mob.MobileState;
 		}
 	}
 }

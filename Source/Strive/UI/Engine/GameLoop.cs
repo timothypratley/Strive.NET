@@ -204,8 +204,13 @@ namespace Strive.UI.Engine
 		}
 
 		void Render() {
-			_scene.Render();
-			_scene.Display();
+			try {
+				_scene.Render();
+				_scene.Display();
+			} catch ( Exception e ) {
+				Log.ErrorMessage( e );
+				Stop();
+			}
 		}
 	}
 }

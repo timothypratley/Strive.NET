@@ -147,29 +147,43 @@ namespace Strive.Rendering
 			{
 				throw new RenderingException("Call to 'Clear()' failed", e);
 			}
+			try {
+				Interop._instance.Pipeline.Renderer_Render();
+			}
+			catch(Exception e) {
+				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
+			}
+			R3DVector3D namePos = new R3DVector3D();
+			R3DVector2D nameLoc = new R3DVector2D();
+			foreach ( Model m in Models.Values ) {
+				if ( m.ShowLabel ) {
+					namePos.x = m.Position.X;
+					namePos.y = m.Position.Y+5;
+					namePos.z = m.Position.Z;
+					nameLoc = Interop._instance.Cameras.Camera_ProjectPoint( ref namePos ) ;
+					// nameDist = namePos - camPos; -> set font size
+					Interop._instance.Interface5D.Primitive_DrawText( ref nameLoc, m.Key );
+				}
+			}
+
 //#if DEBUG
 			R3DVector2D zero = new R3DVector2D();
 			zero.x = 20;
 			zero.y = 20;
-			R3DColor black = new R3DColor();
-			black.b = 255;
-			black.r = 255;
-			black.g = 255;
-			Interop._instance.Interface5D.Primitive_SetDrawColor(ref black);
+
+			//R3DColor black = new R3DColor();
+			//black.b = 255;
+			//black.r = 255;
+			//black.g = 255;
+			//EEERRR setting the draw color fails to write text in 89
+			//Interop._instance.Interface5D.Primitive_SetDrawColor(ref black);
 	        Interop._instance.Interface5D.Primitive_DrawText(ref zero, "Fp/S: " + Interop._instance.PowerMonitor.lGetFramesPerSecond().ToString() +
                                                             ", Vertices: " + Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame().ToString() + 
                                                             ", Verts/Sec:  " + (Interop._instance.PowerMonitor.lGetFramesPerSecond() * Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame()).ToString() );
 //			Interop._instance.Interface2D.Primitive_DrawText(0,0, (Interop._instance.PowerMonitor.lGetFramesPerSecond()).ToString());
 //#endif
 
-			try
-			{
-				Interop._instance.Pipeline.Renderer_Render();
-			}
-			catch(Exception e)
-			{
-				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
-			}
+			/*
 			try
 			{
 				Interop._instance.Pipeline.Renderer_Display();
@@ -178,6 +192,7 @@ namespace Strive.Rendering
 			{
 				throw new RenderingException("Call to 'Display()' failed with '" + e.ToString() + "'", e);
 			}
+			*/
 		}
 
 		/// <summary>

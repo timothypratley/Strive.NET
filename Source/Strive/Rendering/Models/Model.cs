@@ -4,8 +4,7 @@ using Strive.Math3D;
 using R3D089_VBasic;
 using Strive.Rendering;
 
-namespace Strive.Rendering.Models
-{
+namespace Strive.Rendering.Models {
 	/// <summary>
 	/// Represents a wireframe with textures
 	/// </summary>
@@ -14,6 +13,7 @@ namespace Strive.Rendering.Models
 
 		#region "Fields"
 		public float BoundingSphereRadiusSquared;
+		public bool ShowLabel = false;
 
 		private ModelFormat _format = ModelFormat.Unspecified;
 		private string _key;
@@ -81,25 +81,25 @@ namespace Strive.Rendering.Models
 				"");
 			return created;
 
-//			Model created = new Model();
-//			created._format = ModelFormat.Scape;
-//			created._key = name;
-//			// TODO TIM: Fix
-//			// P.S.  Why does this method exist anyway?
-//			R3DVector2D size = new R3DVector2D();
-//			size.x = 128;
-//			size.y = 128;
-//			created._id = Interop._instance.PolyVox.Scape_Create(name, ref size, 1);
-//			//created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 500, false, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
-//			R3DVector3D scale = new R3DVector3D();
-//			scale.x = 0.390625F;
-//			scale.y = 0.390625F;
-//			scale.z = 0.390625F;
-//			//Interop._instance.PolyVox.Scape_ApplyHeightMap(
-//			//Interop._instance.PolyVox.Scape_SetScale( ref scale );
-//			// TODO TIM: Fix
-//			Interop._instance.PolyVox.Scape_SetTexture( 0, texture);
-//			return created;
+			//			Model created = new Model();
+			//			created._format = ModelFormat.Scape;
+			//			created._key = name;
+			//			// TODO TIM: Fix
+			//			// P.S.  Why does this method exist anyway?
+			//			R3DVector2D size = new R3DVector2D();
+			//			size.x = 128;
+			//			size.y = 128;
+			//			created._id = Interop._instance.PolyVox.Scape_Create(name, ref size, 1);
+			//			//created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 500, false, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
+			//			R3DVector3D scale = new R3DVector3D();
+			//			scale.x = 0.390625F;
+			//			scale.y = 0.390625F;
+			//			scale.z = 0.390625F;
+			//			//Interop._instance.PolyVox.Scape_ApplyHeightMap(
+			//			//Interop._instance.PolyVox.Scape_SetScale( ref scale );
+			//			// TODO TIM: Fix
+			//			Interop._instance.PolyVox.Scape_SetTexture( 0, texture);
+			//			return created;
 		}
 
 		/// <summary>
@@ -111,8 +111,7 @@ namespace Strive.Rendering.Models
 		/// <returns>A reference to the loaded Model</returns>
 		public static Model Load(string key, string path, ModelFormat format) {
 			
-			if(!System.IO.File.Exists(path))
-			{
+			if(!System.IO.File.Exists(path)) {
 				throw new System.IO.FileNotFoundException("Could not load model '" + path + "'", path);
 			}
 			
@@ -127,6 +126,7 @@ namespace Strive.Rendering.Models
 			loadedModel._key = key;
 			// todo: fix bounding radius
 			loadedModel.BoundingSphereRadiusSquared = 100;
+			loadedModel.ShowLabel = true;
 
 			// 2.0 Create appropriate model in interop layer
 			switch(format) {
@@ -141,10 +141,8 @@ namespace Strive.Rendering.Models
 					}
 					break;
 				}
-				case ModelFormat.Mesh:
-				{
-					try
-					{
+				case ModelFormat.Mesh: {
+					try {
 						// Changed for 8088c
 						R3D_3DStudio _3dsfile = new R3D_3DStudioClass();
 						_3dsfile.File_Open(path);
