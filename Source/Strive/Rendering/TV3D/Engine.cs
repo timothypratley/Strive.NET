@@ -108,8 +108,7 @@ namespace Strive.Rendering.TV3D {
 				throw new EngineInitialisationException(e);
 			}
 			TV3DEngine.SetAngleSystem( CONST_TV_ANGLE.TV_ANGLE_DEGREE );
-			// TODO:
-			//TV3DEngine.SetVSync( true );
+			TV3DEngine.SetVSync( true );
 			TV3DEngine.DisplayFPS = true;
 			TV3DScene = new TVScene();
 			TV3DScene.SetDepthBuffer( CONST_TV_DEPTHBUFFER.TV_WBUFFER );

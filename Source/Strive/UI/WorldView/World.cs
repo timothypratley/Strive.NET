@@ -76,7 +76,8 @@ namespace Strive.UI.WorldView {
 				PhysicalObjectInstance poi;
 				try {
 					poi = new PhysicalObjectInstance( po, Resources );
-				} catch ( Exception ) {
+				} catch ( Exception e ) {
+					Log.ErrorMessage( e );
 					return null;
 				}
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
@@ -179,7 +180,7 @@ namespace Strive.UI.WorldView {
 				// and be visible from further away.
 				// For this to be efficient, you would probabbly want big objects stored in different memory structures.
 
-				if ( dist > Constants.objectScopeRadius ) {
+				if ( dist > Constants.objectScopeRadius*2 ) {
 					// TODO: make this area the same as that used by the server,
 					// ie: square delimited
 					Remove( poi.physicalObject.ObjectInstanceID );

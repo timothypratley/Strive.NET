@@ -319,6 +319,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "Windows\ChildWindows\Admin.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\Admin.resx"
+                    DependentUpon = "Admin.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "Windows\ChildWindows\Chat.cs"
                     SubType = "Form"
                     BuildAction = "Compile"

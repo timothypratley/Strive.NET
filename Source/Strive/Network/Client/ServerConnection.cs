@@ -346,6 +346,10 @@ namespace Strive.Network.Client {
 			Send( new Pong( SequenceNumber ) );
 		}
 
+		public void ReloadWorld() {
+			Send( new ReloadWorld() );
+		}
+
 		#endregion
 
 	}

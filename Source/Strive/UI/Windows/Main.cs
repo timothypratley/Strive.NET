@@ -45,6 +45,7 @@ namespace Strive.UI.Windows
 
 		public Channels.ChannelManager CurrentChannelManager;
 		private Crownwood.Magic.Menus.MenuCommand ViewOptions;
+		private Crownwood.Magic.Menus.MenuCommand ViewAdmin;
 
 		private System.ComponentModel.IContainer components = null;
 
@@ -120,6 +121,7 @@ namespace Strive.UI.Windows
 			this.AreaInformation = new System.Windows.Forms.StatusBarPanel();
 			this.Information = new System.Windows.Forms.StatusBarPanel();
 			this.Coords = new System.Windows.Forms.StatusBarPanel();
+			this.ViewAdmin = new Crownwood.Magic.Menus.MenuCommand();
 			this.GameTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.AreaInformation)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Information)).BeginInit();
@@ -133,7 +135,7 @@ namespace Strive.UI.Windows
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(888, 952);
+			this.MainTabs.Size = new System.Drawing.Size(888, 947);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -146,7 +148,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.Add(this.RenderTarget);
 			this.GameTab.Location = new System.Drawing.Point(0, 0);
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(888, 927);
+			this.GameTab.Size = new System.Drawing.Size(888, 922);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -157,7 +159,7 @@ namespace Strive.UI.Windows
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.RenderTarget.Location = new System.Drawing.Point(0, 0);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(800, 728);
+			this.RenderTarget.Size = new System.Drawing.Size(800, 708);
 			this.RenderTarget.TabIndex = 1;
 			// 
 			// MainMenu
@@ -212,7 +214,8 @@ namespace Strive.UI.Windows
 																							this.ViewFirstPerson,
 																							this.ViewChaseCam,
 																							this.ViewMiniMap,
-																							this.ViewOptions});
+																							this.ViewOptions,
+																							this.ViewAdmin});
 			this.ViewMenu.Text = "&View";
 			// 
 			// ViewLog
@@ -277,14 +280,14 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 979);
+			this.MainStatus.Location = new System.Drawing.Point(2, 974);
 			this.MainStatus.Name = "MainStatus";
 			this.MainStatus.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
 																						  this.AreaInformation,
 																						  this.Information,
 																						  this.Coords});
 			this.MainStatus.ShowPanels = true;
-			this.MainStatus.Size = new System.Drawing.Size(888, 30);
+			this.MainStatus.Size = new System.Drawing.Size(888, 33);
 			this.MainStatus.TabIndex = 1;
 			// 
 			// AreaInformation
@@ -304,10 +307,16 @@ namespace Strive.UI.Windows
 			this.Coords.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
 			this.Coords.Width = 10;
 			// 
+			// ViewAdmin
+			// 
+			this.ViewAdmin.Description = "ViewAdmin";
+			this.ViewAdmin.Text = "ViewAdmin";
+			this.ViewAdmin.Click += new System.EventHandler(this.ViewAdmin_Click);
+			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(892, 1011);
+			this.ClientSize = new System.Drawing.Size(892, 1009);
 			this.Controls.Add(this.MainTabs);
 			this.Controls.Add(this.MainMenu);
 			this.Controls.Add(this.MainStatus);
@@ -592,6 +601,11 @@ namespace Strive.UI.Windows
 		{
 			Strive.Rendering.TV3D.Windows.Options o = new Strive.Rendering.TV3D.Windows.Options();
 			o.ShowDialog(this);
+		}
+
+		private void ViewAdmin_Click(object sender, System.EventArgs e) {
+			Content adminWindow = DockingManager.Contents.Add(new ChildWindows.Admin(), "Admin", Icons.IconManager.GlobalImageList, -1);
+			DockingManager.AddContentWithState(adminWindow, State.Floating);
 		}
 
 	}

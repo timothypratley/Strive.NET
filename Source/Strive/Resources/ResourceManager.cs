@@ -77,7 +77,9 @@ namespace Strive.Resources
 			// that are rarely duplicated. I propose we would keep track
 			// of when a model was last duplicated or created, and sort
 			// that list, removing oldest first until we reach some condition
-			return m.Duplicate( InstanceID.ToString(), height );
+			IModel dup = m.Duplicate( InstanceID.ToString(), height );
+			dup.Visible = true;
+			return dup;
 		}
 
 		IActor LoadActor( int InstanceID, int ModelID, float height ) {
