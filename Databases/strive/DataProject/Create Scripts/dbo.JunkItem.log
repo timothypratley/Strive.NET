@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[JunkItem]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.JunkItem.dat
+Rows copied: 3
+Bulk Copy duration: 0 minutes and 0.60 seconds

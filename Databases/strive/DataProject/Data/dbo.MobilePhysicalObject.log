@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[MobilePhysicalObject]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.MobilePhysicalObject.dat
+Rows copied: 4
+Bulk Copy duration: 0 minutes and 0.10 seconds

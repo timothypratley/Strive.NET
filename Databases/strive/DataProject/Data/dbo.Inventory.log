@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[Inventory]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.Inventory.dat
+Rows copied: 5
+Bulk Copy duration: 0 minutes and 0.0 seconds

@@ -1,0 +1,417 @@
+
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Equipable' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Junk' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Mobile' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.PhysicalObjectInstance' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Quaffable' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.QuaffableItems' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Terrain' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Wieldable' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateEquipable' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateJunk' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMirror' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobile' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobileMirror' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateQuaffable' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateReadable' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateWieldable' not being transfered is dependent on the table 'dbo.Area' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Wieldable' not being transfered is dependent on the table 'dbo.EnumDamageType' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateWieldable' not being transfered is dependent on the table 'dbo.EnumDamageType' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Quaffable' not being transfered is dependent on the table 'dbo.EnumLiquidType' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.QuaffableItems' not being transfered is dependent on the table 'dbo.EnumLiquidType' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateQuaffable' not being transfered is dependent on the table 'dbo.EnumLiquidType' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Mobile' not being transfered is dependent on the table 'dbo.EnumSize' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobile' not being transfered is dependent on the table 'dbo.EnumSize' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Terrain' not being transfered is dependent on the table 'dbo.EnumTerrainType' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'dbo.EnumTerrainType' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Equipable' not being transfered is dependent on the table 'dbo.EnumWearLocation' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateEquipable' not being transfered is dependent on the table 'dbo.EnumWearLocation' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Equipable' not being transfered is dependent on the table 'dbo.EquipableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateEquipable' not being transfered is dependent on the table 'dbo.EquipableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Equipable' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Junk' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Quaffable' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.QuaffableItems' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Wieldable' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateEquipable' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateJunk' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateQuaffable' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateReadable' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateWieldable' not being transfered is dependent on the table 'dbo.ItemPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Junk' not being transfered is dependent on the table 'dbo.JunkItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateJunk' not being transfered is dependent on the table 'dbo.JunkItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Mobile' not being transfered is dependent on the table 'dbo.MobilePhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobile' not being transfered is dependent on the table 'dbo.MobilePhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Equipable' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Junk' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Mobile' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.PhysicalObjectInstance' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Quaffable' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.QuaffableItems' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Terrain' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Wieldable' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateEquipable' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateJunk' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMirror' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobile' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobileMirror' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateQuaffable' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateReadable' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateWieldable' not being transfered is dependent on the table 'dbo.PhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Quaffable' not being transfered is dependent on the table 'dbo.QuaffableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.QuaffableItems' not being transfered is dependent on the table 'dbo.QuaffableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateQuaffable' not being transfered is dependent on the table 'dbo.QuaffableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Mobile' not being transfered is dependent on the table 'dbo.Race' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobile' not being transfered is dependent on the table 'dbo.Race' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateReadable' not being transfered is dependent on the table 'dbo.ReadableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Equipable' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Junk' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Mobile' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.PhysicalObjectInstance' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Quaffable' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Terrain' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Wieldable' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateEquipable' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateJunk' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMirror' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobile' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobileMirror' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateQuaffable' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateReadable' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateWieldable' not being transfered is dependent on the table 'dbo.RespawnPoint' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Terrain' not being transfered is dependent on the table 'dbo.TerrainPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'dbo.TerrainPhysicalObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Wieldable' not being transfered is dependent on the table 'dbo.WieldableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateWieldable' not being transfered is dependent on the table 'dbo.WieldableItem' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Equipable' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Junk' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Mobile' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.PhysicalObjectInstance' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Quaffable' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.QuaffableItems' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Terrain' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.Wieldable' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateEquipable' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateJunk' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMirror' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobile' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateMobileMirror' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateQuaffable' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateReadable' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'dbo.World' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
+The object 'dbo.CreateWieldable' not being transfered is dependent on the table 'dbo.World' being transfered. 

@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[Area]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.Area.dat
+Rows copied: 3
+Bulk Copy duration: 0 minutes and 0.40 seconds

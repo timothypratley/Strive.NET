@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[Clan]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.Clan.dat
+Rows copied: 1
+Bulk Copy duration: 0 minutes and 0.70 seconds

@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[RespawnPoint]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.RespawnPoint.dat
+Rows copied: 18
+Bulk Copy duration: 0 minutes and 0.10 seconds

@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[EnumLiquidType]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.EnumLiquidType.dat
+Rows copied: 1
+Bulk Copy duration: 0 minutes and 0.0 seconds

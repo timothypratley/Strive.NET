@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[SpecialisationEnablesSpecialisation]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.SpecialisationEnablesSpecialisation.dat
+Rows copied: 0
+Bulk Copy duration: 0 minutes and 0.10 seconds

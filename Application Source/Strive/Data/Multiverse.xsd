@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Multiverse" targetNamespace="http://source.strive3d.net/Application Source/Strive/Data/Multiverse.xsd" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns="http://source.strive3d.net/Application Source/Strive/Data/Multiverse.xsd" xmlns:mstns="http://source.strive3d.net/Application Source/Strive/Data/Multiverse.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="Multiverse" msdata:IsDataSet="true">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="Player">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="PlayerID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="UserName" type="xs:string" />
+                            <xs:element name="Password" type="xs:string" />
+                            <xs:element name="Email" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="World">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="WorldID" type="xs:int" />
+                            <xs:element name="WorldName" type="xs:string" />
+                            <xs:element name="Description" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Area">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="AreaID" type="xs:int" />
+                            <xs:element name="WorldID" type="xs:int" />
+                            <xs:element name="AreaName" type="xs:string" />
+                            <xs:element name="LowX" type="xs:int" />
+                            <xs:element name="LowY" type="xs:int" />
+                            <xs:element name="LowZ" type="xs:int" />
+                            <xs:element name="HighX" type="xs:int" />
+                            <xs:element name="HighY" type="xs:int" />
+                            <xs:element name="HighZ" type="xs:int" />
+                            <xs:element name="ControllingClan" type="xs:int" minOccurs="0" />
+                            <xs:element name="Description" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Mobile">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="AreaID" type="xs:int" />
+                            <xs:element name="PhysicalObjectName" type="xs:string" />
+                            <xs:element name="ModelID" type="xs:int" />
+                            <xs:element name="X" type="xs:int" minOccurs="0" />
+                            <xs:element name="Y" type="xs:int" minOccurs="0" />
+                            <xs:element name="Z" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingX" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingY" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingZ" type="xs:int" minOccurs="0" />
+                            <xs:element name="SpawnID" type="xs:int" minOccurs="0" />
+                            <xs:element name="MobileID" type="xs:int" />
+                            <xs:element name="RaceID" type="xs:int" />
+                            <xs:element name="Level" type="xs:int" />
+                            <xs:element name="Constitution" type="xs:int" />
+                            <xs:element name="Strength" type="xs:int" />
+                            <xs:element name="Cognition" type="xs:int" />
+                            <xs:element name="Willpower" type="xs:int" />
+                            <xs:element name="Dexterity" type="xs:int" />
+                            <xs:element name="GoldCarried" type="xs:int" />
+                            <xs:element name="GoldBanked" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Quaffable">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="AreaID" type="xs:int" />
+                            <xs:element name="ModelID" type="xs:int" />
+                            <xs:element name="PhysicalObjectName" type="xs:string" />
+                            <xs:element name="Value" type="xs:int" />
+                            <xs:element name="Weight" type="xs:int" />
+                            <xs:element name="ItemID" type="xs:int" />
+                            <xs:element name="LiquidTypeID" type="xs:int" />
+                            <xs:element name="Capacity" type="xs:int" />
+                            <xs:element name="X" type="xs:int" minOccurs="0" />
+                            <xs:element name="Y" type="xs:int" minOccurs="0" />
+                            <xs:element name="SpawnID" type="xs:int" minOccurs="0" />
+                            <xs:element name="Z" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingX" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingY" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingZ" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Junk">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="AreaID" type="xs:int" />
+                            <xs:element name="PhysicalObjectName" type="xs:string" />
+                            <xs:element name="ModelID" type="xs:int" />
+                            <xs:element name="SpawnID" type="xs:int" minOccurs="0" />
+                            <xs:element name="Y" type="xs:int" minOccurs="0" />
+                            <xs:element name="X" type="xs:int" minOccurs="0" />
+                            <xs:element name="Z" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingX" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingY" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingZ" type="xs:int" minOccurs="0" />
+                            <xs:element name="ItemID" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Terrain">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="AreaID" type="xs:int" />
+                            <xs:element name="PhysicalObjectName" type="xs:string" />
+                            <xs:element name="ModelID" type="xs:int" />
+                            <xs:element name="SpawnID" type="xs:int" minOccurs="0" />
+                            <xs:element name="X" type="xs:int" minOccurs="0" />
+                            <xs:element name="Y" type="xs:int" minOccurs="0" />
+                            <xs:element name="Z" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingX" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingY" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingZ" type="xs:int" minOccurs="0" />
+                            <xs:element name="TerrainID" type="xs:int" />
+                            <xs:element name="TerrainTypeID" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Wieldable">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="AreaID" type="xs:int" />
+                            <xs:element name="PhysicalObjectName" type="xs:string" />
+                            <xs:element name="ModelID" type="xs:int" />
+                            <xs:element name="Value" type="xs:int" />
+                            <xs:element name="Weight" type="xs:int" />
+                            <xs:element name="ItemID" type="xs:int" />
+                            <xs:element name="Damage" type="xs:int" />
+                            <xs:element name="Hitroll" type="xs:int" />
+                            <xs:element name="DamageTypeID" type="xs:int" />
+                            <xs:element name="SpawnID" type="xs:int" minOccurs="0" />
+                            <xs:element name="X" type="xs:int" minOccurs="0" />
+                            <xs:element name="Y" type="xs:int" minOccurs="0" />
+                            <xs:element name="Z" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingX" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingY" type="xs:int" minOccurs="0" />
+                            <xs:element name="HeadingZ" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="MobilePossesableByPlayer">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="MobileID" type="xs:int" />
+                            <xs:element name="PlayerID" type="xs:int" />
+                            <xs:element name="SpawnID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Inventory">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="PhysicalObjectID" type="xs:int" />
+                            <xs:element name="ItemID" type="xs:int" />
+                            <xs:element name="SpawnID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+        <xs:key name="WorldPK">
+            <xs:selector xpath=".//mstns:World" />
+            <xs:field xpath="mstns:WorldID" />
+        </xs:key>
+        <xs:key name="AreaPK">
+            <xs:selector xpath=".//mstns:Area" />
+            <xs:field xpath="mstns:AreaID" />
+        </xs:key>
+        <xs:keyref name="WorldArea" refer="WorldPK">
+            <xs:selector xpath=".//mstns:Area" />
+            <xs:field xpath="mstns:WorldID" />
+        </xs:keyref>
+        <xs:key name="TerrainPK">
+            <xs:selector xpath=".//mstns:Terrain" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:key>
+        <xs:keyref name="AreaTerrain" refer="AreaPK">
+            <xs:selector xpath=".//mstns:Terrain" />
+            <xs:field xpath="mstns:AreaID" />
+        </xs:keyref>
+        <xs:key name="WieldablePK">
+            <xs:selector xpath=".//mstns:Wieldable" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:key>
+        <xs:keyref name="AreaWieldable" refer="AreaPK">
+            <xs:selector xpath=".//mstns:Wieldable" />
+            <xs:field xpath="mstns:AreaID" />
+        </xs:keyref>
+        <xs:key name="QuaffablePK">
+            <xs:selector xpath=".//mstns:Quaffable" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:key>
+        <xs:key name="JunkPK">
+            <xs:selector xpath=".//mstns:Junk" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:key>
+        <xs:key name="PlayerPK">
+            <xs:selector xpath=".//mstns:Player" />
+            <xs:field xpath="mstns:PlayerID" />
+        </xs:key>
+        <xs:keyref name="PlayerMobilePossesableByPlayer" refer="PlayerPK">
+            <xs:selector xpath=".//mstns:MobilePossesableByPlayer" />
+            <xs:field xpath="mstns:PlayerID" />
+        </xs:keyref>
+        <xs:key name="MobilePK">
+            <xs:selector xpath=".//mstns:Mobile" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:key>
+        <xs:keyref name="AreaMobile" refer="AreaPK">
+            <xs:selector xpath=".//mstns:Mobile" />
+            <xs:field xpath="mstns:AreaID" />
+        </xs:keyref>
+        <xs:keyref name="MobileMobilePossesableByPlayer" refer="MobilePK">
+            <xs:selector xpath=".//mstns:MobilePossesableByPlayer" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:keyref>
+        <xs:keyref name="MobileInventory" refer="MobilePK">
+            <xs:selector xpath=".//mstns:Inventory" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:keyref>
+        <xs:keyref name="AreaQuaffable" refer="AreaPK">
+            <xs:selector xpath=".//mstns:Quaffable" />
+            <xs:field xpath="mstns:AreaID" />
+        </xs:keyref>
+        <xs:keyref name="AreaJunk" refer="AreaPK">
+            <xs:selector xpath=".//mstns:Junk" />
+            <xs:field xpath="mstns:AreaID" />
+        </xs:keyref>
+        <xs:keyref name="WieldableInventory" refer="WieldablePK">
+            <xs:selector xpath=".//mstns:Inventory" />
+            <xs:field xpath="mstns:SpawnID" />
+        </xs:keyref>
+    </xs:element>
+</xs:schema>

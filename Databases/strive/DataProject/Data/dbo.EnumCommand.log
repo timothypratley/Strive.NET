@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[EnumCommand]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.EnumCommand.dat
+Rows copied: 1
+Bulk Copy duration: 0 minutes and 0.10 seconds

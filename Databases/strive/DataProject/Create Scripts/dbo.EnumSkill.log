@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[EnumSkill]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.EnumSkill.dat
+Rows copied: 1
+Bulk Copy duration: 0 minutes and 0.40 seconds

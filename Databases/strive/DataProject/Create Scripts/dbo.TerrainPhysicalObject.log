@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[TerrainPhysicalObject]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.TerrainPhysicalObject.dat
+Rows copied: 2
+Bulk Copy duration: 0 minutes and 0.80 seconds

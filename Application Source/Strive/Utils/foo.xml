@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StoredProcedures>
+	<StoredProcedure id="421576540" name="CreateMobile" createdate="2002-08-20 11:44:40.480" owner="dbo">
+		<Parameters>
+			<Parameter name="@AreaID" type="int" input="true" output="false" />
+			<Parameter name="@Name" type="nvarchar" input="true" output="false" />
+			<Parameter name="@ModelID" type="nvarchar" input="true" output="false" />
+			<Parameter name="@RaceID" type="int" input="true" output="false" />
+			<Parameter name="@Level" type="int" input="true" output="false" />
+			<Parameter name="@Strength" type="int" input="true" output="false" />
+			<Parameter name="@Constitution" type="int" input="true" output="false" />
+			<Parameter name="@Cognition" type="int" input="true" output="false" />
+			<Parameter name="@Willpower" type="int" input="true" output="false" />
+			<Parameter name="@Dexterity" type="int" input="true" output="false" />
+			<Parameter name="@Hitpoints" type="int" input="true" output="false" />
+			<Parameter name="@GoldCarried" type="int" input="true" output="false" />
+			<Parameter name="@GoldBanked" type="int" input="true" output="false" />
+			<Parameter name="@X" type="int" input="true" output="false" />
+			<Parameter name="@Y" type="int" input="true" output="false" />
+			<Parameter name="@Z" type="int" input="true" output="false" />
+			<Parameter name="@HeadingX" type="int" input="true" output="false" />
+			<Parameter name="@HeadingY" type="int" input="true" output="false" />
+			<Parameter name="@HeadingZ" type="int" input="true" output="false" />
+		</Parameters>
+	</StoredProcedure>
+	<StoredProcedure id="437576597" name="CreateMobileMirror" createdate="2002-08-20 11:44:40.490" owner="dbo">
+		<Parameters>
+			<Parameter name="@MobileID" type="int" input="true" output="false" />
+			<Parameter name="@X" type="int" input="true" output="false" />
+			<Parameter name="@Y" type="int" input="true" output="false" />
+			<Parameter name="@Z" type="int" input="true" output="false" />
+			<Parameter name="@HeadingX" type="int" input="true" output="false" />
+			<Parameter name="@HeadingY" type="int" input="true" output="false" />
+			<Parameter name="@HeadingZ" type="int" input="true" output="false" />
+		</Parameters>
+	</StoredProcedure>
+</StoredProcedures>

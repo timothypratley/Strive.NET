@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?><StoredProcedures>
+<StoredProcedure id="1982682161" 
+name="cer_Events_Select_Event_NA_1" 
+createdate="2002-08-28 09:46:25.230" 
+owner="dbo"><Parameters /></StoredProcedure>
+<StoredProcedure id="2030682332" name="cer_Events_Select_Ticket_NA_1" createdate="2002-08-28 11:49:44.657" owner="dbo">
+<Parameters /></StoredProcedure>
+<StoredProcedure id="1998682218" name="cer_Events_Select_Venue_ByIEvent_1" createdate="2002-08-28 10:09:33.187" owner="dbo">
+<Parameters>
+<Parameter name="@IEventStructure" type="int" length="4" input="true" output="false" />
+<Parameter name="@IEventStructureVersion" type="int" length="4" input="true" output="false" />
+<Parameter name="@IEventID" type="int" length="4" input="true" output="false" /></Parameters>
+</StoredProcedure>
+<StoredProcedure id="2014682275" name="cer_Events_Select_Venue_NA_1" createdate="2002-08-28 11:27:16.877" owner="dbo">
+<Parameters />
+</StoredProcedure>
+</StoredProcedures>

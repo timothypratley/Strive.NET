@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[EnumSize]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.EnumSize.dat
+Rows copied: 2
+Bulk Copy duration: 0 minutes and 0.60 seconds

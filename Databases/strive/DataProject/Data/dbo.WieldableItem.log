@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[WieldableItem]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.WieldableItem.dat
+Rows copied: 2
+Bulk Copy duration: 0 minutes and 0.0 seconds

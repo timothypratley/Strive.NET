@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[MobilePossesableByPlayer]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Data\dbo.MobilePossesableByPlayer.dat
+Rows copied: 1
+Bulk Copy duration: 0 minutes and 0.10 seconds

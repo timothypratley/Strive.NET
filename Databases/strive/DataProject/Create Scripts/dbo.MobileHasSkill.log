@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[MobileHasSkill]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.MobileHasSkill.dat
+Rows copied: 0
+Bulk Copy duration: 0 minutes and 0.0 seconds

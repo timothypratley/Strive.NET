@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[EquipableItem]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.EquipableItem.dat
+Rows copied: 2
+Bulk Copy duration: 0 minutes and 0.30 seconds

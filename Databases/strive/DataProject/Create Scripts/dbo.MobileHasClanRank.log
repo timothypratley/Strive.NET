@@ -1,0 +1,7 @@
+
+
+Bulk Copy completed successfully.
+Source: [dbo].[MobileHasClanRank]
+Destination: C:\projects\Strive\Databases\strive\DataProject\Create Scripts\dbo.MobileHasClanRank.dat
+Rows copied: 0
+Bulk Copy duration: 0 minutes and 0.10 seconds
