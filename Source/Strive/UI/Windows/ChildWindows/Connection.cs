@@ -14,6 +14,7 @@ namespace Strive.UI.Windows.ChildWindows
 	/// </summary>
 	public class Connection : System.Windows.Forms.Form
 	{
+
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label1;
@@ -35,10 +36,8 @@ namespace Strive.UI.Windows.ChildWindows
 		private System.Windows.Forms.ListView RecentConnections;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ProgressBar ConnectionProgress;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+		private System.Windows.Forms.Timer timer1;
+		private System.ComponentModel.IContainer components;
 
 		public Connection()
 		{
@@ -76,6 +75,7 @@ namespace Strive.UI.Windows.ChildWindows
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.NetworkProtocolTypeUDP = new System.Windows.Forms.RadioButton();
 			this.NetworkProtocolTypeTCP = new System.Windows.Forms.RadioButton();
@@ -94,6 +94,7 @@ namespace Strive.UI.Windows.ChildWindows
 			this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
 			this.ConnectionProgress = new System.Windows.Forms.ProgressBar();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -112,7 +113,7 @@ namespace Strive.UI.Windows.ChildWindows
 			this.groupBox1.Controls.Add(this.PortNumber);
 			this.groupBox1.Controls.Add(this.ServerAddress);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Location = new System.Drawing.Point(0, 288);
+			this.groupBox1.Location = new System.Drawing.Point(0, 291);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(656, 176);
 			this.groupBox1.TabIndex = 0;
@@ -262,18 +263,25 @@ namespace Strive.UI.Windows.ChildWindows
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.ConnectionProgress.Location = new System.Drawing.Point(0, 472);
 			this.ConnectionProgress.Name = "ConnectionProgress";
-			this.ConnectionProgress.Size = new System.Drawing.Size(648, 23);
+			this.ConnectionProgress.Size = new System.Drawing.Size(656, 23);
 			this.ConnectionProgress.Step = 5;
 			this.ConnectionProgress.TabIndex = 2;
+			this.ConnectionProgress.Visible = false;
+			// 
+			// timer1
+			// 
+			this.timer1.Interval = 1000;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// Connection
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(656, 494);
+			this.ClientSize = new System.Drawing.Size(656, 501);
 			this.Controls.Add(this.ConnectionProgress);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Name = "Connection";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Connection";
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
@@ -288,7 +296,6 @@ namespace Strive.UI.Windows.ChildWindows
 			{
 				case ConnectionWindowState.NotConnected:
 				{
-					ConnectionProgress.Visible = false;
 					if(ServerAddress.Text == "")
 					{
 						ServerAddress.Focus();
@@ -338,13 +345,7 @@ namespace Strive.UI.Windows.ChildWindows
 					Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), protocol, Game.CurrentMainWindow.RenderTarget);
 					ConnectionProgress.Visible = true;
 					ConnectionProgress.Value = 0;
-					for(int i = 0; i < 20; i++)
-					{
-						ConnectionProgress.PerformStep();
-						System.Threading.Thread.Sleep(1000);
-						
-					}
-					StriveWindowState = ConnectionWindowState.NotConnected;
+					timer1.Start();
 					break;
 				}
 				case ConnectionWindowState.Connecting:
@@ -380,22 +381,16 @@ namespace Strive.UI.Windows.ChildWindows
 				this.Text = "No characters available.";
 				return;
 			}
-			foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) {
-				// TODO: this code does nothing, just here as a reminder to get the character name or whatever
-				TreeNode n = new TreeNode(tuple.name);
-				n.Tag = tuple.id;
-				n.ImageIndex = (int)Icons.AvailableIcons.Mobile;
-				n.SelectedImageIndex = n.ImageIndex;
-			}
 			StriveWindowState = ConnectionWindowState.Connected;
 			Game.CurrentServerConnection.PossessMobile(cp.possesable[0].id);
+			Game.CurrentPlayerID = cp.possesable[0].id;
 			StriveWindowState = ConnectionWindowState.Playing;
-
 		}
 
 
 		private void loadRecentServers()
 		{
+			RecentConnections.Items.Clear();
 			// Initialise Recent Servers
 			foreach(DataRow serverRow in Settings.SettingsManager.RecentServers.Rows)
 			{
@@ -426,6 +421,9 @@ namespace Strive.UI.Windows.ChildWindows
 					Password.Enabled = true;
 					NetworkProtocolTypeTCP.Enabled = true;
 					NetworkProtocolTypeUDP.Enabled = true;
+					Game.Stop();
+					timer1.Stop();
+					ConnectionProgress.Visible = false;
 					break;
 				}
 				case ConnectionWindowState.Connected:
@@ -457,6 +455,7 @@ namespace Strive.UI.Windows.ChildWindows
 				{
 					this.Text = "Playing";
 					this.Close();
+					timer1.Stop();
 					break;
 				}
 				
@@ -524,6 +523,13 @@ namespace Strive.UI.Windows.ChildWindows
 			}
 		}
 
+
+		private void timer1_Tick(object sender, System.EventArgs e) {
+			ConnectionProgress.PerformStep();
+			if ( ConnectionProgress.Value == ConnectionProgress.Maximum ) {
+				StriveWindowState = ConnectionWindowState.NotConnected;
+			}
+		}
 
 	}
 }
