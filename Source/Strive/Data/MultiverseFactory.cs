@@ -185,6 +185,8 @@ namespace Strive.Data
 			System.Diagnostics.Debug.Write(Tables);
 			System.Diagnostics.Debug.WriteLine("***********************");
 
+			multiverse.EnforceConstraints = false;
+
 			foreach(object mt in tableList)
 			{
 				DataTable multiverseTable = (DataTable)mt;
@@ -199,6 +201,7 @@ namespace Strive.Data
 					throw new Exception("Could not execute '" + tableAdapter.SelectCommand.CommandText + "'\r\nThe error was '" + e.Message + "'.", e);
 				}
 			}
+			multiverse.EnforceConstraints = true;
 			return multiverse;
 		}
 
