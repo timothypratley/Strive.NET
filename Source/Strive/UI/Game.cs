@@ -139,6 +139,11 @@ namespace Strive.UI
 
 			// display the new world
 			Game.CurrentWorld.Render();
+
+			// TODO: UMG this hack is because TV3D updates its relative mouse state
+			// on every render (ghey) AND their absolute mouse pos is shit.
+			CurrentInputProcessor.AccumulateMouse();
+			Game.CurrentWorld.RenderMiniMap();
 		}
 
 		static void ProcessOutstandingMessages() {

@@ -26,11 +26,24 @@ namespace Strive.UI.Engine {
 			movementTimer = new AccurateTimer();
 		}
 
+		public void AccumulateMouse() {
+			// TODO: umg ghey hack due to TV3Ds crap input handling
+			mouse.GetState();
+		}
+
 		// todo: replace pitch with a more elegant solution
 		float pitch = 0;
 		float frameTime = 0;
+		int oldMouseX = 0;
+		int oldMouseY = 0;
 		public void ProcessPlayerInput() {
-			frameTime = (99F*frameTime + (float)movementTimer.ElapsedSeconds())/100F;
+			frameTime = (999F*frameTime + (float)movementTimer.ElapsedSeconds())/1000F;
+			mouse.AccumulateState();
+			int mdx = mouse.X;
+			int mdy = mouse.Y;
+			oldMouseX = mouse.X;
+			oldMouseY = mouse.Y;
+
 			// no avatar... no nothing
 			if ( _world.CurrentAvatar == null ) return;
 
@@ -69,15 +82,12 @@ namespace Strive.UI.Engine {
 
 			Vector3D avatarPosition = _world.CurrentAvatar.model.Position.Clone();
 			Vector3D newRotation = _world.CurrentAvatar.model.Rotation.Clone();
-			mouse.GetState();
-			if( mouse.X != 0 ) 
-			{
-				newRotation.Y += mouse.X*0.2f; 
+			if( mdx != 0 ) {
+				newRotation.Y += mdx*0.2f; 
 				newRotation.X = pitch;
 			}
-			if( mouse.Y != 0 ) 
-			{
-				pitch += mouse.Y*0.2f;
+			if( mdy != 0 ) {
+				pitch += mdy*0.2f;
 				if ( pitch > 60 ) { pitch = 60; }
 				if ( pitch < -60 ) { pitch = -60; }
 				newRotation.X = pitch;

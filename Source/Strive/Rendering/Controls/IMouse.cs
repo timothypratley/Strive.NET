@@ -12,10 +12,10 @@ namespace Strive.Rendering.Controls
 		bool Button1down { get; }
 		bool Button2down { get; }
 		bool Button3down { get; }
-		bool Button4down { get; }
 
 		void GetState();
 		void GetAbsState();
+		void AccumulateState();
 		void ShowCursor( bool showCursor );
 	}
 }

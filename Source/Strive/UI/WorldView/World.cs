@@ -165,13 +165,8 @@ namespace Strive.UI.WorldView {
 			TerrainPieces.Recenter( CurrentAvatar.model.Position.X, CurrentAvatar.model.Position.Z );
 		}
 
-		public void Render() {
-			renderViewport.SetFocus();
-			RenderingScene.Clear();
-			RenderingScene.RenderAtmosphere();
-			TerrainPieces.Render();
-			RenderingScene.Render();
-			RenderingScene.Display();
+		/* TODO: probably should make more generic multiple views */
+		public void RenderMiniMap() {
 			if ( miniMapViewport != null ) {
 				miniMapViewport.SetFocus();
 				RenderingScene.Clear();
@@ -180,6 +175,15 @@ namespace Strive.UI.WorldView {
 				RenderingScene.Render();
 				RenderingScene.Display();
 			}
+		}
+
+		public void Render() {
+			renderViewport.SetFocus();
+			RenderingScene.Clear();
+			RenderingScene.RenderAtmosphere();
+			TerrainPieces.Render();
+			RenderingScene.Render();
+			RenderingScene.Display();
 		}
 
 		public void Clear() {
