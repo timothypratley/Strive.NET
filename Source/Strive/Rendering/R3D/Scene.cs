@@ -56,11 +56,15 @@ namespace Strive.Rendering.R3D
 			_views = new Cameras.CameraCollection();
 		}
 
-		public void SetSky( string name, ITexture texture ) {
-			if ( Engine.Skydome.Class_SetPointer( name ) < 0 ) {
-				Engine.Skydome.Item_Create( name, R3DSKYDOMEITEM.R3DSKYDOMEITEM_SPHERE, 2000 );
+		public void SetSky( ITexture texture ) {
+			if ( Engine.Skydome.Class_SetPointer( "sky" ) < 0 ) {
+				Engine.Skydome.Item_Create( "sky", R3DSKYDOMEITEM.R3DSKYDOMEITEM_SPHERE, 2000 );
 			}
 			Engine.Skydome.Item_SetTexture( 0, texture.Name );
+		}
+
+		public void SetClouds( ITexture texture ) {
+
 		}
 
 		public void SetLighting( short level ) {

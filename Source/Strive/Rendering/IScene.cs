@@ -15,7 +15,8 @@ namespace Strive.Rendering
 	{
 		#region "Methods"
 		void DropAll();
-		void SetSky( string name, ITexture texture );
+		void SetSky( ITexture texture );
+		void SetClouds( ITexture texture );
 		void SetLighting( short level );
 		void SetFog( float level );
 		void DrawText( Vector3D location, string message );

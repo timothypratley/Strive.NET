@@ -18,6 +18,7 @@ namespace Strive.Rendering.TV3D.Models {
 
 		string _key;
 		int _id;
+		public string _label;
 		Vector3D _position;
 		Vector3D _offset;
 		Vector3D _rotation;
@@ -25,6 +26,8 @@ namespace Strive.Rendering.TV3D.Models {
 		float _RadiusSquared;
 		Vector3D _boxmin;
 		Vector3D _boxmax;
+		bool _show = true;
+		float _height;
 		#endregion
 
 		#region "Constructors"
@@ -61,6 +64,7 @@ namespace Strive.Rendering.TV3D.Models {
 			loadedModel._boxmin = new Vector3D( boxmin.x, boxmin.y, boxmin.z );
 			loadedModel._boxmax = new Vector3D( boxmax.x, boxmax.y, boxmax.z );
 
+			loadedModel._height = height;
 			if ( height != 0 ) {
 				// scale the model to the correct height and get new bounding box info
 				float scale_factor = height / ( boxmax.y - boxmin.y );
@@ -95,12 +99,6 @@ namespace Strive.Rendering.TV3D.Models {
 		public void Delete() {
 			Engine.TV3DScene.DestroyMesh( ref _mesh );
 			_mesh = null;
-		}
-
-		public void Hide() {
-		}
-
-		public void Show() {
 		}
 
 		public void applyTexture( string texture ) {
@@ -138,6 +136,21 @@ namespace Strive.Rendering.TV3D.Models {
 				return _RadiusSquared;
 			}
 		}
+
+		public string Label {
+			get { return _label; }
+			set { _label = value; }
+		}
+
+		public bool Visible {
+			get { return _show; }
+			set { _show = value; _mesh.Enable( value ); }
+		}
+
+		public float Height {
+			get { return _height; }
+		}
+
 		#endregion
 
 		#region "Implementation of IManeuverable"

@@ -16,11 +16,14 @@ namespace Strive.Rendering.TV3D.Models {
 	public class Actor : IActor {
 
 		#region "Fields"
+
+
 		float _RadiusSquared;
 
 		// todo: shouldn't need a show variable, engine should do it for us
 		private bool _show = true;
 		private string _key;
+		private string _label;
 		private int _id;
 		private Vector3D _offset;
 		private Vector3D _position;
@@ -29,6 +32,7 @@ namespace Strive.Rendering.TV3D.Models {
 
 		private Vector3D _boxmin;
 		private Vector3D _boxmax;
+		private float _height;
 		#endregion
 
 		#region "Constructors"
@@ -64,6 +68,8 @@ namespace Strive.Rendering.TV3D.Models {
 			DxVBLibA.D3DVECTOR boxmax = new DxVBLibA.D3DVECTOR();
 			loadedModel._model.GetBoundingBox( ref boxmin, ref boxmax );
 
+			// TODO: get bounding boxes dependent upon the animation sequence
+
 			// EEERRR todo: there is a bug in tv3d mdl bounding boxes,
 			// we need to transpose for it
 			loadedModel._boxmin = new Vector3D( boxmin.y, boxmin.z, boxmin.x );
@@ -71,6 +77,7 @@ namespace Strive.Rendering.TV3D.Models {
 
 			// todo: use a bounding cylinder instead, would be bett0r!
 
+			loadedModel._height = height;
 			if ( height != 0 ) {
 				// scale the model to the correct height and get new bounding box info
 				float scale_factor = height / ( loadedModel._boxmax.Y - loadedModel._boxmin.Y );
@@ -99,7 +106,7 @@ namespace Strive.Rendering.TV3D.Models {
 				(loadedModel._boxmax.Z + loadedModel._boxmin.Z)/2
 			);
 			loadedModel._id = loadedModel._model.GetEntity();
-			loadedModel._model.ShowBoundingBox( true, false );
+			//loadedModel._model.ShowBoundingBox( true, false );
 			loadedModel._model.PlayAnimation( 20 );
 			return loadedModel;
 		}
@@ -111,17 +118,6 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public void Delete() {
 			_model.Destroy();
-		}
-
-		public void Hide() {
-			_show = false;
-			// todo: why doesn't this work?
-			//_model.Enable( false );
-		}
-
-		public void Show() {
-			_show = true;
-			//_model.Enable( true );
 		}
 
 		public void applyTexture( ITexture texture ) {
@@ -180,6 +176,20 @@ namespace Strive.Rendering.TV3D.Models {
 			set {
 				_model.SetAnimationByName( value );
 			}
+		}
+
+		public string Label {
+			get { return _label; }
+			set { _label = value; }
+		}
+
+		public bool Visible {
+			get { return _show; }
+			set { _show = value; _model.Enable(value); }
+		}
+
+		public float Height {
+			get { return _height; }
 		}
 
 		#endregion

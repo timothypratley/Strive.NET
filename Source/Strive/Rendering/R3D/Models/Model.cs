@@ -17,8 +17,11 @@ namespace Strive.Rendering.R3D.Models {
 
 		private string _key;
 		private int _id;
+		private string _label;
 		private Vector3D _position;
 		private Vector3D _rotation;
+		private bool _is_visible = true;
+		private float _height = 0;
 		#endregion
 
 		#region "Constructors"
@@ -69,16 +72,6 @@ namespace Strive.Rendering.R3D.Models {
 			Engine.MeshBuilder.Mesh_Release();
 		}
 
-		public void Hide() {
-			Engine.MeshBuilder.Class_SetPointer(this.Name);
-			Engine.MeshBuilder.Mesh_SetActivate( false );
-		}
-
-		public void Show() {
-			Engine.MeshBuilder.Class_SetPointer(this.Name);
-			Engine.MeshBuilder.Mesh_SetActivate( true );
-		}
-
 		public void applyTexture( string texture ) {
 			Engine.MeshBuilder.Class_SetPointer(this.Name);
 			Engine.MeshBuilder.Mesh_SetTexture( 0, texture );
@@ -110,6 +103,26 @@ namespace Strive.Rendering.R3D.Models {
 			get {
 				return _RadiusSquared;
 			}
+		}
+
+		public string Label {
+			get { return _label; }
+			set { _label = value; }
+		}
+
+		public bool Visible {
+			set {
+						   Engine.MeshBuilder.Class_SetPointer(this.Name);
+						   Engine.MeshBuilder.Mesh_SetActivate( value );
+				_is_visible = value;
+			}
+			get {
+				return _is_visible;
+			}
+		}
+
+		public float Height {
+			get { return _height; }
 		}
 
 		#endregion

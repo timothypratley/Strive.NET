@@ -13,10 +13,6 @@ namespace Strive.Rendering.Models {
 
 		void Delete();
 
-		void Hide();
-
-		void Show();
-
 		void GetBoundingBox( Vector3D boxmin, Vector3D boxmax );
 
 		#endregion
@@ -24,7 +20,10 @@ namespace Strive.Rendering.Models {
 		#region "Properties"
 		string Name { get; }
 		int ID { get; }
+		string Label { get; set; }	// a label appears above the 3d object
 		float RadiusSquared { get; }
+		bool Visible { get; set; }
+		float Height { get; }
 
 		#endregion
 	}

@@ -18,8 +18,11 @@ namespace Strive.Rendering.R3D.Models {
 
 		private string _key;
 		private int _id;
+		private string _label;
 		private Vector3D _position;
 		private Vector3D _rotation;
+		private bool _is_visible;
+		private float _height = 0;
 		#endregion
 
 		#region "Constructors"
@@ -58,18 +61,8 @@ namespace Strive.Rendering.R3D.Models {
 		#region "Methods"
 
 		public void Delete() {
-				Engine.MeshBuilder.Class_SetPointer(this.Name);
-				Engine.MeshBuilder.Mesh_Release();
-		}
-
-		public void Hide() {
-				Engine.MeshBuilder.Class_SetPointer(this.Name);
-				Engine.MeshBuilder.Mesh_SetActivate( false );
-		}
-
-		public void Show() {
-				Engine.MeshBuilder.Class_SetPointer(this.Name);
-				Engine.MeshBuilder.Mesh_SetActivate( true );
+			Engine.MeshBuilder.Class_SetPointer(this.Name);
+			Engine.MeshBuilder.Mesh_Release();
 		}
 
 		public void applyTexture( ITexture texture ) {
@@ -109,6 +102,27 @@ namespace Strive.Rendering.R3D.Models {
 				return _RadiusSquared;
 			}
 		}
+
+		public string Label {
+			get { return _label; }
+			set { _label = value; }
+		}
+
+		public bool Visible {
+			get {
+				return _is_visible;
+			}
+			set {
+				Engine.MeshBuilder.Class_SetPointer(this.Name);
+				Engine.MeshBuilder.Mesh_SetActivate( value );
+				_is_visible = value;
+			}
+		}
+
+		public float Height {
+			get { return _height; }
+		}
+
 		#endregion
 
 		#region "Implementation of IManeuverable"

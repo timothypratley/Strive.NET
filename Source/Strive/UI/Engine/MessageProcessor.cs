@@ -169,6 +169,7 @@ namespace Strive.UI.Engine {
 				//Log.LogMessage( "Weather update recieved" );
 				ITexture t = ResourceManager.LoadTexture(w.SkyTextureID);
 				Game.CurrentWorld.SetSky( t );
+				Game.CurrentWorld.SetClouds( t );
 			}
 				#endregion
 			#region SkillList

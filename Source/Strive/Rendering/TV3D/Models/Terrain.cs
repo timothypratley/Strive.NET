@@ -18,10 +18,13 @@ namespace Strive.Rendering.TV3D.Models {
 
 		private string _key;
 		private int _id;
+		private string _label;
 		private Vector3D _position = new Vector3D( 0, 0, 0 );
 		private Vector3D _rotation = new Vector3D( 0, 0, 0 );
-		float _RadiusSquared;
-		TVMesh _mesh;
+		private float _RadiusSquared;
+		private TVMesh _mesh;
+		private bool _show = true;
+		private float _height = 0;
 		#endregion
 
 		#region "Constructors"
@@ -40,6 +43,7 @@ namespace Strive.Rendering.TV3D.Models {
 			t._key = name;
 			t._id = t._mesh.GetMeshIndex();
 			t._RadiusSquared = 0;
+			t._height = (y + zy + xy + xzy)/2;
 			return t;
 		}
 
@@ -51,12 +55,6 @@ namespace Strive.Rendering.TV3D.Models {
 		public void Delete() {
 			Engine.TV3DScene.DestroyMesh( ref _mesh );
 			_mesh = null;
-		}
-
-		public void Hide() {
-		}
-
-		public void Show() {
 		}
 
 		public void applyTexture( ITexture texture ) {
@@ -94,6 +92,20 @@ namespace Strive.Rendering.TV3D.Models {
 			get {
 				return _RadiusSquared;
 			}
+		}
+
+		public string Label {
+			get { return _label; }
+			set { _label = value; }
+		}
+
+		public bool Visible {
+			get { return _show; }
+			set { _show = value; _mesh.Enable( value ); }
+		}
+
+		public float Height {
+			get { return _height; }
 		}
 
 		#endregion

@@ -83,9 +83,9 @@ namespace Strive.UI.WorldView {
 			}
 			CurrentAvatar = (PhysicalObjectInstance)o;
 			if ( cameraMode == EnumCameraMode.FirstPerson ) {
-				CurrentAvatar.model.Hide();
+				CurrentAvatar.model.Visible = false;
 			} else {
-				CurrentAvatar.model.Show();
+				CurrentAvatar.model.Visible = true;
 			}
 			RepositionCamera();
 		}
@@ -129,36 +129,6 @@ namespace Strive.UI.WorldView {
 
 		public void Render() {
 			RenderingScene.Render();
-
-			// label everything in the world
-			// TODO: optimise this, the text writing is a performance hit atm
-			foreach ( PhysicalObjectInstance poi in physicalObjectInstances.Values ) {
-				if (
-					( poi != CurrentAvatar || cameraMode != EnumCameraMode.FirstPerson )
-					&& ( poi.physicalObject is Mobile || poi.physicalObject is Item )
-				) {
-					//Get the vector between camera and object, put in v1
-					//Get the direction vector of the camera (lookat - position normalized) put in v2
-					//Compute the Dot product.
-					//If Dot(V1, V2) > Cos(FOVInRadian) Then 
-					//You can see the object ! 
-					//Using FieldOfView of 90degrees,
-					//so things offscreen infront will still be labeled.
-
-//					Vector3D v1 = poi.model.Position - CameraPosition;
-//					if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(CameraRotation) ) <= Math.Cos( Math.PI ) ) {
-//						continue;
-//					}
-
-					Vector3D labelPos = new Vector3D(
-                        poi.model.Position.X,
-                        poi.model.Position.Y + poi.physicalObject.Height/2 + 2,
-                        poi.model.Position.Z
-					);
-
-					RenderingScene.DrawText( labelPos, poi.physicalObject.ObjectTemplateName );
-				}
-			}
 			RenderingScene.Display();
 		}
 
@@ -168,7 +138,11 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void SetSky( ITexture texture ) {
-			RenderingScene.SetSky( "sky", texture );
+			RenderingScene.SetSky( texture );
+		}
+
+		public void SetClouds( ITexture texture ) {
+			RenderingScene.SetClouds( texture );
 		}
 
 		public EnumCameraMode CameraMode {
@@ -180,9 +154,9 @@ namespace Strive.UI.WorldView {
 					if ( CurrentAvatar != null ) {
 						cameraMode = value;
 						if ( cameraMode == EnumCameraMode.FirstPerson ) {
-							CurrentAvatar.model.Hide();
+							CurrentAvatar.model.Visible = false;
 						} else {
-							CurrentAvatar.model.Show();
+							CurrentAvatar.model.Visible = true;
 						}
 						RepositionCamera();
 					} else {

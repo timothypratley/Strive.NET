@@ -56,10 +56,19 @@ namespace Strive.Rendering.TV3D
 			_views = new Cameras.CameraCollection();
 		}
 
-		public void SetSky( string name, ITexture texture ) {
+		public void SetSky( ITexture texture ) {
 			Engine.Atmosphere.SkyBox_SetDistance( 1000 );
 			Engine.Atmosphere.SkyBox_SetTexture( texture.ID,texture.ID,texture.ID,texture.ID,texture.ID,texture.ID );
 			Engine.Atmosphere.SkyBox_Enable(true, true);
+		}
+
+		public void SetClouds( ITexture texture ) {
+			// TODO: the fact that its a dds means our current resource manager
+			// wont load it. need to make resources more flexible... in the
+			// meantime its hardcoded ofc.
+			int tex_id = Engine.TexFactory.LoadTexture(@"C:\TV3DSDK\Media\cloud1.dds", "Clouds",-1 ,-1 , CONST_TV_COLORKEY.TV_COLORKEY_BLACK,true,true);
+			Engine.Land.InitClouds( tex_id, CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
+			Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
 		}
 
 		public void SetLighting( short level ) {
@@ -84,40 +93,53 @@ namespace Strive.Rendering.TV3D
 		/// <remarks>This method renders the scene into video memory</remarks>
 		public void Render()
 		{
-			try
-			{
+			try	{
 				Engine.TV3DEngine.Clear( false );
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				throw new RenderingException("Call to 'Clear()' failed", e);
 			}
 			try {
+				// render the atmosphere
 				Engine.Atmosphere.Atmosphere_Render();
+
+				// for us, land only contains the clouds atm
+				Engine.Land.Render(false, false);
+
+				// render static models
 				Engine.TV3DScene.RenderAllMeshes( false );
+
+				// render character models and object labels
+				Engine.Screen2DText.ACTION_BeginText();
 				foreach( IModel m in _models.Values ) {
 					if ( m is Actor ) {
 						((Actor)m).Render();
 					}
+					if ( m.Visible && m.Label != null ) {
+						//Get the vector between camera and object, put in v1
+						//Get the direction vector of the camera (lookat - position normalized) put in v2
+						//Compute the Dot product.
+						//If Dot(V1, V2) > Cos(FOVInRadian) Then 
+						//You can see the object ! 
+						//Using FieldOfView of 90degrees,
+						//so things offscreen infront will still be labeled.
+						Vector3D v1 = m.Position - View.Position;
+						if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(View.Rotation) ) <= Math.Cos( View.FieldOfView * Math.PI / 180 ) ) {
+							continue;
+						}
+
+						Vector3D labelPos = new Vector3D(
+							m.Position.X,
+							m.Position.Y + m.Height/2 + 2,
+							m.Position.Z
+						);
+
+						DrawText( labelPos, m.Label );
+					}
 				}
-			}
-			catch(Exception e) {
+				Engine.Screen2DText.ACTION_EndText();
+			} catch(Exception e) {
 				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
 			}
-
-			Engine.TV3DEngine.DisplayFPS = true;	
-		
-
-			// hardcoded clouds
-			// New : for fun, we will also add some clouds, just over the water
-			// to give a creepy fog effect. Let's start by loading the clouds textures.
-			// TODO: get the clouds from resourcemanager instead
-			Engine.TexFactory.LoadTexture(@"C:\TV3DSDK\Media\cloud1.dds", "Clouds",-1 ,-1 , CONST_TV_COLORKEY.TV_COLORKEY_BLACK,true,true);
-
-			// Then, set the land's clouds.
-			Engine.Land.InitClouds (Engine.Gl.GetTex("Clouds"), CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
-			Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
-			Engine.Land.Render(false, false);
 
 			//#if DEBUG
 			//R3DColor black = new R3DColor();
