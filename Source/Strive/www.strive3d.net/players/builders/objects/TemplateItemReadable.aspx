@@ -1,4 +1,4 @@
-<%@ Page language="c#" Codebehind="TemplateItemJunk.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.objects.TemplateItemJunk" %>
+<%@ Page language="c#" Codebehind="TemplateItemReadable.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.objects.TemplateItemReadable" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
@@ -36,8 +36,17 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><asp:CheckBox ID="Takeable" Runat="Server" CssClass="label" Text="Takeable" /></td>
+			<td><span class="label">Title</span></td>
+			<td><asp:TextBox ID="Title" CssClass="Input" Runat="Server" />
+			</td>
 		</tr>
+		<tr>
+			<td><span class="label">Content</span></td>
+		</tr>
+		<TR>
+			<td colspan="4"><asp:TextBox ID="Content" SIze="4" CssClass="Input" Runat="Server" TextMode="MultiLine" />
+			</td>
+		</TR>
 		<tr>
 			<td colspan="4"><hr>
 			</td>

@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <%@ Import Namespace="System.Data" %>
 <CONTROLS:HEADER id="Header1" title="Objects - List View" runat="Server"></CONTROLS:HEADER>
-<table valign="top">
+<table valign="top" style="vertical-align:top">
 	<tr>
 		<th>
 			Mobiles</th>
@@ -22,7 +22,10 @@
 		<td><A href="./TemplateItemReadable.aspx?TemplateName=ItemReadable">[Add]</A></td>
 		<th>
 			Wieldables</th>
-		<td><A href="./TemplateItemWieldables.aspx?TemplateName=ItemWieldable">[Add]</A></td>
+		<td><A href="./TemplateItemWieldable.aspx?TemplateName=ItemWieldable">[Add]</A></td>
+		<th>
+			Terrain</th>
+		<td><A href="./TemplateTerrain.aspx?TemplateName=Terrain">[Add]</A></td>
 	</tr>
 	<tr>
 		<td colSpan="2" valign="top" style="vertical-align:top"><asp:repeater id="TemplateMobileList" runat="server"><ItemTemplate><a href='./TemplateMobile.aspx?TemplateObjectID=<%#DataBinder.Eval(Container.DataItem, "TemplateObjectID")%>&amp;TemplateName=Mobile'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
@@ -35,6 +38,15 @@
 				</ItemTemplate>
 			</asp:Repeater></td>
 		<td colSpan="2" valign="top" style="vertical-align:top"><asp:Repeater ID="TemplateItemQuaffableList" runat="server"><ItemTemplate><a href='./TemplateItemQuaffable.aspx?TemplateObjectID=<%#DataBinder.Eval(Container.DataItem, "TemplateObjectID")%>&amp;TemplateName=ItemQuaffable'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+				</ItemTemplate>
+			</asp:Repeater></td>
+		<td colSpan="2" valign="top" style="vertical-align:top"><asp:Repeater ID="TemplateItemReadableList" runat="server"><ItemTemplate><a href='./TemplateItemReadable.aspx?TemplateObjectID=<%#DataBinder.Eval(Container.DataItem, "TemplateObjectID")%>&amp;TemplateName=ItemReadable'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+				</ItemTemplate>
+			</asp:Repeater></td>
+		<td colSpan="2" valign="top" style="vertical-align:top"><asp:Repeater ID="TemplateItemWieldableList" runat="server"><ItemTemplate><a href='./TemplateItemWieldable.aspx?TemplateObjectID=<%#DataBinder.Eval(Container.DataItem, "TemplateObjectID")%>&amp;TemplateName=ItemWieldable'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+				</ItemTemplate>
+			</asp:Repeater></td>
+		<td colSpan="2" valign="top" style="vertical-align:top"><asp:Repeater ID="TemplateTerrainList" runat="server"><ItemTemplate><a href='./TemplateTerrain.aspx?TemplateObjectID=<%#DataBinder.Eval(Container.DataItem, "TemplateObjectID")%>&amp;TemplateName=Terrain'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
 				</ItemTemplate>
 			</asp:Repeater></td>
 	</tr>

@@ -21,6 +21,9 @@ namespace www.strive3d.net.players.builders.objects
 		protected System.Web.UI.WebControls.Repeater TemplateMobileList;
 		protected System.Web.UI.WebControls.Repeater TemplateItemJunkList;
 		protected System.Web.UI.WebControls.Repeater TemplateItemQuaffableList;
+		protected System.Web.UI.WebControls.Repeater TemplateTerrainList;
+		protected System.Web.UI.WebControls.Repeater TemplateItemReadableList;
+		protected System.Web.UI.WebControls.Repeater TemplateItemWieldableList;
 protected System.Web.UI.WebControls.Repeater TemplateItemEquipableList;
 	
 		private void Page_Load(object sender, System.EventArgs e)
@@ -103,7 +106,63 @@ protected System.Web.UI.WebControls.Repeater TemplateItemEquipableList;
 				TemplateItemQuaffableFiller.Fill(TemplateItemQuaffables);
 				TemplateItemQuaffableList.DataSource = TemplateItemQuaffables;
 				TemplateItemQuaffableList.DataBind();
-					
+
+
+				SqlDataAdapter TemplateItemReadableFiller = new SqlDataAdapter(
+					cmd.GetSqlCommand(
+					"SELECT TemplateItemReadable.*, " +
+					"TemplateObject.TemplateObjectName, " +
+					"TemplateItem.Value, " +
+					"TemplateItem.Weight, " +
+					"TemplateItem.EnumItemDurabilityID " +
+					"FROM TemplateItemReadable " +
+					"INNER JOIN TemplateItem " +
+					"ON TemplateItemReadable.TemplateObjectID = TemplateItem.TemplateObjectID " +
+					"INNER JOIN TemplateObject " +
+					"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+					"ORDER BY TemplateObjectName "));
+
+				DataTable TemplateItemReadables = new DataTable();
+				
+				TemplateItemReadableFiller.Fill(TemplateItemReadables);
+				TemplateItemReadableList.DataSource = TemplateItemReadables;
+				TemplateItemReadableList.DataBind();
+
+				SqlDataAdapter TemplateItemWieldableFiller = new SqlDataAdapter(
+					cmd.GetSqlCommand(
+					"SELECT TemplateItemWieldable.*, " +
+					"TemplateObject.TemplateObjectName, " +
+					"TemplateItem.Value, " +
+					"TemplateItem.Weight, " +
+					"TemplateItem.EnumItemDurabilityID " +
+					"FROM TemplateItemWieldable " +
+					"INNER JOIN TemplateItem " +
+					"ON TemplateItemWieldable.TemplateObjectID = TemplateItem.TemplateObjectID " +
+					"INNER JOIN TemplateObject " +
+					"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+					"ORDER BY TemplateObjectName "));
+
+				DataTable TemplateItemWieldables = new DataTable();
+				
+				TemplateItemWieldableFiller.Fill(TemplateItemWieldables);
+				TemplateItemWieldableList.DataSource = TemplateItemWieldables;
+				TemplateItemWieldableList.DataBind();
+
+				SqlDataAdapter TemplateTerrainFiller = new SqlDataAdapter(
+					cmd.GetSqlCommand(
+					"SELECT TemplateTerrain.*, " +
+					"TemplateObject.TemplateObjectName " +
+					"FROM TemplateTerrain " +
+					"INNER JOIN TemplateObject " +
+					"ON TemplateTerrain.TemplateObjectID = TemplateObject.TemplateObjectID " +
+					"ORDER BY TemplateObjectName "));
+
+				DataTable TemplateTerrains = new DataTable();
+				
+				TemplateTerrainFiller.Fill(TemplateTerrains);
+				TemplateTerrainList.DataSource = TemplateTerrains;
+				TemplateTerrainList.DataBind();
+
 								}
 			catch(Exception ex)
 			{

@@ -1,4 +1,4 @@
-<%@ Page language="c#" Codebehind="TemplateItemJunk.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.objects.TemplateItemJunk" %>
+<%@ Page language="c#" Codebehind="TemplateItemQuaffable.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.objects.TemplateItemQuaffable" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
@@ -36,7 +36,12 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><asp:CheckBox ID="Takeable" Runat="Server" CssClass="label" Text="Takeable" /></td>
+			<td><span class="label">Liquid Type</span></td>
+			<td><asp:DropDownList ID="EnumLiquidTypeID" DataValueField="EnumLiquidTypeID" DataTextField="EnumLiquidTypeName"
+					CssClass="Input" runat="server" /></td>
+			<td><span class="label">Capacity</span></td>
+			<td><asp:TextBox ID="Capacity" SIze="4" CssClass="Input" Runat="Server" />
+			</td>
 		</tr>
 		<tr>
 			<td colspan="4"><hr>

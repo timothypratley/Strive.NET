@@ -12,62 +12,56 @@ using System.Data.SqlClient;
 using www.strive3d.net.Game;
 using thisterminal.Web;
 
-
 namespace www.strive3d.net.players.builders.objects
 {
 	/// <summary>
-	/// Summary description for TemplateItemJunk.
+	/// Summary description for TemplateTerrain.
 	/// </summary>
-	public class TemplateItemJunk : GenericSpecialiser
+	public class TemplateTerrain : GenericSpecialiser
 	{
 		protected System.Web.UI.WebControls.TextBox TemplateObjectName;
 		protected System.Web.UI.WebControls.DropDownList ResourceID;
-		protected System.Web.UI.WebControls.TextBox Height;
-		protected System.Web.UI.WebControls.TextBox Value;
-		protected System.Web.UI.WebControls.TextBox Weight;
-		protected System.Web.UI.WebControls.DropDownList EnumItemDurabilityID;
+		protected System.Web.UI.HtmlControls.HtmlInputHidden Height;
+		protected System.Web.UI.WebControls.DropDownList EnumTerrainTypeID;
+#if FOO
 		protected System.Web.UI.WebControls.Button Save;
 		protected System.Web.UI.WebControls.Button Cancel;
-		protected System.Web.UI.WebControls.CheckBox Takeable;
+#endif
+		protected System.Web.UI.HtmlControls.HtmlInputHidden AreaID;
 
-	
-		public TemplateItemJunk() : base("ItemJunk")
-		{
-
+		public TemplateTerrain() : base( "Terrain" ) {
 		}
-
+	
 		private void Page_Load(object sender, System.EventArgs e)
 		{
+			// Put user code to initialize the page here
+			// setup dropdowns
 			if(!IsPostBack)
 			{
 				CommandFactory cmd = new CommandFactory();
-				try
-				{
-					DataTable EnumItemDurabilitys = new DataTable();
-					SqlDataAdapter EnumItemDurabilityFiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM EnumItemDurability ORDER BY BaseHitpointsEnergy "));
-					EnumItemDurabilityFiller.Fill(EnumItemDurabilitys);
-					EnumItemDurabilityID.DataSource = EnumItemDurabilitys;
-					EnumItemDurabilityID.DataBind();
-					EnumItemDurabilityID.Items.Insert(0, new ListItem("(select)", ""));
-
-					DataTable ResourceIDs = new DataTable();
-					SqlDataAdapter ResourceIDFiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM Resource WHERE EnumResourceTypeID = 3"));
-					ResourceIDFiller.Fill(ResourceIDs);
-
-					ResourceID.DataSource = ResourceIDs;
+				try {
+					DataTable Resources = new DataTable();
+					SqlDataAdapter ResourceFiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM Resource WHERE EnumResourceTypeID = 1 ORDER BY ResourceName ASC"));
+					ResourceFiller.Fill(Resources);
+					ResourceID.DataSource = Resources;
 					ResourceID.DataBind();
-
 					ResourceID.Items.Insert(0, new ListItem("(select)", ""));
-				}
-				catch(Exception ex)
-				{
+
+					DataTable EnumTerrainTypes = new DataTable();
+					SqlDataAdapter EnumTerrainTypeFiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM EnumTerrainType ORDER BY EnumTerrainTypeName ASC"));
+					EnumTerrainTypeFiller.Fill(EnumTerrainTypes);
+					EnumTerrainTypeID.DataSource = EnumTerrainTypes;
+					EnumTerrainTypeID.DataBind();
+					EnumTerrainTypeID.Items.Insert(0, new ListItem("(select)", ""));
+				} catch(Exception ex) {
 					throw ex;
 				}
-				finally
-				{
+				finally {
 					cmd.Close();
 				}
 			}
+
+
 		}
 
 		#region Web Form Designer generated code

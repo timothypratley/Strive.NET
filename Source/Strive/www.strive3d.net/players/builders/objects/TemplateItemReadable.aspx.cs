@@ -12,45 +12,54 @@ using System.Data.SqlClient;
 using www.strive3d.net.Game;
 using thisterminal.Web;
 
-
 namespace www.strive3d.net.players.builders.objects
 {
 	/// <summary>
-	/// Summary description for TemplateItemJunk.
+	/// Summary description for TemplateItemReadable.
 	/// </summary>
-	public class TemplateItemJunk : GenericSpecialiser
+	public class TemplateItemReadable : GenericSpecialiser
 	{
 		protected System.Web.UI.WebControls.TextBox TemplateObjectName;
 		protected System.Web.UI.WebControls.DropDownList ResourceID;
 		protected System.Web.UI.WebControls.TextBox Height;
 		protected System.Web.UI.WebControls.TextBox Value;
 		protected System.Web.UI.WebControls.TextBox Weight;
-		protected System.Web.UI.WebControls.DropDownList EnumItemDurabilityID;
+		protected System.Web.UI.WebControls.TextBox ArmourClass;
+#if FOO
 		protected System.Web.UI.WebControls.Button Save;
 		protected System.Web.UI.WebControls.Button Cancel;
-		protected System.Web.UI.WebControls.CheckBox Takeable;
+	#endif
+		protected System.Web.UI.WebControls.TextBox Title;
+		protected System.Web.UI.WebControls.TextBox Content;
+		protected System.Web.UI.WebControls.Button Save;
+		protected System.Web.UI.WebControls.Button Cancel;
+
+
+
+		protected System.Web.UI.WebControls.DropDownList EnumItemDurabilityID;
 
 	
-		public TemplateItemJunk() : base("ItemJunk")
+		public TemplateItemReadable() : base("ItemReadable")
 		{
-
 		}
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
+			// Put user code to initialize the page here
+			// setup dropdowns
 			if(!IsPostBack)
 			{
 				CommandFactory cmd = new CommandFactory();
 				try
 				{
-					DataTable EnumItemDurabilitys = new DataTable();
+								DataTable EnumItemDurabilitys = new DataTable();
 					SqlDataAdapter EnumItemDurabilityFiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM EnumItemDurability ORDER BY BaseHitpointsEnergy "));
 					EnumItemDurabilityFiller.Fill(EnumItemDurabilitys);
 					EnumItemDurabilityID.DataSource = EnumItemDurabilitys;
 					EnumItemDurabilityID.DataBind();
 					EnumItemDurabilityID.Items.Insert(0, new ListItem("(select)", ""));
 
-					DataTable ResourceIDs = new DataTable();
+							DataTable ResourceIDs = new DataTable();
 					SqlDataAdapter ResourceIDFiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM Resource WHERE EnumResourceTypeID = 3"));
 					ResourceIDFiller.Fill(ResourceIDs);
 
@@ -58,7 +67,8 @@ namespace www.strive3d.net.players.builders.objects
 					ResourceID.DataBind();
 
 					ResourceID.Items.Insert(0, new ListItem("(select)", ""));
-				}
+					
+				} 
 				catch(Exception ex)
 				{
 					throw ex;
@@ -68,6 +78,7 @@ namespace www.strive3d.net.players.builders.objects
 					cmd.Close();
 				}
 			}
+
 		}
 
 		#region Web Form Designer generated code
@@ -90,5 +101,6 @@ namespace www.strive3d.net.players.builders.objects
 
 		}
 		#endregion
+
 	}
 }

@@ -28,6 +28,10 @@ namespace www.strive3d.net.players.builders.objects
 		protected System.Web.UI.WebControls.TextBox ArmourClass;
 		protected System.Web.UI.WebControls.Button Save;
 		protected System.Web.UI.WebControls.Button Cancel;
+#if FOO
+		protected System.Web.UI.WebControls.Button Save;
+		protected System.Web.UI.WebControls.Button Cancel;
+#endif
 
 
 

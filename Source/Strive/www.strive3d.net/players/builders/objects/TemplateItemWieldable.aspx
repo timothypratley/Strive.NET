@@ -1,4 +1,4 @@
-<%@ Page language="c#" Codebehind="TemplateItemJunk.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.objects.TemplateItemJunk" %>
+<%@ Page language="c#" Codebehind="TemplateItemWieldable.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.objects.TemplateItemWieldable" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
@@ -36,7 +36,20 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"><asp:CheckBox ID="Takeable" Runat="Server" CssClass="label" Text="Takeable" /></td>
+			<td><span class="label">Damage Type</span></td>
+			<td><asp:DropDownList ID="EnumDamageTypeID" DataValueField="EnumDamageTypeID" DataTextField="EnumDamageTypeName"
+					CssClass="Input" runat="server" /></td>
+			<td><span class="label">Size</span></td>
+			<td><asp:DropDownList ID="EnumWeaponSizeID" DataValueField="EnumWeaponSizeID" DataTextField="EnumWeaponSizeName"
+					CssClass="Input" runat="server" /></td>
+		</tr>
+		<tr>
+			<td><span class="label">Damage Roll</span></td>
+			<td><asp:TextBox ID="Damage" SIze="4" CssClass="Input" Runat="Server" />
+			</td>
+			<td><span class="label">Hit Roll</span></td>
+			<td><asp:TextBox ID="Hitroll" SIze="4" CssClass="Input" Runat="Server" />
+			</td>
 		</tr>
 		<tr>
 			<td colspan="4"><hr>

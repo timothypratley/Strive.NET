@@ -31,6 +31,12 @@ namespace www.strive3d.net.players.builders.objects
 		protected System.Web.UI.WebControls.TextBox Dexterity;
 		protected System.Web.UI.WebControls.DropDownList EnumSexID;
 		protected System.Web.UI.WebControls.TextBox Level;
+		protected System.Web.UI.WebControls.Button Save;
+		protected System.Web.UI.WebControls.Button Cancel;
+#if FOO
+		protected System.Web.UI.WebControls.Button Save;
+		protected System.Web.UI.WebControls.Button Cancel;
+#endif
 		protected System.Web.UI.WebControls.DropDownList EnumMobileStateID;
 		public TemplateMobile() : base("Mobile")
 		{
