@@ -57,6 +57,10 @@ namespace Strive.Server.Shared {
 			squaresInX = (int)(highX-lowX)/Square.squareSize + 1;
 			squaresInZ = (int)(highZ-lowZ)/Square.squareSize + 1;
 
+			if ( squaresInX * squaresInZ > 10000 ) {
+				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize );
+			}
+
 			// allocate the grid of squares used for grouping
 			// physical objects that are close to each other
 			squares = new Square[squaresInX,squaresInZ];
