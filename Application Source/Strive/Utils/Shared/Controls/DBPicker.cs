@@ -34,7 +34,8 @@ namespace Strive.Utils.Shared.Controls
 		private SQLDMO.Application SQLDMOApplication;
 		private SQLDMO.SQLServer SQLDMOServer;
 		private System.Windows.Forms.Label DatabasesLabel;
-		private System.Windows.Forms.TextBox ConnectionStatus; 
+		private System.Windows.Forms.TextBox ConnectionStatus;
+		private System.Windows.Forms.Button Register; 
 		private SQLDMO.Database SQLDMODatabase;
 		
 
@@ -83,6 +84,8 @@ namespace Strive.Utils.Shared.Controls
 			this.label1 = new System.Windows.Forms.Label();
 			this.servers = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.Register = new System.Windows.Forms.Button();
+			this.ConnectionStatus = new System.Windows.Forms.TextBox();
 			this.DatabaseStatus = new System.Windows.Forms.Label();
 			this.DatabasesLabel = new System.Windows.Forms.Label();
 			this.Databases = new System.Windows.Forms.ComboBox();
@@ -93,7 +96,6 @@ namespace Strive.Utils.Shared.Controls
 			this.UserName = new System.Windows.Forms.TextBox();
 			this.UseSQLAuthentication = new System.Windows.Forms.RadioButton();
 			this.UseTrustedAuthentication = new System.Windows.Forms.RadioButton();
-			this.ConnectionStatus = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -111,12 +113,13 @@ namespace Strive.Utils.Shared.Controls
 			this.servers.Location = new System.Drawing.Point(72, 24);
 			this.servers.Name = "servers";
 			this.servers.Size = new System.Drawing.Size(152, 24);
-			this.servers.TabIndex = 1;
-			this.servers.SelectedIndexChanged += new System.EventHandler(this.servers_SelectedIndexChanged);
+			this.servers.TabIndex = 0;
+			this.servers.TextChanged += new System.EventHandler(this.servers_SelectedIndexChanged);
 			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.AddRange(new System.Windows.Forms.Control[] {
+																					this.Register,
 																					this.ConnectionStatus,
 																					this.DatabaseStatus,
 																					this.DatabasesLabel,
@@ -137,6 +140,26 @@ namespace Strive.Utils.Shared.Controls
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Specify a Server";
+			// 
+			// Register
+			// 
+			this.Register.Enabled = false;
+			this.Register.Location = new System.Drawing.Point(16, 88);
+			this.Register.Name = "Register";
+			this.Register.TabIndex = 13;
+			this.Register.Text = "Remember";
+			this.Register.Click += new System.EventHandler(this.Register_Click);
+			// 
+			// ConnectionStatus
+			// 
+			this.ConnectionStatus.Location = new System.Drawing.Point(104, 56);
+			this.ConnectionStatus.Multiline = true;
+			this.ConnectionStatus.Name = "ConnectionStatus";
+			this.ConnectionStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.ConnectionStatus.Size = new System.Drawing.Size(272, 56);
+			this.ConnectionStatus.TabIndex = 0;
+			this.ConnectionStatus.TabStop = false;
+			this.ConnectionStatus.Text = "";
 			// 
 			// DatabaseStatus
 			// 
@@ -225,19 +248,9 @@ namespace Strive.Utils.Shared.Controls
 			this.UseTrustedAuthentication.Location = new System.Drawing.Point(248, 24);
 			this.UseTrustedAuthentication.Name = "UseTrustedAuthentication";
 			this.UseTrustedAuthentication.Size = new System.Drawing.Size(136, 24);
-			this.UseTrustedAuthentication.TabIndex = 2;
+			this.UseTrustedAuthentication.TabIndex = 1;
 			this.UseTrustedAuthentication.Text = "Use Trusted Security";
 			this.UseTrustedAuthentication.CheckedChanged += new System.EventHandler(this.UseTrustedAuthentication_CheckedChanged);
-			// 
-			// ConnectionStatus
-			// 
-			this.ConnectionStatus.Location = new System.Drawing.Point(104, 56);
-			this.ConnectionStatus.Multiline = true;
-			this.ConnectionStatus.Name = "ConnectionStatus";
-			this.ConnectionStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.ConnectionStatus.Size = new System.Drawing.Size(272, 56);
-			this.ConnectionStatus.TabIndex = 13;
-			this.ConnectionStatus.Text = "";
 			// 
 			// DBPicker
 			// 
@@ -269,11 +282,8 @@ namespace Strive.Utils.Shared.Controls
 
 		private void servers_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if(servers.SelectedIndex >= 0)
-			{
-				UseTrustedAuthentication.Enabled = true;
-				UseSQLAuthentication.Enabled = true;
-			}
+			UseTrustedAuthentication.Enabled = true;
+			UseSQLAuthentication.Enabled = true;
 		}
 
 		private void UseTrustedAuthentication_CheckedChanged(object sender, System.EventArgs e)
@@ -330,6 +340,7 @@ namespace Strive.Utils.Shared.Controls
 			catch(Exception)
 			{
 			}
+			Register.Enabled = true;
 		}
 		
 		private void populateDatabases()
@@ -357,6 +368,56 @@ namespace Strive.Utils.Shared.Controls
 					SQLDMODatabase);
 				OnDatabaseSelected(dbArgs);
 			}
+		}
+
+		private void Register_Click(object sender, System.EventArgs e)
+		{
+			const string DEFAULTGROUPNAME = "DBPicker";
+
+			ServerGroup s = null;
+
+			// Look for default group
+			foreach(ServerGroup g in SQLDMOApplication.ServerGroups)
+			{
+				if(g.Name == DEFAULTGROUPNAME)
+				{
+					s = g;
+					break;
+				}
+			}
+
+			// Create and add default group if it doesn't exist
+			if(s == null)
+			{
+				s = new SQLDMO.ServerGroupClass();
+				s.Name = DEFAULTGROUPNAME;
+				SQLDMOApplication.ServerGroups.Add(s);
+			}
+
+
+			// return if server already registered in a group
+			foreach(ServerGroup enumServerGroup in SQLDMOApplication.ServerGroups)
+			{
+				foreach(RegisteredServer r in enumServerGroup.RegisteredServers)
+				{
+					if(r.Name == SQLDMOServer.Name)
+					{
+						MessageBox.Show(this, "Already regstered in group '" + enumServerGroup.Name + "'.");
+						return;
+					}
+				}
+			}
+
+			RegisteredServer t = new RegisteredServerClass();
+
+			t.Name = SQLDMOServer.Name;
+			t.Login = SQLDMOServer.Login;
+			t.Password = SQLDMOServer.Password;
+			t.UseTrustedConnection = (UseTrustedAuthentication.Checked == true ? 1 : 0);
+			
+			s.RegisteredServers.Add(t);
+
+			MessageBox.Show(this, "Registered '" + SQLDMOServer.Name + "'.");
 		}
 
 		public class DatabaseSelectedEventArgs : System.EventArgs

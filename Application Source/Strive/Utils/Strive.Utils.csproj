@@ -163,6 +163,16 @@
                     DependentUpon = "DBPicker.cs"
                     BuildAction = "EmbeddedResource"
                 />
+                <File
+                    RelPath = "StoredProcedureUI\WinMain.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "StoredProcedureUI\WinMain.resx"
+                    DependentUpon = "WinMain.cs"
+                    BuildAction = "EmbeddedResource"
+                />
             </Include>
         </Files>
     </CSHARP>
