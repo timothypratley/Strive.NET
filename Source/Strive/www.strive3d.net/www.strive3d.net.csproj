@@ -95,14 +95,19 @@
                     HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Web.Mobile.dll"
                 />
                 <Reference
+                    Name = "thisterminal.Common"
+                    AssemblyName = "thisterminal.Common"
+                    HintPath = "ReferencedAssemblies\thisterminal.Common.dll"
+                />
+                <Reference
                     Name = "thisterminal.Web"
                     AssemblyName = "thisterminal.Web"
                     HintPath = "ReferencedAssemblies\thisterminal.Web.dll"
                 />
                 <Reference
-                    Name = "thisterminal.Common"
-                    AssemblyName = "thisterminal.Common"
-                    HintPath = "ReferencedAssemblies\thisterminal.Common.dll"
+                    Name = "Strive.Math3D"
+                    Project = "{14818E27-DABB-4332-B572-21BA9983D886}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
         </Build>
@@ -1038,6 +1043,22 @@
                     DependentUpon = "default.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
+                <File
+                    RelPath = "players\builders\resources\deleteresource.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\resources\deleteresource.aspx.cs"
+                    DependentUpon = "deleteresource.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\resources\deleteresource.aspx.resx"
+                    DependentUpon = "deleteresource.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
                 <Folder RelPath = "players\builders\resources\texture\" />
                 <File
                     RelPath = "players\builders\terrain\default.aspx"
@@ -1127,6 +1148,22 @@
                 <File
                     RelPath = "players\builders\terrain2\editterrainpiece.aspx.resx"
                     DependentUpon = "editterrainpiece.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\editterrainpieceobjectinstance.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\editterrainpieceobjectinstance.aspx.cs"
+                    DependentUpon = "editterrainpieceobjectinstance.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\editterrainpieceobjectinstance.aspx.resx"
+                    DependentUpon = "editterrainpieceobjectinstance.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

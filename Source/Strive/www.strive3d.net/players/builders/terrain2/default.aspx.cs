@@ -29,8 +29,8 @@ namespace www.strive3d.net.players.builders.terrain2
 		{
 			if(!IsPostBack)
 			{
-				TextBox1.Text = "1000";
-				TextBox2.Text = "1000";
+				TextBox1.Text = "100";
+				TextBox2.Text = "100";
 			}
 			CommandFactory cmd = new CommandFactory();
 			try

@@ -99,6 +99,8 @@ namespace www.strive3d.net
 				System.Drawing.RotateFlipType rotateType = RotateFlipType.RotateNoneFlipNone;
 				switch(rotation)
 				{
+					case 0:
+						break;
 					case 90:
 					{
 						rotateType = RotateFlipType.Rotate90FlipNone;
@@ -114,6 +116,8 @@ namespace www.strive3d.net
 						rotateType = RotateFlipType.Rotate270FlipNone;
 						break;
 					}
+					default:
+						throw new Exception( "bugger" );
 				}
 				newBitmap.RotateFlip(rotateType);
 				System.IO.MemoryStream newImage = new System.IO.MemoryStream();

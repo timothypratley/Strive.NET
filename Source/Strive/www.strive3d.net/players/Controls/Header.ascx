@@ -26,5 +26,5 @@
 		<br /><Controls:Login runat="server" /></td>
 	</tr>
 	<tr >
-		<td height="100%" align="left" class="Content">
+		<td height="100%" align="left" valign="top" class="Content">
   

@@ -13,7 +13,7 @@
 					</tr>
 					<tr>
 						<td><asp:Button ID="Higher" Text="+" Runat="server" /></td>
-						<td><%=Math.Round(Altitude, 0).ToString()%></td>
+						<td bgcolor="white"><%=Math.Round(Altitude, 0).ToString()%></td>
 						<td><asp:Button ID="Lower" Text="-" Runat="server" /></td>
 					</tr>
 					<tr>

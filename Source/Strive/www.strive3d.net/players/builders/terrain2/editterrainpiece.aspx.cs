@@ -27,7 +27,11 @@ namespace www.strive3d.net.players.builders.terrain2
 		protected System.Web.UI.WebControls.TextBox Altitude;
 		protected System.Web.UI.HtmlControls.HtmlInputHidden referer;
 		protected int ObjectInstanceID;
+		protected float TerrainX;
+		protected float TerrainZ;
+		protected System.Web.UI.WebControls.Repeater TemplateItemJunkList;
 		protected DataTable textures;
+		
 	
 		private void Page_Load(object sender, System.EventArgs e)
 		{
@@ -44,9 +48,8 @@ namespace www.strive3d.net.players.builders.terrain2
 				CommandFactory cmd = new CommandFactory();
 				try {
 
-				SqlDataAdapter texturefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM Resource WHERE EnumResourceTypeID = 1 ORDER BY ResourceName"));
+				SqlDataAdapter texturefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT *, LTrim(IsNull(ResourcePak, '') + ' ' + ResourceName) AS ResourceDisplayName FROM Resource WHERE EnumResourceTypeID = 1 ORDER BY ResourceDisplayName"));
 				SqlDataAdapter terraintypefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM EnumTerrainType ORDER BY EnumTerrainTypeName"));
-
 				textures = new DataTable();
 				// add to viewstate for handy stuff
 				ViewState.Add("textures", textures);
@@ -73,7 +76,39 @@ namespace www.strive3d.net.players.builders.terrain2
 						ResourceID.SelectedIndex = ResourceID.Items.IndexOf(ResourceID.Items.FindByValue(oDr["ResourceID"].ToString()));
                         EnumTerrainID.SelectedIndex = EnumTerrainID.Items.IndexOf(EnumTerrainID.Items.FindByValue(oDr["EnumTerrainTypeID"].ToString()));
 						Altitude.Text = oDr["Y"].ToString();
-						oDr.Close();
+
+						TerrainX = float.Parse(oDr["X"].ToString());
+						TerrainZ = float.Parse(oDr["Z"].ToString());
+					oDr.Close();
+						SqlDataAdapter TemplateItemJunkFiller = new SqlDataAdapter(
+							cmd.GetSqlCommand(
+							"SELECT TemplateItemJunk.*, " +
+							"TemplateObject.TemplateObjectName, " +
+							"TemplateItem.Value, " +
+							"TemplateItem.Weight, " +
+							"ObjectInstance.ObjectInstanceID , " +
+							"TemplateItem.EnumItemDurabilityID " +
+							"FROM TemplateItemJunk " +
+							"INNER JOIN TemplateItem " +
+							"ON TemplateItemJunk.TemplateObjectID = TemplateItem.TemplateObjectID " +
+							"INNER JOIN TemplateObject " +
+							"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+							"INNER JOIN ObjectInstance  " +
+							"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+							"AND ObjectInstance.X >= " + TerrainX +
+							" AND ObjectInstance.Z >= " + TerrainZ +
+							" AND ObjectInstance.X < " + (TerrainX + 10) +
+							" AND ObjectInstance.Z < " + (TerrainZ + 10) +
+							" ORDER BY TemplateObjectName "));
+
+						DataTable TemplateItemJunkInSquare = new DataTable();
+						TemplateItemJunkFiller.Fill(TemplateItemJunkInSquare);
+						TemplateItemJunkList.DataSource = TemplateItemJunkInSquare;
+						TemplateItemJunkList.DataBind();
+
+						
+
+	
 					}
 				}
 
@@ -83,7 +118,7 @@ namespace www.strive3d.net.players.builders.terrain2
 			}
 			catch(Exception c)
 			{
-				throw c;
+				throw new Exception("EditTerrainPiece.Page_Load", c);
 			}
 			finally
 			{
