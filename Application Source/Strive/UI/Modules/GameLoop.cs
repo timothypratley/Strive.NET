@@ -118,6 +118,59 @@ namespace Strive.UI.Modules
 				}
 
 					#endregion
+					#region CombatReport Message
+				else if ( m is Strive.Network.Messages.ToClient.CombatReport ) {
+					Strive.Network.Messages.ToClient.CombatReport cr = m as Strive.Network.Messages.ToClient.CombatReport;
+					switch ( cr.combat_event ) {
+						case EnumCombatEvent.Attacks:
+							Global._log.LogMessage(
+								cr.attackerObjectInstanceID.ToString() + " attacks " + cr.targetObjectInstanceID.ToString() + "!" );
+							break;
+						case EnumCombatEvent.Avoids:
+							Global._log.LogMessage(
+								cr.targetObjectInstanceID.ToString() + " avoids " + cr.attackerObjectInstanceID.ToString() + "." );
+							break;
+						case EnumCombatEvent.FleeFails:
+							Global._log.LogMessage(
+								cr.attackerObjectInstanceID.ToString() + " attempts to flee but fails." );
+							break;
+						case EnumCombatEvent.FleeSuccess:
+							Global._log.LogMessage(
+								cr.attackerObjectInstanceID.ToString() + " flees!" );
+							break;
+						case EnumCombatEvent.Hits:
+							Global._log.LogMessage(
+								cr.attackerObjectInstanceID.ToString() + " hits " + cr.targetObjectInstanceID.ToString() + " for " + cr.damage + " damage." );
+							break;
+						case EnumCombatEvent.Misses:
+							Global._log.LogMessage(
+								cr.attackerObjectInstanceID.ToString() + " misses " + cr.targetObjectInstanceID.ToString() + "." );
+							break;
+						default:
+							Global._log.ErrorMessage(
+								"Unknown CombatEvent " + cr.combat_event );
+							break;
+					}
+				}
+				#endregion
+				#region DropPhysicalObject Message
+				else if ( m is Strive.Network.Messages.ToClient.DropPhysicalObject) {
+					Strive.Network.Messages.ToClient.DropPhysicalObject dpo = (Strive.Network.Messages.ToClient.DropPhysicalObject)m;
+					_scene.Models.Remove( dpo.instance_id );
+				}
+				#endregion
+				#region MobileState
+				else if ( m is Strive.Network.Messages.ToClient.MobileState) {
+					Strive.Network.Messages.ToClient.MobileState ms = (Strive.Network.Messages.ToClient.MobileState)m;
+					Global._log.LogMessage( "Mobile " + ms.ObjectInstanceID + " is " + ms.State );
+				}
+				#endregion
+				#region CurrentHitpoints
+				else if ( m is Strive.Network.Messages.ToClient.CurrentHitpoints) {
+					Strive.Network.Messages.ToClient.CurrentHitpoints chp = (Strive.Network.Messages.ToClient.CurrentHitpoints)m;
+					Global._log.LogMessage( "You now have " + chp.HitPoints );
+				}
+				#endregion
 			}
 
 				#endregion
@@ -181,14 +234,15 @@ namespace Strive.UI.Modules
 			if(WasKeyboardInput) {
 				_scene.View.Position = cameraPosition;
 				_scene.View.Rotation = cameraRotation;
-				Network.Messages.ToServer.Position pos = new Network.Messages.ToServer.Position();
 				Vector3D cameraHeading = GetHeadingFromRotation( cameraRotation );
-				pos.heading_x = cameraHeading.X;
-				pos.heading_y = cameraHeading.Y;
-				pos.heading_z = cameraHeading.Z;
-				pos.position_x = _scene.View.Position.X;
-				pos.position_y = _scene.View.Position.Y;
-				pos.position_z = _scene.View.Position.Z;
+				Network.Messages.ToServer.Position pos = new Network.Messages.ToServer.Position(
+					_scene.View.Position.X,
+					_scene.View.Position.Y,
+					_scene.View.Position.Z,
+					cameraHeading.X,
+					cameraHeading.Y,
+					cameraHeading.Z
+				);
 				_connection.Send(pos);
 			}
 

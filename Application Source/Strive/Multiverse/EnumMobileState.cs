@@ -6,6 +6,7 @@ namespace Strive.Multiverse
 	/// Summary description for EnumMobileState.
 	/// </summary>
 	public enum EnumMobileState	{
-		Dead, Incapacitated, Sleeping, Resting, Standing, Walking, Running
+		Dead, Incapacitated, Sleeping,
+		Resting, Standing, Walking, Running, Fighting
 	}
 }

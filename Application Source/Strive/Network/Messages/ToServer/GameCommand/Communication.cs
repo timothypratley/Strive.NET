@@ -6,8 +6,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// Summary description for Communication.
 	/// </summary>
 	[Serializable]
-	public struct Communication : IMessage
-	{
+	public class Communication : IMessage {
 		public Communication( CommunicationType communicationType, string message )
 		{
 			this.communicationType = communicationType;

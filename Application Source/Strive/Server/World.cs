@@ -6,8 +6,10 @@ using System.Collections;
 using System.Threading;
 
 using Strive.Network.Server;
+using Strive.Network.Messages;
 using Strive.Multiverse;
 using Strive.Math3D;
+using Strive.Data;
 
 namespace Strive.Server {
 	public class World {
@@ -17,19 +19,18 @@ namespace Strive.Server {
 		double lowZ = -100000.0;
 		int squaresInX = 1;
 		int squaresInZ = 1;
-		int squareSize = 10000;
 		
 		// the multiverse schema is used for dataset access
 		Schema multiverse;
 		// squares are used to group physical objects
 		protected Square[,] squares;
 		// all physical objects are indexed in a hashtable
-		protected Hashtable physicalObjects = new Hashtable();
+		public Hashtable physicalObjects = new Hashtable();
 		protected ArrayList mobilesArrayList = new ArrayList();
 
 		public World() {
 			System.Console.WriteLine( "Loading world..." );
-			multiverse = Data.MultiverseFactory.loadMultiverse();
+			multiverse = Strive.Data.MultiverseFactory.loadMultiverse();
 
 			// find highX and lowX for our world dimensions
 			highX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
@@ -38,8 +39,8 @@ namespace Strive.Server {
 			lowZ = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
 
 			// figure out how many squares we need
-			squaresInX = (int)(highX-lowX)/squareSize + 1;
-			squaresInZ = (int)(highZ-lowZ)/squareSize + 1;
+			squaresInX = (int)(highX-lowX)/Square.squareSize + 1;
+			squaresInZ = (int)(highZ-lowZ)/Square.squareSize + 1;
 
 			// allocate the grid of squares used for grouping
 			// physical objects that are close to each other
@@ -124,6 +125,13 @@ namespace Strive.Server {
 				}
 			}
 			System.Console.WriteLine( "Loaded world" );
+
+			// Calculate Terrain heightmaps
+			for ( int i=0; i<squaresInX; i++ ) {
+				for ( int j=0; j<squaresInZ; j++ ) {
+					squares[i,j].CalculateHeightMap();
+				}
+			}
 		}
 
 		public void Update() {
@@ -142,76 +150,37 @@ namespace Strive.Server {
 				System.Console.WriteLine( "ERROR: tried to add physical object outside the world" );
 				return;
 			}
-			int squareX = (int)(po.Position.X-lowX)/squareSize;
-			int squareZ = (int)(po.Position.Z-lowZ)/squareSize;
-			int i, j;
 
-			// if a new client has entered the world,
-			// notify them about surrounding physical objects
-			if ( po is MobileAvatar ) {
-				Client client = ((MobileAvatar)po).client;
-				if ( client != null ) {
-					ArrayList nearbyPhysicalObjects = new ArrayList();
-					ArrayList nearbyClients = new ArrayList();
-					for ( i=-1; i<=1; i++ ) {
-						for ( j=-1; j<=1; j++ ) {
-							// check that neigbour exists
-							if (
-								squareX+i < 0 || squareX+i >= squaresInX
-								|| squareZ+j < 0 || squareZ+j >= squaresInZ
-								) {
-								continue;
-							}
-							// add all neighbouring physical objects
-							// to the clients world view
-							foreach ( PhysicalObject p in squares[squareX+i,squareZ+j].physicalObjects ) {
-								nearbyPhysicalObjects.Add( p );
-							}
-						}
-					}
-					/*
-					Strive.Network.Messages.ToClient.AddPhysicalObjects message = new Strive.Network.Messages.ToClient.AddPhysicalObjects(
-						nearbyPhysicalObjects
-					);
-					client.Send( message );
-					*/
-					foreach ( PhysicalObject p in nearbyPhysicalObjects ) {
-						Strive.Network.Messages.ToClient.AddPhysicalObject message = new Strive.Network.Messages.ToClient.AddPhysicalObject( p );
-						client.Send( message );
-					}
-				}
-			}
-
-			// notify all nearby clients that a new
-			// physical object has entered the world
-			for ( i=-1; i<=1; i++ ) {
-				for ( j=-1; j<=1; j++ ) {
-					// check that neigbour exists
-					if (
-						squareX+i < 0 || squareX+i >= squaresInX
-						|| squareZ+j < 0 || squareZ+j >= squaresInZ
-					) {
-						continue;
-					}
-					// need to send a message to all nearby clients
-					squares[squareX+i, squareZ+j].NotifyClientsAdd( po );
-				}
-			}
-
-			// actually add the object to the world
+			// add the object to the world
 			physicalObjects.Add( po.ObjectInstanceID, po );
 			if ( po is Mobile ) {
 				mobilesArrayList.Add( po );
 			}
+			int squareX = (int)(po.Position.X-lowX)/Square.squareSize;
+			int squareZ = (int)(po.Position.Z-lowZ)/Square.squareSize;
 			squares[squareX,squareZ].Add( po );
+
+			// notify all nearby clients that a new
+			// physical object has entered the world
+			InformNearby( po, new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
+
 			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ")" );
 		}
 
+		public void Remove( PhysicalObject po ) {
+			int squareX = (int)(po.Position.X-lowX)/Square.squareSize;
+			int squareZ = (int)(po.Position.Z-lowZ)/Square.squareSize;
+			InformNearby( po, new Strive.Network.Messages.ToClient.DropPhysicalObject( po ) );
+			squares[squareX,squareZ].Remove( po );
+			physicalObjects.Remove( po.ObjectInstanceID );
+			System.Console.WriteLine( "Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world." );
+		}
+
 		public void Relocate( PhysicalObject po, Vector3D newPos ) {
-			int fromSquareX = (int)po.Position.X/squareSize;
-			int fromSquareZ = (int)po.Position.Z/squareSize;
-			int toSquareX = (int)newPos.X/squareSize;
-			int toSquareZ = (int)newPos.Z/squareSize;
+			int fromSquareX = (int)po.Position.X/Square.squareSize;
+			int fromSquareZ = (int)po.Position.Z/Square.squareSize;
+			int toSquareX = (int)newPos.X/Square.squareSize;
+			int toSquareZ = (int)newPos.Z/Square.squareSize;
 			int i, j;
 			Strive.Network.Messages.ToClient.Position message = new Strive.Network.Messages.ToClient.Position( po );
 
@@ -225,20 +194,24 @@ namespace Strive.Server {
 							fromSquareX+i >= 0 && fromSquareX+i < squaresInX
 							&& fromSquareZ+j >= 0 && fromSquareZ+j < squaresInZ
 						) {
-							squares[fromSquareX+i, fromSquareZ+j].NotifyClientsRemove( po );
+							squares[fromSquareX+i, fromSquareZ+j].NotifyClients(
+								new Strive.Network.Messages.ToClient.DropPhysicalObject( po )
+							);
 						}
 						if (
 							toSquareX+i >= 0 && toSquareX+i < squaresInX
 							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
 						) {
-							squares[toSquareX-i, toSquareZ-j].NotifyClientsAdd( po );
+							squares[toSquareX-i, toSquareZ-j].NotifyClients(
+								new Strive.Network.Messages.ToClient.DropPhysicalObject( po )
+							);
 						}
 					}
 					if (
 						toSquareX+i >= 0 && toSquareX+i < squaresInX
 						&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
 						) {
-						squares[toSquareX-i, toSquareZ-j].NotifyClientsMessage( message );
+						squares[toSquareX-i, toSquareZ-j].NotifyClients( message );
 					}
 				}
 			}
@@ -272,6 +245,67 @@ namespace Strive.Server {
 				} else {
 					System.Console.WriteLine( "ERROR: incorrect password for player with email '" + email + "'" );
 					return false;
+				}
+			}
+		}
+
+		public void InformNearby( PhysicalObject po, IMessage message ) {
+			// notify all nearby clients
+			int squareX = (int)(po.Position.X-lowX)/Square.squareSize;
+			int squareZ = (int)(po.Position.Z-lowZ)/Square.squareSize;
+			int i, j;
+			for ( i=-1; i<=1; i++ ) {
+				for ( j=-1; j<=1; j++ ) {
+					// check that neigbour exists
+					if (
+						squareX+i < 0 || squareX+i >= squaresInX
+						|| squareZ+j < 0 || squareZ+j >= squaresInZ
+					) {
+						continue;
+					}
+					// need to send a message to all nearby clients
+					squares[squareX+i, squareZ+j].NotifyClients( message );
+				}
+			}
+		}
+
+		public void SendInitialWorldView( MobileAvatar mob ) {
+			// if a new client has entered the world,
+			// notify them about surrounding physical objects
+			// NB: this routine will send the client mobile's
+			// position as one of the 'nearby' mobiles.
+			Client client = mob.client;
+			int squareX = (int)(mob.Position.X-lowX)/Square.squareSize;
+			int squareZ = (int)(mob.Position.Z-lowZ)/Square.squareSize;
+			int i, j;
+			if ( client != null ) {
+				ArrayList nearbyPhysicalObjects = new ArrayList();
+				ArrayList nearbyClients = new ArrayList();
+				for ( i=-1; i<=1; i++ ) {
+					for ( j=-1; j<=1; j++ ) {
+						// check that neigbour exists
+						if (
+							squareX+i < 0 || squareX+i >= squaresInX
+							|| squareZ+j < 0 || squareZ+j >= squaresInZ
+							) {
+							continue;
+						}
+						// add all neighbouring physical objects
+						// to the clients world view
+						foreach ( PhysicalObject p in squares[squareX+i,squareZ+j].physicalObjects ) {
+							nearbyPhysicalObjects.Add( p );
+						}
+					}
+				}
+				/*
+				Strive.Network.Messages.ToClient.AddPhysicalObjects message = new Strive.Network.Messages.ToClient.AddPhysicalObjects(
+					nearbyPhysicalObjects
+				);
+				client.Send( message );
+				*/
+				foreach ( PhysicalObject p in nearbyPhysicalObjects ) {
+					Strive.Network.Messages.ToClient.AddPhysicalObject message = new Strive.Network.Messages.ToClient.AddPhysicalObject( p );
+					client.Send( message );
 				}
 			}
 		}

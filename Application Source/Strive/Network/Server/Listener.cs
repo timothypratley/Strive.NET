@@ -15,7 +15,7 @@ namespace Strive.Network.Server {
 		Queue clientMessageQueue = new Queue();
 		IPEndPoint localEndPoint;
 		bool isRunning;
-		BinaryFormatter formatter = new BinaryFormatter();
+		//BinaryFormatter formatter = new BinaryFormatter();
 		Hashtable clients = new Hashtable();
 
 		public Listener( IPEndPoint localEndPoint ) {
@@ -51,9 +51,13 @@ namespace Strive.Network.Server {
 					Byte[] receivedBytes = receivingUdpClient.Receive(ref endpoint);
 					IMessage message;
 					try {
-						message = (IMessage)formatter.Deserialize(
-							new MemoryStream( receivedBytes )
-						);
+						// Generic serialization
+						//message = (IMessage)formatter.Deserialize(
+						//	new MemoryStream( receivedBytes )
+						//);
+
+						// Custom serialization
+						message = CustomFormatter.Deserialize( receivedBytes );
 					} catch ( Exception ) {
 						System.Console.WriteLine( "Invalid packet received" );
 						return;

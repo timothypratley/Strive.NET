@@ -7,7 +7,7 @@ namespace Strive.Network.Messages.ToClient
 	/// Summary description for Acknowledge.
 	/// </summary>
 	[Serializable]
-	public struct Acknowledge : IMessage {
+	public class Acknowledge : IMessage {
 		public Acknowledge( int SequenceNumber ) {
 			this.SequenceNumber = SequenceNumber;
 		}

@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer
 	/// Summary description for Login.
 	/// </summary>
 	[Serializable]
-	public struct Login : IMessage
+	public class Login : IMessage
 	{
 		public Login( string username, string password )
 		{

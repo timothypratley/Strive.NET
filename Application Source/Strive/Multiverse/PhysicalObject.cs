@@ -15,6 +15,8 @@ namespace Strive.Multiverse
 		public int AreaID;
 		public Vector3D Position;
 		public Vector3D Heading;
+		public float HitPoints = 0;
+		public int MaxHitPoints = 0;
 
 		public PhysicalObject(
 			Schema.ObjectTemplateRow template,

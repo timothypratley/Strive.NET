@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// Summary description for Animation.
 	/// </summary>
 	[Serializable]
-	public struct Emote : IMessage	{
+	public class Emote : IMessage	{
 		public Emote( EmoteType EmoteID, int MobileID )	{
 			this.EmoteID = EmoteID;
 			this.MobileID = MobileID;

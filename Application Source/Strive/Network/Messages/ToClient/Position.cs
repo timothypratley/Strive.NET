@@ -9,7 +9,13 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class Position : IMessage
 	{
-		public Position() {
+		public Position( float position_x, float position_y, float position_z, float heading_x, float heading_y, float heading_z ) {
+			this.position_x = position_x;
+			this.position_y = position_y;
+			this.position_z = position_z;
+			this.heading_x = heading_x;
+			this.heading_y = heading_y;
+			this.heading_z = heading_z;
 		}
 
 		public Position( PhysicalObject po ) {

@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// Summary description for TargetAny.
 	/// </summary>
 	[Serializable]
-	public struct TargetAny : IMessage	{
+	public class TargetAny : IMessage	{
 		public TargetAny( CommandType CommandID, int PhysicalObjectID )	{
 			this.CommandID = CommandID;
 			this.PhysicalObjectID = PhysicalObjectID;

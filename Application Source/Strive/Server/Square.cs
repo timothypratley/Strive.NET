@@ -16,8 +16,10 @@ namespace Strive.Server
 	/// </summary>
 	public class Square
 	{
+		public static int squareSize = 10000;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
+		ArrayList[,] heightMap = new ArrayList[Square.squareSize,Square.squareSize];
 
 		public Square() {
 		}
@@ -32,13 +34,6 @@ namespace Strive.Server
 			}
 		}
 
-		public void NotifyClientsAdd( PhysicalObject po ) {
-			Strive.Network.Messages.ToClient.AddPhysicalObject message = new Strive.Network.Messages.ToClient.AddPhysicalObject( po );
-			foreach ( Client c in clients ) {
-				c.Send( message );
-			}
-		}
-
 		public void Remove( PhysicalObject po ) {
 			physicalObjects.Remove( po );
 			if ( po is MobileAvatar ) {
@@ -49,16 +44,21 @@ namespace Strive.Server
 			}
 		}
 
-		public void NotifyClientsRemove( PhysicalObject po ) {
-			Strive.Network.Messages.ToClient.DropPhysicalObject message = new Strive.Network.Messages.ToClient.DropPhysicalObject( po );
+		public void NotifyClients( IMessage message ) {
 			foreach ( Client c in clients ) {
 				c.Send( message );
 			}
 		}
 
-		public void NotifyClientsMessage( IMessage message ) {
-			foreach ( Client c in clients ) {
-				c.Send( message );
+		public void CalculateHeightMap() {
+			int i, j;
+			for ( i=0; i<Square.squareSize; i++ ) {
+				for ( j=0; j<Square.squareSize; j++ ) {
+					float [] occupiableSpace = new float[2];
+					occupiableSpace[0] = 0.0f;
+					occupiableSpace[1] = 100.0f;
+					heightMap[i,j].Add( occupiableSpace );
+				}
 			}
 		}
 	}

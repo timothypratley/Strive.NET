@@ -10,10 +10,13 @@ namespace Strive.Network.Messages
 	/// Summary description for CustomFormatter.
 	/// </summary>
 	public class CustomFormatter {
+		public static MessageTypeMap messageTypeMap = new MessageTypeMap();
 		public static byte[] Serialize( Object obj ) {
 			MemoryStream Buffer = new MemoryStream();
 			Type t = obj.GetType();
-			byte[] EncodedID = BitConverter.GetBytes( GetMessageID( t ) );
+			byte[] EncodedID = BitConverter.GetBytes(
+				(int)messageTypeMap.idFromMessageType[t]
+			);
 			Buffer.Write( EncodedID, 0, EncodedID.Length );
 			FieldInfo[] fi = t.GetFields( );
 			foreach( FieldInfo i in fi ) {
@@ -37,12 +40,13 @@ namespace Strive.Network.Messages
 			return Buffer.ToArray();
 		}
 		
-		public static Object Deserialize( byte[] buffer ) {
+		public static IMessage Deserialize( byte[] buffer ) {
 			int Offset = 0;
-			Type t = GetMessageType( BitConverter.ToInt32( buffer, Offset ) );
+			int message_id = BitConverter.ToInt32( buffer, Offset );
+			Type t = (Type)messageTypeMap.messageTypeFromID[message_id];
 			Offset += 4;
 			System.Console.WriteLine( t );
-			Object obj = t.GetConstructor( new System.Type[0] ).Invoke( null );
+			IMessage obj = (IMessage)t.GetConstructor( new System.Type[0] ).Invoke( null );
 			FieldInfo[] fi = t.GetFields( );
 			foreach( FieldInfo i in fi ) {
 				if ( i.FieldType == typeof( Int32 ) ) {
@@ -59,23 +63,6 @@ namespace Strive.Network.Messages
 				}
 			}
 			return obj;
-		}
-
-		public static Type GetMessageType( int MessageID ) {
-			switch ( MessageID ) {
-				case 1:
-					return typeof( Strive.Network.Messages.ToClient.Position );
-				default:
-					return typeof( Object );
-			}
-		}
-
-		public static int GetMessageID( Type t ) {
-			if ( t == typeof( Strive.Network.Messages.ToClient.Position ) ) {
-				return 1;
-			} else {
-				return -1;
-			}
 		}
 	}
 }

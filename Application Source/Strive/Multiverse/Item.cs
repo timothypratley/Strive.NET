@@ -9,8 +9,6 @@ namespace Strive.Multiverse
 	{
 		public int Value;
 		public int Weight;
-		public float HitPoints;
-		public int MaxHitPoints;
 
 		public Item(
 			Schema.TemplateItemRow item,

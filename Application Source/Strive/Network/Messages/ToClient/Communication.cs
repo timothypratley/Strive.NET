@@ -7,7 +7,7 @@ namespace Strive.Network.Messages.ToClient
 	/// Summary description for Communication.
 	/// </summary>
 	[Serializable]
-	public struct Communication : IMessage
+	public class Communication : IMessage
 	{
 		public Communication( string name, string message, CommunicationType communicationType )
 		{

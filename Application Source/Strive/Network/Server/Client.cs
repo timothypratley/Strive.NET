@@ -15,7 +15,7 @@ namespace Strive.Network.Server {
 		Mobile avatar = null;
 		string authenticatedUsername = null;
 		bool connected = false;
-		BinaryFormatter formatter = new BinaryFormatter();
+		//BinaryFormatter formatter = new BinaryFormatter();
 		UdpClient connection = new UdpClient();
 		DateTime lastMessageTimestamp;
 
@@ -42,15 +42,25 @@ namespace Strive.Network.Server {
 				return;
 			}
 			try {
-				MemoryStream ms = new MemoryStream();
-				formatter.Serialize( ms, message );
-				byte[] EncodedMessage = ms.ToArray();
+				// Generic serialization
+				// MemoryStream ms = new MemoryStream();
+				// formatter.Serialize( ms, message );
+				// byte[] EncodedMessage = ms.ToArray();
+
+				// Custom serialization
+				byte[] EncodedMessage = CustomFormatter.Serialize( message );
+
 				connection.Send( EncodedMessage, EncodedMessage.Length );
 				// Console.WriteLine( "Sent " + message.GetType() + " message (" + EncodedMessage.Length + " bytes) to " + endPoint );
 			} catch ( Exception e ) {
 				Console.WriteLine( e );
 				connected = false;
 			}
+		}
+
+		public void Close() {
+			connection.Close();
+			connected = false;
 		}
 
 		public Mobile Avatar {

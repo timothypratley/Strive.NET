@@ -14,8 +14,6 @@ namespace Strive.Multiverse
 		public int Strength;
 		public int Constitution;
 		public EnumRace Race;
-		public float HitPoints;
-		int MaxHitPoints;
 		public EnumMobileSize MobileSize;
 		public EnumMobileState MobileState;
 

@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// Summary description for TargetMobile.
 	/// </summary>
 	[Serializable]
-	public struct TargetMobile : IMessage	{
+	public class TargetMobile : IMessage	{
 		public TargetMobile( CommandType CommandID, int MobileID )	{
 			this.CommandID = CommandID;
 			this.MobileID = MobileID;

@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// Summary description for Animation.
 	/// </summary>
 	[Serializable]
-	public struct ChangeStance : IMessage	{
+	public class ChangeStance : IMessage	{
 		public ChangeStance( int StanceID )	{
 			this.StanceID = StanceID;	
 		}

@@ -1,6 +1,7 @@
 using System;
 using Strive.Multiverse;
 using Strive.Network.Server;
+using Strive.Network.Messages;
 using Strive.Math3D;
 
 namespace Strive.Server
@@ -16,12 +17,12 @@ namespace Strive.Server
 	public class MobileAvatar : Mobile
 	{
 		public Client client = null;
-		public PhysicalObject target = null;
 		public World world = null;
 		DateTime lastAttackUpdate = DateTime.Now;
 		DateTime lastHealUpdate = DateTime.Now;
 		DateTime lastBehaviourUpdate = DateTime.Now;
 		DateTime lastMoveUpdate = DateTime.Now;
+		public PhysicalObject target = null;
 
 		public MobileAvatar(
 			World world,
@@ -42,7 +43,7 @@ namespace Strive.Server
 			} else if ( IsPlayer() ) {
 				BehaviourUpdate();
 			}
-			PeaceUpdate();
+			HealUpdate();
 		}
 
 		public void CombatUpdate() {
@@ -89,51 +90,186 @@ namespace Strive.Server
 			}
 		}
 
-		public void PeaceUpdate() {
-			if ( Global.now - lastHealUpdate > TimeSpan.FromSeconds( 100/Constitution ) ) {
-				// EEERRR this is wrong atm
-				// heal
+		public void HealUpdate() {
+			if ( Global.now - lastHealUpdate > TimeSpan.FromSeconds( 1 ) ) {
 				lastHealUpdate = Global.now;
-				HitPoints++;
 				if ( MobileState == EnumMobileState.Dead ) {
 					// respawn!
 				} else if ( MobileState == EnumMobileState.Incapacitated ) {
-					HitPoints -= 0.1F;
+					HitPoints -= 0.5F;
+					if ( HitPoints < 100.0F ) {
+						// TODO more handling
+						MobileState = EnumMobileState.Dead;
+					}
 				} else if ( MobileState == EnumMobileState.Sleeping ) {
 					HitPoints += Constitution/10.0F;
+					if ( HitPoints > MaxHitPoints ) {
+						HitPoints = MaxHitPoints;
+					}
 				} else if ( MobileState == EnumMobileState.Resting ) {
 					HitPoints += Constitution/40.0F;
+					if ( HitPoints > MaxHitPoints ) {
+						HitPoints = MaxHitPoints;
+					}
 				}
 			}
 		}
 
+		public void Attack( int ObjectInstanceID ) {
+			target = world.physicalObjects[ObjectInstanceID] as PhysicalObject;
+			if ( target == null ) {
+				return;
+			}
+			Vector3D distance = target.Position - Position;
+			if ( distance.GetMagnitude() > 5.0F	) {
+				// too far away!
+				System.Console.WriteLine( this.ObjectTemplateName + " tried to attack " + target.ObjectTemplateName + " but was too far away." );
+				return;
+			}
+			world.InformNearby(
+				this,
+				new Strive.Network.Messages.ToClient.CombatReport(
+					this, target, EnumCombatEvent.Attacks, 0
+				)
+			);
+		}
+
+		public void Flee() {
+			target = null;
+			if ( Global.random.Next( Dexterity ) > 10 ) {
+				// success
+				world.InformNearby(
+					this,
+					new Strive.Network.Messages.ToClient.CombatReport(
+						this, null, EnumCombatEvent.FleeSuccess, 0
+					)
+				);
+				// EEERRR could do this just for nearby mobs?
+				foreach ( PhysicalObject po in world.physicalObjects ) {
+					if ( po is MobileAvatar ) {
+						MobileAvatar ma = po as MobileAvatar;
+						if ( ma.target == this ) {
+							ma.target = null;
+						}
+					}
+				}
+			} else {
+				// failed
+				world.InformNearby(
+					this,
+					new Strive.Network.Messages.ToClient.CombatReport(
+						this, null, EnumCombatEvent.FleeFails, 0
+					)
+				);
+			}
+		}
+
 		public void PhysicalAttack( PhysicalObject po ) {
-			if ( po is Mobile ) {
-				Mobile opponent = po as Mobile;
+			if ( po is MobileAvatar ) {
+				MobileAvatar opponent = po as MobileAvatar;
 				// avoidance phase: ratio of Dexterity
 				if ( Dexterity == 0 || Global.random.Next(100) <= opponent.Dexterity/Dexterity * 20 ) {
 					// 20% chance for equal dex player to avoid
-					// tell players
+					world.InformNearby(
+						this,
+						new Strive.Network.Messages.ToClient.CombatReport(
+							this, target, EnumCombatEvent.Avoids, 0 )
+					);
 					return;
 				}
 
 				// hit phase: hitroll determines if you miss, hit armour, or bypass armour
 				int hitroll = 80;
-				if ( Global.random.Next( hitroll ) < 20 ) {
+				int attackroll = Global.random.Next( hitroll );
+
+				if ( attackroll < 20 ) {
+					// ~ %20 chance to miss for weapon with 100 hitroll
+					world.InformNearby(
+						this,
+						new Strive.Network.Messages.ToClient.CombatReport(
+							this, target, EnumCombatEvent.Misses, 0 )
+					);
 				}
 
 				// damage phase: weapon damage + bonuses
 				int damage = 10;
+				if ( attackroll < 50 ) {
+					damage -= 8; // opponent.ArmourRating
+				}
+				if ( damage < 0 ) damage = 0;
 				opponent.HitPoints -= damage;
-			} else {
+				opponent.UpdateState();
+				world.InformNearby(
+					this,
+					new Strive.Network.Messages.ToClient.CombatReport(
+						this, target, EnumCombatEvent.Hits, damage )
+				);
+			} else if ( po is Item ) {
 				// attacking object
 				Item item = target as Item;
 				int damage = 10;
 				item.HitPoints -= damage;
+				world.InformNearby(
+					this,
+					new Strive.Network.Messages.ToClient.CombatReport(
+						this, target, EnumCombatEvent.Hits, damage )
+				);
+
 				if ( item.HitPoints <= 0 ) {
 					// omg j00 destoryed teh item!
+					world.Remove( item );
+				}
+			} else {
+				System.Console.WriteLine( "ERROR: attacking a " + po.GetType().ToString() + " " + po );
+			}
+		}
+
+		public void UpdateState() {
+			if ( MobileState >= EnumMobileState.Sleeping ) {
+				if ( HitPoints <= 0 ) {
+					MobileState = EnumMobileState.Incapacitated;
+					HitPoints = 0;
+					world.InformNearby(
+						this,
+						new Strive.Network.Messages.ToClient.MobileState( this )
+						);
+				}
+			} else if ( MobileState <= EnumMobileState.Incapacitated ) {
+				if ( HitPoints <= -50 ) {
+					Death();
 				}
 			}
 		}
+
+		public void Death() {
+			this.MobileState = EnumMobileState.Dead;
+			world.InformNearby(
+				this,
+				new Strive.Network.Messages.ToClient.MobileState( this )
+			);
+			// EEERRR should load a corpse
+
+			if ( IsPC() ) {
+				// respawn!
+				this.HitPoints = this.MaxHitPoints;
+				this.MobileState = EnumMobileState.Resting;
+
+				// EEERRR where should we respawn?
+				this.Position = new Vector3D( 0.0f, 0.0f, 0.0f );
+				this.Heading = new Vector3D( 0.0f, 0.0f, 0.0f );
+			} else {
+				world.Remove( this );
+			}
+		}
+
+		public bool IsPC() {
+			if ( this.AreaID == 0 ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+
 	}
 }

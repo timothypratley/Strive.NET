@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// Summary description for TargetItem.
 	/// </summary>
 	[Serializable]
-	public struct TargetItem : IMessage	{
+	public class TargetItem : IMessage	{
 		public TargetItem( CommandType CommandID, int ItemID )	{
 			this.CommandID = CommandID;
 			this.ItemID = ItemID;

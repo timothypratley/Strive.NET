@@ -13,7 +13,7 @@ namespace Strive.Network.Client {
 		IPEndPoint remoteEndPoint;
 		bool isRunning = false;
 		UdpClient serverConnection = new UdpClient();
-		BinaryFormatter formatter = new BinaryFormatter();
+		//BinaryFormatter formatter = new BinaryFormatter();
 		
 		public ServerConnection() {
 		}
@@ -45,9 +45,13 @@ namespace Strive.Network.Client {
 					// Blocks until a message returns on this socket from a remote host.
 					byte[] receivedBytes = serverConnection.Receive(ref endpoint);
 					try {
-						IMessage message = (IMessage)formatter.Deserialize(
-							new MemoryStream( receivedBytes )
-						);
+						// Generic serialization
+						//IMessage message = (IMessage)formatter.Deserialize(
+						//	new MemoryStream( receivedBytes )
+						//);
+
+						// Custom serialization
+						IMessage message = CustomFormatter.Deserialize( receivedBytes );
 						messageQueue.Enqueue( (IMessage)message );
 						//Console.WriteLine( "enqueued " + message.GetType() + " message" );
 					} catch ( Exception ) {
@@ -66,9 +70,13 @@ namespace Strive.Network.Client {
 				return;
 			}
 			try {
-				MemoryStream ms = new MemoryStream();
-				formatter.Serialize( ms, message );
-				serverConnection.Send( ms.GetBuffer(), ms.GetBuffer().Length, remoteEndPoint );
+				// Generic serialization
+				//MemoryStream ms = new MemoryStream();
+				//formatter.Serialize( ms, message );
+
+				// Custom serialization
+				byte [] buffer = CustomFormatter.Serialize( message );
+				serverConnection.Send( buffer, buffer.Length, remoteEndPoint );
 			} catch ( Exception e ) {
 				Console.WriteLine( e );
 				Stop();

@@ -102,7 +102,17 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "EnumCombatEvent.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "IMessage.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MessageTypeMap.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -122,7 +132,17 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\CombatReport.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\Communication.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToClient\CurrentHitpoints.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -133,6 +153,11 @@
                 />
                 <File
                     RelPath = "ToClient\DropPhysicalObjects.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToClient\MobileState.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -167,6 +192,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToServer\GameCommand\Attack.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToServer\GameCommand\ChangeStance.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -178,6 +208,11 @@
                 />
                 <File
                     RelPath = "ToServer\GameCommand\Emote.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\GameCommand\Flee.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

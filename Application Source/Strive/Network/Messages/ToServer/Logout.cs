@@ -6,6 +6,6 @@ namespace Strive.Network.Messages.ToServer
 	/// Summary description for Logout.
 	/// </summary>
 	[Serializable]
-	public struct Logout : IMessage	{
+	public class Logout : IMessage	{
 	}
 }

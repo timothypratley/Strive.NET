@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// Summary description for TargetNone.
 	/// </summary>
 	[Serializable]
-	public struct TargetNone : IMessage	{
+	public class TargetNone : IMessage	{
 		public TargetNone( CommandType CommandID )	{
 			this.CommandID = CommandID;
 		}

@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer
 	/// Summary description for EnterWorldAsMobile.
 	/// </summary>
 	[Serializable]
-	public struct EnterWorldAsMobile : IMessage
+	public class EnterWorldAsMobile : IMessage
 	{
 		public EnterWorldAsMobile( int WorldID, int SpawnID )
 		{

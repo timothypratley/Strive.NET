@@ -49,11 +49,15 @@ namespace Strive.Server {
 
 			// normal message for logged in user
 			if ( message is Network.Messages.ToServer.Position ) {
-				ProcessPositionMessage( client, (Network.Messages.ToServer.Position)message );
+				ProcessPositionMessage( client, message as Network.Messages.ToServer.Position );
 			} else if ( message is Network.Messages.ToServer.GameCommand.Communication ) {
-				ProcessChatMessage( client, (Network.Messages.ToServer.GameCommand.Communication)message );
+				ProcessChatMessage( client, message as Network.Messages.ToServer.GameCommand.Communication );
 			} else if ( message is Network.Messages.ToServer.GameCommand.TargetAny ) {
-				GameCommandProcessor.ProcessTargetAny( client, (Network.Messages.ToServer.GameCommand.TargetAny)message );
+				GameCommandProcessor.ProcessTargetAny( client, message as Network.Messages.ToServer.GameCommand.TargetAny );
+			} else if ( message is Network.Messages.ToServer.GameCommand.Attack ) {
+				ProcessAttackMessage( client, message as Network.Messages.ToServer.GameCommand.Attack );
+			} else if ( message is Network.Messages.ToServer.GameCommand.Flee ) {
+				ProcessFleeMessage( client, message as Network.Messages.ToServer.GameCommand.Flee );
 			} else {
 				System.Console.WriteLine(
 					"ERROR: Unknown message " + message.GetType()
@@ -79,8 +83,24 @@ namespace Strive.Server {
 	}
 
 		void ProcessEnterWorldAsMobile( Client client, Strive.Network.Messages.ToServer.EnterWorldAsMobile message ) {
+			MobileAvatar a;
+			if ( world.physicalObjects.ContainsKey( message.SpawnID ) ) {
+				// reconnected
+				// simply replace existing connection with the new
+				a = (MobileAvatar)world.physicalObjects[message.SpawnID];
+				if ( a.client == client ) {
+					System.Console.WriteLine( "ERROR: a client " + client.ToString() + " attempted to take control of the same mobile " + a.ObjectInstanceID + " twice... ignoring request." );
+				} else {
+					// EEERRR print reconnected message to clients
+					System.Console.WriteLine( "Mobile " + a.ObjectInstanceID + " has been taken over by a new connection." );
+					a.client.Close();
+					a.client = client;
+				}
+				return;
+			}
+
 			// try to load the character
-			MobileAvatar a = world.LoadMobile( message.SpawnID );
+			a = world.LoadMobile( message.SpawnID );
 			if ( a == null ) {
 				Console.WriteLine( "ERROR: Character "+message.SpawnID+" not found." );
 				return;
@@ -97,8 +117,7 @@ namespace Strive.Server {
 				client.Avatar = null;
 				return;
 			}
-			// tell the client the characters position
-			client.Send( new Strive.Network.Messages.ToClient.AddPhysicalObject( client.Avatar ) );
+			world.SendInitialWorldView( a );
 		}
 
 		void ProcessPositionMessage(
@@ -118,6 +137,18 @@ namespace Strive.Server {
 					new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, message.communicationType )
 				);
 			}
+		}
+
+		void ProcessAttackMessage(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.Attack message
+		) {
+			(client.Avatar as MobileAvatar).Attack( message.targetObjectInstanceID );
+		}
+
+		void ProcessFleeMessage(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.Flee message
+		) {
+			(client.Avatar as MobileAvatar).Flee();
 		}
 
 		public void CleanupDeadConnections() {

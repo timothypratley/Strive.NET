@@ -76,6 +76,11 @@
                     AssemblyName = "System.Xml"
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
                 />
+                <Reference
+                    Name = "Strive.Multiverse"
+                    Project = "{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
@@ -89,25 +94,6 @@
                     RelPath = "CommandFactory.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Multiverse.xsd"
-                    BuildAction = "Content"
-                    Generator = "MSDataSetGenerator"
-                    LastGenOutput = "Multiverse.cs"
-                />
-                <File
-                    RelPath = "Multiverse.cs"
-                    DependentUpon = "Multiverse.xsd"
-                    SubType = "code"
-                    BuildAction = "Compile"
-                    DesignTime = "True"
-                    AutoGen = "True"
-                />
-                <File
-                    RelPath = "Multiverse.xsx"
-                    DependentUpon = "Multiverse.xsd"
-                    BuildAction = "None"
                 />
                 <File
                     RelPath = "MultiverseFactory.cs"
