@@ -100,6 +100,10 @@ namespace Strive.Server.Shared {
 			{
 				ProcessWhoList(client, message as Network.Messages.ToServer.GameCommand.WhoList);
 			}
+			else if ( message is Network.Messages.ToServer.QueryPhysicalObject )
+			{
+				ProcessQueryPhysicalObject(client, message as Network.Messages.ToServer.QueryPhysicalObject );
+			}
 			else 
 			{
 				Log.WarningMessage(
@@ -123,6 +127,16 @@ namespace Strive.Server.Shared {
 					"Login failed for username " + loginMessage.username
 				);
 			}
+		}
+
+		void ProcessQueryPhysicalObject(Client client, Strive.Network.Messages.ToServer.QueryPhysicalObject message )
+		{
+			PhysicalObject po = (PhysicalObject)world.physicalObjects[message.instance_id];
+			if( po != null)
+			{
+				client.Send(Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage(po));
+			}
+
 		}
 
 		void ProcessRequestPossessable( Client client, Strive.Network.Messages.ToServer.RequestPossessable message ) {

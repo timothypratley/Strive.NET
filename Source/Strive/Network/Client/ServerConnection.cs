@@ -153,6 +153,11 @@ namespace Strive.Network.Client {
 			Send(new RequestPossessable());
 		}
 
+		public void QueryPhysicalObject(int instance_id)
+		{
+			Send(new QueryPhysicalObject(instance_id));
+		}
+
 		#endregion
 
 	}

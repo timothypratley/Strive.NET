@@ -101,10 +101,10 @@ namespace Strive.UI.Windows.ChildWindows
 																						   this.RefreshList});
 			this.WhoCommands.Dock = System.Windows.Forms.DockStyle.None;
 			this.WhoCommands.DropDownArrows = true;
-			this.WhoCommands.Location = new System.Drawing.Point(0, 345);
+			this.WhoCommands.Location = new System.Drawing.Point(0, 343);
 			this.WhoCommands.Name = "WhoCommands";
 			this.WhoCommands.ShowToolTips = true;
-			this.WhoCommands.Size = new System.Drawing.Size(300, 25);
+			this.WhoCommands.Size = new System.Drawing.Size(298, 39);
 			this.WhoCommands.TabIndex = 1;
 			this.WhoCommands.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.WhoCommands_ButtonClick);
 			// 
@@ -123,7 +123,7 @@ namespace Strive.UI.Windows.ChildWindows
 																							   this.columnHeader1});
 			this.CharactersOnline.FullRowSelect = true;
 			this.CharactersOnline.Name = "CharactersOnline";
-			this.CharactersOnline.Size = new System.Drawing.Size(296, 344);
+			this.CharactersOnline.Size = new System.Drawing.Size(294, 342);
 			this.CharactersOnline.TabIndex = 2;
 			this.CharactersOnline.View = System.Windows.Forms.View.Details;
 			// 
@@ -138,7 +138,7 @@ namespace Strive.UI.Windows.ChildWindows
 			// WhoList
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(292, 373);
+			this.ClientSize = new System.Drawing.Size(290, 371);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.CharactersOnline,
 																		  this.WhoCommands});
