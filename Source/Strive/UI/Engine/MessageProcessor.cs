@@ -25,7 +25,10 @@ namespace Strive.UI.Engine {
 		public event WhoListHandler OnWhoList;
 		public event ChatHandler OnChat;
 
-		public MessageProcessor() {
+		World _world;
+
+		public MessageProcessor( World w ) {
+			_world = w;
 		}
 
 		public void Process( IMessage m ) {
@@ -47,18 +50,18 @@ namespace Strive.UI.Engine {
 				//po.Position.X = (float)Math.Round(po.Position.X * 8F / 10F);
 				//po.Position.Y = (float)Math.Round(po.Position.Y * 8F / 10F);
 				//po.Position.Z = (float)Math.Round(po.Position.Z * 8F / 10F);
-				PhysicalObjectInstance poi = (PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[po.ObjectInstanceID];
+				PhysicalObjectInstance poi = (PhysicalObjectInstance)_world.physicalObjectInstances[po.ObjectInstanceID];
 				if ( poi != null ) {
 					// replace an existing physical object
 					poi.physicalObject = po;
 				} 
 				else {
 					// add a new one
-					poi = Game.CurrentWorld.Add( po );
+					poi = _world.Add( po );
 				}
 				if ( po.ObjectInstanceID == Game.CurrentPlayerID ) {
 					// current player gets followed by camera etc.
-					Game.CurrentWorld.Possess( Game.CurrentPlayerID );
+					_world.Possess( Game.CurrentPlayerID );
 					Log.LogMessage( "Initial position is " + po.Position );
 					Log.LogMessage( "Initial heading is " + Helper.GetHeadingFromRotation(po.Rotation) );
 				} 
@@ -74,14 +77,14 @@ namespace Strive.UI.Engine {
 				// TODO: unused atm, unnesessary?
 			else if ( m is Strive.Network.Messages.ToClient.AddTerrainCollection ) {
 				Strive.Network.Messages.ToClient.AddTerrainCollection atc = (Strive.Network.Messages.ToClient.AddTerrainCollection)m;
-				Game.CurrentWorld.TerrainPieces.AddMany( atc.startX, atc.startZ, atc.width, atc.height, atc.gap_size, atc.map );
+				_world.TerrainPieces.AddMany( atc.startX, atc.startZ, atc.width, atc.height, atc.gap_size, atc.map );
 			}
 				#endregion
 			#region Position Message
 
 			else if( m is Strive.Network.Messages.ToClient.Position) {
 				Strive.Network.Messages.ToClient.Position p = (Strive.Network.Messages.ToClient.Position)m;
-				PhysicalObjectInstance poi = Game.CurrentWorld.Find( p.instance_id );
+				PhysicalObjectInstance poi = _world.Find( p.instance_id );
 				if ( poi == null ) {
 					Log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
 					return;
@@ -89,8 +92,8 @@ namespace Strive.UI.Engine {
 
 				poi.model.Position = p.position;
 				poi.model.Rotation = p.rotation;
-				if ( poi == Game.CurrentWorld.CurrentAvatar ) {
-					Game.CurrentWorld.RepositionCamera();
+				if ( poi == _world.CurrentAvatar ) {
+					_world.RepositionCamera();
 				}
 				//				Log.LogMessage( "Position message applied to " + p.instance_id + " rotation " + Rotation );
 			}
@@ -125,7 +128,7 @@ namespace Strive.UI.Engine {
 			#region DropPhysicalObject Message
 			else if ( m is Strive.Network.Messages.ToClient.DropPhysicalObject) {
 				Strive.Network.Messages.ToClient.DropPhysicalObject dpo = (Strive.Network.Messages.ToClient.DropPhysicalObject)m;
-				Game.CurrentWorld.Remove( dpo.instance_id );
+				_world.Remove( dpo.instance_id );
 				//Log.LogMessage( "Removed "+ dpo.instance_id.ToString() );
 			}
 				#endregion
@@ -134,7 +137,7 @@ namespace Strive.UI.Engine {
 				Strive.Network.Messages.ToClient.MobileState ms = (Strive.Network.Messages.ToClient.MobileState)m;
 				//				Log.LogMessage( "Mobile " + ms.ObjectInstanceID + " is " + ms.State );
 
-				PhysicalObjectInstance poi = Game.CurrentWorld.Find( ms.ObjectInstanceID );
+				PhysicalObjectInstance poi = _world.Find( ms.ObjectInstanceID );
 				
 				#region 1.1.1 Check that the model exists
 				if ( poi == null || poi.model == null || !(poi.model is IActor ) ) {
@@ -166,7 +169,7 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.DropAll ) {
 				Strive.Network.Messages.ToClient.DropAll da = (Strive.Network.Messages.ToClient.DropAll)m;
 				Log.LogMessage( "DropAll recieved" );
-				Game.CurrentWorld.Clear();
+				_world.Clear();
 			}
 				#endregion
 			#region Weather
@@ -177,8 +180,8 @@ namespace Strive.UI.Engine {
 
 				// TODO: don't hardcode the clouds textureid
 				ITexture ct = Game.resources.GetTexture( 46 );
-				Game.CurrentWorld.SetSky( t );
-				Game.CurrentWorld.SetClouds( ct );
+				_world.SetSky( t );
+				_world.SetClouds( ct );
 			}
 				#endregion
 			#region SkillList

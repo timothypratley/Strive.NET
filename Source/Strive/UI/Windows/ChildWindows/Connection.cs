@@ -47,9 +47,10 @@ namespace Strive.UI.Windows.ChildWindows
 			InitializeComponent();
 			loadRecentServers();
 			StriveWindowState = ConnectionWindowState.NotConnected;
-			Game.CurrentGameLoop._message_processor.OnCanPossess
-				+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
+			Game.CurrentMessageProcessor.OnCanPossess
+				+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossess );
 			Game.CurrentServerConnection.OnConnect += new ServerConnection.OnConnectHandler( HandleConnect );
+			Game.CurrentServerConnection.OnConnectFailed += new ServerConnection.OnConnectFailedHandler( HandleConnectFailed );
 			Game.CurrentServerConnection.OnDisconnect += new ServerConnection.OnDisconnectHandler( HandleDisconnect );
 		}
 
@@ -366,15 +367,22 @@ namespace Strive.UI.Windows.ChildWindows
 			StriveWindowState = ConnectionWindowState.Connected;
 		}
 
+		void HandleConnectFailed() {
+			// TODO: might want to show a message etc
+			StriveWindowState = ConnectionWindowState.Connected;
+		}
+
 		void HandleDisconnect() {
 			StriveWindowState = ConnectionWindowState.NotConnected;
 		}
 
+		/*** no longer on another thread
 		void HandleCanPossessThreadSafe( Strive.Network.Messages.ToClient.CanPossess cp ) 
 		{
 			this.Invoke( new Engine.MessageProcessor.CanPossessHandler( HandleCanPossess ),
 				new object [] { cp } );
 		}
+		*/
 
 		void HandleCanPossess( Strive.Network.Messages.ToClient.CanPossess cp ) {
 			if ( cp.possesable.Length < 1 ) {
@@ -421,7 +429,6 @@ namespace Strive.UI.Windows.ChildWindows
 					Password.Enabled = true;
 					NetworkProtocolTypeTCP.Enabled = true;
 					NetworkProtocolTypeUDP.Enabled = true;
-					Game.Stop();
 					timer1.Stop();
 					ConnectionProgress.Visible = false;
 					break;

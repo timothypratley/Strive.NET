@@ -24,8 +24,8 @@ namespace Strive.UI.Windows.ChildWindows
 			//
 			InitializeComponent();
 
-			Game.CurrentGameLoop._message_processor.OnSkillList
-				+= new MessageProcessor.SkillListHandler( HandleSkillListThreadSafe );
+			Game.CurrentMessageProcessor.OnSkillList
+				+= new MessageProcessor.SkillListHandler( HandleSkillList );
 			RefreshForm();
 		}
 
@@ -36,11 +36,13 @@ namespace Strive.UI.Windows.ChildWindows
 			// ToDo: start a timer with a timeout
 		}
 
+		/*** no longer on another thread
 		// umg this is zanny code
 		void HandleSkillListThreadSafe( Strive.Network.Messages.ToClient.SkillList sl ) {
 			this.Invoke( new MessageProcessor.SkillListHandler( HandleSkillList ),
 				new object [] { sl } );
 		}
+		*/
 
 		class IdButton : Button {
 			public int id;

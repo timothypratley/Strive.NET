@@ -116,30 +116,36 @@ namespace Strive.UI.Windows
 			// 
 			// MainTabs
 			// 
-			this.MainTabs.Location = new System.Drawing.Point(2, 31);
+			this.MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.MainTabs.Location = new System.Drawing.Point(2, 27);
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(888, 677);
+			this.MainTabs.Size = new System.Drawing.Size(888, 626);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
 			// 
 			// GameTab
 			// 
+			this.GameTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+				| System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
 			this.GameTab.Controls.Add(this.RenderTarget);
 			this.GameTab.Location = new System.Drawing.Point(0, 0);
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(888, 756);
+			this.GameTab.Size = new System.Drawing.Size(888, 601);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
 			// RenderTarget
 			// 
-			this.RenderTarget.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.RenderTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+				| System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
 			this.RenderTarget.Location = new System.Drawing.Point(0, 0);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(800, 646);
+			this.RenderTarget.Size = new System.Drawing.Size(800, 454);
 			this.RenderTarget.TabIndex = 1;
 			// 
 			// MainMenu
@@ -252,15 +258,15 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 705);
+			this.MainStatus.Location = new System.Drawing.Point(2, 653);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(888, 72);
+			this.MainStatus.Size = new System.Drawing.Size(888, 98);
 			this.MainStatus.TabIndex = 1;
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(892, 779);
+			this.ClientSize = new System.Drawing.Size(892, 753);
 			this.Controls.Add(this.MainTabs);
 			this.Controls.Add(this.MainMenu);
 			this.Controls.Add(this.MainStatus);
@@ -291,14 +297,11 @@ namespace Strive.UI.Windows
 			Log.LogMessage("Saved Strive config to '" + Settings.SettingsManager.StriveSettingsPath + "'");
 		}
 
-		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
+		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
 			saveSettings();
-			Application.Exit();
 		}
 
-		private void FileQuit_Click(object sender, System.EventArgs e)
-		{
+		private void FileQuit_Click(object sender, System.EventArgs e) {
 			this.Close();
 		}
 
@@ -486,22 +489,7 @@ namespace Strive.UI.Windows
 			RenderTarget.Click += new EventHandler( RenderTarget_Click );
 			#endregion
 
-			this.Show();
-
-			Game.CurrentWorld = new World( Game.resources, Game.RenderingFactory, this, RenderTarget, null );
-			Game.CurrentWorld.MiniMapTarget = miniMap.RenderTarget;
-
-			ChildWindows.Connection con = new ChildWindows.Connection();
-			con.Show();
-
 			#endregion		
-
-			while(true) {
-				if ( Game.CurrentGameLoop.isRunning ) {
-					Game.CurrentGameLoop.MainLoop();
-				}
-				System.Windows.Forms.Application.DoEvents();
-			}
 		}
 
 		public void Navigate(string url)
@@ -554,6 +542,7 @@ namespace Strive.UI.Windows
 			DockingManager.AddContentWithState(mapWindow, State.Floating);
 			Game.CurrentWorld.MiniMapTarget = miniMap.RenderTarget;
 		}
+
 	}
 }
 

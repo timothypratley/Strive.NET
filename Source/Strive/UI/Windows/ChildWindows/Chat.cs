@@ -28,7 +28,7 @@ namespace Strive.UI.Windows.ChildWindows
 			InitializeComponent();
 			
 			// register for chats
-			Game.CurrentGameLoop._message_processor.OnChat += new MessageProcessor.ChatHandler(ProcessChat);
+			Game.CurrentMessageProcessor.OnChat += new MessageProcessor.ChatHandler(ProcessChat);
 
 		}
 

@@ -30,8 +30,8 @@ namespace Strive.UI.Windows.ChildWindows
 			//
 			InitializeComponent();
 
-			Game.CurrentGameLoop._message_processor.OnWhoList
-				+= new MessageProcessor.WhoListHandler( HandleWhoListThreadSafe );
+			Game.CurrentMessageProcessor.OnWhoList
+				+= new MessageProcessor.WhoListHandler( HandleWhoList );
 
 			RefreshForm();
 		}
@@ -40,11 +40,13 @@ namespace Strive.UI.Windows.ChildWindows
 			Game.CurrentServerConnection.WhoList();
 		}
 
+		/*** no longer on another thread
 		// umg this is zanny code
 		void HandleWhoListThreadSafe( Strive.Network.Messages.ToClient.WhoList wl ) {
 			this.Invoke( new MessageProcessor.WhoListHandler( HandleWhoList ),
 				new object [] { wl } );
 		}
+		*/
 
 		void HandleWhoList( Strive.Network.Messages.ToClient.WhoList wl ) {
 			CharactersOnline.Items.Clear();

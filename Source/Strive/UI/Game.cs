@@ -11,6 +11,7 @@ using Strive.Resources;
 using Strive.UI.WorldView;
 using Strive.UI.Engine;
 using Strive.Logging;
+using Strive.Network.Messages;
 using Strive.Network.Client;
 using Strive.Multiverse;
 
@@ -25,7 +26,8 @@ namespace Strive.UI
 		#region Public Fields
 
 		public static ServerConnection CurrentServerConnection;// = new ServerConnection();
-		public static GameLoop CurrentGameLoop;// = new GameLoop();
+		public static InputProcessor CurrentInputProcessor;
+		public static MessageProcessor CurrentMessageProcessor;
 		public static Windows.Main CurrentMainWindow;// = new Windows.Main();
 		public static World CurrentWorld;// = new Scene();
 		public static Logging.Log CurrentLog;// = new Logging.Log();
@@ -52,59 +54,44 @@ namespace Strive.UI
 
 		#endregion
 
-		static void OnThreadException(object sender, System.Threading.ThreadExceptionEventArgs args)
-		{
-			Exit();
-		}
-		static void OnApplicationExit(object sender, EventArgs args)
-		{
-			Exit();
-		}
-
-
-		static void Exit()
-		{
-			if(CurrentServerConnection != null)
-			{
-				CurrentServerConnection.Stop();
-
-			}
-			if(CurrentGameLoop != null)
-			{
-				CurrentGameLoop.Stop();
-			}
-			Application.ExitThread();
-		}
 
 		[STAThread]
-		static void Main(string[] args)
-		{
-			// deal with exceptions
-			//Application.ApplicationExit += new EventHandler(OnApplicationExit);
-			//Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(OnThreadException);
-			// todo: umg refactor this out of existance
+		static void Main(string[] args)	{
 			resources = new ResourceManager( RenderingFactory );
+			// Configure Resource manager
+			string path = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
+			if ( path == null ) {
+				throw new System.Configuration.ConfigurationException( "ResourcePath" );
+			}
+			resources.SetPath( path );
+			CurrentWorld = new World( resources, RenderingFactory );
+			CurrentInputProcessor = new InputProcessor( CurrentWorld );
+			CurrentMessageProcessor = new MessageProcessor( CurrentWorld );
 
 			// Initialise required objects
 			CurrentServerConnection = new ServerConnection();
 			CurrentServerConnection.OnConnect += new ServerConnection.OnConnectHandler( HandleConnect );
 			CurrentServerConnection.OnDisconnect += new ServerConnection.OnDisconnectHandler( HandleDisconnect );
-			CurrentGameLoop = new GameLoop();
 			CurrentLog = new Logging.Log();
+
 			CurrentMainWindow = new Windows.Main();
-			// Configure Resource manager
-			if ( System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"] == null ) 
-			{
-				throw new System.Configuration.ConfigurationException( "ResourcePath" );
+			CurrentMainWindow.Show();
+			CurrentWorld.InitialiseView( CurrentMainWindow, CurrentMainWindow.RenderTarget, CurrentMainWindow.miniMap.RenderTarget );
+
+			Windows.ChildWindows.Connection con = new Windows.ChildWindows.Connection();
+			con.Show();
+
+			while( !CurrentMainWindow.IsDisposed ) {
+				Application.DoEvents();
+				// TODO:
+				if ( /*CurrentServerConnection.isRunning */ true ) {
+					GameLoop();
+				}
+				System.Threading.Thread.Sleep( 0 );
 			}
-			string path = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
-			resources.SetPath( path );
-			Application.Run(CurrentMainWindow);
 
 			// must terminate all threads to quit
-			CurrentGameLoop.Stop();
 			CurrentServerConnection.Stop();
-			CurrentWorld.Clear();
 		}
 
 
@@ -116,12 +103,10 @@ namespace Strive.UI
 			CurrentServerConnection.protocol = protocol;
 			Log.LogMessage( "Connecting to " + ServerName + ":" + Port );
 			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName ).AddressList[0], Port ) );
-			CurrentGameLoop.Start(CurrentServerConnection);
 		}
 
 		public static void Stop() {
 			CurrentWorld.CurrentAvatar = null;
-			CurrentGameLoop.Stop();
 			CurrentServerConnection.Stop();
 			CurrentWorld.Clear();
 		}
@@ -138,5 +123,32 @@ namespace Strive.UI
 			password = null;
 			Stop();
 		}
+
+		public static void GameLoop() {
+			// Only get the current time once per iteration.
+			// This is faster, and makes time apply uniformly for the update.
+			now = DateTime.Now;
+
+			// handle network input from the server
+			ProcessOutstandingMessages();
+
+			CurrentInputProcessor.ProcessPlayerInput();
+
+			// display the new world
+			Game.CurrentWorld.Render();
+		}
+
+		static void ProcessOutstandingMessages() {
+			// TODO: we need to avoid flooding
+			int i = 0;
+			while(CurrentServerConnection.MessageCount > 0) {
+				IMessage m = CurrentServerConnection.PopNextMessage();
+				if ( m == null ) break;
+				CurrentMessageProcessor.Process( m );
+				i++;
+				//if ( i>5 ) break;
+			}
+		}
+
 	}
 }

@@ -20,7 +20,6 @@ namespace Strive.UI.WorldView {
 		public IEngine RenderingEngine;
 		public ResourceManager Resources;
 		public IScene RenderingScene;
-		//public ITerrain WorldTerrain;
 		public TerrainCollection TerrainPieces;
 		public PhysicalObjectInstance CurrentAvatar;
 
@@ -30,20 +29,23 @@ namespace Strive.UI.WorldView {
 		IViewport renderViewport;
 		IViewport miniMapViewport;
 
-		public World( ResourceManager resources, IEngine engine, IWin32Window parent, IWin32Window RenderTarget, IWin32Window MiniMapTarget ) {
+		public World( ResourceManager resources, IEngine engine ) {
 			Resources = resources;
 			RenderingEngine = engine;
-			RenderingEngine.Initialise( parent, EnumRenderTarget.PictureBox, Resolution.Automatic );
-			RenderingScene = engine.CreateScene();
-			renderViewport = engine.CreateViewport( RenderTarget, "RenderTarget" );
+		}
+
+		public void InitialiseView( IWin32Window parent, IWin32Window RenderTarget, IWin32Window MiniMapTarget ) {
+			RenderingEngine.Initialise( RenderTarget, EnumRenderTarget.PictureBox, Resolution.Automatic );
+			RenderingScene = RenderingEngine.CreateScene();
+			renderViewport = RenderingEngine.CreateViewport( RenderTarget, "RenderTarget" );
 			if ( MiniMapTarget != null ) {
 				this.MiniMapTarget = MiniMapTarget;
 			}
-			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
 			//WorldTerrain = RenderingEngine.GetTerrain();
 			RenderingScene.SetLighting( 100 );
 			RenderingScene.SetFog( 500.0f );
 			renderViewport.Camera.ViewDistance = 10000;
+			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
 		}
 
 		public IWin32Window MiniMapTarget {
@@ -164,7 +166,7 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Render() {
-			renderViewport.SetFocus();
+			//renderViewport.SetFocus();
 			RenderingScene.Clear();
 			RenderingScene.RenderAtmosphere();
 			TerrainPieces.Render();
@@ -182,10 +184,9 @@ namespace Strive.UI.WorldView {
 
 		public void Clear() {
 			physicalObjectInstances.Clear();
-			TerrainPieces.Clear();
-			//WorldTerrain.Clear();
+			if ( TerrainPieces != null ) TerrainPieces.Clear();
 			CurrentAvatar = null;
-			RenderingScene.DropAll();
+			if ( RenderingScene != null ) RenderingScene.DropAll();
 			Resources.DropAll();
 		}
 

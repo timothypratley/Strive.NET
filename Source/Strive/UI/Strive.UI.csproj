@@ -233,7 +233,7 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "Engine\GameLoop.cs"
+                    RelPath = "Engine\InputProcessor.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
