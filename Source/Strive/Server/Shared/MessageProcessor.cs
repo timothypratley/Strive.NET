@@ -238,9 +238,14 @@ namespace Strive.Server.Shared {
 		void ProcessChatMessage(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Communication message
 		) {
-			world.NotifyMobiles(
-				new Network.Messages.ToClient.Communication( client.Avatar.TemplateObjectName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )
-			);
+			if ( message.communicationType == CommunicationType.Chat ) {
+				world.NotifyMobiles( new Network.Messages.ToClient.Communication( client.Avatar.TemplateObjectName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )	);
+			} else if ( message.communicationType == CommunicationType.PartyTalk ) {
+				MobileAvatar ma = (MobileAvatar)client.Avatar;
+				ma.party.SendPartyTalk( ma.TemplateObjectName, message.message );
+			} else {
+				Log.ErrorMessage( "Unexpected CommunicationType " + message.communicationType );
+			}
 			//Log.LogMessage( "Sent communication message" );
 		}
 
@@ -276,26 +281,65 @@ namespace Strive.Server.Shared {
 		void ProcessCreateParty(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.CreateParty message
 		) {
+			MobileAvatar ma = (MobileAvatar)client.Avatar;
+			if ( ma.party != null ) {
+				ma.SendLog( "You are currently in party '" + ma.party.Name + "'." );
+				return;
+			}
+			ma.party = new Party( message.name, ma );
 		}
 
 		void ProcessTransferPartyLeadership(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.TransferPartyLeadership message
 		) {
+			MobileAvatar ma = (MobileAvatar)client.Avatar;
+			MobileAvatar target = (MobileAvatar)Global.world.physicalObjects[ message.ObjectInstanceID ];
+			if ( ma.party != target.party ) {
+				ma.SendLog( "You are not in the same party as " + target.TemplateObjectName );
+				return;
+			}
+			ma.party.Leader = target;
+			ma.party.SendPartyTalk( "Party leadership has been transfered to " + target.TemplateObjectName );
 		}
 
 		void ProcessLeaveParty(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.LeaveParty message
 		) {
+			MobileAvatar ma = (MobileAvatar)client.Avatar;
+			Party p = ma.party;
+			ma.SendLog( "You have left party '" + p.Name + "'." );
+			ma.party = null;
+			p.SendPartyTalk( ma.TemplateObjectName + " has left your party." );
 		}
 
 		void ProcessJoinParty(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.JoinParty message
 		) {
+			MobileAvatar ma = (MobileAvatar)client.Avatar;
+
+			// TODO: need some sort of party ID to make sure you don't
+			// join the wrong one if you get invited multiple times
+			ma.invitedToParty.SendPartyTalk( ma.TemplateObjectName + " has joined your party." );
+			ma.party = ma.invitedToParty;
+			ma.SendLog( "You are now in party '" + ma.party.Name + "'." );
 		}
 
 		void ProcessInviteToParty(
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Party.InviteToParty message
 		) {
+			Party p = ((MobileAvatar)client.Avatar).party;
+			if ( p == null ) {
+				client.SendLog( "You are not in a party." );
+				return;
+			}
+			if ( p.Leader != client.Avatar ) {
+				client.SendLog( "You are not the party leader." );
+				return;
+			}
+			MobileAvatar target = (MobileAvatar)Global.world.physicalObjects[ message.ObjectInstanceID ];
+			target.invitedToParty = p;
+			// TODO: probabbly want a graphical thing or something for invites
+			target.SendLog( "You have been invited to party '" + p.Name + "'." );
 		}
 
 		void ProcessSkillList(

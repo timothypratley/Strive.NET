@@ -30,6 +30,7 @@ namespace Strive.Server.Shared
 
 		// if in a party
 		public Party party = null;
+		public Party invitedToParty = null;
 
 		// currently invoking a skill
 		public Strive.Network.Messages.ToServer.GameCommand.UseSkill activatingSkill = null;
