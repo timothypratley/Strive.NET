@@ -167,13 +167,25 @@ namespace Strive.Server {
 			System.Console.WriteLine( "Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world." );
 		}
 
-		public void Relocate( PhysicalObject po, Vector3D newPos ) {
-			int fromSquareX = (int)po.Position.X/Square.squareSize;
-			int fromSquareZ = (int)po.Position.Z/Square.squareSize;
-			int toSquareX = (int)newPos.X/Square.squareSize;
-			int toSquareZ = (int)newPos.Z/Square.squareSize;
+		public void Relocate( PhysicalObject po, Vector3D newPos, Vector3D newHeading ) {
+			if ( newPos.X > highX ) {
+				newPos.X = (float)highX;
+			}
+			if ( newPos.Z > highZ ) {
+				newPos.Z = (float)highZ;
+			}
+			int fromSquareX = (int)(po.Position.X - lowX)/Square.squareSize;
+			int fromSquareZ = (int)(po.Position.Z - lowZ)/Square.squareSize;
+			int toSquareX = (int)(newPos.X - lowX)/Square.squareSize;
+			int toSquareZ = (int)(newPos.Z - lowZ)/Square.squareSize;
 			int i, j;
-			Strive.Network.Messages.ToClient.Position message = new Strive.Network.Messages.ToClient.Position( po );
+
+			po.Position.X = newPos.X;
+			po.Position.Y = newPos.Y;
+			po.Position.Z = newPos.Z;
+			po.Heading.X = newHeading.X;
+			po.Heading.Y = newHeading.Y;
+			po.Heading.Z = newHeading.Z;
 
 			for ( i=-1; i<=1; i++ ) {
 				for ( j=-1; j<=1; j++ ) {
@@ -193,7 +205,7 @@ namespace Strive.Server {
 							toSquareX+i >= 0 && toSquareX+i < squaresInX
 							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
 						) {
-							squares[toSquareX-i, toSquareZ-j].NotifyClients(
+							squares[toSquareX+i, toSquareZ+j].NotifyClients(
 								new Strive.Network.Messages.ToClient.DropPhysicalObject( po )
 							);
 						}
@@ -201,8 +213,10 @@ namespace Strive.Server {
 					if (
 						toSquareX+i >= 0 && toSquareX+i < squaresInX
 						&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
-						) {
-						squares[toSquareX-i, toSquareZ-j].NotifyClients( message );
+					) {
+						squares[toSquareX+i, toSquareZ+j].NotifyClients(
+							new Strive.Network.Messages.ToClient.Position( po )
+						);
 					}
 				}
 			}
@@ -210,9 +224,6 @@ namespace Strive.Server {
 				squares[fromSquareX,fromSquareZ].Remove( po );
 				squares[toSquareX,toSquareZ].Add( po );
 			}
-			po.Position.X = newPos.X;
-			po.Position.Y = newPos.Y;
-			po.Position.Z = newPos.Z;
 		}
 
 		public MobileAvatar LoadMobile( int instanceID ) {

@@ -310,7 +310,14 @@ namespace Strive.Rendering.Models
 						}
 						break;
 					}
-
+					case ModelFormat._3DS: {
+						setPointer();
+						Interop._instance.Meshbuilder.Mesh_SetRotation( value.X, value.Y, value.Z );
+						break;
+					}
+					default:
+							throw new Exception( "fall through" );
+				
 				}
 				_rotation = value;
 			}

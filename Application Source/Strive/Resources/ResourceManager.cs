@@ -34,7 +34,6 @@ namespace Strive.Resources
 			{
 				throw new ResourceNotLoadedException(modelID, ResourceType.Model);
 			}
-
 		}
 	}
 }

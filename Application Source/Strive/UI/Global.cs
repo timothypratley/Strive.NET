@@ -21,6 +21,8 @@ namespace Strive.UI
 		{
 			_game = new Game();
 			Application.Run(_game);
+			_serverConnection.Stop();
+			Modules.GameLoop.Stop();
 		}
 	}
 }

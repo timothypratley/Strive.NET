@@ -69,7 +69,7 @@ namespace Strive.Network.Messages
 			MessageTypeMap.EnumMessageID message_id = (MessageTypeMap.EnumMessageID)BitConverter.ToInt32( buffer, Offset );
 			Type t = (Type)messageTypeMap.messageTypeFromID[message_id];
 			Offset += 4;
-			System.Console.WriteLine( t );
+			//System.Console.WriteLine( t );
 
 			return Decode( t, buffer, Offset );
 		}

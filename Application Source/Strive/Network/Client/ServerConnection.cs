@@ -33,6 +33,7 @@ namespace Strive.Network.Client {
 		}
 
 		public void Stop() {
+			serverConnection.Close();
 			isRunning = false;
 		}
 

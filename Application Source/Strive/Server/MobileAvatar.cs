@@ -63,11 +63,11 @@ namespace Strive.Server
 				Vector3D velocity = Heading.GetUnit();
 				switch ( MobileState ) {
 					case EnumMobileState.Running:
-						world.Relocate( this, Position+velocity );
+						world.Relocate( this, Position+velocity, Heading );
 						break;
 					case EnumMobileState.Walking:
 						velocity.Divide( 3.0F );
-						world.Relocate( this, Position+velocity );
+						world.Relocate( this, Position+velocity, Heading );
 						break;
 					default:
 						// do nothing

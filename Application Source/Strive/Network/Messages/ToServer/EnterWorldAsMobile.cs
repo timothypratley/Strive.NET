@@ -9,12 +9,10 @@ namespace Strive.Network.Messages.ToServer
 	public class EnterWorldAsMobile : IMessage
 	{
 		public EnterWorldAsMobile(){}
-		public EnterWorldAsMobile( int WorldID, int SpawnID )
+		public EnterWorldAsMobile( int InstanceID )
 		{
-			this.WorldID = WorldID;
-			this.SpawnID = SpawnID;
+			this.InstanceID = InstanceID;
 		}
-		public int WorldID;
-		public int SpawnID;
+		public int InstanceID;
 	}
 }

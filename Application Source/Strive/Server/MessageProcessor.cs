@@ -88,38 +88,34 @@ namespace Strive.Server {
 
 		void ProcessEnterWorldAsMobile( Client client, Strive.Network.Messages.ToServer.EnterWorldAsMobile message ) {
 			MobileAvatar a;
-			if ( world.physicalObjects.ContainsKey( message.SpawnID ) ) {
+			if ( world.physicalObjects.ContainsKey( message.InstanceID ) ) {
 				// reconnected
 				// simply replace existing connection with the new
-				a = (MobileAvatar)world.physicalObjects[message.SpawnID];
+				a = (MobileAvatar)world.physicalObjects[message.InstanceID];
 				if ( a.client == client ) {
 					System.Console.WriteLine( "ERROR: a client " + client.ToString() + " attempted to take control of the same mobile " + a.ObjectInstanceID + " twice... ignoring request." );
-				} else {
+				} else if ( a.client != null ) {
 					// EEERRR print reconnected message to clients
 					System.Console.WriteLine( "Mobile " + a.ObjectInstanceID + " has been taken over by a new connection." );
-					a.client.Close();
 					a.client = client;
+					client.Avatar = a;
+				} else {
+					a.client = client;
+					client.Avatar = a;
 				}
-				return;
-			}
+			} else {
+				// try to load the character
+				a = world.LoadMobile( message.InstanceID );
+				if ( a == null ) {
+					Console.WriteLine( "ERROR: Character "+message.InstanceID+" not found." );
+					client.Close();
+					return;
+				}
+				a.client = client;
+				client.Avatar = a;
 
-			// try to load the character
-			a = world.LoadMobile( message.SpawnID );
-			if ( a == null ) {
-				Console.WriteLine( "ERROR: Character "+message.SpawnID+" not found." );
-				return;
-			}
-			a.client = client;
-			client.Avatar = a;
-
-			// try to add the character to the world
-			try {
+				// try to add the character to the world
 				world.Add( client.Avatar );
-			} catch {
-				// NTR: I don't think this is entirely true.
-				Console.WriteLine( "ERROR: Character "+message.SpawnID+" already logged in." );
-				client.Avatar = null;
-				return;
 			}
 			world.SendInitialWorldView( a );
 		}
@@ -128,7 +124,8 @@ namespace Strive.Server {
 			Client client, Strive.Network.Messages.ToServer.Position message
 		) {
 			world.Relocate( client.Avatar,
-				new Vector3D( message.position_x, message.position_y, message.position_z )
+				new Vector3D( message.position_x, message.position_y, message.position_z ),
+				new Vector3D( message.heading_x, message.heading_y, message.heading_z )
 			);
 		}
 

@@ -35,6 +35,7 @@ namespace Strive.Client.NetworkHandler {
 		}
 
 		public void Stop() {
+			serverConnection.Close();
 			isRunning = false;
 		}
 

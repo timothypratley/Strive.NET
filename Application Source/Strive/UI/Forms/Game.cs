@@ -284,7 +284,6 @@ namespace Strive.UI.Forms
 															  "sleep"});
 			this.quickCommand.Location = new System.Drawing.Point(8, 616);
 			this.quickCommand.Name = "quickCommand";
-			this.quickCommand.Size = new System.Drawing.Size(121, 24);
 			this.quickCommand.Sorted = true;
 			this.quickCommand.TabIndex = 1;
 			this.quickCommand.Leave += new System.EventHandler(this.Complete_quickCommand);
@@ -469,11 +468,11 @@ namespace Strive.UI.Forms
 				// testing stuffs
 				Model model = Model.Load( "foo", "D:\\projects\\YardView\\GUI\\media\\models\\straddle.3ds", ModelFormat._3DS );
 				System.Console.WriteLine(  model.BoundingSphereRadius );
-				model.Position = new Vector3D( 15, 0, 15 );
+				model.Position = new Vector3D( 0, 0, 100 );
 //				Model model = Model.Load( "foo", "D:/downloads/windows/Bdroid_c.mdl", ModelFormat.MDL );
 
 				_scene.Models.Add( model );
-				_scene.View.Position = new Vector3D( 0, 0, -100 );
+				_scene.View.Position = new Vector3D( 0, 0, 0 );
 				Mouse.ShowCursor( _mouseCaptured );
 			} catch ( Exception ex) {
 				System.Console.WriteLine( ex );

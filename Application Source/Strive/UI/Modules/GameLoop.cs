@@ -29,6 +29,10 @@ namespace Strive.UI.Modules
 
 		public static void Start(Scene scene, System.Windows.Forms.IWin32Window screen, ServerConnection connection)
 		{
+			if ( _isMainRunning ) {
+				throw new Exception( "already running" );
+			}
+			ResourceManager.SetPath( "D:/projects/Strive/Application Source/Strive/UI/Resources" );
 			_scene = scene;
 			_screen = screen;
 			_connection = connection;
@@ -89,6 +93,8 @@ namespace Strive.UI.Modules
 					}
 					model.Position = new Vector3D( apo.x, apo.y, apo.z );
 					model.Rotation = GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
+					Global._log.LogMessage( "Loaded " + model.Key );
+
 				}
 					#endregion
 					#region Position Message
@@ -114,8 +120,7 @@ namespace Strive.UI.Modules
 						
 					workingModel.Position = new Vector3D(p.position_x, p.position_y, p.position_z);
 					workingModel.Rotation = GetRotationFromHeading(p.heading_x, p.heading_y, p.heading_z);
-
-					//Global._log.LogMessage( "Position message applied to " + p.spawn_id );
+					Global._log.LogMessage( "Position message applied to " + p.instance_id + " rotation " + workingModel.Rotation );
 						#endregion
 				}
 
@@ -183,7 +188,7 @@ namespace Strive.UI.Modules
 					}
 					Global._log.LogMessage( "Entering world as default: " + cp.possesable[0].name );
 					Global._myid = cp.possesable[0].id;
-					Global._serverConnection.Send(new Strive.Network.Messages.ToServer.EnterWorldAsMobile( 0, Global._myid ));
+					Global._serverConnection.Send(new Strive.Network.Messages.ToServer.EnterWorldAsMobile( Global._myid ));
 				}
 				#endregion
 					#region Default
@@ -300,7 +305,8 @@ namespace Strive.UI.Modules
 				cameraHeading.X,
 				cameraHeading.Y,
 				cameraHeading.Z
-				);
+			);
+			Global._log.LogMessage( "Sending position message rotation " + _scene.View.Rotation );
 			_connection.Send(pos);
 		}
 
