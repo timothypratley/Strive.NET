@@ -94,7 +94,6 @@ namespace Strive.Rendering.Models
 					{
 						throw new ModelNotLoadedException(path, format, e);
 					}
-					loadedModel.setPointer();
 					break;
 				}
 				case ModelFormat._3DS:
@@ -102,10 +101,7 @@ namespace Strive.Rendering.Models
 					try
 					{
 						Interop._instance.Meshbuilder.Mesh_Create(key);
-						Interop._instance.Meshbuilder.Mesh_SetPointer(key);
-						//Interop._instance.Meshbuilder.Mesh_Add3DS(path, (bool)Type.Missing, (bool)Type.Missing, (bool)Type.Missing, false);
-						Interop._instance.Meshbuilder.Mesh_Add3DS(path,true,true,true,false);
-						
+						Interop._instance.Meshbuilder.Mesh_Add3DS( path,false,false,false,false);
 					}
 					catch(Exception e)
 					{
@@ -145,6 +141,15 @@ namespace Strive.Rendering.Models
 			}
 		}
 
+
+		#endregion
+
+		#region "Methods"
+
+		public void applyTexture( string texture ) {
+			setPointer();
+			Interop._instance.Meshbuilder.Mesh_SetTexture( 0, texture );
+		}
 
 		#endregion
 

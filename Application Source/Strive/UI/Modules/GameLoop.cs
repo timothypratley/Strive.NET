@@ -48,6 +48,7 @@ namespace Strive.UI.Modules
 			{
 				ProcessOutstandingMessages();
 				ProcessKeyboardInput();
+				ProcessMouseInput();
 				Render();
 			}
 		}
@@ -195,14 +196,45 @@ namespace Strive.UI.Modules
 				#endregion
 		}
 
+		private static void ProcessMouseInput() {
+			#region ProcessMouseInput
+			if ( !Global._game._mouseCaptured ) {
+				//		System.Windows.Forms.MessageBox.Show("No keyboard");
+				return;
+			}
+			bool WasMouseInput = false;
+			Vector3D cameraPosition = _scene.View.Position;
+			Vector3D cameraRotation = _scene.View.Rotation;
+
+			Mouse m = Mouse.GetState();
+			if( m.x != 0 ) {
+				WasMouseInput = true;
+				cameraRotation.Y += m.x*0.2f; 
+			}
+			//if( m.y != 0 ) {
+				//WasMouseInput = true;
+				//cameraRotation.Y -= m.y; 
+			//}
+			if(WasMouseInput) {
+				_scene.View.Rotation = cameraRotation;
+				Vector3D cameraHeading = GetHeadingFromRotation( cameraRotation );
+				SendCurrentPosition();
+			}
+#endregion
+		}
+
 		private static void ProcessKeyboardInput() {
 			#region 2.0 Get keyboard input 
-				
+			if ( !((System.Windows.Forms.PictureBox)_screen).Visible ) {
+		//		System.Windows.Forms.MessageBox.Show("No keyboard");
+				return;
+			}
 			bool WasKeyboardInput = false;
 			const int moveunit = 5;
 			Vector3D cameraPosition = _scene.View.Position;
 			Vector3D cameraRotation = _scene.View.Rotation;
 
+			Keyboard.ReadKeys();
 			if(Keyboard.GetKeyState(Keys.key_W)) {
 				WasKeyboardInput = true;
 				cameraPosition.X +=
@@ -253,19 +285,23 @@ namespace Strive.UI.Modules
 			if(WasKeyboardInput) {
 				_scene.View.Position = cameraPosition;
 				_scene.View.Rotation = cameraRotation;
-				Vector3D cameraHeading = GetHeadingFromRotation( cameraRotation );
-				Network.Messages.ToServer.Position pos = new Network.Messages.ToServer.Position(
-					_scene.View.Position.X,
-					_scene.View.Position.Y,
-					_scene.View.Position.Z,
-					cameraHeading.X,
-					cameraHeading.Y,
-					cameraHeading.Z
-				);
-				_connection.Send(pos);
+				SendCurrentPosition();
 			}
 
 				#endregion
+		}
+
+		private static void SendCurrentPosition() {
+			Vector3D cameraHeading = GetHeadingFromRotation( _scene.View.Rotation );
+			Network.Messages.ToServer.Position pos = new Network.Messages.ToServer.Position(
+				_scene.View.Position.X,
+				_scene.View.Position.Y,
+				_scene.View.Position.Z,
+				cameraHeading.X,
+				cameraHeading.Y,
+				cameraHeading.Z
+				);
+			_connection.Send(pos);
 		}
 
 		private static void Render() {

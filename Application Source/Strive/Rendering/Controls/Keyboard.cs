@@ -20,5 +20,9 @@ namespace Strive.Rendering.Controls
 			R3DKey r = (R3DKey)Key;
 			return Interop._instance.Control.Keyboard_GetKeyState(ref r);
 		}
+
+		public static void ReadKeys() {
+			Interop._instance.Control.Keyboard_ReceiveKeys();
+		}
 	}
 }

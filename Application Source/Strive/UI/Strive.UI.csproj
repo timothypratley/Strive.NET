@@ -7,7 +7,7 @@
     >
         <Build>
             <Settings
-                ApplicationIcon = "App.ico"
+                ApplicationIcon = "Icon1.ico"
                 AssemblyKeyContainerName = ""
                 AssemblyName = "Strive.UI"
                 AssemblyOriginatorKeyFile = ""

@@ -25,6 +25,8 @@ namespace Strive.UI.Forms
 	{
 		internal Scene _scene = new Scene();
 		internal bool _isRendering = false;
+		internal bool _mouseCaptured = false;
+
 		private System.Windows.Forms.TabControl gameTabs;
 		private System.Windows.Forms.TabPage InGameTab;
 		private System.Windows.Forms.TabControl inGameTabs;
@@ -56,6 +58,7 @@ namespace Strive.UI.Forms
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
+
 
 		public Game()
 		{		
@@ -92,6 +95,11 @@ namespace Strive.UI.Forms
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Game));
 			this.gameTabs = new System.Windows.Forms.TabControl();
 			this.ConnectTab = new System.Windows.Forms.TabPage();
+			this.PasswordField = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.PortField = new System.Windows.Forms.TextBox();
 			this.ServerNames = new System.Windows.Forms.ComboBox();
 			this.Go = new System.Windows.Forms.Button();
 			this.LoginNames = new System.Windows.Forms.ComboBox();
@@ -109,14 +117,9 @@ namespace Strive.UI.Forms
 			this.CharacterSheet = new System.Windows.Forms.TabPage();
 			this.aLogTab = new System.Windows.Forms.TabPage();
 			this.logOutput = new System.Windows.Forms.RichTextBox();
-			this.PortField = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.PasswordField = new System.Windows.Forms.TextBox();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.Resolutions = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.Resolutions = new System.Windows.Forms.ComboBox();
 			this.gameTabs.SuspendLayout();
 			this.ConnectTab.SuspendLayout();
 			this.InGameTab.SuspendLayout();
@@ -164,6 +167,44 @@ namespace Strive.UI.Forms
 			this.ConnectTab.Size = new System.Drawing.Size(1008, 648);
 			this.ConnectTab.TabIndex = 3;
 			this.ConnectTab.Text = "Connect";
+			// 
+			// PasswordField
+			// 
+			this.PasswordField.Location = new System.Drawing.Point(200, 152);
+			this.PasswordField.Name = "PasswordField";
+			this.PasswordField.PasswordChar = '*';
+			this.PasswordField.Size = new System.Drawing.Size(200, 20);
+			this.PasswordField.TabIndex = 9;
+			this.PasswordField.Text = "";
+			// 
+			// label3
+			// 
+			this.label3.Location = new System.Drawing.Point(96, 152);
+			this.label3.Name = "label3";
+			this.label3.TabIndex = 8;
+			this.label3.Text = "Password";
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(96, 120);
+			this.label2.Name = "label2";
+			this.label2.TabIndex = 7;
+			this.label2.Text = "Username";
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(96, 88);
+			this.label1.Name = "label1";
+			this.label1.TabIndex = 6;
+			this.label1.Text = "Server";
+			// 
+			// PortField
+			// 
+			this.PortField.Location = new System.Drawing.Point(408, 88);
+			this.PortField.Name = "PortField";
+			this.PortField.Size = new System.Drawing.Size(64, 20);
+			this.PortField.TabIndex = 5;
+			this.PortField.Text = "1337";
 			// 
 			// ServerNames
 			// 
@@ -243,6 +284,7 @@ namespace Strive.UI.Forms
 															  "sleep"});
 			this.quickCommand.Location = new System.Drawing.Point(8, 616);
 			this.quickCommand.Name = "quickCommand";
+			this.quickCommand.Size = new System.Drawing.Size(121, 24);
 			this.quickCommand.Sorted = true;
 			this.quickCommand.TabIndex = 1;
 			this.quickCommand.Leave += new System.EventHandler(this.Complete_quickCommand);
@@ -317,6 +359,7 @@ namespace Strive.UI.Forms
 			this.RenderTarget.Size = new System.Drawing.Size(800, 500);
 			this.RenderTarget.TabIndex = 1;
 			this.RenderTarget.TabStop = false;
+			this.RenderTarget.Click += new System.EventHandler(this.RenderTarget_Click);
 			// 
 			// NoteBoardTabs
 			// 
@@ -353,44 +396,6 @@ namespace Strive.UI.Forms
 			this.logOutput.TabIndex = 0;
 			this.logOutput.Text = "";
 			// 
-			// PortField
-			// 
-			this.PortField.Location = new System.Drawing.Point(408, 88);
-			this.PortField.Name = "PortField";
-			this.PortField.Size = new System.Drawing.Size(64, 20);
-			this.PortField.TabIndex = 5;
-			this.PortField.Text = "1337";
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(96, 88);
-			this.label1.Name = "label1";
-			this.label1.TabIndex = 6;
-			this.label1.Text = "Server";
-			// 
-			// label2
-			// 
-			this.label2.Location = new System.Drawing.Point(96, 120);
-			this.label2.Name = "label2";
-			this.label2.TabIndex = 7;
-			this.label2.Text = "Username";
-			// 
-			// label3
-			// 
-			this.label3.Location = new System.Drawing.Point(96, 152);
-			this.label3.Name = "label3";
-			this.label3.TabIndex = 8;
-			this.label3.Text = "Password";
-			// 
-			// PasswordField
-			// 
-			this.PasswordField.Location = new System.Drawing.Point(200, 152);
-			this.PasswordField.Name = "PasswordField";
-			this.PasswordField.PasswordChar = '*';
-			this.PasswordField.Size = new System.Drawing.Size(200, 20);
-			this.PasswordField.TabIndex = 9;
-			this.PasswordField.Text = "";
-			// 
 			// tabPage1
 			// 
 			this.tabPage1.Controls.AddRange(new System.Windows.Forms.Control[] {
@@ -401,6 +406,13 @@ namespace Strive.UI.Forms
 			this.tabPage1.Size = new System.Drawing.Size(1008, 648);
 			this.tabPage1.TabIndex = 4;
 			this.tabPage1.Text = "Settings";
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(24, 40);
+			this.label4.Name = "label4";
+			this.label4.TabIndex = 5;
+			this.label4.Text = "Resolution";
 			// 
 			// Resolutions
 			// 
@@ -420,13 +432,6 @@ namespace Strive.UI.Forms
 			this.Resolutions.Name = "Resolutions";
 			this.Resolutions.Size = new System.Drawing.Size(200, 24);
 			this.Resolutions.TabIndex = 4;
-			// 
-			// label4
-			// 
-			this.label4.Location = new System.Drawing.Point(24, 40);
-			this.label4.Name = "label4";
-			this.label4.TabIndex = 5;
-			this.label4.Text = "Resolution";
 			// 
 			// Game
 			// 
@@ -457,9 +462,19 @@ namespace Strive.UI.Forms
 			try {
 				_scene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
 				_scene.View.FieldOfView = 60;
-				_scene.View.ViewDistance = 200;
+				_scene.View.ViewDistance = 20000;
 				_scene.View.Position = new Vector3D(0, -50, 70);
 				Modules.GameLoop.Start(_scene, RenderTarget, Global._serverConnection);
+				
+				// testing stuffs
+				Model model = Model.Load( "foo", "D:\\projects\\YardView\\GUI\\media\\models\\straddle.3ds", ModelFormat._3DS );
+				System.Console.WriteLine(  model.BoundingSphereRadius );
+				model.Position = new Vector3D( 15, 0, 15 );
+//				Model model = Model.Load( "foo", "D:/downloads/windows/Bdroid_c.mdl", ModelFormat.MDL );
+
+				_scene.Models.Add( model );
+				_scene.View.Position = new Vector3D( 0, 0, -100 );
+				Mouse.ShowCursor( _mouseCaptured );
 			} catch ( Exception ex) {
 				System.Console.WriteLine( ex );
 			}
@@ -523,6 +538,18 @@ namespace Strive.UI.Forms
 			if(LoginNames.SelectedIndex < 0) {
 				LoginNames.Focus();
 			}
+		}
+
+		private void RenderTarget_Click(object sender, System.EventArgs e) {
+			
+			_mouseCaptured = !_mouseCaptured;
+			if(_mouseCaptured) {
+				System.Windows.Forms.Cursor.Hide();
+			} else {
+				System.Windows.Forms.Cursor.Show();
+			}
+			Mouse.ShowCursor( _mouseCaptured );
+			Mouse.GetState();
 		}
 	}
 }
