@@ -52,7 +52,7 @@ namespace Strive.UI.Windows.ChildWindows
 			}
 			for ( int i=0; i<sl.skills.Length; i++ ) {
 				IdButton b = new IdButton();
-				// todo: do the name lookup
+				// TODO: do the name lookup
 				b.Text = "skill " + sl.skills[i] + " : " + sl.competancy[i] + "%";
 				b.id = sl.skills[i];
 				b.Click += new System.EventHandler(this.Button_Click);
@@ -62,7 +62,8 @@ namespace Strive.UI.Windows.ChildWindows
 
 		private void Button_Click(object sender, System.EventArgs e) {			
 			int [] targets = {};
-			Game.CurrentServerConnection.UseSkill(((IdButton)sender).id, targets);
+			// TODO: use InvokationID to keep track of casting and cancellation
+			Game.CurrentServerConnection.UseSkill(((IdButton)sender).id, 0, targets);
 		}
 
 		/// <summary>

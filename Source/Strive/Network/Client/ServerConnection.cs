@@ -291,24 +291,24 @@ namespace Strive.Network.Client {
 			Send(new Strive.Network.Messages.ToServer.GameCommand.WhoList());
 		}
 
-		public void UseSkill(Strive.Multiverse.EnumSkill Skill)
+		public void UseSkill(Strive.Multiverse.EnumSkill Skill, int InvokationID )
 		{
-			Send(new Strive.Network.Messages.ToServer.GameCommand.UseSkill(Skill));
+			Send(new Strive.Network.Messages.ToServer.GameCommand.UseSkill(Skill, InvokationID));
 		}
 
-		public void UseSkill(Strive.Multiverse.EnumSkill Skill, int[] Targets)
+		public void UseSkill(Strive.Multiverse.EnumSkill Skill, int InvokationID, int[] Targets)
 		{
-			Send(new Strive.Network.Messages.ToServer.GameCommand.UseSkill(Skill, Targets));
+			Send(new Strive.Network.Messages.ToServer.GameCommand.UseSkill(Skill, InvokationID, Targets));
 		}
 
-		public void UseSkill(int SkillID)
+		public void UseSkill(int SkillID, int InvokationID)
 		{
-			this.UseSkill((Strive.Multiverse.EnumSkill)SkillID);
+			this.UseSkill((Strive.Multiverse.EnumSkill)SkillID, InvokationID);
 		}
 
-		public void UseSkill(int SkillID, int[] Targets)
+		public void UseSkill(int SkillID, int InvokationID, int[] Targets)
 		{
-			this.UseSkill((Strive.Multiverse.EnumSkill)SkillID, Targets);
+			this.UseSkill((Strive.Multiverse.EnumSkill)SkillID, InvokationID, Targets);
 		}
 
 		public void Position( Vector3D position, Vector3D rotation ) {

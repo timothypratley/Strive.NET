@@ -333,9 +333,10 @@ namespace Strive.UI.Windows
 					PhysicalObject po = ((PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[int.Parse(m.Name)]).physicalObject;
 					int [] targets = new int[1];
 					targets[0] = po.ObjectInstanceID;
+					// TODO: use InvokationID to track casting and allow for cancelations
 					Game.CurrentServerConnection.Send(
 						new Strive.Network.Messages.ToServer.GameCommand.UseSkill(
-							Game.CurrentGameCommand, targets )
+							Game.CurrentGameCommand, 0, targets )
 					);
 				} else {
 					MessageBox.Show( this, "No target" );

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 using Strive.Multiverse;
 using Strive.Network.Server;
@@ -23,10 +24,17 @@ namespace Strive.Server.Shared
 		public DateTime lastHealUpdate = Global.now;
 		public DateTime lastBehaviourUpdate = Global.now;
 		public DateTime lastMoveUpdate = Global.now;
+
+		// if fighting someone or something
 		public PhysicalObject target = null;
+
+		// currently invoking a skill
 		public Strive.Network.Messages.ToServer.GameCommand.UseSkill activatingSkill = null;
 		public DateTime activatingSkillTimestamp = Global.now;
 		public TimeSpan activatingSkillLeadTime = TimeSpan.FromSeconds(0);
+
+		// any queued up skills to be executed after the current one
+		public Queue skillQueue = new Queue();
 
 		// todo: put these in the database schema
 		public float AffinityAir = 0;
@@ -62,11 +70,16 @@ namespace Strive.Server.Shared
 		}
 
 		public void Update() {
-			// check for queue skills
+			// check for activating skills
 			if ( activatingSkill != null ) {
 				if ( activatingSkillTimestamp + activatingSkillLeadTime <= Global.now ) {
 					SkillCommandProcessor.UseSkillNow( client, activatingSkill );
 					activatingSkill = null;
+				}
+			} else {
+				// check for queued skills
+				if ( skillQueue.Count > 0 ) {
+					activatingSkill = (Strive.Network.Messages.ToServer.GameCommand.UseSkill)skillQueue.Dequeue();
 				}
 			}
 
@@ -205,6 +218,13 @@ namespace Strive.Server.Shared
 		public void PhysicalAttack( PhysicalObject po ) {
 			if ( po is MobileAvatar ) {
 				MobileAvatar opponent = po as MobileAvatar;
+
+				// if not already in a fight, your opponent automatically
+				// fights back
+				if ( opponent.target == null ) {
+					opponent.target = this;
+				}
+
 				// avoidance phase: ratio of Dexterity
 				if ( Dexterity == 0 || Global.random.Next(100) <= opponent.Dexterity/Dexterity * 20 ) {
 					// 20% chance for equal dex player to avoid
@@ -265,6 +285,13 @@ namespace Strive.Server.Shared
 		public void MagicalAttack( PhysicalObject po, float damage ) {
 			if ( po is MobileAvatar ) {
 				MobileAvatar opponent = po as MobileAvatar;
+
+				// if not already in a fight, your opponent automatically
+				// fights back
+				if ( opponent.target == null ) {
+					opponent.target = this;
+				}
+
 				// avoidance phase: Dexterity
 				if ( Global.random.Next(100) <= opponent.Dexterity ) {
 					world.InformNearby(

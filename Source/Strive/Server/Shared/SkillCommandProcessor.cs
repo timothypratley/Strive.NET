@@ -6,12 +6,32 @@ using Strive.Logging;
 namespace Strive.Server.Shared
 {
 	/// <summary>
-	/// Summary description for GameCommandProcessor.
+	/// 
 	/// </summary>
 	public class SkillCommandProcessor
 	{
 		public static void ProcessUseSkill( Client client, Strive.Network.Messages.ToServer.GameCommand.UseSkill message ) {
+			MobileAvatar avatar = client.Avatar as MobileAvatar;
+			if ( avatar == null ) {
+				Log.WarningMessage(
+					client.EndPoint + " requested a skill, but doesn't have an avatar." );
+				// TODO: nack?
+			}
 			Schema.EnumSkillRow esr = Global.multiverse.EnumSkill.FindByEnumSkillID( (int)message.SkillID );
+			if ( esr == null ) {
+                Log.WarningMessage(
+					avatar.ObjectTemplateName + " requested an invalid skill " + message.SkillID );
+				// TODO: nack?
+				return;
+			}
+
+			// If already performing a skil invokation, just queue the request
+			// for later.
+			if ( avatar.activatingSkill != null ) {
+				avatar.skillQueue.Enqueue( message );
+				return;
+			}
+
 			if ( esr.LeadTime <= 0 ) {
 				// process it now
 				UseSkillNow( client, message );
@@ -29,12 +49,6 @@ namespace Strive.Server.Shared
 			MobileAvatar caster = client.Avatar as MobileAvatar;
 			MobileAvatar target;
 
-			// casting affects affinity with the elements
-			caster.AffinityAir += esr.AirAffinity/1000;
-			caster.AffinityEarth += esr.EarthAffinity/1000;
-			caster.AffinityFire += esr.FireAffinity/1000;
-			caster.AffinityLife += esr.LifeAffinity/1000;
-			caster.AffinityWater += esr.WaterAffinity/1000;
 			switch ( (EnumTargetType)esr.EnumTargetTypeID ) {
 				case EnumTargetType.TargetSelf:
 					TargetSkill( caster, caster, esr );
@@ -51,6 +65,13 @@ namespace Strive.Server.Shared
 				default:
 					throw new Exception( "n0rty n0rty, unhandled targettype" );
 			}
+
+			// successful casting affects affinity with the elements
+			caster.AffinityAir += esr.AirAffinity/1000;
+			caster.AffinityEarth += esr.EarthAffinity/1000;
+			caster.AffinityFire += esr.FireAffinity/1000;
+			caster.AffinityLife += esr.LifeAffinity/1000;
+			caster.AffinityWater += esr.WaterAffinity/1000;
 		}
 
 		public static void TargetSkill( MobileAvatar caster, MobileAvatar target, Schema.EnumSkillRow esr ) {
@@ -88,7 +109,7 @@ namespace Strive.Server.Shared
 		}
 
 		public static void DoKill( MobileAvatar caster, MobileAvatar target ) {
-			caster.PhysicalAttack( target );
+			caster.Attack( target.ObjectInstanceID );
 		}
 
 		public static void DoFlee( MobileAvatar caster ) {
