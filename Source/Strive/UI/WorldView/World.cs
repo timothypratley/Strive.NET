@@ -138,7 +138,10 @@ namespace Strive.UI.WorldView {
 
 		public void Clear() {
 			physicalObjectInstances = new Hashtable();
+			TerrainPieces.Clear();
+			CurrentAvatar = null;
 			RenderingScene.DropAll();
+			ResourceManager.DropAll();
 		}
 
 		public void SetSky( ITexture texture ) {

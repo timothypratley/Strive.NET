@@ -71,6 +71,9 @@ namespace Strive.Rendering.TV3D {
 		/// <param name="target">The render target</param>
 		/// <param name="resolution">The resolution to render in</param>
 		public void Initialise(IWin32Window window, EnumRenderTarget target, Resolution resolution) {
+			if ( TV3DEngine != null ) {
+				Terminate();
+			}
 			TV3DEngine = new TVEngine();
 			try {
 				Engine.TV3DEngine.Init3DWindowedMode(window.Handle.ToInt32(), true);
@@ -95,7 +98,24 @@ namespace Strive.Rendering.TV3D {
 		}
 
 		public void Terminate() {
+			TV3DEngine.ReleaseAll();
 			TV3DEngine = null;
+			TV3DScene.DestroyAllMeshes();
+			TV3DScene = null;
+			TexFactory.DeleteAll();
+			TexFactory = null;
+			Land.DeleteAll();
+			Land = null;
+			Screen2DImmediate = null;
+			Screen2DText = null;
+			LightEngine.DeleteAllLights();
+			LightEngine = null;
+			Gl = null;
+			Camera = null;
+			Atmosphere.Unload();
+			Atmosphere = null;
+			Input.UnloadDevices();
+			Input = null;
 		}
 
 		public IWin32Window RenderTarget {

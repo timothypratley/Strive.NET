@@ -57,7 +57,12 @@ namespace Strive.UI.Engine
 			}
 
 			// display the new world
-			Game.CurrentWorld.Render();
+			try {
+				Game.CurrentWorld.Render();
+			} catch ( Exception ) {
+				Log.LogMessage( "Render failed." );
+				Stop();
+			}
 
 			// give the CPU a breather
 			System.Threading.Thread.Sleep( 10 );

@@ -365,6 +365,7 @@ namespace Strive.UI.Windows.ChildWindows
 					{
 						CurrentPlayerNode.Nodes.Clear();
 					}
+					Game.Stop();
 					break;
 				}
 

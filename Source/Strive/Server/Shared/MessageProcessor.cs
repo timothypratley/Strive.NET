@@ -122,6 +122,7 @@ namespace Strive.Server.Shared {
 			} else {
 				Log.LogMessage(
 					"Login failed for username " + loginMessage.username
+					+ " hehehe " + loginMessage.password
 				);
 				client.Close();
 			}

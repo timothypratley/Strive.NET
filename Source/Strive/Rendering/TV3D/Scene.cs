@@ -54,6 +54,9 @@ namespace Strive.Rendering.TV3D
 		public void DropAll() {
 			_models = new ModelCollection();
 			_views = new Cameras.CameraCollection();
+			if ( Engine.TV3DScene != null ) {
+				Engine.TV3DScene.DestroyAllMeshes();
+			}
 		}
 
 		public void SetSky( ITexture texture ) {
@@ -63,11 +66,7 @@ namespace Strive.Rendering.TV3D
 		}
 
 		public void SetClouds( ITexture texture ) {
-			// TODO: the fact that its a dds means our current resource manager
-			// wont load it. need to make resources more flexible... in the
-			// meantime its hardcoded ofc.
-			int tex_id = Engine.TexFactory.LoadTexture(@"C:\TV3DSDK\Media\cloud1.dds", "Clouds",-1 ,-1 , CONST_TV_COLORKEY.TV_COLORKEY_BLACK,true,true);
-			Engine.Land.InitClouds( tex_id, CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
+			Engine.Land.InitClouds( texture.ID, CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
 			Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
 		}
 

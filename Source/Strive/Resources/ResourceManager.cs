@@ -149,5 +149,11 @@ namespace Strive.Resources
 			}
 			return texture;
 		}
+
+		// TODO: umg this is a bit ghey...
+		// maybe resourcemanager should be in rendering
+		public static void DropAll() {
+			_textures.Clear();
+		}
 	}
 }

@@ -22,11 +22,13 @@ namespace Strive.Network.Server {
 		int tcpoffset = 0;
 		DateTime lastMessageTimestamp;
 		Listener handler;
+		EndPoint remoteEndPoint;
 		Strive.Network.Messages.NetworkProtocolType protocol;
 
 		public Client( Socket tcpsocket, Listener handler ) {
 			this.tcpsocket = tcpsocket;
 			this.handler = handler;
+			this.remoteEndPoint = tcpsocket.RemoteEndPoint;
 
 			// Begin Reading.
 			try {
@@ -110,7 +112,7 @@ namespace Strive.Network.Server {
 		public void Send( IMessage message ) {
 			// TODO: some clients may prefer no UDP
 			if ( !Authenticated ) {
-				Log.ErrorMessage( "Trying to send message without authenticated connection." );
+				//Log.ErrorMessage( "Trying to send message without authenticated connection." );
 				return;
 			}
 
@@ -192,6 +194,7 @@ namespace Strive.Network.Server {
 
 		public void Close() {
 			if ( tcpsocket != null ) {
+				Log.LogMessage( "Closing connection to " + EndPoint + "." );
 				tcpsocket.Close();
 				tcpsocket = null;
 			}
@@ -209,7 +212,7 @@ namespace Strive.Network.Server {
 		}
 
 		public EndPoint EndPoint {
-			get { return tcpsocket.RemoteEndPoint; }
+			get { return remoteEndPoint; }
 		}
 	}
 }

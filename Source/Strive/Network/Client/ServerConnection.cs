@@ -56,8 +56,8 @@ namespace Strive.Network.Client {
 				udpsocket = null;
 			}
 			if ( connected ) {
-				OnDisconnect();
 				connected = false;
+				OnDisconnect();
 			}
 		}
 
