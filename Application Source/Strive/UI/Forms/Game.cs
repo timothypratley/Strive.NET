@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
 
 using Strive.Rendering;
 using Strive.Rendering.Controls;
@@ -24,10 +25,8 @@ namespace Strive.UI.Forms
 		internal bool _isRendering = false;
 		private System.Windows.Forms.TabControl gameTabs;
 		private System.Windows.Forms.TabPage InGameTab;
-		internal System.Windows.Forms.PictureBox RenderTarget;
 		private System.Windows.Forms.TabControl inGameTabs;
 		private System.Windows.Forms.TabPage inGameSpells;
-		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage inGameInventory;
 		private System.Windows.Forms.ComboBox quickCommand;
 		private System.Windows.Forms.TabPage NoteBoardTabs;
@@ -36,13 +35,16 @@ namespace Strive.UI.Forms
 		private System.Windows.Forms.TextBox CommandText;
 		private System.Windows.Forms.RichTextBox Communications;
 		private System.Windows.Forms.Button butSpell1;
+		private System.Windows.Forms.TabPage aLogTab;
+		internal System.Windows.Forms.PictureBox RenderTarget;
+		private System.Windows.Forms.RichTextBox logOutput;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
 		public Game()
-		{			
+		{		
 			//
 			// Required for Windows Form Designer support
 			//
@@ -52,6 +54,7 @@ namespace Strive.UI.Forms
 			// TODO: Add any constructor code after InitializeComponent call
 			//
 
+			Global._log.SetLogOutput( logOutput );
 		}
 
 		/// <summary>
@@ -86,14 +89,16 @@ namespace Strive.UI.Forms
 			this.butSpell1 = new System.Windows.Forms.Button();
 			this.inGameInventory = new System.Windows.Forms.TabPage();
 			this.CommandText = new System.Windows.Forms.TextBox();
-			this.RenderTarget = new System.Windows.Forms.PictureBox();
 			this.NoteBoardTabs = new System.Windows.Forms.TabPage();
 			this.CharacterSheet = new System.Windows.Forms.TabPage();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.aLogTab = new System.Windows.Forms.TabPage();
+			this.RenderTarget = new System.Windows.Forms.PictureBox();
+			this.logOutput = new System.Windows.Forms.RichTextBox();
 			this.gameTabs.SuspendLayout();
 			this.InGameTab.SuspendLayout();
 			this.inGameTabs.SuspendLayout();
 			this.inGameSpells.SuspendLayout();
+			this.aLogTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gameTabs
@@ -105,7 +110,8 @@ namespace Strive.UI.Forms
 			this.gameTabs.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				   this.InGameTab,
 																				   this.NoteBoardTabs,
-																				   this.CharacterSheet});
+																				   this.CharacterSheet,
+																				   this.aLogTab});
 			this.gameTabs.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.gameTabs.HotTrack = true;
 			this.gameTabs.Location = new System.Drawing.Point(3, 8);
@@ -226,18 +232,6 @@ namespace Strive.UI.Forms
 			this.CommandText.TabIndex = 2;
 			this.CommandText.Text = "";
 			// 
-			// RenderTarget
-			// 
-			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Cursor = System.Windows.Forms.Cursors.Arrow;
-			this.RenderTarget.Location = new System.Drawing.Point(8, 8);
-			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(800, 500);
-			this.RenderTarget.TabIndex = 1;
-			this.RenderTarget.TabStop = false;
-			// 
 			// NoteBoardTabs
 			// 
 			this.NoteBoardTabs.Location = new System.Drawing.Point(4, 28);
@@ -255,13 +249,36 @@ namespace Strive.UI.Forms
 			this.CharacterSheet.TabIndex = 2;
 			this.CharacterSheet.Text = "Character Sheet";
 			// 
-			// tabPage1
+			// aLogTab
 			// 
-			this.tabPage1.Location = new System.Drawing.Point(4, 4);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(90, 592);
-			this.tabPage1.TabIndex = 1;
-			this.tabPage1.Text = "Inventory";
+			this.aLogTab.Controls.AddRange(new System.Windows.Forms.Control[] {
+																				  this.logOutput});
+			this.aLogTab.Location = new System.Drawing.Point(4, 28);
+			this.aLogTab.Name = "aLogTab";
+			this.aLogTab.Size = new System.Drawing.Size(1008, 648);
+			this.aLogTab.TabIndex = 3;
+			this.aLogTab.Text = "Log";
+			// 
+			// RenderTarget
+			// 
+			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+				| System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right);
+			this.RenderTarget.Cursor = System.Windows.Forms.Cursors.Arrow;
+			this.RenderTarget.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.RenderTarget.Location = new System.Drawing.Point(8, 8);
+			this.RenderTarget.Name = "RenderTarget";
+			this.RenderTarget.Size = new System.Drawing.Size(800, 500);
+			this.RenderTarget.TabIndex = 1;
+			this.RenderTarget.TabStop = false;
+			// 
+			// logOutput
+			// 
+			this.logOutput.Location = new System.Drawing.Point(16, 16);
+			this.logOutput.Name = "logOutput";
+			this.logOutput.Size = new System.Drawing.Size(976, 616);
+			this.logOutput.TabIndex = 0;
+			this.logOutput.Text = "";
 			// 
 			// Game
 			// 
@@ -278,6 +295,7 @@ namespace Strive.UI.Forms
 			this.InGameTab.ResumeLayout(false);
 			this.inGameTabs.ResumeLayout(false);
 			this.inGameSpells.ResumeLayout(false);
+			this.aLogTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}

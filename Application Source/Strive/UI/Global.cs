@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Strive.Multiverse;
 using Strive.Network.Client;
 using Strive.UI.Forms;
+using Strive.Logging;
 
 namespace Strive.UI
 {
@@ -22,6 +23,7 @@ namespace Strive.UI
 		internal static int _myid;
 		internal static Game _game;
 		public static string _resourcePath = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"].ToString();
+		public static Log _log = new Log();
 
 		[STAThread]
 		static void Main( string[] args ) 
@@ -51,7 +53,7 @@ namespace Strive.UI
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine(e.ToString());
+				_log.ErrorMessage(e.ToString());
 			}
 			#endregion
 
@@ -59,8 +61,6 @@ namespace Strive.UI
 
 			Application.Run(splash);
 			
-			Console.WriteLine("I don't block");
-
 			_serverConnection.Stop();
 
 		}

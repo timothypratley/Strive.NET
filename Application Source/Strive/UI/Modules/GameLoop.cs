@@ -63,7 +63,7 @@ namespace Strive.UI.Modules
 					if ( c.communicationType == CommunicationType.Chat ) {
 						Global._game.displayChat( c.name, c.message );
 					} else {
-						System.Console.WriteLine( "Bad communicationType" );
+						Global._log.ErrorMessage( "Bad communicationType" );
 					}
 				}
 					#endregion
@@ -74,15 +74,15 @@ namespace Strive.UI.Modules
 						// load self... this contains the players initial position
 						_scene.View.Position = new Vector3D( apo.x, apo.y, apo.z );
 						_scene.View.Rotation = GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
-						System.Console.WriteLine( "Initial position is " + _scene.View.Position );
-						System.Console.WriteLine( "Initial rotation is " + _scene.View.Rotation );
+						Global._log.LogMessage( "Initial position is " + _scene.View.Position );
+						Global._log.LogMessage( "Initial rotation is " + _scene.View.Rotation );
 						continue;
 					}
 					Model model = Resources.ResourceManager.LoadModel(apo.spawn_id, apo.model_id);
 					try {
 						_scene.Models.Add( model );
 					} catch ( Exception ) {
-						System.Console.WriteLine( "Could not add model " + model.Key );
+						Global._log.ErrorMessage( "Could not add model " + model.Key );
 						continue;
 					}
 					model.Position = new Vector3D( apo.x, apo.y, apo.z );
@@ -103,7 +103,7 @@ namespace Strive.UI.Modules
 					try {
 						workingModel = _scene.Models[p.spawn_id.ToString()];
 					} catch (Exception) {
-						System.Console.WriteLine( "Model for " + p.spawn_id + " has not been loaded" );
+						Global._log.ErrorMessage( "Model for " + p.spawn_id + " has not been loaded" );
 						continue;
 					}
 						#endregion
@@ -113,7 +113,7 @@ namespace Strive.UI.Modules
 					workingModel.Position = new Vector3D(p.position_x, p.position_y, p.position_z);
 					workingModel.Rotation = GetRotationFromHeading(p.heading_x, p.heading_y, p.heading_z);
 
-					//System.Console.WriteLine( "Position message applied to " + p.spawn_id );
+					//Global._log.LogMessage( "Position message applied to " + p.spawn_id );
 						#endregion
 				}
 
@@ -132,7 +132,7 @@ namespace Strive.UI.Modules
 			Vector3D cameraRotation = _scene.View.Rotation;
 
 			if(Keyboard.GetKeyState(Keys.key_W)) {
-				System.Console.WriteLine("w00t" );
+				Global._log.DebugMessage("w00t" );
 				WasKeyboardInput = true;
 				cameraPosition.X +=
 					(float)Math.Sin( cameraRotation.Y * Math.PI/180.0 ) * moveunit*2;
