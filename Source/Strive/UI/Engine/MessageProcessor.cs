@@ -7,6 +7,7 @@ using Strive.Rendering.Textures;
 using Strive.Logging;
 using Strive.Multiverse;
 using Strive.Resources;
+using Strive.UI.WorldView;
 
 
 namespace Strive.UI.Engine {

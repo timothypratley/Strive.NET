@@ -141,6 +141,11 @@
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
+                    Name = "Strive.UI.WorldView"
+                    Project = "{34B1BDF7-749D-4595-9F39-64A9D8FDA883}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
                     Name = "Strive.Rendering.R3D"
                     Project = "{60959A92-CEA0-421D-86DE-97F4B5E85D8E}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
@@ -177,27 +182,12 @@
                     BuildAction = "None"
                 />
                 <File
-                    RelPath = "Engine\EnumCameraMode.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "Engine\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Engine\MessageProcessor.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Engine\PhysicalObjectInstance.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Engine\World.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -7,6 +7,7 @@ using Strive.Common;
 using Strive.Math3D;
 using Strive.Rendering;
 using Strive.Resources;
+using Strive.UI.WorldView;
 using Strive.UI.Engine;
 
 using Strive.Network.Client;
@@ -44,7 +45,7 @@ namespace Strive.UI
 			// Initialise required objects
 			CurrentServerConnection = new ServerConnection();
 			CurrentGameLoop = new GameLoop();
-			CurrentWorld = new World();
+			CurrentWorld = new World( RenderingFactory );
 			CurrentLog = new Logging.Log();
 			CurrentMainWindow = new Windows.Main();
 			// Configure Resource manager
