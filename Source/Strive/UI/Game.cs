@@ -75,7 +75,6 @@ namespace Strive.UI
 			CurrentServerConnection.OnConnect += new ServerConnection.OnConnectHandler( HandleConnect );
 			CurrentServerConnection.OnDisconnect += new ServerConnection.OnDisconnectHandler( HandleDisconnect );
 			CurrentGameLoop = new GameLoop();
-			CurrentWorld = new World( RenderingFactory );
 			CurrentLog = new Logging.Log();
 			CurrentMainWindow = new Windows.Main();
 			// Configure Resource manager
@@ -94,17 +93,15 @@ namespace Strive.UI
 		}
 
 
-		public static void Play(string ServerName, string LoginName, string Password, int Port, Strive.Network.Messages.NetworkProtocolType protocol, IWin32Window RenderTarget) 
+		public static void Play(string ServerName, string LoginName, string Password, int Port, Strive.Network.Messages.NetworkProtocolType Protocol, IWin32Window RenderTarget) 
 		{
+			userName = LoginName;
+			password = Password;
+			protocol = Protocol;
 			CurrentServerConnection.protocol = protocol;
-			Stop();
-			CurrentWorld.InitialiseView( RenderTarget );
 			Log.LogMessage( "Connecting to " + ServerName + ":" + Port );
 			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName ).AddressList[0], Port ) );
 			CurrentGameLoop.Start(CurrentServerConnection);
-			userName = LoginName;
-			password = Password;
-			protocol = protocol;
 		}
 
 		public static void Stop() {

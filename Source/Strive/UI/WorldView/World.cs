@@ -25,17 +25,13 @@ namespace Strive.UI.WorldView {
 		Vector3D cameraPosition = new Vector3D( 0, 0, 0 );
 		Vector3D cameraRotation = new Vector3D( 0, 0, 0 );
 
-		public World( IEngine engine ) {
+		public World( IEngine engine, IWin32Window RenderTarget ) {
 			RenderingEngine = engine;
 			RenderingScene = engine.CreateScene();
 			TerrainPieces = new TerrainCollection( RenderingEngine, RenderingScene );
-		}
-
-		public void InitialiseView( IWin32Window RenderTarget ) {
-			
 			RenderingEngine.Initialise( RenderTarget, EnumRenderTarget.PictureBox, Resolution.Automatic );
-			RenderingScene.View.FieldOfView = 90;
-			RenderingScene.View.ViewDistance = 4000;
+			//RenderingScene.View.FieldOfView = 90;
+			//RenderingScene.View.ViewDistance = 4000;
 			RenderingScene.SetLighting( 100 );
 			RenderingScene.SetFog( 500.0f );
 		}

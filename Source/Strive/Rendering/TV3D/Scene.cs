@@ -52,12 +52,17 @@ namespace Strive.Rendering.TV3D
 
 		#region "Methods"
 		public void DropAll() {
-			this.Views.Clear();
-			_models = new ModelCollection();
-			_views = new Cameras.CameraCollection();
-			if ( Engine.TV3DScene != null ) {
-				Engine.TV3DScene.DestroyAllMeshes();
+			foreach ( IModel m in _models.Values ) {
+				m.Delete();
 			}
+			_models.Clear();
+			// TODO: do we want to clear cameras or not?
+			//_views.Clear();
+			Engine.Atmosphere.Unload();
+			Engine.Atmosphere.SkyBox_Enable( false, false );
+			Engine.Gl.DestroyAllMeshes();
+			Engine.TV3DEngine.Clear( false );
+			Engine.TV3DEngine.RenderToScreen();
 		}
 
 		public void SetSky( ITexture texture ) {
@@ -67,8 +72,9 @@ namespace Strive.Rendering.TV3D
 		}
 
 		public void SetClouds( ITexture texture ) {
-			Engine.Land.InitClouds( texture.ID, CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
-			Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
+			// TODO: make clouds always above your head
+			//Engine.Land.InitClouds( texture.ID, CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
+			//Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
 		}
 
 		public void SetLighting( short level ) {

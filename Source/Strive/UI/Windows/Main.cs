@@ -446,6 +446,8 @@ namespace Strive.UI.Windows
 			RenderTarget.Click += new EventHandler( RenderTarget_Click );
 			#endregion
 
+			Game.CurrentWorld = new World( Game.RenderingFactory, RenderTarget );
+
 			#endregion		
 		}
 

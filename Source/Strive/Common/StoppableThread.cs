@@ -22,6 +22,7 @@ namespace Strive.Common
 		}
 
 		public void Start() {
+			if ( isRunning ) return;
 			thisThread = new Thread( new ThreadStart( ThreadLoop ) );
 			isRunning = true;
 			thisThread.Start();

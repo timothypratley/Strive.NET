@@ -22,6 +22,7 @@ namespace Strive.Network.Client {
 		int tcpoffset = 0;
 		bool connected = false;
 		public Strive.Network.Messages.NetworkProtocolType protocol;
+		bool isRunning = false;
 
 		public delegate void OnConnectHandler();
 		public delegate void OnDisconnectHandler();
@@ -34,6 +35,8 @@ namespace Strive.Network.Client {
 
 		public class AlreadyRunningException : Exception{}
 		public void Start( IPEndPoint remoteEndPoint ) {
+			if ( isRunning ) throw new AlreadyRunningException();
+			isRunning = true;
 			this.remoteEndPoint = remoteEndPoint;
 			messageQueue.Clear();
 			tcpoffset = 0;
@@ -60,6 +63,7 @@ namespace Strive.Network.Client {
 				connected = false;
 				OnDisconnect();
 			}
+			isRunning = false;
 		}
 
 		private static void ConnectTCPCallback(IAsyncResult ar) {

@@ -63,9 +63,6 @@ namespace Strive.UI.WorldBuilder
 			// the 3d rendering engine
 			engine = Strive.Rendering.Activator.GetEngine();
 
-			// the worldview
-			world = new World( engine );
-
 			ResourceManager.SetPath( "c:/strive/resources" );
 			ResourceManager.factory = engine;
 
@@ -233,7 +230,8 @@ namespace Strive.UI.WorldBuilder
 
 		Strive.Common.StoppableThread st;
 		private void Main_Load(object sender, System.EventArgs e) {
-			world.InitialiseView( panel1 );
+			// the worldview
+			world = new World( engine, panel1 );
 			st = new Strive.Common.StoppableThread( new Strive.Common.StoppableThread.WhileRunning( InputHandler ) );
 		}
 
