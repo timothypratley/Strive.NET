@@ -13,7 +13,7 @@ namespace Strive.Rendering.Models
 		/// <param name="location">The path of other location of the model that could not be loaded</param>
 		/// <param name="format">The format the model was attempted to be loaded as</param>
 		/// <param name="innerException">The exception that is the cause of the ModelFormatUnknownException</param>
-		public ModelFormatUnknownException(string location, ModelFormat format, Exception innerException) : base("Unknown format '" + format.ToString()  +"'" +
+		public ModelFormatUnknownException(string location, Exception innerException) : base(
 			"for model '" + location + "'.", innerException)
 		{
 		}
@@ -23,7 +23,7 @@ namespace Strive.Rendering.Models
 		/// </summary>
 		/// <param name="location">The path of other location of the model that could not be loaded</param>
 		/// <param name="format">The format the model was attempted to be loaded as</param>
-		public ModelFormatUnknownException(string location, ModelFormat format) : this(location, format, null)
+		public ModelFormatUnknownException(string location) : this(location, null)
 		{
 		}
 	}
@@ -39,7 +39,7 @@ namespace Strive.Rendering.Models
 		/// <param name="location">The path of other location of the model that could not be loaded</param>
 		/// <param name="format">The format the model was attempted to be loaded as</param>
 		/// <param name="innerException">The exception that is the cause of the ModelFormatUnknownException</param>
-		public ModelNotLoadedException(string location, ModelFormat format, Exception innerException) : base("Unknown format '" + format.ToString()  +"'" +
+		public ModelNotLoadedException(string location, Exception innerException) : base(
 			"for model '" + location + "'.", innerException)
 		{
 		}
@@ -49,7 +49,7 @@ namespace Strive.Rendering.Models
 		/// </summary>
 		/// <param name="location">The path of other location of the model that could not be loaded</param>
 		/// <param name="format">The format the model was attempted to be loaded as</param>
-		public ModelNotLoadedException(string location, ModelFormat format) : this(location, format, null)
+		public ModelNotLoadedException(string location) : this(location, null)
 		{
 		}
 	}
