@@ -1,7 +1,7 @@
 using System;
 
 using DxVBLibA;
-using Revolution3D8087b;
+using Revolution3D8088c;
 
 namespace Strive.Rendering.Controls
 {
@@ -22,7 +22,8 @@ namespace Strive.Rendering.Controls
 		}
 
 		public static void ReadKeys() {
-			Interop._instance.Control.Keyboard_ReceiveKeys();
+			// the following line of code made redundant by 8088C
+			//Interop._instance.Control..Keyboard_ReceiveKeys();
 		}
 	}
 }

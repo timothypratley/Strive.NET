@@ -1,5 +1,5 @@
 using System;
-using Revolution3D8087b;
+using Revolution3D8088c;
 using DxVBLibA;
 
 namespace Strive.Rendering
@@ -27,9 +27,9 @@ namespace Strive.Rendering
 		/// </summary>
 		internal R3D_MeshBuilder Meshbuilder = new R3D_MeshBuilderClass();
 		/// <summary>
-		/// Revolution3D camera
+		/// Revolution3D cameras
 		/// </summary>
-		internal R3D_Camera Camera = new R3D_CameraClass();
+		internal R3D_Cameras Cameras = new R3D_CamerasClass();
 		/// <summary>
 		/// Revolution3D tools
 		/// </summary>
@@ -41,7 +41,7 @@ namespace Strive.Rendering
 		/// <summary>
 		/// Revolution3D skydome
 		/// </summary>
-		internal R3D_SkyDome Skydome = new R3D_SkyDomeClass();
+		internal R3D_SkyDome2 Skydome = new R3D_SkyDome2Class();
 		/// <summary>
 		/// Revolution3D texture library
 		/// </summary>

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using Strive.Rendering.Models;
 using Strive.Math3D;
-using Revolution3D8087b;
+using Revolution3D8088c;
 
 namespace Strive.Rendering
 {
@@ -14,16 +14,13 @@ namespace Strive.Rendering
 	/// </summary>
 	public class Scene
 	{
-
-		#region "Private fields"
+		#region "Private fields"		
 		// Singleton support
 		private static bool _constructed = false;
 		private bool _initialised;
 		private bool _isRendering;
 		private ModelCollection _models = new ModelCollection();
-		// This, combined with the inner class, is an attempt to implement
-		// an interesting design pattern
-		private Scene.Camera _view = Scene.Camera._instance;
+		private Cameras.CameraCollection _views = new Cameras.CameraCollection();
 		#endregion
 
 		#region "Constructors"
@@ -75,7 +72,7 @@ namespace Strive.Rendering
 				Interop._instance.Engine.InitializeMe(true);
 				Interop._instance.Pipeline.SetBackColor(0,0,0);
 				Interop._instance.Pipeline.SetDithering(true);
-				Interop._instance.Pipeline.SetFillMode(Revolution3D8087b.R3DFILLMODE.R3DFILLMODE_SOLID);
+				Interop._instance.Pipeline.SetFillMode(Revolution3D8088c.R3DFILLMODE.R3DFILLMODE_SOLID);
 				Interop._instance.Pipeline.SetAmbientLight(255,255,255);
 				Interop._instance.Pipeline.SetSpecular(true);
 				Interop._instance.Pipeline.SetMipMapping(false);
@@ -89,11 +86,15 @@ namespace Strive.Rendering
 			_initialised = true;
 		}
 
-		public void LoadTexture( string name, string filename ) {
-			if ( Interop._instance.TextureLib.Class_SetPointer( name ) < 0 ) {
+		public void LoadTexture( string name, string filename ) 
+		{
+			if ( Interop._instance.TextureLib.Class_SetPointer( name ) < 0 ) 
+			{
 				R3DCOLORKEY colorkey = R3DCOLORKEY.R3DCOLORKEY_CYAN;
 				Interop._instance.TextureLib.Texture_Load( name, filename, ref colorkey );
-			} else {
+			} 
+			else 
+			{
 				// already added
 			}
 		}
@@ -123,7 +124,7 @@ namespace Strive.Rendering
 			}
 			catch(Exception e)
 			{
-				throw new RenderingException("Call to 'Render()' failed", e);
+				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
 			}
 		}
 
@@ -154,7 +155,8 @@ namespace Strive.Rendering
 
 		public int RayCollision(
 			Vector3D start_point, Vector3D end_point, int collision_type
-		) {
+			) 
+		{
 			// map collision_type to r3d collision type omg :(
 			R3DCOLLISIONTYPE ct = (R3DCOLLISIONTYPE) collision_type;
 			R3DVector3D vStart;
@@ -168,7 +170,7 @@ namespace Strive.Rendering
 			// if (
 			Interop._instance.Meshbuilder.Class_RayCollision(
 				ref vStart, ref vEnd, ct
-			);
+				);
 
 			return 1;
 		}
@@ -207,182 +209,40 @@ namespace Strive.Rendering
 		/// <summary>
 		/// Returns the View of the current scene.
 		/// </summary>
-		public Camera View
+		public Cameras.CameraCollection Views
 		{
 			get
 			{
 				checkInitialised();
-				return _view;
+				return _views;
 			}
+			set
+			{
+				checkInitialised();
+				_views = value;
+			}
+
 		}
-
-		#endregion
-
-		#region "Internal classes"
 
 		/// <summary>
-		/// Represents the current view of the scene
+		/// Returns the default view
 		/// </summary>
-		public class Camera : IManeuverable
+		public Cameras.Camera View
 		{
-			#region "Private fields"
-			/// <summary>
-			/// Enforces access to only one Camera object (singleton pattern)
-			/// </summary>
-			/// <remarks>This may be extended in the future for multiple cameras/split screen views such as 'crystal ball'</remarks>
-			public static readonly Camera _instance = new Camera();
-			private Vector3D _position;
-			private Vector3D _rotation;
-			private float _fieldOfView;
-			private float _viewDistance;
-			#endregion
-
-			#region "Constructors"
-			/// <summary>
-			/// Private constructor for singleton pattern
-			/// </summary>
-			private Camera()
+			get
 			{
-			}
-			#endregion
-
-			#region "Operators
-
-			#endregion
-
-			#region "Properties"
-			/// <summary>
-			/// The depth of field (width of vision) for the camera
-			/// </summary>
-			public float FieldOfView
-			{
-				get
+				checkInitialised();
+				if(!Views.Contains("DefaultView"))
 				{
-					return _fieldOfView;
-				}
-				set
+					return Cameras.Camera.CreateCamera("DefaultView", this.Views);
+					}
+				else
 				{
-					try
-					{
-						Interop._instance.Engine.Inf_SetFieldOfView(value);
-					}
-					catch(Exception e)
-					{
-						throw new SceneException("Could not set field of view", e);
-					}
-					_fieldOfView = value;
-				
+					return this.Views["DefaultView"];
 				}
 			}
-			/// <summary>
-			/// The view distance for the camera
-			/// </summary>
-			public float ViewDistance
-			{
-				get
-				{
-					return _viewDistance;
-				}
-				set
-				{
-					try
-					{
-						Interop._instance.Engine.Inf_SetViewDistance(value);
-					}
-					catch(Exception e)
-					{
-						throw new SceneException("Could not set view distance", e);
-					}
-					_viewDistance = value;
-				}
-			}
-			#endregion
-
-			#region "Implementation of IManeuverable"
-			/// <summary>
-			/// Moves the camera
-			/// </summary>
-			/// <param name="movement">The amount to move the camera</param>
-			/// <returns>Indicates whether the Move was successful</returns>
-			public bool Move(Vector3D movement)
-			{
-				Vector3D newPosition = _position + movement;
-				try
-				{
-					Interop._instance.Camera.SetPosition(newPosition.X, newPosition.Y, newPosition.Z);
-				}
-				catch(Exception e)
-				{
-					throw new RenderingException("Could not set position '" + newPosition.X + "' '" + newPosition.Y + "' '" + newPosition.Z + "' for camera.", e);
-				}
-				_position = newPosition;
-				// TODO: Implement success correctly - may not be needed for a camera
-				return true;
-			}
-
-			/// <summary>
-			/// Rotates the camera
-			/// </summary>
-			/// <param name="rotation">The amount to rotate the camera</param>
-			/// <returns>Indicates whether the rotation was successful</returns>
-			public bool Rotate(Vector3D rotation)
-			{
-				Vector3D newRotation = _rotation + rotation;
-				try
-				{
-					Interop._instance.Camera.SetRotation(newRotation.X, newRotation.Y, newRotation.Z);
-				}
-				catch(Exception e)
-				{
-					throw new RenderingException("Could not set rotation '" + newRotation.X + "' '" + newRotation.Y + "' '" + newRotation.Z + "' for camera.", e);
-				}
-				_rotation = newRotation;
-				// TODO: Implement success if needed
-				return true;
-			}
-
-			/// <summary>
-			/// The position of the camera
-			/// </summary>
-			public Vector3D Position
-			{
-				get
-				{
-					return _position;
-				}
-				set {
-					try {
-						Interop._instance.Camera.SetPosition(value.X, value.Y, value.Z);
-					}
-					catch(Exception e) {
-						throw new RenderingException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for camera.", e);
-					}
-					_position = value;				
-				}
-			}
-
-			/// <summary>
-			/// The rotation of the camera
-			/// </summary>
-			public Vector3D Rotation
-			{
-				get
-				{
-					return _rotation;
-				}
-				set {
-					try {
-						Interop._instance.Camera.SetRotation(value.X, value.Y, value.Z);
-					}
-					catch(Exception e) {
-						throw new RenderingException("Could not set rotation '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for camera.", e);
-					}
-					_rotation = value;
-				}
-			}
-			#endregion
 		}
-		
+
 		#endregion
 
 	}

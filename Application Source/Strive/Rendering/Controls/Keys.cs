@@ -1,6 +1,6 @@
 using System;
 using DxVBLibA;
-using Revolution3D8087b;
+using Revolution3D8088c;
 
 namespace Strive.Rendering.Controls
 {
@@ -16,9 +16,9 @@ namespace Strive.Rendering.Controls
 		/// </summary>
 		/// <param name="k">The Key to cast from</param>
 		/// <returns>The R3DKey result of the cast</returns>
-		public static implicit operator Revolution3D8087b.R3DKey(Key k)
+		public static implicit operator Revolution3D8088c.R3DKey(Key k)
 		{
-			return (Revolution3D8087b.R3DKey)Enum.Parse(typeof(Revolution3D8087b.R3DKey), k.Code.ToString(), true);
+			return (Revolution3D8088c.R3DKey)Enum.Parse(typeof(Revolution3D8088c.R3DKey), k.Code.ToString(), true);
 		}
 		
 		/// <summary>
@@ -26,7 +26,7 @@ namespace Strive.Rendering.Controls
 		/// </summary>
 		/// <param name="k">The R3DKey to cast from</param>
 		/// <returns>The Key result of the cast</returns>
-		public static implicit operator Key(Revolution3D8087b.R3DKey k)
+		public static implicit operator Key(Revolution3D8088c.R3DKey k)
 		{
 			Key kReturn;
 			kReturn.Code = (int)k;

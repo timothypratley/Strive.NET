@@ -94,22 +94,22 @@
                     WrapperTool = "tlbimp"
                 />
                 <Reference
-                    Name = "Revolution3D8087b"
-                    Guid = "{599E9200-4AE4-4D0C-9675-F15F10D96AD6}"
-                    VersionMajor = "1"
-                    VersionMinor = "0"
-                    Lcid = "0"
-                    WrapperTool = "tlbimp"
-                />
-                <Reference
                     Name = "System.Data"
                     AssemblyName = "System.Data"
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Data.dll"
                 />
                 <Reference
                     Name = "System.XML"
-                    AssemblyName = "System.XML"
+                    AssemblyName = "System.Xml"
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
+                />
+                <Reference
+                    Name = "Revolution3D8088c"
+                    Guid = "{F9026A6D-BB52-43C8-8439-586CE8DB3FAC}"
+                    VersionMajor = "1"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
                 />
             </References>
         </Build>
@@ -151,17 +151,35 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "VectorConverter.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Cameras\Camera.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Cameras\Collections.xml"
+                    BuildAction = "Content"
+                    Generator = "SBCollectionGenerator"
+                    LastGenOutput = "Collections.cs"
+                />
+                <File
+                    RelPath = "Cameras\Collections.cs"
+                    DependentUpon = "Collections.xml"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                    AutoGen = "True"
+                />
+                <File
                     RelPath = "Controls\Keyboard.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Controls\Keys.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Controls\Mouse.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

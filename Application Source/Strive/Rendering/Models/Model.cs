@@ -1,7 +1,7 @@
 using System;
 using Strive.Math3D;
 
-using Revolution3D8087b;
+using Revolution3D8088c;
 using Strive.Rendering;
 
 namespace Strive.Rendering.Models
@@ -65,8 +65,9 @@ namespace Strive.Rendering.Models
 		/// <returns>A reference to the loaded Model</returns>
 		public static Model Load(string key, string path, ModelFormat format) {
 			
-			if(!System.IO.File.Exists(path)) {
-				throw new System.IO.FileNotFoundException("Could not load model", path);
+			if(!System.IO.File.Exists(path))
+			{
+				throw new System.IO.FileNotFoundException("Could not load model '" + path + "'", path);
 			}
 			
 			// 1.0  Initialise object
@@ -89,10 +90,18 @@ namespace Strive.Rendering.Models
 					}
 					break;
 				}
-				case ModelFormat._3DS: {
-					try {
+				case ModelFormat._3DS:
+				{
+					try
+					{
+						// Changed for 8088c
+						R3D_3DSFile _3dsfile = new R3D_3DSFileClass();
+						_3dsfile.File_Open(path);
+											
+						_3dsfile.File_Close();
+
 						Interop._instance.Meshbuilder.Mesh_Create(key);
-						Interop._instance.Meshbuilder.Mesh_Add3DS( path,false,false,false,false);
+						Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
