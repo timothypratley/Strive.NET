@@ -68,32 +68,34 @@ namespace Strive.Rendering.Models {
 			return created;
 		}
 
-		public static Model CreateTerrain( string name, string filename, string texture ) {
-			//			Model created = CreatePlane(name, 
-			//				new Vector3D(0,0,0),
-			//				new Vector3D(100,0,0),
-			//				new Vector3D(100,0,100),
-			//				new Vector3D(0,0,100),
-			//				texture,
-			//				"");
-			//			return created;
-
-			Model created = new Model();
-			created._format = ModelFormat.Scape;
-			created._key = name;
-			R3DVector2D size = new R3DVector2D();
-			size.x = 16;
-			size.y = 16;
-			created._id = Interop._instance.PolyVox.Scape_Create(name, ref size, 1);
-			Interop._instance.PolyVox.Scape_ApplyHeightMap( filename, 1000000, R3DCOMBINATION.R3DCOMBINATION_REPLACE );
-			//Interop._instance.PolyVox.Scape_ApplySmoothness( 10 );
-			Interop._instance.PolyVox.Scape_SetTexture( 0, texture);
-			R3DVector3D scale = new R3DVector3D();
-			scale.x = 100.0f/16.0f;
-			scale.z = 100.0f/16.0f;
-			scale.y = 1;
-			Interop._instance.PolyVox.Scape_SetScale( ref scale );
+		public static Model CreateTerrain( string name, string texture ) {
+			Model created = CreatePlane(
+				name, 
+				new Vector3D(0,0,0),
+				new Vector3D(100,0,0),
+				new Vector3D(100,0,100),
+				new Vector3D(0,0,100),
+				texture,
+				""
+			);
 			return created;
+			//
+			//			Model created = new Model();
+			//			created._format = ModelFormat.Scape;
+			//			created._key = name;
+			//			R3DVector2D size = new R3DVector2D();
+			//			size.x = 16;
+			//			size.y = 16;
+			//			created._id = Interop._instance.PolyVox.Scape_Create(name, ref size, 1);
+			//			Interop._instance.PolyVox.Scape_ApplyHeightMap( filename, 1000000, R3DCOMBINATION.R3DCOMBINATION_REPLACE );
+			//			//Interop._instance.PolyVox.Scape_ApplySmoothness( 10 );
+			//			Interop._instance.PolyVox.Scape_SetTexture( 0, texture);
+			//			R3DVector3D scale = new R3DVector3D();
+			//			scale.x = 100.0f/16.0f;
+			//			scale.z = 100.0f/16.0f;
+			//			scale.y = 1;
+			//			Interop._instance.PolyVox.Scape_SetScale( ref scale );
+			//			return created;
 		}
 
 		/// <summary>

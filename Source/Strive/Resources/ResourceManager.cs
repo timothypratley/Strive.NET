@@ -29,15 +29,6 @@ namespace Strive.Resources
 			_modelPath = System.IO.Path.Combine( path, "models" );
 			_texturePath = System.IO.Path.Combine( path, "textures" );
 			_resourceServer = System.Configuration.ConfigurationSettings.AppSettings["ResourceServer"];
-
-			// todo: remove this code,
-			// ensures the default heightmap has been downloaded.
-			string heightMapFile = System.IO.Path.Combine( _texturePath, "91.bmp");
-			if ( System.IO.File.Exists( heightMapFile ) ) {
-				// all well and good
-			} else {
-				makeTextureExist( heightMapFile );
-			}
 		}
 
 		public static Model LoadModel(int InstanceID, int ModelID)
@@ -55,10 +46,8 @@ namespace Strive.Resources
 			} else if ( System.IO.File.Exists(_3dsFile) ) {
 				return Model.Load(InstanceID.ToString(), _3dsFile, ModelFormat.Mesh);
 			} else if ( System.IO.File.Exists(textureFile) ) {
-				// todo: don't hardcode the heightmap file
-				string heightmap = System.IO.Path.Combine( _texturePath, "91.bmp");
 				string texture = LoadTexture( ModelID );
-				return Model.CreateTerrain( InstanceID.ToString(), heightmap, texture );
+				return Model.CreateTerrain( InstanceID.ToString(), texture );
 			}
 
 			// download resource
@@ -69,10 +58,8 @@ namespace Strive.Resources
 				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), ModelFormat.Mesh);
 			}
 			else if (makeTextureExist(System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp"))) {
-				// todo: don't hardcode the heightmap file
-				string heightmap = System.IO.Path.Combine( _texturePath, "91.bmp");
 				string texture = LoadTexture( ModelID );
-				return Model.CreateTerrain( InstanceID.ToString(), heightmap, texture );
+				return Model.CreateTerrain( InstanceID.ToString(), texture );
 			}
 			else {
 				throw new ResourceNotLoadedException(ModelID, ResourceType.Model);

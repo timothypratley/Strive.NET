@@ -18,7 +18,6 @@ namespace Strive.Server.Shared {
 		World world;
 		MessageProcessor mp;
 		StoppableThread engine_thread;
-		bool loadFromFile = false;
 
 		public Engine() {
 			Global.ReadConfiguration();

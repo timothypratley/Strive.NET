@@ -3,9 +3,9 @@ using System;
 using Strive.Network.Messages;
 using Strive.Math3D;
 using Strive.Rendering.Models;
-using Strive.Resources;
 using Strive.Logging;
 using Strive.Multiverse;
+using Strive.Resources;
 
 
 namespace Strive.UI.Engine {

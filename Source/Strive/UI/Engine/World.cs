@@ -7,23 +7,25 @@ using Strive.Rendering.Models;
 using Strive.Multiverse;
 using Strive.Logging;
 using Strive.Math3D;
+using Strive.Resources;
+
 
 namespace Strive.UI.Engine {
 	/// <summary>
 	/// Summary description for World.
 	/// </summary>
 	public class World {
+		// TODO: refactor into a strongly typed collection?
 		public Hashtable physicalObjectInstances = new Hashtable();
 		Scene scene = new Scene();
+		TerrainCollection terrainPieces;
 		public PhysicalObjectInstance CurrentAvatar;
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
 		Vector3D cameraHeading;
 		Vector3D cameraPosition;
 
 		public World() {
-			//
-			// TODO: refactor into a strongly typed collection?
-			//
+			terrainPieces = new TerrainCollection( scene );
 		}
 
 		public void InitialiseView(IWin32Window RenderTarget) {
@@ -40,6 +42,11 @@ namespace Strive.UI.Engine {
 			physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 			scene.Models.Add( poi.model );
 
+			if ( po is Terrain ) {
+				Terrain t = (Terrain)po;
+				terrainPieces.Add( new TerrainPiece( t.ObjectInstanceID, t.Position.X, t.Position.Z, t.Position.Y, t.ModelID ) );
+			}
+
 			//todo: serverside ground level/gravity control
 			//instead of clientside.
 			po.Position.Y = GroundLevel( po.Position.X, po.Position.Z );
@@ -49,6 +56,7 @@ namespace Strive.UI.Engine {
 		}
 
 		public void Remove( int ObjectInstanceID ) {
+			terrainPieces.Remove( ObjectInstanceID );
 			physicalObjectInstances.Remove( ObjectInstanceID );
 			scene.Models.Remove( ObjectInstanceID );
 		}
@@ -183,7 +191,7 @@ namespace Strive.UI.Engine {
 					&& z >= t.Position.Z && z < t.Position.Z+terrainSize
 				) {
 					// w00t on this piece lookup its height
-					return poi.model.HeightLookup( x - t.Position.X, z - t.Position.Z );
+					return poi.physicalObject.Position.Y;
 				}
 			}
 
