@@ -184,6 +184,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Controls\Mouse.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Models\Collections.xml"
                     BuildAction = "Content"
                     Generator = "SBCollectionGenerator"
