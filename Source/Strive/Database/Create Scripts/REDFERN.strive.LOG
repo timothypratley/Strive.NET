@@ -6,11 +6,11 @@ The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'd
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.Area' being transfered.
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.Area' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.Area' being transfered.
+The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.Area' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -70,11 +70,11 @@ The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'd
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.EnumTerrainType' being transfered.
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.EnumTerrainType' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.EnumTerrainType' being transfered.
+The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.EnumTerrainType' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -126,6 +126,10 @@ The object 'dbo.CreateWieldable' not being transfered is dependent on the table 
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.ObjectInstance' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
 The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.ObjectInstance' being transfered.
 
 ::Warning::
@@ -138,11 +142,11 @@ The object 'dbo.RaiseTerrain' not being transfered is dependent on the table 'db
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.ObjectInstance' being transfered.
+The object 'dbo.RotateTerrain' not being transfered is dependent on the table 'dbo.ObjectInstance' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.ObjectInstance' being transfered.
+The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.ObjectInstance' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -1142,6 +1146,10 @@ The object 'dbo.CreateWieldable' not being transfered is dependent on the table 
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.Player' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
 The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.Player' being transfered.
 
 ::Warning::
@@ -1194,6 +1202,10 @@ The object 'dbo.RaiseTerrain' not being transfered is dependent on the table 'db
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
+The object 'dbo.RotateTerrain' not being transfered is dependent on the table 'dbo.Player' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
 The object 'dbo.SelectPlayer' not being transfered is dependent on the table 'dbo.Player' being transfered.
 
 ::Warning::
@@ -1203,10 +1215,6 @@ The object 'dbo.SelectPlayerByPlayerKey' not being transfered is dependent on th
 ::Warning::
 Transfer Status: Scripting dependent object drops
 The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.Player' being transfered.
-
-::Warning::
-Transfer Status: Scripting dependent object drops
-The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.Player' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -1230,11 +1238,11 @@ The object 'dbo.CreateWieldable' not being transfered is dependent on the table 
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.Quote' being transfered.
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.Quote' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.Quote' being transfered.
+The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.Quote' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -1278,6 +1286,10 @@ The object 'dbo.CreateWieldable' not being transfered is dependent on the table 
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.Resource' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
 The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.Resource' being transfered.
 
 ::Warning::
@@ -1290,15 +1302,15 @@ The object 'dbo.RaiseTerrain' not being transfered is dependent on the table 'db
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
+The object 'dbo.RotateTerrain' not being transfered is dependent on the table 'dbo.Resource' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
 The object 'dbo.UpdateResource' not being transfered is dependent on the table 'dbo.Resource' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
 The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.Resource' being transfered.
-
-::Warning::
-Transfer Status: Scripting dependent object drops
-The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.Resource' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -1382,6 +1394,10 @@ The object 'dbo.CreateWieldable' not being transfered is dependent on the table 
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.TemplateObject' being transfered.
+
+::Warning::
+Transfer Status: Scripting dependent object drops
 The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.TemplateObject' being transfered.
 
 ::Warning::
@@ -1394,11 +1410,11 @@ The object 'dbo.RaiseTerrain' not being transfered is dependent on the table 'db
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.TemplateObject' being transfered.
+The object 'dbo.RotateTerrain' not being transfered is dependent on the table 'dbo.TemplateObject' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.TemplateObject' being transfered.
+The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.TemplateObject' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -1410,11 +1426,11 @@ The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'd
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.TemplateTerrain' being transfered.
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.TemplateTerrain' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.TemplateTerrain' being transfered.
+The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.TemplateTerrain' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
@@ -1422,8 +1438,8 @@ The object 'dbo.CreateTerrain' not being transfered is dependent on the table 'd
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.World' being transfered.
+The object 'dbo.EnumTerrainInSquare' not being transfered is dependent on the table 'dbo.World' being transfered.
 
 ::Warning::
 Transfer Status: Scripting dependent object drops
-The object 'dbo.UpdateTerrain' not being transfered is dependent on the table 'dbo.World' being transfered. 
+The object 'dbo.GetTerrain' not being transfered is dependent on the table 'dbo.World' being transfered. 

@@ -1,6 +1,6 @@
 @echo off
 REM: Command File Created by Microsoft Visual Database Tools
-REM: Date Generated: 17/12/2003
+REM: Date Generated: 30/05/2004
 REM: Authentication type: Windows NT
 REM: Usage: CommandFilename [Server] [Database]
 
@@ -20,71 +20,39 @@ osql -S %1 -d %2 -E -b -i "dbo.ClanRank.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumActivationType.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumActivationType" in "dbo.EnumActivationType.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumCommand.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumCommand" in "dbo.EnumCommand.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumDamageType.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumDamageType" in "dbo.EnumDamageType.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumEmote.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumEmote" in "dbo.EnumEmote.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumItemDurability.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumItemDurability" in "dbo.EnumItemDurability.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumLiquidType.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumLiquidType" in "dbo.EnumLiquidType.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumMobileSize.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumMobileSize" in "dbo.EnumMobileSize.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumMobileState.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumMobileState" in "dbo.EnumMobileState.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumRace.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumRace" in "dbo.EnumRace.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumResourceType.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumResourceType" in "dbo.EnumResourceType.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumSex.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumSex" in "dbo.EnumSex.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumSkill.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumSkill" in "dbo.EnumSkill.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumSpecialisation.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumSpecialisation" in "dbo.EnumSpecialisation.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumTargetType.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumTargetType" in "dbo.EnumTargetType.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumTerrainType.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumTerrainType" in "dbo.EnumTerrainType.dat" -S %1 -T -k -n -q
-if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumWeaponSize.tab"
-if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumWeaponSize" in "dbo.EnumWeaponSize.dat" -S %1 -T -k -n -q
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumWearLocation.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
-bcp "%2.dbo.EnumWearLocation" in "dbo.EnumWearLocation.dat" -S %1 -T -k -n -q
+osql -S %1 -d %2 -E -b -i "dbo.EnumWearSlot.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.Inventory.tab"
 if %ERRORLEVEL% NEQ 0 goto errors
@@ -204,6 +172,8 @@ osql -S %1 -d %2 -E -b -i "dbo.EnumWeaponSize.kci"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumWearLocation.kci"
 if %ERRORLEVEL% NEQ 0 goto errors
+osql -S %1 -d %2 -E -b -i "dbo.EnumWearSlot.kci"
+if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.Inventory.kci"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.MobileHasClanRank.kci"
@@ -322,6 +292,8 @@ osql -S %1 -d %2 -E -b -i "dbo.EnumWeaponSize.fky"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumWearLocation.fky"
 if %ERRORLEVEL% NEQ 0 goto errors
+osql -S %1 -d %2 -E -b -i "dbo.EnumWearSlot.fky"
+if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.Inventory.fky"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.MobileHasClanRank.fky"
@@ -439,6 +411,8 @@ if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumWeaponSize.ext"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.EnumWearLocation.ext"
+if %ERRORLEVEL% NEQ 0 goto errors
+osql -S %1 -d %2 -E -b -i "dbo.EnumWearSlot.ext"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.Inventory.ext"
 if %ERRORLEVEL% NEQ 0 goto errors
@@ -689,6 +663,8 @@ if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.PO_UserLogin.prc"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.RaiseTerrain.prc"
+if %ERRORLEVEL% NEQ 0 goto errors
+osql -S %1 -d %2 -E -b -i "dbo.RotateTerrain.prc"
 if %ERRORLEVEL% NEQ 0 goto errors
 osql -S %1 -d %2 -E -b -i "dbo.SelectPlayer.prc"
 if %ERRORLEVEL% NEQ 0 goto errors
