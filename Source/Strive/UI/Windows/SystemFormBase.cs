@@ -50,9 +50,14 @@ namespace Strive.UI.Windows
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.Size = new System.Drawing.Size(300,300);
+			// 
+			// SystemFormBase
+			// 
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+			this.ClientSize = new System.Drawing.Size(292, 273);
+			this.Name = "SystemFormBase";
 			this.Text = "SystemForm";
+
 		}
 		#endregion
 	}

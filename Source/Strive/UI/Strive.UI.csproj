@@ -170,8 +170,16 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Icons\Mobile.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Icons\MobilePossessed.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "Icons\Player.bmp"
-                    BuildAction = "Content"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "Icons\StartedServer.bmp"
@@ -185,6 +193,10 @@
                     RelPath = "Settings\SettingsManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Icon1.ico"
+                    BuildAction = "Content"
                 />
                 <File
                     RelPath = "Windows\Main.cs"

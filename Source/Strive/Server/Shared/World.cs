@@ -23,8 +23,6 @@ namespace Strive.Server.Shared {
 		int squaresInZ;
 		int world_id;
 		
-		// the multiverse schema is used for dataset access
-		Schema multiverse;
 		// squares are used to group physical objects
 		protected Square[,] squares;
 		// all physical objects are indexed in a hashtable
@@ -44,16 +42,16 @@ namespace Strive.Server.Shared {
 
 			// todo: would be nice to be able to load only the
 			// world in question... but for now load them all
-			System.Console.WriteLine( "Loading multiverse..." );
-			multiverse = Strive.Data.MultiverseFactory.getMultiverse();
-			System.Console.WriteLine( "Multiverse loaded." );
+			System.Console.WriteLine( "Loading Global.multiverse..." );
+			Global.multiverse = Strive.Data.MultiverseFactory.getMultiverse();
+			System.Console.WriteLine( "Global.multiverse loaded." );
 
 			// find highX and lowX for our world dimensions
-			highX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
-			lowX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
-			highZ = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
-			lowZ = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
-			System.Console.WriteLine( "Multiverse bounds are " + lowX + "," + lowZ + " " + highX + "," + highZ );
+			highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
+			lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
+			highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
+			lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
+			System.Console.WriteLine( "Global.multiverse bounds are " + lowX + "," + lowZ + " " + highX + "," + highZ );
 
 			// figure out how many squares we need
 			squaresInX = (int)(highX-lowX)/Square.squareSize + 1;
@@ -72,7 +70,7 @@ namespace Strive.Server.Shared {
 				}
 			}
 
-			Schema.WorldRow wr = multiverse.World.FindByWorldID( world_id );
+			Schema.WorldRow wr = Global.multiverse.World.FindByWorldID( world_id );
 			if ( wr == null ) {
 				throw new Exception( "ERROR: World ID not valid!" );	
 			}
@@ -357,27 +355,24 @@ namespace Strive.Server.Shared {
 		}
 
 		public MobileAvatar LoadMobile( int instanceID ) {
-			Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)multiverse.ObjectInstance.FindByObjectInstanceID( instanceID );
+			Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.FindByObjectInstanceID( instanceID );
 			if ( rpr == null ) return null;
-			Schema.ObjectTemplateRow por = multiverse.ObjectTemplate.FindByObjectTemplateID( rpr.ObjectTemplateID );
+			Schema.ObjectTemplateRow por = Global.multiverse.ObjectTemplate.FindByObjectTemplateID( rpr.ObjectTemplateID );
 			if ( por == null ) return null;
-			Schema.TemplateMobileRow mr = multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
+			Schema.TemplateMobileRow mr = Global.multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
 			if ( mr == null ) return null;
 			return new MobileAvatar( this, mr, por, rpr );
 		}
 
-		public bool UserLookup( string email, string password ) {
-			// todo: don't reload the whole world,
-			// just look up player details (and their mob details when they enterworld)
-			System.Console.WriteLine( "Reloading multiverse..." );
-			multiverse = Strive.Data.MultiverseFactory.getMultiverse();
-			System.Console.WriteLine( "Multiverse loaded." );
-			DataRow[] dr = multiverse.Player.Select( "Email = '" + email + "'" );
+		public bool UserLookup( string email, string password, ref int playerID ) {
+			Strive.Data.MultiverseFactory.refreshPlayerList( Global.multiverse );
+			DataRow[] dr = Global.multiverse.Player.Select( "Email = '" + email + "'" );
 			if ( dr.Length != 1 ) {
 				System.Console.WriteLine( "ERROR: " + dr.Length + " players found with email '" + email + "'" );
 				return false;
 			} else {
-				if ( String.Compare( (string)dr[0]["password"], password ) == 0 ) {
+				if ( String.Compare( (string)dr[0]["Password"], password ) == 0 ) {
+					playerID = (int)dr[0]["PlayerID"];
 					return true;
 				} else {
 					System.Console.WriteLine( "ERROR: incorrect password for player with email '" + email + "'" );
@@ -453,8 +448,8 @@ namespace Strive.Server.Shared {
 		}
 
 		public Strive.Network.Messages.ToClient.CanPossess.id_name_tuple[] getPossessable( string username ) {
-			DataRow[] dr = multiverse.Player.Select( "Email = '" + username + "'" );
-			Schema.PlayerRow pr = multiverse.Player.FindByPlayerID( (int)dr[0][0] );
+			DataRow[] dr = Global.multiverse.Player.Select( "Email = '" + username + "'" );
+			Schema.PlayerRow pr = Global.multiverse.Player.FindByPlayerID( (int)dr[0][0] );
 			Schema.MobilePossesableByPlayerRow [] mpbpr = pr.GetMobilePossesableByPlayerRows();
 			ArrayList list = new ArrayList();
 			foreach ( Schema.MobilePossesableByPlayerRow mpr in mpbpr ) {

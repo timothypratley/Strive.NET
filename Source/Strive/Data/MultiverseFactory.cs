@@ -16,12 +16,13 @@ namespace Strive.Data
 		static ListDictionary dataAdapters = new ListDictionary();
 		static ListDictionary commands = new ListDictionary();
 		static ArrayList tableList = new ArrayList();
-		static CommandFactory commandFactory = new CommandFactory(connection);
+		static CommandFactory commandFactory;
 		static bool isInitialised;
 
 		static MultiverseFactory() {
 			connection = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["databaseConnectionString"].ToString());
 			connection.Open();
+			commandFactory = new CommandFactory(connection);
 		}
 
 
@@ -100,15 +101,25 @@ namespace Strive.Data
 		#endregion
 
 
-		public static void refreshMultiverse(Schema multiverse, int PlayerID) {
+		public static void refreshPlayerList(Schema multiverse) {
 			Schema updatedPlayerPartOfMultiverse = new Schema();
-			
-			SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer(PlayerID));
+			SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
+			playerFiller.Fill( updatedPlayerPartOfMultiverse.Player );
+			multiverse.Merge(updatedPlayerPartOfMultiverse);	
+		}
 
-			playerFiller.Fill(updatedPlayerPartOfMultiverse.Player);
-
-			multiverse.Merge(updatedPlayerPartOfMultiverse);
-			
+		public static void refreshMultiverseForPlayer(Schema multiverse, int PlayerID) {
+			Schema updatedPlayerPartOfMultiverse = new Schema();
+			updatedPlayerPartOfMultiverse.EnforceConstraints = false;
+			SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
+			SqlDataAdapter mobileFiller = new SqlDataAdapter(commandFactory.SelectTemplateMobileRows(PlayerID));
+			SqlDataAdapter objectFiller = new SqlDataAdapter(commandFactory.SelectObjectInstanceRows(PlayerID));
+			SqlDataAdapter templateFiller = new SqlDataAdapter(commandFactory.SelectObjectTemplateRows(PlayerID));
+			templateFiller.Fill(updatedPlayerPartOfMultiverse.ObjectTemplate);
+			objectFiller.Fill(updatedPlayerPartOfMultiverse.ObjectInstance);
+			mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
+			possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
+			multiverse.Merge(updatedPlayerPartOfMultiverse);			
 		}
 
 		public static Schema getMultiverse()

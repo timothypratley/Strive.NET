@@ -89,17 +89,45 @@ namespace Strive.Data
 
 		#region Hand built commands - DO NOT DELETE
 
-		public System.Data.SqlClient.SqlCommand SelectPlayerRows(int PlayerID) {
-
-			System.Data.SqlClient.SqlCommand playerCommand = buildCommandFromSimpleQuery( "select * from Player WHERE PlayerID = @PlayerID" );
+		public System.Data.SqlClient.SqlCommand SelectMobilePossesableByPlayerRows(int PlayerID) {
+			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT * FROM MobilePossesableByPlayer WHERE PlayerID = @PlayerID" );
 
 			SqlParameter param = new System.Data.SqlClient.SqlParameter();		
 			param.ParameterName = "@PlayerID";
 			param.Value = PlayerID;
-			playerCommand.Parameters.Add(param);			
+			command.Parameters.Add(param);			
 
-			return playerCommand;				
+			return command;
+		}
 
+		public System.Data.SqlClient.SqlCommand SelectTemplateMobileRows(int PlayerID) {
+			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT tm.* FROM TemplateMobile tm, ObjectInstance oi, MobilePossesableByPlayer mpbp WHERE mpbp.PlayerID = @PlayerID AND oi.ObjectInstanceID = mpbp.ObjectInstanceID AND oi.ObjectTemplateID = tm.ObjectTemplateID" );
+			SqlParameter param = new System.Data.SqlClient.SqlParameter();		
+			param.ParameterName = "@PlayerID";
+			param.Value = PlayerID;
+			command.Parameters.Add(param);			
+
+			return command;
+		}
+
+		public System.Data.SqlClient.SqlCommand SelectObjectTemplateRows( int PlayerID ) {
+			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT ot.* FROM ObjectTemplate ot, ObjectInstance oi, MobilePossesableByPlayer mpbp WHERE mpbp.PlayerID = @PlayerID AND oi.ObjectInstanceID = mpbp.ObjectInstanceID AND oi.ObjectTemplateID = ot.ObjectTemplateID" );
+			SqlParameter param = new System.Data.SqlClient.SqlParameter();		
+			param.ParameterName = "@PlayerID";
+			param.Value = PlayerID;
+			command.Parameters.Add(param);			
+
+			return command;
+		}
+
+		public System.Data.SqlClient.SqlCommand SelectObjectInstanceRows( int PlayerID ) {
+			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT oi.* FROM ObjectInstance oi, MobilePossesableByPlayer mpbp WHERE mpbp.PlayerID = @PlayerID AND oi.ObjectInstanceID = mpbp.ObjectInstanceID" );
+			SqlParameter param = new System.Data.SqlClient.SqlParameter();		
+			param.ParameterName = "@PlayerID";
+			param.Value = PlayerID;
+			command.Parameters.Add(param);			
+
+			return command;
 		}
 
 		public System.Data.SqlClient.SqlCommand SelectObjectInstance {

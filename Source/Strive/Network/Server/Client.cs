@@ -14,6 +14,7 @@ namespace Strive.Network.Server {
 		IPEndPoint endPoint;
 		Mobile avatar = null;
 		string authenticatedUsername = null;
+		public int PlayerID = 0;
 		bool connected = false;
 		//BinaryFormatter formatter = new BinaryFormatter();
 		UdpClient connection = new UdpClient();

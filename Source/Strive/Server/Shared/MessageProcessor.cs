@@ -111,7 +111,7 @@ namespace Strive.Server.Shared {
 			Client client, Strive.Network.Messages.ToServer.Login loginMessage
 			) {
 			if (
-				world.UserLookup( loginMessage.username, loginMessage.password )
+				world.UserLookup( loginMessage.username, loginMessage.password, ref client.PlayerID )
 			) {
 				System.Console.WriteLine(
 					"User " + loginMessage.username + " logged in"
@@ -125,6 +125,7 @@ namespace Strive.Server.Shared {
 		}
 
 		void ProcessRequestPossessable( Client client, Strive.Network.Messages.ToServer.RequestPossessable message ) {
+			Strive.Data.MultiverseFactory.refreshMultiverseForPlayer( Global.multiverse, client.PlayerID );
 			Strive.Network.Messages.ToClient.CanPossess canPossess = new Strive.Network.Messages.ToClient.CanPossess(
 				world.getPossessable( client.AuthenticatedUsername ) );
 			client.Send( canPossess );

@@ -24,10 +24,8 @@ namespace Strive.UI.Windows.ChildWindows
 		private System.Windows.Forms.TextBox Email;
 		private System.Windows.Forms.TextBox Password;
 		private System.Windows.Forms.TreeView RecentServers;
+		private TreeNode CurrentPlayerNode;
 		
-		private Hashtable serverNodes = new Hashtable();
-		private Hashtable playerNodes = new Hashtable();
-		private Hashtable characterNodes = new Hashtable();
 		private Connection.ConnectionWindowState windowState;
 
 		public bool Connected = false;
@@ -43,11 +41,14 @@ namespace Strive.UI.Windows.ChildWindows
 			//
 			InitializeComponent();
 			ImageList i = new ImageList();
-			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StoppedServer));
+			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Connection));
 			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StartedServer));
-			//i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Player));
+			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.StoppedServer));
+			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Player));
+			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Mobile));
+			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.MobilePossessed));
 			RecentServers.ImageList = i;
-			synchRecentServers();
+			loadRecentServers();
 			StriveWindowState = ConnectionWindowState.NotConnected;
 		}
 
@@ -248,10 +249,36 @@ namespace Strive.UI.Windows.ChildWindows
 					MessageBox.Show("You must enter an e-mail.");
 					return;
 				}
+				// umg ghey check for existance cause umg
+				string label = ServerAddress.Text + ":" + PortNumber.Text;
+				TreeNode serverNode = null;
+				foreach ( TreeNode n in RecentServers.Nodes ) {
+					if ( n.Text == label ) {
+						serverNode = n;
+						break;
+					}
+				}
+				if ( serverNode == null ) {
+					serverNode = new TreeNode( label );
+					RecentServers.Nodes.Add( serverNode );
+				}
+				label = Email.Text;
+				TreeNode playerNode = null;
+				foreach ( TreeNode n in serverNode.Nodes ) {
+					if ( n.Text == label ) {
+						playerNode = n;
+						break;
+					}
+				}
+				if ( playerNode == null ) {
+					playerNode = new TreeNode( label );
+					serverNode.Nodes.Add( playerNode );
+				}
+				CurrentPlayerNode = playerNode;
+
 				Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text));
 				Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
 				Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), Game.CurrentMainWindow.RenderTarget);
-				setConnectedImage();
 				Connected = true;
 				Game.CurrentGameLoop._message_processor.OnCanPossess
 					+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
@@ -266,18 +293,8 @@ namespace Strive.UI.Windows.ChildWindows
 				// disconnect:
 				Game.CurrentServerConnection.Logout();
 				StriveWindowState = ConnectionWindowState.NotConnected;
-
-
-			}
-		}
-
-		private void setConnectedImage()
-		{
-			foreach(TreeNode n in RecentServers.Nodes)
-			{
-				if(n.Text == ServerAddress.Text + ":" + PortNumber.Text)
-				{
-					n.ImageIndex = 1;
+				if( CurrentPlayerNode != null ) {
+					CurrentPlayerNode.Nodes.Clear();
 				}
 			}
 		}
@@ -289,84 +306,62 @@ namespace Strive.UI.Windows.ChildWindows
 		}
 
 		void HandleCanPossess( Strive.Network.Messages.ToClient.CanPossess cp ) {
-			if ( cp.possesable.Length < 1 ) 
-			{
+			if ( cp.possesable.Length < 1 ) {
 				this.Text = "No characters available.";
 			}
-			foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) 
-			{
-				Settings.SettingsManager.AddRecentCharacter(ServerAddress.Text, 
-					int.Parse(PortNumber.Text),
-					Email.Text,
-					Password.Text,
-					tuple.id,
-					tuple.name);
+			CurrentPlayerNode.Nodes.Clear();
+			foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) {
+				TreeNode n = new TreeNode(tuple.name);
+				n.Tag = tuple.id;
+				n.ImageIndex = (int)Icons.AvailableIcons.Mobile;
+				n.SelectedImageIndex = n.ImageIndex;
+				CurrentPlayerNode.Nodes.Add( n );
 			}
-
-			synchRecentServers();
+			CurrentPlayerNode.Expand();
 		}
 
 
-		private void synchRecentServers()
+		private void loadRecentServers()
 		{
-			RecentServers.Nodes.Clear();
-			serverNodes.Clear();
-			playerNodes.Clear();
-			characterNodes.Clear();
 			// Initialise Recent Servers
 			foreach(DataRow serverRow in Settings.SettingsManager.RecentServers.Rows)
 			{
-				TreeNode n = new TreeNode(serverRow["serveraddress"] + ":" + serverRow["serverport"]);
-				n.Tag = serverRow;
-				//n.ImageIndex = 0;
-
-				serverNodes.Add(serverRow["serveraddress"] + ":" + serverRow["serverport"],
-					n);
-
-				foreach(DataRow playerRow in serverRow.GetChildRows("ServerPlayers"))
-				{
-					TreeNode p = new TreeNode(playerRow["emailaddress"].ToString());
-					p.Tag = playerRow;
-					p.ImageIndex = 2;
-
-					playerNodes.Add(playerRow["emailaddress"].ToString(),
-						p);
-
-					if(Connected)
-					{
-						foreach(DataRow characterRow in playerRow.GetChildRows("PlayerCharacters"))
-						{
-							TreeNode c = new TreeNode(characterRow["charactername"].ToString());
-							c.Tag = characterRow;
-							p.Nodes.Add(c);
-
-							characterNodes.Add(characterRow["charactername"].ToString(),
-								c);
-						}
-					}
-
-					n.Nodes.Add(p);
+				TreeNode serverNode = new TreeNode( serverRow["serveraddress"] + ":" + serverRow["serverport"] );
+				serverNode.Tag = serverRow;
+				serverNode.ImageIndex = (int)Icons.AvailableIcons.StoppedServer;
+				serverNode.SelectedImageIndex = serverNode.ImageIndex;
+				RecentServers.Nodes.Add(serverNode);
+				foreach(DataRow playerRow in serverRow.GetChildRows("ServerPlayers")) {
+					TreeNode playerNode = new TreeNode( playerRow["emailaddress"].ToString() );
+					playerNode.Tag = playerRow;
+					playerNode.ImageIndex = (int)Icons.AvailableIcons.Player;
+					playerNode.SelectedImageIndex = playerNode.ImageIndex;
+					serverNode.Nodes.Add( playerNode );
 				}
-				RecentServers.Nodes.Add(n);
 			}
-
 			RecentServers.ExpandAll();
-
 		}
 
 		private void RecentServers_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
 		{
+			if( e.Node.Tag is int ) {
+				foreach ( TreeNode n in CurrentPlayerNode.Nodes ) {
+					n.ImageIndex = (int)Icons.AvailableIcons.Mobile;
+					n.SelectedImageIndex = n.ImageIndex;
+				}
+				Game.CurrentPlayerID = (int)e.Node.Tag;
+				Game.CurrentServerConnection.PossessMobile( Game.CurrentPlayerID );
+				StriveWindowState = ConnectionWindowState.Playing;
+				e.Node.ImageIndex = (int)Icons.AvailableIcons.MobilePossessed;
+				e.Node.SelectedImageIndex = e.Node.ImageIndex;
+				e.Node.Parent.Parent.ImageIndex = (int)Icons.AvailableIcons.StartedServer;
+				e.Node.Parent.Parent.SelectedImageIndex = e.Node.Parent.Parent.ImageIndex;
+				return;
+			}
+
 			DataRow serverSetting = (DataRow)e.Node.Tag;
 
 			// How to do this and stay sane
-			// this is a character node
-			if(serverSetting.Table.Columns.Contains("charactername"))
-			{
-				Game.CurrentServerConnection.PossessMobile(int.Parse(serverSetting["characterid"].ToString()));
-				Game.CurrentPlayerID = int.Parse(serverSetting["characterid"].ToString() );
-				StriveWindowState = ConnectionWindowState.Playing;
-				return;
-			}
 			if(serverSetting.Table.Columns.Contains("playerkey"))
 			{
 				Email.Text = serverSetting["emailaddress"].ToString();
@@ -374,8 +369,6 @@ namespace Strive.UI.Windows.ChildWindows
 				DataRow serverRow = serverSetting.GetParentRow("ServerPlayers");
 				ServerAddress.Text = serverRow["serveraddress"].ToString();
 				PortNumber.Text = serverRow["serverport"].ToString();
-
-				e.Node.ImageIndex = 2;
 				return;
 			}
 			if(serverSetting.Table.Columns.Contains("serverkey"))
@@ -397,6 +390,12 @@ namespace Strive.UI.Windows.ChildWindows
 					ServerAddress.Enabled = true;
 					PortNumber.Enabled = true;
 					Password.Enabled = true;
+
+					// 1.  set the icon for the connected server
+					if ( CurrentPlayerNode != null ) {
+						CurrentPlayerNode.Parent.ImageIndex = (int)Icons.AvailableIcons.StoppedServer;
+						CurrentPlayerNode.Parent.SelectedImageIndex = CurrentPlayerNode.Parent.ImageIndex;
+					}
 					break;
 				}
 				case ConnectionWindowState.Connected:
@@ -408,16 +407,10 @@ namespace Strive.UI.Windows.ChildWindows
 					Password.Enabled = false;
 
 					// 1.  set the icon for the connected server
-
-					string connectedServerKey = ServerAddress.Text + ":" + PortNumber.Text;
-
-					if ( serverNodes[connectedServerKey] == null ) {
-						TreeNode n = new TreeNode(connectedServerKey);
-						serverNodes.Add( connectedServerKey, n );
-					} else {
-						((TreeNode)serverNodes[connectedServerKey]).ImageIndex = 1;
+					if ( CurrentPlayerNode != null ) {
+						CurrentPlayerNode.Parent.ImageIndex = (int)Icons.AvailableIcons.StartedServer;
+						CurrentPlayerNode.Parent.SelectedImageIndex = CurrentPlayerNode.Parent.ImageIndex;
 					}
-
 					break;
 				}
 				case ConnectionWindowState.Playing:
