@@ -200,7 +200,6 @@ namespace Strive.Resources
 			return t;
 		}
 
-
 		/// <summary>
 		/// LoadCursor just loads a texture, but from the cursor directory
 		/// </summary>

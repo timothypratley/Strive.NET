@@ -27,7 +27,6 @@ namespace Strive.UI.WorldView {
 		int [] CZ = new int[zoomorder];
 		int ts = Constants.terrainPieceSize;
 		int hpc = Constants.terrainHeightsPerChunk;
-		float center_x, center_z;
 
 		public TerrainCollection( ResourceManager rm, IEngine engine, IScene scene ) {
 			_engine = engine;
@@ -36,8 +35,6 @@ namespace Strive.UI.WorldView {
 
 			// now create chunks at the empty points
 			int i, j, k, cs;
-			center_x = 0;
-			center_z = 0;
 			for ( k=0; k<zoomorder; k++ ) {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 				CX[k] = 0;
@@ -51,22 +48,18 @@ namespace Strive.UI.WorldView {
 							// TODO:
 						//	TC[i,j,k].SetClouds(_resource_manager.GetTexture(8));
 						//}
-						//if ( k > 0 ) {
-							// TODO: bad, don't use hardcoded 20!
-							//TC[i,j,k].SetTexture( _resource_manager.GetTexture( 21 ).ID );
-						//}
 					}
 				}
 			}
 		}
 
 		public void Recenter( float x, float z ) {
-			int i, j, k, cs;
+			int i, j, k, cs, cx, cz;
 			int xdiff, zdiff;
-			float tcx, tcz, px, pz;
+			float tcx, tcz, px, pz, altitude;
 			int l, m;
-			Vector2D loc;
-			Terrain t;
+			Vector2D loc = new Vector2D(0,0);
+			Terrain t1, t2;
 
 			// drop all terrain data that is now out of scope
 			ArrayList arrayList = new ArrayList(terrainPiecesXYIndex.Keys);
@@ -83,7 +76,7 @@ namespace Strive.UI.WorldView {
 							|| (key.X % (ts*Constants.scale[k+1])) != 0 || (key.Y % (ts*Constants.scale[k+1])) != 0
 						) {
 							// TODO: why doesn't this wurk??? umg
-							//terrainPiecesXYIndex.Remove( key );
+							terrainPiecesXYIndex.Remove( key );
 							break;
 						}
 					} else {
@@ -92,20 +85,17 @@ namespace Strive.UI.WorldView {
 				}
 			}
 
-			// first loop through all chunks to see if any can be reused
-			int cx = Helper.DivTruncate( (int)x, ts );
-			int cz = Helper.DivTruncate( (int)z, ts );
-			for ( k=0; k<zoomorder; k++ ) {
+			// loop through all chunks to see if any can be reused
+			for ( k=zoomorder-1; k>=0; k++ ) {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
-				cx = Helper.DivTruncate( cx, hpc );
-				cz = Helper.DivTruncate( cz, hpc );
+				cx = Helper.DivTruncate( (int)x, cs );
+				cz = Helper.DivTruncate( (int)z, cs );
 				if ( x - (cx*cs) < (cx+1)*cs - x ) cx--;
 				if ( z - (cz*cs) < (cz+1)*cs - z ) cz--;
 				cx -= (xorder/2-1);
 				cz -= (zorder/2-1);
 				xdiff = cx - CX[k];
 				zdiff = cz - CZ[k];
-
 				// no difference, keep all the chunks
 				if ( xdiff == 0 && zdiff == 0 ) continue;
 
@@ -114,32 +104,121 @@ namespace Strive.UI.WorldView {
 						// see if we can replace it with an existing chunk
 						tcx = cx*cs + i*cs;
 						tcz = cz*cs + j*cs;
+
 						if (
 							i+xdiff >= 0
 							&& i+xdiff < xorder
 							&& j+zdiff >= 0
 							&& j+zdiff < zorder
-							) {
-							// swap
+						) {
+							// Keep the data in TC[i+xdiff,j+zdiff,k]
+							// but move it to TC[i,j,k]
 							ITerrainChunk tc = TC[i,j,k];
 							TC[i,j,k] = TC[i+xdiff,j+zdiff,k];
 							TC[i+xdiff,j+zdiff,k] = tc;
+
+							// update edges with real values
+							// this is 'unseaming' from the higher order
+							if ( (i+xdiff)==0 ) {
+								for ( m=0; m<hpc; m++ ) {
+									px = TC[i,j,k].Position.X;
+									pz = TC[i,j,k].Position.Z + m*cs/hpc;
+									loc.Set( px, pz );
+									altitude = 0;
+									t1 = (Terrain)terrainPiecesXYIndex[loc];
+									if ( t1!=null ) {
+										altitude = t1.Position.Y;
+									}
+									TC[i,j,k].SetHeight(px, pz, altitude);
+								}
+							} else if ( (i+xdiff)==(xorder-1) ) {
+								for ( m=0; m<hpc; m++ ) {
+									px = TC[i,j,k].Position.X + cs;
+									pz = TC[i,j,k].Position.Z + m*cs/hpc;
+									loc.Set( px, pz );
+									altitude = 0;
+									t1 = (Terrain)terrainPiecesXYIndex[loc];
+									if ( t1!=null ) {
+										altitude = t1.Position.Y;
+									}
+									TC[i,j,k].SetHeight(px, pz, altitude);
+								}
+							}
+							if ( (j+zdiff)==0 ) {
+								for ( l=0; l<hpc; l++ ) {
+									px = TC[i,j,k].Position.X + l*cs/hpc;
+									pz = TC[i,j,k].Position.Z;
+									loc.Set( px, pz );
+									altitude = 0;
+									t1 = (Terrain)terrainPiecesXYIndex[loc];
+									if ( t1!=null ) {
+										altitude = t1.Position.Y;
+									}
+									TC[i,j,k].SetHeight(px, pz, altitude);
+								}
+							} else if ( (j+zdiff)==(zorder-1) ) {
+								for ( l=0; l<hpc; l++ ) {
+									px = TC[i,j,k].Position.X + l*cs/hpc;
+									pz = TC[i,j,k].Position.Z + cs;
+									loc.Set( px, pz );
+									altitude = 0;
+									t1 = (Terrain)terrainPiecesXYIndex[loc];
+									if ( t1!=null ) {
+										altitude = t1.Position.Y;
+									}
+									TC[i,j,k].SetHeight(px, pz, altitude);
+								}
+							}
 						} else {
+							// TC[i,j,k] is dirty and ready for
+							// reuse... this means that its higher order peice
+							// is going to become visible again (if it exists).
+							MakeVisible( k+1, TC[i,j,k].Position.X, TC[i,j,k].Position.Z );
+
+							// The new location needs to be made invisible
 							TC[i,j,k].Position = new Vector3D(tcx, 0, tcz );
+							MakeInvisible( k+1, TC[i,j,k].Position.X, TC[i,j,k].Position.Z );
+
 							// update it with any known heights
 							// Refresh( TC[i,j,k] );
 							for (l=0; l<=hpc; l++ ) {
 								for (m=0; m<=hpc; m++) {
 									px = tcx + l*cs/hpc;
 									pz = tcz + m*cs/hpc;
-									loc = new Vector2D( px, pz );
-									t = (Terrain)terrainPiecesXYIndex[loc];
-									if ( t != null ) {
-										TC[i,j,k].SetHeight( px, pz, t.Position.Y );
-										//if ( k==0 )
-										TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ), px, pz, t.Rotation.Y );
+									altitude = 0;
+									if ( l==0&&i==0 || l==(hpc-1)&&i==(xorder-1) ) {
+										// edges need to be seamed with higher order edges
+										loc.Set( tcx, tcz );
+										t1 = (Terrain)terrainPiecesXYIndex[loc];
+										loc.Set( tcx, tcz+cs );
+										t2 = (Terrain)terrainPiecesXYIndex[loc];
+										if ( t1!=null && t2!=null ) {
+											altitude = t1.Position.Y + (t2.Position.Y-t1.Position.Y)*m/hpc;
+										}
+									} else if ( m==0&&j==0 || m==(hpc-1)&&j==(zorder-1) ) {
+										// edges need to be seamed with higher order edges
+										loc.Set( tcx, tcz );
+										t1 = (Terrain)terrainPiecesXYIndex[loc];
+										loc.Set( tcx+cs, tcz );
+										t2 = (Terrain)terrainPiecesXYIndex[loc];
+										if ( t1!=null && t2!=null ) {
+											altitude = t1.Position.Y + (t2.Position.Y-t1.Position.Y)*m/hpc;
+										}
 									} else {
-										TC[i,j,k].SetHeight( px, pz, 0 );
+										loc.Set( px, pz );
+										t1 = (Terrain)terrainPiecesXYIndex[loc];
+										if ( t1!=null ) {
+											altitude = t1.Position.Y;
+										}
+									}
+									TC[i,j,k].SetHeight( px, pz, altitude );
+
+									// regardless of altitude, always use the right texture
+									loc.Set( px, pz );
+									t1 = (Terrain)terrainPiecesXYIndex[loc];
+									if ( t1 != null ) {
+										//if ( k==0 )
+										TC[i,j,k].SetTexture( _resource_manager.GetTexture( t1.ResourceID ), px, pz, t1.Rotation.Y );
 									}
 								}
 							}
@@ -152,29 +231,31 @@ namespace Strive.UI.WorldView {
 				CX[k] = cx;
 				CZ[k] = cz;
 			}
-
-			/***
-			// TODO:
-			//
-			// Make sure we update the previous x,z heights for underlying landscapes
-			// to their correct values
-			loc = new Vector2D( prev_x, prev_z );
-			t = (Terrain)terrainPiecesXYIndex[loc];
-			if ( t != null ) {
-				Set( t.Position.X, t.Position.Z, t.Position.Y, -1, 0 );
-			}
-
-			// set underlying landscapes to 0 at x,z
-			Set( x, z, 0, -1, 0 );
-			*/
-
-			center_x = x; center_z = z;
 		}
 
 		public void AddMany( float start_x, float start_z, int width, int height, int gap_size, Terrain [,] map ) {
 			foreach ( Terrain t in map ) {
 				Add( t );
 			}
+		}
+
+		void MakeVisible( int k, float x, float z ) {
+			int cs = (int)(ts*Math.Pow(hpc,k+1));
+			int i = Helper.DivTruncate( (int)x, cs ) - CX[k];
+			int j = Helper.DivTruncate( (int)z, cs ) - CZ[k];
+			Vector2D loc = new Vector2D( x, z );
+			Terrain t = (Terrain)terrainPiecesXYIndex[loc];
+			if ( t!=null ) {
+				TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ), x, z, t.Rotation.Y );
+			}
+		}
+		
+		void MakeInvisible( int k, float x, float z ) {
+			int cs = (int)(ts*Math.Pow(hpc,k+1));
+			int i = Helper.DivTruncate( (int)x, cs ) - CX[k];
+			int j = Helper.DivTruncate( (int)z, cs ) - CZ[k];
+			// TODO: need a default 'invis' texture
+			TC[i,j,k].SetTexture( _engine.GetInvisible(), x, z, 0 );
 		}
 
 		public void Set( float x, float z, float altitude, ITexture texture, float rotation ) {
@@ -256,72 +337,18 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Clear() {
-			/* no point dropping them, seeing we can reuse them right?
-			int i,j,k;
-			for (k=0; k<zoomorder; k++ ) {
-				for (i=0; i<xorder; i++ ) {
-					for (j=0; j<zorder; j++ ) {
-						if ( TC[i,j,k] != null ) {
-							TC[i,j,k].Delete();
-							TC[i,j,k] = null;
-						}
-					}
-				}
-			}
-			*/
-			// TODO: could drop the reference too...
+			// TODO: could clear the underlying terrain chunks if we wanted to
 			terrainPiecesXYIndex.Clear();
 		}
 
 		public void Render() {
-			int i, j, k, l, m, p, q;
-			int cs;
-			bool renderright;
-			bool renderup;
-			q=0;
-
-			// Disable Z for the higher order landscapes, but for the best detail one,
-			// re-enable Z (we want it on top, and to hide objects etc as normal
-			_engine.DisableZ();
+			int i, j, k;
 			for ( k=zoomorder-1; k>=0; k-- ) {
-				if ( k==0 ) _engine.EnableZ();
-				cs = (int)(ts*Math.Pow(hpc,k+1));
-
-				if ( center_x - CX[k]*cs < ( CX[k]+1)*cs - center_x ) {
-					renderright = true;
-				} else {
-					renderright = false;
-				}
-				if ( center_z - CZ[k]*cs < ( CZ[k]+1)*cs - center_z ) {
-					renderup = true;
-				} else {
-					renderup = false;
-				}
-
-				// the p loop ensures we render the outer squares first
-				// moving in
-				// the l, m mapping ensures we draw the furthest first
-				for ( p=0; p<(int)Math.Ceiling(Math.Max(xorder,zorder)/2.0); p++ ) {
-					for ( i=0; i<xorder; i++ ) {
-						if ( renderright ) {
-							l = i;
-						} else {
-							l = xorder-i-1;
+				for ( i=0; i<xorder; i++ ) {
+					for ( j=0; j<zorder; j++ ) {
+						if ( TC[i,j,k] != null && TC[i,j,k].Visible ) {
+							TC[i,j,k].Render();
 						}
-						for ( j=0; j<zorder; j++ ) {
-							if ( i>p && i<xorder-p-1 && j>p && j<zorder-p-1 ) continue;
-							if ( renderup ) {
-								m = j;
-							} else {
-								m = zorder-j-1;
-							}
-							if ( TC[l,m,k] != null && TC[l,m,k].Visible ) {
-								TC[l,m,k].Render();
-								_scene.DrawText( new Vector3D(TC[l,m,k].Position.X+cs/2, TC[l,m,k].Position.Y+cs/2, TC[l,m,k].Position.Z+50 ), "T("+l+","+m+","+k+") "+q+"th" );
-								q++;
-							}
-						}
-
 					}
 				}
 			}
