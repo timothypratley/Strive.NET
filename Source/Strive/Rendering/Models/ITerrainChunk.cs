@@ -15,6 +15,7 @@ namespace Strive.Rendering.Models {
 		void DrawTexture( ITexture t, float x, float z, float rotation );
 		void Clear( float x, float z, float width, float height );
 		void SetTexture( ITexture t );
+		void SetDetailTexture( ITexture t );
 		void SetClouds( ITexture t );
 		void Update();
 		void Render();

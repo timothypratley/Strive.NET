@@ -64,6 +64,11 @@ namespace Strive.Rendering.TV3D.Models {
 			_texture = t;
 		}
 
+		public void SetDetailTexture( ITexture t ) {
+			_mesh.SetDetailTexture( t.ID );
+			_mesh.SetDetailTextureMode( CONST_TV_DETAILMAP_MODE.TV_DETAILMAP_ADDSIGNED );
+		}
+
 		public void DrawTexture( ITexture t, float x, float z, float rotation ) {
 			_texture.Draw( t, x, z, rotation, 1 );
 		}

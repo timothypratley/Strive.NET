@@ -45,6 +45,9 @@ namespace Strive.UI.WorldView {
 						ITexture texture = engine.CreateTexture( "land", 256*hpc, 256*hpc );
 						TC[i,j,k].SetTexture( texture );
 
+						// TODO: how to know which detail texture to use?
+						TC[i,j,k].SetDetailTexture( _resource_manager.GetTexture( 9 ) );
+
 						// TODO: fix this don't hardcode it... and don't set it per terrain chunk
 						//if ( k == zoomorder-1 ){
 							// TODO:
