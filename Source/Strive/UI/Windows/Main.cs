@@ -44,69 +44,14 @@ namespace Strive.UI.Windows
 			SetStyle(ControlStyles.DoubleBuffer, true);
 			SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
-			#region Magic Controls workarounds
+		}
 
-			// Setting this using designer causes a Code Generation Error
-			MainTabs.Appearance = Crownwood.Magic.Controls.TabControl.VisualAppearance.MultiDocument;
-			// Setting this using designer appears to have no affect
-			MainTabs.IDEPixelBorder = true;
+		
 
-			// Order is important for docking to work.  This isn't really a Magic Controls
-			// issue, but related to how Winforms processes docking events.
-			// Since InitializeComponent is GENERATED code, the form control collection gets cleared
-			// and then the controls are added in the correct order;
-			this.Controls.Clear();
-
-			this.Controls.Add(MainTabs);
-			this.Controls.Add(MainStatus);
-			this.Controls.Add(MainMenu);
-			
-			#endregion
-
-			#region Magic Controls Initialisation
-
-			DockingManager = new DockingManager(this, VisualStyle.IDE);
-			
-			DockingManager.InnerControl = MainTabs;
-			DockingManager.OuterControl = MainStatus;
-
-			#endregion
-
-			#region Our Initialisation
-			
-			#region RenderContainer
-
-			RenderTarget.Left = GameTab.Left;
-			RenderTarget.Top = GameTab.Top;
-			RenderTarget.Height = GameTab.Height;
-			RenderTarget.Width = GameTab.Width;
-
-			#endregion
-
-			#region Add our windows
-
-			// Connection
-			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
-			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
-			connectionWindow.CaptionBar = true;
-			connectionWindow.CloseButton = false;
-			DockingManager.AddContentWithState(connectionWindow, State.DockLeft);
-			// Log
-			Content logWindow = DockingManager.Contents.Add(new ChildWindows.Log(), "Log", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Log);
-			DockingManager.AddContentWithState(logWindow, State.DockBottom);
-			// Who
-			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GlobalImageList,-1);
-			DockingManager.AddContentWithState(whoWindow, State.DockRight);
-			// Command
-			Content commandWindow = DockingManager.Contents.Add(new ChildWindows.Command(), "Command", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Command);
-			DockingManager.AddContentWithState(commandWindow, State.DockBottom);
-			// Chat
-			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Chat);
-			DockingManager.AddContentWithState(chatWindow, State.DockBottom);
-			#endregion
-
-			#region Load Settings
-
+		#region Window Management Stuff
+	
+		private void loadSettings()
+		{
 			if(System.IO.File.Exists(Settings.SettingsManager.MagicWindowSettingsPath))
 			{
 				DockingManager.LoadConfigFromFile(Settings.SettingsManager.MagicWindowSettingsPath);
@@ -114,21 +59,7 @@ namespace Strive.UI.Windows
 			}
 
 			Settings.SettingsManager.InitialiseWindow(this);
-
-			#endregion
-
-			#region Events
-			RenderTarget.LostFocus += new EventHandler( RenderTarget_LostFocus );
-			RenderTarget.Click += new EventHandler( RenderTarget_Click );
-			#endregion
-
-			#endregion
-			
-
 		}
-
-		#region Window Management Stuff
-	
 
 
 		#endregion
@@ -171,19 +102,17 @@ namespace Strive.UI.Windows
 			this.ViewChat = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewCommand = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
-			this.MainTabs.SuspendLayout();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MainTabs
 			// 
 			this.MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.MainTabs.IDEPixelArea = true;
 			this.MainTabs.Location = new System.Drawing.Point(2, 27);
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(612, 691);
+			this.MainTabs.Size = new System.Drawing.Size(612, 804);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -193,21 +122,19 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				  this.RenderTarget});
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(612, 666);
+			this.GameTab.Size = new System.Drawing.Size(612, 779);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
-
 			// 
 			// RenderTarget
 			// 
 			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Location = new System.Drawing.Point(256, 1488);
+			this.RenderTarget.Location = new System.Drawing.Point(256, 1722);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(116, 0);
+			this.RenderTarget.Size = new System.Drawing.Size(116, 8);
 			this.RenderTarget.TabIndex = 0;
-			this.RenderTarget.TabStop = false;
 			// 
 			// MainMenu
 			// 
@@ -299,15 +226,15 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 718);
+			this.MainStatus.Location = new System.Drawing.Point(2, 831);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(612, 33);
+			this.MainStatus.Size = new System.Drawing.Size(612, 38);
 			this.MainStatus.TabIndex = 1;
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(616, 753);
+			this.ClientSize = new System.Drawing.Size(616, 871);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.MainTabs,
 																		  this.MainMenu,
@@ -317,7 +244,7 @@ namespace Strive.UI.Windows
 			this.Name = "Main";
 			this.Text = "";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Main_Closing);
-			this.MainTabs.ResumeLayout(false);
+			this.Load += new System.EventHandler(this.Load_Form);
 			this.GameTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -427,6 +354,79 @@ namespace Strive.UI.Windows
 		{
 			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", null, -1);
 			DockingManager.AddContentWithState(chatWindow, State.Floating);
+		}
+
+		private void Load_Form(object sender, System.EventArgs e)
+		{
+			#region Magic Controls workarounds
+
+			// Setting this using designer causes a Code Generation Error
+			MainTabs.Appearance = Crownwood.Magic.Controls.TabControl.VisualAppearance.MultiDocument;
+			// Setting this using designer appears to have no affect
+			MainTabs.IDEPixelBorder = true;
+
+			// Order is important for docking to work.  This isn't really a Magic Controls
+			// issue, but related to how Winforms processes docking events.
+			// Since InitializeComponent is GENERATED code, the form control collection gets cleared
+			// and then the controls are added in the correct order;
+			this.Controls.Clear();
+
+			this.Controls.Add(MainTabs);
+			this.Controls.Add(MainStatus);
+			this.Controls.Add(MainMenu);
+			
+			#endregion
+
+			#region Magic Controls Initialisation
+
+			DockingManager = new DockingManager(this, VisualStyle.IDE);
+			
+			DockingManager.InnerControl = MainTabs;
+			DockingManager.OuterControl = MainStatus;
+
+			#endregion
+
+			#region Our Initialisation
+			
+			#region RenderContainer
+
+			RenderTarget.Left = GameTab.Left;
+			RenderTarget.Top = GameTab.Top;
+			RenderTarget.Height = GameTab.Height;
+			RenderTarget.Width = GameTab.Width;
+
+			#endregion
+
+			#region Add our windows
+
+			// Connection
+			Content connectionWindow = DockingManager.Contents.Add(new ChildWindows.Connection(), "Connection", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Connection);
+			connectionWindow.DisplaySize = new Size(200, GameTab.Height);
+			connectionWindow.CaptionBar = true;
+			connectionWindow.CloseButton = false;
+			DockingManager.AddContentWithState(connectionWindow, State.DockLeft);
+			// Log
+			Content logWindow = DockingManager.Contents.Add(new ChildWindows.Log(), "Log", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Log);
+			DockingManager.AddContentWithState(logWindow, State.DockBottom);
+			// Who
+			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GlobalImageList,-1);
+			DockingManager.AddContentWithState(whoWindow, State.DockRight);
+			// Command
+			Content commandWindow = DockingManager.Contents.Add(new ChildWindows.Command(), "Command", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Command);
+			DockingManager.AddContentWithState(commandWindow, State.DockBottom);
+			// Chat
+			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Chat);
+			DockingManager.AddContentWithState(chatWindow, State.DockBottom);
+			#endregion
+
+			loadSettings();
+
+			#region Events
+			RenderTarget.LostFocus += new EventHandler( RenderTarget_LostFocus );
+			RenderTarget.Click += new EventHandler( RenderTarget_Click );
+			#endregion
+
+			#endregion		
 		}
 	}
 }
