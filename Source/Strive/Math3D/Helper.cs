@@ -21,13 +21,9 @@ namespace Strive.Math3D
 			} else if ( z > 0.0 ) {
 				yTheta = Math.Atan( -x/z );
 			} else {
-				if ( x < 0.0 ) {
-					yTheta = Math.Atan( x/z ) - Math.PI/2.0;
-				} else {
-					yTheta = Math.Atan( -x/z ) + Math.PI/2.0;
-				}
+				yTheta = Math.Atan( -x/z ) - Math.PI;
 			}
-			return new Vector3D( 0, (float)((yTheta*180.0/Math.PI)%360.0), 0 );
+			return new Vector3D( 0, (float)(yTheta*180.0/Math.PI), 0 );
 		}
 
 		public static Vector3D GetHeadingFromRotation( Vector3D rotation ) {

@@ -414,7 +414,9 @@ namespace Strive.Rendering.Models
 					case ModelFormat.MDL: {
 						setPointer();
 						try {
-							Interop._instance.MdlSystem.MDL_SetRotation(-value.X, -value.Y, -value.Z);
+							// todo: normalise MDLs so we don't need a 90 degree offset?
+							// todo: our mobs are at different angles to players :(
+							Interop._instance.MdlSystem.MDL_SetRotation(-value.X, -value.Y+90, -value.Z);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set rotation '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);

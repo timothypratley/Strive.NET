@@ -66,6 +66,8 @@ namespace Strive.UI.Engine
 			}
 		}
 
+		// todo: replace pitch with a more elegant solution
+		float pitch = 0;
 		void ProcessMouseInput() {
 			#region ProcessMouseInput
 			
@@ -77,14 +79,20 @@ namespace Strive.UI.Engine
 			if( m.x != 0 ) {
 				WasMouseInput = true;
 				cameraRotation.Y += m.x*0.2f; 
+				cameraRotation.X = pitch*(float)Math.Cos( cameraRotation.Y * Math.PI/180.0f );
+				cameraRotation.Z = -pitch*(float)Math.Sin( cameraRotation.Y * Math.PI/180.0f );
 			}
-			//if( m.y != 0 ) {
-				//WasMouseInput = true;
-				//cameraRotation.Y -= m.y; 
-			//}
+			if( m.y != 0 ) {
+				WasMouseInput = true;
+				pitch += m.y*0.2f;
+				if ( pitch > 30 ) { pitch = 30; }
+				if ( pitch < -30 ) { pitch = -30; }
+				cameraRotation.X = pitch*(float)Math.Cos( cameraRotation.Y * Math.PI/180.0f );
+				cameraRotation.Z = -pitch*(float)Math.Sin( cameraRotation.Y * Math.PI/180.0f );
+			}
+			// todo: only send once for mouse or keyboard input
 			if(WasMouseInput) {
 				_scene.View.Rotation = cameraRotation;
-				Vector3D cameraHeading = Helper.GetHeadingFromRotation( cameraRotation );
 				SendCurrentPosition();
 			}
 #endregion
