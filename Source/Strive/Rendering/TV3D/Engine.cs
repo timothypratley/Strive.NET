@@ -43,11 +43,11 @@ namespace Strive.Rendering.TV3D {
 		public ITerrain CreateTerrain( string name, ITexture texture, float y, float xy, float zy, float xzy ) {
 			return Terrain.CreateTerrain( name, texture, y, xy, zy, xzy );
 		}
-		public IActor LoadActor(string name, string path ) {
-			return Actor.LoadActor( name, path );
+		public IActor LoadActor(string name, string path, float height) {
+			return Actor.LoadActor( name, path, height );
 		}
-		public IModel LoadStaticModel(string name, string path ) {
-			return Model.LoadStaticModel( name, path );
+		public IModel LoadStaticModel(string name, string path, float height) {
+			return Model.LoadStaticModel( name, path, height );
 		}
 
 		public ITexture LoadTexture( string name, string path ) {

@@ -19,8 +19,8 @@ namespace Strive.Rendering
 		IScene CreateScene();
 
 		ITerrain CreateTerrain( string name, ITexture texture, float y, float xy, float zy, float xzy );
-		IModel LoadStaticModel(string name, string path);
-		IActor LoadActor(string name, string path);
+		IModel LoadStaticModel(string name, string path, float height);
+		IActor LoadActor(string name, string path, float height);
 
 		ITexture LoadTexture(string name, string path);
 

@@ -13,7 +13,7 @@ namespace Strive.Rendering.R3D.Models {
 	public class Model : IModel {
 
 		#region "Fields"
-		public float _BoundingSphereRadiusSquared;
+		public float _RadiusSquared;
 
 		private string _key;
 		private int _id;
@@ -26,14 +26,14 @@ namespace Strive.Rendering.R3D.Models {
 		#endregion
 
 		#region "Factory Initialisers"
-		public static IModel Load( string name, string path ) {
+		public static IModel Load( string name, string path, float height ) {
 			if(!System.IO.File.Exists(path)) {
 				throw new System.IO.FileNotFoundException("Could not load model '" + path + "'", path);
 			}
 			Model loadedModel = new Model();
 			loadedModel._key = name;
 			// todo: fix bounding radius
-			loadedModel._BoundingSphereRadiusSquared = 100;
+			loadedModel._RadiusSquared = 100;
 
 			try {
 				R3D_3DStudio _3dsfile = new R3D_3DStudio();
@@ -49,7 +49,7 @@ namespace Strive.Rendering.R3D.Models {
 				//Engine.Meshbuilder.Mesh_SetLayerConfig(0, R3DLAYERCONFIG.R3DLAYERCONFIG_MONOCHROME);
 				//System.Windows.Forms.MessageBox.Show(Engine.TextureLib.Class_GetNumTextures().ToString());
 						
-				loadedModel._BoundingSphereRadiusSquared = 1000;
+				loadedModel._RadiusSquared = 1000;
 			}
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);
@@ -79,12 +79,13 @@ namespace Strive.Rendering.R3D.Models {
 			Engine.MeshBuilder.Mesh_SetActivate( true );
 		}
 
-		public void Normalise( float height ) {
-		}
-
 		public void applyTexture( string texture ) {
 			Engine.MeshBuilder.Class_SetPointer(this.Name);
 			Engine.MeshBuilder.Mesh_SetTexture( 0, texture );
+		}
+
+		public void GetBoundingBox( Vector3D minbox, Vector3D maxbox ) {
+
 		}
 
 		#endregion
@@ -105,9 +106,9 @@ namespace Strive.Rendering.R3D.Models {
 			}
 		}
 
-		public float BoundingSphereRadiusSquared {
+		public float RadiusSquared {
 			get {
-				return _BoundingSphereRadiusSquared;
+				return _RadiusSquared;
 			}
 		}
 

@@ -47,11 +47,11 @@ namespace Strive.Rendering.R3D {
 		public ITerrain CreateTerrain( string name, ITexture texture, float y, float xy, float zy, float xzy ) {
 			return Terrain.CreateTerrain( name, texture );
 		}
-		public IActor LoadActor(string key, string path) {
-			return Actor.Load( key, path );
+		public IActor LoadActor(string key, string path, float height) {
+			return Actor.Load( key, path, height );
 		}
-		public IModel LoadStaticModel(string key, string path) {
-			return Model.Load( key, path );
+		public IModel LoadStaticModel(string key, string path, float height) {
+			return Model.Load( key, path, height );
 		}
 
 		public ITexture LoadTexture( string name, string path ) {

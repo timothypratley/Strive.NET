@@ -101,49 +101,42 @@ namespace Strive.UI.Engine
 			if ( Game.CurrentWorld.CurrentAvatar == null ) return;
 
 			bool WasKeyboardInput = false;
-			const int moveunit = 5;
-			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position.Clone();
+			const int moveunit = 2;
+			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position;
 			Vector3D avatarRotation = Game.CurrentWorld.CurrentAvatar.model.Rotation;
-			if(keyboard.GetKeyState(Key.key_W)) {
+			Vector3D changeOfPosition = new Vector3D( 0, 0, 0 );
+			if ( keyboard.GetKeyState(Key.key_W) ) {
 				WasKeyboardInput = true;
-				avatarPosition.X +=
-					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit*2;
-				avatarPosition.Z +=
-					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit*2;
+				changeOfPosition.X += (float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit;
+				changeOfPosition.Z += (float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit;
 			}
 
-			if(keyboard.GetKeyState(Key.key_S)) {
+			if ( keyboard.GetKeyState(Key.key_S) ) {
 				WasKeyboardInput = true;
-				avatarPosition.X -=
-					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit;
-				avatarPosition.Z -=
-					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit;
+				changeOfPosition.X -= (float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2F;
+				changeOfPosition.Z -= (float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 			}
 
-			if(keyboard.GetKeyState(Key.key_D)) {
+			if ( keyboard.GetKeyState(Key.key_D) ) {
 				WasKeyboardInput = true;
-				avatarPosition.X +=
-					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
-				avatarPosition.Z -=
-					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
+				changeOfPosition.X += (float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2F;
+				changeOfPosition.Z -= (float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 			}
 
-			if(keyboard.GetKeyState(Key.key_A)) {
+			if( keyboard.GetKeyState(Key.key_A) ) {
 				WasKeyboardInput = true;
-				avatarPosition.X -=
-					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
-				avatarPosition.Z += 
-					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
+				changeOfPosition.X -=	(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2F;
+				changeOfPosition.Z +=	(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 			}
 
-			if(keyboard.GetKeyState(Key.key_Q)) {
+			if( keyboard.GetKeyState(Key.key_Q) ) {
 				WasKeyboardInput = true;
-				avatarRotation.Y -= 5.0F; 
+				avatarRotation.Y -= moveunit*2F;
 			}
 
 			if(keyboard.GetKeyState(Key.key_E)) {
 				WasKeyboardInput = true;
-				avatarRotation.Y += 5.0F;
+				avatarRotation.Y += moveunit*2F;
 			}
 
 			if(keyboard.GetKeyState(Key.key_ESCAPE )) {
@@ -154,7 +147,9 @@ namespace Strive.UI.Engine
 			if(WasKeyboardInput) {
 				// stay on the ground
 				// TODO: What about when walking on objects?
-				avatarPosition.Y = Game.CurrentWorld.TerrainPieces.AltitudeAt( avatarPosition.X, avatarPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
+				Vector3D newPosition = avatarPosition + changeOfPosition;
+				newPosition.Y = Game.CurrentWorld.TerrainPieces.AltitudeAt( avatarPosition.X, avatarPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
+				changeOfPosition.Y = newPosition.Y - avatarPosition.Y;
 
 				// check that we can go there
 				foreach ( PhysicalObjectInstance poi in Game.CurrentWorld.physicalObjectInstances.Values ) {
@@ -162,26 +157,66 @@ namespace Strive.UI.Engine
 						continue;
 					}
 					if ( poi == Game.CurrentWorld.CurrentAvatar ) {
+						//ignore ourselves
 						continue;
 					}
-					float dx1 = Game.CurrentWorld.CurrentAvatar.model.Position.X - poi.model.Position.X;
-					float dz1 = Game.CurrentWorld.CurrentAvatar.model.Position.Z - poi.model.Position.Z;
-					float dy1 = Game.CurrentWorld.CurrentAvatar.model.Position.Y - poi.model.Position.Y;
-					float distance_squared1 = dx1*dx1 + dz1*dz1 + dy1*dy1;
-					if ( distance_squared1 < poi.model.BoundingSphereRadiusSquared + Game.CurrentWorld.CurrentAvatar.model.BoundingSphereRadiusSquared ) {
-						// already a collision, ignore collision detection
-						continue;
-					}
-					float dx = avatarPosition.X - poi.model.Position.X;
-					float dz = avatarPosition.Z - poi.model.Position.Z;
-					float dy = avatarPosition.Y - poi.model.Position.Y;
-					float distance_squared = dx*dx + dz*dz + dy*dy;
-					if ( distance_squared < poi.model.BoundingSphereRadiusSquared + Game.CurrentWorld.CurrentAvatar.model.BoundingSphereRadiusSquared ) {
-						//Log.LogMessage( "Canceled move due to collision" );
-						return;
+
+					// do a bounding sphere test to see if the movement will go near poi
+					// test from the middle of the line drawn between current position
+					// and future position, distance is the radius of both objects
+					// plus half the distance of the movement.
+					float dx = avatarPosition.X + changeOfPosition.X / 2F - poi.model.Position.X;
+					float dy = avatarPosition.Y + changeOfPosition.Y / 2F - poi.model.Position.Y;
+					float dz = avatarPosition.Z + changeOfPosition.Z / 2F - poi.model.Position.Z;
+					float distance_squared = dx*dx + dy*dy + dz*dz;
+					float distance_moved = changeOfPosition.X * changeOfPosition.X + changeOfPosition.Y * changeOfPosition.Y + changeOfPosition.Z * changeOfPosition.Z;
+// TODO: optimize, no sqrts
+					if ( Math.Sqrt(distance_squared) < Math.Sqrt(poi.model.RadiusSquared) + Math.Sqrt(Game.CurrentWorld.CurrentAvatar.model.RadiusSquared) + Math.Sqrt(distance_moved)/2F ) {
+						// ok, these objects are close enough to collide,
+						// but did a collision really happen?
+						// now we do a more acurate test to find out.
+
+						Vector3D boxmin1 = new Vector3D();
+						Vector3D boxmax1 = new Vector3D();
+						Vector3D boxmin2 = new Vector3D();
+						Vector3D boxmax2 = new Vector3D();
+						poi.model.GetBoundingBox( boxmin1, boxmax1 );
+						Game.CurrentWorld.CurrentAvatar.model.GetBoundingBox( boxmin2, boxmax2 );
+						Vector3D halfbox1size = (boxmax1 - boxmin1)/2;
+						boxmin2 -= halfbox1size;
+						boxmax2 += halfbox1size;
+						boxmin2 += poi.model.Position;
+						boxmax2 += poi.model.Position;
+
+						if (
+							avatarPosition.X > boxmin2.X
+							&& avatarPosition.Y > boxmin2.Y
+							&& avatarPosition.Z > boxmin2.Z
+							&& avatarPosition.X < boxmax2.X
+							&& avatarPosition.Y < boxmax2.Y
+							&& avatarPosition.Z < boxmax2.Z
+						) {
+							// already in a collision, ignore collision detection
+							break;
+						}
+
+						if (
+							newPosition.X > boxmin2.X
+							&& newPosition.Y > boxmin2.Y
+							&& newPosition.Z > boxmin2.Z
+							&& newPosition.X < boxmax2.X
+							&& newPosition.Y < boxmax2.Y
+							&& newPosition.Z < boxmax2.Z
+						) {
+							// would be a collision
+							changeOfPosition.Set( 0, 0, 0 );
+							newPosition.Set( avatarPosition );
+							break;
+							// TODO: should actually figure out the collision point
+						}
 					}
 				}
-				Game.CurrentWorld.CurrentAvatar.model.Position = avatarPosition;
+				Game.CurrentWorld.CurrentAvatar.model.Position = avatarPosition+changeOfPosition;
 				Game.CurrentWorld.CurrentAvatar.model.Rotation = avatarRotation;
 				Game.CurrentWorld.RepositionCamera();
 				SendCurrentPosition();

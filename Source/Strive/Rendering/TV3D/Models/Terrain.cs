@@ -20,7 +20,7 @@ namespace Strive.Rendering.TV3D.Models {
 		private int _id;
 		private Vector3D _position = new Vector3D( 0, 0, 0 );
 		private Vector3D _rotation = new Vector3D( 0, 0, 0 );
-		float _BoundingSphereRadiusSquared;
+		float _RadiusSquared;
 		TVMesh _mesh;
 		#endregion
 
@@ -39,7 +39,7 @@ namespace Strive.Rendering.TV3D.Models {
 			//t._mesh.SetBumpMapping( true, texture.ID, -1, -1, 10 );
 			t._key = name;
 			t._id = t._mesh.GetMeshIndex();
-			t._BoundingSphereRadiusSquared = 0;
+			t._RadiusSquared = 0;
 			return t;
 		}
 
@@ -59,9 +59,6 @@ namespace Strive.Rendering.TV3D.Models {
 		public void Show() {
 		}
 
-		public void Normalise( float height ) {
-		}
-
 		public void applyTexture( ITexture texture ) {
 		}
 
@@ -69,6 +66,9 @@ namespace Strive.Rendering.TV3D.Models {
 			return 0;
 		}
 
+		public void GetBoundingBox( Vector3D minbox, Vector3D maxbox ) {
+		
+		}
 
 
 		#endregion
@@ -90,9 +90,9 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 		}
 
-		public float BoundingSphereRadiusSquared {
+		public float RadiusSquared {
 			get {
-				return _BoundingSphereRadiusSquared;
+				return _RadiusSquared;
 			}
 		}
 

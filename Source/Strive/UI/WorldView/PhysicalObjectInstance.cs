@@ -20,8 +20,7 @@ namespace Strive.UI.WorldView
 		public PhysicalObjectInstance( PhysicalObject po ) {
 			physicalObject = po;
 			if ( !(po is Terrain) ) {
-				model = ResourceManager.LoadModel( po.ObjectInstanceID, po.ModelID );
-				model.Normalise( po.Height );
+				model = ResourceManager.LoadModel( po.ObjectInstanceID, po.ModelID, po.Height );
 			}
 		}
 	}

@@ -32,32 +32,34 @@ namespace Strive.Resources
 			_resourceServer = System.Configuration.ConfigurationSettings.AppSettings["ResourceServer"];
 		}
 
-		public static IModel LoadModel(int InstanceID, int ModelID)
+		public static IModel LoadModel( int InstanceID, int ModelID, float height )
 		{
-			string md2File = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2");
+			string actorFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl");
 			string _3dsFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds");
 			string textureFile = System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp");
 
 			// check for local file first:
-			if ( System.IO.File.Exists(md2File) ) {
-				IActor m = factory.LoadActor(InstanceID.ToString(), md2File);
-				ITexture t = LoadTexture( ModelID );
-				m.applyTexture( t );
+			if ( System.IO.File.Exists( actorFile ) ) {
+				IActor m = factory.LoadActor( InstanceID.ToString(), actorFile, height );
+
+				// for md2 have to apply a texture
+				//ITexture t = LoadTexture( ModelID );
+				//m.applyTexture( t );
 				return m;
 			} else if ( System.IO.File.Exists(_3dsFile) ) {
-				return factory.LoadStaticModel(InstanceID.ToString(), _3dsFile);
-			} else if ( System.IO.File.Exists(textureFile) ) {
+				return factory.LoadStaticModel( InstanceID.ToString(), _3dsFile, height );
+			} else if ( System.IO.File.Exists( textureFile ) ) {
 				throw new Exception( "don't make terrain this way" );
 				//ITexture t = LoadTexture( ModelID );
 				//return factory.CreateTerrain( InstanceID.ToString(), t );
 			}
 
 			// download resource
-			if(makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2"))) {
-				return factory.LoadActor(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2"));
+			if(makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"))) {
+				return factory.LoadActor(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"), height);
 			}
 			else if (makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"))) {
-				return factory.LoadStaticModel(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"));
+				return factory.LoadStaticModel(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), height);
 			}
 			else if (makeTextureExist(System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp"))) {
 				throw new Exception( "don't make terrain pieces this way" );

@@ -17,14 +17,14 @@ namespace Strive.Rendering.Models {
 
 		void Show();
 
-		void Normalise( float height );
+		void GetBoundingBox( Vector3D boxmin, Vector3D boxmax );
 
 		#endregion
 
 		#region "Properties"
 		string Name { get; }
 		int ID { get; }
-		float BoundingSphereRadiusSquared { get; }
+		float RadiusSquared { get; }
 
 		#endregion
 	}

@@ -1,7 +1,8 @@
 using System;
-using Strive.Math3D;
-
+using DxVBLibA;
 using TrueVision3D;
+
+using Strive.Math3D;
 using Strive.Rendering.Models;
 using Strive.Rendering.Textures;
 using Strive.Rendering.TV3D;
@@ -15,15 +16,19 @@ namespace Strive.Rendering.TV3D.Models {
 	public class Actor : IActor {
 
 		#region "Fields"
-		float _BoundingSphereRadiusSquared;
+		float _RadiusSquared;
 
 		// todo: shouldn't need a show variable, engine should do it for us
 		private bool _show = true;
 		private string _key;
 		private int _id;
-		private Vector3D _position = new Vector3D( 0, 0, 0);
-		private Vector3D _rotation = new Vector3D( 0, 0, 0);
+		private Vector3D _offset;
+		private Vector3D _position;
+		private Vector3D _rotation;
 		TVActor2 _model;
+
+		private Vector3D _boxmin;
+		private Vector3D _boxmax;
 		#endregion
 
 		#region "Constructors"
@@ -39,7 +44,7 @@ namespace Strive.Rendering.TV3D.Models {
 		/// <param name="path">The path at which the model can be loaded</param>
 		/// <param name="format">The format of the model</param>
 		/// <returns>A reference to the loaded Model</returns>
-		public static IActor LoadActor(string name, string path ) {
+		public static IActor LoadActor(string name, string path, float height ) {
 			if(!System.IO.File.Exists(path)) {
 				throw new System.IO.FileNotFoundException("Could not load model '" + path + "'", path);
 			}
@@ -55,18 +60,42 @@ namespace Strive.Rendering.TV3D.Models {
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);
 			}
-			// TODO: remove hardcoded initial rotation
-			loadedModel._rotation.Y += 90;
+			DxVBLibA.D3DVECTOR boxmin = new DxVBLibA.D3DVECTOR();
+			DxVBLibA.D3DVECTOR boxmax = new DxVBLibA.D3DVECTOR();
+			loadedModel._model.GetBoundingBox( ref boxmin, ref boxmax );
+
+			// EEERRR todo: there is a bug in tv3d mdl bounding boxes,
+			// we need to transpose for it
+			loadedModel._boxmin = new Vector3D( boxmin.y, boxmin.z, boxmin.x );
+			loadedModel._boxmax = new Vector3D( boxmax.y, boxmax.z, boxmax.x );
+
+			// todo: use a bounding cylinder instead, would be bett0r!
+
+			if ( height != 0 ) {
+				// scale the model to the correct height and get new bounding box info
+				float scale_factor = height / ( loadedModel._boxmax.Y - loadedModel._boxmin.Y );
+				loadedModel._model.SetScale( scale_factor, scale_factor, scale_factor );
+				loadedModel._boxmin.X *= scale_factor;
+				loadedModel._boxmin.Y *= scale_factor;
+				loadedModel._boxmin.Z *= scale_factor;
+				loadedModel._boxmax.X *= scale_factor;
+				loadedModel._boxmax.Y *= scale_factor;
+				loadedModel._boxmax.Z *= scale_factor;
+			}
 			float radius = 0;
 			DxVBLibA.D3DVECTOR center = new DxVBLibA.D3DVECTOR();
-			// TODO: this will be fixed in release of next TV3D
-			//loadedModel._model.GetBoundingSphere( ref center, ref radius );
-			loadedModel._BoundingSphereRadiusSquared = 300;
-			//loadedModel._BoundingSphereRadiusSquared = radius * radius;
-			if ( center.x != 0 || center.y != 0 || center.z != 0 ) {
-				Log.WarningMessage( "Model " + name + " " + path + " is centered at " + center + " not at (0,0,0) where it should be." );
-			}
+			loadedModel._model.GetBoundingSphere(ref center, ref radius );
+			loadedModel._RadiusSquared = radius * radius;
+			loadedModel._position = new Math3D.Vector3D( 0, 0, 0 );
+			// TODO: remove hardcoded initial rotation
+			//loadedModel._rotation = new Math3D.Vector3D( 0, 90, 0 );
+			loadedModel._offset = new Math3D.Vector3D(
+				(loadedModel._boxmax.X + loadedModel._boxmin.X)/2,
+				(loadedModel._boxmax.Y + loadedModel._boxmin.Y)/2,
+				(loadedModel._boxmax.Z + loadedModel._boxmin.Z)/2
+			);
 			loadedModel._id = loadedModel._model.GetEntity();
+			loadedModel._model.ShowBoundingBox( true, false );
 			return loadedModel;
 		}
 
@@ -83,15 +112,6 @@ namespace Strive.Rendering.TV3D.Models {
 			_show = false;
 			// todo: why doesn't this work?
 			//_model.Enable( false );
-		}
-
-		public void Normalise( float height ) {
-			// TODO: should also translate, not just scale
-			DxVBLibA.D3DVECTOR boxmin = new DxVBLibA.D3DVECTOR();
-			DxVBLibA.D3DVECTOR boxmax = new DxVBLibA.D3DVECTOR();
-			_model.GetBoundingBox( ref boxmin, ref boxmax );
-			float scale_factor = height / ( boxmax.y - boxmin.y );
-			_model.SetScale( scale_factor, scale_factor, scale_factor );
 		}
 
 		public void Show() {
@@ -120,6 +140,11 @@ namespace Strive.Rendering.TV3D.Models {
 			_model.StopAnimation();
 		}
 
+		public void GetBoundingBox( Vector3D minbox, Vector3D maxbox ) {
+			minbox.Set( _boxmin );
+			maxbox.Set( _boxmax );
+		}
+
 		#endregion
 
 		#region "Properties"
@@ -139,9 +164,9 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 		}
 
-		public float BoundingSphereRadiusSquared {
+		public float RadiusSquared {
 			get {
-				return _BoundingSphereRadiusSquared;
+				return _RadiusSquared;
 			}
 		}
 
@@ -195,7 +220,7 @@ namespace Strive.Rendering.TV3D.Models {
 			// Calculate new absolute vector:
 			Vector3D newPosition = _position + movement;
 			_position = newPosition;
-			_model.SetPosition( _position.X, _position.Y, _position.Z );
+			_model.SetPosition( _position.X - _offset.X, _position.Y - _offset.Y, _position.Z - _offset.Z );
 			// TODO: Implement success 
 			return true;
 		}
@@ -227,7 +252,7 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 			set {
 				_position = value;
-				_model.SetPosition( _position.X, _position.Y, _position.Z );
+				_model.SetPosition( _position.X - _offset.X, _position.Y - _offset.Y, _position.Z - _offset.Z );
 			}
 		}
 
