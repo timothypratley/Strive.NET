@@ -14,7 +14,6 @@ namespace Strive.UI.Settings
 		public static string SettingsPath = System.IO.Path.Combine(Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) , @".strive3d");
 		public static string StriveSettingsPath = System.IO.Path.Combine(SettingsPath, "Strive.UI.Settings.xml");
 		public static string MagicWindowSettingsPath = System.IO.Path.Combine(SettingsPath, "MagicWindowSettings.xml");
-
 		private static DataSet _settingsDataSet;
 
 		static SettingsManager()
@@ -24,7 +23,22 @@ namespace Strive.UI.Settings
 				System.IO.Directory.CreateDirectory(SettingsPath);
 			}
 		}
+		public static DataTable GameOptions {
+			get {
+				if(RawSettings.Tables["GameOptions"] == null) {
+					DataTable gameOptions = new DataTable("GameOptions");
+					DataColumn c = gameOptions.Columns.Add("NetworkProtocol", typeof(GameOptionNetworkProtocol));
+					c.AllowDBNull = false;
+					RawSettings.Tables.Add(gameOptions);
+				}
+				return RawSettings.Tables["GameOptions"];
+			}
+		}
 
+		public enum GameOptionNetworkProtocol {
+			TCPOnly,
+			TCPandUDP
+		}
 		public static DataTable RecentWindowSettings
 		{
 			get
@@ -44,6 +58,8 @@ namespace Strive.UI.Settings
 				return RawSettings.Tables["RecentWindowSettings"];
 			}
 		}
+
+
 
 		public static void SaveWindowSetting(System.Windows.Forms.Form window)
 		{
