@@ -186,6 +186,19 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Cursors\CursorManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Cursors\Default.cur"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Cursors\Kill.cur"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "Engine\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -309,6 +322,7 @@
                     RelPath = "Icons\StoppedServer.bmp"
                     BuildAction = "EmbeddedResource"
                 />
+                <Folder RelPath = "Icons\GameCommands\" />
                 <File
                     RelPath = "Settings\SettingsManager.cs"
                     SubType = "Code"

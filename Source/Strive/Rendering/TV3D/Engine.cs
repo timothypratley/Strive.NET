@@ -51,11 +51,20 @@ namespace Strive.Rendering.TV3D {
 		public IModel LoadStaticModel(string name, string path, float height) {
 			return Model.LoadStaticModel( name, path, height );
 		}
+		public IModel CreateBox( string name, float width, float height, float depth, ITexture texture ) {
+			return Model.CreateBox( name, width, height, depth, texture );
+		}
+		public IModel CreatePlane( string name, ITexture texture, Vector3D p1, Vector3D p2, Vector3D p3, Vector3D p4 ) {
+			return Model.CreatePlane( name, texture, p1, p2, p3, p4 );
+		}
 
 		public ITexture LoadTexture( string name, string path ) {
 			return Textures.Texture.LoadTexture( name, path );
 		}
 
+		public void ForceInputUpdate() {
+			Input.ForceUpdate();
+		}
 
 		public IMouse Mouse {
 			get { return mouse; }
@@ -85,6 +94,7 @@ namespace Strive.Rendering.TV3D {
 			TV3DEngine.SetAngleSystem( CONST_TV_ANGLE.TV_ANGLE_DEGREE );
 			TV3DEngine.SetVSync( true );
 			TV3DScene = new TVScene();
+			TV3DScene.SetDepthBuffer( CONST_TV_DEPTHBUFFER.TV_WBUFFER );
 			Land = new TVLandscape();
 			TexFactory = new TVTextureFactory();
 			Screen2DImmediate = new TVScreen2DImmediate();

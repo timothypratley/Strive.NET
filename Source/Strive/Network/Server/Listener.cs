@@ -125,20 +125,6 @@ namespace Strive.Network.Server {
 			get { return clients; }
 		}
 
-		public void CleanupDeadConnections() {
-			// Make a list of dead connections and remove them all
-			ArrayList al = new ArrayList();
-			foreach ( Client c in clients.Values ) {
-				if ( (DateTime.Now - c.LastMessageTimestamp).Seconds > 60 ) {
-					al.Add( c );
-				}
-			}
-			foreach ( Client c in al ) {
-				Log.LogMessage( "Dropping connection to "+c.EndPoint+" due to inactivity" );
-				c.Close();
-				clients.Remove( c.EndPoint );
-			}
-		}
 
 		public void SendToAll( IMessage message ) {
 			foreach ( Client c in clients.Values ) {

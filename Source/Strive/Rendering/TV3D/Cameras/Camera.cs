@@ -15,8 +15,8 @@ namespace Strive.Rendering.TV3D.Cameras
 		// initialised to origin
 		private Vector3D _position = Vector3D.Origin;
 		private Vector3D _rotation = Vector3D.Origin;
-		private float _fieldOfView;
-		private float _viewDistance;
+		private float _fieldOfView = 60;
+		private float _viewDistance = 1000;
 		private string _key;
 
 		static Camera thisCamera = new Camera();
@@ -54,8 +54,9 @@ namespace Strive.Rendering.TV3D.Cameras
 			}
 			set
 			{
-				Engine.Camera.SetViewFrustum(value, _viewDistance, 0f);
 				_fieldOfView = value;
+				Engine.TV3DScene.SetViewFrustum( _fieldOfView, _viewDistance );
+				//Engine.Camera.SetViewFrustum( _fieldOfView, _viewDistance, 0f);
 			}
 		}
 
@@ -70,16 +71,9 @@ namespace Strive.Rendering.TV3D.Cameras
 			}
 			set
 			{
-				try
-				{
-					Engine.Camera.SetViewFrustum(_fieldOfView, value, 0f);
-
-				}
-				catch(Exception e)
-				{
-					throw new SceneException("Could not set view distance", e);
-				}
 				_viewDistance = value;
+				Engine.TV3DScene.SetViewFrustum( _fieldOfView, _viewDistance );
+				//Engine.Camera.SetViewFrustum(_fieldOfView, _viewDistance, 0f);
 			}
 		}
 

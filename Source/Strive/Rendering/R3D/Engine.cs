@@ -53,6 +53,14 @@ namespace Strive.Rendering.R3D {
 		public IModel LoadStaticModel(string key, string path, float height) {
 			return Model.Load( key, path, height );
 		}
+		public IModel CreateBox( string key, float length, float width, float depth, ITexture texture ) {
+			return null;
+		}
+		public IModel CreatePlane( string key, ITexture texture, Vector3D p1, Vector3D p2, Vector3D p3, Vector3D p4  ) {
+			return null;
+		}
+		public void ForceInputUpdate() {
+		}
 
 		public ITexture LoadTexture( string name, string path ) {
 			return Textures.Texture.LoadTexture( name, path );

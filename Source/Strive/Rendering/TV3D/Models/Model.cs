@@ -4,6 +4,7 @@ using DxVBLibA;
 using TrueVision3D;
 using Strive.Rendering.Models;
 using Strive.Rendering.TV3D;
+using Strive.Rendering.Textures;
 using Strive.Math3D;
 using Strive.Logging;
 
@@ -91,6 +92,42 @@ namespace Strive.Rendering.TV3D.Models {
 			);
 			loadedModel._id = loadedModel._mesh.GetMeshIndex();
 			return loadedModel;
+		}
+
+
+		public static Model CreateBox( string name, float width, float height, float depth, ITexture texture ) {
+			Model loadedModel = new Model();
+			loadedModel._key = name;
+			loadedModel._mesh = Engine.TV3DScene.CreateMeshBuilder( name );
+			loadedModel._mesh.CreateBox( width, height, depth, false );
+			if ( texture != null ) loadedModel._mesh.SetTexture( texture.ID, 0 );
+			loadedModel._RadiusSquared = 0;
+			loadedModel._position = new Math3D.Vector3D( 0, 0, 0 );
+			loadedModel._rotation = new Math3D.Vector3D( 0, 0, 0 );
+			// TODO: could get rid of 'offset' if we prenormalize the models
+			// outside
+			loadedModel._offset = new Math3D.Vector3D( 0,0,0 );
+			loadedModel._id = loadedModel._mesh.GetMeshIndex();
+			return loadedModel;
+		}
+
+
+		public static Model CreatePlane( string name, ITexture texture, Vector3D p1, Vector3D p2, Vector3D p3, Vector3D p4 ) {
+			Model t = new Model();
+			t._mesh = Engine.TV3DScene.CreateMeshBuilder( name );
+			// NB: note the point order gets changed here,
+			// because I think it makes more sense this way
+			t._mesh.AddFaceFromPoint( texture.ID, p1.X, p1.Y, p1.Z, p2.X, p2.Y, p2.Z, p4.X, p4.Y, p4.Z, p3.X, p3.Y, p3.Z, 1, 1, true, false );
+			t._mesh.Optimize();
+			t._mesh.ComputeBoundingVolumes();
+			t._offset = new Math3D.Vector3D( 0,0,0 );
+
+			// TODO: bumpmapping would be cool :)
+			//t._mesh.SetBumpMapping( true, texture.ID, -1, -1, 10 );
+			t._key = name;
+			t._id = t._mesh.GetMeshIndex();
+			t._RadiusSquared = 0;
+			return t;
 		}
 		#endregion
 

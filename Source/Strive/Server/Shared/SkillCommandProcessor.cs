@@ -72,6 +72,13 @@ namespace Strive.Server.Shared
 				case EnumActivationType.HealingSpell:
 					break;
 				case EnumActivationType.Skill:
+					if ( esr.EnumSkillID ==  (int)EnumSkill.Kill ) {
+						DoKill( caster, target);
+					} else if ( esr.EnumSkillID ==  (int)EnumSkill.Flee ) {	
+						DoFlee( caster );
+					} else {
+						Log.WarningMessage( "Unhandled SkillID " + esr.EnumSkillID );
+					}
 					break;
 				case EnumActivationType.Sorcery:
 					break;
@@ -80,8 +87,12 @@ namespace Strive.Server.Shared
 			}
 		}
 
-		public static void PhysicalAttack( MobileAvatar attacker, MobileAvatar target, int damage ) {
+		public static void DoKill( MobileAvatar caster, MobileAvatar target ) {
+			caster.PhysicalAttack( target );
+		}
 
+		public static void DoFlee( MobileAvatar caster ) {
+			caster.Flee();
 		}
 	}
 }

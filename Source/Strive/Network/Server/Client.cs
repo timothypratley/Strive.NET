@@ -199,6 +199,11 @@ namespace Strive.Network.Server {
 				tcpsocket = null;
 			}
 			authenticatedUsername = null;
+			handler.Clients.Remove( this );
+		}
+
+		public bool Active {
+			get { return tcpsocket != null; }
 		}
 
 		public Mobile Avatar {

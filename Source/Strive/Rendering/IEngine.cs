@@ -20,9 +20,11 @@ namespace Strive.Rendering
 
 		ITerrain CreateTerrain( string name, ITexture texture, float y, float xy, float zy, float xzy );
 		IModel LoadStaticModel(string name, string path, float height);
+		IModel CreateBox( string name, float width, float height, float depth, ITexture texture );
+		IModel CreatePlane( string name, ITexture texture, Vector3D p1, Vector3D p2, Vector3D p3, Vector3D p4 );
 		IActor LoadActor(string name, string path, float height);
-
 		ITexture LoadTexture(string name, string path);
+		void ForceInputUpdate();
 
 		IMouse Mouse { get; }
 		IKeyboard Keyboard{ get; }
@@ -30,6 +32,5 @@ namespace Strive.Rendering
 		void Initialise(IWin32Window window, EnumRenderTarget target, Resolution resolution);
 		void Terminate();
 		IWin32Window RenderTarget { get; }
-
 	}
 }

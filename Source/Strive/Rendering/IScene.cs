@@ -22,15 +22,11 @@ namespace Strive.Rendering
 		void DrawText( Vector3D location, string message );
 		/// <remarks>Renders the scene into video memory.</remarks>
 		void Render();
-
 		/// <remarks>Displays the rendered screen.</remarks>
 		void Display();
-
-		int RayCollision(
-			Vector3D start_point, Vector3D end_point, int collision_type
-		);
-
+		int RayCollision( Vector3D start_point, Vector3D end_point, int collision_type );
 		IModel MousePick( int x, int y );
+		void SetCursor( ITexture texture );
 
 		#endregion
  

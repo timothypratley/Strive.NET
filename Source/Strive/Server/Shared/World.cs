@@ -30,7 +30,7 @@ namespace Strive.Server.Shared {
 
 		// all physical objects are indexed in a hashtable
 		public Hashtable physicalObjects;
-		ArrayList mobilesArrayList;
+		public ArrayList mobilesArrayList;
 
 		Strive.Network.Messages.ToClient.Weather weather = new Strive.Network.Messages.ToClient.Weather( 1, 0, 0, 0 );
 

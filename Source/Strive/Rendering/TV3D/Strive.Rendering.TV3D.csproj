@@ -86,11 +86,6 @@
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
-                    Name = "Strive.Common"
-                    Project = "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
                     Name = "Strive.Rendering"
                     Project = "{F814C2A2-F0A3-4742-A49E-FF3527A03F12}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"

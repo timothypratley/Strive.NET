@@ -52,9 +52,9 @@ namespace Strive.UI.Engine
 			ProcessOutstandingMessages();
 
 			// handle user input
-			if ( Game.GameControlMode ) {
+			//if ( Game.GameControlMode ) {
 				ProcessPlayerInput();
-			}
+			//}
 
 			// display the new world
 			try {
@@ -78,10 +78,36 @@ namespace Strive.UI.Engine
 		// todo: replace pitch with a more elegant solution
 		float pitch = 0;
 		void ProcessPlayerInput() {
-			#region ProcessRotationInput
+			if ( keyboard.GetKeyState( Key.key_F5 ) ) {
+				Game.CurrentMainWindow.SetGameControlMode();
+			} else if ( keyboard.GetKeyState( Key.key_F6 ) ) {
+				Game.CurrentMainWindow.ReleaseGameControlMode();
+			}
+			if ( Game.GameControlMode ) {
+				if ( keyboard.GetKeyState( Key.key_ESCAPE ) ) {
+					Game.CurrentMainWindow.ReleaseGameControlMode();
+				} else if ( keyboard.GetKeyState( Key.key_1 ) ) {
+					Game.CurrentGameCommand = EnumSkill.Kill;
+					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Kill;
+				} else if ( keyboard.GetKeyState( Key.key_2 ) ) {
+					Game.CurrentGameCommand = EnumSkill.Flee;
+					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Default;
+				} else if ( keyboard.GetKeyState( Key.key_0 ) ) {
+					Game.CurrentGameCommand = EnumSkill.None;
+					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Default;
+				}
+			}
 
+			// if not in game control mode, don't respond to game controls
+			if ( Game.GameControlMode ) {
+				return;
+			}
+			
 			// no avatar... no movement
 			if ( Game.CurrentWorld.CurrentAvatar == null ) return;
+			
+			#region ProcessRotationInput
+
 			const int moveunit = 2;
 			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position.Clone();
 			Vector3D newRotation = Game.CurrentWorld.CurrentAvatar.model.Rotation.Clone();

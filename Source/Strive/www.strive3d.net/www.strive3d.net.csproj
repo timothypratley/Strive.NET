@@ -381,7 +381,7 @@
                 />
                 <File
                     RelPath = "Components\MobileControls.cs"
-                    SubType = "Code"
+                    SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
                 />
                 <File

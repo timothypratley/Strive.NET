@@ -11,6 +11,8 @@ using Crownwood.Magic.Docking;
 
 using Strive.Logging;
 using Strive.UI.WorldView;
+using Strive.UI.Icons;
+using Strive.Multiverse;
 
 
 namespace Strive.UI.Windows
@@ -107,17 +109,19 @@ namespace Strive.UI.Windows
 			this.ViewFirstPerson = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewChaseCam = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
+			this.MainTabs.SuspendLayout();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MainTabs
 			// 
 			this.MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.MainTabs.IDEPixelArea = true;
 			this.MainTabs.Location = new System.Drawing.Point(2, 27);
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(612, 951);
+			this.MainTabs.Size = new System.Drawing.Size(612, 687);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -127,7 +131,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				  this.RenderTarget});
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(612, 926);
+			this.GameTab.Size = new System.Drawing.Size(612, 662);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -136,9 +140,9 @@ namespace Strive.UI.Windows
 			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Location = new System.Drawing.Point(256, 4130);
+			this.RenderTarget.Location = new System.Drawing.Point(256, 5528);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(116, 13);
+			this.RenderTarget.Size = new System.Drawing.Size(116, 0);
 			this.RenderTarget.TabIndex = 0;
 			// 
 			// MainMenu
@@ -245,15 +249,15 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 978);
+			this.MainStatus.Location = new System.Drawing.Point(2, 714);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(612, 27);
+			this.MainStatus.Size = new System.Drawing.Size(612, 37);
 			this.MainStatus.TabIndex = 1;
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(616, 1007);
+			this.ClientSize = new System.Drawing.Size(616, 753);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.MainTabs,
 																		  this.MainMenu,
@@ -262,8 +266,10 @@ namespace Strive.UI.Windows
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Main";
 			this.Text = "";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Main_Closing);
 			this.Load += new System.EventHandler(this.Load_Form);
+			this.MainTabs.ResumeLayout(false);
 			this.GameTab.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -317,24 +323,46 @@ namespace Strive.UI.Windows
 
 		private void RenderTarget_Click( object sender, System.EventArgs e ) {
 			if ( Game.GameControlMode ) {
-				ReleaseGameControlMode();	
+				//ReleaseGameControlMode();
+				EnumSkill skill = Game.CurrentGameCommand;
+                //if ( targettypeof( skill ) == targetmobil ) {
+				Game.RenderingFactory.Mouse.GetAbsState();
+				Strive.Rendering.Models.IModel m = Game.CurrentWorld.RenderingScene.MousePick( Game.RenderingFactory.Mouse.X, Game.RenderingFactory.Mouse.Y );
+				if ( m != null ) {
+					MessageBox.Show( this, m.Name );
+					PhysicalObject po = ((PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[int.Parse(m.Name)]).physicalObject;
+					int [] targets = new int[1];
+					targets[0] = po.ObjectInstanceID;
+					Game.CurrentServerConnection.Send(
+						new Strive.Network.Messages.ToServer.GameCommand.UseSkill(
+							Game.CurrentGameCommand, targets )
+					);
+				} else {
+					MessageBox.Show( this, "No target" );
+				}
 			} else {
-				RenderTarget.Focus();
 				SetGameControlMode();
 			}
 		}
 
-		private void SetGameControlMode() {
-			Game.GameControlMode = true;
-			Cursor.Hide();
-			Rectangle r = new Rectangle(
-				RenderTarget.Left, RenderTarget.Top,
-				RenderTarget.Width, RenderTarget.Height );
-			Cursor.Clip = RenderTarget.RectangleToScreen( r );
-			RenderTarget.Capture = true;
+		public void SetGameControlMode() {
+			if ( !Game.GameControlMode ) {
+				RenderTarget.Focus();
+				Game.GameControlMode = true;
+				Point center = new Point(
+					RenderTarget.Left + RenderTarget.Width / 2,
+					RenderTarget.Top + RenderTarget.Height / 2
+				);
+				Cursor.Position = RenderTarget.PointToScreen( center );
+				Rectangle r = new Rectangle( center, new System.Drawing.Size( 0, 0 ) );
+				Cursor.Clip = RenderTarget.RectangleToScreen( r );
+				RenderTarget.Capture = true;
+				Cursor.Hide();
+				Game.CurrentGameCommand = EnumSkill.None;
+			}
 		}
 		
-		private void ReleaseGameControlMode() {
+		public void ReleaseGameControlMode() {
 			if ( Game.GameControlMode ) {
 				Game.GameControlMode = false;
 				RenderTarget.Capture = false;
@@ -343,7 +371,7 @@ namespace Strive.UI.Windows
 					RenderTarget.Left + RenderTarget.Width / 2,
 					RenderTarget.Top + RenderTarget.Height / 2
 					)
-					);
+				);
 				Cursor.Clip = new Rectangle( new Point(0,0), new Size(0,0) );
 				Cursor.Show();
 			}
@@ -457,6 +485,26 @@ namespace Strive.UI.Windows
 
 		private void ViewChaseCam_Click(object sender, System.EventArgs e) {
 			Game.CurrentWorld.CameraMode = EnumCameraMode.Chase;	
+		}
+
+		private void Main_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
+			// TODO: why doesn't this work???? umg
+			// is it because of the hax directx keyboard handling?
+
+			if ( e.KeyCode == Keys.F5 ) {
+				SetGameControlMode();
+			} else if ( e.KeyCode == Keys.F6 ) {
+				ReleaseGameControlMode();
+			}
+			if ( Game.GameControlMode ) {
+				if ( e.KeyCode == Keys.Escape ) {
+					ReleaseGameControlMode();
+				} else if ( e.KeyCode == Keys.D1 ) {
+					Game.CurrentGameCommand = EnumSkill.Kill;
+				} else if ( e.KeyCode == Keys.D0 ) {
+					Game.CurrentGameCommand = EnumSkill.None;
+				}
+			}
 		}
 	}
 }

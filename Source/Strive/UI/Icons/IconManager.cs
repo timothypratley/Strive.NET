@@ -74,6 +74,6 @@ namespace Strive.UI.Icons
 		Refresh = 6,
 		Log = 7,
 		Chat = 8,
-		Command = 9
+		Command = 9,
 	}
 }

@@ -321,7 +321,7 @@ namespace Strive.Server.Shared
 			// RIP
 			SetMobileState( EnumMobileState.Dead );
 
-			if ( IsPC() ) {
+			if ( IsPlayer() ) {
 				// respawn!
 				HitPoints = MaxHitPoints;
 
@@ -336,14 +336,6 @@ namespace Strive.Server.Shared
 				// TODO: should probably stay around as a corpse
 				// world.Remove( this );
 				// but we need some decay/repop code
-			}
-		}
-
-		public bool IsPC() {
-			if ( this.AreaID == 0 ) {
-				return true;
-			} else {
-				return false;
 			}
 		}
 

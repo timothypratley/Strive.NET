@@ -24,6 +24,8 @@ namespace Strive.Rendering.TV3D
 		private bool _isRendering = false;
 		private ModelCollection _models = new ModelCollection();
 		private Cameras.CameraCollection _views = new Cameras.CameraCollection();
+		private int cursorTextureID = 0;
+
 		#endregion
 
 		#region "Constructors"
@@ -39,7 +41,6 @@ namespace Strive.Rendering.TV3D
 			}			
 
 			Scene._constructed = true;
-
 		}
 		/// <summary>
 		/// Destuctor for Scene.  Unsets static _constructed field
@@ -93,6 +94,10 @@ namespace Strive.Rendering.TV3D
 			*/
 		}
 
+		public void SetCursor( ITexture texture ) {
+			cursorTextureID = texture.ID;
+		}
+
 		/// <summary>
 		/// Public rendering routine
 		/// </summary>
@@ -116,6 +121,9 @@ namespace Strive.Rendering.TV3D
 
 				// render character models and object labels
 				Engine.Screen2DText.ACTION_BeginText();
+				string header = "X:"+View.Position.X+",Y:"+View.Position.Y+",Z:"+View.Position.Z+" - heading:"+View.Rotation.Y;
+				Engine.Screen2DText.NormalFont_DrawTextFontID( header, 0, 0, Engine.Gl.RGBA(1f, 0f, 1f, 1f), Engine.FontIndex );
+
 				foreach( IModel m in _models.Values ) {
 					if ( m is Actor ) {
 						((Actor)m).Render();
@@ -145,6 +153,17 @@ namespace Strive.Rendering.TV3D
 					}
 				}
 				Engine.Screen2DText.ACTION_EndText();
+
+				if ( cursorTextureID != 0 ) {
+					// TODO: use locally saved values
+					TVViewport vp = Engine.TV3DEngine.GetViewport();
+					float x = vp.Width/2;
+					float y = vp.Height/2;
+
+					Engine.Screen2DImmediate.ACTION_Begin2D();
+					Engine.Screen2DImmediate.DRAW_Texture( cursorTextureID, x-8, y-8, x+8, y+8, -2, -2, -2, -2, 0, 0, 1, 1 ); 
+					Engine.Screen2DImmediate.ACTION_End2D();
+				}
 			} catch(Exception e) {
 				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
 			}
@@ -198,7 +217,7 @@ namespace Strive.Rendering.TV3D
 		public IModel MousePick( int x, int y ) {
 			DxVBLibA.D3DVECTOR dxo = new DxVBLibA.D3DVECTOR();
 			DxVBLibA.D3DVECTOR dxd = new DxVBLibA.D3DVECTOR();
-			Engine.Gl.MousePickVector( x, y, ref dxo, ref dxd);
+			Engine.Gl.MousePickVector( x, y, ref dxo, ref dxd );
 			TV_COLLISIONRESULT cr = new TV_COLLISIONRESULT();
 			if ( Engine.TV3DScene.AdvancedCollision( ref dxo, ref dxd, ref cr, CONST_TV_OBJECT_TYPE.TV_COLLIDE_MESH | CONST_TV_OBJECT_TYPE.TV_COLLIDE_ACTOR, CONST_TV_TESTTYPE.TV_TESTTYPE_ACCURATETESTING, true) ) {
 				// TODO: don't loop through, a userdata field?

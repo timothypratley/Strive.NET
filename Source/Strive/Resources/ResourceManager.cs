@@ -22,6 +22,7 @@ namespace Strive.Resources
 
 		public static string _modelPath = "";
 		public static string _texturePath = "";
+		public static string _cursorPath = "";
 		public static string _resourceServer = "";
 		public static Hashtable _textures = new Hashtable();
 		public static IEngine factory;
@@ -29,6 +30,7 @@ namespace Strive.Resources
 		public static void SetPath( string path ) {
 			_modelPath = System.IO.Path.Combine( path, "models" );
 			_texturePath = System.IO.Path.Combine( path, "textures" );
+			_cursorPath = System.IO.Path.Combine( path, "cursors" );
 			_resourceServer = System.Configuration.ConfigurationSettings.AppSettings["ResourceServer"];
 		}
 
@@ -146,6 +148,29 @@ namespace Strive.Resources
 				}
 				texture = factory.LoadTexture( TextureID.ToString(), filename );
 				_textures.Add( TextureID, texture );
+			}
+			return texture;
+		}
+
+		/// <summary>
+		/// LoadCursor just loads a texture, but from the cursor directory
+		/// </summary>
+		/// <param name="CursorID"></param>
+		/// <returns></returns>
+		public static ITexture LoadCursor( int CursorID ) {
+			// see if its already loaded
+			ITexture texture = (ITexture)_textures[CursorID];
+			if ( texture == null ) {
+				// load from file
+				string filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".dds" );
+				if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
+					filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".dds" );
+					if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
+						throw new ResourceNotLoadedException( CursorID, ResourceType.Texture );
+					}
+				}
+				texture = factory.LoadTexture( CursorID.ToString(), filename );
+				_textures.Add( CursorID, texture );
 			}
 			return texture;
 		}

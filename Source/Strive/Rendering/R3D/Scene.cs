@@ -186,6 +186,10 @@ namespace Strive.Rendering.R3D
 			return null;
 		}
 
+		public void SetCursor( ITexture texture ) {
+		}
+
+
 		public ICameraCollection CameraCollection {
 			get { return _views; }
 		}

@@ -66,8 +66,7 @@ namespace Strive.Server.Shared {
 					mp.ProcessNextMessage();
 				}
 
-				// TODO: don't cleanup so regularly?
-				networkhandler.CleanupDeadConnections();
+				CleanupLinkdead();
 
 				if ( (DateTime.Now - Global.now) > TimeSpan.FromSeconds(1) ) {
 					Log.WarningMessage( "An update cycle took longer than one second." );
@@ -94,6 +93,19 @@ namespace Strive.Server.Shared {
 				// Just log exceptions and stop all threads
 				Log.ErrorMessage( e );
 				Stop();
+			}
+		}
+
+		void CleanupLinkdead() {
+			// TODO: instead of looping through the entire world,
+			// we should keep a list of players
+			foreach ( MobileAvatar ma in world.mobilesArrayList ) {
+				if ( ma.IsPlayer() ) {
+					if ( ma.client == null || (!ma.client.Active && (Global.now - ma.client.LastMessageTimestamp) > TimeSpan.FromSeconds(60) ) ) {
+						ma.client = null;
+						world.Remove( ma );
+					}
+				}
 			}
 		}
 	}

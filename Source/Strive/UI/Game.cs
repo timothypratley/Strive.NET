@@ -11,6 +11,7 @@ using Strive.UI.WorldView;
 using Strive.UI.Engine;
 using Strive.Logging;
 using Strive.Network.Client;
+using Strive.Multiverse;
 
 namespace Strive.UI
 {
@@ -34,6 +35,18 @@ namespace Strive.UI
 		public static string userName;
 		public static string password;
 		public static Strive.Network.Messages.NetworkProtocolType protocol;
+
+		private static EnumSkill currentGameCommand = EnumSkill.None;
+		public static EnumSkill CurrentGameCommand {
+			get {
+				return currentGameCommand;
+			}
+			set {
+				currentGameCommand = value;
+				Strive.Rendering.Textures.ITexture texture = Strive.Resources.ResourceManager.LoadCursor( (int)currentGameCommand );
+				CurrentWorld.RenderingScene.SetCursor( texture );
+			}
+		}
 
 		#endregion
 

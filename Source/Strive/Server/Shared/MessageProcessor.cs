@@ -110,10 +110,16 @@ namespace Strive.Server.Shared {
 
 		void ProcessLoginMessage(
 			Client client, Strive.Network.Messages.ToServer.Login loginMessage
-			) {
+		) {
 			if (
 				world.UserLookup( loginMessage.username, loginMessage.password, ref client.PlayerID )
 			) {
+				// login succeeded, check there isnt an existing connection for this
+				// player
+				Client old = (Client)listener.Clients[ loginMessage.username ];
+				if ( old != null ) {
+					old.Close();
+				}
 				Log.LogMessage(
 					"User " + loginMessage.username + " logged in"
 					);
