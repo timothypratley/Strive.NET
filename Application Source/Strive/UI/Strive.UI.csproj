@@ -112,6 +112,11 @@
                     Project = "{3781C605-0BA3-4DD2-91BB-F01368CD060F}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "Strive.Resources"
+                    Project = "{E8037631-248F-411C-BA3A-744FE15704EC}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
@@ -233,37 +238,6 @@
                     RelPath = "Modules\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Resources\Enumerations.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Resources\Exceptions.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Resources\ResourceManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Resources\Assemblies\AxSHDocVw.dll"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Resources\Assemblies\SHDocVw.dll"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Resources\System.Drawing.Bitmap\mango.jpg"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "Resources\System.Drawing.Bitmap\pathgradient.jpg"
-                    BuildAction = "Content"
                 />
             </Include>
         </Files>

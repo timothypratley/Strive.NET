@@ -7,6 +7,7 @@ using Strive.Multiverse;
 using Strive.Network.Client;
 using Strive.UI.Forms;
 using Strive.Logging;
+using Strive.Resources;
 
 namespace Strive.UI
 {
@@ -22,7 +23,6 @@ namespace Strive.UI
 		internal static ServerConnection _serverConnection = new ServerConnection();
 		internal static int _myid;
 		internal static Game _game;
-		public static string _resourcePath = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"].ToString();
 		public static Log _log = new Log();
 
 		[STAThread]
@@ -32,19 +32,21 @@ namespace Strive.UI
 			#region Retrieve config settings for server location
 
 			// Retreive default server:port
-			if ( ConfigurationSettings.AppSettings["server"] == null ) 
-			{
+			if ( ConfigurationSettings.AppSettings["server"] == null ) {
 				throw new ConfigurationException( "server" );
 			}
-			if ( ConfigurationSettings.AppSettings["port"] == null ) 
-			{
+			if ( ConfigurationSettings.AppSettings["port"] == null ) {
 				throw new ConfigurationException( "port" );
+			}
+			if ( ConfigurationSettings.AppSettings["ResourcePath"] == null ) {
+				throw new ConfigurationException( "ResourcePath" );
 			}
 			int port = int.Parse(ConfigurationSettings.AppSettings["port"]);
 			string server = ConfigurationSettings.AppSettings["server"];
+			string resourcePath = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
+			ResourceManager.SetPath( resourcePath );
 
 			#endregion
-
 
 			#region Connect to server
 			try

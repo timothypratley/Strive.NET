@@ -54,7 +54,7 @@ namespace Strive.Rendering
 		}
 		#endregion
 
-		#region "Operators"
+		#region "Methods"
 		/// <summary>
 		/// Initialise the scene
 		/// </summary>
@@ -141,6 +141,27 @@ namespace Strive.Rendering
 			{
 				throw new SceneNotInitialisedException();
 			}
+		}
+
+		public int RayCollision(
+			Vector3D start_point, Vector3D end_point, int collision_type
+		) {
+			// map collision_type to r3d collision type omg :(
+			R3DCOLLISIONTYPE ct = (R3DCOLLISIONTYPE) collision_type;
+			R3DVector3D vStart;
+			vStart.x = start_point.X;
+			vStart.y = start_point.Y;
+			vStart.z = start_point.Z;
+			R3DVector3D vEnd;
+			vEnd.x = end_point.X;
+			vEnd.y = end_point.Y;
+			vEnd.z = end_point.Z;
+			// if (
+			Interop._instance.Meshbuilder.Class_RayCollision(
+				ref vStart, ref vEnd, ct
+			);
+
+			return 1;
 		}
 
 		#endregion

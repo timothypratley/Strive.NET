@@ -8,6 +8,7 @@ using Strive.Network.Messages;
 using Strive.Rendering;
 using Strive.Rendering.Controls;
 using Strive.Rendering.Models;
+using Strive.Resources;
 
 
 namespace Strive.UI.Modules
@@ -78,7 +79,7 @@ namespace Strive.UI.Modules
 						Global._log.LogMessage( "Initial rotation is " + _scene.View.Rotation );
 						continue;
 					}
-					Model model = Resources.ResourceManager.LoadModel(apo.instance_id, apo.model_id);
+					Model model = ResourceManager.LoadModel(apo.instance_id, apo.model_id);
 					try {
 						_scene.Models.Add( model );
 					} catch ( Exception ) {

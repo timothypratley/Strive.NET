@@ -1,6 +1,6 @@
 using System;
 
-namespace Strive.UI.Resources
+namespace Strive.Resources
 {
 	public enum ResourceType
 	{

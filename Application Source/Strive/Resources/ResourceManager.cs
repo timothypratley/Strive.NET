@@ -4,7 +4,7 @@ using Strive.Rendering;
 using Strive.Rendering.Models;
 
 
-namespace Strive.UI.Resources
+namespace Strive.Resources
 {
 	/// <summary>
 	/// Summary description for ModelLoader.
@@ -12,7 +12,12 @@ namespace Strive.UI.Resources
 	public class ResourceManager
 	{
 
-		private static string _modelPath = System.IO.Path.Combine(Global._resourcePath, "Models");
+		public static string _modelPath = "";
+
+		public static void SetPath( string path ) {
+			_modelPath = path;
+		}
+
 		public static Model LoadModel(int spawnID, int modelID)
 		{
 			// check MDL first:
