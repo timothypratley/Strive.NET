@@ -9,7 +9,7 @@ using Strive.Rendering;
 using Strive.Rendering.Controls;
 using Strive.Rendering.Models;
 using Strive.Resources;
-
+using System.Threading;
 
 namespace Strive.UI.Modules
 {
@@ -33,6 +33,8 @@ namespace Strive.UI.Modules
 			_screen = screen;
 			_connection = connection;
 			_isMainRunning = true;
+			Thread thisThread = new Thread(	new ThreadStart( MainLoop )	);
+			thisThread.Start();
 		}
 
 		public static void Stop()
@@ -40,7 +42,7 @@ namespace Strive.UI.Modules
 			_isMainRunning = false;
 		}
 
-		public static void Main()
+		public static void MainLoop()
 		{
 			while(_isMainRunning)
 			{
@@ -48,8 +50,6 @@ namespace Strive.UI.Modules
 				ProcessKeyboardInput();
 				Render();
 			}
-
-			Stop();
 		}
 
 		private static void ProcessOutstandingMessages() {
@@ -90,7 +90,7 @@ namespace Strive.UI.Modules
 					model.Rotation = GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
 				}
 					#endregion
-					#region 1.1 Position Message
+					#region Position Message
 
 				else if( m is Strive.Network.Messages.ToClient.Position) {
 					Strive.Network.Messages.ToClient.Position p = (Strive.Network.Messages.ToClient.Position)m;
@@ -154,25 +154,25 @@ namespace Strive.UI.Modules
 					}
 				}
 				#endregion
-				#region DropPhysicalObject Message
+					#region DropPhysicalObject Message
 				else if ( m is Strive.Network.Messages.ToClient.DropPhysicalObject) {
 					Strive.Network.Messages.ToClient.DropPhysicalObject dpo = (Strive.Network.Messages.ToClient.DropPhysicalObject)m;
 					_scene.Models.Remove( dpo.instance_id );
 				}
 				#endregion
-				#region MobileState
+					#region MobileState
 				else if ( m is Strive.Network.Messages.ToClient.MobileState) {
 					Strive.Network.Messages.ToClient.MobileState ms = (Strive.Network.Messages.ToClient.MobileState)m;
 					Global._log.LogMessage( "Mobile " + ms.ObjectInstanceID + " is " + ms.State );
 				}
 				#endregion
-				#region CurrentHitpoints
+					#region CurrentHitpoints
 				else if ( m is Strive.Network.Messages.ToClient.CurrentHitpoints) {
 					Strive.Network.Messages.ToClient.CurrentHitpoints chp = (Strive.Network.Messages.ToClient.CurrentHitpoints)m;
 					Global._log.LogMessage( "You now have " + chp.HitPoints );
 				}
 				#endregion
-				#region CanPossess
+					#region CanPossess
 				else if ( m is Strive.Network.Messages.ToClient.CanPossess ) {
 					Strive.Network.Messages.ToClient.CanPossess cp = (Strive.Network.Messages.ToClient.CanPossess)m;
 					Global._log.LogMessage( "You can possess... " );
@@ -180,7 +180,9 @@ namespace Strive.UI.Modules
 						Global._log.LogMessage( "	" + tuple.id + " : " + tuple.name );
 						System.Console.WriteLine( "	" + tuple.id + " : " + tuple.name );
 					}
-
+					Global._log.LogMessage( "Entering world as default: " + cp.possesable[0].name );
+					Global._myid = cp.possesable[0].id;
+					Global._serverConnection.Send(new Strive.Network.Messages.ToServer.EnterWorldAsMobile( 0, Global._myid ));
 				}
 				#endregion
 					#region Default

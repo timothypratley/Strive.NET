@@ -93,8 +93,13 @@
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
-                    Name = "Strive.Multiverse"
-                    Project = "{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}"
+                    Name = "Strive.Logging"
+                    Project = "{3781C605-0BA3-4DD2-91BB-F01368CD060F}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Strive.Resources"
+                    Project = "{E8037631-248F-411C-BA3A-744FE15704EC}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
@@ -108,13 +113,8 @@
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
-                    Name = "Strive.Logging"
-                    Project = "{3781C605-0BA3-4DD2-91BB-F01368CD060F}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
-                    Name = "Strive.Resources"
-                    Project = "{E8037631-248F-411C-BA3A-744FE15704EC}"
+                    Name = "Strive.Multiverse"
+                    Project = "{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
@@ -150,6 +150,10 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Icon1.ico"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "Forms\Acknowledgements.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
@@ -177,16 +181,6 @@
                 <File
                     RelPath = "Forms\Game.resx"
                     DependentUpon = "Game.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Forms\Splash.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Splash.resx"
-                    DependentUpon = "Splash.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

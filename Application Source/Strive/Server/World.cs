@@ -119,7 +119,8 @@ namespace Strive.Server {
 			// Calculate Terrain heightmaps
 			for ( int i=0; i<squaresInX; i++ ) {
 				for ( int j=0; j<squaresInZ; j++ ) {
-					squares[i,j].CalculateHeightMap();
+					// EEERRR not working just yet
+					//squares[i,j].CalculateHeightMap();
 				}
 			}
 		}

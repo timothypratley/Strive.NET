@@ -16,6 +16,7 @@ namespace Strive.Rendering.Models
 		#region "Fields"
 		private ModelFormat _format = ModelFormat.Unspecified;
 		private string _key;
+		private int _id;
 		private Vector3D _position;
 		private Vector3D _rotation;
 		#endregion
@@ -25,6 +26,37 @@ namespace Strive.Rendering.Models
 		#endregion
 
 		#region "Factory Initialisers"
+		public static Model CreatePlane( string name, Vector3D point1, Vector3D point2, Vector3D point3, Vector3D point4, string texture, string material ) {
+			int id = Interop._instance.Meshbuilder.Mesh_Create( name );
+			R3DPoint3D p1, p2, p3, p4;
+			p1.x = point1.X;
+			p1.y = point1.Y;
+			p1.z = point1.Z;
+			p2.x = point2.X;
+			p2.y = point2.Y;
+			p2.z = point2.Z;
+			p3.x = point3.X;
+			p3.y = point3.Y;
+			p3.z = point3.Z;
+			p4.x = point4.X;
+			p4.y = point4.Y;
+			p4.z = point4.Z;
+			Interop._instance.Meshbuilder.Mesh_AddPlane( ref p1, ref p2, ref p3, ref p4, texture, material, R3DBLENDMODE.R3DBLENDMODE_NONE, R3DCULLMODE.R3DCULLMODE_DOUBLESIDED );
+			Model created = new Model();
+			created._key = name;
+			created._id = id;
+			return created;
+		}
+
+		public static Model CreateBox( string name, float w, float h, float d, string texture, string material ) {
+			int id = Interop._instance.Meshbuilder.Mesh_Create( name );
+			Interop._instance.Meshbuilder.Mesh_AddBox( texture, material, w, h, d, R3DBLENDMODE.R3DBLENDMODE_NONE, R3DCULLMODE.R3DCULLMODE_DOUBLESIDED );
+			Model created = new Model();
+			created._key = name;
+			created._id = id;
+			return created;
+		}
+
 		/// <summary>
 		/// Loads a model
 		/// </summary>
@@ -101,7 +133,11 @@ namespace Strive.Rendering.Models
 		{
 			try
 			{
-				Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
+				if ( _format == ModelFormat.MDL ) {
+					Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
+				} else  {
+					Interop._instance.Meshbuilder.Mesh_SetPointer(this.Key);
+				}
 			}
 			catch(Exception e)
 			{
@@ -133,6 +169,18 @@ namespace Strive.Rendering.Models
 				return _key;
 			}
 		}
+
+		public float BoundingSphereRadius {
+			get {
+				R3DVector3D center = new R3DVector3D();
+				float radius = 10;
+				bool worldspace = false;
+				setPointer();
+				Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref radius, ref worldspace );
+				return radius;
+			}
+		}
+
 		#endregion
 
 		#region "Implementation of IManeuverable"
@@ -215,6 +263,16 @@ namespace Strive.Rendering.Models
 						setPointer();
 						try {
 							Interop._instance.MdlSystem.MDL_SetPosition(value.X, value.Y, value.Z);
+						}
+						catch(Exception e) {
+							throw new ModelException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
+						}
+						break;
+					}
+					default: {
+						setPointer();
+						try {
+							Interop._instance.Meshbuilder.Mesh_SetPosition(value.X, value.Y, value.Z);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);

@@ -47,6 +47,10 @@ namespace Strive.Rendering
 		/// </summary>
 		internal R3D_TextureLib TextureLib = new R3D_TextureLibClass();
 		/// <summary>
+		/// Revolution3D matrial library
+		/// </summary>
+		internal R3D_MaterialLib MaterialLib = new R3D_MaterialLib();
+		/// <summary>
 		/// Revolution3D polyvov terrain class
 		/// </summary>
 		internal R3D_PolyVox2 PolyVox = new R3D_PolyVox2Class();

@@ -5,13 +5,15 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
 
 using Strive.Rendering;
 using Strive.Rendering.Controls;
 using Strive.Rendering.Models;
 using Strive.Math3D;
 using Strive.Network.Messages;
-
+using Strive.Network.Client;
+using Strive.Resources;
 using Strive.UI.Forms.Controls.Html;
 
 namespace Strive.UI.Forms
@@ -39,6 +41,17 @@ namespace Strive.UI.Forms
 		private System.Windows.Forms.TabPage aLogTab;
 		internal System.Windows.Forms.PictureBox RenderTarget;
 		private System.Windows.Forms.RichTextBox logOutput;
+		private System.Windows.Forms.Button Go;
+		private System.Windows.Forms.ComboBox LoginNames;
+		private System.Windows.Forms.ComboBox ServerNames;
+		private System.Windows.Forms.TextBox PortField;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox PasswordField;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.ComboBox Resolutions;
+		private System.Windows.Forms.Label label4;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -50,10 +63,6 @@ namespace Strive.UI.Forms
 			// Required for Windows Form Designer support
 			//
 			InitializeComponent();
-
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
 
 			Global._log.SetLogOutput( logOutput );
 		}
@@ -80,7 +89,12 @@ namespace Strive.UI.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Game));
 			this.gameTabs = new System.Windows.Forms.TabControl();
+			this.ConnectTab = new System.Windows.Forms.TabPage();
+			this.ServerNames = new System.Windows.Forms.ComboBox();
+			this.Go = new System.Windows.Forms.Button();
+			this.LoginNames = new System.Windows.Forms.ComboBox();
 			this.InGameTab = new System.Windows.Forms.TabPage();
 			this.Communications = new System.Windows.Forms.RichTextBox();
 			this.GoCommand = new System.Windows.Forms.Button();
@@ -90,18 +104,26 @@ namespace Strive.UI.Forms
 			this.butSpell1 = new System.Windows.Forms.Button();
 			this.inGameInventory = new System.Windows.Forms.TabPage();
 			this.CommandText = new System.Windows.Forms.TextBox();
+			this.RenderTarget = new System.Windows.Forms.PictureBox();
 			this.NoteBoardTabs = new System.Windows.Forms.TabPage();
 			this.CharacterSheet = new System.Windows.Forms.TabPage();
-			this.ConnectTab = new System.Windows.Forms.TabPage();
 			this.aLogTab = new System.Windows.Forms.TabPage();
-			this.RenderTarget = new System.Windows.Forms.PictureBox();
 			this.logOutput = new System.Windows.Forms.RichTextBox();
-
+			this.PortField = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.PasswordField = new System.Windows.Forms.TextBox();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.Resolutions = new System.Windows.Forms.ComboBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.gameTabs.SuspendLayout();
+			this.ConnectTab.SuspendLayout();
 			this.InGameTab.SuspendLayout();
 			this.inGameTabs.SuspendLayout();
 			this.inGameSpells.SuspendLayout();
 			this.aLogTab.SuspendLayout();
+			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gameTabs
@@ -115,8 +137,8 @@ namespace Strive.UI.Forms
 																				   this.InGameTab,
 																				   this.NoteBoardTabs,
 																				   this.CharacterSheet,
-																				   this.aLogTab});
-			this.gameTabs.Enabled = false;
+																				   this.aLogTab,
+																				   this.tabPage1});
 			this.gameTabs.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.gameTabs.HotTrack = true;
 			this.gameTabs.Location = new System.Drawing.Point(3, 8);
@@ -125,6 +147,53 @@ namespace Strive.UI.Forms
 			this.gameTabs.ShowToolTips = true;
 			this.gameTabs.Size = new System.Drawing.Size(1016, 680);
 			this.gameTabs.TabIndex = 0;
+			// 
+			// ConnectTab
+			// 
+			this.ConnectTab.Controls.AddRange(new System.Windows.Forms.Control[] {
+																					 this.PasswordField,
+																					 this.label3,
+																					 this.label2,
+																					 this.label1,
+																					 this.PortField,
+																					 this.ServerNames,
+																					 this.Go,
+																					 this.LoginNames});
+			this.ConnectTab.Location = new System.Drawing.Point(4, 28);
+			this.ConnectTab.Name = "ConnectTab";
+			this.ConnectTab.Size = new System.Drawing.Size(1008, 648);
+			this.ConnectTab.TabIndex = 3;
+			this.ConnectTab.Text = "Connect";
+			// 
+			// ServerNames
+			// 
+			this.ServerNames.Items.AddRange(new object[] {
+															 "localhost",
+															 "strive.net"});
+			this.ServerNames.Location = new System.Drawing.Point(200, 88);
+			this.ServerNames.Name = "ServerNames";
+			this.ServerNames.Size = new System.Drawing.Size(200, 24);
+			this.ServerNames.TabIndex = 4;
+			// 
+			// Go
+			// 
+			this.Go.Location = new System.Drawing.Point(200, 200);
+			this.Go.Name = "Go";
+			this.Go.Size = new System.Drawing.Size(200, 24);
+			this.Go.TabIndex = 2;
+			this.Go.Text = "Connect";
+			this.Go.Click += new System.EventHandler(this.Go_Click);
+			// 
+			// LoginNames
+			// 
+			this.LoginNames.Items.AddRange(new object[] {
+															"timothypratley@yahoo.com",
+															"nathan@rogers.name"});
+			this.LoginNames.Location = new System.Drawing.Point(200, 120);
+			this.LoginNames.Name = "LoginNames";
+			this.LoginNames.Size = new System.Drawing.Size(200, 24);
+			this.LoginNames.TabIndex = 1;
+			this.LoginNames.Leave += new System.EventHandler(this.Complete_LoginNames);
 			// 
 			// InGameTab
 			// 
@@ -174,7 +243,6 @@ namespace Strive.UI.Forms
 															  "sleep"});
 			this.quickCommand.Location = new System.Drawing.Point(8, 616);
 			this.quickCommand.Name = "quickCommand";
-			this.quickCommand.Size = new System.Drawing.Size(121, 24);
 			this.quickCommand.Sorted = true;
 			this.quickCommand.TabIndex = 1;
 			this.quickCommand.Leave += new System.EventHandler(this.Complete_quickCommand);
@@ -237,6 +305,19 @@ namespace Strive.UI.Forms
 			this.CommandText.TabIndex = 2;
 			this.CommandText.Text = "";
 			// 
+			// RenderTarget
+			// 
+			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+				| System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right);
+			this.RenderTarget.Cursor = System.Windows.Forms.Cursors.Arrow;
+			this.RenderTarget.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.RenderTarget.Location = new System.Drawing.Point(8, 8);
+			this.RenderTarget.Name = "RenderTarget";
+			this.RenderTarget.Size = new System.Drawing.Size(800, 500);
+			this.RenderTarget.TabIndex = 1;
+			this.RenderTarget.TabStop = false;
+			// 
 			// NoteBoardTabs
 			// 
 			this.NoteBoardTabs.Location = new System.Drawing.Point(4, 28);
@@ -264,19 +345,6 @@ namespace Strive.UI.Forms
 			this.aLogTab.TabIndex = 3;
 			this.aLogTab.Text = "Log";
 			// 
-			// RenderTarget
-			// 
-			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Cursor = System.Windows.Forms.Cursors.Arrow;
-			this.RenderTarget.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
-			this.RenderTarget.Location = new System.Drawing.Point(8, 8);
-			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(800, 500);
-			this.RenderTarget.TabIndex = 1;
-			this.RenderTarget.TabStop = false;
-			// 
 			// logOutput
 			// 
 			this.logOutput.Location = new System.Drawing.Point(16, 16);
@@ -285,13 +353,80 @@ namespace Strive.UI.Forms
 			this.logOutput.TabIndex = 0;
 			this.logOutput.Text = "";
 			// 
-			// ConnectTab
+			// PortField
 			// 
-			this.ConnectTab.Location = new System.Drawing.Point(4, 28);
-			this.ConnectTab.Name = "ConnectTab";
-			this.ConnectTab.Size = new System.Drawing.Size(1008, 648);
-			this.ConnectTab.TabIndex = 3;
-			this.ConnectTab.Text = "Connect";
+			this.PortField.Location = new System.Drawing.Point(408, 88);
+			this.PortField.Name = "PortField";
+			this.PortField.Size = new System.Drawing.Size(64, 20);
+			this.PortField.TabIndex = 5;
+			this.PortField.Text = "1337";
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(96, 88);
+			this.label1.Name = "label1";
+			this.label1.TabIndex = 6;
+			this.label1.Text = "Server";
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(96, 120);
+			this.label2.Name = "label2";
+			this.label2.TabIndex = 7;
+			this.label2.Text = "Username";
+			// 
+			// label3
+			// 
+			this.label3.Location = new System.Drawing.Point(96, 152);
+			this.label3.Name = "label3";
+			this.label3.TabIndex = 8;
+			this.label3.Text = "Password";
+			// 
+			// PasswordField
+			// 
+			this.PasswordField.Location = new System.Drawing.Point(200, 152);
+			this.PasswordField.Name = "PasswordField";
+			this.PasswordField.PasswordChar = '*';
+			this.PasswordField.Size = new System.Drawing.Size(200, 20);
+			this.PasswordField.TabIndex = 9;
+			this.PasswordField.Text = "";
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.AddRange(new System.Windows.Forms.Control[] {
+																				   this.label4,
+																				   this.Resolutions});
+			this.tabPage1.Location = new System.Drawing.Point(4, 28);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Size = new System.Drawing.Size(1008, 648);
+			this.tabPage1.TabIndex = 4;
+			this.tabPage1.Text = "Settings";
+			// 
+			// Resolutions
+			// 
+			this.Resolutions.Items.AddRange(new object[] {
+															 "640 X 480 (16bit)",
+															 "640 X 480 (32bit)",
+															 "800 X 600 (16bit)",
+															 "800 X 600 (32bit)",
+															 "1024 X 728 (16bit)",
+															 "1024 X 728 (32bit)",
+															 "1024 X 728 (16bit)",
+															 "1280 X 1024 (16bit)",
+															 "1280 X 1024 (32bit)",
+															 "1600 X 1200 (16bit)",
+															 "1600 X 1200 (32bit)"});
+			this.Resolutions.Location = new System.Drawing.Point(144, 40);
+			this.Resolutions.Name = "Resolutions";
+			this.Resolutions.Size = new System.Drawing.Size(200, 24);
+			this.Resolutions.TabIndex = 4;
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(24, 40);
+			this.label4.Name = "label4";
+			this.label4.TabIndex = 5;
+			this.label4.Text = "Resolution";
 			// 
 			// Game
 			// 
@@ -300,15 +435,18 @@ namespace Strive.UI.Forms
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
 																		  this.gameTabs});
 			this.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Game";
 			this.Text = "Game";
 			this.Load += new System.EventHandler(this.Game_Load);
 			this.Closed += new System.EventHandler(this.Game_Unload);
 			this.gameTabs.ResumeLayout(false);
+			this.ConnectTab.ResumeLayout(false);
 			this.InGameTab.ResumeLayout(false);
 			this.inGameTabs.ResumeLayout(false);
 			this.inGameSpells.ResumeLayout(false);
 			this.aLogTab.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -316,16 +454,15 @@ namespace Strive.UI.Forms
 
 		private void Game_Load(object sender, System.EventArgs e)
 		{
-			_scene.View.FieldOfView = 60;
-			_scene.View.ViewDistance = 200;
-			_scene.View.Position = new Vector3D(0, -50, 70);
-		
-			Modules.GameLoop.Start(_scene, RenderTarget, Global._serverConnection);
-
-			Thread renderer = new Thread(new ThreadStart(Modules.GameLoop.Main));
-			renderer.Start();
-			
-			
+			try {
+				_scene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
+				_scene.View.FieldOfView = 60;
+				_scene.View.ViewDistance = 200;
+				_scene.View.Position = new Vector3D(0, -50, 70);
+				Modules.GameLoop.Start(_scene, RenderTarget, Global._serverConnection);
+			} catch ( Exception ex) {
+				System.Console.WriteLine( ex );
+			}
 		}
 
 		private void Game_Unload(object sender, System.EventArgs e)
@@ -370,6 +507,22 @@ namespace Strive.UI.Forms
 		private void GoCommand_Click(object sender, System.EventArgs e)
 		{
 			processCommand(quickCommand.Text, CommandText.Text);
+		}
+
+		private void Go_Click(object sender, System.EventArgs e) {
+			if( LoginNames.Text.CompareTo( "" ) != 0 && ServerNames.Text.CompareTo( "" ) != 0 ) {
+				Global._serverConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerNames.Text ).AddressList[0], int.Parse( PortField.Text ) ) );
+				Global._serverConnection.Send( new Strive.Network.Messages.ToServer.Login( LoginNames.Text, ""));
+			} else {
+				Global._log.ErrorMessage( "Please specify a server and username" );
+			}
+		}
+
+		private void Complete_LoginNames(object sender, EventArgs e) {
+			LoginNames.SelectedIndex = LoginNames.FindString(LoginNames.Text,0);
+			if(LoginNames.SelectedIndex < 0) {
+				LoginNames.Focus();
+			}
 		}
 	}
 }
