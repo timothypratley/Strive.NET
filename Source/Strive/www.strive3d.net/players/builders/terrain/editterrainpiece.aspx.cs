@@ -229,11 +229,26 @@ namespace www.strive3d.net.players.builders.terrain
 
 	
 						}
+						// find correct row in datasource
+						DataRow selectedResourceRow = textures.Select("TemplateObjectID = " + TemplateObject.SelectedItem.Value)[0];
+						textureshower.Src = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +selectedResourceRow["ResourceID"] + selectedResourceRow["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
+
+						// see if we should automagically open lower frame
+						if(QueryString.ContainsVariable("LoadObjectInstanceID"))
+						{
+							int LoadedObjectInstanceID = QueryString.GetVariableInt32Value("LoadObjectInstanceID");
+							string LoadedObjectTemplateName = QueryString.GetVariableStringValue("LoadedObjectTemplateName");
+							string editLoadedObjectInstanceHref = "./editterrainpieceobjectinstance.aspx?ObjectInstanceID=" + LoadedObjectInstanceID + "&TemplateName=" + LoadedObjectTemplateName + "&Y=" + Altitude.Text + "&StartX=" + TerrainX + "&StartZ=" + TerrainZ;
+							
+							Page.RegisterStartupScript("AutoLoader", "<script>window.parent.frames['ObjectInstanceEditor'].location.href = '" + editLoadedObjectInstanceHref + "';</script>");
+						}
+						else
+						{
+							Page.RegisterStartupScript("AutoLoader", "<script>window.parent.frames['ObjectInstanceEditor'].location.href = 'about:blank';</script>");
+						}
 					}
 
-					// find correct row in datasource
-					DataRow selectedResourceRow = textures.Select("TemplateObjectID = " + TemplateObject.SelectedItem.Value)[0];
-					textureshower.Src = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +selectedResourceRow["ResourceID"] + selectedResourceRow["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
+
 				}
 				catch(Exception c) {
 					throw new Exception("EditTerrainPiece.Page_Load", c);

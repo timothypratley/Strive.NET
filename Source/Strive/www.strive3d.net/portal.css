@@ -349,3 +349,9 @@ HR {
     text-align:left
 }
 
+.TEST
+{
+	left: 24px;
+	position: relative;
+	top: 24px;
+}

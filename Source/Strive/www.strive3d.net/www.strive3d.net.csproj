@@ -826,6 +826,10 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "images\object.GIF"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "images\plus.gif"
                     BuildAction = "Content"
                 />

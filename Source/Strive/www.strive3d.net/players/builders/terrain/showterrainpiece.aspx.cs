@@ -29,6 +29,7 @@ namespace www.strive3d.net.players.builders.terrain
 				protected System.Web.UI.WebControls.Button Rotate;
 		protected System.Web.UI.WebControls.Button Lower;
 		protected int Z;
+		protected DataTable Objects = new DataTable();
 	
 		private void Page_Load(object sender, System.EventArgs e)
 		{
@@ -58,11 +59,27 @@ namespace www.strive3d.net.players.builders.terrain
 				TextureSrc = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +oDr["ResourceID"] + oDr["ResourceFileExtension"] +"&amp;h=75&amp;w=75&amp;r=" + Rotation; ;
 				oDr.Close();
 				Loaded = true;
+				// setup object
+				SqlCommand objectReader = cmd.GetSqlCommand("SELECT TemplateObject.*, ObjectInstance.ObjectInstanceID, ObjectInstance.X, ObjectInstance.Z, TemplateObjectTemplateNames.TemplateName " +
+					"FROM TemplateObject " +
+					"INNER JOIN ObjectInstance " + 
+					"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+					"INNER JOIN TemplateObjectTemplateNames " + 
+					"ON TemplateObject.TemplateObjectID = TemplateObjectTemplateNames.TemplateObjectID " +
+					"WHERE ObjectInstance.X >= " + X + 
+					" AND ObjectInstance.Z >= " + Z + 
+					" AND ObjectInstance.X < " + (X + Strive.Common.Constants.terrainPieceSize) +
+					" AND ObjectInstance.Z < " + (Z + Strive.Common.Constants.terrainPieceSize));
+
+				SqlDataAdapter objectFiller = new SqlDataAdapter(objectReader);
+
+				objectFiller.Fill(Objects);
+
 			}
 			}
 			catch(Exception c)
 			{
-				throw c;
+				throw new Exception("Could not load " + Request.Url.ToString() + "", c);
 			}
 			finally
 			{
@@ -86,66 +103,13 @@ namespace www.strive3d.net.players.builders.terrain
 		/// </summary>
 		private void InitializeComponent()
 		{    
-			this.Higher.Click += new System.EventHandler(this.Higher_Click);
-			this.Lower.Click += new System.EventHandler(this.Lower_Click);
+
 			this.Load += new System.EventHandler(this.Page_Load);
-			this.Rotate.Click += new System.EventHandler(this.Rotate_Click);
+
 
 		}
 		#endregion
 
-		private void Higher_Click(object sender, System.EventArgs e)
-		{
-			CommandFactory cmd = new CommandFactory();
-			try 
-			{
-				cmd.RaiseTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
-
-			}
-			catch(Exception c)
-			{
-				throw c;
-			}
-			finally
-			{
-				cmd.Close();
-			}
-			Response.Redirect(Request.Url.ToString());
-		}
-
-		private void Lower_Click(object sender, System.EventArgs e)
-		{
-			CommandFactory cmd = new CommandFactory();
-			try {
-			cmd.LowerTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
-
-			}
-			catch(Exception c)
-			{
-				throw c;
-			}
-			finally
-			{
-				cmd.Close();
-			}
-			Response.Redirect(Request.Url.ToString());
-		}
-
-		private void Rotate_Click(object sender, System.EventArgs e)
-		{
-			CommandFactory cmd = new CommandFactory();
-			try {
-			cmd.RotateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"), 90).ExecuteNonQuery();
-			}
-			catch(Exception c)
-			{
-				throw c;
-			}
-			finally
-			{
-				cmd.Close();
-			}
-			Response.Redirect(Request.Url.ToString());		
-		}
+	
 	}
 }

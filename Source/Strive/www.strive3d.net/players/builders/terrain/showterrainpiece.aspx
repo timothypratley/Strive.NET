@@ -3,28 +3,31 @@
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <form runat="server">
-	<table height="100%" width="100%" border="0" cellpadding="0" cellspacing="0">
-		<tr>
 			<%if(Loaded) {%>
-			<td background="<%=TextureSrc%>" valign="middle" align="center" height="100%" width="100%">
-				<table>
-					<tr>
-						<td colspan="3"><a target="Editor" href="editterrainpiece.aspx?ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">[Edit]</a></td>
-					</tr>
-					<tr>
-						<td><asp:Button ID="Higher" Text="+" Runat="server" /></td>
-						<td bgcolor="white"><%=Math.Round(Altitude, 0).ToString()%></td>
-						<td><asp:Button ID="Lower" Text="-" Runat="server" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td><asp:Button ID="Rotate" Text="/" Runat="server" /></td>
-					</tr>
-				</table>
-			</td>
+			<a style="position:absolute;top:0px;left:0px" target="Editor" href="editterrainpiece.aspx?ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">
+				<img src="<%=TextureSrc%>" border="0" />
+			</a>
+			<%
+			foreach(DataRow foundObject in Objects.Rows)
+			{
+				float htmlX = float.Parse(foundObject["X"].ToString())- X;
+				float htmlZ = Strive.Common.Constants.terrainPieceSize - (float.Parse(foundObject["Z"].ToString()) - Z);
+				htmlX *= Strive.Common.Constants.worldBuilderTerrainPieceSize / Strive.Common.Constants.terrainPieceSize; 
+				htmlZ *= Strive.Common.Constants.worldBuilderTerrainPieceSize / Strive.Common.Constants.terrainPieceSize; 
+				htmlX -= 2.5f;
+				htmlZ -= 2.5f;
+				int htmlObjectInstanceID = int.Parse(foundObject["ObjectInstanceID"].ToString());				
+				string TemplateObjectTemplateName = foundObject["TemplateName"].ToString();
+				string TemplateObjectName = htmlObjectInstanceID + ": " + foundObject["TemplateObjectName"].ToString() + " (" + TemplateObjectTemplateName.Replace("Item", "") + ")";
+			%>
+				<a target="Editor" style="position:absolute;left:<%=htmlX%>px;top:<%=htmlZ%>px" href="editterrainpiece.aspx?ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>&amp;LoadObjectInstanceID=<%=htmlObjectInstanceID%>&amp;LoadedObjectTemplateName=<%=TemplateObjectTemplateName%>"><img alt="<%=TemplateObjectName%>" src="<%=www.strive3d.net.Utils.ApplicationPath%>/images/object.gif" /></a>
+			<%		
+			
+			}
+			%>
+		
 			<%} else { %>
-			<td><a target="Editor" href="editterrainpiece.aspx?X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">[Create]</a></td>
+		<a target="Editor" href="editterrainpiece.aspx?X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">[Create]</a></td>
 			<%}%>
 		</tr>
 	</table>

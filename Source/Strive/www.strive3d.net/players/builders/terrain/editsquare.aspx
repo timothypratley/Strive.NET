@@ -64,7 +64,7 @@ foreach(DataRow t in this.terrain.Rows)
 <%
 	}
 %>
-		<td height="75" width="75" valign="middle" align="center"><iframe id="frame<%=c.ToString()%>" src="showterrainpiece.aspx?FrameID=frame<%=c.ToString()%>&ObjectInstanceID=<%=t["ObjectInstanceID"]%>&X=<%=t["X"]%>&Z=<%=t["Z"]%><%=www.strive3d.net.Utils.TabHref%>" marginwidth=0 marginheight=0 hspace=0 vspace=0 width="75" height="75" frameborder=0 scrolling=no></iframe></td>
+		<td height="<%=Strive.Common.Constants.worldBuilderTerrainPieceSize%>" width="<%=Strive.Common.Constants.worldBuilderTerrainPieceSize%>" valign="middle" align="center"><iframe id="frame<%=c.ToString()%>" src="showterrainpiece.aspx?FrameID=frame<%=c.ToString()%>&ObjectInstanceID=<%=t["ObjectInstanceID"]%>&X=<%=t["X"]%>&Z=<%=t["Z"]%><%=www.strive3d.net.Utils.TabHref%>" marginwidth=0 marginheight=0 hspace=0 vspace=0 width="75" height="75" frameborder=0 scrolling=no></iframe></td>
 <%
 	c++;
 }
