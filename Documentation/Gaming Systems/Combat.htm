@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+
+<style>
+body
+{
+	font-family: 'Trebuchet MS';
+}
+
+.formula
+{
+	text-align: center;
+	font-weight: bolder;
+	font-style: italic;
+	border-right-style: none;
+	border-left-style: none;
+	border-bottom-style: none;
+	border-top-style: none;
+	
+}
+
+.formulaanswer
+{
+	text-align: center;
+	font-weight: bolder;
+	color: red;
+	font-style: italic;	
+}
+</style>
+
+<title></title>
+<meta name="GENERATOR" content="Microsoft Visual Studio.NET 7.0">
+<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+</head>
+<body>
+
+<h1>Strive Combat</h1>
+
+<h2>Definitions</h2>
+
+<ul>
+	<li><strong>A</strong> attacker</li>
+	<li><strong>V</strong> victim</li>
+	<li><strong>DAM</strong> total weapon damage (raw weapon damage + dam roll)</li>
+	<li><strong>HIT</strong> hit roll</li>
+	<li><strong>STR</strong> strength</li>
+	<li><strong>CON</strong> strength</li>	
+	<li><strong>DEX</strong> strength</li>		
+	<li><strong>AC</strong> armor class</li>	
+	<li><strong>d</strong> dice</li>
+</ul>
+
+<h2>Melee</h2>
+
+<h3>Base Attack Damage <em>(BAD)</em></h3>
+
+<p align="left" class="formula">
+	( ( ( A( STR ) + A( DAM ) ) +/- X% ) * A( STR ) / V( CON ) ) - V( AC )
+</p>
+
+<p align="left">
+<table border="1">
+	<tr>
+		<th colspan="3">Attacker</th>
+		<th colspan="3">Victim</th>
+	</tr>
+	<tr>
+		<td></td>
+		<th>STR</th>
+		<th>DAM</th>
+		<td></td>
+		<th>CON</th>
+		<th>AC</th>
+		<th class="formula">A( STR ) + A( DAM ) ) +/- X%</th>
+		<th class="formula">*</th>
+		<th class="formula">A( STR ) / V( CON )</th>
+		<th class="formula"> - </th>
+		<th class="formula">V( AC )</th>
+		<th class="formula">=</th>
+		<th class="formula">BAD</th>
+		
+	</tr>
+	<tr>
+		<td>Malandrin Knight</td>
+		<td>30</td>
+		<td>120</td>
+		<td>Jlen Rogue</td>
+		<td>20</td>
+		<td>100</td>
+		
+		<td class="formula">( ( 30 + 120 ) * 0.94 )</td><td class="formula">*</td><td class="formula">( 30 / 20 )</td><td class="formula"> - </td><td class="formula">100</td>
+	</tr>
+	<tr>
+		<td colspan="6"></td>
+		<td class="formula">141</td>
+		<td class="formula">*</td>
+		<td class="formula">1.5</td>
+		<td class="formula"> - </td>
+		<td class="formula">100</td>
+	</tr>
+	<tr>
+		<td colspan="6"></td>
+		<td class="formula" colspan="3">211.5</td>
+		<td class="formula"> - </td>
+		<td class="formula">100</td>
+		<td class="formula"> = </td>
+		<td class="formulaanswer">111.5</td>
+	</tr>
+	<tr>
+		<td>Jlen Rogue</td>
+		<td>20</td>
+		<td>80</td>
+		<td>Malandrin Knight</td>
+		<td>30</td>
+		<td>150</td>
+		
+		<td class="formula">( ( 20 + 80 ) * 0.97 )</td><td class="formula">*</td><td class="formula">( 20 / 30 )</td><td class="formula"> - </td><td class="formula">150</td>
+	</tr>
+	<tr>
+		<td colspan="6"></td>
+		<td class="formula">97</td>
+		<td class="formula">*</td>
+		<td class="formula">0.66</td>
+		<td class="formula"> - </td>
+		<td class="formula">150</td>
+	</tr>
+	<tr>
+		<td colspan="6"></td>
+		<td class="formula" colspan="3">64.66</td>
+		<td class="formula"> - </td>
+		<td class="formula">150</td>
+		<td class="formula"> = </td>
+		<td class="formulaanswer">-85.34</td>
+	</tr>
+	
+</table>
+</p>
+
+<h3>Ability To Hit <em>(ATH)</em></h3>
+
+<p class="formula">
+A( d( DEX ) ) - V( d( DEX ) )
+</p>
+
+
+<h3>Hit Modifier <em>(HM)</em></h3>
+
+<p class="formula">
+	( HIT )d( 100 )
+</p>
+
+
+
+<h3>Actual Damage</h3>
+
+</body>
+</html>
