@@ -28,7 +28,9 @@ namespace Strive.UI.Engine {
 
 		// todo: replace pitch with a more elegant solution
 		float pitch = 0;
+		float frameTime = 0;
 		public void ProcessPlayerInput() {
+			frameTime = (99F*frameTime + (float)movementTimer.ElapsedSeconds())/100F;
 			// no avatar... no nothing
 			if ( _world.CurrentAvatar == null ) return;
 
@@ -58,7 +60,7 @@ namespace Strive.UI.Engine {
 				return;
 			}
 			
-			float moveunit = 1.39F * (float)movementTimer.ElapsedSeconds();
+			float moveunit = 1.39F * frameTime * 10;
 			if ( keyboard.GetKeyState(Key.key_LEFTSHIFT) ) {
 				moveunit *= 2.5F;
 			}
