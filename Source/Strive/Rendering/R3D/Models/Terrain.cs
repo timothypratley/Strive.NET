@@ -28,7 +28,9 @@ namespace Strive.Rendering.R3D.Models {
 
 		#region "Factory Initialisers"
 		public static Terrain CreateTerrain( string name, ITexture texture ) {
-			int id = Engine.MeshBuilder.Mesh_Create( name );
+			Terrain created = new Terrain();
+			created._id = Engine.MeshBuilder.Mesh_Create( name );
+			created._key = name;
 			R3DVector3D p1, p2, p3, p4;
 			p1.x = 0;
 			p1.y = 0;
@@ -43,9 +45,6 @@ namespace Strive.Rendering.R3D.Models {
 			p4.y = 0;
 			p4.z = 0;
 			Engine.MeshBuilder.Mesh_AddPlane( ref p1, ref p2, ref p3, ref p4, texture.Name, "", R3DBLENDMODE.R3DBLENDMODE_NONE, true);
-			Terrain created = new Terrain();
-			created._key = name;
-			created._id = id;
 			// todo: fix this hax,
 			// atm set to 0 as this is assumed to be terrain...
 			created.BoundingSphereRadiusSquared = 0;
@@ -95,6 +94,11 @@ namespace Strive.Rendering.R3D.Models {
 			}
 		}
 
+		public int ID {
+			get {
+				return _id;
+			}
+		}
 		#endregion
 
 		#region "Implementation of IManeuverable"

@@ -24,22 +24,21 @@ namespace Strive.Rendering.TV3D.Models
 		#region "Operators"
 
 		#region "Collection Support"
-		/// <summary>
-		/// Adds a model to the collection
-		/// </summary>
-		/// <param name="model">The model to add</param>
-		public void Add( IModel model )
-		{
-			base.Add(model.Name, model);
-		}
 
-		public void Remove( string name )
+		public override void Remove( object key )
 		{
-			Model indexedModel = (Model)base[name];
+			IModel indexedModel = (IModel)base[key];
 			if ( indexedModel != null ) {
 				indexedModel.Delete();
-				base.Remove(name);
+				base.Remove(key);
 			}
+		}
+
+		public override void Clear() {
+			foreach ( IModel m in base.Values ) {
+				m.Delete();
+			}
+			base.Clear();
 		}
 
 		/// <summary>

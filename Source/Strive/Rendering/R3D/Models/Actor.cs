@@ -38,7 +38,7 @@ namespace Strive.Rendering.R3D.Models {
 			loadedModel.BoundingSphereRadiusSquared = 100;
 
 			try {
-				Engine.MD2System.Model_Load(path, name);
+				loadedModel._id = Engine.MD2System.Model_Load(path, name);
 			}
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);
@@ -97,6 +97,11 @@ namespace Strive.Rendering.R3D.Models {
 			}
 		}
 
+		public int ID {
+			get {
+				return _id;
+			}
+		}
 
 		public int AnimationSequence {
 			set {

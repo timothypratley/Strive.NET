@@ -122,6 +122,16 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "TerrainCollection.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "TerrainPiece.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "World.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

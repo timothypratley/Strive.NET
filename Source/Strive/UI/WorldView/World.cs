@@ -42,8 +42,7 @@ namespace Strive.UI.WorldView {
 		public void Add( PhysicalObject po ) {
 			if ( po is Terrain ) {
 				Terrain t = (Terrain)po;
-				TerrainPieces.Add( new TerrainPiece(
-					t.ObjectInstanceID, t.Position.X, t.Position.Z, t.Position.Y, t.ModelID ) );
+				TerrainPieces.Add( new TerrainPiece( t ) );
 			} else {
 				PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );

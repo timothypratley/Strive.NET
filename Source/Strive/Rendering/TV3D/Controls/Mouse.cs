@@ -18,6 +18,10 @@ namespace Strive.Rendering.TV3D.Controls
 			Engine.Input.GetMouseState(ref x, ref y, ref button1down, ref button2down, ref button3down, ref intellimouseroll );
 		}
 
+		public void GetAbsState() {
+			Engine.Input.GetAbsMouseState( ref x, ref y, ref button1down, ref button2down, ref button3down );
+		}
+
 		public void ShowCursor( bool showCursor ) {
 			//Engine.Tools.ShowCursor( ref showCursor );
 		}

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 using Strive.Multiverse;
+using Strive.Data;
 using Strive.Math3D;
 using Strive.Logging;
 using Strive.Rendering;
@@ -39,6 +40,7 @@ namespace Strive.UI.WorldBuilder
 		static Schema multiverse;
 		static IEngine engine;
 		static World world;
+		string currentFileName;
 
 
 		public WinMain()
@@ -166,6 +168,7 @@ namespace Strive.UI.WorldBuilder
 			// 
 			this.menuItem4.Index = 1;
 			this.menuItem4.Text = "Save";
+			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
 			// 
 			// menuItem2
 			// 
@@ -205,15 +208,16 @@ namespace Strive.UI.WorldBuilder
 
 			//openFileDialog1.InitialDirectory = "c:/" ;
 			openFileDialog1.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*" ;
-			openFileDialog1.FilterIndex = 2 ;
+			openFileDialog1.FilterIndex = 1;
 			openFileDialog1.RestoreDirectory = true;
 
 			if(openFileDialog1.ShowDialog() == DialogResult.OK) {
 				st.Stop();
 				world.RemoveAll();
-				multiverse = Strive.Data.MultiverseFactory.getMultiverseFromFile( openFileDialog1.FileName );
+				currentFileName = openFileDialog1.FileName;
+				multiverse = MultiverseFactory.getMultiverseFromFile( currentFileName );
 				renderMultiverse();
-				world.CameraPosition = new Vector3D( 0, 0, 0 );
+				world.CameraPosition = new Vector3D( 0, 100, 0 );
 				world.CameraRotation = new Vector3D( 0, 90, 0 );
 				st.Start();
 			}
@@ -307,11 +311,9 @@ namespace Strive.UI.WorldBuilder
 						// way?
 						foreach ( TerrainPiece tp in world.TerrainPieces.terrainPieces.Values ) {
 							if ( tp.model == m ) {
-								// remove it
-								world.TerrainPieces.Remove( tp.instance_id );
-
 								// readd it with a different altitude
-								tp.altitude += 5;
+								// multiple adds are ok
+								tp.altitude += 2;
 								world.TerrainPieces.Add( tp );
 								break;
 							}
@@ -390,11 +392,6 @@ namespace Strive.UI.WorldBuilder
 				avatarRotation.Y += 5.0F;
 			}
 
-			if(keyboard.GetKeyState(Key.key_ESCAPE )) {
-				WasKeyboardInput = true;
-				System.Windows.Forms.Application.Exit();
-			}				
-
 			if(WasKeyboardInput) {
 				// check that we can go there
 				/** TODO: enable collision detection
@@ -441,6 +438,14 @@ namespace Strive.UI.WorldBuilder
 
 		private void WinMain_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
 			st.Stop();
+		}
+
+		private void menuItem4_Click(object sender, System.EventArgs e) {
+			if ( currentFileName == null ) {
+				MessageBox.Show( this, "Not currently working on a world file." );
+			} else {
+				MultiverseFactory.persistMultiverseToFile( multiverse, currentFileName );
+			}
 		}
 	}
 }

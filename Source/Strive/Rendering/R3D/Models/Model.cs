@@ -44,7 +44,7 @@ namespace Strive.Rendering.R3D.Models {
 				_3dsfile.File_ReadMeshes(name, true, true,true,true,true);	
 				_3dsfile.File_Close();
 
-				Engine.MeshBuilder.Mesh_Create( name );
+				loadedModel._id = Engine.MeshBuilder.Mesh_Create( name );
 				//Engine.Meshbuilder.Mesh_SetCullMode(R3DCULLMODE.R3DCULLMODE_DOUBLESIDED);
 				//Engine.Meshbuilder.Mesh_SetLayerConfig(0, R3DLAYERCONFIG.R3DLAYERCONFIG_MONOCHROME);
 				//System.Windows.Forms.MessageBox.Show(Engine.TextureLib.Class_GetNumTextures().ToString());
@@ -93,6 +93,12 @@ namespace Strive.Rendering.R3D.Models {
 		public string Name {
 			get {
 				return _key;
+			}
+		}
+
+		public int ID {
+			get {
+				return _id;
 			}
 		}
 

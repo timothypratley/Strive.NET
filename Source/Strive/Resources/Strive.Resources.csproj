@@ -112,16 +112,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "TerrainCollection.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "TerrainPiece.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "System.Drawing.Bitmap\mango.jpg"
                     BuildAction = "Content"
                 />

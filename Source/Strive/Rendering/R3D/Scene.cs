@@ -176,6 +176,11 @@ namespace Strive.Rendering.R3D
 			return 1;
 		}
 
+		public IModel MousePick( int x, int y ) {
+
+			return null;
+		}
+
 		public ICameraCollection CameraCollection {
 			get { return _views; }
 		}

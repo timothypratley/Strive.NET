@@ -46,6 +46,7 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 			loadedModel.BoundingSphereRadiusSquared = 1000;
 			loadedModel.Position = Vector3D.Origin;
+			loadedModel._id = loadedModel._mesh.GetMeshIndex();
 			return loadedModel;
 		}
 		#endregion
@@ -53,6 +54,8 @@ namespace Strive.Rendering.TV3D.Models {
 		#region "Methods"
 
 		public void Delete() {
+			Engine.TV3DScene.DestroyMesh( ref _mesh );
+			_mesh = null;
 		}
 
 		public void Hide() {
@@ -80,6 +83,11 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 		}
 
+		public int ID {
+			get {
+				return _id;
+			}
+		}
 		#endregion
 
 		#region "Implementation of IManeuverable"

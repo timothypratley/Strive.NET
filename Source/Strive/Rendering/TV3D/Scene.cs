@@ -72,9 +72,10 @@ namespace Strive.Rendering.TV3D
 			Engine.Screen2DText.TextureFont_DrawBillboardText( message, location.X, location.Y, location.Z, 0, 0, 1, 1 );
 			*/
 
-			/* need a render surface :(
+
+			/*
 			Engine.Screen2DText.ACTION_BeginText();
-			Engine.Screen2DText.NormalFont_DrawText( message, location.X, location.Y, Engine.Gl.RGBA(1f, 0f, 1f, 1f), "TV" );
+			Engine.Screen2DText.NormalFont_DrawText( message, (int)location.X, (int)location.Y, Engine.Gl.RGBA(1f, 0f, 1f, 1f), "TV" );
 			Engine.Screen2DText.ACTION_EndText();
 			*/
 		}
@@ -150,6 +151,25 @@ namespace Strive.Rendering.TV3D
 			Vector3D start_point, Vector3D end_point, int collision_type
 		) {
 			return 1;
+		}
+
+		public IModel MousePick( int x, int y ) {
+			DxVBLibA.D3DVECTOR dxo = new DxVBLibA.D3DVECTOR();
+			DxVBLibA.D3DVECTOR dxd = new DxVBLibA.D3DVECTOR();
+			Engine.Gl.MousePickVector( x, y, ref dxo, ref dxd);
+			TV_COLLISIONRESULT cr = new TV_COLLISIONRESULT();
+			if ( Engine.TV3DScene.AdvancedCollision( ref dxo, ref dxd, ref cr, CONST_TV_OBJECT_TYPE.TV_COLLIDE_MESH | CONST_TV_OBJECT_TYPE.TV_COLLIDE_ACTOR, CONST_TV_TESTTYPE.TV_TESTTYPE_ACCURATETESTING, true) ) {
+				// TODO: don't loop through, a userdata field?
+				foreach ( IModel m in Models.Values ) {
+					if (
+						(cr.collidedobjecttype == 1 && (m is IActor) && m.ID == cr.MeshID)
+						|| (cr.collidedobjecttype != 1 && !(m is IActor) && m.ID == cr.MeshID)
+					) {
+						return m;
+					}
+				}
+			}
+			return null;
 		}
 
 		public ICameraCollection CameraCollection {

@@ -57,6 +57,7 @@ namespace Strive.Rendering.TV3D.Models {
 				throw new ModelNotLoadedException(path, e);
 			}
 			loadedModel.Position = Vector3D.Origin;
+			loadedModel._id = loadedModel._model.GetEntity();
 			return loadedModel;
 		}
 
@@ -66,6 +67,7 @@ namespace Strive.Rendering.TV3D.Models {
 		#region "Methods"
 
 		public void Delete() {
+			_model.Destroy();
 		}
 
 		public void Hide() {
@@ -110,6 +112,12 @@ namespace Strive.Rendering.TV3D.Models {
 		public string Name {
 			get {
 				return _key;
+			}
+		}
+
+		public int ID {
+			get {
+				return _id;
 			}
 		}
 

@@ -29,6 +29,8 @@ namespace Strive.Rendering
 			Vector3D start_point, Vector3D end_point, int collision_type
 		);
 
+		IModel MousePick( int x, int y );
+
 		#endregion
  
 		#region "Properties"

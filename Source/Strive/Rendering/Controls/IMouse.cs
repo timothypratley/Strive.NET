@@ -15,6 +15,7 @@ namespace Strive.Rendering.Controls
 		bool Button4down { get; }
 
 		void GetState();
+		void GetAbsState();
 		void ShowCursor( bool showCursor );
 	}
 }

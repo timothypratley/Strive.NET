@@ -21,6 +21,7 @@ namespace Strive.Rendering.Models {
 
 		#region "Properties"
 		string Name { get; }
+		int ID { get; }
 
 		#endregion
 	}

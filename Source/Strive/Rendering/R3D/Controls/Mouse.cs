@@ -22,6 +22,16 @@ namespace Strive.Rendering.R3D.Controls
 			button4down = ms.iButton[3] != 0;
 		}
 
+		public void GetAbsState() {
+			R3DMouseState ms = Engine.Control.Mouse_GetState( false );
+			x = ms.x;
+			y = ms.y;
+			button1down = ms.iButton[0] != 0;
+			button2down = ms.iButton[1] != 0;
+			button3down = ms.iButton[2] != 0;
+			button4down = ms.iButton[3] != 0;
+		}
+
 		public void ShowCursor( bool showCursor ) {
 			//Engine.Tools.ShowCursor( ref showCursor );
 		}
