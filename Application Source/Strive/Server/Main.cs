@@ -28,13 +28,20 @@ namespace Strive.Server {
 
 			while ( true ) {
 				// handle world changes
-				//world.Update();
+				Global.now = DateTime.Now;
+				world.Update();
 
 				// handle incomming messages
 				while ( listener.MessageCount > 0 ) {
 					mp.ProcessNextMessage();
 				}
 				mp.CleanupDeadConnections();
+
+				if ( (DateTime.Now - Global.now) > TimeSpan.FromSeconds(1) ) {
+					System.Console.WriteLine( "WARNING: an update cycle took longer than one second" );
+				} else {
+					Thread.Sleep( 100 );
+				}
 			}
 		}
 	}

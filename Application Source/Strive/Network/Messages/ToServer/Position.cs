@@ -10,21 +10,21 @@ namespace Strive.Network.Messages.ToServer
 	public struct Position : IMessage
 	{
 		public Position( PhysicalObject po ) {
-			this.position_x = (float)po.X;
-			this.position_y = (float)po.Y;
-			this.position_z = (float)po.Z;
-			this.heading_x = (float)po.HeadingX;
-			this.heading_y = (float)po.HeadingY;
-			this.heading_z = (float)po.HeadingZ;
+			this.position_x = (float)po.Position.X;
+			this.position_y = (float)po.Position.Y;
+			this.position_z = (float)po.Position.Z;
+			this.heading_x = (float)po.Heading.X;
+			this.heading_y = (float)po.Heading.Y;
+			this.heading_z = (float)po.Heading.Z;
 		}
 
 		public void Apply( PhysicalObject po ) {
-			po.X = this.position_x;
-			po.Y = this.position_y;
-			po.Z = this.position_z;
-			po.HeadingX = this.heading_x;
-			po.HeadingY = this.heading_y;
-			po.HeadingZ = this.heading_z;
+			po.Position.X = this.position_x;
+			po.Position.Y = this.position_y;
+			po.Position.Z = this.position_z;
+			po.Heading.X = this.heading_x;
+			po.Heading.Y = this.heading_y;
+			po.Heading.Z = this.heading_z;
 		}
 
 		public float position_x;

@@ -1,6 +1,7 @@
 using System;
 using Strive.Multiverse;
 using Strive.Network.Server;
+using Strive.Math3D;
 
 namespace Strive.Server
 {
@@ -16,10 +17,10 @@ namespace Strive.Server
 	{
 		public Client client = null;
 		public PhysicalObject target = null;
-		public bool hasStruck = false;
-		DateTime lastAttack = DateTime.Now;
-		DateTime lastHeal = DateTime.Now;
-		DateTime lastAI = DateTime.Now;
+		DateTime lastAttackUpdate = DateTime.Now;
+		DateTime lastHealUpdate = DateTime.Now;
+		DateTime lastBehaviourUpdate = DateTime.Now;
+		DateTime lastMoveUpdate = DateTime.Now;
 
 		public MobileAvatar(
 			Schema.TemplateMobileRow mobile,
@@ -30,17 +31,49 @@ namespace Strive.Server
 
 		public void Update() {
 			if ( target != null ) {
-				if ( lastAttack - Global.now > TimeSpan.FromSeconds(3) ) {
+				if ( lastAttackUpdate - Global.now > TimeSpan.FromSeconds(3) ) {
 					// combat
+					lastAttackUpdate = Global.now;
 					PhysicalAttack( target );
 				}
 			} else {
-				if ( lastAI - Global.now > TimeSpan.FromSeconds( 1 ) ) {
-					// wander
+				// continue doing whatever you were doing
+				if ( Global.now - lastMoveUpdate > TimeSpan.FromSeconds( 1 ) ) {
+					if ( MobileState >= EnumMobileState.Standing ) {
+						Heading.Transform( Strive.Math3D.Matrix3D.FromRotation( Global.up, (float)(Global.random.NextDouble()/10.0) ) );
+					}
+					switch ( MobileState ) {
+						case EnumMobileState.Running:
+							Position += Heading.GetUnit();
+							break;
+						case EnumMobileState.Walking:
+							Vector3D velocity = Heading.GetUnit();
+							velocity.Divide( 3.0F );
+							Position += velocity;
+							break;
+					}
+					// EEERRR fs world move, not this hax version
+					System.Console.WriteLine( ObjectTemplateName + " has moved" );
+				}
+				if ( Global.now - lastBehaviourUpdate > TimeSpan.FromSeconds( 10 ) ) {
+					// change behaviour?
+					lastBehaviourUpdate = Global.now;
+					if ( MobileState > EnumMobileState.Incapacitated ) {
+						int rand = Global.random.Next( 5 ) - 2;
+						if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
+							MobileState--;
+							System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState );
+						} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
+							MobileState++;
+							System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState );
+						}
+					}
 				}
 			}
-			if ( lastHeal - Global.now > TimeSpan.FromSeconds( 1 ) ) {
+			if ( Global.now - lastHealUpdate > TimeSpan.FromSeconds( 100/Constitution ) ) {
 				// heal
+				lastHealUpdate = Global.now;
+				HitPoints++;
 			}
 			
 		}

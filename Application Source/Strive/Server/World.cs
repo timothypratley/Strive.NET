@@ -124,21 +124,23 @@ namespace Strive.Server {
 		}
 
 		public void Update() {
-			foreach ( MobileAvatar mob in physicalObjects ) {
-				mob.Update();
+			foreach ( PhysicalObject po in physicalObjects.Values ) {
+				if ( po is MobileAvatar ) {
+					(po as MobileAvatar).Update();
+				}
 			}
 		}
 
 		public void Add( PhysicalObject po ) {
 			if (
-				po.X > highX || po.Z > highZ
-				|| po.X < lowX || po.Z < lowZ
+				po.Position.X > highX || po.Position.Z > highZ
+				|| po.Position.X < lowX || po.Position.Z < lowZ
 			) {
 				System.Console.WriteLine( "ERROR: tried to add physical object outside the world" );
 				return;
 			}
-			int squareX = (int)(po.X-lowX)/squareSize;
-			int squareZ = (int)(po.Z-lowZ)/squareSize;
+			int squareX = (int)(po.Position.X-lowX)/squareSize;
+			int squareZ = (int)(po.Position.Z-lowZ)/squareSize;
 			int i, j;
 
 			// if a new client has entered the world,
@@ -199,12 +201,12 @@ namespace Strive.Server {
 				mobilesArrayList.Add( po );
 			}
 			squares[squareX,squareZ].Add( po );
-			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.X + "," + po.Y + "," +po.Z + ")" );
+			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ")" );
 		}
 
 		public void Move( PhysicalObject po, float x, float y, float z ) {
-			int fromSquareX = (int)po.X/squareSize;
-			int fromSquareZ = (int)po.Z/squareSize;
+			int fromSquareX = (int)po.Position.X/squareSize;
+			int fromSquareZ = (int)po.Position.Z/squareSize;
 			int toSquareX = (int)x/squareSize;
 			int toSquareZ = (int)z/squareSize;
 			int i, j;
@@ -241,9 +243,9 @@ namespace Strive.Server {
 				squares[fromSquareX,fromSquareZ].Remove( po );
 				squares[toSquareX,toSquareZ].Add( po );
 			}
-			po.X = x;
-			po.Y = y;
-			po.Z = z;
+			po.Position.X = x;
+			po.Position.Y = y;
+			po.Position.Z = z;
 		}
 
 		public MobileAvatar LoadMobile( int instanceID ) {

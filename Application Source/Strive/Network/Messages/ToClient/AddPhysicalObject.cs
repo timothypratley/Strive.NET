@@ -13,12 +13,12 @@ namespace Strive.Network.Messages.ToClient
 			this.instance_id = po.ObjectInstanceID;
 			this.model_id = po.ModelID;
 			this.name = po.ObjectTemplateName;
-			this.x = (float)po.X;
-			this.y = (float)po.Y;
-			this.z = (float)po.Z;
-			this.heading_x = (float)po.HeadingX;
-			this.heading_y = (float)po.HeadingY;
-			this.heading_z = (float)po.HeadingZ;
+			this.x = (float)po.Position.X;
+			this.y = (float)po.Position.Y;
+			this.z = (float)po.Position.Z;
+			this.heading_x = (float)po.Heading.X;
+			this.heading_y = (float)po.Heading.Y;
+			this.heading_z = (float)po.Heading.Z;
 		}
 
 		public int instance_id;
