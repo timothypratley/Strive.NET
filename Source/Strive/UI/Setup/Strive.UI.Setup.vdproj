@@ -1,0 +1,1925 @@
+"DeployProject"
+{
+"VSVersion" = "3:700"
+"ProjectType" = "8:{5443560c-dbb4-11d2-8724-00a0c9a8b90c}"
+"IsWebType" = "8:FALSE"
+"ProjectName" = "8:Strive.UI.Setup"
+"LanguageId" = "3:1033"
+"CodePage" = "3:1252"
+"UILanguageId" = "3:1033"
+"SccProjectName" = "8:"
+"SccLocalPath" = "8:"
+"SccAuxPath" = "8:"
+"SccProvider" = "8:"
+    "Hierarchy"
+    {
+        "Entry"
+        {
+        "MsmKey" = "8:_035CC4C3CB90477E8112DD0342180210"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\WINDOWS\\SYSTEM32\\TVIMAGING.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_B2A67068937E357D87CCD31130CE6111"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_88F450C435FA2BFD74ED81633C305A07"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_83E26DA5E71BBDCE7E01498609C630ED"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_C389D28516DC4F7D8277AD8D3C366A25"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_83B906F254CFA9BBE878A975A05B6E85"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_263055917F8BF2AEC28A4E6220C6E31B"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "OwnerKey" = "8:_AC2E4AACA3F43D5B7108EF718A42C871"
+        "MsmSig" = "8:strive.math3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\math3d\\obj\\debug\\strive.math3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2046E570B53544298DE7458BDD23ABDA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\TV3DSDK\\BIN\\TVMEDIA.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_263055917F8BF2AEC28A4E6220C6E31B"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.network.clientc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\network\\client\\obj\\debug\\strive.network.client.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4E793211789D4AF681356525D89563D2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\PROJECTS\\CVS.SOURCEFORGE.NET\\STRIVE\\SOURCE\\STRIVE\\UI\\APP.ICO"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_57A75187C5FF4909B8A7827764081979"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\TV3DSDK\\BIN\\TVDN.CHM"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_697C7B66A5389F81310FA3DA40C9FB4A"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.resourcesc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\resources\\obj\\debug\\strive.resources.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_697C7B66A5389F81310FA3DA40C9FB4A"
+        "OwnerKey" = "8:_B2A67068937E357D87CCD31130CE6111"
+        "MsmSig" = "8:strive.resourcesc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\resources\\obj\\debug\\strive.resources.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7057B2E393B0FA05F5D1631C9B7990B6"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:magiclibrary_304910cfc37f9b7970ec02974921b5f7"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7370BD6328D8BFAEF04DF5B92CEB5E93"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.commonc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\common\\obj\\debug\\strive.common.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7370BD6328D8BFAEF04DF5B92CEB5E93"
+        "OwnerKey" = "8:_697C7B66A5389F81310FA3DA40C9FB4A"
+        "MsmSig" = "8:strive.commonc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\common\\obj\\debug\\strive.common.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7370BD6328D8BFAEF04DF5B92CEB5E93"
+        "OwnerKey" = "8:_263055917F8BF2AEC28A4E6220C6E31B"
+        "MsmSig" = "8:strive.commonc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\common\\obj\\debug\\strive.common.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_74288E53447E4F31A6351B7243F0D834"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\WINDOWS\\SYSTEM32\\TVUTIL60.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7B542FFEF98649AE876AED6DBABE7163"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\TV3DSDK\\BIN\\TRUEVISION3D.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_83B906F254CFA9BBE878A975A05B6E85"
+        "OwnerKey" = "8:_263055917F8BF2AEC28A4E6220C6E31B"
+        "MsmSig" = "8:strive.network.messagesc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\network\\messages\\obj\\debug\\strive.network.messages.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_83B906F254CFA9BBE878A975A05B6E85"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.network.messagesc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\network\\messages\\obj\\debug\\strive.network.messages.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_83E26DA5E71BBDCE7E01498609C630ED"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.rendering.r3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\r3d\\obj\\debug\\strive.rendering.r3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_876565B0BD9E427193CFBB8A473E11FF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:C:\\WINDOWS\\SYSTEM32\\TVUTIL32.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_88F450C435FA2BFD74ED81633C305A07"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.rendering.tv3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\debug\\strive.rendering.tv3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:strive.uic:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\ui\\obj\\debug\\strive.ui.exe"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8D073A64686E53E9061F635BD79B5FE6"
+        "OwnerKey" = "8:_F97E9C740E970898E0592D271D293FB1"
+        "MsmSig" = "8:C:\\WINDOWS\\SYSTEM\\R3D089_VBASIC.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92652AD97CDDD30AB7DBDA234C4E97C2"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:interop.dxvblibac:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\interop.dxvbliba.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92652AD97CDDD30AB7DBDA234C4E97C2"
+        "OwnerKey" = "8:_EF87BE0749846A9C2C0218A94AB7E75C"
+        "MsmSig" = "8:interop.dxvblibac:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\interop.dxvbliba.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92652AD97CDDD30AB7DBDA234C4E97C2"
+        "OwnerKey" = "8:_EBB1BB405ED83728562CC28A8043CB0F"
+        "MsmSig" = "8:interop.dxvblibac:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\interop.dxvbliba.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92652AD97CDDD30AB7DBDA234C4E97C2"
+        "OwnerKey" = "8:_88F450C435FA2BFD74ED81633C305A07"
+        "MsmSig" = "8:interop.dxvblibac:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\interop.dxvbliba.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92652AD97CDDD30AB7DBDA234C4E97C2"
+        "OwnerKey" = "8:_83E26DA5E71BBDCE7E01498609C630ED"
+        "MsmSig" = "8:interop.dxvblibac:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\interop.dxvbliba.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9975E7096B48A2F5C14248A9A7A1D28C"
+        "OwnerKey" = "8:_EF87BE0749846A9C2C0218A94AB7E75C"
+        "MsmSig" = "8:C:\\PROGRAM FILES\\X-DREAM PROJECT\\REVOLUTION3D GRAPHIC ENGINE\\REVOLUTION3D8087B.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AC2E4AACA3F43D5B7108EF718A42C871"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.multiversec:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\multiverse\\obj\\debug\\strive.multiverse.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AC2E4AACA3F43D5B7108EF718A42C871"
+        "OwnerKey" = "8:_B2A67068937E357D87CCD31130CE6111"
+        "MsmSig" = "8:strive.multiversec:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\multiverse\\obj\\debug\\strive.multiverse.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AC2E4AACA3F43D5B7108EF718A42C871"
+        "OwnerKey" = "8:_83B906F254CFA9BBE878A975A05B6E85"
+        "MsmSig" = "8:strive.multiversec:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\multiverse\\obj\\debug\\strive.multiverse.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AC2E4AACA3F43D5B7108EF718A42C871"
+        "OwnerKey" = "8:_263055917F8BF2AEC28A4E6220C6E31B"
+        "MsmSig" = "8:strive.multiversec:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\multiverse\\obj\\debug\\strive.multiverse.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B28A47115143B4BD84B64244FC4FE391"
+        "OwnerKey" = "8:_92652AD97CDDD30AB7DBDA234C4E97C2"
+        "MsmSig" = "8:C:\\WINDOWS\\SYSTEM32\\DX8VB.DLL"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B2A67068937E357D87CCD31130CE6111"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.ui.worldviewc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\ui\\worldview\\obj\\debug\\strive.ui.worldview.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C389D28516DC4F7D8277AD8D3C366A25"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.renderingc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\obj\\debug\\strive.rendering.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C389D28516DC4F7D8277AD8D3C366A25"
+        "OwnerKey" = "8:_B2A67068937E357D87CCD31130CE6111"
+        "MsmSig" = "8:strive.renderingc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\obj\\debug\\strive.rendering.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C389D28516DC4F7D8277AD8D3C366A25"
+        "OwnerKey" = "8:_697C7B66A5389F81310FA3DA40C9FB4A"
+        "MsmSig" = "8:strive.renderingc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\obj\\debug\\strive.rendering.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C389D28516DC4F7D8277AD8D3C366A25"
+        "OwnerKey" = "8:_88F450C435FA2BFD74ED81633C305A07"
+        "MsmSig" = "8:strive.renderingc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\obj\\debug\\strive.rendering.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C389D28516DC4F7D8277AD8D3C366A25"
+        "OwnerKey" = "8:_83E26DA5E71BBDCE7E01498609C630ED"
+        "MsmSig" = "8:strive.renderingc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\obj\\debug\\strive.rendering.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_7057B2E393B0FA05F5D1631C9B7990B6"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_92652AD97CDDD30AB7DBDA234C4E97C2"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_B2A67068937E357D87CCD31130CE6111"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_697C7B66A5389F81310FA3DA40C9FB4A"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_88F450C435FA2BFD74ED81633C305A07"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_EBB1BB405ED83728562CC28A8043CB0F"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_83E26DA5E71BBDCE7E01498609C630ED"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_F97E9C740E970898E0592D271D293FB1"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_C389D28516DC4F7D8277AD8D3C366A25"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_E682C3B42B0E03C8941430688ED1CE05"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_263055917F8BF2AEC28A4E6220C6E31B"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_83B906F254CFA9BBE878A975A05B6E85"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_AC2E4AACA3F43D5B7108EF718A42C871"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_7370BD6328D8BFAEF04DF5B92CEB5E93"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFA0EFEA42434181BDC1D9D06596F891"
+        "OwnerKey" = "8:_EBA9CC081ABF290CB5E615373F620F12"
+        "MsmSig" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E682C3B42B0E03C8941430688ED1CE05"
+        "OwnerKey" = "8:_EF87BE0749846A9C2C0218A94AB7E75C"
+        "MsmSig" = "8:stdole_c209afdbbe385f6128d9c8ea2a9f992d"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E682C3B42B0E03C8941430688ED1CE05"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:stdole_c209afdbbe385f6128d9c8ea2a9f992d"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E682C3B42B0E03C8941430688ED1CE05"
+        "OwnerKey" = "8:_F97E9C740E970898E0592D271D293FB1"
+        "MsmSig" = "8:stdole_c209afdbbe385f6128d9c8ea2a9f992d"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EBA9CC081ABF290CB5E615373F620F12"
+        "OwnerKey" = "8:_7370BD6328D8BFAEF04DF5B92CEB5E93"
+        "MsmSig" = "8:strive.logc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\logging\\obj\\debug\\strive.log.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EBA9CC081ABF290CB5E615373F620F12"
+        "OwnerKey" = "8:_B2A67068937E357D87CCD31130CE6111"
+        "MsmSig" = "8:strive.logc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\logging\\obj\\debug\\strive.log.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EBA9CC081ABF290CB5E615373F620F12"
+        "OwnerKey" = "8:_263055917F8BF2AEC28A4E6220C6E31B"
+        "MsmSig" = "8:strive.logc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\logging\\obj\\debug\\strive.log.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EBA9CC081ABF290CB5E615373F620F12"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:strive.logc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\logging\\obj\\debug\\strive.log.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EBB1BB405ED83728562CC28A8043CB0F"
+        "OwnerKey" = "8:_88F450C435FA2BFD74ED81633C305A07"
+        "MsmSig" = "8:interop.truevision3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\interop.truevision3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EBB1BB405ED83728562CC28A8043CB0F"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:interop.truevision3dc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\tv3d\\obj\\interop.truevision3d.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EF87BE0749846A9C2C0218A94AB7E75C"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:interop.revolution3d8087bc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\network\\client\\obj\\interop.revolution3d8087b.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F97E9C740E970898E0592D271D293FB1"
+        "OwnerKey" = "8:_83E26DA5E71BBDCE7E01498609C630ED"
+        "MsmSig" = "8:interop.r3d089_vbasicc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\r3d\\obj\\interop.r3d089_vbasic.dll"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F97E9C740E970898E0592D271D293FB1"
+        "OwnerKey" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+        "MsmSig" = "8:interop.r3d089_vbasicc:\\projects\\cvs.sourceforge.net\\strive\\source\\strive\\rendering\\r3d\\obj\\interop.r3d089_vbasic.dll"
+        }
+    }
+    "Configurations"
+    {
+        "Debug"
+        {
+        "DisplayName" = "8:Debug"
+        "IsDebugOnly" = "11:TRUE"
+        "IsReleaseOnly" = "11:FALSE"
+        "OutputFilename" = "8:Debug\\Strive.UI.Setup.msi"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:-2147483648"
+        "CabType" = "3:1"
+        "Compression" = "3:3"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:1"
+        }
+        "Release"
+        {
+        "DisplayName" = "8:Release"
+        "IsDebugOnly" = "11:FALSE"
+        "IsReleaseOnly" = "11:TRUE"
+        "OutputFilename" = "8:Release\\Strive.UI.Setup.msi"
+        "PackageFilesAs" = "3:2"
+        "PackageFileSize" = "3:-2147483648"
+        "CabType" = "3:1"
+        "Compression" = "3:2"
+        "SignOutput" = "11:FALSE"
+        "CertificateFile" = "8:"
+        "PrivateKeyFile" = "8:"
+        "TimeStampServer" = "8:"
+        "InstallerBootstrapper" = "3:2"
+        }
+    }
+    "Deployable"
+    {
+        "CustomAction"
+        {
+        }
+        "DefaultFeature"
+        {
+        "Name" = "8:DefaultFeature"
+        "Title" = "8:"
+        "Description" = "8:"
+        }
+        "Feature"
+        {
+        }
+        "File"
+        {
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_035CC4C3CB90477E8112DD0342180210"
+            {
+            "SourcePath" = "8:C:\\WINDOWS\\system32\\tvimaging.dll"
+            "TargetName" = "8:tvimaging.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7024D3156D4D47E988BD538368D61D71"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Math3D, Version=1.0.1298.15988, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_1F3FE4CA76DD3342441ED0CAA4CCCAD5"
+                    {
+                    "Name" = "8:Strive.Math3D.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Math3D.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_2046E570B53544298DE7458BDD23ABDA"
+            {
+            "SourcePath" = "8:C:\\TV3DSDK\\Bin\\tvmedia.dll"
+            "TargetName" = "8:tvmedia.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_6C7813EDC1144505806F696617C8A9F1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:4"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_263055917F8BF2AEC28A4E6220C6E31B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Network.Client, Version=1.0.1306.34892, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_263055917F8BF2AEC28A4E6220C6E31B"
+                    {
+                    "Name" = "8:Strive.Network.Client.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Network.Client.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_4E793211789D4AF681356525D89563D2"
+            {
+            "SourcePath" = "8:..\\App.ico"
+            "TargetName" = "8:App.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_57A75187C5FF4909B8A7827764081979"
+            {
+            "SourcePath" = "8:C:\\TV3DSDK\\Bin\\TVDN.chm"
+            "TargetName" = "8:TVDN.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_6C7813EDC1144505806F696617C8A9F1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_697C7B66A5389F81310FA3DA40C9FB4A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Resources, Version=1.0.1306.34888, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_697C7B66A5389F81310FA3DA40C9FB4A"
+                    {
+                    "Name" = "8:Strive.Resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_7057B2E393B0FA05F5D1631C9B7990B6"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MagicLibrary, Version=1.7.1.0, Culture=neutral, PublicKeyToken=3a6eb82f876a49bc"
+                "ScatterAssemblies"
+                {
+                    "_7057B2E393B0FA05F5D1631C9B7990B6"
+                    {
+                    "Name" = "8:MagicLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MagicLibrary.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_7370BD6328D8BFAEF04DF5B92CEB5E93"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Common, Version=1.0.1298.15997, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_7370BD6328D8BFAEF04DF5B92CEB5E93"
+                    {
+                    "Name" = "8:Strive.Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_74288E53447E4F31A6351B7243F0D834"
+            {
+            "SourcePath" = "8:C:\\WINDOWS\\system32\\tvutil60.dll"
+            "TargetName" = "8:tvutil60.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7024D3156D4D47E988BD538368D61D71"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_7B542FFEF98649AE876AED6DBABE7163"
+            {
+            "SourcePath" = "8:C:\\TV3DSDK\\Bin\\truevision3d.dll"
+            "TargetName" = "8:truevision3d.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_6C7813EDC1144505806F696617C8A9F1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:4"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_83B906F254CFA9BBE878A975A05B6E85"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Network.Messages, Version=1.0.1306.34887, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_83B906F254CFA9BBE878A975A05B6E85"
+                    {
+                    "Name" = "8:Strive.Network.Messages.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Network.Messages.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_83E26DA5E71BBDCE7E01498609C630ED"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Rendering.R3D, Version=1.0.1306.34890, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_83E26DA5E71BBDCE7E01498609C630ED"
+                    {
+                    "Name" = "8:Strive.Rendering.R3D.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Rendering.R3D.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_876565B0BD9E427193CFBB8A473E11FF"
+            {
+            "SourcePath" = "8:C:\\WINDOWS\\system32\\tvutil32.dll"
+            "TargetName" = "8:tvutil32.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_7024D3156D4D47E988BD538368D61D71"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_88F450C435FA2BFD74ED81633C305A07"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Rendering.TV3D, Version=1.0.1306.34891, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_88F450C435FA2BFD74ED81633C305A07"
+                    {
+                    "Name" = "8:Strive.Rendering.TV3D.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Rendering.TV3D.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_8D073A64686E53E9061F635BD79B5FE6"
+            {
+            "Signature" = "8:2000000000ca39b4c6dfc201b0d4c6018456c30100ca39b4c6dfc2010000000000a0080000000000000000005200330044003000380039005f005600420061007300690063002e0044004c004c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005200330044003000380039007e0031002e0044004c004c0000000000"
+            "SourcePath" = "8:R3D089_VBasic.DLL"
+            "TargetName" = "8:R3D089_VBasic.DLL"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:4"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_92652AD97CDDD30AB7DBDA234C4E97C2"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Interop.DxVBLibA, Version=1.0.0.0, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_92652AD97CDDD30AB7DBDA234C4E97C2"
+                    {
+                    "Name" = "8:Interop.DxVBLibA.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Interop.DxVBLibA.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_9975E7096B48A2F5C14248A9A7A1D28C"
+            {
+            "Signature" = "8:20000000002d7eeac3ecc101a078ce018456c301002d7eeac3ecc1010000000000c00f0000000000000000005200650076006f006c007500740069006f006e0033004400380030003800370062002e0064006c006c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005200450056004f004c0055007e0031002e0044004c004c0000000000"
+            "SourcePath" = "8:Revolution3D8087b.dll"
+            "TargetName" = "8:Revolution3D8087b.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:4"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_AC2E4AACA3F43D5B7108EF718A42C871"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Multiverse, Version=1.0.1306.34883, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_AC2E4AACA3F43D5B7108EF718A42C871"
+                    {
+                    "Name" = "8:Strive.Multiverse.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Multiverse.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{54DA9790-1474-11D3-8E00-00C04F6837D0}:_B28A47115143B4BD84B64244FC4FE391"
+            {
+            "Signature" = "8:20000000fc00b1b34552c301c0ecd3fc8256c30100c524093626c30100000000002812000000000000000000640078003800760062002e0064006c006c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+            "SourcePath" = "8:dx8vb.dll"
+            "TargetName" = "8:dx8vb.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:4"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_B2A67068937E357D87CCD31130CE6111"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.UI.WorldView, Version=1.0.1306.34893, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_B2A67068937E357D87CCD31130CE6111"
+                    {
+                    "Name" = "8:Strive.UI.WorldView.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.UI.WorldView.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_C389D28516DC4F7D8277AD8D3C366A25"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Rendering, Version=1.0.1306.34886, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_C389D28516DC4F7D8277AD8D3C366A25"
+                    {
+                    "Name" = "8:Strive.Rendering.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Rendering.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_E682C3B42B0E03C8941430688ED1CE05"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+                "ScatterAssemblies"
+                {
+                    "_E682C3B42B0E03C8941430688ED1CE05"
+                    {
+                    "Name" = "8:stdole.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:stdole.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_EBA9CC081ABF290CB5E615373F620F12"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Strive.Log, Version=0.0.0.0, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_EBA9CC081ABF290CB5E615373F620F12"
+                    {
+                    "Name" = "8:Strive.Log.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Strive.Log.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_EBB1BB405ED83728562CC28A8043CB0F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Interop.TrueVision3D, Version=10.0.0.0, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_EBB1BB405ED83728562CC28A8043CB0F"
+                    {
+                    "Name" = "8:Interop.TrueVision3D.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Interop.TrueVision3D.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_EF87BE0749846A9C2C0218A94AB7E75C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Interop.Revolution3D8087b, Version=1.0.0.0, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_EF87BE0749846A9C2C0218A94AB7E75C"
+                    {
+                    "Name" = "8:Interop.Revolution3D8087b.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Interop.Revolution3D8087b.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{C7BF5952-4B9D-11D3-8E24-00C04F6837D0}:_F97E9C740E970898E0592D271D293FB1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Interop.R3D089_VBasic, Version=1.0.0.0, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_F97E9C740E970898E0592D271D293FB1"
+                    {
+                    "Name" = "8:Interop.R3D089_VBasic.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Interop.R3D089_VBasic.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+        }
+        "FileType"
+        {
+        }
+        "Folder"
+        {
+            "{777C097F-0ED8-11D3-8D6C-00A0C9CFCEE6}:_22342535B3C6482ABDF983F9823FFDD8"
+            {
+            "Name" = "8:#1916"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:DesktopFolder"
+                "Folders"
+                {
+                }
+            }
+            "{777C097F-0ED8-11D3-8D6C-00A0C9CFCEE6}:_7024D3156D4D47E988BD538368D61D71"
+            {
+            "Name" = "8:#1914"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:SystemFolder"
+                "Folders"
+                {
+                }
+            }
+            "{EE62640D-12F2-11D3-8D6C-00A0C9CFCEE6}:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            {
+            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "Name" = "8:#1925"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:TARGETDIR"
+                "Folders"
+                {
+                    "{461E96AF-1495-11D3-8D6C-00A0C9CFCEE6}:_6C7813EDC1144505806F696617C8A9F1"
+                    {
+                    "Name" = "8:TV3D"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_5459B478406E43ED9DD746EAD3598628"
+                        "Folders"
+                        {
+                        }
+                    }
+                }
+            }
+            "{777C097F-0ED8-11D3-8D6C-00A0C9CFCEE6}:_FCBAEBD89A5E41EF819423591A5B738F"
+            {
+            "Name" = "8:#1919"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:ProgramMenuFolder"
+                "Folders"
+                {
+                    "{461E96AF-1495-11D3-8D6C-00A0C9CFCEE6}:_223FE559217C4A3BB95500F412128AEE"
+                    {
+                    "Name" = "8:Strive"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_7367FAA42D084D0991CA5EF23A0D903E"
+                        "Folders"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+        "LaunchCondition"
+        {
+            "{B26CFB94-18E3-45BF-8D42-933BDAF5E76C}:_E04843A2B4864B008E90BBFB186C3AD6"
+            {
+            "Name" = "8:MsiNetAssemblySupport"
+            "Condition" = "8:MsiNetAssemblySupport"
+            "Message" = "8:[VSDNETMSG]"
+            }
+        }
+        "Locator"
+        {
+        }
+        "Shortcut"
+        {
+            "{D0C99CFE-1238-11D3-8E00-00C04F6837D0}:_4521E022FE78465B98046735F80578D1"
+            {
+            "Name" = "8:Strive3D"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+            "Folder" = "8:_223FE559217C4A3BB95500F412128AEE"
+            "WorkingFolder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Icon" = "8:_4E793211789D4AF681356525D89563D2"
+            "Feature" = "8:"
+            }
+        }
+        "Sequences"
+        {
+        }
+        "Registry"
+        {
+            "HKLM"
+            {
+                "Keys"
+                {
+                    "{7DF0CD0A-FF27-11D2-8D6B-00A0C9CFCEE6}:_DD5AE3A9625F426F935CFA04383106D5"
+                    {
+                    "Name" = "8:Software"
+                    "Condition" = "8:"
+                    "AlwaysCreate" = "11:FALSE"
+                    "DeleteAtUninstall" = "11:FALSE"
+                    "Transitive" = "11:FALSE"
+                        "Keys"
+                        {
+                            "{7DF0CD0A-FF27-11D2-8D6B-00A0C9CFCEE6}:_BF8BC70C99FA4DCE95EB23A749BCF8E5"
+                            {
+                            "Name" = "8:[Manufacturer]"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                        }
+                        "Values"
+                        {
+                        }
+                    }
+                }
+            }
+            "HKCU"
+            {
+                "Keys"
+                {
+                    "{7DF0CD0A-FF27-11D2-8D6B-00A0C9CFCEE6}:_9D9D2AA67D104A69A8A18D6B1E2BC42B"
+                    {
+                    "Name" = "8:Software"
+                    "Condition" = "8:"
+                    "AlwaysCreate" = "11:FALSE"
+                    "DeleteAtUninstall" = "11:FALSE"
+                    "Transitive" = "11:FALSE"
+                        "Keys"
+                        {
+                            "{7DF0CD0A-FF27-11D2-8D6B-00A0C9CFCEE6}:_E3F315D66C8A4107BE94D77581EA24FB"
+                            {
+                            "Name" = "8:[Manufacturer]"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                        }
+                        "Values"
+                        {
+                        }
+                    }
+                }
+            }
+            "HKCR"
+            {
+                "Keys"
+                {
+                }
+            }
+            "HKU"
+            {
+                "Keys"
+                {
+                }
+            }
+            "HKPU"
+            {
+                "Keys"
+                {
+                }
+            }
+        }
+        "ProjectOutput"
+        {
+            "{B1E2BB22-187D-11D3-8E02-00C04F6837D0}:_1F3DB5DCD01F47B38E940C71AFE20DA8"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Symbols"
+            "OutputProjectCanonicalName" = "8:Source\\Strive\\UI\\Strive.UI.csproj"
+            "OutputProjectGuid" = "8:{53A093E4-7325-442F-873D-51B5C551BEFA}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{B1E2BB22-187D-11D3-8E02-00C04F6837D0}:_8B7EDD2DFB6B49C4A2066E8B3C067AE6"
+            {
+            "SourcePath" = "8:..\\obj\\Debug\\Strive.UI.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C56371A1CF7C483CA48B3B4092F0FD4D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectCanonicalName" = "8:Source\\Strive\\UI\\Strive.UI.csproj"
+            "OutputProjectGuid" = "8:{53A093E4-7325-442F-873D-51B5C551BEFA}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+        }
+        "Product"
+        {
+        "Name" = "8:Microsoft Visual Studio"
+        "ProductName" = "8:Strive3D"
+        "ProductCode" = "8:{0D9B51D5-CBB6-4261-BA1D-6AB9C2D265D4}"
+        "PackageCode" = "8:{1D178964-900A-41FB-AD54-C1A22C4F9E68}"
+        "UpgradeCode" = "8:{6D7827B1-5615-44E9-A404-F6595DC19CA5}"
+        "RestartWWWService" = "11:FALSE"
+        "RemovePreviousVersions" = "11:FALSE"
+        "DetectNewerInstalledVersion" = "11:TRUE"
+        "ProductVersion" = "8:1.0.0"
+        "Manufacturer" = "8:Strive"
+        "ARPHELPTELEPHONE" = "8:"
+        "ARPHELPLINK" = "8:http://www.strive3d.net"
+        "Title" = "8:Strive3D Client"
+        "Subject" = "8:"
+        "ARPCONTACT" = "8:Strive"
+        "Keywords" = "8:"
+        "ARPCOMMENTS" = "8:Strive3D Client"
+        "ARPURLINFOABOUT" = "8:"
+        "ARPPRODUCTICON" = "8:"
+        "ARPIconIndex" = "3:0"
+        "SearchPath" = "8:"
+        "UseSystemSearchPath" = "11:TRUE"
+        }
+        "MsiBootstrapper"
+        {
+        "LangId" = "3:1033"
+        }
+        "MergeModule"
+        {
+            "{AC8774A4-3E09-11D3-8E14-00C04F6837D0}:_CFA0EFEA42434181BDC1D9D06596F891"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:dotnetfxredist_x86_enu.msm"
+            "ModuleSignature" = "8:mondo.E4183BB4_18A8_11D5_A549_0090278A1BB8"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:1033"
+            "Exclude" = "11:TRUE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+        }
+        "UserInterface"
+        {
+            "{7DFFC192-4ABE-11D3-8D78-00A0C9CFCEE6}:_0FC4461123C341F3972E93A39201EAB2"
+            {
+            "Name" = "8:#1902"
+            "Sequence" = "3:2"
+            "Attributes" = "3:3"
+                "Dialogs"
+                {
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_036D1ACE8E8A46E0B488B08F59AE5A8C"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:Finished"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFinishedDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.83D22742_1B79_46f6_9A99_DF0F2BD4C077"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{E4ECAB26-4AB7-11D3-8D78-00A0C9CFCEE6}:_444D0C1FC89B48359347033E4AF544C9"
+            {
+            "UseDynamicProperties" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:<VsdDialogDir>\\VsdBasicDialogs.wim"
+            "ModuleSignature" = "8:VsdDialogs.CE4B864F_F1C1_4B85_98D4_2A2BF5FFB12B"
+            }
+            "{7DFFC192-4ABE-11D3-8D78-00A0C9CFCEE6}:_46124226F7C346B69C8309CBEF1ABD46"
+            {
+            "Name" = "8:#1901"
+            "Sequence" = "3:1"
+            "Attributes" = "3:2"
+                "Dialogs"
+                {
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_AFA2C56C5549448A977EC36C03B275F4"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:Progress"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdProgressDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.4FB12620_0D15_42D0_8677_2766FFA6923F"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "ShowProgress"
+                            {
+                            "Name" = "8:ShowProgress"
+                            "DisplayName" = "8:#1009"
+                            "Description" = "8:#1109"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{E4ECAB26-4AB7-11D3-8D78-00A0C9CFCEE6}:_4E98EE5204FB411F88BDB0188B099ECC"
+            {
+            "UseDynamicProperties" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:<VsdDialogDir>\\VsdUserInterface.wim"
+            "ModuleSignature" = "8:VsdUserInterface.524F4245_5254_5341_4C45_534153783400"
+            }
+            "{7DFFC192-4ABE-11D3-8D78-00A0C9CFCEE6}:_666AEC0AC6274E0791A421520F8A607C"
+            {
+            "Name" = "8:#1902"
+            "Sequence" = "3:1"
+            "Attributes" = "3:3"
+                "Dialogs"
+                {
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_0B594F73F9284BB4A60F0CBFCF66459D"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:Finished"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.1DB77F5A_BA5C_4470_89B6_0B0EC07E3A10"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{7DFFC192-4ABE-11D3-8D78-00A0C9CFCEE6}:_9219BC89BF6E40C9A5D2F4E790CB8503"
+            {
+            "Name" = "8:#1900"
+            "Sequence" = "3:2"
+            "Attributes" = "3:1"
+                "Dialogs"
+                {
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_354E087541E84BEDA405CF7BFBE71DAC"
+                    {
+                    "Sequence" = "3:300"
+                    "DisplayName" = "8:Confirm Installation"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.FA58E60A_A1E8_4876_95FC_2AC3B5AAA5F8"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_4ECAB445B3234FEFAE76A22562F205AE"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:Welcome"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminWelcomeDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.E35A0E2C_F131_4B57_B946_59A1A2A8F45F"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "CopyrightWarning"
+                            {
+                            "Name" = "8:CopyrightWarning"
+                            "DisplayName" = "8:#1002"
+                            "Description" = "8:#1102"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1202"
+                            "DefaultValue" = "8:#1202"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Welcome"
+                            {
+                            "Name" = "8:Welcome"
+                            "DisplayName" = "8:#1003"
+                            "Description" = "8:#1103"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1203"
+                            "DefaultValue" = "8:#1203"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_F3D8B60E5044479EA9040D26CC98EB64"
+                    {
+                    "Sequence" = "3:200"
+                    "DisplayName" = "8:Installation Folder"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.2DED2424_5429_4616_A1AD_4D62837C2ADA"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{7DFFC192-4ABE-11D3-8D78-00A0C9CFCEE6}:_BC412DF290C8411E98A814A5573C34B8"
+            {
+            "Name" = "8:#1900"
+            "Sequence" = "3:1"
+            "Attributes" = "3:1"
+                "Dialogs"
+                {
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_038DB9B1D622492E8010C0D49F289F24"
+                    {
+                    "Sequence" = "3:300"
+                    "DisplayName" = "8:Confirm Installation"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.6DBC9783_3677_4D68_8BF5_D749558A0AC1"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_517338FD4FA0407B9415EFDBC825C0F0"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:Welcome"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdWelcomeDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.68F69290_BB7C_474E_A153_6679845F3DDF"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "CopyrightWarning"
+                            {
+                            "Name" = "8:CopyrightWarning"
+                            "DisplayName" = "8:#1002"
+                            "Description" = "8:#1102"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1202"
+                            "DefaultValue" = "8:#1202"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Welcome"
+                            {
+                            "Name" = "8:Welcome"
+                            "DisplayName" = "8:#1003"
+                            "Description" = "8:#1103"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1203"
+                            "DefaultValue" = "8:#1203"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_57931867D2774F659814BD4F3654DC3C"
+                    {
+                    "Sequence" = "3:200"
+                    "DisplayName" = "8:Installation Folder"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.C113BC36_2532_4D45_8099_4818B1133B2F"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+            "{7DFFC192-4ABE-11D3-8D78-00A0C9CFCEE6}:_CB6D49F31A2F4931BCF37935EC9AA6B5"
+            {
+            "Name" = "8:#1901"
+            "Sequence" = "3:2"
+            "Attributes" = "3:2"
+                "Dialogs"
+                {
+                    "{E4ECAB24-4AB7-11D3-8D78-00A0C9CFCEE6}:_E8152E4A9E934AFC99CAD2A71E323683"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:Progress"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminProgressDlg.wid"
+                    "ModuleSignature" = "8:VsdDialogs.EE9A1AFA_41DD_4514_B727_DF0ACA1D7389"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "ShowProgress"
+                            {
+                            "Name" = "8:ShowProgress"
+                            "DisplayName" = "8:#1009"
+                            "Description" = "8:#1109"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
