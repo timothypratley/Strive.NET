@@ -176,11 +176,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Models\Exceptions.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "Models\Model.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

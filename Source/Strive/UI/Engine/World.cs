@@ -4,6 +4,7 @@ using System.Collections;
 
 using Strive.Rendering;
 using Strive.Rendering.Models;
+using Strive.Rendering.Textures;
 using Strive.Multiverse;
 using Strive.Logging;
 using Strive.Math3D;
@@ -17,8 +18,8 @@ namespace Strive.UI.Engine {
 	public class World {
 		// TODO: refactor into a strongly typed collection?
 		public Hashtable physicalObjectInstances = new Hashtable();
-		Scene scene = new Scene();
-		TerrainCollection terrainPieces = new TerrainCollection();
+		IScene scene = Game.RenderingFactory.CreateScene();
+		TerrainCollection terrainPieces = new TerrainCollection( Game.RenderingFactory );
 		public PhysicalObjectInstance CurrentAvatar;
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
 		Vector3D cameraHeading;
@@ -26,9 +27,8 @@ namespace Strive.UI.Engine {
 
 		public World() {}
 
-		public void InitialiseView(IWin32Window RenderTarget) {
-			scene.DropAll();
-			scene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
+		public void InitialiseView( IWin32Window RenderTarget ) {
+			Game.RenderingFactory.Initialise( RenderTarget, EnumRenderTarget.PictureBox, Resolution.Automatic );
 			scene.View.FieldOfView = 60;
 			scene.View.ViewDistance = 1000;
 			scene.SetLighting( 255 );
@@ -36,30 +36,27 @@ namespace Strive.UI.Engine {
 		}
 
 		public void Add( PhysicalObject po ) {
-			PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
-			physicalObjectInstances.Add( po.ObjectInstanceID, poi );
-			scene.Models.Add( poi.model );
-
 			if ( po is Terrain ) {
-				// todo: don't add the model in the first place
-				scene.Models.Remove( po.ObjectInstanceID.ToString() );
 				Terrain t = (Terrain)po;
-				terrainPieces.Add( new TerrainPieceModel(
-					scene, t.ObjectInstanceID, t.Position.X, t.Position.Z, t.Position.Y, t.ModelID ) );
+				terrainPieces.Add( new TerrainPiece(
+					t.ObjectInstanceID, t.Position.X, t.Position.Z, t.Position.Y, t.ModelID ) );
+			} else {
+				PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
+				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
+				scene.Models.Add( po.ObjectInstanceID, poi.model );
+				//todo: serverside ground level/gravity control
+				//instead of clientside.
+				po.Position.Y = GroundLevel( po.Position.X, po.Position.Z );
+
+				poi.model.Position = po.Position;
+				poi.model.Rotation = po.Rotation;
 			}
-
-			//todo: serverside ground level/gravity control
-			//instead of clientside.
-			po.Position.Y = GroundLevel( po.Position.X, po.Position.Z );
-
-			poi.model.Position = po.Position;
-			poi.model.Rotation = po.Rotation;
 		}
 
 		public void Remove( int ObjectInstanceID ) {
 			terrainPieces.Remove( ObjectInstanceID );
 			physicalObjectInstances.Remove( ObjectInstanceID );
-			scene.Models.Remove( ObjectInstanceID );
+			scene.Models.Remove( ObjectInstanceID.ToString() );
 		}
 
 		public PhysicalObjectInstance Find( int ObjectInstanceID ) {
@@ -74,6 +71,11 @@ namespace Strive.UI.Engine {
 		public void Possess( int ObjectInstanceID ) {
 			Object o = physicalObjectInstances[ObjectInstanceID];
 			CurrentAvatar = o as PhysicalObjectInstance;
+			if ( cameraMode == EnumCameraMode.FirstPerson ) {
+				CurrentAvatar.model.Hide();
+			} else {
+				CurrentAvatar.model.Show();
+			}
 			RepositionCamera();
 		}
 
@@ -98,18 +100,7 @@ namespace Strive.UI.Engine {
 			}
 		}
 
-		void ProcessAnimations() {
-			// todo: make this mobile based,
-			// and only if they are moving.
-			foreach ( Model model in scene.Models.Values ) {
-				if ( model.ModelFormat == ModelFormat.MD2 ) {
-					model.nextFrame();
-				}
-			}
-		}
-
 		public void Render() {
-			ProcessAnimations();
 			scene.Render();
 			foreach ( PhysicalObjectInstance poi in physicalObjectInstances.Values ) {
 				if ( poi.physicalObject is Mobile || poi.physicalObject is Item ) {
@@ -155,8 +146,8 @@ namespace Strive.UI.Engine {
 			scene.DropAll();
 		}
 
-		public void SetSky( string texture_name ) {
-			scene.SetSky( "sky", texture_name );
+		public void SetSky( ITexture texture ) {
+			scene.SetSky( "sky", texture );
 		}
 
 		public EnumCameraMode CameraMode {
@@ -164,16 +155,18 @@ namespace Strive.UI.Engine {
 				return cameraMode;
 			}
 			set{
-				if ( CurrentAvatar != null && cameraMode != value ) {
-					if ( value == EnumCameraMode.FirstPerson ) {
-						CurrentAvatar.model.Hide();
+				if ( cameraMode != value ) {
+					if ( CurrentAvatar != null ) {
+						cameraMode = value;
+						if ( cameraMode == EnumCameraMode.FirstPerson ) {
+							CurrentAvatar.model.Hide();
+						} else {
+							CurrentAvatar.model.Show();
+						}
+						RepositionCamera();
 					} else {
-						CurrentAvatar.model.Show();
+						cameraMode = value;
 					}
-					cameraMode = value;
-					RepositionCamera();
-				} else {
-					cameraMode = value;
 				}
 			}
 		}

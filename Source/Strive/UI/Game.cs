@@ -27,6 +27,9 @@ namespace Strive.UI
 		public static World CurrentWorld;// = new Scene();
 		public static Logging.Log CurrentLog;// = new Logging.Log();
 		public static bool GameControlMode = false;
+		
+		public static IEngine RenderingFactory = Strive.Rendering.Activator.GetEngine();
+
 
 		public static int CurrentPlayerID;
 
@@ -35,6 +38,9 @@ namespace Strive.UI
 		[STAThread]
 		static void Main(string[] args)
 		{
+			// todo: umg refactor this out of existance
+			ResourceManager.factory = RenderingFactory;
+
 			// Initialise required objects
 			CurrentServerConnection = new ServerConnection();
 			CurrentGameLoop = new GameLoop();

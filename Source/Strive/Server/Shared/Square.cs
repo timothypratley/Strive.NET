@@ -21,9 +21,10 @@ namespace Strive.Server.Shared
 	public class Square
 	{
 		public static int squareSize = 1000;
+		public static int terrainSize = 100;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
-		ArrayList[,] heightMap = new ArrayList[Square.squareSize,Square.squareSize];
+		public float[,] heightMap = new float[squareSize/terrainSize,squareSize/terrainSize];
 
 		public Square() {
 		}
@@ -35,6 +36,13 @@ namespace Strive.Server.Shared
 				if ( a.client != null ) {
 					clients.Add( a.client );
 				}
+			}
+			if ( po is Terrain ) {
+				Terrain t = (Terrain)po;
+				heightMap[
+					((int)t.Position.X % squareSize) / terrainSize,
+					((int)t.Position.Z % squareSize) / terrainSize
+				] = t.Position.Y;
 			}
 		}
 
@@ -58,33 +66,6 @@ namespace Strive.Server.Shared
 			foreach ( Client c in clients ) {
 				if ( c == client ) continue;
 				c.Send( message );
-			}
-		}
-
-		public void CalculateHeightMap() {
-			// create a tempory local scene of the terrain in this square
-//			Scene scene = new Scene();
-//			foreach ( PhysicalObject po in physicalObjects ) {
-				// load it into the local scene
-//				Model model = ResourceManager.LoadModel(po.ObjectInstanceID, po.ModelID);
-//				scene.Models.Add( model );
-//			}
-
-			int i, j;
-			for ( i=0; i<Square.squareSize; i++ ) {
-				for ( j=0; j<Square.squareSize; j++ ) {
-					// follow a ray to discover the occupiable
-					// space at this location
-					Math3D.Vector3D start = new Math3D.Vector3D( i, j, 10000 );
-					Math3D.Vector3D end = new Math3D.Vector3D( i, j, -10000 );
-//					scene.RayCollision( start, end, 1 );
-
-					float [] occupiableSpace = new float[2];
-					occupiableSpace[0] = 0.0f;
-					occupiableSpace[1] = 100.0f;
-					heightMap[i,j] = new ArrayList();
-					heightMap[i,j].Add( occupiableSpace );
-				}
 			}
 		}
 	}

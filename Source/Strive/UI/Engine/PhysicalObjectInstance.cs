@@ -14,7 +14,7 @@ namespace Strive.UI.Engine
 	/// so only use those values.
 	/// </summary>
 	public class PhysicalObjectInstance {
-		public Model model;
+		public IModel model;
 		public PhysicalObject physicalObject;
 
 		public PhysicalObjectInstance( PhysicalObject po ) {

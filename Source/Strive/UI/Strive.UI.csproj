@@ -98,11 +98,6 @@
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
-                    Name = "Strive.Rendering"
-                    Project = "{F814C2A2-F0A3-4742-A49E-FF3527A03F12}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
                     Name = "Strive.Math3D"
                     Project = "{14818E27-DABB-4332-B572-21BA9983D886}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
@@ -138,6 +133,21 @@
                 <Reference
                     Name = "Strive.Resources"
                     Project = "{E8037631-248F-411C-BA3A-744FE15704EC}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Strive.Rendering"
+                    Project = "{F814C2A2-F0A3-4742-A49E-FF3527A03F12}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Strive.Rendering.R3D"
+                    Project = "{60959A92-CEA0-421D-86DE-97F4B5E85D8E}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Strive.Rendering.TV3D"
+                    Project = "{0D415106-F5A0-4DAD-B8A5-48AE0E7E74AB}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
@@ -183,11 +193,6 @@
                 />
                 <File
                     RelPath = "Engine\PhysicalObjectInstance.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Engine\TerrainPieceModel.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -21,6 +21,7 @@ namespace Strive.Multiverse
 		public float HitPoints = 0;
 		public int MaxHitPoints = 0;
 		public float BoundingSphereRadiusSquared;
+		public float Height = 20;
 
 		public PhysicalObject() {}
 
@@ -36,7 +37,7 @@ namespace Strive.Multiverse
 				(float)instance.Y,
 				(float)instance.Z
 			);
-			// TODO: fix meh umg!!!
+			// todo: fix meh umg!!!
 			// Shall we use teh ghey euler angles in database?
 			// 1337 quarterions?
 			// whatever the case, heading probabbly is not a good one.

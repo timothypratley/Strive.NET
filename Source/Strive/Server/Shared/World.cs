@@ -25,12 +25,14 @@ namespace Strive.Server.Shared {
 		int world_id;
 		
 		// squares are used to group physical objects
-		protected Square[,] squares;
+		Square[,] square;
+		Terrain[,] terrain;
+
 		// all physical objects are indexed in a hashtable
 		public Hashtable physicalObjects;
-		protected ArrayList mobilesArrayList;
+		ArrayList mobilesArrayList;
 
-		protected Strive.Network.Messages.ToClient.Weather weather = new Strive.Network.Messages.ToClient.Weather( 1, 0, 0 );
+		Strive.Network.Messages.ToClient.Weather weather = new Strive.Network.Messages.ToClient.Weather( 1, 0, 0, 0 );
 
 		public World( int world_id ) {
 			this.world_id = world_id;
@@ -70,12 +72,8 @@ namespace Strive.Server.Shared {
 
 			// allocate the grid of squares used for grouping
 			// physical objects that are close to each other
-			squares = new Square[squaresInX,squaresInZ];
-			for ( int i=0; i<squaresInX; i++ ) {
-				for ( int j=0; j<squaresInZ; j++ ) {
-					squares[i,j] = new Square();
-				}
-			}
+			square = new Square[squaresInX,squaresInZ];
+			terrain = new Terrain[squaresInX*Square.terrainSize,squaresInZ*Square.terrainSize];
 
 			Schema.WorldRow wr = Global.multiverse.World.FindByWorldID( world_id );
 			if ( wr == null ) {
@@ -204,7 +202,15 @@ namespace Strive.Server.Shared {
 			}
 			int squareX = (int)(po.Position.X-lowX)/Square.squareSize;
 			int squareZ = (int)(po.Position.Z-lowZ)/Square.squareSize;
-			squares[squareX,squareZ].Add( po );
+			if ( square[squareX,squareZ] == null ) {
+				square[squareX,squareZ] = new Square();
+			}
+			square[squareX,squareZ].Add( po );
+			if ( po is Terrain ) {
+				int terrainX = (int)(po.Position.X-lowX)/Square.terrainSize;
+				int terrainZ = (int)(po.Position.Z-lowZ)/Square.terrainSize;
+				terrain[terrainX,terrainZ] = (Terrain)po;
+			}
 
 			// notify all nearby clients that a new
 			// physical object has entered the world
@@ -216,12 +222,13 @@ namespace Strive.Server.Shared {
 			int squareX = (int)(po.Position.X-lowX)/Square.squareSize;
 			int squareZ = (int)(po.Position.Z-lowZ)/Square.squareSize;
 			InformNearby( po, new Strive.Network.Messages.ToClient.DropPhysicalObject( po ) );
-			squares[squareX,squareZ].Remove( po );
+			square[squareX,squareZ].Remove( po );
 			physicalObjects.Remove( po.ObjectInstanceID );
 			Log.LogMessage( "Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world." );
 		}
 
 		public void Relocate( PhysicalObject po, Vector3D newPosition, Vector3D newRotation ) {
+			// keep everything inside world bounds
 			if ( newPosition.X > highX ) {
 				newPosition.X = (float)highX;
 			}
@@ -234,11 +241,19 @@ namespace Strive.Server.Shared {
 			if ( newPosition.Z < lowZ ) {
 				newPosition.Z = (float)lowZ;
 			}
+
 			int fromSquareX = (int)(po.Position.X - lowX)/Square.squareSize;
 			int fromSquareZ = (int)(po.Position.Z - lowZ)/Square.squareSize;
 			int toSquareX = (int)(newPosition.X - lowX)/Square.squareSize;
 			int toSquareZ = (int)(newPosition.Z - lowZ)/Square.squareSize;
 			int i, j;
+
+			// keep everything on the ground
+			// todo: take slope into consideration
+			newPosition.Y = square[toSquareX,toSquareZ].heightMap[
+				( (int)newPosition.X % Square.squareSize ) / Square.terrainSize,
+				( (int)newPosition.Z % Square.squareSize ) / Square.terrainSize
+			] + po.Height / 2;
 
 			MobileAvatar ma;
 			if ( po is MobileAvatar ) {
@@ -248,16 +263,16 @@ namespace Strive.Server.Shared {
 			}
 
 			// check that the object can fit there
-			/** TODO: enable collision detection
-			foreach ( PhysicalObject spo in squares[toSquareX,toSquareZ].physicalObjects ) {
-				// ignoring terrain for now
+			// todo: what about objects that span squares?
+			// these need to be checked as well, or linked from both squares?
+			foreach ( PhysicalObject spo in square[toSquareX,toSquareZ].physicalObjects ) {
+				// ignoring terrain and yourself
 				if ( spo is Terrain || spo == po ) continue;
 				// distance between two objects in 2d space
-				// todo, convert to 3d space when object centers is sorted
 				float dx = newPosition.X - spo.Position.X;
+				float dy = newPosition.Y - spo.Position.Y;
 				float dz = newPosition.Z - spo.Position.Z;
-				//float dy = newPosition.Y - spo.Position.Y;
-				float distance_squared = dx*dx + dz*dz; // + dy*dy;
+				float distance_squared = dx*dx + dy*dy + dz*dz;
 				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
 					// Log.LogMessage( "Collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID + "." );
 					// objects would be touching, reject the move
@@ -265,10 +280,10 @@ namespace Strive.Server.Shared {
 					if ( ma != null ) {
 						// only if not already collided!
 						float dx1 = ma.Position.X - spo.Position.X;
+						float dy1 = ma.Position.Y - spo.Position.Y;
 						float dz1 = ma.Position.Z - spo.Position.Z;
-						//float dy1 = ma.Position.Y - spo.Position.Y;
-						float distance_squared1 = dx1*dx1 + dz1*dz1;// + dy1*dy1;
-						if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
+						float distance_squared1 = dx1*dx1 + dy1*dy1 + dz1*dz1;
+						if ( distance_squared1 <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
 							return;
 						}
 						if ( ma.client != null ) {
@@ -278,7 +293,7 @@ namespace Strive.Server.Shared {
 					}
 					return;
 				}
-			} */
+			}
 
 			po.Position = newPosition;
 			po.Rotation = newRotation;
@@ -299,12 +314,12 @@ namespace Strive.Server.Shared {
 							fromSquareX+i >= 0 && fromSquareX+i < squaresInX
 							&& fromSquareZ+j >= 0 && fromSquareZ+j < squaresInZ
 						) {
-							squares[fromSquareX+i, fromSquareZ+j].NotifyClients(
+							square[fromSquareX+i, fromSquareZ+j].NotifyClients(
 								new Strive.Network.Messages.ToClient.DropPhysicalObject( po ) );
 							// if the object is a mobile, it needs to be made aware
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
-								foreach( PhysicalObject toDrop in squares[fromSquareX+i, fromSquareZ+j].physicalObjects ) {
+								foreach( PhysicalObject toDrop in square[fromSquareX+i, fromSquareZ+j].physicalObjects ) {
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.DropPhysicalObject( toDrop ) );
 									//Log.LogMessage( "Told client to drop " + toDrop.ObjectInstanceID + "." );
@@ -318,11 +333,11 @@ namespace Strive.Server.Shared {
 							toSquareX-i >= 0 && toSquareX-i < squaresInX
 							&& toSquareZ-j >= 0 && toSquareZ-j < squaresInZ
 						) {
-							squares[toSquareX-i, toSquareZ-j].NotifyClients( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( po ) );
+							square[toSquareX-i, toSquareZ-j].NotifyClients( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( po ) );
 							// if the object is a player, it needs to be made aware
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
-								foreach( PhysicalObject toAdd in squares[toSquareX-i, toSquareZ-j].physicalObjects ) {
+								foreach( PhysicalObject toAdd in square[toSquareX-i, toSquareZ-j].physicalObjects ) {
 									ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( toAdd ) );
 									//Log.LogMessage( "Told client to add " + toAdd.ObjectInstanceID + "." );
 								}
@@ -337,11 +352,11 @@ namespace Strive.Server.Shared {
 							&& toSquareZ+j >= 0 && toSquareZ+j < squaresInZ
 						) {
 							if ( ma != null && ma.client != null ) {
-								squares[toSquareX+i, toSquareZ+j].NotifyClientsExcept(
+								square[toSquareX+i, toSquareZ+j].NotifyClientsExcept(
 									new Strive.Network.Messages.ToClient.Position( po ),
 									ma.client );
 							} else {
-								squares[toSquareX+i, toSquareZ+j].NotifyClients(
+								square[toSquareX+i, toSquareZ+j].NotifyClients(
 									new Strive.Network.Messages.ToClient.Position( po ) );
 							}
 						}
@@ -351,8 +366,8 @@ namespace Strive.Server.Shared {
 
 			// transition the object to its new square if it changed squares
 			if ( fromSquareX != toSquareX || fromSquareZ != toSquareZ ) {
-				squares[fromSquareX,fromSquareZ].Remove( po );
-				squares[toSquareX,toSquareZ].Add( po );
+				square[fromSquareX,fromSquareZ].Remove( po );
+				square[toSquareX,toSquareZ].Add( po );
 			}
 		}
 
@@ -398,7 +413,7 @@ namespace Strive.Server.Shared {
 						continue;
 					}
 					// need to send a message to all nearby clients
-					squares[squareX+i, squareZ+j].NotifyClients( message );
+					square[squareX+i, squareZ+j].NotifyClients( message );
 				}
 			}
 		}
@@ -426,7 +441,7 @@ namespace Strive.Server.Shared {
 						}
 						// add all neighbouring physical objects
 						// to the clients world view
-						foreach ( PhysicalObject p in squares[squareX+i,squareZ+j].physicalObjects ) {
+						foreach ( PhysicalObject p in square[squareX+i,squareZ+j].physicalObjects ) {
 							nearbyPhysicalObjects.Add( p );
 						}
 					}
@@ -455,6 +470,28 @@ namespace Strive.Server.Shared {
 				list.Add( tuple );
 			}
 			return (Strive.Network.Messages.ToClient.CanPossess.id_name_tuple [])list.ToArray( typeof( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple ) );
+		}
+
+		public float altitudeAt( float x, float z ) {
+			int terrain_x = (int) x / Square.terrainSize;
+			int terrain_z = (int) z / Square.terrainSize;
+			float offset_x = x - ( terrain_x * Square.terrainSize );
+			float offset_z = z - ( terrain_z * Square.terrainSize );
+			return 0;
+/*
+			if ( offset_z < offset_x && offset_z < Square.terrainSize - offset_x ) {
+				// bottom triangle
+				float xalt = xminuszminus.altitude + (xminuszplus.altitude - xminusxminus.altitude) * offset_x;
+				return xalt + (xalt - t.altitude) * (offset_z - Square.terrainSize/2);
+			} else if ( offset_z > offset_x && offset_z > Square.terrainSize - offset_x ) {
+				// top triangle
+			} else if ( offset_z > offset_x && offset_z < Square.terrainSize - offset_x ) {
+				// left triangle
+			} else {
+				// ( offset_z < offset_x && offset_z > Square.terrainSize - offset_x )
+				// right triangle
+			}
+*/
 		}
 	}
 }

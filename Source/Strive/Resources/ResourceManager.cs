@@ -23,7 +23,8 @@ namespace Strive.Resources
 		public static string _modelPath = "";
 		public static string _texturePath = "";
 		public static string _resourceServer = "";
-		public static ArrayList _knownmodels = new ArrayList();
+		public static Hashtable _textures = new Hashtable();
+		public static IEngine factory;
 
 		public static void SetPath( string path ) {
 			_modelPath = System.IO.Path.Combine( path, "models" );
@@ -31,7 +32,7 @@ namespace Strive.Resources
 			_resourceServer = System.Configuration.ConfigurationSettings.AppSettings["ResourceServer"];
 		}
 
-		public static Model LoadModel(int InstanceID, int ModelID)
+		public static IModel LoadModel(int InstanceID, int ModelID)
 		{
 			string md2File = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2");
 			string _3dsFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds");
@@ -39,36 +40,33 @@ namespace Strive.Resources
 
 			// check for local file first:
 			if ( System.IO.File.Exists(md2File) ) {
-				Model m = Model.Load(InstanceID.ToString(), md2File, ModelFormat.MD2);
-				LoadTexture( ModelID );
-				m.applyTexture( ModelID.ToString() );
+				IActor m = factory.LoadActor(InstanceID.ToString(), md2File);
+				ITexture t = LoadTexture( ModelID );
+				m.applyTexture( t );
 				return m;
 			} else if ( System.IO.File.Exists(_3dsFile) ) {
-				return Model.Load(InstanceID.ToString(), _3dsFile, ModelFormat.Mesh);
+				return factory.LoadStaticModel(InstanceID.ToString(), _3dsFile);
 			} else if ( System.IO.File.Exists(textureFile) ) {
-				string texture = LoadTexture( ModelID );
-				return Model.CreateTerrain( InstanceID.ToString(), texture );
+				throw new Exception( "don't make terrain this way" );
+				//ITexture t = LoadTexture( ModelID );
+				//return factory.CreateTerrain( InstanceID.ToString(), t );
 			}
 
 			// download resource
 			if(makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2"))) {
-				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2"), ModelFormat.MD2);
+				return factory.LoadActor(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2"));
 			}
 			else if (makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"))) {
-				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), ModelFormat.Mesh);
+				return factory.LoadStaticModel(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"));
 			}
 			else if (makeTextureExist(System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp"))) {
-				string texture = LoadTexture( ModelID );
-				return Model.CreateTerrain( InstanceID.ToString(), texture );
+				throw new Exception( "don't make terrain pieces this way" );
+//				ITexture t = LoadTexture( ModelID );
+//				return factory.CreateTerrain( InstanceID.ToString(), t );
 			}
 			else {
 				throw new ResourceNotLoadedException(ModelID, ResourceType.Model);
 			}
-		}
-
-		public static string LoadTexture( int TextureID ) {
-			Texture.LoadTexture( TextureID.ToString(), System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".bmp" ) );			
-			return TextureID.ToString();
 		}
 
 		#region Automatic Resource Downloading Stuffs
@@ -141,5 +139,16 @@ namespace Strive.Resources
 		}
 
 		#endregion
+
+		public static ITexture LoadTexture( int TextureID ) {
+			// see if its already loaded
+			ITexture texture = (ITexture)_textures[TextureID];
+			if ( texture == null ) {
+				// load from file
+				texture = factory.LoadTexture( TextureID.ToString(), System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".bmp" ) );
+				_textures.Add( TextureID, texture );
+			}
+			return texture;
+		}
 	}
 }

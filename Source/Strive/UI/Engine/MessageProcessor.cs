@@ -3,6 +3,7 @@ using System;
 using Strive.Network.Messages;
 using Strive.Math3D;
 using Strive.Rendering.Models;
+using Strive.Rendering.Textures;
 using Strive.Logging;
 using Strive.Multiverse;
 using Strive.Resources;
@@ -40,19 +41,25 @@ namespace Strive.UI.Engine {
 			#region AddPhysicalObject Message
 			else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject ) {
 				PhysicalObject po = Strive.Network.Messages.ToClient.AddPhysicalObject.GetPhysicalObject( (Strive.Network.Messages.ToClient.AddPhysicalObject)m );
-				try {
+				PhysicalObjectInstance existing = (PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[po.ObjectInstanceID];
+				if ( existing != null ) {
+					// replace an existing physical object
+					existing.physicalObject = po;
+				} else {
+					// add a new one
 					Game.CurrentWorld.Add( po );
-				} catch ( Exception e ) {
-					Log.ErrorMessage( "Got a double add message." );
 				}
 				if ( po.ObjectInstanceID == Game.CurrentPlayerID ) {
-					// load self... this contains the players initial position
+					// current player gets followed by camera etc.
 					Game.CurrentWorld.Possess( Game.CurrentPlayerID );
 					Log.LogMessage( "Initial position is " + po.Position );
 					Log.LogMessage( "Initial heading is " + Helper.GetHeadingFromRotation(po.Rotation) );
-					return;
+				} else {
+					Log.LogMessage( "Added object " + po.ObjectInstanceID + " with model " + po.ModelID + " at " + po.Position );
 				}
-				Log.LogMessage( "Added object " + po.ObjectInstanceID + " with model " + po.ModelID + " at " + po.Position );
+				if ( m is Strive.Network.Messages.ToClient.AddMobile ) {
+					// todo: should set the animation sequence/play here
+				}
 			}
 					#endregion
 			#region Position Message
@@ -130,13 +137,15 @@ namespace Strive.UI.Engine {
 					// ignoring self positions for now
 					return;
 				}
-				if ( poi == null ) {
+				if ( poi == null || !(poi.model is IActor ) ) {
 					Log.ErrorMessage( "Model for " + ms.ObjectInstanceID + " has not been loaded" );
 					return;
 				}
 				#endregion
 
-				poi.model.AnimationSequence = (int)ms.State;
+				IActor actor = (IActor)poi.model;
+				actor.AnimationSequence = (int)ms.State;
+				actor.playAnimation();
 			}
 				#endregion
 			#region CurrentHitpoints
@@ -162,8 +171,8 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.Weather ) {
 				Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
 				//Log.LogMessage( "Weather update recieved" );
-				string texture_name = ResourceManager.LoadTexture(w.SkyTextureID);
-				Game.CurrentWorld.SetSky( texture_name );
+				ITexture t = ResourceManager.LoadTexture(w.SkyTextureID);
+				Game.CurrentWorld.SetSky( t );
 			}
 				#endregion
 			#region SkillList

@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 
+using Strive.Rendering;
+using Strive.Math3D;
+
 namespace Strive.Resources
 {
 	/// <summary>
@@ -9,76 +12,61 @@ namespace Strive.Resources
 	public class TerrainCollection
 	{
 		public Hashtable terrainPieces = new Hashtable();
+		IEngine _engine;
 
-		public TerrainCollection() {}
+		public TerrainCollection( IEngine engine ) {
+			_engine = engine;
+		}
 
 		public void Add( TerrainPiece tp ) {
 			foreach ( TerrainPiece tmptp in terrainPieces.Values ) {
 				int xdiff = (int)(tp.x - tmptp.x)/100;
 				int zdiff = (int)(tp.z - tmptp.z)/100;
 
-				// neighbours
+				// everybody needs good neighbours
 				if ( xdiff == 0 ) {
 					if ( zdiff == 1 ) {
-						tp.zminus = tmptp;
-						tmptp.zplus = tp;
+						tmptp.zplus = tp.altitude;
+						tmptp.zplusKnown = true;
 					} else if ( zdiff == -1 ) {
-						tp.zplus = tmptp;
-						tmptp.zminus = tp;
+						tp.zplus = tmptp.altitude;
+						tp.zplusKnown = true;
 					}
 				} else if ( zdiff == 0 ) {
 					if ( xdiff == 1 ) {
-						tp.xminus = tmptp;
-						tmptp.xplus = tp;
+						tmptp.xplus = tp.altitude;
+						tmptp.xplusKnown = true;
 					} else if ( xdiff == -1 ) {
-						tp.xplus = tmptp;
-						tmptp.xminus = tp;
+						tp.xplus = tmptp.altitude;
+						tp.xplusKnown = true;
 					}
 				} else if ( xdiff == 1 ) {
 					if ( zdiff == 1 ) {
-						tp.xminuszminus = tmptp;
-						tmptp.xpluszplus = tp;
-					} else if ( zdiff == -1 ) {
-						tp.xminuszplus = tmptp;
-						tmptp.xpluszminus = tp;
+						tmptp.xpluszplus = tp.altitude;
+						tmptp.xpluszplusKnown = true;
 					}
 				} else if ( xdiff == -1 ) {
-					if ( zdiff == 1 ) {
-						tp.xpluszminus = tmptp;
-						tmptp.xminuszplus = tp;
-					} else if ( zdiff == -1 ) {
-						tp.xpluszplus = tmptp;
-						tmptp.xminuszminus = tp;
+					if ( zdiff == -1 ) {
+						tp.xpluszplus = tmptp.altitude;
+						tp.xpluszplusKnown = true;
 					}
 				}
+				if ( tmptp.model == null && tmptp.xplusKnown && tmptp.zplusKnown && tmptp.xpluszplusKnown ) {
+					
+					tmptp.model = _engine.CreateTerrain( tmptp.instance_id.ToString(), ResourceManager.LoadTexture( tmptp.texture_id), tmptp.altitude, tmptp.xplus, tmptp.zplus, tmptp.xpluszplus );
+					tmptp.model.Position = new Vector3D( tmptp.x, 0, tmptp.z );
+				}
+			}
+			if ( tp.model == null && tp.xplusKnown && tp.zplusKnown && tp.xpluszplusKnown ) {
+				tp.model = _engine.CreateTerrain( tp.instance_id.ToString(), ResourceManager.LoadTexture( tp.texture_id ), tp.altitude, tp.xplus, tp.zplus, tp.xpluszplus );
+				tp.model.Position = new Vector3D( tp.x, 0, tp.z );
 			}
 			terrainPieces.Add( tp.instance_id, tp );
-			ReCreateTerrain();
 		}
 
 		public void Remove( int instance_id ) {
-			// only remove if it exists
-			TerrainPiece tp = (TerrainPiece)terrainPieces[instance_id];
-			if ( tp == null ) return;
-
-			// unlink it
-			if ( tp.xminus != null ) { tp.xminus.xplus = null; }
-			if ( tp.xplus != null ) { tp.xplus.xminus = null; }
-			if ( tp.zminus != null ) { tp.zminus.zplus = null; }
-			if ( tp.zplus != null ) { tp.zplus.zminus = null; }
-			if ( tp.xminuszminus != null ) { tp.xminuszminus.xpluszplus = null; }
-			if ( tp.xpluszminus != null ) { tp.xpluszminus.xminuszplus = null; }
-			if ( tp.xminuszplus != null ) { tp.xminuszplus.xpluszminus = null; }
-			if ( tp.xpluszplus != null ) { tp.xpluszplus.xminuszminus = null; }
-
 			// remove it
 			terrainPieces.Remove( instance_id );
-		}
-
-		public void ReCreateTerrain() {
-			foreach ( TerrainPiece tp in terrainPieces.Values ) {
-				tp.Display();
-			}
 		}
 	}
 }

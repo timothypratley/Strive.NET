@@ -21,6 +21,9 @@ namespace Strive.UI.Engine
 		ServerConnection _connection;
 		StoppableThread thisThread;
 
+		public IKeyboard keyboard = Game.RenderingFactory.Keyboard;
+		public IMouse mouse = Game.RenderingFactory.Mouse;
+
 		public GameLoop()
 		{
 			thisThread = new StoppableThread( new StoppableThread.WhileRunning( MainLoop ) );
@@ -67,15 +70,15 @@ namespace Strive.UI.Engine
 			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position;
 			Vector3D avatarRotation = Game.CurrentWorld.CurrentAvatar.model.Rotation;
 
-			Mouse m = Mouse.GetState();
-			if( m.x != 0 ) {
+			mouse.GetState();
+			if( mouse.X != 0 ) {
 				WasMouseInput = true;
-				avatarRotation.Y += m.x*0.2f; 
+				avatarRotation.Y += mouse.X*0.2f; 
 				avatarRotation.X = pitch;
 			}
-			if( m.y != 0 ) {
+			if( mouse.Y != 0 ) {
 				WasMouseInput = true;
-				pitch += m.y*0.2f;
+				pitch += mouse.Y*0.2f;
 				if ( pitch > 60 ) { pitch = 60; }
 				if ( pitch < -60 ) { pitch = -60; }
 				avatarRotation.X = pitch;
@@ -99,8 +102,7 @@ namespace Strive.UI.Engine
 			const int moveunit = 5;
 			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position;
 			Vector3D avatarRotation = Game.CurrentWorld.CurrentAvatar.model.Rotation;
-			Keyboard.ReadKeys();
-			if(Keyboard.GetKeyState(Keys.key_W)) {
+			if(keyboard.GetKeyState(Key.key_W)) {
 				WasKeyboardInput = true;
 				avatarPosition.X +=
 					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit*2;
@@ -108,7 +110,7 @@ namespace Strive.UI.Engine
 					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit*2;
 			}
 
-			if(Keyboard.GetKeyState(Keys.key_S)) {
+			if(keyboard.GetKeyState(Key.key_S)) {
 				WasKeyboardInput = true;
 				avatarPosition.X -=
 					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit;
@@ -116,7 +118,7 @@ namespace Strive.UI.Engine
 					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit;
 			}
 
-			if(Keyboard.GetKeyState(Keys.key_D)) {
+			if(keyboard.GetKeyState(Key.key_D)) {
 				WasKeyboardInput = true;
 				avatarPosition.X +=
 					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
@@ -124,7 +126,7 @@ namespace Strive.UI.Engine
 					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
 			}
 
-			if(Keyboard.GetKeyState(Keys.key_A)) {
+			if(keyboard.GetKeyState(Key.key_A)) {
 				WasKeyboardInput = true;
 				avatarPosition.X -=
 					(float)Math.Cos( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
@@ -132,17 +134,17 @@ namespace Strive.UI.Engine
 					(float)Math.Sin( avatarRotation.Y * Math.PI/180.0 ) * moveunit/2.0F;
 			}
 
-			if(Keyboard.GetKeyState(Keys.key_Q)) {
+			if(keyboard.GetKeyState(Key.key_Q)) {
 				WasKeyboardInput = true;
 				avatarRotation.Y -= 5.0F; 
 			}
 
-			if(Keyboard.GetKeyState(Keys.key_E)) {
+			if(keyboard.GetKeyState(Key.key_E)) {
 				WasKeyboardInput = true;
 				avatarRotation.Y += 5.0F;
 			}
 
-			if(Keyboard.GetKeyState(Keys.key_ESCAPE )) {
+			if(keyboard.GetKeyState(Key.key_ESCAPE )) {
 				WasKeyboardInput = true;
 				System.Windows.Forms.Application.Exit();
 			}				
