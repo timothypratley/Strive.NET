@@ -122,11 +122,6 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "CommandGenerator\API.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "CommandGenerator\WinMain.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
@@ -154,6 +149,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Shared\API.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Shared\Controls\DBPicker.cs"
                     SubType = "UserControl"
                     BuildAction = "Compile"
@@ -161,6 +161,16 @@
                 <File
                     RelPath = "Shared\Controls\DBPicker.resx"
                     DependentUpon = "DBPicker.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "StoredProcedureUI\SPUI.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "StoredProcedureUI\SPUI.resx"
+                    DependentUpon = "SPUI.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
