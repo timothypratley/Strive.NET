@@ -107,7 +107,12 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Listener.cs"
+                    RelPath = "TcpHandler.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "UdpHandler.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -50,7 +50,11 @@ namespace Strive.Network.Server {
 				// Custom serialization
 				byte[] EncodedMessage = CustomFormatter.Serialize( message );
 
-				connection.Send( EncodedMessage, EncodedMessage.Length );
+				try {
+					connection.Send( EncodedMessage, EncodedMessage.Length );
+				} catch ( ObjectDisposedException ) {
+					// do nothing, socket has been closed by another thread
+				}
 				// Console.WriteLine( "Sent " + message.GetType() + " message (" + EncodedMessage.Length + " bytes) to " + endPoint );
 			} catch ( Exception e ) {
 				Console.WriteLine( e );
