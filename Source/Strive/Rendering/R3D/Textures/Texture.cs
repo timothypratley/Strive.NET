@@ -16,7 +16,7 @@ namespace Strive.Rendering.R3D.Textures
 			Texture t = new Texture();
 			if ( Engine.TextureLib.Class_SetPointer( name ) < 0 ) {
 				R3DCOLORKEY colorkey = R3DCOLORKEY.R3DCOLORKEY_NONE;
-				t.id = (int)Engine.TextureLib.Texture_Load( name, filename, ref colorkey );
+				t.id = (short)Engine.TextureLib.Texture_Load( name, filename, ref colorkey );
 			} 
 			else {
 				// already added
