@@ -284,6 +284,36 @@ namespace Strive.Utils.Shared.Controls
 		{
 			UseTrustedAuthentication.Enabled = true;
 			UseSQLAuthentication.Enabled = true;
+
+			// try to set the properties for the user.
+			// check if the server is in registered server:
+			foreach(SQLDMO.ServerGroup s in SQLDMOApplication.ServerGroups)
+			{
+				foreach(SQLDMO.RegisteredServer r in s.RegisteredServers)
+				{
+					if(r.Name == servers.Text)
+					{
+						// it is:  go setting:
+						if(r.UseTrustedConnection == 0)
+						{
+							UseTrustedAuthentication.Checked = false;
+							UseSQLAuthentication.Checked = true;
+							UserName.Text = r.Login;
+							UserPassword.Text = r.Password;
+
+						}
+						else
+						{
+							UseTrustedAuthentication.Checked = true;
+							UserName.Text = "";
+							UserPassword.Text = "";
+						}
+						break;
+
+					}
+				}
+			}
+
 		}
 
 		private void UseTrustedAuthentication_CheckedChanged(object sender, System.EventArgs e)
@@ -315,6 +345,8 @@ namespace Strive.Utils.Shared.Controls
 		{
 			SQLDMOServer = new SQLDMO.SQLServerClass();
 
+			this.Cursor = Cursors.WaitCursor;
+
 			try
 			{
 				if(!UseTrustedAuthentication.Checked)
@@ -332,6 +364,7 @@ namespace Strive.Utils.Shared.Controls
 			{
 				ConnectionStatus.Text += ex.Message + "\r\n----------------\r\n";
 			}
+
 			this.Refresh();
 			try
 			{
@@ -339,6 +372,10 @@ namespace Strive.Utils.Shared.Controls
 			}
 			catch(Exception)
 			{
+			}
+			finally
+			{
+				this.Cursor = Cursors.Default;
 			}
 			Register.Enabled = true;
 		}

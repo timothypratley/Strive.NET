@@ -14,6 +14,7 @@ namespace Strive.Utils
 	{
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.DateTimePicker dateTimePicker1;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -55,6 +56,7 @@ namespace Strive.Utils
 		{
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -75,11 +77,18 @@ namespace Strive.Utils
 			this.button2.Text = "Stored Procedure UI";
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
+			// dateTimePicker1
+			// 
+			this.dateTimePicker1.Location = new System.Drawing.Point(136, 72);
+			this.dateTimePicker1.Name = "dateTimePicker1";
+			this.dateTimePicker1.TabIndex = 2;
+			// 
 			// WinMain
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(440, 126);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
+																		  this.dateTimePicker1,
 																		  this.button2,
 																		  this.button1});
 			this.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
