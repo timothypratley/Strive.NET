@@ -95,6 +95,7 @@ namespace Strive.UI.Windows
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Main));
 			this.MainTabs = new Crownwood.Magic.Controls.TabControl();
 			this.GameTab = new Crownwood.Magic.Controls.TabPage();
+			// TODO: would be nice to use something that doesn't re-paint itself
 			this.RenderTarget = new System.Windows.Forms.Panel();
 			this.MainMenu = new Crownwood.Magic.Menus.MenuControl();
 			this.FileMenu = new Crownwood.Magic.Menus.MenuCommand();

@@ -105,8 +105,9 @@ namespace Strive.UI.Settings
 					window.Top = int.Parse(windowRow["windowtop"].ToString());
 					window.Left = int.Parse(windowRow["windowleft"].ToString());
 				}
-				catch(Exception)
+				catch(Exception e)
 				{
+					Log.ErrorMessage( e );
 				}
 
 				window.WindowState = (System.Windows.Forms.FormWindowState)Enum.Parse(typeof(System.Windows.Forms.FormWindowState), windowRow["windowstate"].ToString(), true);

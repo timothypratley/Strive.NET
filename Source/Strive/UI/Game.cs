@@ -82,9 +82,12 @@ namespace Strive.UI
 			con.Show();
 
 			while( !CurrentMainWindow.IsDisposed ) {
+				// NB: This is a tight renderloop
+				// it will chew cpu
+				// TODO: could be made nicer by
+				// P/Invoke into the Win32 API and call PeekMessage/TranslateMessage/DispatchMessage.  (Doevents actually does something similar, but you can do this without the extra allocations). 
 				Application.DoEvents();
-				// TODO:
-				if ( /*CurrentServerConnection.isRunning */ true ) {
+				if ( CurrentServerConnection.isRunning ) {
 					GameLoop();
 				}
 				System.Threading.Thread.Sleep( 0 );
