@@ -73,6 +73,10 @@ namespace Strive.Rendering.TV3D {
 			return Textures.Texture.LoadTexture( name, path );
 		}
 
+		public ITexture CreateTexture( string name, int width, int height ) {
+			return Textures.Texture.CreateTexture( name, width, height );
+		}
+
 		public ITexture GetInvisible() {
 			return Textures.Texture.GetInvisible();
 		}

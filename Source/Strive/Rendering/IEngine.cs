@@ -27,6 +27,7 @@ namespace Strive.Rendering
 		IModel CreatePlane( string name, ITexture texture, Vector3D p1, Vector3D p2, Vector3D p3, Vector3D p4 );
 		IActor LoadActor(string name, string path, float height);
 		ITexture LoadTexture(string name, string path);
+		ITexture CreateTexture( string name, int width, int height );
 		ITexture GetInvisible();
 		void ForceInputUpdate();
 		float TimeSinceLastFrame();

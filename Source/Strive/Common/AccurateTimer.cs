@@ -36,5 +36,11 @@ namespace Strive.Common
 			setpoint = sp2;
 			return (double)duration/(double)freq;
 		}
+
+		public double ElapsedSecondsSoFar() {
+			long sp2 = GetCounter();
+			long duration = sp2-setpoint;
+			return (double)duration/(double)freq;
+		}
 	}
 }

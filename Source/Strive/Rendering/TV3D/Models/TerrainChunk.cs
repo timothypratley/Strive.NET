@@ -23,6 +23,7 @@ namespace Strive.Rendering.TV3D.Models {
 		private float _height = 0;
 		private float _gap_size = 1;
 		private float _heights;
+		private ITexture _texture = null;
 
 		public static ITerrainChunk CreateTerrainChunk( float x, float z, float gap_size, int heights ) {
             TerrainChunk t = new TerrainChunk();
@@ -34,13 +35,6 @@ namespace Strive.Rendering.TV3D.Models {
 				1, 1,
 				x, z );
 			t._mesh.SetTerrainScale( gap_size*heights/256F, 1, gap_size*heights/256F, true );
-
-			//if ( gap_size == Constants.terrainPieceSize ) {
-				// TODO: hmmm
-				t._mesh.CreateDynTextures(256, 256, true, true );
-			//} else {
-				//t._mesh.SetTexture( 1, -1 );
-			//}
 			return t;
 		}
 
@@ -67,29 +61,15 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public void SetTexture( ITexture t ) {
 			_mesh.SetTexture( t.ID, -1 );
+			_texture = t;
 		}
 
-		public void SetTexture( ITexture t, float x, float z, float rotation ) {
-			//_mesh.SetTexture( t.ID, -1 );
-			int rot = ((int)rotation)%360;
-			switch( rot ) {
-				default:
-					Logging.Log.ErrorMessage( "Invalid rotation " + rotation );
-					_mesh.DynDrawTexture( t.ID, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
-					break;
-				case 0:
-					_mesh.DynDrawTexture( t.ID, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
-					break;
-				case 90:
-					_mesh.DynDrawTexture( t.ID, x+_gap_size, z, x, z+_gap_size, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
-					break;
-				case 180:
-					_mesh.DynDrawTexture( t.ID, x+_gap_size, z+_gap_size, x, z, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
-					break;
-				case 270:
-					_mesh.DynDrawTexture( t.ID, x, z+_gap_size, x+_gap_size, z, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
-					break;
-			}
+		public void DrawTexture( ITexture t, float x, float z, float rotation ) {
+			_texture.Draw( t, x, z, rotation, 1 );
+		}
+
+		public void Clear( float x, float z, float width, float height ) {
+			_texture.Clear( x, z, width, height );
 		}
 
 		public void SetClouds( ITexture texture ) {

@@ -9,5 +9,9 @@ namespace Strive.Rendering.Textures
 	{
 		string Name { get; }
 		int ID { get; }
+		int Width { get; }
+		int Height { get; }
+		void Draw( ITexture t, float x, float y, float rotation, float scale );
+		void Clear( float x, float y, float width, float height );
 	}
 }
