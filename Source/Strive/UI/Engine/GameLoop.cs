@@ -62,9 +62,9 @@ namespace Strive.UI.Engine
 			{
 				Game.CurrentWorld.Render();
 			} 
-			catch ( Exception ) 
+			catch ( Exception e ) 
 			{
-				Log.LogMessage( "Render failed." );
+				Log.ErrorMessage( e );
 				Stop();
 			}
 
@@ -82,7 +82,7 @@ namespace Strive.UI.Engine
 				if ( m == null ) break;
 				_message_processor.Process( m );
 				i++;
-				if ( i>5 ) break;
+				//if ( i>5 ) break;
 			}
 		}
 
@@ -204,7 +204,9 @@ namespace Strive.UI.Engine
 				Vector3D newPosition = avatarPosition + changeOfPosition;
 				try 
 				{
-					newPosition.Y = Game.CurrentWorld.TerrainPieces.AltitudeAt( newPosition.X, newPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
+					newPosition.Y = 
+						Game.CurrentWorld.TerrainPieces.AltitudeAt( newPosition.X, newPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
+						//Game.CurrentWorld.WorldTerrain.HeightLookup( newPosition.X, newPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
 					changeOfPosition.Y = newPosition.Y - avatarPosition.Y;
 
 					// check that we can go there
@@ -278,7 +280,7 @@ namespace Strive.UI.Engine
 						}
 					}
 				} 
-				catch ( TerrainCollection.InvalidLocationException ) 
+				catch ( InvalidLocationException ) 
 				{
 					changeOfPosition.Set( 0, 0, 0 );
 				}
@@ -295,6 +297,7 @@ namespace Strive.UI.Engine
 		{
 			PhysicalObjectInstance poi = Game.CurrentWorld.CurrentAvatar;
 			poi.Move( oldPosition, velocity, newRotation );
+			Log.LogMessage( "Now at ("+poi.model.Position.X+", "+poi.model.Position.Y+", "+poi.model.Position.Z+")" );
 			if ( poi.NeedsUpdate( Game.now ) ) 
 			{
 				_connection.Position(

@@ -21,7 +21,6 @@ namespace Strive.Rendering.TV3D {
 		static internal TVEngine TV3DEngine;
 		static internal TVInputEngine Input;
 		static internal TVScene TV3DScene;
-		static internal TVLandscape Land;
 		static internal TVTextureFactory TexFactory;
 		static internal TVScreen2DImmediate Screen2DImmediate;
 		static internal TVScreen2DText Screen2DText;
@@ -29,6 +28,7 @@ namespace Strive.Rendering.TV3D {
 		static internal TVGlobals Gl;
 		static internal TVCamera Camera;
 		static internal TVAtmosphere Atmosphere;
+		static internal Terrain terrain = new Terrain();
 
 		static internal int FontIndex = -1;
 
@@ -46,8 +46,15 @@ namespace Strive.Rendering.TV3D {
 			return new Viewport( window, name );
 		}
 
-		public ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy ) {
-			return Terrain.CreateTerrain( name, texture, texture_rotation, y, xy, zy, xzy );
+//		public ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy ) {
+//			return Terrain.CreateTerrain( name, texture, texture_rotation, y, xy, zy, xzy );
+//		}
+		public ITerrainChunk CreateTerrainChunk( float x, float z, float gap_size, int heights ) {
+			return TerrainChunk.CreateTerrainChunk( x, z, gap_size, heights );
+		}
+
+		public ITerrain GetTerrain() {
+			return terrain;
 		}
 		public IActor LoadActor(string name, string path, float height) {
 			return Actor.LoadActor( name, path, height );
@@ -104,7 +111,8 @@ namespace Strive.Rendering.TV3D {
 			TV3DEngine.DisplayFPS = true;
 			TV3DScene = new TVScene();
 			TV3DScene.SetDepthBuffer( CONST_TV_DEPTHBUFFER.TV_WBUFFER );
-			Land = new TVLandscape();
+			//TV3DScene.SetRenderMode( CONST_TV_RENDERMODE.TV_LINE );
+			TV3DScene.SetTextureFilter( CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC );
 			TexFactory = new TVTextureFactory();
 			Screen2DImmediate = new TVScreen2DImmediate();
 			Screen2DText = new TVScreen2DText();
@@ -126,9 +134,6 @@ namespace Strive.Rendering.TV3D {
 			if(TexFactory != null)
 				TexFactory.DeleteAll();
 			TexFactory = null;
-			if(Land != null)
-				Land.DeleteAll();
-			Land = null;
 			if(Screen2DImmediate != null)
 				Screen2DImmediate = null;
 			Screen2DText = null;

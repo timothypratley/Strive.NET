@@ -7,8 +7,12 @@ namespace Strive.Common
 	/// </summary>
 	public class Constants
 	{
-		public static int terrainPieceSize = 10;
-		public static int terrainHeightsPerChunk = 8;
+		public const int terrainPieceSize = 10;
+		public const int terrainHeightsPerChunk = 8;
 
+		// TODO: these should be settable per client
+		public const int terrainZoomOrder = 3;
+		public const int terrainXOrder = 2;
+		public const int terrainZOrder = 2;
 	}
 }

@@ -1,7 +1,9 @@
 using System;
-using Strive.Math3D;
+using System.Collections;
 
 using TrueVision3D;
+using Strive.Math3D;
+using Strive.Common;
 using Strive.Rendering.Models;
 using Strive.Rendering.Textures;
 using Strive.Rendering.TV3D;
@@ -13,6 +15,129 @@ namespace Strive.Rendering.TV3D.Models {
 	/// </summary>
 	/// <remarks>This class is designed to shield clients from the internal workings of how models are stored and represented.</remarks>
 	public class Terrain : ITerrain {
+		public Hashtable terrainHeights = new Hashtable();
+		public Hashtable terrainChunks = new Hashtable();
+
+		public void SetHeight( float x, float z, float altitude ) {
+			int tx = (int)( x/Constants.terrainPieceSize );
+			int tz = (int)( z/Constants.terrainPieceSize );
+			Vector2D loc = new Vector2D( tx, tz );
+
+			if ( terrainHeights.Contains( loc ) ) {
+				//Strive.Logging.Log.WarningMessage( "Replacing terrain peice " + tpexists.instance_id + " with " + tp.instance_id );
+				terrainHeights.Remove( loc );
+			}
+			terrainHeights.Add( loc, altitude );
+
+			int cx = tx/Constants.terrainHeightsPerChunk;
+			if ( tx < 0 && tx%Constants.terrainHeightsPerChunk != 0 ) cx--;
+			int cz = tz/Constants.terrainHeightsPerChunk;
+			if ( tz < 0 && tz%Constants.terrainHeightsPerChunk != 0 ) cz--;
+
+			loc.Set( cx, cz );
+			ITerrainChunk tc = terrainChunks[loc] as ITerrainChunk;
+			if ( tc == null ) {
+				tc = TerrainChunk.CreateTerrainChunk( cx*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, cz*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, Constants.terrainPieceSize, Constants.terrainHeightsPerChunk );
+                terrainChunks.Add( loc, tc );
+			}
+			tc.SetHeight( x, z, altitude );
+			if ( tx%Constants.terrainHeightsPerChunk == 0 ) {
+				loc.Set( cx-1, cz );
+				tc = terrainChunks[loc] as ITerrainChunk;
+				if ( tc == null ) {
+					tc = TerrainChunk.CreateTerrainChunk( (cx-1)*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, cz*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, Constants.terrainPieceSize, Constants.terrainHeightsPerChunk );
+					terrainChunks.Add( loc, tc );
+				}
+				tc.SetHeight( x, z, altitude );
+			}
+			if ( tz%Constants.terrainHeightsPerChunk == 0 ) {
+				loc.Set( cx, cz-1 );
+				tc = terrainChunks[loc] as ITerrainChunk;
+				if ( tc == null ) {
+					tc = TerrainChunk.CreateTerrainChunk( cx*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, (cz-1)*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, Constants.terrainPieceSize, Constants.terrainHeightsPerChunk );
+					terrainChunks.Add( loc, tc );
+				}
+				tc.SetHeight( x, z, altitude );
+			}
+			if ( tx%Constants.terrainHeightsPerChunk == 0 && tz%Constants.terrainHeightsPerChunk == 0 ) {
+				loc.Set( cx-1, cz-1 );
+				tc = terrainChunks[loc] as ITerrainChunk;
+				if ( tc == null ) {
+					tc = TerrainChunk.CreateTerrainChunk( (cx-1)*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, (cz-1)*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, Constants.terrainPieceSize, Constants.terrainHeightsPerChunk );
+					terrainChunks.Add( loc, tc );
+				}
+				tc.SetHeight( x, z, altitude );
+			}
+		}
+
+		public float HeightLookup( float x, float z ) {
+			int tx = (int)(x/Constants.terrainPieceSize);
+			int tz = (int)(z/Constants.terrainPieceSize);
+			Vector2D loc = new Vector2D( tx, tz );
+
+			return (float)terrainHeights[ loc ];
+		}
+
+		public void SetTexture( float x, float z, ITexture texture, float rotation ) {
+			int tx = (int)(x/Constants.terrainPieceSize);
+			int tz = (int)(z/Constants.terrainPieceSize);
+			int cx = tx/Constants.terrainHeightsPerChunk;
+			if ( tx < 0 && tx%Constants.terrainHeightsPerChunk != 0 ) cx--;
+			int cz = tz/Constants.terrainHeightsPerChunk;
+			if ( tz < 0 && tz%Constants.terrainHeightsPerChunk != 0 ) cz--;
+
+			Vector2D loc = new Vector2D( cx, cz );
+			ITerrainChunk tc = terrainChunks[loc] as ITerrainChunk;
+			if ( tc == null ) {
+				tc = TerrainChunk.CreateTerrainChunk( cx*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, cz*Constants.terrainHeightsPerChunk*Constants.terrainPieceSize, Constants.terrainPieceSize, Constants.terrainHeightsPerChunk );
+				terrainChunks.Add( loc, tc );
+			}
+			tc.SetTexture( texture.ID, x, z, rotation );
+		}
+
+//		TVRenderSurface rs = Engine.TV3DScene.CreateRenderSurface(256,256,false,0,0);
+//		public void StitchTexture() {
+//			rs.StartRender( true );
+//			Engine.Screen2DImmediate.DRAW_TextureRotated( texture_id, x, y, 32, 32, angle, 0, 0, 1, 1, &HFFFFFFFF, -2, -2, -2 );
+//			rs.EndRender();
+//			texture_id = rs.CreateStaticTextureFromRenderSurface( fire_width, fire_height, CONST_TV_COLORKEY.TV_COLORKEY_BLACK );
+//		}
+
+		public void Clear() {
+			foreach ( TerrainChunk tc in terrainChunks.Values ) {
+				tc.Delete();
+			}
+			terrainChunks.Clear();
+			terrainHeights.Clear();
+		}
+
+		public void Render() {
+			foreach ( TerrainChunk tc in terrainChunks.Values ) {
+				tc.Render();
+			}
+		}
+
+		public void Cull( float x, float z ) {
+			int tx = (int)(x/Constants.terrainHeightsPerChunk);
+			int tz = (int)(z/Constants.terrainHeightsPerChunk);
+			foreach ( Vector2D loc in terrainChunks.Keys ) {
+				if ( Math.Abs( loc.X - tx ) > 2 || Math.Abs( loc.Y - tz ) > 2 ) {
+					TerrainChunk tc = terrainChunks[loc] as TerrainChunk;
+					if ( tc != null ) {
+						tc.Delete();
+						terrainChunks.Remove( loc );
+					}
+					Vector2D height_loc = new Vector2D(0,0);
+					for ( int i = 0; i<Constants.terrainHeightsPerChunk; i++ ) {
+						for ( int j = 0; j<Constants.terrainHeightsPerChunk; j++ ) {
+							height_loc.Set( loc.X*Constants.terrainHeightsPerChunk+i, loc.Y*Constants.terrainHeightsPerChunk+j );
+							terrainHeights.Remove( height_loc );
+						}
+					}
+				}
+			}
+		}
+
 
 		#region "Fields"
 
@@ -39,21 +164,21 @@ namespace Strive.Rendering.TV3D.Models {
 
 			switch ( (int)texture_rotation ) {
 				case 0:
-					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 10, xzy, 10, 0, y, 0, -1, 1, true, false );
-					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 0, y, 0, 10, xzy, 10, 1, -1, true, false );
+					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 10, xzy, 10, 0, y, 0, -1, 1, false, false );
+					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 0, y, 0, 10, xzy, 10, 1, -1, false, false );
 					break;
 				case 180:
-					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 10, xzy, 10, 0, y, 0, 1, -1, true, false );
-					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 0, y, 0, 10, xzy, 10, -1, 1, true, false );
+					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 10, xzy, 10, 0, y, 0, 1, -1, false, false );
+					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 0, y, 0, 10, xzy, 10, -1, 1, false, false );
 					break;
 
 				case 90:
-					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, 1, 1, true, false );
-					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, -1, -1, true, false );
+					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, 1, 1, false, false );
+					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, -1, -1, false, false );
 					break;
 				case 270:
-					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, -1, -1, true, false );
-					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, 1, 1, true, false );
+					t._mesh.AddTriangle( texture.ID, 0, zy, 10, 0, y, 0, 10, xzy, 10, -1, -1, false, false );
+					t._mesh.AddTriangle( texture.ID, 10, xy, 0, 10, xzy, 10, 0, y, 0, 1, 1, false, false );
 					break;
 
 				default:
@@ -62,7 +187,8 @@ namespace Strive.Rendering.TV3D.Models {
 
 
 			//t._mesh.Optimize();
-			t._mesh.ComputeBoundingVolumes();
+			//t._mesh.ComputeBoundingVolumes();
+			t._mesh.ComputeNormals();
 
 			// TODO: bumpmapping would be cool :)
 			//t._mesh.SetBumpMapping( true, texture.ID, -1, -1, 10 );
@@ -88,10 +214,6 @@ namespace Strive.Rendering.TV3D.Models {
 		}
 
 		public void applyTexture( ITexture texture ) {
-		}
-
-		public float HeightLookup( float x, float z ) {
-			return 0;
 		}
 
 		public void GetBoundingBox( Vector3D minbox, Vector3D maxbox ) {

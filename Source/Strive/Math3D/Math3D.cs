@@ -267,7 +267,8 @@ namespace Strive.Math3D {
 			float dZ = z2 - z1;
 			return	(float)	Math.Sqrt( dX*dX + dY*dY + dZ*dZ );
 		}
-		
+
+	
 		//===============================================================================
 
 	}

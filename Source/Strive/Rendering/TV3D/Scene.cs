@@ -123,7 +123,7 @@ namespace Strive.Rendering.TV3D
 				Engine.Atmosphere.Atmosphere_Render();
 
 				// for us, land only contains the clouds atm
-				Engine.Land.Render(false, false);
+				Engine.terrain.Render();
 
 				// render static models
 				Engine.TV3DScene.RenderAllMeshes( false );

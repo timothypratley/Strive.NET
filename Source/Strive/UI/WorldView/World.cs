@@ -20,8 +20,10 @@ namespace Strive.UI.WorldView {
 		public IEngine RenderingEngine;
 		public ResourceManager Resources;
 		public IScene RenderingScene;
+		//public ITerrain WorldTerrain;
 		public TerrainCollection TerrainPieces;
 		public PhysicalObjectInstance CurrentAvatar;
+
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
 		Vector3D cameraPosition = new Vector3D( 0, 0, 0 );
 		Vector3D cameraRotation = new Vector3D( 0, 0, 0 );
@@ -38,6 +40,7 @@ namespace Strive.UI.WorldView {
 				this.MiniMapTarget = MiniMapTarget;
 			}
 			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
+			//WorldTerrain = RenderingEngine.GetTerrain();
 			RenderingScene.SetLighting( 100 );
 			RenderingScene.SetFog( 500.0f );
 			renderViewport.Camera.ViewDistance = 10000;
@@ -58,14 +61,21 @@ namespace Strive.UI.WorldView {
 		public PhysicalObjectInstance Add( PhysicalObject po ) {
 			if ( po is Terrain ) {
 				Terrain t = (Terrain)po;
-				TerrainPieces.Add( new TerrainPiece( t, Resources ) );
+				TerrainPieces.Add( t );
+				//WorldTerrain.SetHeight( po.Position.X, po.Position.Z, po.Position.Y );
+				//WorldTerrain.SetTexture( po.Position.X, po.Position.Z, Resources.GetTexture( po.ResourceID ), po.Rotation.Y );
 				return null;
 			} else {
 				if ( RenderingScene.Models.Contains( po.ObjectInstanceID ) ) {
 					Log.WarningMessage( "Trying to add existing PhysicalObject " + po.ObjectInstanceID );
 					return (PhysicalObjectInstance)physicalObjectInstances[po.ObjectInstanceID];
 				}
-				PhysicalObjectInstance poi = new PhysicalObjectInstance( po, Resources );
+				PhysicalObjectInstance poi;
+				try {
+					poi = new PhysicalObjectInstance( po, Resources );
+				} catch ( Exception ) {
+					return null;
+				}
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 				RenderingScene.Models.Add( po.ObjectInstanceID, poi.model );
 				poi.model.Position = po.Position;
@@ -75,13 +85,14 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Remove( int ObjectInstanceID ) {
-			TerrainPieces.Remove( ObjectInstanceID );
+			//TerrainPieces.Remove( ObjectInstanceID );
 			physicalObjectInstances.Remove( ObjectInstanceID );
 			RenderingScene.Models.Remove( ObjectInstanceID );
 		}
 
 		public void RemoveAll() {
 			TerrainPieces.Clear();
+			//WorldTerrain.Clear();
 			physicalObjectInstances.Clear();
 			RenderingScene.Models.Clear();
 		}
@@ -135,7 +146,7 @@ namespace Strive.UI.WorldView {
 
 			if ( cameraMode == EnumCameraMode.FirstPerson ) {
 				Vector3D newPos = CurrentAvatar.model.Position.Clone();
-				newPos.Y += CurrentAvatar.physicalObject.Height*2/5;
+				newPos.Y += CurrentAvatar.physicalObject.Height*2F/5F;
 				CameraPosition = newPos;
 				CameraRotation = CurrentAvatar.model.Rotation;
 			} else if ( cameraMode == EnumCameraMode.Chase ) {
@@ -149,22 +160,25 @@ namespace Strive.UI.WorldView {
 			} else {
 				Log.ErrorMessage( "Unknown camera mode." );
 			}
+			TerrainPieces.Recenter( CurrentAvatar.model.Position.X, CurrentAvatar.model.Position.Z );
 		}
 
 		public void Render() {
 			renderViewport.SetFocus();
 			RenderingScene.Render();
+			TerrainPieces.Render();
 			RenderingScene.Display();
 			if ( miniMapViewport != null ) {
-				miniMapViewport.SetFocus();
-				RenderingScene.Render();
-				RenderingScene.Display();
+				//miniMapViewport.SetFocus();
+				//RenderingScene.Render();
+				//RenderingScene.Display();
 			}
 		}
 
 		public void Clear() {
 			physicalObjectInstances.Clear();
 			TerrainPieces.Clear();
+			//WorldTerrain.Clear();
 			CurrentAvatar = null;
 			RenderingScene.DropAll();
 			Resources.DropAll();

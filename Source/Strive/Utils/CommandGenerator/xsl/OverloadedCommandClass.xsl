@@ -161,6 +161,7 @@
 								<xsl:when test="contains($Parameter/@type, 'datetime')">SqlDateTime</xsl:when>
 								<xsl:when test="contains($Parameter/@type, 'bit')">SqlBoolean</xsl:when>
 								<xsl:when test="contains($Parameter/@type, 'money')">SqlMoney</xsl:when>
+								<xsl:when test="contains($Parameter/@type, 'float')">SqlSingle</xsl:when>							
 								<xsl:when test="contains($Parameter/@type, 'uniqueidentifier')">SqlGuid</xsl:when>							
 								<xsl:otherwise>UNKNOWN<xsl:value-of select="$Parameter/@type" />ThisWontCompileFixXSL</xsl:otherwise>
 							</xsl:choose>

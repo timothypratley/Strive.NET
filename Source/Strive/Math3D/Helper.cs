@@ -27,5 +27,10 @@ namespace Strive.Math3D
 				D, B*C, A*C
 			);
 		}
+
+		static public int DivTruncate( int x, int y ) {
+			return (x/y - (x<0?1:0));
+		}
+
 	}
 }

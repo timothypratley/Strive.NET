@@ -19,7 +19,9 @@ namespace Strive.Rendering
 		IScene CreateScene();
 		IViewport CreateViewport( IWin32Window window, string name );
 
-		ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy );
+		//ITerrain CreateTerrain( string name, ITexture texture, float texture_rotation, float y, float xy, float zy, float xzy );
+		ITerrainChunk CreateTerrainChunk( float x, float z, float gap_size, int heights );
+		ITerrain GetTerrain();
 		IModel LoadStaticModel(string name, string path, float height);
 		IModel CreateBox( string name, float width, float height, float depth, ITexture texture );
 		IModel CreatePlane( string name, ITexture texture, Vector3D p1, Vector3D p2, Vector3D p3, Vector3D p4 );

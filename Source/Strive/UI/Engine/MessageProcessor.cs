@@ -42,6 +42,7 @@ namespace Strive.UI.Engine {
 					#endregion
 			#region AddPhysicalObject Message
 			else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject ) {
+				// TODO: should probabbly treat terrain differently
 				PhysicalObject po = Strive.Network.Messages.ToClient.AddPhysicalObject.GetPhysicalObject( (Strive.Network.Messages.ToClient.AddPhysicalObject)m );
 				PhysicalObjectInstance poi = (PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[po.ObjectInstanceID];
 				if ( poi != null ) {
@@ -66,6 +67,13 @@ namespace Strive.UI.Engine {
 				}
 			}
 					#endregion
+			#region AddTerrainCollection Message
+				// TODO: unused atm, unnesessary?
+			else if ( m is Strive.Network.Messages.ToClient.AddTerrainCollection ) {
+				Strive.Network.Messages.ToClient.AddTerrainCollection atc = (Strive.Network.Messages.ToClient.AddTerrainCollection)m;
+				Game.CurrentWorld.TerrainPieces.AddMany( atc.startX, atc.startZ, atc.width, atc.height, atc.gap_size, atc.map );
+			}
+				#endregion
 			#region Position Message
 
 			else if( m is Strive.Network.Messages.ToClient.Position) {

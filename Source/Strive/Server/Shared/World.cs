@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Threading;
 
+using Strive.Common;
 using Strive.Network.Server;
 using Strive.Network.Messages;
 using Strive.Multiverse;
@@ -105,7 +106,7 @@ namespace Strive.Server.Shared {
 			// allocate the grid of squares used for grouping
 			// physical objects that are close to each other
 			square = new Square[squaresInX,squaresInZ];
-			terrain = new Terrain[squaresInX*Square.terrainSize,squaresInZ*Square.terrainSize];
+			terrain = new Terrain[squaresInX*Square.squareSize/Constants.terrainPieceSize,squaresInZ*Square.squareSize/Constants.terrainPieceSize];
 
 			Schema.WorldRow wr = Global.multiverse.World.FindByWorldID( world_id );
 			if ( wr == null ) {
@@ -236,8 +237,8 @@ namespace Strive.Server.Shared {
 			}
 			square[squareX,squareZ].Add( po );
 			if ( po is Terrain ) {
-				int terrainX = (int)(po.Position.X-lowX)/Square.terrainSize;
-				int terrainZ = (int)(po.Position.Z-lowZ)/Square.terrainSize;
+				int terrainX = Helper.DivTruncate( (int)(po.Position.X-lowX), Constants.terrainPieceSize );
+				int terrainZ = Helper.DivTruncate( (int)(po.Position.Z-lowZ), Constants.terrainPieceSize );
 				terrain[terrainX,terrainZ] = (Terrain)po;
 			}
 
@@ -282,6 +283,7 @@ namespace Strive.Server.Shared {
 			int i, j;
 
 			// keep everything on the ground
+			// TODO: refactor below ma and overload Height
 			try {
 				float altitude = AltitudeAt( newPosition.X, newPosition.Z );
 				if ( po is MobileAvatar ) {
@@ -303,6 +305,7 @@ namespace Strive.Server.Shared {
 			}
 
 			// check that the object can fit there
+			// TODO: revisit
 			for ( i=-1; i<=1; i++ ) {
 				for ( j=-1; j<=1; j++ ) {
 					if (
@@ -339,6 +342,42 @@ namespace Strive.Server.Shared {
 				}
 			}
 
+			// send everything nearby
+			//public void server_foo(float x1, float z1, float x, float z) {
+			// TODO: apply -- for -ve div
+			if ( ma != null && ma.client != null && po.Position != newPosition ) {
+				int tx1 = Helper.DivTruncate( (int)po.Position.X, Constants.terrainPieceSize );
+				int tz1 = Helper.DivTruncate( (int)po.Position.Z, Constants.terrainPieceSize );
+				for ( int k=0; k<Constants.terrainZoomOrder; k++ ) {
+					int chs = (int)Math.Pow(Constants.terrainHeightsPerChunk,k);
+					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder/2;
+					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder/2;
+					int tbx = Helper.DivTruncate( (int)newPosition.X, Constants.terrainPieceSize) - xradius;
+					int tbz = Helper.DivTruncate( (int)newPosition.Z, Constants.terrainPieceSize) - zradius;
+
+					// NB: /2*2 is necessary for odd/even
+					for ( i=0; i<=Constants.terrainXOrder/2*2*Constants.terrainHeightsPerChunk; i++ ) {
+						for ( j=0; j<=Constants.terrainZOrder/2*2*Constants.terrainHeightsPerChunk; j++ ) {
+							int tx = (tbx+i*chs);
+							int tz = (tbz+j*chs);
+							if ((Math.Abs(tx - tx1) > xradius) || (Math.Abs(tz - tz1) > zradius)) {
+								int terrainX = tx - Helper.DivTruncate( (int)lowX, Constants.terrainPieceSize );
+								int terrainZ = tz - Helper.DivTruncate( (int)lowZ, Constants.terrainPieceSize );
+								if ( terrainX >= 0 && terrainX < squaresInX*Square.squareSize/Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < squaresInZ*Square.squareSize/Constants.terrainPieceSize ) {
+									Terrain t = terrain[ terrainX, terrainZ ];
+									if ( t != null ) {
+										ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
+									}
+								} else {
+									Log.ErrorMessage( " terrainX " + terrainX + ", terrainZ " + terrainZ );
+								}
+							}
+						}
+					}
+				}
+			}
+			//}
+
 			po.Position = newPosition;
 			po.Rotation = newRotation;
 
@@ -351,7 +390,7 @@ namespace Strive.Server.Shared {
 						// squares which need to have their clients
 						// add or remove the object
 						// as the jump has brought the object in or out of focus
-
+/**** let the client remove them
 						// remove from
 						if (
 							// check the square exists
@@ -365,12 +404,15 @@ namespace Strive.Server.Shared {
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
 								foreach( PhysicalObject toDrop in square[fromSquareX+i, fromSquareZ+j].physicalObjects ) {
+									// Don't drop terrain, client is responsible for that
+									if ( toDrop is Terrain ) continue;
 									ma.client.Send(
 										new Strive.Network.Messages.ToClient.DropPhysicalObject( toDrop ) );
 									//Log.LogMessage( "Told client to drop " + toDrop.ObjectInstanceID + "." );
 								}
 							}
 						}
+						***/
 
 						// add to
 						if (
@@ -384,6 +426,10 @@ namespace Strive.Server.Shared {
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
 								foreach( PhysicalObject toAdd in square[toSquareX-i, toSquareZ-j].physicalObjects ) {
+									if ( toAdd is Terrain ) {
+										// TODO: take terrain out of the po list if thiw works
+										continue;
+									}
 									ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( toAdd ) );
 									//Log.LogMessage( "Told client to add " + toAdd.ObjectInstanceID + "." );
 								}
@@ -527,8 +573,8 @@ namespace Strive.Server.Shared {
 
 		public class InvalidLocationException : Exception {}
 		public float AltitudeAt( float x, float z ) {
-			int terrainX = (int)(x - lowX)/Square.terrainSize;
-			int terrainZ = (int)(z - lowZ)/Square.terrainSize;
+			int terrainX = Helper.DivTruncate( (int)(x - lowX), Constants.terrainPieceSize );
+			int terrainZ = Helper.DivTruncate( (int)(z - lowZ), Constants.terrainPieceSize );
 
 			// if terrain piece exists, keep everything on the ground
 			if (	terrain[ terrainX, terrainZ ] != null
@@ -548,12 +594,12 @@ namespace Strive.Server.Shared {
 				float zslope;
 				if ( dz < dx ) {
 					// lower triangle
-					xslope = ( terrain[ terrainX+1, terrainZ ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Square.terrainSize;
-					zslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX+1, terrainZ ].Position.Y ) / Square.terrainSize;
+					xslope = ( terrain[ terrainX+1, terrainZ ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Constants.terrainPieceSize;
+					zslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX+1, terrainZ ].Position.Y ) / Constants.terrainPieceSize;
 				} else {
 					// upper triangle
-					xslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ+1 ].Position.Y ) / Square.terrainSize;
-					zslope = ( terrain[ terrainX, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Square.terrainSize;
+					xslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ+1 ].Position.Y ) / Constants.terrainPieceSize;
+					zslope = ( terrain[ terrainX, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Constants.terrainPieceSize;
 				}
 				return terrain[ terrainX, terrainZ ].Position.Y + xslope * dx + zslope * dz;
 			}

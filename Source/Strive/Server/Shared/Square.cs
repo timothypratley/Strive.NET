@@ -6,6 +6,7 @@ using Strive.Network.Messages;
 //using Strive.Rendering;
 //using Strive.Rendering.Models;
 //using Strive.Resources;
+using Strive.Common;
 
 
 namespace Strive.Server.Shared
@@ -20,8 +21,7 @@ namespace Strive.Server.Shared
 	/// </summary>
 	public class Square
 	{
-		public static int squareSize = 50;
-		public static int terrainSize = 10;
+		public static int squareSize = Constants.terrainHeightsPerChunk*Constants.terrainPieceSize;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
 
