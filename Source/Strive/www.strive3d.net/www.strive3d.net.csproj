@@ -1141,7 +1141,10 @@
                     RelPath = "ReferencedAssemblies\thisterminal.Web.pdb"
                     BuildAction = "Content"
                 />
-                <Folder RelPath = "screenshots\" />
+                <File
+                    RelPath = "screenshots\55.jpg"
+                    BuildAction = "Content"
+                />
             </Include>
         </Files>
     </CSHARP>

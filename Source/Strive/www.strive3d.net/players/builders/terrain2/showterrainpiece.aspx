@@ -16,6 +16,11 @@
 						<td><%=Math.Round(Altitude, 0).ToString()%></td>
 						<td><asp:Button ID="Lower" Text="-" Runat="server" /></td>
 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td><asp:Button ID="Rotate" Text="/" Runat="server" /></td>
+					</tr>
 				</table>
 			</td>
 			<%} else { %>

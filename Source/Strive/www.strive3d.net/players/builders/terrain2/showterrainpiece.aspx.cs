@@ -22,9 +22,11 @@ namespace www.strive3d.net.players.builders.terrain2
 		protected int ObjectInstanceID;
 		protected string TextureSrc;
 		protected decimal Altitude;
+		protected decimal Rotation;
 		protected bool Loaded;
 		protected int X;
 		protected System.Web.UI.WebControls.Button Higher;
+				protected System.Web.UI.WebControls.Button Rotate;
 		protected System.Web.UI.WebControls.Button Lower;
 		protected int Z;
 	
@@ -51,7 +53,8 @@ namespace www.strive3d.net.players.builders.terrain2
 			else
 			{
 				Altitude = decimal.Parse(oDr["Y"].ToString());
-				TextureSrc = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +oDr["ResourceID"] + oDr["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
+				Rotation = decimal.Parse(oDr["RotationY"].ToString());
+				TextureSrc = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +oDr["ResourceID"] + oDr["ResourceFileExtension"] +"&amp;h=75&amp;w=75&amp;r=" + Rotation; ;
 				oDr.Close();
 				Loaded = true;
 			}
@@ -76,6 +79,7 @@ namespace www.strive3d.net.players.builders.terrain2
 			this.Higher.Click += new System.EventHandler(this.Higher_Click);
 			this.Lower.Click += new System.EventHandler(this.Lower_Click);
 			this.Load += new System.EventHandler(this.Page_Load);
+			this.Rotate.Click += new System.EventHandler(this.Rotate_Click);
 
 		}
 		#endregion
@@ -96,6 +100,12 @@ namespace www.strive3d.net.players.builders.terrain2
 			Response.Redirect(Request.Url.ToString());
 		}
 
-
+		private void Rotate_Click(object sender, System.EventArgs e)
+		{
+			CommandFactory cmd = new CommandFactory();
+			cmd.RotateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"), 90).ExecuteNonQuery();
+			cmd.Close();
+			Response.Redirect(Request.Url.ToString());		
+		}
 	}
 }

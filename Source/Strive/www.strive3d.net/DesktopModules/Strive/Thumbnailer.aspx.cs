@@ -30,6 +30,11 @@ namespace www.strive3d.net
 			{
 				throw new thisterminal.Web.QueryStringException("You must specify an image height.");
 			}
+			int rotation = 0;
+			if(thisterminal.Web.QueryString.ContainsVariable("r"))
+			{
+				rotation = thisterminal.Web.QueryString.GetVariableInt32Value("r");
+			}
 			string filename = Server.MapPath(thisterminal.Web.QueryString.GetVariableStringValue("i"));
 			
 			if(!filename.ToLower().EndsWith(".png") &&
@@ -56,7 +61,8 @@ namespace www.strive3d.net
 			Response.AddHeader("Content-Disposition", "filename=\"" + System.IO.Path.GetFileName(filename) + "\";");
 			Response.BinaryWrite(GetImage(originalImage, 
 				thisterminal.Web.QueryString.GetVariableInt32Value("h"), 
-				thisterminal.Web.QueryString.GetVariableInt32Value("h"))  );
+				thisterminal.Web.QueryString.GetVariableInt32Value("w"),
+				rotation)  );
 			Response.End();
 
 		}
@@ -69,7 +75,7 @@ namespace www.strive3d.net
 		/// <param name="imageHeight">The desired height of the returned image</param>
 		/// <param name="imageWidth">The desired width of the returned image</param>
 		/// <returns>The bytes of a resized image</returns>
-		public static byte[] GetImage(byte[] imageContents, int imageHeight, int imageWidth)
+		public static byte[] GetImage(byte[] imageContents, int imageHeight, int imageWidth, int rotation)
 		{
 			if(imageContents == null)
 			{
@@ -90,6 +96,26 @@ namespace www.strive3d.net
 					throw new Exception("You cannot request an image larger than its native size.");
 				}
 				Bitmap newBitmap = new Bitmap(originalBitmap, imageWidth, imageHeight);
+				System.Drawing.RotateFlipType rotateType = RotateFlipType.RotateNoneFlipNone;
+				switch(rotation)
+				{
+					case 90:
+					{
+						rotateType = RotateFlipType.Rotate90FlipNone;
+						break;
+					}
+					case 180:
+					{
+						rotateType = RotateFlipType.Rotate180FlipNone;
+						break;
+					}
+					case 270:
+					{
+						rotateType = RotateFlipType.Rotate270FlipNone;
+						break;
+					}
+				}
+				newBitmap.RotateFlip(rotateType);
 				System.IO.MemoryStream newImage = new System.IO.MemoryStream();
 				newBitmap.Save(newImage, originalBitmap.RawFormat);
 				return newImage.GetBuffer();

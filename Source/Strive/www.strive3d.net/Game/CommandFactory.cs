@@ -94,7 +94,6 @@ namespace www.strive3d.net.Game
 		
 		#endregion
 
-		
 	
 	
 			
@@ -2307,6 +2306,86 @@ namespace www.strive3d.net.Game
 		}
 	
 			
+		public System.Data.SqlClient.SqlCommand RotateTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID, System.Data.SqlTypes.SqlInt32 Degrees)
+		{
+			const string thisID = "1228583465";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "RotateTerrain";
+					
+				// Parameters:
+					
+					
+				System.Data.SqlClient.SqlParameter param;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@TerrainInstanceID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Degrees";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@TerrainInstanceID"].Value = TerrainInstanceID;
+		
+			thisCommand.Parameters["@Degrees"].Value = Degrees;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand RotateTerrain()
+		{
+			const string thisID = "1228583465";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "RotateTerrain";
+					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
 		public System.Data.SqlClient.SqlCommand SelectPlayer(System.Data.SqlTypes.SqlInt32 PlayerID)
 		{
 			const string thisID = "844582097";
@@ -2796,6 +2875,9 @@ namespace www.strive3d.net.Game
 			return thisCommand;
 			
 		}
+	
+
+	
 
 	}
 
