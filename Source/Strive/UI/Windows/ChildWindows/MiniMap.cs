@@ -18,6 +18,7 @@ namespace Strive.UI.Windows.ChildWindows
 		private System.Windows.Forms.StatusBarPanel Information;
 		private System.Windows.Forms.StatusBar Status;
 		private System.Windows.Forms.StatusBarPanel RY;
+		private System.Windows.Forms.StatusBarPanel Triangles;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -44,7 +45,7 @@ namespace Strive.UI.Windows.ChildWindows
 			Y.Text = ((int)newPosition.position.Y).ToString();
 			X.Text = ((int)newPosition.position.X).ToString();
 			RY.Text = ((int)newPosition.rotation.Y).ToString();
-
+            Triangles.Text = Game.CurrentWorld.RenderingScene.VisibleTriangleCount.ToString();
 		}
 
 		/// <summary>
@@ -71,16 +72,18 @@ namespace Strive.UI.Windows.ChildWindows
 		{
 			this.RenderTarget = new System.Windows.Forms.Panel();
 			this.Status = new System.Windows.Forms.StatusBar();
-			this.X = new System.Windows.Forms.StatusBarPanel();
-			this.Y = new System.Windows.Forms.StatusBarPanel();
-			this.Z = new System.Windows.Forms.StatusBarPanel();
 			this.Information = new System.Windows.Forms.StatusBarPanel();
 			this.RY = new System.Windows.Forms.StatusBarPanel();
-			((System.ComponentModel.ISupportInitialize)(this.X)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.Y)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.Z)).BeginInit();
+			this.X = new System.Windows.Forms.StatusBarPanel();
+			this.Z = new System.Windows.Forms.StatusBarPanel();
+			this.Y = new System.Windows.Forms.StatusBarPanel();
+			this.Triangles = new System.Windows.Forms.StatusBarPanel();
 			((System.ComponentModel.ISupportInitialize)(this.Information)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.RY)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.X)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Z)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Y)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Triangles)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// RenderTarget
@@ -103,10 +106,22 @@ namespace Strive.UI.Windows.ChildWindows
 																					  this.RY,
 																					  this.X,
 																					  this.Z,
-																					  this.Y});
+																					  this.Y,
+																					  this.Triangles});
 			this.Status.ShowPanels = true;
 			this.Status.Size = new System.Drawing.Size(304, 22);
 			this.Status.TabIndex = 1;
+			// 
+			// Information
+			// 
+			this.Information.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
+			this.Information.Width = 148;
+			// 
+			// RY
+			// 
+			this.RY.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.RY.ToolTipText = "Heading";
+			this.RY.Width = 10;
 			// 
 			// X
 			// 
@@ -114,28 +129,23 @@ namespace Strive.UI.Windows.ChildWindows
 			this.X.ToolTipText = "Latitude";
 			this.X.Width = 10;
 			// 
-			// Y
-			// 
-			this.Y.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
-			this.Y.ToolTipText = "Altitude";
-			this.Y.Width = 10;
-			// 
 			// Z
 			// 
 			this.Z.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
 			this.Z.ToolTipText = "Longitude";
 			this.Z.Width = 10;
 			// 
-			// Information
+			// Y
 			// 
-			this.Information.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
-			this.Information.Width = 248;
+			this.Y.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.Y.ToolTipText = "Altitude";
+			this.Y.Width = 10;
 			// 
-			// RY
+			// Triangles
 			// 
-			this.RY.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
-			this.RY.ToolTipText = "Heading";
-			this.RY.Width = 10;
+			this.Triangles.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.Triangles.ToolTipText = "Triangles";
+			this.Triangles.Width = 10;
 			// 
 			// MiniMap
 			// 
@@ -145,11 +155,12 @@ namespace Strive.UI.Windows.ChildWindows
 			this.Controls.Add(this.RenderTarget);
 			this.Name = "MiniMap";
 			this.Text = "MiniMap";
-			((System.ComponentModel.ISupportInitialize)(this.X)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.Y)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.Z)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.Information)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.RY)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.X)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Z)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Y)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Triangles)).EndInit();
 			this.ResumeLayout(false);
 
 		}
