@@ -1,5 +1,8 @@
 using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Specialized;
+
 using System.Net;
 
 using Strive.Common;
@@ -20,6 +23,7 @@ namespace Strive.Resources
 		public static string _modelPath = "";
 		public static string _texturePath = "";
 		public static string _resourceServer = "";
+		public static ArrayList _knownmodels = new ArrayList();
 
 		public static void SetPath( string path ) {
 			_modelPath = System.IO.Path.Combine( path, "models" );
@@ -62,6 +66,7 @@ namespace Strive.Resources
 		{
 			if(System.IO.File.Exists(modelPath))
 			{
+
 				return true;
 			}
 
@@ -125,7 +130,5 @@ namespace Strive.Resources
 		}
 
 		#endregion
-
-
 	}
 }

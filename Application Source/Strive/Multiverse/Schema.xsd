@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="utf-16" ?>
 <xs:schema id="Schema" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
 	<xs:element name="Schema" msdata:IsDataSet="true" msdata:Locale="en-AU">
 		<xs:complexType>

@@ -21,6 +21,9 @@ namespace Strive.Logging {
 		}
 
 		public void LogMessage( string message ) {
+			message = "[" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":" 
+				+ DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":" 
+				+ DateTime.Now.Second.ToString().PadLeft(2, '0') + "]" + message;
 			Trace.WriteLine( message );
 			StringAppendFinite( message );
 		}
@@ -40,9 +43,9 @@ namespace Strive.Logging {
 
 		private void StringAppendFinite( string message ) {
 			if ( output != null ) {
-				output.Text += message + Environment.NewLine;
+				output.Text = message + Environment.NewLine + output.Text;
 				if ( output.Text.Length > 1000 ) {
-					output.Text = output.Text.Remove( 0, output.Text.Length - 1000 );
+					output.Text = output.Text.Remove(1000, output.Text.Length - 1000);
 				}
 			}
 		}

@@ -17,7 +17,7 @@
                 DelaySign = "false"
                 OutputType = "WinExe"
                 RootNamespace = "Strive.UI"
-                StartupObject = "Strive.UI.Global"
+                StartupObject = "Strive.UI.Game"
             >
                 <Config
                     Name = "Debug"
@@ -122,6 +122,16 @@
                     Project = "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "System.Design"
+                    AssemblyName = "System.Design"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Design.dll"
+                />
+                <Reference
+                    Name = "magiclibrary1"
+                    AssemblyName = "MagicLibrary"
+                    HintPath = "..\..\..\..\..\..\program files\crownwood consulting ltd\magic library 1.7.1\bin\magiclibrary.dll"
+                />
             </References>
         </Build>
         <Files>
@@ -131,108 +141,81 @@
                     BuildAction = "None"
                 />
                 <File
-                    RelPath = "App.ico"
-                    BuildAction = "Content"
-                />
-                <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Avatar.cs"
+                    RelPath = "Game.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Exceptions.cs"
+                    RelPath = "Engine\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Global.cs"
+                    RelPath = "Icons\Connection.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Icons\IconManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Forms\Acknowledgements.cs"
+                    RelPath = "Icons\StartedServer.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Icons\StoppedServer.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Settings\SettingsManager.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Main.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Forms\Acknowledgements.resx"
-                    DependentUpon = "Acknowledgements.cs"
+                    RelPath = "Windows\Main.resx"
+                    DependentUpon = "Main.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "Forms\FormBase.cs"
+                    RelPath = "Windows\SystemFormBase.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Forms\FormBase.resx"
-                    DependentUpon = "FormBase.cs"
+                    RelPath = "Windows\SystemFormBase.resx"
+                    DependentUpon = "SystemFormBase.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "Forms\Game.cs"
+                    RelPath = "Windows\ChildWindows\Connection.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Forms\Game.resx"
-                    DependentUpon = "Game.cs"
+                    RelPath = "Windows\ChildWindows\Connection.resx"
+                    DependentUpon = "Connection.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "Forms\Controls\Html\BrowserNavigateEvent.cs"
-                    SubType = "Code"
+                    RelPath = "Windows\ChildWindows\Log.cs"
+                    SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Forms\Controls\Html\HtmlControl.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\HtmlControl.resx"
-                    DependentUpon = "HtmlControl.cs"
+                    RelPath = "Windows\ChildWindows\Log.resx"
+                    DependentUpon = "Log.cs"
                     BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IHTMLDocument2.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IHTMLElement.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IWebBrowser.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IWebBrowserEvents.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\WebBrowser.cs"
-                    SubType = "UserControl"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\WebBrowser.resx"
-                    DependentUpon = "WebBrowser.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Modules\GameLoop.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
                 />
             </Include>
         </Files>

@@ -35,7 +35,14 @@ namespace Strive.Common
 
 		void ThreadLoop() {
 			while ( isRunning ) {
-				wr();
+				try
+				{
+					wr();
+				}
+				catch(Exception e)
+				{
+					throw new Strive.Common.TracedException("TracedException[" + e.Message + "]", e);
+				}
 			}
 			iHaveStopped.Set();
 		}
