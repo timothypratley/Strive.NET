@@ -26,6 +26,7 @@ namespace Strive.UI
 		public static Windows.Main CurrentMainWindow;// = new Windows.Main();
 		public static Scene CurrentScene;// = new Scene();
 		public static Logging.Log CurrentLog;// = new Logging.Log();
+		public static bool GameControlMode = false;
 
 		public static int CurrentPlayerID;
 
@@ -68,12 +69,14 @@ namespace Strive.UI
 			CurrentScene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
 			CurrentScene.View.FieldOfView = 60;
 			CurrentScene.View.ViewDistance = 20000;
-			CurrentScene.View.Position = new Vector3D( 0, 0, 0 );
+			CurrentScene.View.Position = new Vector3D( 0, 200, 0 );
 			CurrentScene.SetLighting( 255 );
-			CurrentScene.SetFog( 100.0f );
+			CurrentScene.SetFog( 1000.0f );
 			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName).AddressList[0], Port ) );
 			CurrentServerConnection.Login(LoginName, Password);
 			CurrentGameLoop.Start(CurrentScene, RenderTarget, CurrentServerConnection);
+			Strive.Rendering.Terrain.Landscape.LoadLandscape(
+				"landscape", "C:/strive/resources/textures/74.bmp" );
 		}
 	}
 }

@@ -42,11 +42,13 @@ namespace Strive.UI.Engine
 
 		public void MainLoop()
 		{
-				ProcessOutstandingMessages();
+			ProcessOutstandingMessages();
+			if ( Game.GameControlMode ) {
 				ProcessKeyboardInput();
-				//ProcessMouseInput();
-				ProcessAnimations();
-				Render();
+				ProcessMouseInput();
+			}
+			ProcessAnimations();
+			Render();
 		}
 
 		void ProcessOutstandingMessages() {
@@ -90,10 +92,6 @@ namespace Strive.UI.Engine
 
 		void ProcessKeyboardInput() {
 			#region 2.0 Get keyboard input 
-			if ( !((System.Windows.Forms.PictureBox)_screen).Visible ) {
-		//		System.Windows.Forms.MessageBox.Show("No keyboard");
-				return;
-			}
 
 			bool WasKeyboardInput = false;
 			const int moveunit = 5;
@@ -150,7 +148,7 @@ namespace Strive.UI.Engine
 			if(WasKeyboardInput) {
 				// check that we can go there
 				foreach ( Model m in _scene.Models.Values ) {
-					if ( m.ModelFormat == ModelFormat.Terrain ) {
+					if ( m.ModelFormat == ModelFormat.Scape ) {
 						continue;
 					}
 					//Game.CurrentLog.LogMessage(	"CD2 model " + m.Key + " at " + m.Position + " from " + cameraPosition );

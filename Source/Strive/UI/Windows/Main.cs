@@ -2,21 +2,20 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
+
 using Crownwood.Magic;
 using Crownwood.Magic.Common;
 using Crownwood.Magic.Controls;
 using Crownwood.Magic.Docking;
 
 
-using System.Windows.Forms;
-
-
 namespace Strive.UI.Windows
 {
 	public class Main : Strive.UI.Windows.SystemFormBase
 	{
-		private Crownwood.Magic.Controls.TabControl MainTabs;
-		private Crownwood.Magic.Controls.TabPage GameTab;
+		public Crownwood.Magic.Controls.TabControl MainTabs;
+		public Crownwood.Magic.Controls.TabPage GameTab;
 		protected Crownwood.Magic.Docking.DockingManager DockingManager;
 		private Crownwood.Magic.Menus.MenuControl MainMenu;
 		private Crownwood.Magic.Menus.MenuCommand FileMenu;
@@ -100,6 +99,11 @@ namespace Strive.UI.Windows
 
 			Settings.SettingsManager.InitialiseWindow(this);
 
+			#endregion
+
+			#region Events
+			RenderTarget.LostFocus += new EventHandler( RenderTarget_LostFocus );
+			RenderTarget.Click += new EventHandler( RenderTarget_Click );
 			#endregion
 
 			#endregion
@@ -303,6 +307,41 @@ namespace Strive.UI.Windows
 			DockingManager.AddContentWithState(logWindow, State.DockBottom);
 		}
 
+		private void RenderTarget_LostFocus( object sender, System.EventArgs e ) {
+			ReleaseGameControlMode();
+		}
+
+		private void RenderTarget_Click( object sender, System.EventArgs e ) {
+			if ( Game.GameControlMode ) {
+				ReleaseGameControlMode();	
+			} else {
+				RenderTarget.Focus();
+				SetGameControlMode();
+			}
+		}
+
+		private void SetGameControlMode() {
+			Game.GameControlMode = true;
+			Cursor.Hide();
+			Rectangle r = new Rectangle(
+				RenderTarget.Left, RenderTarget.Top,
+				RenderTarget.Width, RenderTarget.Height );
+			Cursor.Clip = RenderTarget.RectangleToScreen( r );
+			RenderTarget.Capture = true;
+		}
+		
+		private void ReleaseGameControlMode() {
+			Game.GameControlMode = false;
+			RenderTarget.Capture = false;
+			Cursor.Position = RenderTarget.PointToScreen(
+				new Point(
+					RenderTarget.Left + RenderTarget.Width / 2,
+					RenderTarget.Top + RenderTarget.Height / 2
+				)
+			);
+			Cursor.Clip = new Rectangle( new Point(0,0), new Size(0,0) );
+			Cursor.Show();
+		}
 	}
 }
 
