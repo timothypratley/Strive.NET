@@ -66,6 +66,10 @@ namespace Strive.Rendering.TV3D {
 			Input.ForceUpdate();
 		}
 
+		public float TimeSinceLastFrame() {
+			return TV3DEngine.AccurateTimeElapsed();
+		}
+
 		public IMouse Mouse {
 			get { return mouse; }
 		}

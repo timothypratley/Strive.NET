@@ -25,6 +25,7 @@ namespace Strive.Rendering
 		IActor LoadActor(string name, string path, float height);
 		ITexture LoadTexture(string name, string path);
 		void ForceInputUpdate();
+		float TimeSinceLastFrame();
 
 		IMouse Mouse { get; }
 		IKeyboard Keyboard{ get; }

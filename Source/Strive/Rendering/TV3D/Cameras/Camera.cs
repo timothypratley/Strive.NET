@@ -13,10 +13,11 @@ namespace Strive.Rendering.TV3D.Cameras
 	{
 		#region "Private fields"
 		// initialised to origin
-		private Vector3D _position = Vector3D.Origin;
-		private Vector3D _rotation = Vector3D.Origin;
-		private float _fieldOfView = 60;
-		private float _viewDistance = 1000;
+		Vector3D _position = Vector3D.Origin;
+		Vector3D _rotation = Vector3D.Origin;
+		float _fieldOfView = 60;
+		float _viewDistance = 100;
+		float _nearPlane = 0.1F;
 
 
 		static Camera thisCamera = new Camera();
@@ -55,8 +56,8 @@ namespace Strive.Rendering.TV3D.Cameras
 			set
 			{
 				_fieldOfView = value;
-				Engine.TV3DScene.SetViewFrustum( _fieldOfView, _viewDistance );
-				//Engine.Camera.SetViewFrustum( _fieldOfView, _viewDistance, 0f);
+				//Engine.TV3DScene.SetViewFrustum( _fieldOfView, _viewDistance );
+				Engine.Camera.SetViewFrustum( _fieldOfView, _viewDistance, _nearPlane);
 			}
 		}
 
@@ -72,8 +73,8 @@ namespace Strive.Rendering.TV3D.Cameras
 			set
 			{
 				_viewDistance = value;
-				Engine.TV3DScene.SetViewFrustum( _fieldOfView, _viewDistance );
-				//Engine.Camera.SetViewFrustum(_fieldOfView, _viewDistance, 0f);
+				//Engine.TV3DScene.SetViewFrustum( _fieldOfView, _viewDistance );
+				Engine.Camera.SetViewFrustum(_fieldOfView, _viewDistance, _nearPlane);
 			}
 		}
 

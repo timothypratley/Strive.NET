@@ -52,7 +52,7 @@ namespace Strive.Multiverse
 			// can we get r^2 from ResourceID?
 			// TODO: make this the proper 3d radius^2
 			// store it in the database
-			BoundingSphereRadiusSquared = 100;
+			BoundingSphereRadiusSquared = 1;
 		}
 	}
 }

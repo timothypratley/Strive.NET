@@ -125,10 +125,11 @@ namespace Strive.Server.Shared
 				Vector3D velocity = Helper.GetHeadingFromRotation( Rotation );
 				switch ( MobileState ) {
 					case EnumMobileState.Running:
-						world.Relocate( this, (Position+3*velocity), Rotation );
+						// TODO: using timing, not constant values
+						world.Relocate( this, (Position+3*velocity/10), Rotation );
 						break;
 					case EnumMobileState.Walking:
-						world.Relocate( this, (Position+velocity), Rotation );
+						world.Relocate( this, (Position+velocity/10), Rotation );
 						break;
 					default:
 						// do nothing

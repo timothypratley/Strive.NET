@@ -30,6 +30,7 @@ namespace Strive.Resources
 		Hashtable _actors = new Hashtable();
 		IEngine factory;
 
+		// TODO: display placeholders until models load
 		IActor _placeHolderActor;
 		IModel _placeHolderModel;
 
@@ -217,7 +218,7 @@ namespace Strive.Resources
 		public ITexture GetCursor( int CursorID ) {
 			ITexture t = (ITexture)_cursors[CursorID];
 			if ( t == null ) {
-				t = LoadTexture( CursorID );
+				t = LoadCursor( CursorID );
 				_cursors.Add( CursorID, t );
 			}
 			return t;

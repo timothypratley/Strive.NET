@@ -134,10 +134,14 @@ namespace Strive.UI.Engine
 				return;
 			}
 			
+			float moveunit = 1.39F * Game.RenderingFactory.TimeSinceLastFrame()/1000F;
+			if ( keyboard.GetKeyState(Key.key_LEFTSHIFT) ) {
+				moveunit *= 2.5F;
+			}
+
 			
 			#region ProcessRotationInput
 
-			const int moveunit = 2;
 			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position.Clone();
 			Vector3D newRotation = Game.CurrentWorld.CurrentAvatar.model.Rotation.Clone();
 			mouse.GetState();
@@ -165,6 +169,7 @@ namespace Strive.UI.Engine
 
 			#endregion
 			#region 2.0 Process Movement Input
+
 
 			Vector3D changeOfPosition = new Vector3D( 0, 0, 0 );
 			if ( keyboard.GetKeyState(Key.key_W) ) 

@@ -33,9 +33,10 @@ namespace Strive.UI.WorldView {
 			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
 			RenderingEngine.Initialise( RenderTarget, EnumRenderTarget.PictureBox, Resolution.Automatic );
 			//RenderingScene.View.FieldOfView = 90;
-			//RenderingScene.View.ViewDistance = 4000;
+			//RenderingScene.View.ViewDistance = 400;
 			RenderingScene.SetLighting( 100 );
 			RenderingScene.SetFog( 500.0f );
+			RenderingScene.View.ViewDistance = 10000;
 		}
 
 		public PhysicalObjectInstance Add( PhysicalObject po ) {

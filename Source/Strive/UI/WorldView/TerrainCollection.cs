@@ -16,7 +16,7 @@ namespace Strive.UI.WorldView
 		IEngine _engine;
 		IScene _scene;
 		ResourceManager _resource_manager;
-		public static int terrainSize = 100;
+		public static int terrainSize = 10;
 
 
 		public TerrainCollection( ResourceManager rm, IEngine engine, IScene scene ) {
