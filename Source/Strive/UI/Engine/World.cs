@@ -80,7 +80,7 @@ namespace Strive.UI.Engine {
 
 			if ( cameraMode == EnumCameraMode.FirstPerson ) {
 				cameraPosition = CurrentAvatar.model.Position.Clone();
-				cameraPosition.Y += 20;
+				cameraPosition.Y += 10;
 				scene.View.Position = cameraPosition;
 				scene.View.Rotation = CurrentAvatar.model.Rotation;
 				cameraHeading = Helper.GetHeadingFromRotation( CurrentAvatar.model.Rotation );

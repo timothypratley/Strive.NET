@@ -179,10 +179,11 @@ namespace Strive.UI.Engine
 						return;
 					}
 				} */
-				avatarPosition.Y = Game.CurrentWorld.terrainPieces.AltitudeAt( avatarPosition.X, avatarPosition.Z );
+				avatarPosition.Y = Game.CurrentWorld.terrainPieces.AltitudeAt( avatarPosition.X, avatarPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
 				Game.CurrentWorld.CurrentAvatar.model.Position = avatarPosition;
 				Game.CurrentWorld.CurrentAvatar.model.Rotation = avatarRotation;
 				Game.CurrentWorld.RepositionCamera();
+				Log.LogMessage( "Now at " + avatarPosition );
 				SendCurrentPosition();
 			}
 

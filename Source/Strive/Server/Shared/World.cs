@@ -256,7 +256,7 @@ namespace Strive.Server.Shared {
 			} else {
 				ma = null;
 			}
-
+/*
 			// check that the object can fit there
 			// todo: what about objects that span squares?
 			// these need to be checked as well, or linked from both squares?
@@ -289,7 +289,7 @@ namespace Strive.Server.Shared {
 					return;
 				}
 			}
-
+*/
 			po.Position = newPosition;
 			po.Rotation = newRotation;
 
@@ -477,8 +477,8 @@ namespace Strive.Server.Shared {
 				&&  terrain[ terrainX, terrainZ+1 ] != null
 				&&  terrain[ terrainX+1, terrainZ+1 ] != null 
 				) {
-				float dx = (float)((x - lowX) % Square.terrainSize);
-				float dz = (float)((z - lowZ) % Square.terrainSize);
+				float dx = x - terrain[ terrainX, terrainZ ].Position.X;
+				float dz = z - terrain[ terrainX, terrainZ ].Position.Z;
 
 				// terrain is a diagonally split square, forming two triangles
 				// which touch the altitude points of 4 neighbouring terrain
@@ -487,19 +487,19 @@ namespace Strive.Server.Shared {
 				// to find the altitude at that point
 				float xslope;
 				float zslope;
-				if ( dz <= 1 - dx ) {
+				if ( dz < dx ) {
 					// lower triangle
-					xslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ+1 ].Position.Y ) / Square.terrainSize;
-					zslope = ( terrain[ terrainX, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Square.terrainSize;
-				} else {
-					// upper triangle
 					xslope = ( terrain[ terrainX+1, terrainZ ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Square.terrainSize;
 					zslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX+1, terrainZ ].Position.Y ) / Square.terrainSize;
+				} else {
+					// upper triangle
+					xslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ+1 ].Position.Y ) / Square.terrainSize;
+					zslope = ( terrain[ terrainX, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Square.terrainSize;
 				}
 				return terrain[ terrainX, terrainZ ].Position.Y + xslope * dx + zslope * dz;
 			}
 			// no terrain here
-			return 0;
+			return -100;
 		}
 	}
 }

@@ -80,10 +80,8 @@ namespace Strive.Resources
 					// w00t on this piece lookup its height
 					// if it is fully defined
 					if ( t.xplusKnown && t.zplusKnown && t.xpluszplusKnown ) {
-						float dx = (float)(x % terrainSize);
-						float dz = (float)(z % terrainSize);
-						if ( dx < 0 ) dx += terrainSize;
-						if ( dz < 0 ) dz += terrainSize;
+						float dx = x - t.x;
+						float dz = z - t.z;
 
 						// terrain is a diagonally split square, forming two triangles
 						// which touch the altitude points of 4 neighbouring terrain
@@ -92,24 +90,24 @@ namespace Strive.Resources
 						// to find the altitude at that point
 						float xslope;
 						float zslope;
-						if ( dz <= 1 - dx ) {
+						if ( dz < dx ) {
 							// lower triangle
-							xslope = ( t.xpluszplus - t.zplus ) / terrainSize;
-							zslope = ( t.zplus - t.altitude ) / terrainSize;
-						} else {
-							// upper triangle
 							xslope = ( t.xplus - t.altitude ) / terrainSize;
 							zslope = ( t.xpluszplus - t.xplus ) / terrainSize;
+						} else {
+							// upper triangle
+							xslope = ( t.xpluszplus - t.zplus ) / terrainSize;
+							zslope = ( t.zplus - t.altitude ) / terrainSize;
 						}
 						return t.altitude + xslope * dx + zslope * dz;
 					} else {
-						// no terrain here
-						return 0;
+						// terrain piece not defined yet
+						return -100;
 					}
 				}
 			}
-			// no terrain here
-			return 0;
+			// no terrain found
+			return -100;
 		}
 	}
 }
