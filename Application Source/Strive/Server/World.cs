@@ -28,17 +28,19 @@ namespace Strive.Server {
 		public Hashtable physicalObjects = new Hashtable();
 		protected ArrayList mobilesArrayList = new ArrayList();
 
-		public World() {
-			System.Console.WriteLine( "Loading world..." );
-			System.Console.WriteLine( "starting... " + DateTime.Now );
+		public World( int world_id ) {
+			// EEERRR would be nice to be able to load only the
+			// world in question... but for now load them all
+			System.Console.WriteLine( "Loading multiverse..." );
 			multiverse = Strive.Data.MultiverseFactory.getMultiverse();
-			System.Console.WriteLine( "starting... " + DateTime.Now );
+			System.Console.WriteLine( "Multiverse loaded." );
 
 			// find highX and lowX for our world dimensions
 			highX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
 			lowX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
 			highZ = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
 			lowZ = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
+			System.Console.WriteLine( "Multiverse bounds are " + lowX + "," + lowZ + " " + highX + "," + highZ );
 
 			// figure out how many squares we need
 			squaresInX = (int)(highX-lowX)/Square.squareSize + 1;
@@ -53,77 +55,63 @@ namespace Strive.Server {
 				}
 			}
 
-			// for each respawn, create the wrapper and add it to the world
-			foreach ( Schema.ObjectInstanceRow rpr in multiverse.ObjectInstance ) {
-				// Load the underlying physical object,
-				// AreaID 0 means it is a Player character or item
-				Schema.ObjectTemplateRow por = multiverse.ObjectTemplate.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				if ( por.AreaID == 0 ) {
-					// player objects/items are not loaded until needed
-					System.Console.WriteLine( "Player " + rpr.ObjectInstanceID + " not loaded" );
-					continue;
-				}
+			Schema.WorldRow wr = multiverse.World.FindByWorldID( world_id );
+			if ( wr == null ) {
+				throw new Exception( "ERROR: World ID not valid!" );	
+			}
+			
+			System.Console.WriteLine( "Loading world \"" + wr.WorldName + "\"..." );
+			foreach ( Schema.AreaRow ar in wr.GetAreaRows() ) {
+				System.Console.WriteLine( "Loading area \"" + ar.AreaName + "\"..." );
+				// don't load area 0, its players and their eq
+				if ( ar.AreaID == 0 ) continue;
+				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
+					foreach ( Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows() ) {
+						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+							// NB: we only add avatars to our world, not mobiles
+							MobileAvatar a = new MobileAvatar( this, tmr, otr, oir );
+							Add( a );
+						}
+					}
+					foreach ( Schema.TemplateItemRow tir in otr.GetTemplateItemRows() ) {
+						foreach ( Schema.ItemEquipableRow ier in tir.GetItemEquipableRows() ) {
+							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+								Equipable e = new Equipable( ier, tir, otr, oir );
+								Add( e );
+							}
+						}
+						foreach ( Schema.ItemJunkRow ijr in tir.GetItemJunkRows() ) {
+							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+								Junk j = new Junk( ijr, tir, otr, oir );
+								Add( j );
+							}
+						}
+						foreach ( Schema.ItemQuaffableRow iqr in tir.GetItemQuaffableRows() ) {
+							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+								Quaffable q = new Quaffable( iqr, tir, otr, oir );
+								Add( q );
+							}
+						}
+						foreach ( Schema.ItemReadableRow irr in tir.GetItemReadableRows() ) {
+							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+								Readable r = new Readable( irr, tir, otr, oir );
+								Add( r );
+							}
+						}
+						foreach ( Schema.ItemWieldableRow iwr in tir.GetItemWieldableRows() ) {
+							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+								Wieldable w = new Wieldable( iwr, tir, otr, oir );
+								Add( w );
+							}
 
-				// For each respawn, try to figure out what it is
-				Schema.TemplateMobileRow mr = multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				Schema.ItemQuaffableRow qr = multiverse.ItemQuaffable.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				Schema.ItemEquipableRow er = multiverse.ItemEquipable.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				Schema.ItemReadableRow rr = multiverse.ItemReadable.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				Schema.ItemJunkRow jr = multiverse.ItemJunk.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				Schema.ItemWieldableRow wr = multiverse.ItemWieldable.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				Schema.TemplateTerrainRow tr = multiverse.TemplateTerrain.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				
-				if ( mr != null ) {
-					MobileAvatar a = new MobileAvatar(
-						this,
-						mr,
-						por,
-						rpr	);
-					// NB: we only add avatars to our world, not mobiles
-					Add( a );
-				} else if ( qr != null ) {
-					Quaffable q = new Quaffable(
-						qr,
-						multiverse.TemplateItem.FindByObjectTemplateID( qr.ObjectTemplateID ),
-						por,
-						rpr );
-					Add( q );
-				} else if ( er != null ) {
-					Equipable e = new Equipable(
-						er,
-						multiverse.TemplateItem.FindByObjectTemplateID( er.ObjectTemplateID ),
-						por,
-						rpr );
-					Add( e );
-				} else if ( rr != null ) {
-					Readable r = new Readable(
-						rr,
-						multiverse.TemplateItem.FindByObjectTemplateID( rr.ObjectTemplateID ),
-						por,
-						rpr );
-					Add( r );
-				} else if ( wr != null ) {
-					Wieldable w = new Wieldable(
-						wr,
-						multiverse.TemplateItem.FindByObjectTemplateID( wr.ObjectTemplateID ),
-						por,
-						rpr );
-					Add( w );
-				} else if ( jr != null ) {
-					Junk j = new Junk(
-						jr,
-						multiverse.TemplateItem.FindByObjectTemplateID( jr.ObjectTemplateID ),
-						por,
-						rpr );
-					Add( j );
-				} else if ( tr != null ) {
-					Terrain t = new Terrain(
-						tr,
-						por,
-						rpr );
-					Add( t );
-				} else {
-					System.Console.WriteLine( "ERROR: respawn of non-entity " + rpr.ObjectTemplateID ) ;
+						}
+					}
+					foreach ( Schema.TemplateTerrainRow ttr in otr.GetTemplateTerrainRows() ) {
+						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+							Terrain t = new Terrain( ttr, otr, oir );
+							Add( t );
+						}
+					}
 				}
 			}
 			System.Console.WriteLine( "Loaded world" );

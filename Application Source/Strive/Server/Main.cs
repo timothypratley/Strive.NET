@@ -12,6 +12,16 @@ namespace Strive.Server {
 		/// The main entry point for the application.
 		/// </summary>
 		static void Main( string[] args ) {
+			int world_id;
+
+			if ( args.Length == 0 ) {
+				world_id = 1;
+			} else if ( args.Length == 1 ) {
+				world_id = int.Parse( args[0] );
+			} else {
+				throw new Exception( "Usage: server [world_id]" );
+			}
+
 			if ( System.Configuration.ConfigurationSettings.AppSettings["port"] == null ) {
 				throw new System.Configuration.ConfigurationException( "port" );
 			}
@@ -23,7 +33,7 @@ namespace Strive.Server {
 			);
 			listener.Start();
 			
-			World world = new World();
+			World world = new World( world_id );
 			MessageProcessor mp = new MessageProcessor( world, listener	);
 
 			while ( true ) {
@@ -43,7 +53,6 @@ namespace Strive.Server {
 					Thread.Sleep( 100 );
 				}
 			}
-			Console.ReadLine();
 		}
 	}
 }

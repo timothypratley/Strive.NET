@@ -83,11 +83,6 @@
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
-                    Name = "Strive.Multiverse"
-                    Project = "{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
                     Name = "Strive.Math3D"
                     Project = "{14818E27-DABB-4332-B572-21BA9983D886}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
@@ -95,6 +90,11 @@
                 <Reference
                     Name = "Strive.Data"
                     Project = "{4EA43F2E-977F-4858-A5F8-FE258628888B}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Strive.Multiverse"
+                    Project = "{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
