@@ -267,10 +267,11 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Render() {
-			int i, j, k, l, m, p;
+			int i, j, k, l, m, p, q;
 			int cs;
 			bool renderright;
 			bool renderup;
+			q=0;
 
 			// Disable Z for the higher order landscapes, but for the best detail one,
 			// re-enable Z (we want it on top, and to hide objects etc as normal
@@ -309,6 +310,8 @@ namespace Strive.UI.WorldView {
 							}
 							if ( TC[l,m,k] != null && TC[l,m,k].Visible ) {
 								TC[l,m,k].Render();
+								_scene.DrawText( new Vector3D(TC[l,m,k].Position.X+cs/2, TC[l,m,k].Position.Y+cs/2, TC[l,m,k].Position.Z+50 ), "T("+l+","+m+","+k+") "+q+"th" );
+								q++;
 							}
 						}
 

@@ -70,8 +70,13 @@ namespace Strive.Resources
 			IModel m = (IModel)_models[ModelID];
 			if ( m == null ) {
 				m = LoadModel( InstanceID, ModelID, height );
+				m.Visible = false;
 				_models.Add( ModelID, m );
 			}
+			// TODO: We will eventually need to garbage collect models
+			// that are rarely duplicated. I propose we would keep track
+			// of when a model was last duplicated or created, and sort
+			// that list, removing oldest first until we reach some condition
 			return m.Duplicate( InstanceID.ToString(), height );
 		}
 
@@ -100,6 +105,7 @@ namespace Strive.Resources
 			IActor a = (IActor)_actors[ModelID];
 			if ( a == null ) {
 				a = LoadActor( InstanceID, ModelID, height );
+				a.Visible = false;
 				_actors.Add( ModelID, a );
 			}
 			return (IActor)a.Duplicate( InstanceID.ToString(), height );
