@@ -165,13 +165,18 @@ namespace Strive.UI.WorldView {
 
 		public void Render() {
 			renderViewport.SetFocus();
-			RenderingScene.Render();
+			RenderingScene.Clear();
+			RenderingScene.RenderAtmosphere();
 			TerrainPieces.Render();
+			RenderingScene.Render();
 			RenderingScene.Display();
 			if ( miniMapViewport != null ) {
-				//miniMapViewport.SetFocus();
-				//RenderingScene.Render();
-				//RenderingScene.Display();
+				miniMapViewport.SetFocus();
+				RenderingScene.Clear();
+				RenderingScene.RenderAtmosphere();
+				TerrainPieces.Render();
+				RenderingScene.Render();
+				RenderingScene.Display();
 			}
 		}
 

@@ -350,8 +350,8 @@ namespace Strive.Server.Shared {
 				int tz1 = Helper.DivTruncate( (int)po.Position.Z, Constants.terrainPieceSize );
 				for ( int k=0; k<Constants.terrainZoomOrder; k++ ) {
 					int chs = (int)Math.Pow(Constants.terrainHeightsPerChunk,k);
-					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder / 2 + 2;
-					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2 + 2;
+					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder / 2 + 2*chs;
+					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2 + 2*chs;
 					int tbx = Helper.DivTruncate( (int)newPosition.X, Constants.terrainPieceSize) - xradius;
 					int tbz = Helper.DivTruncate( (int)newPosition.Z, Constants.terrainPieceSize) - zradius;
 

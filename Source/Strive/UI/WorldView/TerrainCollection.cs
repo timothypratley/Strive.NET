@@ -240,7 +240,7 @@ namespace Strive.UI.WorldView {
 			bool renderright;
 			bool renderup;
 			_engine.DisableZ();
-			for ( k=0; k<zoomorder; k++ ) {
+			for ( k=zoomorder-1; k>=0; k-- ) {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 
 				if ( center_x - CX[k]*cs < ( CX[k]+xorder-1)*cs - center_x ) {
@@ -260,11 +260,11 @@ namespace Strive.UI.WorldView {
 					} else {
 						l = xorder-i-1;
 					}
-					for ( j=0; j<zorder; k++ ) {
+					for ( j=0; j<zorder; j++ ) {
 						if ( renderup ) {
 							m = i;
 						} else {
-							m = zorder-i-1;
+							m = zorder-j-1;
 						}
 						if ( TC[l,m,k] != null && TC[l,m,k].Visible ) {
 							TC[l,m,k].Render();

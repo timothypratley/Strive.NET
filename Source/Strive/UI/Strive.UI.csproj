@@ -194,9 +194,8 @@
                 />
                 <Reference
                     Name = "MagicLibrary"
-                    AssemblyName = "MagicLibrary"
-                    HintPath = "C:\Program Files\Crownwood Consulting Ltd\Magic Library 1.7.4\Bin\MagicLibrary.DLL"
-                    AssemblyFolderKey = "hklm\dn\magic library"
+                    Project = "{92F94EA0-9910-4895-B8A1-FED1543A9DA1}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
         </Build>

@@ -49,8 +49,8 @@ namespace Strive.Rendering.TV3D.Models {
 		}
 
 		public void SetHeight( float x, float z, float altitude ) {
-			// bug in TV3D landscape scaling, z+1
-			_mesh.ChangePointAltitude( x, z, altitude, true, false, false );
+			// TODO: remove +1 ... bug in TV3D landscape scaling, z+1
+			_mesh.ChangePointAltitude( x, z+1, altitude, true, false, false );
 		}
 
 		public float GetHeight( float x, float z ) {

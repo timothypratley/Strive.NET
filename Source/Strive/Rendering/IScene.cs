@@ -21,7 +21,9 @@ namespace Strive.Rendering
 		void SetFog( float level );
 		void DrawText( Vector3D location, string message );
 		/// <remarks>Renders the scene into video memory.</remarks>
+		void Clear();
 		void Render();
+		void RenderAtmosphere();
 		void RenderToOtherWindow( System.Windows.Forms.IWin32Window hwnd );
 		/// <remarks>Displays the rendered screen.</remarks>
 		void Display();
