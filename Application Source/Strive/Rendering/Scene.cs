@@ -70,10 +70,11 @@ namespace Strive.Rendering
 				}
 
 				Interop._instance.Engine.InitializeMe(true);
-				Interop._instance.Pipeline.SetBackColor(0,0,0);
+				Interop._instance.Pipeline.SetBackColor(30,30,140);
 				Interop._instance.Pipeline.SetDithering(true);
 				Interop._instance.Pipeline.SetFillMode(Revolution3D8088c.R3DFILLMODE.R3DFILLMODE_SOLID);
-				Interop._instance.Pipeline.SetAmbientLight(255,255,255);
+				Interop._instance.Pipeline.SetAmbientLight(0,0,0);
+				Interop._instance.Pipeline.SetColorKeying(true);
 				Interop._instance.Pipeline.SetSpecular(true);
 				Interop._instance.Pipeline.SetMipMapping(false);
 				Interop._instance.Pipeline.SetShadeMode(R3DSHADEMODE.R3DSHADEMODE_GOURAUD);
@@ -86,17 +87,18 @@ namespace Strive.Rendering
 			_initialised = true;
 		}
 
-		public void LoadTexture( string name, string filename ) 
-		{
-			if ( Interop._instance.TextureLib.Class_SetPointer( name ) < 0 ) 
-			{
-				R3DCOLORKEY colorkey = R3DCOLORKEY.R3DCOLORKEY_CYAN;
-				Interop._instance.TextureLib.Texture_Load( name, filename, ref colorkey );
-			} 
-			else 
-			{
-				// already added
-			}
+		public void DropAll() {
+			_models = new ModelCollection();
+			_views = new Cameras.CameraCollection();
+			Interop._instance.Engine.InitializeMe(true);
+			Interop._instance.MdlSystem.Class_ClearMe();
+			Interop._instance.Meshbuilder.Class_ClearMe();
+			Interop._instance.TextureLib.Class_ReleaseMe();
+		}
+
+		public void SetSky( string name, string texture ) {
+			Interop._instance.Skydome.Item_Create( name, R3DSKYDOMEITEM.R3DSKYDOMEITEM_SPHERE, 2000 );
+			Interop._instance.Skydome.Item_SetTexture( 0, texture );
 		}
 
 		/// <summary>

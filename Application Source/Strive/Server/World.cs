@@ -19,16 +19,25 @@ namespace Strive.Server {
 		double lowZ = -1000.0;
 		int squaresInX = 1;
 		int squaresInZ = 1;
+		int world_id;
 		
 		// the multiverse schema is used for dataset access
 		Schema multiverse;
 		// squares are used to group physical objects
 		protected Square[,] squares;
 		// all physical objects are indexed in a hashtable
-		public Hashtable physicalObjects = new Hashtable();
-		protected ArrayList mobilesArrayList = new ArrayList();
+		public Hashtable physicalObjects;
+		protected ArrayList mobilesArrayList;
 
 		public World( int world_id ) {
+			this.world_id = world_id;
+			Load();
+		}
+
+		public void Load() {
+			physicalObjects = new Hashtable();
+			mobilesArrayList = new ArrayList();
+
 			// EEERRR would be nice to be able to load only the
 			// world in question... but for now load them all
 			System.Console.WriteLine( "Loading multiverse..." );
@@ -271,12 +280,12 @@ namespace Strive.Server {
 			}
 		}
 
-		public void SendInitialWorldView( MobileAvatar mob ) {
+		public void SendInitialWorldView( Client client ) {
 			// if a new client has entered the world,
 			// notify them about surrounding physical objects
 			// NB: this routine will send the client mobile's
 			// position as one of the 'nearby' mobiles.
-			Client client = mob.client;
+			Mobile mob = client.Avatar;
 			int squareX = (int)(mob.Position.X-lowX)/Square.squareSize;
 			int squareZ = (int)(mob.Position.Z-lowZ)/Square.squareSize;
 			int i, j;

@@ -39,11 +39,14 @@ namespace Strive.Rendering.Cameras
 		public static Camera CreateCamera(string cameraKey, CameraCollection cameras)
 		{
 			Camera c = new Camera();
+			
 			c._key = cameraKey;
 			c.Position = Vector3D.Origin;
-			c.Rotation = Vector3D.Origin;
+			//c.Rotation = Vector3D;
 			cameras.Add(cameraKey, c);
 			Interop._instance.Cameras.Camera_Create(cameraKey);
+			Interop._instance.Cameras.Class_SetPointer(cameraKey);
+			
 			return c;
 		}
 
@@ -121,6 +124,17 @@ namespace Strive.Rendering.Cameras
 				_viewDistance = value;
 			}
 		}
+
+		/*
+		public void SetHeading( Vector3D heading ) {
+			setPointer;
+			R3DPoint3D p;
+			p.x = heading.X + _position.X;
+			p.y = heading.Y + _position.Y;
+			p.z = heading.Z + _position.Z;
+			Interop._instance.Cameras.Camera_LookAt( ref p );
+		}
+		*/
 		#endregion
 
 		#region "Implementation of IManeuverable"
@@ -135,7 +149,7 @@ namespace Strive.Rendering.Cameras
 			try
 			{
 				initialisePointer();
-				R3DPoint3D r = VectorConverter.GetR3DPoint3DFromVector3D(movement);
+				R3DPoint3D r = VectorConverter.GetR3DPoint3DFromVector3D(newPosition);
 				Interop._instance.Cameras.Camera_SetPosition(ref r);
 			}
 			catch(Exception e)
@@ -158,7 +172,7 @@ namespace Strive.Rendering.Cameras
 			try
 			{
 				initialisePointer();
-				R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(rotation);
+				R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(newRotation);
 				Interop._instance.Cameras.Camera_SetRotation(ref r);
 			}
 			catch(Exception e)
@@ -181,13 +195,12 @@ namespace Strive.Rendering.Cameras
 			}
 			set 
 			{
-				try 
-				{
+				try {
+					initialisePointer();
 					R3DPoint3D r = VectorConverter.GetR3DPoint3DFromVector3D(value);
 					Interop._instance.Cameras.Camera_SetPosition(ref r);
 				}
-				catch(Exception e) 
-				{
+				catch(Exception e) {
 					throw new RenderingException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for camera.", e);
 				}
 				_position = value;				
@@ -207,7 +220,11 @@ namespace Strive.Rendering.Cameras
 			{
 				try 
 				{
+					initialisePointer();
 					R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(value);
+					r.x = -r.x;
+					r.y = -r.y;
+					r.z = -r.z;
 					Interop._instance.Cameras.Camera_SetRotation(ref r);
 				}
 				catch(Exception e) 

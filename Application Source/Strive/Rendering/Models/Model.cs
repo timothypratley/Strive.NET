@@ -44,6 +44,7 @@ namespace Strive.Rendering.Models
 			Model created = new Model();
 			created._key = name;
 			created._id = id;
+			created._format = ModelFormat._3DS;
 			return created;
 		}
 
@@ -84,6 +85,7 @@ namespace Strive.Rendering.Models
 				case ModelFormat.MDL: {
 					try {
 						Interop._instance.MdlSystem.MDL_Load(key, path);
+						Interop._instance.MdlSystem.MDL_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -102,6 +104,7 @@ namespace Strive.Rendering.Models
 
 						Interop._instance.Meshbuilder.Mesh_Create(key);
 						Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
+						Interop._instance.Meshbuilder.Mesh_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -332,7 +335,7 @@ namespace Strive.Rendering.Models
 					case ModelFormat.MDL: {
 						setPointer();
 						try {
-							Interop._instance.MdlSystem.MDL_SetRotation(value.X, value.Y, value.Z);
+							Interop._instance.MdlSystem.MDL_SetRotation(-value.X, -value.Y, -value.Z);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set rotation '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
@@ -341,7 +344,7 @@ namespace Strive.Rendering.Models
 					}
 					case ModelFormat._3DS: {
 						setPointer();
-						Interop._instance.Meshbuilder.Mesh_SetRotation( value.X, value.Y, value.Z );
+						Interop._instance.Meshbuilder.Mesh_SetRotation( -value.X, -value.Y, -value.Z );
 						break;
 					}
 					default:

@@ -16,6 +16,7 @@ namespace Strive.Network.Messages {
 			ToClientCombatReport,
 			ToClientCommunication,
 			ToClientCurrentHitpoints,
+			ToClientDropAll,
 			ToClientDropPhysicalObject,
 			ToClientDropPhysicalObjects,
 			ToClientNegativeAcknowledge,
@@ -33,6 +34,7 @@ namespace Strive.Network.Messages {
 			ToServerEnterWorldAsMobile,
 			ToServerLogin,
 			ToServerLogout,
+			ToServerReloadWorld,
 			ToServerPosition
 		}
 		public MessageTypeMap()	{
@@ -44,6 +46,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientCombatReport, typeof( ToClient.CombatReport ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCommunication, typeof( ToClient.Communication ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientCurrentHitpoints, typeof( ToClient.CurrentHitpoints ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientDropAll, typeof( ToClient.DropAll ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientDropPhysicalObject, typeof( ToClient.DropPhysicalObject ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientDropPhysicalObjects, typeof( ToClient.DropPhysicalObjects ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientNegativeAcknowledge, typeof( ToClient.NegativeAcknowledge ) );
@@ -62,6 +65,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToServerEnterWorldAsMobile, typeof( ToServer.EnterWorldAsMobile ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerLogin, typeof( ToServer.Login ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerLogout, typeof( ToServer.Logout ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerReloadWorld, typeof( ToServer.ReloadWorld ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerPosition, typeof( ToServer.Position ) );
 
 			// build the reverse lookup

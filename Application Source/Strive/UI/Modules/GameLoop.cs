@@ -32,13 +32,6 @@ namespace Strive.UI.Modules
 			if ( _isMainRunning ) {
 				throw new Exception( "already running" );
 			}
-
-			if ( System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"] == null ) {
-				throw new System.Configuration.ConfigurationException( "ResourcePath" );
-			}
-			string path = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
-
-			ResourceManager.SetPath( path );
 			_scene = scene;
 			_screen = screen;
 			_connection = connection;
@@ -221,6 +214,13 @@ namespace Strive.UI.Modules
 					Global._serverConnection.Send(new Strive.Network.Messages.ToServer.EnterWorldAsMobile( Global._myid ));
 				}
 				#endregion
+					#region DropAll
+				else if ( m is Strive.Network.Messages.ToClient.DropAll ) {
+					Strive.Network.Messages.ToClient.DropAll da = (Strive.Network.Messages.ToClient.DropAll)m;
+					Global._log.LogMessage( "DropAll recieved" );
+					_scene.DropAll();
+				}
+				#endregion
 					#region Default
 				else {
 					Global._log.ErrorMessage( "Unknown message of type " + m.GetType() );
@@ -268,7 +268,6 @@ namespace Strive.UI.Modules
 			const int moveunit = 5;
 			Vector3D cameraPosition = _scene.View.Position;
 			Vector3D cameraRotation = _scene.View.Rotation;
-
 			Keyboard.ReadKeys();
 			if(Keyboard.GetKeyState(Keys.key_W)) {
 				WasKeyboardInput = true;
@@ -351,6 +350,9 @@ namespace Strive.UI.Modules
 			// Rotation, convert from heading to Euler angles
 			// protect from divide by zero,
 			// and convert to degrees, and float.
+			if ( x == 0 && y == 0 && z == 0 ) {
+				return new Vector3D(0, 0, 0);
+			}
 			double dFlat = Math.Sqrt( x * x + z * z );
 			double xTheta;
 			if ( dFlat == 0.0 ) {

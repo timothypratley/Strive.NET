@@ -54,6 +54,8 @@ namespace Strive.UI.Forms
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.ComboBox Resolutions;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.Button button1;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -120,6 +122,8 @@ namespace Strive.UI.Forms
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.label4 = new System.Windows.Forms.Label();
 			this.Resolutions = new System.Windows.Forms.ComboBox();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.button1 = new System.Windows.Forms.Button();
 			this.gameTabs.SuspendLayout();
 			this.ConnectTab.SuspendLayout();
 			this.InGameTab.SuspendLayout();
@@ -127,6 +131,7 @@ namespace Strive.UI.Forms
 			this.inGameSpells.SuspendLayout();
 			this.aLogTab.SuspendLayout();
 			this.tabPage1.SuspendLayout();
+			this.tabPage2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gameTabs
@@ -141,7 +146,8 @@ namespace Strive.UI.Forms
 																				   this.NoteBoardTabs,
 																				   this.CharacterSheet,
 																				   this.aLogTab,
-																				   this.tabPage1});
+																				   this.tabPage1,
+																				   this.tabPage2});
 			this.gameTabs.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.gameTabs.HotTrack = true;
 			this.gameTabs.Location = new System.Drawing.Point(3, 8);
@@ -432,6 +438,25 @@ namespace Strive.UI.Forms
 			this.Resolutions.Size = new System.Drawing.Size(200, 24);
 			this.Resolutions.TabIndex = 4;
 			// 
+			// tabPage2
+			// 
+			this.tabPage2.Controls.AddRange(new System.Windows.Forms.Control[] {
+																				   this.button1});
+			this.tabPage2.Location = new System.Drawing.Point(4, 28);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Size = new System.Drawing.Size(1008, 648);
+			this.tabPage2.TabIndex = 5;
+			this.tabPage2.Text = "Admin";
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(16, 16);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(272, 23);
+			this.button1.TabIndex = 0;
+			this.button1.Text = "Reload World";
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
 			// Game
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -451,6 +476,7 @@ namespace Strive.UI.Forms
 			this.inGameSpells.ResumeLayout(false);
 			this.aLogTab.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -463,6 +489,9 @@ namespace Strive.UI.Forms
 				_scene.View.FieldOfView = 60;
 				_scene.View.ViewDistance = 20000;
 				_scene.View.Position = new Vector3D( 0, 0, 0 );
+
+				string texture_name = ResourceManager.LoadTexture(1);
+				_scene.SetSky( "sky", texture_name );
 				Modules.GameLoop.Start(_scene, RenderTarget, Global._serverConnection);
 				Mouse.ShowCursor( _mouseCaptured );
 			} catch ( Exception ex) {
@@ -540,6 +569,13 @@ namespace Strive.UI.Forms
 			}
 			Mouse.ShowCursor( _mouseCaptured );
 			Mouse.GetState();
+		}
+
+		private void button1_Click(object sender, System.EventArgs e) {
+			Global._serverConnection.Send(
+				new Strive.Network.Messages.ToServer.ReloadWorld()
+			);
+			Global._log.LogMessage( "Sent ReloadWorld message" );
 		}
 	}
 }

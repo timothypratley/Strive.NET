@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Strive.Network.Client;
 using Strive.UI.Forms;
 using Strive.Logging;
+using Strive.Resources;
 
 namespace Strive.UI
 {
@@ -19,6 +20,12 @@ namespace Strive.UI
 		[STAThread]
 		static void Main( string[] args ) 
 		{
+			if ( System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"] == null ) {
+				throw new System.Configuration.ConfigurationException( "ResourcePath" );
+			}
+			string path = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
+			ResourceManager.SetPath( path );
+
 			_game = new Game();
 			Application.Run(_game);
 			_serverConnection.Stop();

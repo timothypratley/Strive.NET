@@ -152,6 +152,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\DropAll.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\DropPhysicalObject.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -177,6 +182,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\Weather.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToServer\EnterWorldAsMobile.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -193,6 +203,11 @@
                 />
                 <File
                     RelPath = "ToServer\Position.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\ReloadWorld.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
