@@ -29,6 +29,8 @@ namespace Strive.Rendering
 		ITexture LoadTexture(string name, string path);
 		void ForceInputUpdate();
 		float TimeSinceLastFrame();
+		void EnableZ();
+		void DisableZ();
 
 		IMouse Mouse { get; }
 		IKeyboard Keyboard{ get; }

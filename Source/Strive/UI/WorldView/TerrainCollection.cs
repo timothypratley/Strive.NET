@@ -18,6 +18,16 @@ namespace Strive.UI.WorldView {
 		IScene _scene;
 		ResourceManager _resource_manager;
 
+		const int xorder = Constants.terrainXOrder;
+		const int zorder = Constants.terrainZOrder;
+		const int zoomorder = Constants.terrainZoomOrder;
+		public ITerrainChunk [,,] TC = new ITerrainChunk[xorder,zorder,zoomorder];
+		int [] CX = new int[zoomorder];
+		int [] CZ = new int[zoomorder];
+		int ts = Constants.terrainPieceSize;
+		int hpc = Constants.terrainHeightsPerChunk;
+		float center_x, center_z;
+
 		public TerrainCollection( ResourceManager rm, IEngine engine, IScene scene ) {
 			_engine = engine;
 			_scene = scene;
@@ -25,6 +35,8 @@ namespace Strive.UI.WorldView {
 
 			// now create chunks at the empty points
 			int i, j, k, cs;
+			center_x = 0;
+			center_z = 0;
 			for ( k=0; k<zoomorder; k++ ) {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 				CX[k] = 0;
@@ -40,16 +52,6 @@ namespace Strive.UI.WorldView {
 				}
 			}
 		}
-
-		const int xorder = Constants.terrainXOrder;
-		const int zorder = Constants.terrainZOrder;
-		const int zoomorder = Constants.terrainZoomOrder;
-		public ITerrainChunk [,,] TC = new ITerrainChunk[xorder,zorder,zoomorder];
-		int [] CX = new int[zoomorder];
-		int [] CZ = new int[zoomorder];
-		int ts = Constants.terrainPieceSize;
-		int hpc = Constants.terrainHeightsPerChunk;
-		float prev_x, prev_z;
 
 		public void Recenter( float x, float z ) {
 			int i, j, k, cs;
@@ -117,6 +119,7 @@ namespace Strive.UI.WorldView {
 				CZ[k] = cz;
 			}
 
+			/***
 			// Make sure we update the previous x,z heights for underlying landscapes
 			// to their correct values
 			loc = new Vector2D( prev_x, prev_z );
@@ -127,8 +130,9 @@ namespace Strive.UI.WorldView {
 
 			// set underlying landscapes to 0 at x,z
 			Set( x, z, 0, -1, 0 );
+			*/
 
-			prev_x = x; prev_z = z;
+			center_x = x; center_z = z;
 		}
 
 		public void AddMany( float start_x, float start_z, int width, int height, int gap_size, Terrain [,] map ) {
@@ -231,11 +235,45 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Render() {
-			foreach ( ITerrainChunk tc in TC ) {
-				if ( tc != null && tc.Visible ) {
-					tc.Render();
+			int i, j, k, l, m;
+			int cs;
+			bool renderright;
+			bool renderup;
+			_engine.DisableZ();
+			for ( k=0; k<zoomorder; k++ ) {
+				cs = (int)(ts*Math.Pow(hpc,k+1));
+
+				if ( center_x - CX[k]*cs < ( CX[k]+xorder-1)*cs - center_x ) {
+					renderright = true;
+				} else {
+					renderright = false;
+				}
+				if ( center_z - CZ[k]*cs < ( CZ[k]+zorder-1)*cs - center_z ) {
+					renderup = true;
+				} else {
+					renderup = false;
+				}
+
+				for ( i=0; i<xorder; i++ ) {
+					if ( renderright ) {
+						l = i;
+					} else {
+						l = xorder-i-1;
+					}
+					for ( j=0; j<zorder; k++ ) {
+						if ( renderup ) {
+							m = i;
+						} else {
+							m = zorder-i-1;
+						}
+						if ( TC[l,m,k] != null && TC[l,m,k].Visible ) {
+							TC[l,m,k].Render();
+						}
+					}
+
 				}
 			}
+			_engine.EnableZ();
 		}
 
 		public class InvalidLocationException : Exception {}

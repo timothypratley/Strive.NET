@@ -151,6 +151,14 @@ namespace Strive.Rendering.TV3D {
 			Input = null;
 		}
 
+		public void DisableZ() {
+			TV3DScene.SetDepthBuffer( 0 );
+		}
+
+		public void EnableZ() {
+			TV3DScene.SetDepthBuffer( CONST_TV_DEPTHBUFFER.TV_WBUFFER );
+		}
+
 		public IWin32Window RenderTarget {
 			get {
 				return _renderTarget;

@@ -577,7 +577,7 @@ namespace Strive.UI.WorldBuilder
 				MessageBox.Show("Created about to render");
 				// update the display
 				//renderMultiverse();
-				MessageBox.Show("Renderd");
+				MessageBox.Show("Rendered");
 				//st.Start();
 			}
 		}
