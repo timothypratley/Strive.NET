@@ -421,7 +421,10 @@ namespace Strive.Server.Shared {
 						continue;
 					}
 					// need to send a message to all nearby clients
-					square[squareX+i, squareZ+j].NotifyClients( message );
+					// so long as the square isn't empty
+					if ( square[squareX+i, squareZ+j] != null ) {
+						square[squareX+i, squareZ+j].NotifyClients( message );
+					}
 				}
 			}
 		}

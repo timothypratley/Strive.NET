@@ -28,11 +28,9 @@ namespace Strive.UI
 		public static World CurrentWorld;// = new Scene();
 		public static Logging.Log CurrentLog;// = new Logging.Log();
 		public static bool GameControlMode = false;
-		
 		public static IEngine RenderingFactory = Strive.Rendering.Activator.GetEngine();
-
-
-		public static int CurrentPlayerID;
+        public static int CurrentPlayerID;
+		public static DateTime now;
 
 		#endregion
 
