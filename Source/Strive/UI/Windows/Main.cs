@@ -64,6 +64,7 @@ namespace Strive.UI.Windows
 			#region Magic Controls Initialisation
 
 			DockingManager = new DockingManager(this, VisualStyle.IDE);
+			
 			DockingManager.InnerControl = MainTabs;
 			DockingManager.OuterControl = MainStatus;
 

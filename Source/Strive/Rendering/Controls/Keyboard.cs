@@ -1,7 +1,7 @@
 using System;
 
 using DxVBLibA;
-using Revolution3D8088c;
+using R3D089_VBasic;
 
 namespace Strive.Rendering.Controls
 {

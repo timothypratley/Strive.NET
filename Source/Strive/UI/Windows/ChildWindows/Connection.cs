@@ -140,6 +140,7 @@ namespace Strive.UI.Windows.ChildWindows
 			// ConnectNow
 			// 
 			this.ConnectNow.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+			this.ConnectNow.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.ConnectNow.Location = new System.Drawing.Point(112, 138);
 			this.ConnectNow.Name = "ConnectNow";
 			this.ConnectNow.TabIndex = 4;

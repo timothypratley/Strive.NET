@@ -122,7 +122,7 @@ namespace Strive.Rendering.Models
 				if(bReturn)
 				{
 					// TODO: Investigate if this will lead to double (potentially slow) MDL_SetPointer calls
-					Interop._instance.MdlSystem.MDL_SetPointer(this.Current.Key);
+					Interop._instance.MdlSystem.Class_SetPointer(this.Current.Key);
 				}
 				return bReturn;
 			}

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using Strive.Rendering.Models;
 using Strive.Math3D;
-using Revolution3D8088c;
+using R3D089_VBasic;
 
 namespace Strive.Rendering
 {
@@ -21,6 +21,7 @@ namespace Strive.Rendering
 		private bool _isRendering;
 		private ModelCollection _models = new ModelCollection();
 		private Cameras.CameraCollection _views = new Cameras.CameraCollection();
+		private IWin32Window _renderTarget;
 		#endregion
 
 		#region "Constructors"
@@ -70,15 +71,24 @@ namespace Strive.Rendering
 				}
 
 				Interop._instance.Engine.InitializeMe(true);
-				Interop._instance.Pipeline.SetBackColor(30,30,140);
+				R3DColor color = new R3DColor();
+				color.r = 30;
+				color.g = 30;
+				color.b = 140;
+				Interop._instance.Pipeline.SetBackColor(ref color);
 				Interop._instance.Pipeline.SetDithering(true);
-				Interop._instance.Pipeline.SetFillMode(Revolution3D8088c.R3DFILLMODE.R3DFILLMODE_SOLID);
-				Interop._instance.Pipeline.SetAmbientLight(0,0,0);
+				Interop._instance.Pipeline.SetFillMode(R3D089_VBasic.R3DFILLMODE.R3DFILLMODE_SOLID);
+				R3DColor white = new R3DColor();
+				white.r = 0;
+				white.b = 0;
+				white.g = 0;
+				Interop._instance.Pipeline.SetAmbientLight(ref white);
 				Interop._instance.Pipeline.SetColorKeying(true);
 				Interop._instance.Pipeline.SetSpecular(true);
 				Interop._instance.Pipeline.SetMipMapping(false);
 				Interop._instance.Pipeline.SetShadeMode(R3DSHADEMODE.R3DSHADEMODE_GOURAUD);
 				Interop._instance.Pipeline.SetTextureFilter(R3DTEXTUREFILTER.R3DTEXTUREFILTER_LINEARFILTER);
+				_renderTarget = window;
 			}
 			catch(Exception e)
 			{
@@ -138,7 +148,18 @@ namespace Strive.Rendering
 				throw new RenderingException("Call to 'Clear()' failed", e);
 			}
 #if DEBUG
-			Interop._instance.Interface2D.Primitive_DrawText(0,0, (Interop._instance.PowerMonitor.GetFrameTime() / Interop._instance.PowerMonitor.GetElapsedFrames() ).ToString());
+			R3DVector2D zero = new R3DVector2D();
+			zero.x = 0;
+			zero.y = 0;
+			R3DColor black = new R3DColor();
+			black.b = 255;
+			black.r = 255;
+			black.g = 255;
+			Interop._instance.Interface2D.Primitive_SetDrawColor(ref black);
+	        Interop._instance.Interface2D.Primitive_DrawText(ref zero, "Fp/S: " + Interop._instance.PowerMonitor.lGetFramesPerSecond().ToString() +
+                                                            ", Vertices: " + Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame().ToString() + 
+                                                            ", Verts/Sec:  " + (Interop._instance.PowerMonitor.lGetFramesPerSecond() * Interop._instance.PowerMonitor.lGetNumVerticesPerSinceLastFrame()).ToString() );
+//			Interop._instance.Interface2D.Primitive_DrawText(0,0, (Interop._instance.PowerMonitor.lGetFramesPerSecond()).ToString());
 #endif
 
 			try
@@ -148,6 +169,14 @@ namespace Strive.Rendering
 			catch(Exception e)
 			{
 				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
+			}
+			try
+			{
+				Interop._instance.Pipeline.Renderer_Display();
+			}
+			catch(Exception e)
+			{
+				throw new RenderingException("Call to 'Display()' failed with '" + e.ToString() + "'", e);
 			}
 		}
 
@@ -191,9 +220,9 @@ namespace Strive.Rendering
 			vEnd.y = end_point.Y;
 			vEnd.z = end_point.Z;
 			// if (
-			Interop._instance.Meshbuilder.Class_RayCollision(
-				ref vStart, ref vEnd, ct
-				);
+//			Interop._instance.Meshbuilder.Class_RayCollision(`(
+//				ref vStart, ref vEnd, ct
+//				);
 
 			return 1;
 		}
@@ -276,6 +305,14 @@ namespace Strive.Rendering
 				{
 					return this.Views["DefaultView"];
 				}
+			}
+		}
+		
+		public IWin32Window RenderTarget
+		{
+			get
+			{
+				return _renderTarget;
 			}
 		}
 

@@ -1,5 +1,5 @@
 using System;
-using Revolution3D8088c;
+using R3D089_VBasic;
 using DxVBLibA;
 
 namespace Strive.Rendering
@@ -25,7 +25,7 @@ namespace Strive.Rendering
 		/// <summary>
 		/// Revolution3D Meshbuilder
 		/// </summary>
-		internal R3D_MeshBuilder Meshbuilder = new R3D_MeshBuilderClass();
+		internal R3D_MeshBuilder2 Meshbuilder = new R3D_MeshBuilder2Class();
 		/// <summary>
 		/// Revolution3D cameras
 		/// </summary>
@@ -33,11 +33,11 @@ namespace Strive.Rendering
 		/// <summary>
 		/// Revolution3D tools
 		/// </summary>
-		internal R3D_Tools Tools = new R3D_ToolsClass();
+//		internal R3D_Tools Tools = new R3D_ToolsClass();
 		/// <summary>
 		/// Revolution3D model system (MDL specific)
 		/// </summary>
-		internal R3D_MDLSystem MdlSystem = new R3D_MDLSystemClass();
+		internal R3D_MD2System MdlSystem = new R3D_MD2SystemClass();
 		/// <summary>
 		/// Revolution3D skydome
 		/// </summary>
@@ -53,15 +53,15 @@ namespace Strive.Rendering
 		/// <summary>
 		/// Revolution3D polyvov terrain class
 		/// </summary>
-		internal R3D_PolyVox2 PolyVox = new R3D_PolyVox2Class();
+		internal R3D_PolyVox3 PolyVox = new R3D_PolyVox3Class();
 		/// <summary>
 		/// Revolution3D math class
 		/// </summary>
-		internal R3D_Math Math = new R3D_MathClass();
+//		internal R3D_Math Math = new R3D_MathClass();
 		/// <summary>
 		/// Revolution3D 2d drawing class
 		/// </summary>
-		internal R3D_Interface2D Interface2D = new R3D_Interface2DClass();
+		internal R3D_Interface5D Interface2D = new R3D_Interface5DClass();
 		/// <summary>
 		/// Revolution3D power monitor
 		/// </summary>

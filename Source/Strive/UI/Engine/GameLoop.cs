@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 
+
 using Strive.Math3D;
 using Strive.Network.Client;
 using Strive.Network.Messages;
@@ -33,6 +34,11 @@ namespace Strive.UI.Engine
 			_scene = scene;
 			_screen = screen;
 			_connection = connection;
+			if(_scene.RenderTarget is System.Windows.Forms.PictureBox)
+			{
+				System.Windows.Forms.PictureBox p = (System.Windows.Forms.PictureBox)_scene.RenderTarget;
+			}
+
 			thisThread.Start();
 		}
 

@@ -1,5 +1,5 @@
 using System;
-using Revolution3D8088c;
+using R3D089_VBasic;
 
 namespace Strive.Rendering.Controls
 {
@@ -12,7 +12,7 @@ namespace Strive.Rendering.Controls
 		public bool button1down, button2down, button3down, button4down;
 		public static Mouse GetState() {
 			Mouse m = new Mouse();
-			R3DMouseState_Type ms = Interop._instance.Control.Mouse_GetState( true );
+			R3DMouseState ms = Interop._instance.Control.Mouse_GetState( true );
 			m.x = ms.x;
 			m.y = ms.y;
 			m.button1down = ms.iButton[0] != 0;

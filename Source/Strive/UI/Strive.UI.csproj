@@ -161,6 +161,10 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "app.manifest"
+                    BuildAction = "None"
+                />
+                <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -169,6 +173,10 @@
                     RelPath = "Game.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "bin\Debug\Strive.UI.exe.manifest"
+                    BuildAction = "None"
                 />
                 <File
                     RelPath = "Engine\GameLoop.cs"

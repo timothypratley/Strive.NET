@@ -1,7 +1,7 @@
 using System;
 using Strive.Math3D;
 
-using Revolution3D8088c;
+using R3D089_VBasic;
 using Strive.Rendering;
 
 namespace Strive.Rendering.Cameras
@@ -60,11 +60,11 @@ namespace Strive.Rendering.Cameras
 		/// <summary>
 		/// Revolution specific camera attributes
 		/// </summary>
-		protected R3DCameraAttributes_Type Attributes
+		protected R3DCameraAttributes Attributes
 		{
 			get
 			{
-				R3DCameraAttributes_Type _attributes = Interop._instance.Cameras.Camera_GetAttributes();
+				R3DCameraAttributes _attributes = Interop._instance.Cameras.Camera_GetAttributes();
 				return _attributes;
 			}
 		}
@@ -89,7 +89,7 @@ namespace Strive.Rendering.Cameras
 				try
 				{
 					initialisePointer();
-					R3DCameraAttributes_Type attributes = this.Attributes;
+					R3DCameraAttributes attributes = this.Attributes;
 					Interop._instance.Cameras.Camera_SetAttributes(ref attributes);
 
 				}
@@ -149,7 +149,7 @@ namespace Strive.Rendering.Cameras
 			try
 			{
 				initialisePointer();
-				R3DPoint3D r = VectorConverter.GetR3DPoint3DFromVector3D(newPosition);
+				R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(newPosition);
 				Interop._instance.Cameras.Camera_SetPosition(ref r);
 			}
 			catch(Exception e)
@@ -197,7 +197,7 @@ namespace Strive.Rendering.Cameras
 			{
 				try {
 					initialisePointer();
-					R3DPoint3D r = VectorConverter.GetR3DPoint3DFromVector3D(value);
+					R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(value);
 					Interop._instance.Cameras.Camera_SetPosition(ref r);
 				}
 				catch(Exception e) {

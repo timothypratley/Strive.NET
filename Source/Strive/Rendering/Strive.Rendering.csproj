@@ -111,6 +111,14 @@
                     Lcid = "0"
                     WrapperTool = "tlbimp"
                 />
+                <Reference
+                    Name = "R3D089_VBasic"
+                    Guid = "{6124ED39-62F9-4D4B-8CA1-56499F5DC07B}"
+                    VersionMajor = "1"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
+                />
             </References>
         </Build>
         <Files>

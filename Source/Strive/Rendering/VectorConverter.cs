@@ -1,7 +1,7 @@
 using System;
 using Strive.Math3D;
 using Strive.Rendering;
-using Revolution3D8088c;
+using R3D089_VBasic;
 
 namespace Strive.Rendering
 {
@@ -11,14 +11,7 @@ namespace Strive.Rendering
 	public class VectorConverter
 	{
 
-		public static R3DPoint3D GetR3DPoint3DFromVector3D(Vector3D vector)
-		{
-			R3DPoint3D r;
-			r.x = vector.X;
-			r.y = vector.Y;
-			r.z = vector.Z;
-			return r;
-		}
+
 
 		public static R3DVector3D GetR3DVector3DFromVector3D(Vector3D vector)
 		{

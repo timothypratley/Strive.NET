@@ -1,7 +1,7 @@
 using System;
 using Strive.Math3D;
 
-using Revolution3D8088c;
+using R3D089_VBasic;
 using Strive.Rendering;
 
 namespace Strive.Rendering.Models
@@ -31,7 +31,7 @@ namespace Strive.Rendering.Models
 		#region "Factory Initialisers"
 		public static Model CreatePlane( string name, Vector3D point1, Vector3D point2, Vector3D point3, Vector3D point4, string texture, string material ) {
 			int id = Interop._instance.Meshbuilder.Mesh_Create( name );
-			R3DPoint3D p1, p2, p3, p4;
+			R3DVector3D p1, p2, p3, p4;
 			p1.x = point1.X;
 			p1.y = point1.Y;
 			p1.z = point1.Z;
@@ -44,7 +44,7 @@ namespace Strive.Rendering.Models
 			p4.x = point4.X;
 			p4.y = point4.Y;
 			p4.z = point4.Z;
-			Interop._instance.Meshbuilder.Mesh_AddPlane( ref p1, ref p2, ref p3, ref p4, texture, material, R3DBLENDMODE.R3DBLENDMODE_NONE, R3DCULLMODE.R3DCULLMODE_DOUBLESIDED );
+			Interop._instance.Meshbuilder.Mesh_AddPlane( ref p1, ref p2, ref p3, ref p4, texture, material, R3DBLENDMODE.R3DBLENDMODE_NONE, true);
 			Model created = new Model();
 			created._key = name;
 			created._id = id;
@@ -57,7 +57,8 @@ namespace Strive.Rendering.Models
 
 		public static Model CreateBox( string name, float w, float h, float d, string texture, string material ) {
 			int id = Interop._instance.Meshbuilder.Mesh_Create( name );
-			Interop._instance.Meshbuilder.Mesh_AddBox( texture, material, w, h, d, R3DBLENDMODE.R3DBLENDMODE_NONE, R3DCULLMODE.R3DCULLMODE_DOUBLESIDED );
+			R3DVector3D box = VectorConverter.GetR3DVector3DFromVector3D(new Vector3D(w,h,d));
+			Interop._instance.Meshbuilder.Mesh_AddBox(ref box,  texture, material,R3DBLENDMODE.R3DBLENDMODE_NONE, true);
 			Model created = new Model();
 			created._key = name;
 			created._id = id;
@@ -71,17 +72,34 @@ namespace Strive.Rendering.Models
 		}
 
 		public static Model CreateTerrain( string name, string filename, string texture ) {
-			Model created = new Model();
-			created._format = ModelFormat.Scape;
-			created._key = name;
-			created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 500, false, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
-			R3DVector3D scale = new R3DVector3D();
-			scale.x = 0.390625F;
-			scale.y = 0.390625F;
-			scale.z = 0.390625F;
-			Interop._instance.PolyVox.Scape_SetScale( ref scale );
-			Interop._instance.PolyVox.Scape_SetTexture( 0, texture, R3DLAYERCONFIG.R3DLAYERCONFIG_COLOR );
+			Model created = CreatePlane(name, 
+				new Vector3D(0,0,0),
+				new Vector3D(100,0,0),
+				new Vector3D(100,0,100),
+				new Vector3D(0,0,100),
+				texture,
+				"");
 			return created;
+
+//			Model created = new Model();
+//			created._format = ModelFormat.Scape;
+//			created._key = name;
+//			// TODO TIM: Fix
+//			// P.S.  Why does this method exist anyway?
+//			R3DVector2D size = new R3DVector2D();
+//			size.x = 128;
+//			size.y = 128;
+//			created._id = Interop._instance.PolyVox.Scape_Create(name, ref size, 1);
+//			//created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 500, false, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
+//			R3DVector3D scale = new R3DVector3D();
+//			scale.x = 0.390625F;
+//			scale.y = 0.390625F;
+//			scale.z = 0.390625F;
+//			//Interop._instance.PolyVox.Scape_ApplyHeightMap(
+//			//Interop._instance.PolyVox.Scape_SetScale( ref scale );
+//			// TODO TIM: Fix
+//			Interop._instance.PolyVox.Scape_SetTexture( 0, texture);
+//			return created;
 		}
 
 		/// <summary>
@@ -114,8 +132,9 @@ namespace Strive.Rendering.Models
 			switch(format) {
 				case ModelFormat.MDL: {
 					try {
-						Interop._instance.MdlSystem.MDL_Load(key, path);
-						Interop._instance.MdlSystem.MDL_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
+						Interop._instance.MdlSystem.Model_Load(key, path);
+						// TODO TIM: fix
+						//Interop._instance.MdlSystem.MDL_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -127,21 +146,21 @@ namespace Strive.Rendering.Models
 					try
 					{
 						// Changed for 8088c
-						R3D_3DSFile _3dsfile = new R3D_3DSFileClass();
-						//_3dsfile.File_Open(path);
-											
-						//_3dsfile.File_Close();
+						R3D_3DStudio _3dsfile = new R3D_3DStudioClass();
+						_3dsfile.File_Open(path);
+						_3dsfile.File_ReadMaterials();
+						_3dsfile.File_ReadTextures();
+						//_3dsfile.File_ReadScene(loadedModel.Key, true, false, true);
+						_3dsfile.File_ReadMeshes(key, true, true,true,true,true);	
 
-						Interop._instance.Meshbuilder.Mesh_Create(key);
-						//System.Environment.CurrentDirectory = path.Substring(0, path.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
-						//Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
-						// todo: fix texture loading here
-						Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
-						Interop._instance.Meshbuilder.Mesh_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
-						//R3DVector3D center = new R3DVector3D();
-						//bool worldspace = false;
-						//Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref loadedModel.BoundingSphereRadiusSquared, ref worldspace );
-						// square it ofc
+						
+						_3dsfile.File_Close();
+						
+						Interop._instance.Meshbuilder.Class_SetPointer(key);
+						//Interop._instance.Meshbuilder.Mesh_SetCullMode(R3DCULLMODE.R3DCULLMODE_DOUBLESIDED);
+						//Interop._instance.Meshbuilder.Mesh_SetLayerConfig(0, R3DLAYERCONFIG.R3DLAYERCONFIG_MONOCHROME);
+						//System.Windows.Forms.MessageBox.Show(Interop._instance.TextureLib.Class_GetNumTextures().ToString());
+						
 						loadedModel.BoundingSphereRadiusSquared = 1000;
 					}
 					catch(Exception e) {
@@ -167,11 +186,11 @@ namespace Strive.Rendering.Models
 		protected void setPointer() {
 			try {
 				if ( _format == ModelFormat.MDL ) {
-					Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
+					Interop._instance.MdlSystem.Class_SetPointer(this.Key);
 				} else if ( _format == ModelFormat.Mesh )  {
-					Interop._instance.Meshbuilder.Mesh_SetPointer(this.Key);
+					Interop._instance.Meshbuilder.Class_SetPointer(this.Key);
 				} else if ( _format == ModelFormat.Scape ) {
-					Interop._instance.PolyVox.Scape_SetPointer( this.Key );
+					Interop._instance.PolyVox.Class_SetPointer( this.Key );
 				} else {
 					throw new Exception( "n0rty n0rty, unknown modelformat" );
 				}
@@ -188,14 +207,14 @@ namespace Strive.Rendering.Models
 
 		public void Delete() {
 			if ( _format == ModelFormat.MDL ) {
-				Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
-				Interop._instance.MdlSystem.MDL_Delete();
+				Interop._instance.MdlSystem.Class_SetPointer(this.Key);
+				Interop._instance.MdlSystem.Model_Release();
 			} else if ( _format == ModelFormat.Scape ) {
-				Interop._instance.PolyVox.Scape_SetPointer(this.Key);
-				Interop._instance.PolyVox.Scape_Delete();
+				Interop._instance.PolyVox.Class_SetPointer(this.Key);
+				Interop._instance.PolyVox.Scape_Release();
 			} else if ( _format == ModelFormat.Mesh ) {
-				Interop._instance.Meshbuilder.Mesh_SetPointer(this.Key);
-				Interop._instance.Meshbuilder.Mesh_Delete();
+				Interop._instance.Meshbuilder.Class_SetPointer(this.Key);
+				Interop._instance.Meshbuilder.Mesh_Release();
 			} else {
 				throw new Exception( "n0rty n0rty, unknown format for delete" );
 			}
@@ -214,7 +233,7 @@ namespace Strive.Rendering.Models
 			setPointer();
 			if ( frame_count > 0 ) {
 				frame = (frame+1)%frame_count;
-				Interop._instance.MdlSystem.MDL_SequenceSetFrame( (float)frame );
+				Interop._instance.MdlSystem.Model_SetFrameEx(R3DLERPNODETYPE.R3DLERPNODETYPE_START,  (byte)frame );
 			}
 		}
 
@@ -274,10 +293,11 @@ namespace Strive.Rendering.Models
 					default:
 						throw new Exception( "Unknown sequence" );
 				}
-				Interop._instance.MdlSystem.MDL_SequenceSet( sequence );
-				frame = 0;
-				frame_count = Interop._instance.MdlSystem.MDL_SequenceGetFrameCount();
-				Interop._instance.MdlSystem.MDL_SequenceSetFrame( frame );
+				// TODO: Reimplement
+				//Interop._instance.MdlSystem.Model_SetSe( sequence );
+				//frame = 0;
+				//frame_count = Interop._instance.MdlSystem.MDL_SequenceGetFrameCount();
+				//Interop._instance.MdlSystem.MDL_SequenceSetFrame( frame );
 			}
 		}
 
@@ -301,7 +321,8 @@ namespace Strive.Rendering.Models
 					setPointer();
 					try
 					{
-						Interop._instance.MdlSystem.MDL_SetPosition(newPosition.X, newPosition.Y, newPosition.Z);
+						R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(newPosition);
+						Interop._instance.MdlSystem.Model_SetPosition(ref vector);
 					}
 					catch(Exception e)
 					{
@@ -333,7 +354,8 @@ namespace Strive.Rendering.Models
 					setPointer();
 					try
 					{
-						Interop._instance.MdlSystem.MDL_SetRotation(newRotation.X, newRotation.Y, newRotation.Z);
+						R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(newRotation);
+						Interop._instance.MdlSystem.Model_SetRotation(ref vector);
 					}
 					catch(Exception e)
 					{
@@ -358,11 +380,13 @@ namespace Strive.Rendering.Models
 				return _position;
 			}
 			set {
+				R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(value);
 				switch(_format) {
 					case ModelFormat.MDL: {
 						setPointer();
 						try {
-							Interop._instance.MdlSystem.MDL_SetPosition(value.X, value.Y, value.Z);
+
+							Interop._instance.MdlSystem.Model_SetPosition(ref vector);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
@@ -372,7 +396,8 @@ namespace Strive.Rendering.Models
 					case ModelFormat.Mesh: {
 						setPointer();
 						try {
-							Interop._instance.Meshbuilder.Mesh_SetPosition(value.X, value.Y, value.Z);
+		
+							Interop._instance.Meshbuilder.Mesh_SetPosition(ref vector);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
@@ -382,11 +407,7 @@ namespace Strive.Rendering.Models
 					case ModelFormat.Scape: {
 						setPointer();
 						try {
-							R3DPoint3D position = new R3DPoint3D();
-							position.x = value.X;
-							position.y = value.Y;
-							position.z = value.Z;
-							Interop._instance.PolyVox.Scape_SetPosition( ref position );
+							Interop._instance.PolyVox.Scape_SetPosition( ref vector);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
@@ -410,13 +431,14 @@ namespace Strive.Rendering.Models
 				return _rotation;
 			}
 			set {
+				R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(value);
 				switch(_format) {
 					case ModelFormat.MDL: {
 						setPointer();
 						try {
 							// todo: normalise MDLs so we don't need a 90 degree offset?
 							// todo: our mobs are at different angles to players :(
-							Interop._instance.MdlSystem.MDL_SetRotation(-value.X, -value.Y+90, -value.Z);
+							Interop._instance.MdlSystem.Model_SetRotation(ref vector);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set rotation '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
@@ -426,7 +448,7 @@ namespace Strive.Rendering.Models
 					case ModelFormat.Mesh:
 					{
 						setPointer();
-						Interop._instance.Meshbuilder.Mesh_SetRotation( -value.X, -value.Y, -value.Z );
+						Interop._instance.Meshbuilder.Mesh_SetRotation(ref vector );
 						break;
 					}
 					case ModelFormat.Scape: {

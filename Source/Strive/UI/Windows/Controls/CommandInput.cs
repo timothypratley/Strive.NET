@@ -72,6 +72,7 @@ namespace Strive.UI.Windows.Controls
 			// Go
 			// 
 			this.Go.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
+			this.Go.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.Go.Location = new System.Drawing.Point(525, 4);
 			this.Go.Name = "Go";
 			this.Go.Size = new System.Drawing.Size(75, 20);
