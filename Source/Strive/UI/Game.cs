@@ -33,6 +33,7 @@ namespace Strive.UI
 		public static DateTime now;
 		public static string userName;
 		public static string password;
+		public static Strive.Network.Messages.NetworkProtocolType protocol;
 
 		#endregion
 
@@ -64,7 +65,7 @@ namespace Strive.UI
 		}
 
 
-		public static void Play(string ServerName, string LoginName, string Password, int Port, IWin32Window RenderTarget) 
+		public static void Play(string ServerName, string LoginName, string Password, int Port, Strive.Network.Messages.NetworkProtocolType protocol, IWin32Window RenderTarget) 
 		{
 			CurrentServerConnection.Stop();
 			CurrentGameLoop.Stop();
@@ -76,11 +77,12 @@ namespace Strive.UI
 			CurrentGameLoop.Start(CurrentServerConnection);
 			userName = LoginName;
 			password = Password;
+			protocol = protocol;
 		}
 
 		public static void HandleConnect() {
 			Strive.Logging.Log.LogMessage( "Connected." );
-			CurrentServerConnection.Login(userName, password);
+			CurrentServerConnection.Login(userName, password, protocol);
 			password = null;
 			CurrentServerConnection.RequestPossessable();
 		}

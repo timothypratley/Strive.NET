@@ -125,6 +125,7 @@ namespace Strive.UI.Settings
 					recentServers.PrimaryKey = new DataColumn[] {c};
 					recentServers.Columns.Add("serveraddress");
 					recentServers.Columns.Add("serverport");
+					recentServers.Columns.Add("protocol");
 
 					DataTable recentPlayers = new DataTable("RecentPlayers");
 					DataColumn pk = recentPlayers.Columns.Add("playerkey");
@@ -168,27 +169,41 @@ namespace Strive.UI.Settings
 		}
 
 		public static DataRow AddRecentServer(string serverAddress, 
-			int serverPort)
+			int serverPort,
+			Strive.Network.Messages.NetworkProtocolType protocol)
 		{
 			string serverKey = serverAddress + serverPort;
-			DataRow newRow = RecentServers.NewRow();
-			newRow["serverkey"] = serverKey;
-			newRow["serveraddress"] = serverAddress;
-			newRow["serverport"] = serverPort;
+			DataRow serverRow;
+			if(!RecentServers.Rows.Contains(serverKey))
+			{
+				serverRow = RecentServers.NewRow();
+				serverRow["serverkey"] = serverKey;
+			}
+			else
+			{
+				serverRow = RecentServers.Rows.Find(serverKey);
+			}
+
+			serverRow["serveraddress"] = serverAddress;
+			serverRow["serverport"] = serverPort;
+			serverRow["protocol"] = protocol;
+
 
 			if(!RecentServers.Rows.Contains(serverKey))
 			{
-				RecentServers.Rows.Add(newRow);
-				RecentServers.AcceptChanges();
+				RecentServers.Rows.Add(serverRow);
+
 			}
+			RecentServers.AcceptChanges();
 
 			Log.LogMessage("Added server '" + serverAddress + ":" + serverPort + "' to recent servers");
 
-			return newRow;
+			return serverRow;
 		}
 
 		public static DataRow AddRecentPlayer(string serverAddress,
 			int serverPort,
+			Strive.Network.Messages.NetworkProtocolType protocol,
 			string emailaddress,
 			string password)
 		{
@@ -196,7 +211,7 @@ namespace Strive.UI.Settings
 			DataRow serverRow;
 			if(!RecentServers.Rows.Contains(serverKey))
 			{
-				AddRecentServer(serverAddress, serverPort);
+				AddRecentServer(serverAddress, serverPort, protocol);
 				serverRow = RecentServers.Rows.Find(serverKey);
 				DataRow newPlayerRow = RawSettings.Tables["RecentPlayers"].NewRow();
 				newPlayerRow["serverkey"] = serverKey;
@@ -237,6 +252,7 @@ namespace Strive.UI.Settings
 
 		public static DataRow AddRecentCharacter(string serverAddress,
 			int serverPort,
+			Strive.Network.Messages.NetworkProtocolType protocol,
 			string emailaddress,
 			string password,
 			int characterid,
@@ -246,14 +262,14 @@ namespace Strive.UI.Settings
 			string serverKey = serverAddress +  serverPort;
 			if(!RecentServers.Rows.Contains(serverKey))
 			{
-				AddRecentServer(serverAddress, serverPort);
+				AddRecentServer(serverAddress, serverPort, protocol);
 			}
 			DataRow serverRow = RecentServers.Rows.Find(serverKey);
 
 			string playerKey = emailaddress + password;
 			if(!RawSettings.Tables["RecentPlayers"].Rows.Contains(new string[] {playerKey, serverKey}))
 			{
-				AddRecentPlayer(serverAddress, serverPort, emailaddress, password);
+				AddRecentPlayer(serverAddress, serverPort, protocol, emailaddress, password);
 			}
 
 			DataRow charrow;

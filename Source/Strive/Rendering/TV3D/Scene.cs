@@ -122,8 +122,10 @@ namespace Strive.Rendering.TV3D
 						//You can see the object ! 
 						//Using FieldOfView of 90degrees,
 						//so things offscreen infront will still be labeled.
+						
 						Vector3D v1 = m.Position - View.Position;
-						if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(View.Rotation) ) <= Math.Cos( View.FieldOfView * Math.PI / 180 ) ) {
+						if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(View.Rotation) ) <= Math.Cos( View.FieldOfView * Math.PI / 180 ) ) 
+						{
 							continue;
 						}
 
@@ -131,7 +133,7 @@ namespace Strive.Rendering.TV3D
 							m.Position.X,
 							m.Position.Y + m.Height/2 + 2,
 							m.Position.Z
-						);
+							);
 
 						DrawText( labelPos, m.Label );
 					}

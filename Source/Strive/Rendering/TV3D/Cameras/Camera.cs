@@ -12,8 +12,9 @@ namespace Strive.Rendering.TV3D.Cameras
 	public class Camera : ICamera
 	{
 		#region "Private fields"
-		private Vector3D _position;
-		private Vector3D _rotation;
+		// initialised to origin
+		private Vector3D _position = Vector3D.Origin;
+		private Vector3D _rotation = Vector3D.Origin;
 		private float _fieldOfView;
 		private float _viewDistance;
 		private string _key;

@@ -22,6 +22,7 @@ namespace Strive.Network.Server {
 		int tcpoffset = 0;
 		DateTime lastMessageTimestamp;
 		Listener handler;
+		Strive.Network.Messages.NetworkProtocolType protocol;
 
 		public Client( Socket tcpsocket, Listener handler ) {
 			this.tcpsocket = tcpsocket;
@@ -94,6 +95,18 @@ namespace Strive.Network.Server {
 			}
 		}
 
+		public Strive.Network.Messages.NetworkProtocolType Protocol
+		{
+			get
+			{
+				return protocol;
+			}
+			set
+			{
+				protocol = value;
+			}
+		}
+
 		public void Send( IMessage message ) {
 			// TODO: some clients may prefer no UDP
 			if ( !Authenticated ) {
@@ -101,11 +114,28 @@ namespace Strive.Network.Server {
 				return;
 			}
 
-			if ( message is Strive.Network.Messages.ToClient.Position ) {
-				SendUDP( message );
-			} else {
-				SendTCP( message );
+			// check if client allows UDP:
+			switch(protocol)
+			{
+				case Strive.Network.Messages.NetworkProtocolType.TcpOnly:
+				{
+					SendTCP(message);
+					break;
+				}
+				case Strive.Network.Messages.NetworkProtocolType.UdpAndTcp:
+				{
+					if ( message is Strive.Network.Messages.ToClient.Position ) 
+					{
+						SendUDP( message );
+					} 
+					else 
+					{
+						SendTCP( message );
+					}
+					break;
+				}
 			}
+
 		}
 
 		void SendTCP( IMessage message ) {

@@ -251,9 +251,9 @@ namespace Strive.Network.Client {
 			Send(new EnterWorldAsMobile(mobileId));
 		}
 
-		public void Login(string username, string password)
+		public void Login(string username, string password, Strive.Network.Messages.NetworkProtocolType protocol)
 		{
-			Send(new Login(username, password));
+			Send(new Login(username, password, protocol));
 		}
 
 		public void Logout()
