@@ -7,13 +7,12 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// </summary>
 	[Serializable]
 	public class Communication : IMessage {
-		public Communication( CommunicationType communicationType, string message )
-		{
-			this.communicationType = communicationType;
+		public int communicationType;
+		public string message;
+		public Communication(){}
+		public Communication( CommunicationType communicationType, string message ) {
+			this.communicationType = (int)communicationType;
 			this.message = message;
 		}
-
-		public CommunicationType communicationType;
-		public string message;
 	}
 }

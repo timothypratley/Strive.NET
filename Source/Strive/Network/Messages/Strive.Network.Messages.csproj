@@ -177,7 +177,17 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\SkillList.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\Weather.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToClient\WhoList.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -237,22 +247,17 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToServer\GameCommand\TargetAny.cs"
+                    RelPath = "ToServer\GameCommand\SkillList.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToServer\GameCommand\TargetItem.cs"
+                    RelPath = "ToServer\GameCommand\UseSkill.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToServer\GameCommand\TargetMobile.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "ToServer\GameCommand\TargetNone.cs"
+                    RelPath = "ToServer\GameCommand\WhoList.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

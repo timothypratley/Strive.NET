@@ -21,16 +21,17 @@ namespace Strive.Network.Messages {
 			ToClientNegativeAcknowledge,
 			ToClientPosition,
 			ToClientMobileState,
+			ToClientSkillList,
 			ToClientWeather,
+			ToClientWhoList,
 			ToServerAttack,
 			ToServerChangeStance,
 			ToServerCommunication,
 			ToServerEmote,
 			ToServerFlee,
-			ToServerTargetAny,
-			ToServerTargetItem,
-			ToServerTargetMobile,
-			ToServerTargetNone,
+			ToServerSkillList,
+			ToServerUseSkill,
+			ToServerWhoList,
 			ToServerEnterWorldAsMobile,
 			ToServerLogin,
 			ToServerLogout,
@@ -52,17 +53,18 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientNegativeAcknowledge, typeof( ToClient.NegativeAcknowledge ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientPosition, typeof( ToClient.Position ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientMobileState, typeof( ToClient.MobileState ) );					
+			messageTypeFromID.Add( EnumMessageID.ToClientSkillList, typeof( ToClient.SkillList ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientWeather, typeof( ToClient.Weather ) );					
+			messageTypeFromID.Add( EnumMessageID.ToClientWhoList, typeof( ToClient.WhoList ) );					
 
 			messageTypeFromID.Add( EnumMessageID.ToServerAttack, typeof( ToServer.GameCommand.Attack ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerChangeStance, typeof( ToServer.GameCommand.ChangeStance ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerCommunication, typeof( ToServer.GameCommand.Communication ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerEmote, typeof( ToServer.GameCommand.Emote ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerFlee, typeof( ToServer.GameCommand.Flee ) );
-			messageTypeFromID.Add( EnumMessageID.ToServerTargetAny, typeof( ToServer.GameCommand.TargetAny ) );
-			messageTypeFromID.Add( EnumMessageID.ToServerTargetItem, typeof( ToServer.GameCommand.TargetItem ) );
-			messageTypeFromID.Add( EnumMessageID.ToServerTargetMobile, typeof( ToServer.GameCommand.TargetMobile ) );
-			messageTypeFromID.Add( EnumMessageID.ToServerTargetNone, typeof( ToServer.GameCommand.TargetNone ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerSkillList, typeof( ToServer.GameCommand.SkillList ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerUseSkill, typeof( ToServer.GameCommand.UseSkill ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerWhoList, typeof( ToServer.GameCommand.WhoList ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerEnterWorldAsMobile, typeof( ToServer.EnterWorldAsMobile ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerLogin, typeof( ToServer.Login ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerLogout, typeof( ToServer.Logout ) );

@@ -26,6 +26,8 @@ namespace Strive.UI.Windows
 		private Crownwood.Magic.Menus.MenuCommand FileSave;
 		private Crownwood.Magic.Menus.MenuCommand ViewLog;
 		private Crownwood.Magic.Menus.MenuCommand ViewConnect;
+		private Crownwood.Magic.Menus.MenuCommand ViewWhoList;
+		private Crownwood.Magic.Menus.MenuCommand ViewSkillList;
 
 		private System.ComponentModel.IContainer components = null;
 
@@ -149,6 +151,8 @@ namespace Strive.UI.Windows
 			this.ViewMenu = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewLog = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewConnect = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewWhoList = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewSkillList = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
@@ -228,8 +232,11 @@ namespace Strive.UI.Windows
 			this.ViewMenu.Description = "MenuItem";
 			this.ViewMenu.MenuCommands.AddRange(new Crownwood.Magic.Menus.MenuCommand[] {
 																							this.ViewLog,
-																							this.ViewConnect});
+																							this.ViewConnect,
+																							this.ViewWhoList,
+																							this.ViewSkillList});
 			this.ViewMenu.Text = "&View";
+			this.ViewMenu.Click += new System.EventHandler(this.ViewMenu_Click);
 			// 
 			// ViewLog
 			// 
@@ -242,6 +249,18 @@ namespace Strive.UI.Windows
 			this.ViewConnect.Description = "MenuItem";
 			this.ViewConnect.Text = "Connect";
 			this.ViewConnect.Click += new System.EventHandler(this.ViewConnect_Click);
+			// 
+			// ViewWhoList
+			// 
+			this.ViewWhoList.Description = "MenuItem";
+			this.ViewWhoList.Text = "WhoList";
+			this.ViewWhoList.Click += new System.EventHandler(this.ViewWhoList_Click);
+			// 
+			// ViewSkillList
+			// 
+			this.ViewSkillList.Description = "MenuItem";
+			this.ViewSkillList.Text = "SkillList";
+			this.ViewSkillList.Click += new System.EventHandler(this.ViewSkillList_Click);
 			// 
 			// MainStatus
 			// 
@@ -343,6 +362,20 @@ namespace Strive.UI.Windows
 				Cursor.Clip = new Rectangle( new Point(0,0), new Size(0,0) );
 				Cursor.Show();
 			}
+		}
+
+		private void ViewMenu_Click(object sender, System.EventArgs e) {
+		
+		}
+
+		private void ViewWhoList_Click(object sender, System.EventArgs e) {
+			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
+			DockingManager.AddContentWithState(whoWindow, State.Floating);
+		}
+
+		private void ViewSkillList_Click(object sender, System.EventArgs e) {
+			Content skillWindow = DockingManager.Contents.Add(new ChildWindows.SkillSelector(), "Skills", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
+			DockingManager.AddContentWithState(skillWindow, State.Floating);
 		}
 	}
 }

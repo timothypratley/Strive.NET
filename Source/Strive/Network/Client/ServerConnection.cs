@@ -60,7 +60,7 @@ namespace Strive.Network.Client {
 			//Console.WriteLine( "enqueued " + message.GetType() + " message" );
 		}
 
-		private void Send( IMessage message ) {
+		public void Send( IMessage message ) {
 			// Generic serialization
 			//MemoryStream ms = new MemoryStream();
 			//formatter.Serialize( ms, message );

@@ -11,8 +11,12 @@ namespace Strive.UI.Engine {
 	/// </summary>
 	public class MessageProcessor {
 		public delegate void CanPossessHandler( Strive.Network.Messages.ToClient.CanPossess message );
+		public delegate void SkillListHandler( Strive.Network.Messages.ToClient.SkillList message );
+		public delegate void WhoListHandler( Strive.Network.Messages.ToClient.WhoList message );
 
 		public event CanPossessHandler OnCanPossess;
+		public event SkillListHandler OnSkillList;
+		public event WhoListHandler OnWhoList;
 
 		public MessageProcessor() {
 		}
@@ -169,9 +173,23 @@ namespace Strive.UI.Engine {
 					#region Weather
 			else if ( m is Strive.Network.Messages.ToClient.Weather ) {
 				Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
-				Game.CurrentLog.LogMessage( "Weather update recieved" );
+				//Game.CurrentLog.LogMessage( "Weather update recieved" );
 				string texture_name = ResourceManager.LoadTexture(w.SkyTextureID);
 				Game.CurrentScene.SetSky( "sky", texture_name );
+			}
+				#endregion
+				#region SkillList
+			else if ( m is Strive.Network.Messages.ToClient.SkillList ) {
+				Strive.Network.Messages.ToClient.SkillList sl = (Strive.Network.Messages.ToClient.SkillList)m;
+				Game.CurrentLog.LogMessage( "SkillList recieved" );
+				OnSkillList( sl );
+			}
+				#endregion
+				#region WhoList
+			else if ( m is Strive.Network.Messages.ToClient.WhoList ) {
+				Strive.Network.Messages.ToClient.WhoList wl = (Strive.Network.Messages.ToClient.WhoList)m;
+				Game.CurrentLog.LogMessage( "WhoList recieved" );
+				OnWhoList( wl );
 			}
 				#endregion
 					#region Default

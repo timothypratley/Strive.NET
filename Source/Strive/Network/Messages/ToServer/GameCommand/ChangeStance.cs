@@ -7,10 +7,11 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// </summary>
 	[Serializable]
 	public class ChangeStance : IMessage	{
-		public ChangeStance( int StanceID )	{
-			this.StanceID = StanceID;	
-		}
 		public int StanceID;
+		public ChangeStance(){}
+		public ChangeStance( Stances StanceID )	{
+			this.StanceID = (int)StanceID;	
+		}
 
 		public enum Stances {
 			// descriptive stances

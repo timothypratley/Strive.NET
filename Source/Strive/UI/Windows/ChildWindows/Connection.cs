@@ -288,11 +288,10 @@ namespace Strive.UI.Windows.ChildWindows
 				new object [] { cp } );
 		}
 
-		void HandleCanPossess( Strive.Network.Messages.ToClient.CanPossess cp ) 
-		{
+		void HandleCanPossess( Strive.Network.Messages.ToClient.CanPossess cp ) {
 			if ( cp.possesable.Length < 1 ) 
 			{
-				throw new Exception("No characters available.");
+				this.Text = "No characters available.";
 			}
 			foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) 
 			{

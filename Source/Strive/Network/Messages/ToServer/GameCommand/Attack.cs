@@ -9,6 +9,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	[Serializable]
 	public class Attack : IMessage	{
 		public int targetObjectInstanceID;
+		public Attack(){}
 		public Attack( PhysicalObject target )	{
 			this.targetObjectInstanceID = target.ObjectInstanceID;
 		}

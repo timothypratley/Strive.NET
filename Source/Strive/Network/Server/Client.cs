@@ -41,7 +41,6 @@ namespace Strive.Network.Server {
 				Console.WriteLine( "ERROR: trying to send message without active connection" );
 				return;
 			}
-			try {
 				// Generic serialization
 				// MemoryStream ms = new MemoryStream();
 				// formatter.Serialize( ms, message );
@@ -56,10 +55,6 @@ namespace Strive.Network.Server {
 					// do nothing, socket has been closed by another thread
 				}
 				// Console.WriteLine( "Sent " + message.GetType() + " message (" + EncodedMessage.Length + " bytes) to " + endPoint );
-			} catch ( Exception e ) {
-				Console.WriteLine( e );
-				connected = false;
-			}
 		}
 
 		public void Close() {

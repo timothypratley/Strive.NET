@@ -1,5 +1,6 @@
 using System;
-
+using System.Data;
+using System.Data.SqlClient;
 namespace Strive.Data
 {
 	/// <summary>
@@ -44,7 +45,7 @@ namespace Strive.Data
 		{
 			_connection.Close();
 		}
-			
+	
 
 		#region Internal helpers
 
@@ -87,6 +88,19 @@ namespace Strive.Data
 
 
 		#region Hand built commands - DO NOT DELETE
+
+		public System.Data.SqlClient.SqlCommand SelectPlayerRows(int PlayerID) {
+
+			System.Data.SqlClient.SqlCommand playerCommand = buildCommandFromSimpleQuery( "select * from Player WHERE PlayerID = @PlayerID" );
+
+			SqlParameter param = new System.Data.SqlClient.SqlParameter();		
+			param.ParameterName = "@PlayerID";
+			param.Value = PlayerID;
+			playerCommand.Parameters.Add(param);			
+
+			return playerCommand;				
+
+		}
 
 		public System.Data.SqlClient.SqlCommand SelectObjectInstance {
 			get {

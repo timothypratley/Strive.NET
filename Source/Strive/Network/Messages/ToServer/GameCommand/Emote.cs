@@ -7,12 +7,13 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// </summary>
 	[Serializable]
 	public class Emote : IMessage	{
+		public int EmoteID;
+		public int MobileID;	// optional target
+		public Emote(){}
 		public Emote( EmoteType EmoteID, int MobileID )	{
-			this.EmoteID = EmoteID;
+			this.EmoteID = (int)EmoteID;
 			this.MobileID = MobileID;
 		}
-		public EmoteType EmoteID;
-		public int MobileID;	// optional target
 
 		public enum EmoteType {
 			Bow,

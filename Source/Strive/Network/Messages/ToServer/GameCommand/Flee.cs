@@ -7,5 +7,6 @@ namespace Strive.Network.Messages.ToServer.GameCommand
 	/// </summary>
 	[Serializable]
 	public class Flee : IMessage {
+		public Flee(){}
 	}
 }

@@ -5,8 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Collections;
 
-namespace Strive.Network.Messages
-{
+namespace Strive.Network.Messages {
 	/// <summary>
 	/// Summary description for CustomFormatter.
 	/// </summary>
@@ -27,43 +26,58 @@ namespace Strive.Network.Messages
 		}
 
 		public static void Encode( Object obj, MemoryStream Buffer ) {
+			// if the object is a basic type, encode and return
+			if ( EncodeBasicType( obj, Buffer ) ) return;
+
+			// otherwise encode its fields
 			Type t = obj.GetType();
-			FieldInfo[] fi = t.GetFields( );
+			FieldInfo[] fi = t.GetFields();
 			foreach( FieldInfo i in fi ) {
-				if ( i.FieldType == typeof( Int32 ) ) {
-					byte[] EncodedInt = BitConverter.GetBytes((Int32)i.GetValue( obj ));
-					Buffer.Write(
-						EncodedInt,
-						0, EncodedInt.Length
-					);
-				} else if ( i.FieldType == typeof( float ) ) {
-					byte[] EncodedFloat = BitConverter.GetBytes((float)i.GetValue( obj ));
-					Buffer.Write(
-						EncodedFloat,
-						0, EncodedFloat.Length
-					);
-				} else if ( i.FieldType == typeof( string ) ) {
-					byte[] EncodedString = Encoding.Unicode.GetBytes(
-						((string)i.GetValue( obj ))
-					);
-					byte[] EncodedInt = BitConverter.GetBytes( EncodedString.Length );
-					Buffer.Write( EncodedInt, 0, EncodedInt.Length );
-					Buffer.Write( EncodedString, 0, EncodedString.Length );
-				} else if ( i.FieldType.IsArray ) {
-					Array a = ((Array)i.GetValue( obj ));
-					byte[] EncodedLength = BitConverter.GetBytes( a.Length );
-					Buffer.Write( EncodedLength, 0, EncodedLength.Length );
-					for ( int j=0; j<a.Length; j++ ) {
-						// recursively encode the objects of the array
-						Encode( a.GetValue(j), Buffer );
-					}
-				} else {
-					System.Console.WriteLine( "Unknown type: " + i.FieldType );
-					throw new Exception( "Cannot serialize" );
-				}
+				Object field = i.GetValue( obj );
+				//Convert.ChangeType( field, i.FieldType );
+				Encode( field, Buffer );
 			}
 		}
 		
+		public static bool EncodeBasicType( Object obj, MemoryStream Buffer ) {
+			Type t = obj.GetType();
+			if ( t == typeof( Enum ) ) {
+				byte[] EncodedInt = BitConverter.GetBytes((Int32)obj);
+				Buffer.Write(
+					EncodedInt,
+					0, EncodedInt.Length );
+					
+			} else if ( t == typeof( Int32 ) ) {
+				byte[] EncodedInt = BitConverter.GetBytes((Int32)obj);
+				Buffer.Write(
+					EncodedInt,
+					0, EncodedInt.Length
+					);
+			} else if ( t == typeof( float ) ) {
+				byte[] EncodedFloat = BitConverter.GetBytes((float)obj);
+				Buffer.Write(
+					EncodedFloat,
+					0, EncodedFloat.Length
+					);
+			} else if ( t == typeof( string ) ) {
+				byte[] EncodedString = Encoding.Unicode.GetBytes((string)obj);
+				byte[] EncodedInt = BitConverter.GetBytes( EncodedString.Length );
+				Buffer.Write( EncodedInt, 0, EncodedInt.Length );
+				Buffer.Write( EncodedString, 0, EncodedString.Length );
+			} else if ( t.IsArray ) {
+				Array a = (Array)obj;
+				byte[] EncodedLength = BitConverter.GetBytes( a.Length );
+				Buffer.Write( EncodedLength, 0, EncodedLength.Length );
+				for ( int j=0; j<a.Length; j++ ) {
+					// recursively encode the objects of the array
+					Encode( a.GetValue(j), Buffer );
+				}
+			} else {
+				return false;
+			}
+			return true;
+		}
+
 		public static Object Deserialize( byte[] buffer ) {
 			int Offset = 0;
 			MessageTypeMap.EnumMessageID message_id = (MessageTypeMap.EnumMessageID)BitConverter.ToInt32( buffer, Offset );
@@ -71,41 +85,48 @@ namespace Strive.Network.Messages
 			Offset += 4;
 			//System.Console.WriteLine( t );
 
-			return Decode( t, buffer, Offset );
+			return Decode( t, buffer, ref Offset );
 		}
 
-		public static Object Decode( Type t, byte[] buffer, int Offset ) {
-            Object obj = t.GetConstructor( new System.Type[0] ).Invoke( null );
+		public static Object Decode( Type t, byte[] buffer, ref int Offset ) {
+			// if its a basic type, return it
+			Object obj = DecodeBasicType( t, buffer, ref Offset );
+			if ( obj != null ) return obj;
+
+			// otherwise create the complex object, and decode its fields
+			obj = t.GetConstructor( new System.Type[0] ).Invoke( null );
 			FieldInfo[] fi = t.GetFields();
 			foreach( FieldInfo i in fi ) {
-				if ( i.FieldType == typeof( Int32 ) ) {
-					i.SetValue( obj, BitConverter.ToInt32( buffer, Offset ) );
-					Offset += 4;
-				} else if ( i.FieldType == typeof( float ) ) {
-					i.SetValue( obj, BitConverter.ToSingle( buffer, Offset ) );
-					Offset += 4;
-				} else if ( i.FieldType == typeof( string ) ) {
-					int StringLength = BitConverter.ToInt32( buffer, Offset );
-					Offset += 4;
-					string DecodedString = Encoding.Unicode.GetString( buffer, Offset, StringLength );
-					i.SetValue( obj, DecodedString );
-					Offset = Offset + StringLength;
-				} else if ( i.FieldType.IsArray ) {
-					int length = BitConverter.ToInt32( buffer, Offset );
-					Offset += 4;
-					ArrayList DecodedArray = new ArrayList();
-					for ( int j=0; j<length; j++ ) {
-						DecodedArray.Add(
-							Decode( i.FieldType.GetElementType(), buffer, Offset )
-						);
-					}
-					i.SetValue( obj, DecodedArray.ToArray( i.FieldType.GetElementType() ) );
-				} else {
-					System.Console.WriteLine( "Unknown type: " + i.FieldType );
-					throw new Exception( "Cannot deserialize" );
-				}
+				i.SetValue( obj, Decode( i.FieldType, buffer, ref Offset ) );
 			}
 			return obj;
+		}
+
+		public static Object DecodeBasicType( Type t, byte[] buffer, ref int Offset ) {
+			Object result = null;
+			if ( t == typeof( Int32 ) ) {
+				result = BitConverter.ToInt32( buffer, Offset );
+				Offset += 4;
+			} else if ( t == typeof( float ) ) {
+				result = BitConverter.ToSingle( buffer, Offset );
+				Offset += 4;
+			} else if ( t == typeof( string ) ) {
+				int StringLength = BitConverter.ToInt32( buffer, Offset );
+				Offset += 4;
+				result = Encoding.Unicode.GetString( buffer, Offset, StringLength );
+				Offset += StringLength;
+			} else if ( t.IsArray ) {
+				int length = BitConverter.ToInt32( buffer, Offset );
+				Offset += 4;
+				ArrayList DecodedArray = new ArrayList();
+				for ( int j=0; j<length; j++ ) {
+					DecodedArray.Add(
+						Decode( t.GetElementType(), buffer, ref Offset )
+					);
+				}
+				result = DecodedArray.ToArray( t.GetElementType() );
+			}
+			return result;
 		}
 	}
 }

@@ -121,11 +121,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "GameCommandProcessor.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "Global.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -141,7 +136,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Skills.cs"
+                    RelPath = "SkillCommandProcessor.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -226,6 +226,26 @@
                     DependentUpon = "Log.cs"
                     BuildAction = "EmbeddedResource"
                 />
+                <File
+                    RelPath = "Windows\ChildWindows\SkillSelector.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\SkillSelector.resx"
+                    DependentUpon = "SkillSelector.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\WhoList.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\WhoList.resx"
+                    DependentUpon = "WhoList.cs"
+                    BuildAction = "EmbeddedResource"
+                />
             </Include>
         </Files>
     </CSHARP>

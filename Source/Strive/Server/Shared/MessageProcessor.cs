@@ -6,6 +6,7 @@ using System.Net;
 using Strive.Network.Messages;
 using Strive.Network.Server;
 using Strive.Math3D;
+using Strive.Multiverse;
 
 namespace Strive.Server.Shared {
 	public class MessageProcessor {
@@ -70,9 +71,9 @@ namespace Strive.Server.Shared {
 			{
 				ProcessChatMessage( client, message as Network.Messages.ToServer.GameCommand.Communication );
 			} 
-			else if ( message is Network.Messages.ToServer.GameCommand.TargetAny ) 
+			else if ( message is Network.Messages.ToServer.GameCommand.UseSkill ) 
 			{
-				GameCommandProcessor.ProcessTargetAny( client, message as Network.Messages.ToServer.GameCommand.TargetAny );
+				SkillCommandProcessor.ProcessUseSkill( client, message as Network.Messages.ToServer.GameCommand.UseSkill );
 			} 
 			else if ( message is Network.Messages.ToServer.GameCommand.Attack ) 
 			{
@@ -89,6 +90,14 @@ namespace Strive.Server.Shared {
 			else if ( message is Network.Messages.ToServer.Logout ) 
 			{
 				ProcessLogout(client);
+			}
+			else if ( message is Network.Messages.ToServer.GameCommand.SkillList )
+			{
+				ProcessSkillList(client, message as Network.Messages.ToServer.GameCommand.SkillList);
+			}
+			else if ( message is Network.Messages.ToServer.GameCommand.WhoList )
+			{
+				ProcessWhoList(client, message as Network.Messages.ToServer.GameCommand.WhoList);
 			}
 			else 
 			{
@@ -189,7 +198,7 @@ namespace Strive.Server.Shared {
 			foreach ( Client c in listener.Clients.Values ) {
 				if (  c == client ) continue;
 				c.Send(
-					new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, message.communicationType )
+					new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )
 				);
 			}
 		}
@@ -219,6 +228,35 @@ namespace Strive.Server.Shared {
 					ProcessEnterWorldAsMobile( c, new Strive.Network.Messages.ToServer.EnterWorldAsMobile( c.Avatar.ObjectInstanceID ) );
 				}
 			}
+		}
+
+		void ProcessWhoList(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.WhoList message
+		) {
+			ArrayList MobileIDs = new ArrayList();
+			ArrayList Names = new ArrayList();
+			foreach( Client c in listener.Clients.Values ) {
+				if ( c.Avatar != null ) {
+					MobileIDs.Add( c.Avatar.ObjectInstanceID );
+					Names.Add( c.Avatar.ObjectTemplateName );
+				}
+			}
+			client.Send( new Strive.Network.Messages.ToClient.WhoList( (int[])MobileIDs.ToArray( typeof( int ) ), (string[])Names.ToArray( typeof( string ) ) ) );
+		}
+
+		void ProcessSkillList(
+			Client client, Strive.Network.Messages.ToServer.GameCommand.SkillList message
+		) {
+			ArrayList skillIDs = new ArrayList();
+			ArrayList competancy = new ArrayList();
+			for ( int i = 1; i < Global.multiverse.EnumSkill.Count; i++ ) {
+				Schema.MobileHasSkillRow mhs = Global.multiverse.MobileHasSkill.FindByObjectTemplateIDEnumSkillID( client.Avatar.ObjectTemplateID, i );
+				if ( mhs != null ) {
+					skillIDs.Add( mhs.EnumSkillID );
+					competancy.Add( mhs.Rating );
+				}
+			}
+			client.Send( new Strive.Network.Messages.ToClient.SkillList( (int [])skillIDs.ToArray( typeof( int ) ), (float [])competancy.ToArray( typeof( float ) ) ) );
 		}
 
 		public void CleanupDeadConnections() {

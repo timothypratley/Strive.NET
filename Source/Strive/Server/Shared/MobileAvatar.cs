@@ -18,11 +18,21 @@ namespace Strive.Server.Shared
 	{
 		public Client client = null;
 		public World world = null;
-		DateTime lastAttackUpdate = DateTime.Now;
-		DateTime lastHealUpdate = DateTime.Now;
-		DateTime lastBehaviourUpdate = DateTime.Now;
-		DateTime lastMoveUpdate = DateTime.Now;
+		DateTime lastAttackUpdate = Global.now;
+		DateTime lastHealUpdate = Global.now;
+		DateTime lastBehaviourUpdate = Global.now;
+		DateTime lastMoveUpdate = Global.now;
 		public PhysicalObject target = null;
+		public Strive.Network.Messages.ToServer.GameCommand.UseSkill activatingSkill = null;
+		public DateTime activatingSkillTimestamp = Global.now;
+		public TimeSpan activatingSkillLeadTime = TimeSpan.FromSeconds(0);
+
+		// todo: put these in the database schema
+		public float AffinityAir = 0;
+		public float AffinityEarth = 0;
+		public float AffinityFire = 0;
+		public float AffinityLife = 0;
+		public float AffinityWater = 0;
 
 		public MobileAvatar(
 			World world,
@@ -38,6 +48,14 @@ namespace Strive.Server.Shared
 		}
 
 		public void Update() {
+			// check for queue skills
+			if ( activatingSkill != null ) {
+				if ( activatingSkillTimestamp + activatingSkillLeadTime <= Global.now ) {
+					SkillCommandProcessor.UseSkillNow( client, activatingSkill );
+					activatingSkill = null;
+				}
+			}
+
 			if ( target != null ) {
 				CombatUpdate();
 			} else if ( !IsPlayer() ) {
@@ -202,7 +220,7 @@ namespace Strive.Server.Shared
 					damage -= 8; // opponent.ArmourRating
 				}
 				if ( damage < 0 ) damage = 0;
-				opponent.HitPoints -= damage;
+				opponent.HitPoints -= damage * Strength/opponent.Constitution;
 				opponent.UpdateState();
 				world.InformNearby(
 					this,
@@ -225,7 +243,47 @@ namespace Strive.Server.Shared
 					world.Remove( item );
 				}
 			} else {
-				System.Console.WriteLine( "ERROR: attacking a " + po.GetType().ToString() + " " + po );
+				throw new Exception( "ERROR: attacking a " + po.GetType().ToString() + " " + po );
+			}
+		}
+
+		public void MagicalAttack( PhysicalObject po, float damage ) {
+			if ( po is MobileAvatar ) {
+				MobileAvatar opponent = po as MobileAvatar;
+				// avoidance phase: Dexterity
+				if ( Global.random.Next(100) <= opponent.Dexterity ) {
+					world.InformNearby(
+						this,
+						new Strive.Network.Messages.ToClient.CombatReport(
+						this, target, EnumCombatEvent.Avoids, 0 )
+					);
+					return;
+				}
+
+				// damage phase
+				opponent.HitPoints -= damage * Cognition/opponent.Willpower;
+				opponent.UpdateState();
+				world.InformNearby(
+					this,
+					new Strive.Network.Messages.ToClient.CombatReport(
+					this, target, EnumCombatEvent.Hits, damage )
+				);
+			} else if ( po is Item ) {
+				// attacking object
+				Item item = target as Item;
+				item.HitPoints -= damage;
+				world.InformNearby(
+					this,
+					new Strive.Network.Messages.ToClient.CombatReport(
+					this, target, EnumCombatEvent.Hits, damage )
+					);
+
+				if ( item.HitPoints <= 0 ) {
+					// omg j00 destoryed teh item!
+					world.Remove( item );
+				}
+			} else {
+				throw new Exception( "ERROR: attacking a " + po.GetType().ToString() + " " + po );
 			}
 		}
 

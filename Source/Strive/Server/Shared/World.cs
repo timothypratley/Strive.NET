@@ -11,6 +11,8 @@ using Strive.Multiverse;
 using Strive.Math3D;
 using Strive.Data;
 
+// todo: this object needs to be made threadsafe
+
 namespace Strive.Server.Shared {
 	public class World {
 		double highX = 500.0;
