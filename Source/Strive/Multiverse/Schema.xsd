@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <xs:schema id="Schema" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
   <xs:element name="Schema" msdata:IsDataSet="true" msdata:Locale="en-AU">
     <xs:complexType>
@@ -277,6 +277,20 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="EnumResourceType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumResourceTypeID" type="xs:int" />
+              <xs:element name="EnumResourceTypeName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="EnumSex">
           <xs:complexType>
             <xs:sequence>
@@ -531,29 +545,6 @@
             <xs:sequence>
               <xs:element name="ObjectInstanceID" type="xs:int" />
               <xs:element name="PlayerID" type="xs:int" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Model">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="ModelID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
-              <xs:element name="ModelName">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="PlayerID" type="xs:int" />
-              <xs:element name="Description" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1073741823" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="CreationTime" type="xs:dateTime" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -1163,6 +1154,44 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Resource">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ResourceID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="ResourceName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ResourcerFileExtension">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PlayerID" type="xs:int" />
+              <xs:element name="Description" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ResourcePak" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EnumResourceTypeID" type="xs:int" />
+              <xs:element name="CreationTime" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="SkillEnablesSkill">
           <xs:complexType>
             <xs:sequence>
@@ -1306,6 +1335,10 @@
       <xs:selector xpath=".//EnumRace" />
       <xs:field xpath="EnumRaceID" />
     </xs:unique>
+    <xs:unique name="EnumResourceType_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumResourceType" />
+      <xs:field xpath="EnumResourceTypeID" />
+    </xs:unique>
     <xs:unique name="EnumSex_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//EnumSex" />
       <xs:field xpath="EnumSexID" />
@@ -1375,10 +1408,6 @@
     <xs:unique name="MobilePossesableByPlayer_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//MobilePossesableByPlayer" />
       <xs:field xpath="ObjectInstanceID" />
-    </xs:unique>
-    <xs:unique name="Model_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//Model" />
-      <xs:field xpath="ModelID" />
     </xs:unique>
     <xs:unique name="ObjectInstance_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//ObjectInstance" />
@@ -1451,6 +1480,10 @@
     <xs:unique name="RaceHasEmote_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//RaceHasEmote" />
       <xs:field xpath="EnumRaceID" />
+    </xs:unique>
+    <xs:unique name="Resource_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Resource" />
+      <xs:field xpath="ResourceID" />
     </xs:unique>
     <xs:unique name="SkillEnablesSkill_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//SkillEnablesSkill" />
@@ -1614,10 +1647,6 @@
     <xs:keyref name="FK_ObjectTemplate_Player" refer="Player_Constraint1">
       <xs:selector xpath=".//ObjectTemplate" />
       <xs:field xpath="PlayerID" />
-    </xs:keyref>
-    <xs:keyref name="FK_ObjectTemplate_Model" refer="Model_Constraint1">
-      <xs:selector xpath=".//ObjectTemplate" />
-      <xs:field xpath="ModelID" />
     </xs:keyref>
     <xs:keyref name="FK_ObjectTemplate_Area" refer="Constraint1">
       <xs:selector xpath=".//ObjectTemplate" />
