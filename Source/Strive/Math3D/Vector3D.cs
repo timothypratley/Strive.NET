@@ -43,10 +43,15 @@ namespace Strive.Math3D {
 	/// Represents a location in 3-space
 	/// </summary>
 	[XmlType("point3d"),StructLayout(LayoutKind.Sequential)]
-	public struct Vector3D : ICloneable {
+	public class Vector3D : ICloneable {
 
 		// ================================================================================
 
+		public Vector3D() {
+			this.X = 0;
+			this.Y = 0;
+			this.Z = 0;
+		}
 		/// <summary>
 		/// Creates a new vector set to ( x, y, z )
 		/// </summary>

@@ -1,35 +1,53 @@
 using System;
+
 using Strive.Multiverse;
 
 namespace Strive.Network.Messages.ToClient
 {
 	/// <summary>
-	/// Summary description for AddPhysicalObject.
+	/// A helper class to construct add messages,
+	/// do not create instances of this class!
 	/// </summary>
-	[Serializable]
-	public abstract class AddPhysicalObject : IMessage
-	{
-		public AddPhysicalObject(){}
-		public AddPhysicalObject( PhysicalObject po ) {
-			this.instance_id = po.ObjectInstanceID;
-			this.model_id = po.ModelID;
-			this.name = po.ObjectTemplateName;
-			this.x = (float)po.Position.X;
-			this.y = (float)po.Position.Y;
-			this.z = (float)po.Position.Z;
-			this.heading_x = (float)po.Heading.X;
-			this.heading_y = (float)po.Heading.Y;
-			this.heading_z = (float)po.Heading.Z;
+	public class AddPhysicalObject : IMessage {
+		protected AddPhysicalObject(){}
+		public static IMessage CreateMessage( PhysicalObject po ) {
+			if ( po is Equipable ) {
+				return new AddEquipable( (Equipable)po );
+			} else if ( po is Junk ) {
+				return new AddJunk( (Junk)po );
+			} else if ( po is Mobile ) {
+				return new AddMobile( (Mobile)po );
+			} else if ( po is Quaffable ) {
+				return new AddQuaffable( (Quaffable)po );
+			} else if ( po is Readable ) {
+				return new AddReadable( (Readable)po );
+			} else if ( po is Terrain ) {
+				return new AddTerrain( (Terrain)po );
+			} else if ( po is Wieldable ) {
+				return new AddWieldable( (Wieldable)po );
+			} else {
+				throw new Exception( "AddPhysicalObject of unknown type " + po.GetType() );
+			}
 		}
 
-		public int instance_id;
-		public int model_id;
-		public string name;
-		public float x;
-		public float y;
-		public float z;
-		public float heading_x;
-		public float heading_y;
-		public float heading_z;
+		public static PhysicalObject GetPhysicalObject( IMessage message ) {
+			if ( message is AddEquipable ) {
+				return ((AddEquipable)message).equipable;
+			} else if ( message is AddJunk ) {
+				return ((AddJunk)message).junk;
+			} else if ( message is AddMobile ) {
+				return ((AddMobile)message).mobile;
+			} else if ( message is AddQuaffable ) {
+				return ((AddQuaffable)message).quaffable;
+			} else if ( message is AddReadable ) {
+				return ((AddReadable)message).readable;
+			} else if ( message is AddTerrain ) {
+				return ((AddTerrain)message).terrain;
+			} else if ( message is AddWieldable ) {
+				return ((AddWieldable)message).weildable;
+			} else {
+				throw new Exception( "Unknown AddPhysicalObject message type " + message.GetType() );
+			}
+		}
 	}
 }

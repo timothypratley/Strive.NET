@@ -197,7 +197,7 @@ namespace Strive.Server.Shared {
 
 			// notify all nearby clients that a new
 			// physical object has entered the world
-			InformNearby( po, CreateAddMessage( po ) );
+			InformNearby( po, Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( po ) );
 			Log.LogMessage( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
 		}
 
@@ -311,12 +311,12 @@ namespace Strive.Server.Shared {
 							toSquareX-i >= 0 && toSquareX-i < squaresInX
 							&& toSquareZ-j >= 0 && toSquareZ-j < squaresInZ
 						) {
-							squares[toSquareX-i, toSquareZ-j].NotifyClients( CreateAddMessage( po ) );
+							squares[toSquareX-i, toSquareZ-j].NotifyClients( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( po ) );
 							// if the object is a player, it needs to be made aware
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
 								foreach( PhysicalObject toAdd in squares[toSquareX-i, toSquareZ-j].physicalObjects ) {
-									ma.client.Send(	CreateAddMessage( toAdd ) );
+									ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( toAdd ) );
 									//Log.LogMessage( "Told client to add " + toAdd.ObjectInstanceID + "." );
 								}
 							}
@@ -431,28 +431,8 @@ namespace Strive.Server.Shared {
 				client.Send( message );
 				*/
 				foreach ( PhysicalObject p in nearbyPhysicalObjects ) {
-					client.Send( CreateAddMessage( p ) );
+					client.Send( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( p ) );
 				}
-			}
-		}
-
-		public Strive.Network.Messages.ToClient.AddPhysicalObject CreateAddMessage( PhysicalObject po ) {
-			if ( po is Mobile ) {
-				return new Strive.Network.Messages.ToClient.AddMobile( po as Mobile );
-			} else if ( po is Quaffable ) {
-				return new Strive.Network.Messages.ToClient.AddQuaffable( po as Quaffable );
-			} else if ( po is Readable ) {
-				return new Strive.Network.Messages.ToClient.AddReadable( po as Readable );
-			} else if ( po is Wieldable ) {
-				return new Strive.Network.Messages.ToClient.AddWieldable( po as Wieldable );
-			} else if ( po is Equipable ) {
-				return new Strive.Network.Messages.ToClient.AddEquipable( po as Equipable );
-			} else if ( po is Junk ) {
-				return new Strive.Network.Messages.ToClient.AddJunk( po as Junk );
-			} else if ( po is Terrain ) {
-				return new Strive.Network.Messages.ToClient.AddTerrain( po as Terrain );
-			} else {
-				throw new Exception( "Unknown physical object type " + po.GetType() );
 			}
 		}
 

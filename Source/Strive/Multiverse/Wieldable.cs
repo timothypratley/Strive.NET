@@ -7,8 +7,6 @@ namespace Strive.Multiverse
 	/// </summary>
 	public class Wieldable : Item
 	{
-		public Schema.ItemWieldableRow wieldable;
-
 		public Wieldable(){}
 		public Wieldable(
 			Schema.ItemWieldableRow wieldable,
@@ -16,7 +14,6 @@ namespace Strive.Multiverse
 			Schema.ObjectTemplateRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( item, template, instance ) {
-			this.wieldable = wieldable;
 		}
 	}
 }

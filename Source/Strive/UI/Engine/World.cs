@@ -35,12 +35,12 @@ namespace Strive.UI.Engine {
 			scene.SetFog( 500.0f );
 		}
 
-		public void Add( PhysicalObject po, Vector3D position, Vector3D rotation ) {
+		public void Add( PhysicalObject po ) {
 			PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
 			physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 			scene.Models.Add( poi.model );
-			poi.model.Position = position;
-			poi.model.Rotation = rotation;
+			poi.model.Position = po.Position;
+			poi.model.Rotation = Helper.GetRotationFromHeading( po.Heading );
 		}
 
 		public void Remove( int ObjectInstanceID ) {

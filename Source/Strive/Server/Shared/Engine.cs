@@ -20,6 +20,10 @@ namespace Strive.Server.Shared {
 		StoppableThread engine_thread;
 
 		public Engine() {
+			Strive.Network.Messages.CustomFormatter.Serialize(
+				Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage(
+					new Strive.Multiverse.Mobile() ) );
+
 			engine_thread = new StoppableThread( new StoppableThread.WhileRunning( UpdateLoop ) );
 
 			#region read and apply configuration settings

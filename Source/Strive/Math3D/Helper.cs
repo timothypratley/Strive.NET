@@ -7,6 +7,10 @@ namespace Strive.Math3D
 	/// </summary>
 	public class Helper
 	{
+		public static Vector3D GetRotationFromHeading( Vector3D heading ) {
+			return GetRotationFromHeading( heading.X, heading.Y, heading.Z );
+		}
+
 		public static Vector3D GetRotationFromHeading( float x, float y, float z ) {
 			// Rotation, convert from heading to Euler angles
 			// protect from divide by zero,

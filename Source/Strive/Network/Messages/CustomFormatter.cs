@@ -26,21 +26,27 @@ namespace Strive.Network.Messages {
 				throw new Exception( "Message " + t + " has not been added to MessageTypeMap" );
 			}
 			Buffer.Write( EncodedID, 0, EncodedID.Length );
-			Encode( obj, Buffer );
+			Encode( obj, Buffer, t );
 			return Buffer.ToArray();
 		}
 
-		public static void Encode( Object obj, MemoryStream Buffer ) {
+		public static void Encode( Object obj, MemoryStream Buffer, Type t ) {
 			// if the object is a basic type, encode and return
 			if ( EncodeBasicType( obj, Buffer ) ) return;
 
-			// otherwise encode its fields
-			Type t = obj.GetType();
 			FieldInfo[] fi = t.GetFields();
 			foreach( FieldInfo i in fi ) {
+				if ( i.IsStatic ) continue;
 				Object field = i.GetValue( obj );
-				//Convert.ChangeType( field, i.FieldType );
-				Encode( field, Buffer );
+				if ( field == null ) {
+					throw new Exception( "Cannot serialise object with null fields" );
+				}
+				// NB: we encode to a specific type,
+				// this prevents encoding derived types,
+				// which would break the message protocol.
+				// derived types will be encoded as messages of the
+				// type they were assigned in the message_id lookup.
+				Encode( field, Buffer, i.FieldType );
 			}
 		}
 		
@@ -75,7 +81,8 @@ namespace Strive.Network.Messages {
 				Buffer.Write( EncodedLength, 0, EncodedLength.Length );
 				for ( int j=0; j<a.Length; j++ ) {
 					// recursively encode the objects of the array
-					Encode( a.GetValue(j), Buffer );
+					object o = a.GetValue(j);
+					Encode( o, Buffer, o.GetType() );
 				}
 			} else {
 				return false;
@@ -102,6 +109,7 @@ namespace Strive.Network.Messages {
 			obj = t.GetConstructor( new System.Type[0] ).Invoke( null );
 			FieldInfo[] fi = t.GetFields();
 			foreach( FieldInfo i in fi ) {
+				if ( i.IsStatic ) continue;
 				i.SetValue( obj, Decode( i.FieldType, buffer, ref Offset ) );
 			}
 			return obj;

@@ -7,8 +7,6 @@ namespace Strive.Multiverse
 	/// </summary>
 	public class Readable : Item
 	{
-		public Schema.ItemReadableRow readable;
-
 		public Readable(){}
 		public Readable(
 			Schema.ItemReadableRow readable,
@@ -16,7 +14,6 @@ namespace Strive.Multiverse
 			Schema.ObjectTemplateRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( item, template, instance ) {
-			this.readable = readable;
 		}
 	}
 }

@@ -13,11 +13,11 @@ namespace Strive.Multiverse
 	{
 		public int ObjectInstanceID;
 		public int ObjectTemplateID;
-		public string ObjectTemplateName;
+		public string ObjectTemplateName = "";
 		public int ModelID;
 		public int AreaID;
-		public Vector3D Position;
-		public Vector3D Heading;
+		public Vector3D Position = new Vector3D(0,0,0);
+		public Vector3D Heading = new Vector3D(0,0,0);
 		public float HitPoints = 0;
 		public int MaxHitPoints = 0;
 		public float BoundingSphereRadiusSquared;

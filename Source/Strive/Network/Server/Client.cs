@@ -44,20 +44,21 @@ namespace Strive.Network.Server {
 				Log.LogMessage( "ERROR: trying to send message without active connection" );
 				return;
 			}
-				// Generic serialization
-				// MemoryStream ms = new MemoryStream();
-				// formatter.Serialize( ms, message );
-				// byte[] EncodedMessage = ms.ToArray();
 
-				// Custom serialization
-				byte[] EncodedMessage = CustomFormatter.Serialize( message );
+			// Generic serialization
+			// MemoryStream ms = new MemoryStream();
+			// formatter.Serialize( ms, message );
+			// byte[] EncodedMessage = ms.ToArray();
 
-				try {
-					connection.Send( EncodedMessage, EncodedMessage.Length );
-				} catch ( ObjectDisposedException ) {
-					// do nothing, socket has been closed by another thread
-				}
-				// Log.LogMessage( "Sent " + message.GetType() + " message (" + EncodedMessage.Length + " bytes) to " + endPoint );
+			// Custom serialization
+			byte[] EncodedMessage = CustomFormatter.Serialize( message );
+
+			try {
+				connection.Send( EncodedMessage, EncodedMessage.Length );
+			} catch ( ObjectDisposedException ) {
+				// do nothing, socket has been closed by another thread
+			}
+			// Log.LogMessage( "Sent " + message.GetType() + " message (" + EncodedMessage.Length + " bytes) to " + endPoint );
 		}
 
 		public void Close() {
