@@ -24,7 +24,7 @@ namespace Strive.Network.Client {
 				throw new AlreadyRunningException();
 			}
 			this.remoteEndPoint = remoteEndPoint;
-			System.Diagnostics.Trace.WriteLine( "remoteEndPoint " + remoteEndPoint );
+			Console.WriteLine( "remoteEndPoint " + remoteEndPoint );
 			isRunning = true;
 			Thread myThread = new Thread(
 				new ThreadStart( Run )
