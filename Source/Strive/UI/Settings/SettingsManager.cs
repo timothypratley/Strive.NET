@@ -81,10 +81,17 @@ namespace Strive.UI.Settings
 			if(RecentWindowSettings.Rows.Contains(window.Text))
 			{
 				DataRow windowRow = RecentWindowSettings.Rows.Find(window.Text);
-				window.Height = int.Parse(windowRow["windowheight"].ToString());
-				window.Width = int.Parse(windowRow["windowwidth"].ToString());
-				window.Top = int.Parse(windowRow["windowtop"].ToString());
-				window.Left = int.Parse(windowRow["windowleft"].ToString());
+				// this is for people who quit the first time they run the game while maxmised
+				try
+				{
+					window.Height = int.Parse(windowRow["windowheight"].ToString());
+					window.Width = int.Parse(windowRow["windowwidth"].ToString());
+					window.Top = int.Parse(windowRow["windowtop"].ToString());
+					window.Left = int.Parse(windowRow["windowleft"].ToString());
+				}
+				catch(Exception)
+				{
+				}
 
 				window.WindowState = (System.Windows.Forms.FormWindowState)Enum.Parse(typeof(System.Windows.Forms.FormWindowState), windowRow["windowstate"].ToString(), true);
 				window.Refresh();
@@ -144,7 +151,7 @@ namespace Strive.UI.Settings
 			}
 		}
 
-		public static void AddRecentServer(string serverAddress, 
+		public static DataRow AddRecentServer(string serverAddress, 
 			int serverPort)
 		{
 			string serverKey = serverAddress + serverPort;
@@ -160,9 +167,11 @@ namespace Strive.UI.Settings
 			}
 
 			Log.LogMessage("Added server '" + serverAddress + ":" + serverPort + "' to recent servers");
+
+			return newRow;
 		}
 
-		public static void AddRecentPlayer(string serverAddress,
+		public static DataRow AddRecentPlayer(string serverAddress,
 			int serverPort,
 			string emailaddress,
 			string password)
@@ -206,9 +215,11 @@ namespace Strive.UI.Settings
 
 			RawSettings.Tables["RecentPlayers"].AcceptChanges();
 			Log.LogMessage("Added player '" + emailaddress + "' to recent players");
+
+			return playerRow;
 		}
 
-		public static void AddRecentCharacter(string serverAddress,
+		public static DataRow AddRecentCharacter(string serverAddress,
 			int serverPort,
 			string emailaddress,
 			string password,
@@ -229,9 +240,10 @@ namespace Strive.UI.Settings
 				AddRecentPlayer(serverAddress, serverPort, emailaddress, password);
 			}
 
+			DataRow charrow;
 			if(!RawSettings.Tables["RecentCharacters"].Rows.Contains(new string[] { charactername, playerKey, serverKey}))
 			{
-				DataRow charrow= RawSettings.Tables["RecentCharacters"].NewRow();
+				charrow= RawSettings.Tables["RecentCharacters"].NewRow();
 				charrow["charactername"] = charactername;
 				charrow["playerkey"] = playerKey;
 				charrow["serverkey"] = serverKey;
@@ -240,7 +252,7 @@ namespace Strive.UI.Settings
 			}
 			else
 			{
-				DataRow charrow = RawSettings.Tables["RecentCharacters"].Rows.Find(new string[] {charactername, playerKey, serverKey});
+				charrow = RawSettings.Tables["RecentCharacters"].Rows.Find(new string[] {charactername, playerKey, serverKey});
 				charrow["charactername"] = charactername;
 				charrow["playerkey"] = playerKey;
 				charrow["serverkey"] = serverKey;
@@ -249,6 +261,7 @@ namespace Strive.UI.Settings
 
 			RawSettings.Tables["RecentCharacters"].AcceptChanges();
 			Log.LogMessage("Added character '" + charactername+ "' to recent characters");
+			return charrow;
 		}	
 
 

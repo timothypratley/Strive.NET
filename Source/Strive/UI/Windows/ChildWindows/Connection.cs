@@ -259,7 +259,12 @@ namespace Strive.UI.Windows.ChildWindows
 					if ( serverNode == null ) 
 					{
 						serverNode = new TreeNode( label );
+						serverNode.Tag = Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text));
 						RecentServers.Nodes.Add( serverNode );
+					}
+					else
+					{
+						Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text));
 					}
 					label = Email.Text;
 					TreeNode playerNode = null;
@@ -274,12 +279,25 @@ namespace Strive.UI.Windows.ChildWindows
 					if ( playerNode == null ) 
 					{
 						playerNode = new TreeNode( label );
+						playerNode.Tag = Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
 						serverNode.Nodes.Add( playerNode );
+						// build a datarow of these settings:
+
 					}
+					else
+					{
+						Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
+					}
+					playerNode.ImageIndex = (int)Icons.AvailableIcons.Player;
+					playerNode.SelectedImageIndex = playerNode.ImageIndex;
+					serverNode.ImageIndex = (int)Icons.AvailableIcons.StoppedServer;
+					serverNode.SelectedImageIndex = serverNode.ImageIndex;
+					serverNode.ExpandAll();
+					playerNode.ExpandAll();
+
 					CurrentPlayerNode = playerNode;
 					StriveWindowState = ConnectionWindowState.Connecting;
-					Settings.SettingsManager.AddRecentServer(ServerAddress.Text, int.Parse(PortNumber.Text));
-					Settings.SettingsManager.AddRecentPlayer(ServerAddress.Text, int.Parse(PortNumber.Text), Email.Text, Password.Text);
+					Application.DoEvents();
 					Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), Game.CurrentMainWindow.RenderTarget);
 					Connected = true;
 					Game.CurrentGameLoop._message_processor.OnCanPossess

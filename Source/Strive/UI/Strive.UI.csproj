@@ -382,11 +382,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Windows\ChildWindows\WhoList.resx"
-                    DependentUpon = "WhoList.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
                     RelPath = "Windows\Controls\CommandInput.cs"
                     SubType = "UserControl"
                     BuildAction = "Compile"

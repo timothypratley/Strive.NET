@@ -34,15 +34,16 @@ namespace Strive.UI.Windows.ChildWindows
 
 		private void ProcessChat(Strive.Network.Messages.ToClient.Communication chatMessage)
 		{
+			
 			ChatOutput.AppendText( chatMessage.name + ": " + chatMessage.message + Environment.NewLine );
 		}
 
 		private void ProcessClientChat(string message)
 		{
-			ChatOutput.AppendText( "You say: " );
-			ChatOutput.AppendText( message );
-			ChatOutput.AppendText( Environment.NewLine );
-
+//			ChatOutput.AppendText( "You say: " );
+//			ChatOutput.AppendText( message );
+//			ChatOutput.AppendText( Environment.NewLine );
+			ChatInput.SelectAll();
 			// send the text
 			Game.CurrentServerConnection.Chat(message);
 		}
