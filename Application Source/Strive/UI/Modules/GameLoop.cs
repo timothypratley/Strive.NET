@@ -78,8 +78,7 @@ namespace Strive.UI.Modules
 						System.Console.WriteLine( "Initial rotation is " + _scene.View.Rotation );
 						continue;
 					}
-					// EEERRR hack, need better way of desciding what is a mdl what is a 3ds
-					Model model = Resources.ResourceManager.LoadModel(apo.spawn_id);
+					Model model = Resources.ResourceManager.LoadModel(apo.spawn_id, apo.model_id);
 					try {
 						_scene.Models.Add( model );
 					} catch ( Exception ) {
@@ -133,6 +132,7 @@ namespace Strive.UI.Modules
 			Vector3D cameraRotation = _scene.View.Rotation;
 
 			if(Keyboard.GetKeyState(Keys.key_W)) {
+				System.Console.WriteLine("w00t" );
 				WasKeyboardInput = true;
 				cameraPosition.X +=
 					(float)Math.Sin( cameraRotation.Y * Math.PI/180.0 ) * moveunit*2;
@@ -177,21 +177,19 @@ namespace Strive.UI.Modules
 			if(Keyboard.GetKeyState(Keys.key_ESCAPE )) {
 				WasKeyboardInput = true;
 				System.Windows.Forms.Application.Exit();
-			}
-
-			_scene.View.Position = cameraPosition;
-			_scene.View.Rotation = cameraRotation;
-			Network.Messages.ToServer.Position pos = new Network.Messages.ToServer.Position();
-			Vector3D cameraHeading = GetHeadingFromRotation( cameraRotation );
-			pos.heading_x = cameraHeading.X;
-			pos.heading_y = cameraHeading.Y;
-			pos.heading_z = cameraHeading.Z;
-			pos.position_x = _scene.View.Position.X;
-			pos.position_y = _scene.View.Position.Y;
-			pos.position_z = _scene.View.Position.Z;
-				
+			}				
 
 			if(WasKeyboardInput) {
+				_scene.View.Position = cameraPosition;
+				_scene.View.Rotation = cameraRotation;
+				Network.Messages.ToServer.Position pos = new Network.Messages.ToServer.Position();
+				Vector3D cameraHeading = GetHeadingFromRotation( cameraRotation );
+				pos.heading_x = cameraHeading.X;
+				pos.heading_y = cameraHeading.Y;
+				pos.heading_z = cameraHeading.Z;
+				pos.position_x = _scene.View.Position.X;
+				pos.position_y = _scene.View.Position.Y;
+				pos.position_z = _scene.View.Position.Z;
 				_connection.Send(pos);
 			}
 
