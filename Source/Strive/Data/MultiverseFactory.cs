@@ -27,13 +27,6 @@ namespace Strive.Data
 
 		#region Utility methods
 
-		private static void manualMerge(DataSet mergeTarget, DataSet mergeSource)
-		{
-			mergeTarget.EnforceConstraints = false;
-			mergeTarget.Merge(mergeSource, false);
-			mergeTarget.EnforceConstraints = true;
-		}
-
 		private static void initaliseState(Schema multiverse)
 		{
 			if(!isInitialised)
@@ -110,65 +103,25 @@ namespace Strive.Data
 		public static void refreshPlayerList(Schema multiverse) 
 		{
 			if ( connection == null ) return;
-			try 
-			{
-				Log.LogMessage( "refreshPlayerList begin" );
-				Schema updatedPlayerPartOfMultiverse = new Schema();
-				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
-				SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
-				playerFiller.Fill( updatedPlayerPartOfMultiverse.Player );
-				Log.LogMessage( "refreshPlayerList merge" );
-				manualMerge(multiverse, updatedPlayerPartOfMultiverse);
-				Log.LogMessage( "refreshPlayerList done" );
-			} 
-			catch ( SqlException e ) 
-			{
-				tryReconnect(e, multiverse);
-			}
+			Log.LogMessage( "refreshPlayerList begin" );
+			SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
+			playerFiller.Fill( multiverse );
+			Log.LogMessage( "refreshPlayerList done" );
 		}
 
 		public static void refreshMultiverseForPlayer(Schema multiverse, int PlayerID) 
 		{
 			if ( connection == null ) return;
-			try 
-			{
-				Log.LogMessage( "refreshMultiverseForPlayer begining sql" );
-				Schema updatedPlayerPartOfMultiverse = new Schema();
-				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
-				SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
-				SqlDataAdapter mobileFiller = new SqlDataAdapter(commandFactory.SelectTemplateMobileRows(PlayerID));
-				SqlDataAdapter objectFiller = new SqlDataAdapter(commandFactory.SelectObjectInstanceRows(PlayerID));
-				SqlDataAdapter templateFiller = new SqlDataAdapter(commandFactory.SelectTemplateObjectRows(PlayerID));
-				templateFiller.Fill(updatedPlayerPartOfMultiverse.TemplateObject);
-				objectFiller.Fill(updatedPlayerPartOfMultiverse.ObjectInstance);
-				mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
-				possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
-				Log.LogMessage( "refreshMultiverseForPlayer begining merge" );
-				manualMerge(multiverse, updatedPlayerPartOfMultiverse);
-				Log.LogMessage( "refreshMultiverseForPlayer done" );
-			} 
-			catch ( SqlException e ) 
-			{
-				tryReconnect(e, multiverse);
-			}
-		}
-
-		private static void tryReconnect(SqlException e, Schema multiverse)
-		{
-			Log.WarningMessage( e.Message );
-			if(connection != null &&
-				connection.State != ConnectionState.Open)
-			{
-				Log.WarningMessage( "Connection to database was lost, reconnecting..." );
-				connection.Open();
-			}
-			else
-			{
-				throw e;
-			}
-
-			Thread.Sleep( 10000 );				
-			refreshPlayerList( multiverse );
+			Log.LogMessage( "refreshMultiverseForPlayer begining sql" );
+			SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
+			SqlDataAdapter mobileFiller = new SqlDataAdapter(commandFactory.SelectTemplateMobileRows(PlayerID));
+			SqlDataAdapter objectFiller = new SqlDataAdapter(commandFactory.SelectObjectInstanceRows(PlayerID));
+			SqlDataAdapter templateFiller = new SqlDataAdapter(commandFactory.SelectTemplateObjectRows(PlayerID));
+			templateFiller.Fill(multiverse);
+			objectFiller.Fill(multiverse);
+			mobileFiller.Fill(multiverse);
+			possesFiller.Fill(multiverse);
+			Log.LogMessage( "refreshMultiverseForPlayer done" );
 		}
 
 		public static Schema getMultiverseFromFile( string filename ) 

@@ -266,7 +266,7 @@ namespace Strive.Network.Client {
 			try {
 				// Complete sending the data to the remote device.
 				int bytesSent = client.udpsocket.EndSend(ar);
-			} catch ( Exception e ) {
+			} catch ( Exception ) {
 				client.Stop();
 			}
 		}
