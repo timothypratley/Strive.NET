@@ -7,6 +7,7 @@ using System.IO;
 
 using Strive.Common;
 using Strive.Network.Messages;
+using Strive.Network.Messages.ToServer;
 
 namespace Strive.Network.Client {
 	public class ServerConnection {
@@ -58,7 +59,7 @@ namespace Strive.Network.Client {
 			//Console.WriteLine( "enqueued " + message.GetType() + " message" );
 		}
 
-		public void Send( IMessage message ) {
+		private void Send( IMessage message ) {
 			// Generic serialization
 			//MemoryStream ms = new MemoryStream();
 			//formatter.Serialize( ms, message );
@@ -79,5 +80,46 @@ namespace Strive.Network.Client {
 		public IMessage PopNextMessage() {
 			return (IMessage)messageQueue.Dequeue();
 		}
+
+		#region Simple Message API
+
+		public void PossessMobile(int mobileId)
+		{
+			Send(new EnterWorldAsMobile(mobileId));
+		}
+
+		public void Login(string username, string password)
+		{
+			Send(new Login(username, password));
+		}
+
+		public void Logout()
+		{
+			Send(new Logout());
+		}
+
+		public void Position(float position_x,
+			float position_y,
+			float position_z,
+			float heading_x,
+			float heading_y,
+			float heading_z)
+		{
+			Send(new Position(position_x,
+				position_y,
+				position_z,
+				heading_x,
+				heading_y,
+				heading_z));
+		}
+
+
+		public void RequestPossessable()
+		{
+			Send(new RequestPossessable());
+		}
+
+		#endregion
+
 	}
 }

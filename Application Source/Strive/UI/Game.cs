@@ -72,7 +72,7 @@ namespace Strive.UI
 			CurrentScene.SetLighting( 255 );
 			CurrentScene.SetFog( 100.0f );
 			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName).AddressList[0], Port ) );
-			CurrentServerConnection.Send( new Strive.Network.Messages.ToServer.Login( LoginName, Password));
+			CurrentServerConnection.Login(LoginName, Password);
 			CurrentGameLoop.Start(CurrentScene, RenderTarget, CurrentServerConnection);
 		}
 	}

@@ -51,8 +51,7 @@ namespace Strive.Server.Shared {
 				} 
 				else if(message is Network.Messages.ToServer.Logout)
 				{
-					// todo: add logout code here:
-					ProcessLogout(client);
+
 				}
 				else
 				{
@@ -63,22 +62,39 @@ namespace Strive.Server.Shared {
 			}
 
 			// normal message for logged in user
-			if ( message is Network.Messages.ToServer.Position ) {
+			if ( message is Network.Messages.ToServer.Position ) 
+			{
 				ProcessPositionMessage( client, message as Network.Messages.ToServer.Position );
-			} else if ( message is Network.Messages.ToServer.GameCommand.Communication ) {
+			} 
+			else if ( message is Network.Messages.ToServer.GameCommand.Communication ) 
+			{
 				ProcessChatMessage( client, message as Network.Messages.ToServer.GameCommand.Communication );
-			} else if ( message is Network.Messages.ToServer.GameCommand.TargetAny ) {
+			} 
+			else if ( message is Network.Messages.ToServer.GameCommand.TargetAny ) 
+			{
 				GameCommandProcessor.ProcessTargetAny( client, message as Network.Messages.ToServer.GameCommand.TargetAny );
-			} else if ( message is Network.Messages.ToServer.GameCommand.Attack ) {
+			} 
+			else if ( message is Network.Messages.ToServer.GameCommand.Attack ) 
+			{
 				ProcessAttackMessage( client, message as Network.Messages.ToServer.GameCommand.Attack );
-			} else if ( message is Network.Messages.ToServer.GameCommand.Flee ) {
+			} 
+			else if ( message is Network.Messages.ToServer.GameCommand.Flee ) 
+			{
 				ProcessFleeMessage( client, message as Network.Messages.ToServer.GameCommand.Flee );
-			} else if ( message is Network.Messages.ToServer.ReloadWorld ) {
+			} 
+			else if ( message is Network.Messages.ToServer.ReloadWorld ) 
+			{
 				ProcessReloadWorldMessage( client, message as Network.Messages.ToServer.ReloadWorld );
-			} else {
+			} 
+			else if ( message is Network.Messages.ToServer.Logout ) 
+			{
+				ProcessLogout(client);
+			}
+			else 
+			{
 				System.Console.WriteLine(
 					"ERROR: Unknown message " + message.GetType()
-				);
+					);
 			}
 		}
 

@@ -23,7 +23,6 @@ namespace Strive.UI.Windows
 		private System.Windows.Forms.StatusBar MainStatus;
 		public System.Windows.Forms.PictureBox RenderTarget;
 		private Crownwood.Magic.Menus.MenuCommand ViewMenu;
-		private Crownwood.Magic.Menus.MenuCommand ViewCharacters;
 		private Crownwood.Magic.Menus.MenuCommand FileQuit;
 		private Crownwood.Magic.Menus.MenuCommand FileSave;
 		private Crownwood.Magic.Menus.MenuCommand ViewLog;
@@ -144,10 +143,9 @@ namespace Strive.UI.Windows
 			this.FileSave = new Crownwood.Magic.Menus.MenuCommand();
 			this.FileQuit = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewMenu = new Crownwood.Magic.Menus.MenuCommand();
-			this.ViewCharacters = new Crownwood.Magic.Menus.MenuCommand();
-			this.MainStatus = new System.Windows.Forms.StatusBar();
 			this.ViewLog = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewConnect = new Crownwood.Magic.Menus.MenuCommand();
+			this.MainStatus = new System.Windows.Forms.StatusBar();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -226,22 +224,8 @@ namespace Strive.UI.Windows
 			this.ViewMenu.Description = "MenuItem";
 			this.ViewMenu.MenuCommands.AddRange(new Crownwood.Magic.Menus.MenuCommand[] {
 																							this.ViewLog,
-																							this.ViewConnect,
-																							this.ViewCharacters});
+																							this.ViewConnect});
 			this.ViewMenu.Text = "&View";
-			// 
-			// ViewCharacters
-			// 
-			this.ViewCharacters.Description = "MenuItem";
-			this.ViewCharacters.Text = "Characters";
-			this.ViewCharacters.Click += new System.EventHandler(this.ViewCharacters_Click);
-			// 
-			// MainStatus
-			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 565);
-			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(596, 22);
-			this.MainStatus.TabIndex = 1;
 			// 
 			// ViewLog
 			// 
@@ -254,6 +238,13 @@ namespace Strive.UI.Windows
 			this.ViewConnect.Description = "MenuItem";
 			this.ViewConnect.Text = "Connect";
 			this.ViewConnect.Click += new System.EventHandler(this.ViewConnect_Click);
+			// 
+			// MainStatus
+			// 
+			this.MainStatus.Location = new System.Drawing.Point(2, 565);
+			this.MainStatus.Name = "MainStatus";
+			this.MainStatus.Size = new System.Drawing.Size(596, 22);
+			this.MainStatus.TabIndex = 1;
 			// 
 			// Main
 			// 
@@ -295,12 +286,6 @@ namespace Strive.UI.Windows
 		private void FileQuit_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
-		}
-
-		private void ViewCharacters_Click(object sender, System.EventArgs e) {
-			// Log
-			Content characterWindow = DockingManager.Contents.Add(new ChildWindows.CharacterSelector(), "Character", new ImageList(), -1);
-			DockingManager.AddContentWithState(characterWindow, State.Floating);
 		}
 
 		private void ViewConnect_Click(object sender, System.EventArgs e) {

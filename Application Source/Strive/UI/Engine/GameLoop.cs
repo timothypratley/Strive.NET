@@ -182,16 +182,13 @@ namespace Strive.UI.Engine
 
 		void SendCurrentPosition() {
 			Vector3D cameraHeading = Helper.GetHeadingFromRotation( _scene.View.Rotation );
-			Network.Messages.ToServer.Position pos = new Network.Messages.ToServer.Position(
-				_scene.View.Position.X,
+
+			_connection.Position(_scene.View.Position.X,
 				_scene.View.Position.Y,
 				_scene.View.Position.Z,
 				cameraHeading.X,
 				cameraHeading.Y,
-				cameraHeading.Z
-			);
-//			Game.CurrentLog.LogMessage( "Sending position message rotation " + _scene.View.Rotation );
-			_connection.Send(pos);
+				cameraHeading.Z);
 		}
 
 		void Render() {

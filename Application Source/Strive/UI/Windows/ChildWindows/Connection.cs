@@ -48,7 +48,7 @@ namespace Strive.UI.Windows.ChildWindows
 			i.Images.Add(Icons.IconManager.GetAsBitmap(Icons.AvailableIcons.Player));
 			RecentServers.ImageList = i;
 			synchRecentServers();
-			WindowState = ConnectionWindowState.NotConnected;
+			StriveWindowState = ConnectionWindowState.NotConnected;
 		}
 
 		/// <summary>
@@ -256,16 +256,16 @@ namespace Strive.UI.Windows.ChildWindows
 				Game.CurrentGameLoop._message_processor.OnCanPossess
 					+= new Engine.MessageProcessor.CanPossessHandler( HandleCanPossessThreadSafe );
 
-				Game.CurrentServerConnection.Send(
-					new Strive.Network.Messages.ToServer.RequestPossessable() );
+				Game.CurrentServerConnection.RequestPossessable();
 
-				WindowState = ConnectionWindowState.Connected;
+				StriveWindowState = ConnectionWindowState.Connected;
 			}
-			else if(windowState == ConnectionWindowState.Connected)
+			else if(windowState == ConnectionWindowState.Connected ||
+				windowState == ConnectionWindowState.Playing)
 			{
 				// disconnect:
-				Game.CurrentServerConnection.Send(new Strive.Network.Messages.ToServer.Logout());
-				WindowState = ConnectionWindowState.NotConnected;
+				Game.CurrentServerConnection.Logout();
+				StriveWindowState = ConnectionWindowState.NotConnected;
 
 
 			}
@@ -363,8 +363,8 @@ namespace Strive.UI.Windows.ChildWindows
 			// this is a character node
 			if(serverSetting.Table.Columns.Contains("charactername"))
 			{
-				Game.CurrentServerConnection.Send(
-					new Strive.Network.Messages.ToServer.EnterWorldAsMobile( int.Parse(serverSetting["characterid"].ToString())) );
+				Game.CurrentServerConnection.PossessMobile(int.Parse(serverSetting["characterid"].ToString()));
+				StriveWindowState = ConnectionWindowState.Playing;
 				return;
 			}
 			if(serverSetting.Table.Columns.Contains("playerkey"))
@@ -432,7 +432,7 @@ namespace Strive.UI.Windows.ChildWindows
 		}
 
 
-		protected Connection.ConnectionWindowState  WindowState
+		protected Connection.ConnectionWindowState StriveWindowState
 		{
 			set
 			{

@@ -109,22 +109,19 @@
     <value>17, 17</value>
   </data>
   <data name="FileSave.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>65, 55</value>
+    <value>640, 17</value>
   </data>
   <data name="FileQuit.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>65, 36</value>
+    <value>308, 17</value>
   </data>
   <data name="ViewMenu.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>338, 12</value>
-  </data>
-  <data name="ViewCharacters.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>341, 38</value>
+    <value>113, 17</value>
   </data>
   <data name="ViewLog.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>453, 11</value>
+    <value>215, 17</value>
   </data>
   <data name="ViewConnect.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>459, 35</value>
+    <value>525, 17</value>
   </data>
   <data name="$this.Name">
     <value>Main</value>
