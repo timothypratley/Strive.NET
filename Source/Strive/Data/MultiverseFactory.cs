@@ -27,6 +27,13 @@ namespace Strive.Data
 
 		#region Utility methods
 
+		private static void manualMerge(DataSet mergeTarget, DataSet mergeSource)
+		{
+			mergeTarget.EnforceConstraints = false;
+			mergeTarget.Merge(mergeSource);
+			mergeTarget.EnforceConstraints = true;
+		}
+
 		private static void initaliseState(Schema multiverse)
 		{
 			if(!isInitialised)
@@ -109,7 +116,7 @@ namespace Strive.Data
 				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
 				SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
 				playerFiller.Fill( updatedPlayerPartOfMultiverse.Player );
-				multiverse.Merge(updatedPlayerPartOfMultiverse);	
+				manualMerge(multiverse, updatedPlayerPartOfMultiverse);
 			} 
 			catch ( SqlException e ) 
 			{
@@ -132,7 +139,7 @@ namespace Strive.Data
 				objectFiller.Fill(updatedPlayerPartOfMultiverse.ObjectInstance);
 				mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
 				possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
-				multiverse.Merge(updatedPlayerPartOfMultiverse);			
+				manualMerge(multiverse, updatedPlayerPartOfMultiverse);
 			} 
 			catch ( SqlException e ) 
 			{
