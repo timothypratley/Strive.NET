@@ -350,26 +350,23 @@ namespace Strive.Server.Shared {
 				int tz1 = Helper.DivTruncate( (int)po.Position.Z, Constants.terrainPieceSize );
 				for ( int k=0; k<Constants.terrainZoomOrder; k++ ) {
 					int chs = (int)Math.Pow(Constants.terrainHeightsPerChunk,k);
-					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder / 2;
-					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2;
+					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder / 2 + 2;
+					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2 + 2;
 					int tbx = Helper.DivTruncate( (int)newPosition.X, Constants.terrainPieceSize) - xradius;
 					int tbz = Helper.DivTruncate( (int)newPosition.Z, Constants.terrainPieceSize) - zradius;
 
-					// NB: /2*2 is necessary for odd/even
 					for ( i=0; i<=xradius*2; i+=chs ) {
 						for ( j=0; j<=zradius*2; j+=chs ) {
 							int tx = tbx+i;
 							int tz = tbz+j;
 							if ( (Math.Abs(tx - tx1) > xradius) || (Math.Abs(tz - tz1) > zradius) ) {
-								int terrainX = tx - Helper.DivTruncate( (int)lowX, Constants.terrainPieceSize );
-								int terrainZ = tz - Helper.DivTruncate( (int)lowZ, Constants.terrainPieceSize );
+								int terrainX = tx - (int)lowX/Constants.terrainPieceSize;
+								int terrainZ = tz - (int)lowZ/Constants.terrainPieceSize;
 								if ( terrainX >= 0 && terrainX < squaresInX*Square.squareSize/Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < squaresInZ*Square.squareSize/Constants.terrainPieceSize ) {
 									Terrain t = terrain[ terrainX, terrainZ ];
 									if ( t != null ) {
 										ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
 									}
-								} else {
-									Log.ErrorMessage( "terrainX " + terrainX + ", terrainZ " + terrainZ + ", tx " + tx + ", tz " + tz + ", tbx " + tbx + ", tbz " + tbz + ", xradius " + xradius + ", zradius " + zradius + ", pos " + po.Position + ", newPos " + newPosition );
 								}
 							}
 						}
@@ -552,7 +549,31 @@ namespace Strive.Server.Shared {
 				client.Send( message );
 				*/
 				foreach ( PhysicalObject p in nearbyPhysicalObjects ) {
+					if ( p is Terrain ) continue;
 					client.Send( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( p ) );
+				}
+
+				for ( int k=0; k<Constants.terrainZoomOrder; k++ ) {
+					int chs = (int)Math.Pow(Constants.terrainHeightsPerChunk,k);
+					int xradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainXOrder / 2 + 2*chs;
+					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2 + 2*chs;
+					int tbx = Helper.DivTruncate( (int)mob.Position.X, Constants.terrainPieceSize) - xradius;
+					int tbz = Helper.DivTruncate( (int)mob.Position.Z, Constants.terrainPieceSize) - zradius;
+
+					for ( i=0; i<=xradius*2; i+=chs ) {
+						for ( j=0; j<=zradius*2; j+=chs ) {
+							int tx = tbx+i;
+							int tz = tbz+j;
+							int terrainX = tx - (int)lowX/Constants.terrainPieceSize;
+							int terrainZ = tz - (int)lowZ/Constants.terrainPieceSize;
+							if ( terrainX >= 0 && terrainX < squaresInX*Square.squareSize/Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < squaresInZ*Square.squareSize/Constants.terrainPieceSize ) {
+								Terrain t = terrain[ terrainX, terrainZ ];
+								if ( t != null ) {
+									client.Send( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( t ) );
+								}
+							}
+						}
+					}
 				}
 			}
 		}

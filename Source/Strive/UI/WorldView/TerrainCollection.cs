@@ -27,6 +27,8 @@ namespace Strive.UI.WorldView {
 			int i, j, k, cs;
 			for ( k=0; k<zoomorder; k++ ) {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
+				CX[k] = 0;
+				CZ[k] = 0;
 				for ( i=0; i<xorder; i++ ) {
 					for ( j=0; j<zorder; j++ ) {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
@@ -75,6 +77,8 @@ namespace Strive.UI.WorldView {
 				for ( i=(xdiff<0?xorder-1:0); (xdiff<0?i>=0:i<xorder); ) {
 					for ( j=(zdiff<0?zorder-1:0); (zdiff<0?j>=0:j<zorder); ) {
 						// see if we can replace it with an existing chunk
+						tcx = cx*cs + i*cs;
+						tcz = cz*cs + j*cs;
 						if (
 							i+xdiff >= 0
 							&& i+xdiff < xorder
@@ -86,8 +90,6 @@ namespace Strive.UI.WorldView {
 							TC[i,j,k] = TC[i+xdiff,j+zdiff,k];
 							TC[i+xdiff,j+zdiff,k] = tc;
 						} else {
-							tcx = cx*cs + i*cs;
-							tcz = cz*cs + j*cs;
 							TC[i,j,k].Position = new Vector3D(tcx, 0, tcz );
 							// update it with any known heights
 							// Refresh( TC[i,j,k] );
@@ -136,9 +138,9 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Set( float x, float z, float altitude, int texture_id, float rotation ) {
+			int cs = ts;
 			int cx = Helper.DivTruncate( (int)x, ts );
 			int cz = Helper.DivTruncate( (int)z, ts );
-			int cs;
 			int xdiff, zdiff;
 			int k;
 
@@ -146,7 +148,8 @@ namespace Strive.UI.WorldView {
 				// This should only be applied to the low detail landscapes
 				k=1;
 
-				// miss one iteration, so prediv cx,cz
+				// miss one iteration, so advance cs and prediv cx,cz
+				cs = cs*hpc;
 				cx = Helper.DivTruncate( cx, hpc );
 				cz = Helper.DivTruncate( cz, hpc );
 			} else {
@@ -154,39 +157,38 @@ namespace Strive.UI.WorldView {
 			}
 
 			for ( ; k<zoomorder; k++ ) {
-				cs = (int)(ts*Math.Pow(hpc,k+1));
+				if ( texture_id == -1 ) {
+					if ( x - (cx*cs) >= (cx+1)*cs - x ) cx++;
+					if ( z - (cz*cs) >= (cz+1)*cs - z ) cz++;
+					x = cx*cs;
+					z = cz*cs;
+				}
+				cs = cs*hpc;
 				cx = Helper.DivTruncate( cx, hpc );
 				cz = Helper.DivTruncate( cz, hpc );
-				if ( texture_id == -1 ) {
-					if ( x - (cx*cs) > (cx+1)*cs - x ) cx++;
-					if ( z - (cz*cs) > (cz+1)*cs - z ) cz++;
-					x = cx * cs;
-					z = cz * cs;
-				}
 				xdiff = cx - CX[k];
 				zdiff = cz - CZ[k];
-				if ( xdiff < 0 || xdiff >= xorder || zdiff < 0 || zdiff >= zorder ) {
-					// TODO: this should only happen when trying to set the height outside the
-					// scope of current zoom level, maybe need some extra checking to test
-					// that this has happened?
-					continue;
-				}
-				TC[xdiff,zdiff,k].SetHeight( x, z, altitude );
-				if ( k==0 ) TC[xdiff,zdiff,k].SetTexture( texture_id, x, z, rotation );
 
-				// edges need to update both chunks (any way around this?)
+				if ( xdiff >= 0 && xdiff < xorder && zdiff >= 0 && zdiff < zorder ) {
+					TC[xdiff,zdiff,k].SetHeight( x, z, altitude );
+					if ( k==0 ) TC[xdiff,zdiff,k].SetTexture( texture_id, x, z, rotation );
+				}
+
+				// edges need to update both chunks
 				if ( x % cs == 0 ) {
-					if ( xdiff-1 >= 0 ) {
+					if ( xdiff-1 >= 0 && xdiff-1 < xorder && zdiff >= 0 && zdiff < zorder ) {
 						TC[xdiff-1,zdiff,k].SetHeight( x, z, altitude );
 					}
 				}
 				if ( z % cs == 0 ) {
-					if ( zdiff-1 >= 0 ) {
+					if ( xdiff >= 0 && xdiff < xorder && zdiff-1 >= 0 && zdiff-1 < zorder ) {
 						TC[xdiff,zdiff-1,k].SetHeight( x, z, altitude );
 					}
 				}
-				if ( x % cs == 0 && z % cs == 0 ) {
-					if ( xdiff-1 >= 0 && zdiff-1 >= 0 ) {
+
+				// corner
+				if ( ( x % cs == 0 ) && ( z % cs == 0 ) ) {
+					if ( xdiff-1 >= 0 && xdiff-1 < xorder && zdiff-1 >= 0 && zdiff-1 < zorder ) {
 						TC[xdiff-1,zdiff-1,k].SetHeight( x, z, altitude );
 					}
 				} else {

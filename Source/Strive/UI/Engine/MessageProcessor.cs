@@ -44,6 +44,9 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject ) {
 				// TODO: should probabbly treat terrain differently
 				PhysicalObject po = Strive.Network.Messages.ToClient.AddPhysicalObject.GetPhysicalObject( (Strive.Network.Messages.ToClient.AddPhysicalObject)m );
+				//po.Position.X = (float)Math.Round(po.Position.X * 8F / 10F);
+				//po.Position.Y = (float)Math.Round(po.Position.Y * 8F / 10F);
+				//po.Position.Z = (float)Math.Round(po.Position.Z * 8F / 10F);
 				PhysicalObjectInstance poi = (PhysicalObjectInstance)Game.CurrentWorld.physicalObjectInstances[po.ObjectInstanceID];
 				if ( poi != null ) {
 					// replace an existing physical object
