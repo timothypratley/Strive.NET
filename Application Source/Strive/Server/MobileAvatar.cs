@@ -17,76 +17,93 @@ namespace Strive.Server
 	{
 		public Client client = null;
 		public PhysicalObject target = null;
+		public World world = null;
 		DateTime lastAttackUpdate = DateTime.Now;
 		DateTime lastHealUpdate = DateTime.Now;
 		DateTime lastBehaviourUpdate = DateTime.Now;
 		DateTime lastMoveUpdate = DateTime.Now;
 
 		public MobileAvatar(
+			World world,
 			Schema.TemplateMobileRow mobile,
 			Schema.ObjectTemplateRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( mobile, template, instance ) {
+			this.world = world;
+		}
+
+		public bool IsPlayer() {
+			return AreaID == 0;
 		}
 
 		public void Update() {
 			if ( target != null ) {
-				if ( lastAttackUpdate - Global.now > TimeSpan.FromSeconds(3) ) {
-					// combat
-					lastAttackUpdate = Global.now;
-					PhysicalAttack( target );
+				CombatUpdate();
+			} else if ( IsPlayer() ) {
+				BehaviourUpdate();
+			}
+			PeaceUpdate();
+		}
+
+		public void CombatUpdate() {
+			if ( lastAttackUpdate - Global.now > TimeSpan.FromSeconds(3) ) {
+				// combat
+				lastAttackUpdate = Global.now;
+				PhysicalAttack( target );
+			}
+		}
+
+		public void BehaviourUpdate() {
+			// continue doing whatever you were doing
+			if ( Global.now - lastMoveUpdate > TimeSpan.FromSeconds( 1 ) ) {
+				if ( MobileState >= EnumMobileState.Standing ) {
+					Heading.Transform( Strive.Math3D.Matrix3D.FromRotation( Global.up, (float)(Global.random.NextDouble()/10.0) ) );
 				}
-			} else {
-				// continue doing whatever you were doing
-				if ( Global.now - lastMoveUpdate > TimeSpan.FromSeconds( 1 ) ) {
-					if ( MobileState >= EnumMobileState.Standing ) {
-						Heading.Transform( Strive.Math3D.Matrix3D.FromRotation( Global.up, (float)(Global.random.NextDouble()/10.0) ) );
-					}
-					switch ( MobileState ) {
-						case EnumMobileState.Running:
-							Position += Heading.GetUnit();
-							break;
-						case EnumMobileState.Walking:
-							Vector3D velocity = Heading.GetUnit();
-							velocity.Divide( 3.0F );
-							Position += velocity;
-							break;
-					}
-					// EEERRR fs world move, not this hax version
-					System.Console.WriteLine( ObjectTemplateName + " has moved" );
+				Vector3D velocity = Heading.GetUnit();
+				switch ( MobileState ) {
+					case EnumMobileState.Running:
+						world.Relocate( this, Position+velocity );
+						break;
+					case EnumMobileState.Walking:
+						velocity.Divide( 3.0F );
+						world.Relocate( this, Position+velocity );
+						break;
+					default:
+						// do nothing
+						break;
 				}
-				if ( Global.now - lastBehaviourUpdate > TimeSpan.FromSeconds( 10 ) ) {
-					// change behaviour?
-					lastBehaviourUpdate = Global.now;
-					if ( MobileState > EnumMobileState.Incapacitated ) {
-						int rand = Global.random.Next( 5 ) - 2;
-						if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
-							MobileState--;
-							System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState );
-						} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
-							MobileState++;
-							System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState );
-						}
+			}
+			if ( Global.now - lastBehaviourUpdate > TimeSpan.FromSeconds( 10 ) ) {
+				// change behaviour?
+				lastBehaviourUpdate = Global.now;
+				if ( MobileState > EnumMobileState.Incapacitated ) {
+					int rand = Global.random.Next( 5 ) - 2;
+					if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
+						MobileState--;
+						System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState );
+					} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
+						MobileState++;
+						System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState );
 					}
 				}
 			}
-			if ( Global.now - lastHealUpdate > TimeSpan.FromSeconds( 100/Constitution ) ) {
-				// heal
-				lastHealUpdate = Global.now;
-				HitPoints++;
-			}
-			
 		}
 
 		public void PeaceUpdate() {
-			if ( MobileState == EnumMobileState.Dead ) {
-				// respawn!
-			} else if ( MobileState == EnumMobileState.Incapacitated ) {
-				HitPoints -= 0.1F;
-			} else if ( MobileState == EnumMobileState.Sleeping ) {
-				HitPoints += Constitution/10.0F;
-			} else if ( MobileState == EnumMobileState.Resting ) {
-				HitPoints += Constitution/40.0F;
+			if ( Global.now - lastHealUpdate > TimeSpan.FromSeconds( 100/Constitution ) ) {
+				// EEERRR this is wrong atm
+				// heal
+				lastHealUpdate = Global.now;
+				HitPoints++;
+				if ( MobileState == EnumMobileState.Dead ) {
+					// respawn!
+				} else if ( MobileState == EnumMobileState.Incapacitated ) {
+					HitPoints -= 0.1F;
+				} else if ( MobileState == EnumMobileState.Sleeping ) {
+					HitPoints += Constitution/10.0F;
+				} else if ( MobileState == EnumMobileState.Resting ) {
+					HitPoints += Constitution/40.0F;
+				}
 			}
 		}
 

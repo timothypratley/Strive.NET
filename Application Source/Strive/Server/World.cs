@@ -4,8 +4,10 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Collections;
 using System.Threading;
+
 using Strive.Network.Server;
 using Strive.Multiverse;
+using Strive.Math3D;
 
 namespace Strive.Server {
 	public class World {
@@ -70,6 +72,7 @@ namespace Strive.Server {
 				
 				if ( mr != null ) {
 					MobileAvatar a = new MobileAvatar(
+						this,
 						mr,
 						por,
 						rpr	);
@@ -204,11 +207,11 @@ namespace Strive.Server {
 			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ")" );
 		}
 
-		public void Move( PhysicalObject po, float x, float y, float z ) {
+		public void Relocate( PhysicalObject po, Vector3D newPos ) {
 			int fromSquareX = (int)po.Position.X/squareSize;
 			int fromSquareZ = (int)po.Position.Z/squareSize;
-			int toSquareX = (int)x/squareSize;
-			int toSquareZ = (int)z/squareSize;
+			int toSquareX = (int)newPos.X/squareSize;
+			int toSquareZ = (int)newPos.Z/squareSize;
 			int i, j;
 			Strive.Network.Messages.ToClient.Position message = new Strive.Network.Messages.ToClient.Position( po );
 
@@ -243,9 +246,9 @@ namespace Strive.Server {
 				squares[fromSquareX,fromSquareZ].Remove( po );
 				squares[toSquareX,toSquareZ].Add( po );
 			}
-			po.Position.X = x;
-			po.Position.Y = y;
-			po.Position.Z = z;
+			po.Position.X = newPos.X;
+			po.Position.Y = newPos.Y;
+			po.Position.Z = newPos.Z;
 		}
 
 		public MobileAvatar LoadMobile( int instanceID ) {
@@ -255,7 +258,7 @@ namespace Strive.Server {
 			if ( por == null ) return null;
 			Schema.TemplateMobileRow mr = multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
 			if ( mr == null ) return null;
-			return new MobileAvatar( mr, por, rpr );
+			return new MobileAvatar( this, mr, por, rpr );
 		}
 
 		public bool UserLookup( string email, string password ) {

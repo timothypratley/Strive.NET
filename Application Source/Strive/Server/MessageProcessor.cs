@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Net;
+
 using Strive.Network.Messages;
 using Strive.Network.Server;
+using Strive.Math3D;
 
 namespace Strive.Server {
 	public class MessageProcessor {
@@ -102,8 +104,9 @@ namespace Strive.Server {
 		void ProcessPositionMessage(
 			Client client, Strive.Network.Messages.ToServer.Position message
 		) {
-			world.Move( client.Avatar,
-				message.position_x, message.position_y, message.position_z );
+			world.Relocate( client.Avatar,
+				new Vector3D( message.position_x, message.position_y, message.position_z )
+			);
 		}
 
 		void ProcessChatMessage(

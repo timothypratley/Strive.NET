@@ -12,6 +12,7 @@ namespace Strive.Multiverse
 		public int ObjectTemplateID;
 		public string ObjectTemplateName;
 		public int ModelID;
+		public int AreaID;
 		public Vector3D Position;
 		public Vector3D Heading;
 
@@ -33,6 +34,7 @@ namespace Strive.Multiverse
 				(float)instance.HeadingZ
 			);
 			ModelID = template.ModelID;
+			AreaID = template.AreaID;
 		}
 	}
 }
