@@ -149,6 +149,9 @@ namespace Strive.Server.Shared {
 			if ( world.physicalObjects.ContainsKey( message.InstanceID ) ) {
 				// reconnected
 				// simply replace existing connection with the new
+				// TODO:  NTR 26 Mar 2003: The above actually needs to be properly implemented
+				// Currently, the MobileAvatar in the World is correctly updated on reconnect,
+				// but the OLD client in listener.Clients isn't removed
 				Object o = world.physicalObjects[message.InstanceID];
 				if ( o is MobileAvatar ) {
 					a = (MobileAvatar)o;

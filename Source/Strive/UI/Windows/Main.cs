@@ -28,6 +28,7 @@ namespace Strive.UI.Windows
 		private Crownwood.Magic.Menus.MenuCommand ViewConnect;
 		private Crownwood.Magic.Menus.MenuCommand ViewWhoList;
 		private Crownwood.Magic.Menus.MenuCommand ViewSkillList;
+		private Strive.UI.Windows.CommandInput commandInput;
 
 		private System.ComponentModel.IContainer components = null;
 
@@ -52,10 +53,12 @@ namespace Strive.UI.Windows
 			// Since InitializeComponent is GENERATED code, the form control collection gets cleared
 			// and then the controls are added in the correct order;
 			this.Controls.Clear();
+
 			this.Controls.Add(MainTabs);
+			this.Controls.Add(commandInput);			
 			this.Controls.Add(MainStatus);
 			this.Controls.Add(MainMenu);
-
+			
 			#endregion
 
 			#region Magic Controls Initialisation
@@ -88,7 +91,9 @@ namespace Strive.UI.Windows
 			// Log
 			Content logWindow = DockingManager.Contents.Add(new ChildWindows.Log(), "Log", new ImageList(), -1);
 			DockingManager.AddContentWithState(logWindow, State.DockBottom);
-
+			// Who
+			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection),0);
+			DockingManager.AddContentWithState(whoWindow, State.DockRight);
 			#endregion
 
 			#region Load Settings
@@ -154,6 +159,7 @@ namespace Strive.UI.Windows
 			this.ViewWhoList = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewSkillList = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
+			this.commandInput = new Strive.UI.Windows.CommandInput();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -164,7 +170,7 @@ namespace Strive.UI.Windows
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(596, 538);
+			this.MainTabs.Size = new System.Drawing.Size(612, 742);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -174,7 +180,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				  this.RenderTarget});
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(596, 513);
+			this.GameTab.Size = new System.Drawing.Size(612, 717);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -183,8 +189,9 @@ namespace Strive.UI.Windows
 			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Location = new System.Drawing.Point(256, 224);
+			this.RenderTarget.Location = new System.Drawing.Point(256, 621);
 			this.RenderTarget.Name = "RenderTarget";
+			this.RenderTarget.Size = new System.Drawing.Size(116, 62);
 			this.RenderTarget.TabIndex = 0;
 			this.RenderTarget.TabStop = false;
 			// 
@@ -202,7 +209,7 @@ namespace Strive.UI.Windows
 																							this.FileMenu,
 																							this.ViewMenu});
 			this.MainMenu.Name = "MainMenu";
-			this.MainMenu.Size = new System.Drawing.Size(596, 25);
+			this.MainMenu.Size = new System.Drawing.Size(612, 25);
 			this.MainMenu.Style = Crownwood.Magic.Common.VisualStyle.IDE;
 			this.MainMenu.TabIndex = 0;
 			this.MainMenu.TabStop = false;
@@ -264,16 +271,26 @@ namespace Strive.UI.Windows
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 565);
+			this.MainStatus.Location = new System.Drawing.Point(2, 769);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(596, 22);
+			this.MainStatus.Size = new System.Drawing.Size(612, 16);
 			this.MainStatus.TabIndex = 1;
+			// 
+			// commandInput
+			// 
+			this.commandInput.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.commandInput.ForeColor = System.Drawing.SystemColors.WindowText;
+			this.commandInput.Location = new System.Drawing.Point(2, 737);
+			this.commandInput.Name = "commandInput";
+			this.commandInput.Size = new System.Drawing.Size(612, 32);
+			this.commandInput.TabIndex = 2;
 			// 
 			// Main
 			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-			this.ClientSize = new System.Drawing.Size(600, 589);
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+			this.ClientSize = new System.Drawing.Size(616, 787);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
+																		  this.commandInput,
 																		  this.MainTabs,
 																		  this.MainMenu,
 																		  this.MainStatus});
@@ -369,7 +386,7 @@ namespace Strive.UI.Windows
 		}
 
 		private void ViewWhoList_Click(object sender, System.EventArgs e) {
-			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
+			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection),0);
 			DockingManager.AddContentWithState(whoWindow, State.Floating);
 		}
 

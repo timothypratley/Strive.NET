@@ -45,6 +45,7 @@ namespace Strive.UI.Icons
 		StoppedServer,
 		Player,
 		Mobile,
-		MobilePossessed
+		MobilePossessed,
+		Refresh
 	}
 }

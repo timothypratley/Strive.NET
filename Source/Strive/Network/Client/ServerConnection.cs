@@ -65,12 +65,20 @@ namespace Strive.Network.Client {
 			//MemoryStream ms = new MemoryStream();
 			//formatter.Serialize( ms, message );
 
-			// Custom serialization
-			byte [] buffer = CustomFormatter.Serialize( message );
-			try {
-				serverConnection.Send( buffer, buffer.Length, remoteEndPoint );
-			} catch ( ObjectDisposedException ) {
-				// do nothing, socket has been closed by another thread
+			// NR 26 Mar 2003
+			// Makes UI less sensitive to crashes when disconnected
+			if(serverConnection != null)
+			{
+				// Custom serialization
+				byte [] buffer = CustomFormatter.Serialize( message );
+				try 
+				{
+					serverConnection.Send( buffer, buffer.Length, remoteEndPoint );
+				} 
+				catch ( ObjectDisposedException ) 
+				{
+					// do nothing, socket has been closed by another thread
+				}
 			}
 		}
 

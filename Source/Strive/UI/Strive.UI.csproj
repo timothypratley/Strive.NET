@@ -182,6 +182,10 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "Icons\Refresh.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "Icons\StartedServer.bmp"
                     BuildAction = "EmbeddedResource"
                 />
@@ -193,6 +197,16 @@
                     RelPath = "Settings\SettingsManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\CommandInput.cs"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\CommandInput.resx"
+                    DependentUpon = "CommandInput.cs"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "Windows\Icon1.ico"

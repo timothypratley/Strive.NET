@@ -65,20 +65,10 @@ namespace Strive.Data
 		private System.Data.SqlClient.SqlCommand buildCommandFromSimpleQuery(string simpleQuery)
 		{
 			System.Data.SqlClient.SqlCommand returnCommand;
-			if(!this.isCommandCached(simpleQuery))
-			{
-				returnCommand = new System.Data.SqlClient.SqlCommand();
-				returnCommand.Connection = _connection;
-				returnCommand.CommandText = simpleQuery;
-
-				returnCommand.Prepare();
-
-				_commands.Add(simpleQuery, returnCommand);
-			}
-			else
-			{
-				returnCommand = (System.Data.SqlClient.SqlCommand)this._commands[simpleQuery];
-			}
+			returnCommand = new System.Data.SqlClient.SqlCommand();
+			returnCommand.Connection = _connection;
+			returnCommand.CommandText = simpleQuery;
+			returnCommand.Prepare();
 
 			return returnCommand;
 		}

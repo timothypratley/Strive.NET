@@ -95,6 +95,5 @@ namespace Strive.Network.Server {
 		public Hashtable Clients {
 			get { return clients; }
 		}
-
 	}
 }
