@@ -40,7 +40,7 @@ namespace Strive.Server.Shared {
 			physicalObjects = new Hashtable();
 			mobilesArrayList = new ArrayList();
 
-			// EEERRR would be nice to be able to load only the
+			// todo: would be nice to be able to load only the
 			// world in question... but for now load them all
 			System.Console.WriteLine( "Loading multiverse..." );
 			multiverse = Strive.Data.MultiverseFactory.getMultiverse();
@@ -365,6 +365,11 @@ namespace Strive.Server.Shared {
 		}
 
 		public bool UserLookup( string email, string password ) {
+			// todo: don't reload the whole world,
+			// just look up player details (and their mob details when they enterworld)
+			System.Console.WriteLine( "Reloading multiverse..." );
+			multiverse = Strive.Data.MultiverseFactory.getMultiverse();
+			System.Console.WriteLine( "Multiverse loaded." );
 			DataRow[] dr = multiverse.Player.Select( "Email = '" + email + "'" );
 			if ( dr.Length != 1 ) {
 				System.Console.WriteLine( "ERROR: " + dr.Length + " players found with email '" + email + "'" );
