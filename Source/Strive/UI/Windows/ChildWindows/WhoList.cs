@@ -37,8 +37,7 @@ namespace Strive.UI.Windows.ChildWindows
 		}
 
 		void RefreshForm() {
-			Game.CurrentServerConnection.Send(
-				new Strive.Network.Messages.ToServer.GameCommand.WhoList() );
+			Game.CurrentServerConnection.WhoList();
 		}
 
 		// umg this is zanny code

@@ -60,7 +60,7 @@ namespace Strive.Network.Client {
 			//Console.WriteLine( "enqueued " + message.GetType() + " message" );
 		}
 
-		public void Send( IMessage message ) {
+		protected void Send( IMessage message ) {
 			// Generic serialization
 			//MemoryStream ms = new MemoryStream();
 			//formatter.Serialize( ms, message );
@@ -106,6 +106,38 @@ namespace Strive.Network.Client {
 		{
 			Send(new Logout());
 		}
+
+		public void SkillList()
+		{
+			Send(new Strive.Network.Messages.ToServer.GameCommand.SkillList());
+		}
+
+		public void WhoList()
+		{
+			Send(new Strive.Network.Messages.ToServer.GameCommand.WhoList());
+		}
+
+		public void UseSkill(Strive.Multiverse.EnumSkill Skill)
+		{
+			Send(new Strive.Network.Messages.ToServer.GameCommand.UseSkill(Skill));
+		}
+
+		public void UseSkill(Strive.Multiverse.EnumSkill Skill, int[] Targets)
+		{
+			Send(new Strive.Network.Messages.ToServer.GameCommand.UseSkill(Skill, Targets));
+		}
+
+		public void UseSkill(int SkillID)
+		{
+			this.UseSkill((Strive.Multiverse.EnumSkill)SkillID);
+		}
+
+		public void UseSkill(int SkillID, int[] Targets)
+		{
+			this.UseSkill((Strive.Multiverse.EnumSkill)SkillID, Targets);
+		}
+
+
 
 		public void Position(float position_x,
 			float position_y,

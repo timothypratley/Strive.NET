@@ -30,8 +30,7 @@ namespace Strive.UI.Windows.ChildWindows
 		}
 
 		void RefreshForm() {
-			Game.CurrentServerConnection.Send(
-				new Strive.Network.Messages.ToServer.GameCommand.SkillList() );
+			Game.CurrentServerConnection.SkillList();
 			Controls.Clear();
 			this.Text = "Requesting...";
 			// ToDo: start a timer with a timeout
@@ -63,8 +62,7 @@ namespace Strive.UI.Windows.ChildWindows
 
 		private void Button_Click(object sender, System.EventArgs e) {			
 			int [] targets = {};
-			Game.CurrentServerConnection.Send(
-				new Strive.Network.Messages.ToServer.GameCommand.UseSkill( (Strive.Multiverse.EnumSkill)((IdButton)sender).id, targets ) );
+			Game.CurrentServerConnection.UseSkill(((IdButton)sender).id, targets);
 		}
 
 		/// <summary>

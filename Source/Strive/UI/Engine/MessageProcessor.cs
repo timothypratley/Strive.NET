@@ -13,10 +13,12 @@ namespace Strive.UI.Engine {
 		public delegate void CanPossessHandler( Strive.Network.Messages.ToClient.CanPossess message );
 		public delegate void SkillListHandler( Strive.Network.Messages.ToClient.SkillList message );
 		public delegate void WhoListHandler( Strive.Network.Messages.ToClient.WhoList message );
+		public delegate void ChatHandler( Strive.Network.Messages.ToClient.Communication message);
 
 		public event CanPossessHandler OnCanPossess;
 		public event SkillListHandler OnSkillList;
 		public event WhoListHandler OnWhoList;
+		public event ChatHandler OnChat;
 
 		public MessageProcessor() {
 		}
@@ -27,8 +29,7 @@ namespace Strive.UI.Engine {
 			if ( m is Strive.Network.Messages.ToClient.Communication ) {
 				Strive.Network.Messages.ToClient.Communication c = (Strive.Network.Messages.ToClient.Communication)m;
 				if ( c.communicationType == CommunicationType.Chat ) {
-					// TODO: Re-add chat support
-					//Global._game.displayChat( c.name, c.message );
+					OnChat(c);
 				} else {
 					Game.CurrentLog.ErrorMessage( "Bad communicationType" );
 				}
