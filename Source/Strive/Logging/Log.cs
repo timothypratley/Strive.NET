@@ -58,7 +58,7 @@ namespace Strive.Logging {
 			if ( textBoxOutput != null ) {
 				textBoxOutput.Text = message + Environment.NewLine + textBoxOutput.Text;
 				if ( textBoxOutput.Text.Length > 1000 ) {
-					textBoxOutput.Text = textBoxOutput.Text.Remove(1000, textBoxOutput.Text.Length - 1000);
+					//textBoxOutput.Text = textBoxOutput.Text.Remove(1000, textBoxOutput.Text.Length - 1000);
 				}
 			}
 		}

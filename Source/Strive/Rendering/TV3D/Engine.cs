@@ -88,6 +88,7 @@ namespace Strive.Rendering.TV3D {
 			Camera = new TVCamera();
 			Atmosphere = new TVAtmosphere();
 			Input = new TVInputEngine();
+			
 		}
 		public void Terminate() {
 			TV3DEngine = null;

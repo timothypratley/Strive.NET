@@ -18,6 +18,11 @@ namespace Strive.Server.Shared {
 		World world;
 		MessageProcessor mp;
 		StoppableThread engine_thread;
+		int CurrentMilliseconds = 0;
+		int CurrentBeat = 0;
+		int BeatsPerDay = 1000;
+		int MillisecondsPerBeat = 10000;
+
 
 		public Engine() {
 			Global.ReadConfiguration();
@@ -45,10 +50,15 @@ namespace Strive.Server.Shared {
 		}
 
 		public void UpdateLoop() {
+			// need to send a beat message every MillisecondsPerBeat milliseconds:
 			try {
 				// handle world changes
 				Global.now = DateTime.Now;
 				world.Update();
+				if(CurrentMilliseconds == 0)
+				{
+					CurrentMilliseconds = Environment.TickCount;
+				}
 
 				// handle incomming messages
 				while ( listener.MessageCount > 0 ) {
@@ -61,6 +71,20 @@ namespace Strive.Server.Shared {
 				} else {
 					System.Threading.Thread.Sleep( 100 );
 				}
+
+				// calculate if message needs to be sent:
+				int CurrentTicks = Environment.TickCount;
+				int BeatIncrement = (CurrentTicks - CurrentMilliseconds) / MillisecondsPerBeat;
+
+				if(BeatIncrement > 0)
+				{
+					CurrentBeat += BeatIncrement;
+					CurrentMilliseconds += BeatIncrement * MillisecondsPerBeat;
+					listener.SendToAll(new Strive.Network.Messages.ToClient.Beat(CurrentBeat));
+				}
+
+				
+
 			} catch ( Exception e ) {
 				// Just log exceptions and stop all threads
 				Log.ErrorMessage( e );

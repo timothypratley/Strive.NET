@@ -141,11 +141,6 @@
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
                 <Reference
-                    Name = "Strive.UI.WorldView"
-                    Project = "{34B1BDF7-749D-4595-9F39-64A9D8FDA883}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
                     Name = "Strive.Rendering.R3D"
                     Project = "{60959A92-CEA0-421D-86DE-97F4B5E85D8E}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
@@ -153,6 +148,11 @@
                 <Reference
                     Name = "Strive.Rendering.TV3D"
                     Project = "{0D415106-F5A0-4DAD-B8A5-48AE0E7E74AB}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Strive.UI.WorldView"
+                    Project = "{34B1BDF7-749D-4595-9F39-64A9D8FDA883}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
@@ -178,10 +178,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "bin\Debug\Strive.UI.exe.manifest"
-                    BuildAction = "None"
-                />
-                <File
                     RelPath = "Engine\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -190,6 +186,75 @@
                     RelPath = "Engine\MessageProcessor.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\CVS\Entries"
+                    BuildAction = "None"
+                />
+                <File
+                    RelPath = "Forms\Controls\CVS\Repository"
+                    BuildAction = "None"
+                />
+                <File
+                    RelPath = "Forms\Controls\CVS\Root"
+                    BuildAction = "None"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\BrowserNavigateEvent.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\HtmlControl.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\HtmlControl.resx"
+                    DependentUpon = "HtmlControl.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\IHTMLDocument2.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\IHTMLElement.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\IWebBrowser.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\IWebBrowserEvents.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\WebBrowser.cs"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\WebBrowser.resx"
+                    DependentUpon = "WebBrowser.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\CVS\Entries"
+                    BuildAction = "None"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\CVS\Repository"
+                    BuildAction = "None"
+                />
+                <File
+                    RelPath = "Forms\Controls\Html\CVS\Root"
+                    BuildAction = "None"
                 />
                 <File
                     RelPath = "Icons\Chat.bmp"

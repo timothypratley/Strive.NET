@@ -38,6 +38,15 @@ namespace Strive.Network.Server {
 		}
 
 		public class AlreadyRunningException : Exception{}
+
+		public void SendToAll(Strive.Network.Messages.IMessage Message)
+		{
+			foreach(Client c in clients.Values)
+			{
+				c.Send(Message);
+			}
+		}
+
 		public void Start() {
 			myThread.Start();
 		}

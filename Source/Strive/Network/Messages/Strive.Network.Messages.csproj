@@ -167,6 +167,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\Beat.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\CanPossess.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -198,6 +203,11 @@
                 />
                 <File
                     RelPath = "ToClient\DropPhysicalObjects.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToClient\Message.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

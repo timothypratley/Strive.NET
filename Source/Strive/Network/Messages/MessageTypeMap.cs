@@ -28,6 +28,7 @@ namespace Strive.Network.Messages {
 			ToClientDropPhysicalObjects,
 			ToClientNegativeAcknowledge,
 			ToClientPosition,
+			ToClientBeat,
 			ToClientMobileState,
 			ToClientServerInfo,
 			ToClientSkillList,
@@ -73,6 +74,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientSkillList, typeof( ToClient.SkillList ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientWeather, typeof( ToClient.Weather ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientWhoList, typeof( ToClient.WhoList ) );					
+			messageTypeFromID.Add( EnumMessageID.ToClientBeat, typeof( ToClient.Beat) );					
 
 			messageTypeFromID.Add( EnumMessageID.ToServerAttack, typeof( ToServer.GameCommand.Attack ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerChangeStance, typeof( ToServer.GameCommand.ChangeStance ) );

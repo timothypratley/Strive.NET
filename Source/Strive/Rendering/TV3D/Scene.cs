@@ -57,8 +57,8 @@ namespace Strive.Rendering.TV3D
 		}
 
 		public void SetSky( string name, ITexture texture ) {
-			Engine.Atmosphere.SkySphere_SetTexture( texture.ID );
-			Engine.Atmosphere.SkySphere_Enable( true );
+			Engine.Atmosphere.SkyBox_SetTexture( texture.ID,texture.ID,texture.ID,texture.ID,texture.ID,texture.ID );
+			Engine.Atmosphere.SkyBox_Enable(true, true);
 		}
 
 		public void SetLighting( short level ) {
@@ -107,7 +107,20 @@ namespace Strive.Rendering.TV3D
 				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
 			}
 
-//#if DEBUG
+			Engine.TV3DEngine.DisplayFPS = true;	
+		
+
+			// hardcoded clouds
+			// New : for fun, we will also add some clouds, just over the water
+			// to give a creepy fog effect. Let's start by loading the clouds textures.
+			Engine.TexFactory.LoadTexture(@"C:\TV3DSDK\Media\cloud1.dds", "Clouds",-1 ,-1 , CONST_TV_COLORKEY.TV_COLORKEY_BLACK,true,true);
+
+			// Then, set the land's clouds.
+			Engine.Land.InitClouds (Engine.Gl.GetTex("Clouds"), CONST_TV_LAND_CLOUDMODE.TV_CLOUD_MOVE, 250f, 1, 1, 2f, 2f, 1024f);
+			Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
+			Engine.Land.Render(false, false);
+
+			//#if DEBUG
 			//R3DColor black = new R3DColor();
 			//black.b = 255;
 			//black.r = 255;
