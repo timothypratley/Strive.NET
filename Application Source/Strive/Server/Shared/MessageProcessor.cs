@@ -100,7 +100,13 @@ namespace Strive.Server.Shared {
 			if ( world.physicalObjects.ContainsKey( message.InstanceID ) ) {
 				// reconnected
 				// simply replace existing connection with the new
-				a = (MobileAvatar)world.physicalObjects[message.InstanceID];
+				Object o = world.physicalObjects[message.InstanceID];
+				if ( o is MobileAvatar ) {
+					a = (MobileAvatar)o;
+				} else {
+					System.Console.WriteLine( "ERROR: can only possess mobiles" );
+					return;
+				}
 				if ( a.client == client ) {
 					System.Console.WriteLine( "ERROR: a client " + client.ToString() + " attempted to take control of the same mobile " + a.ObjectInstanceID + " twice... ignoring request." );
 				} else if ( a.client != null ) {
