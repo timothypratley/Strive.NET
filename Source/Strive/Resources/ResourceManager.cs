@@ -41,7 +41,7 @@ namespace Strive.Resources
 
 		public void SetPath( string path ) {
 			_modelPath = System.IO.Path.Combine( path, "models" );
-			_texturePath = System.IO.Path.Combine( path, "textures" );
+			_texturePath = System.IO.Path.Combine( path, "texture" );
 			_cursorPath = System.IO.Path.Combine( path, "cursors" );
 			_resourceServer = System.Configuration.ConfigurationSettings.AppSettings["ResourceServer"];
 
@@ -168,7 +168,7 @@ namespace Strive.Resources
 
 		private string getDownloadUrlFromTexturePath(string TexturePath)
 		{
-			string TextureFragment  = TexturePath.Substring(TexturePath.IndexOf("\\textures"));
+			string TextureFragment  = TexturePath.Substring(TexturePath.IndexOf("\\texture"));
 			TextureFragment = TextureFragment.Replace("\\", "/");
 			return _resourceServer + TextureFragment;
 
