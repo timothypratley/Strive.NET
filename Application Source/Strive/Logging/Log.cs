@@ -41,12 +41,9 @@ namespace Strive.Logging {
 		private void StringAppendFinite( string message ) {
 			if ( output != null ) {
 				output.Text += message + Environment.NewLine;
-				System.Console.WriteLine( "appended" );
-			} else {
-				System.Console.WriteLine( "no string" );
-			}
-			if ( output.Text.Length > 1000 ) {
-				output.Text = output.Text.Remove( 0, output.Text.Length - 1000 );
+				if ( output.Text.Length > 1000 ) {
+					output.Text = output.Text.Remove( 0, output.Text.Length - 1000 );
+				}
 			}
 		}
 
