@@ -149,7 +149,7 @@ namespace Strive.UI.Forms
 			{
 				// EEERRR hardcoded player spawnids
 				Global._myid = this.LoginNames.SelectedIndex == 1 ? 27 : 26;
-				Global._serverConnection.Send(new Strive.Network.Messages.ToServer.Login(this.LoginNames.Text, this.LoginNames.Text));
+				Global._serverConnection.Send(new Strive.Network.Messages.ToServer.Login(this.LoginNames.Text, ""));
 				Global._serverConnection.Send(new Strive.Network.Messages.ToServer.EnterWorldAsMobile(0, Global._myid ));
 				game = new Game();
 				game._scene.Initialise(game.RenderTarget, RenderTarget.PictureBox, Resolution.Automatic);

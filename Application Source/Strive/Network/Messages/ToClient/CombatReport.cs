@@ -12,6 +12,7 @@ namespace Strive.Network.Messages.ToClient
 		public int targetObjectInstanceID;
 		public EnumCombatEvent combat_event;
 		public int damage;
+		public CombatReport(){}
 		public CombatReport( Mobile attacker, PhysicalObject target, EnumCombatEvent combat_event, int damage ) {
 			this.attackerObjectInstanceID = attacker.ObjectInstanceID;
 			if ( target == null ) {

@@ -63,7 +63,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToServerPosition, typeof( ToServer.Position ) );
 					
 			// build the reverse lookup
-			foreach ( int id in messageTypeFromID.Keys ) {
+			foreach ( EnumMessageID id in messageTypeFromID.Keys ) {
 				idFromMessageType.Add( messageTypeFromID[id], id );
 			}
 		}

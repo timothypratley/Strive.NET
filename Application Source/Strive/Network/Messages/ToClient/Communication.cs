@@ -9,6 +9,7 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class Communication : IMessage
 	{
+		public Communication(){}
 		public Communication( string name, string message, CommunicationType communicationType )
 		{
 			this.name = name;

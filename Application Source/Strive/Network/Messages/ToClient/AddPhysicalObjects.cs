@@ -10,6 +10,7 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class AddPhysicalObjects : IMessage
 	{
+		public AddPhysicalObjects(){}
 		public AddPhysicalObjects( ArrayList physicalObjects ) {
 			this.physialObjects = physicalObjects;
 		}

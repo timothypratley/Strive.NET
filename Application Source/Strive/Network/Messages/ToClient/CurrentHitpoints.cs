@@ -8,6 +8,7 @@ namespace Strive.Network.Messages.ToClient
 	/// </summary>
 	public class CurrentHitpoints : IMessage {
 		public int HitPoints;
+		public CurrentHitpoints(){}
 		public CurrentHitpoints( PhysicalObject po ) {
 			HitPoints = (int)po.HitPoints;
 		}

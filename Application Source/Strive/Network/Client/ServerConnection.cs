@@ -51,10 +51,11 @@ namespace Strive.Network.Client {
 						//);
 
 						// Custom serialization
-						IMessage message = CustomFormatter.Deserialize( receivedBytes );
-						messageQueue.Enqueue( (IMessage)message );
+						IMessage message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
+						messageQueue.Enqueue( message );
 						//Console.WriteLine( "enqueued " + message.GetType() + " message" );
-					} catch ( Exception ) {
+					} catch ( Exception e ) {
+						Console.WriteLine( e );
 						Console.WriteLine( "ERROR: bad message discarded" );
 					}
 				}

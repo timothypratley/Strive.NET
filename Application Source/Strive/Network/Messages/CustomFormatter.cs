@@ -20,11 +20,9 @@ namespace Strive.Network.Messages
 			Type t = obj.GetType();
 			byte[] EncodedID = BitConverter.GetBytes(
 				(int)messageTypeMap.idFromMessageType[t]
-				);
+			);
 			Buffer.Write( EncodedID, 0, EncodedID.Length );
-
-			Encode( t, Buffer );
-
+			Encode( obj, Buffer );
 			return Buffer.ToArray();
 		}
 
@@ -37,7 +35,7 @@ namespace Strive.Network.Messages
 					Buffer.Write(
 						EncodedInt,
 						0, EncodedInt.Length
-						);
+					);
 				} else if ( i.FieldType == typeof( float ) ) {
 					byte[] EncodedFloat = BitConverter.GetBytes((float)i.GetValue( obj ));
 					Buffer.Write(
@@ -51,7 +49,7 @@ namespace Strive.Network.Messages
 					byte[] EncodedInt = BitConverter.GetBytes( EncodedString.Length );
 					Buffer.Write( EncodedInt, 0, EncodedInt.Length );
 					Buffer.Write( EncodedString, 0, EncodedString.Length );
-				} else if ( i.FieldType == typeof( Array ) ) {
+				} else if ( i.FieldType.IsArray ) {
 					Array a = ((Array)i.GetValue( obj ));
 					byte[] EncodedLength = BitConverter.GetBytes( a.Length );
 					Buffer.Write( EncodedLength, 0, EncodedLength.Length );
@@ -60,24 +58,25 @@ namespace Strive.Network.Messages
 						Encode( a.GetValue(j), Buffer );
 					}
 				} else {
-					System.Console.WriteLine( "Unknown type: " + t );
+					System.Console.WriteLine( "Unknown type: " + i.FieldType );
+					throw new Exception( "Cannot serialize" );
 				}
 			}
 		}
 		
-		public static IMessage Deserialize( byte[] buffer ) {
+		public static Object Deserialize( byte[] buffer ) {
 			int Offset = 0;
-			int message_id = BitConverter.ToInt32( buffer, Offset );
+			MessageTypeMap.EnumMessageID message_id = (MessageTypeMap.EnumMessageID)BitConverter.ToInt32( buffer, Offset );
 			Type t = (Type)messageTypeMap.messageTypeFromID[message_id];
 			Offset += 4;
 			System.Console.WriteLine( t );
 
-			return (IMessage)Decode( t, buffer, Offset );
+			return Decode( t, buffer, Offset );
 		}
 
 		public static Object Decode( Type t, byte[] buffer, int Offset ) {
-            IMessage obj = (IMessage)t.GetConstructor( new System.Type[0] ).Invoke( null );
-			FieldInfo[] fi = t.GetFields( );
+            Object obj = t.GetConstructor( new System.Type[0] ).Invoke( null );
+			FieldInfo[] fi = t.GetFields();
 			foreach( FieldInfo i in fi ) {
 				if ( i.FieldType == typeof( Int32 ) ) {
 					i.SetValue( obj, BitConverter.ToInt32( buffer, Offset ) );
@@ -91,7 +90,7 @@ namespace Strive.Network.Messages
 					string DecodedString = Encoding.Unicode.GetString( buffer, Offset, StringLength );
 					i.SetValue( obj, DecodedString );
 					Offset = Offset + StringLength;
-				} else if ( i.FieldType == typeof( Array ) ) {
+				} else if ( i.FieldType.IsArray ) {
 					int length = BitConverter.ToInt32( buffer, Offset );
 					Offset += 4;
 					ArrayList DecodedArray = new ArrayList();
@@ -100,9 +99,10 @@ namespace Strive.Network.Messages
 							Decode( i.FieldType.GetElementType(), buffer, Offset )
 						);
 					}
-					i.SetValue( obj, DecodedArray.ToArray() );
+					i.SetValue( obj, DecodedArray.ToArray( i.FieldType.GetElementType() ) );
 				} else {
-					System.Console.WriteLine( "Unknown type: " + t );
+					System.Console.WriteLine( "Unknown type: " + i.FieldType );
+					throw new Exception( "Cannot deserialize" );
 				}
 			}
 			return obj;

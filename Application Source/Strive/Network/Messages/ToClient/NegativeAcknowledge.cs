@@ -8,6 +8,7 @@ namespace Strive.Network.Messages.ToClient
 	/// </summary>
 	[Serializable]
 	public class NegativeAcknowledge : IMessage {
+		public NegativeAcknowledge(){}
 		public NegativeAcknowledge( int SequenceNumber ) {
 			this.SequenceNumber = SequenceNumber;
 		}

@@ -10,6 +10,7 @@ namespace Strive.Network.Messages.ToClient
 	public class MobileState : IMessage {
 		public int ObjectInstanceID;
 		public EnumMobileState State;
+		public MobileState(){}
 		public MobileState( Mobile mob ) {
 			this.ObjectInstanceID = mob.ObjectInstanceID;
 			this.State = mob.MobileState;

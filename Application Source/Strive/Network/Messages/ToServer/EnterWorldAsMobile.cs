@@ -8,6 +8,7 @@ namespace Strive.Network.Messages.ToServer
 	[Serializable]
 	public class EnterWorldAsMobile : IMessage
 	{
+		public EnterWorldAsMobile(){}
 		public EnterWorldAsMobile( int WorldID, int SpawnID )
 		{
 			this.WorldID = WorldID;

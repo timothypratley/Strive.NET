@@ -177,6 +177,7 @@ namespace Strive.UI.Modules
 					Global._log.LogMessage( "You can possess... " );
 					foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) {
 						Global._log.LogMessage( "	" + tuple.id + " : " + tuple.name );
+						System.Console.WriteLine( "	" + tuple.id + " : " + tuple.name );
 					}
 
 				}

@@ -31,10 +31,11 @@ namespace Strive.Server {
 			Listener listener = new Listener(
 				new IPEndPoint( IPAddress.Any, port )
 			);
-			listener.Start();
-			
+
 			World world = new World( world_id );
+			listener.Start();
 			MessageProcessor mp = new MessageProcessor( world, listener	);
+			System.Console.WriteLine( "Listening to new connections..." );
 
 			while ( true ) {
 				// handle world changes

@@ -8,6 +8,7 @@ namespace Strive.Network.Messages.ToClient
 	/// </summary>
 	[Serializable]
 	public class Acknowledge : IMessage {
+		public Acknowledge(){}
 		public Acknowledge( int SequenceNumber ) {
 			this.SequenceNumber = SequenceNumber;
 		}

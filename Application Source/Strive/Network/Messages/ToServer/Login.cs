@@ -8,6 +8,7 @@ namespace Strive.Network.Messages.ToServer
 	[Serializable]
 	public class Login : IMessage
 	{
+		public Login(){}
 		public Login( string username, string password )
 		{
 			this.username = username;

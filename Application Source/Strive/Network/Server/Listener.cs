@@ -57,8 +57,9 @@ namespace Strive.Network.Server {
 						//);
 
 						// Custom serialization
-						message = CustomFormatter.Deserialize( receivedBytes );
-					} catch ( Exception ) {
+						message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
+					} catch ( Exception e ) {
+						System.Console.WriteLine( e );
 						System.Console.WriteLine( "Invalid packet received" );
 						return;
 					}

@@ -9,6 +9,7 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class AddPhysicalObject : IMessage
 	{
+		public AddPhysicalObject(){}
 		public AddPhysicalObject( PhysicalObject po ) {
 			this.instance_id = po.ObjectInstanceID;
 			this.model_id = po.ModelID;

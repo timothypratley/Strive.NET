@@ -9,6 +9,7 @@ namespace Strive.Network.Messages.ToClient
 	/// </summary>
 	[Serializable]
 	public class DropPhysicalObjects : IMessage {
+		public DropPhysicalObjects(){}
 		public DropPhysicalObjects( ArrayList physicalObjects ) {
 			instanceIDs = new int[physicalObjects.Count];
 			int i = 0;
