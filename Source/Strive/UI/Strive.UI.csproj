@@ -151,11 +151,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Engine\Character.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "Engine\GameLoop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -173,10 +168,6 @@
                     RelPath = "Icons\IconManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Icons\Player.bmp"
-                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "Icons\StartedServer.bmp"

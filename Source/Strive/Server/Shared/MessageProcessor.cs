@@ -126,7 +126,7 @@ namespace Strive.Server.Shared {
 			if(client.Avatar != null)
 			{
 				// remove from world.
-				world.Remove(client.Avatar.ObjectInstanceID);
+				world.Remove(client.Avatar);
 			}
 			System.Console.WriteLine("Logged out '" + client.AuthenticatedUsername +"'.");
 			client.Close(); 

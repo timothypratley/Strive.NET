@@ -150,18 +150,10 @@
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "CommandGenerator\xsl\NEWOverloadedCommandClass.xsl"
-                    BuildAction = "Content"
-                />
-                <File
                     RelPath = "CommandGenerator\xsl\sample.xml"
                     BuildAction = "Content"
                 />
-                <File
-                    RelPath = "CommandGenerator\xsl\output\Commands.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
+                <Folder RelPath = "CommandGenerator\xsl\output\" />
                 <File
                     RelPath = "Shared\API.cs"
                     SubType = "Code"
