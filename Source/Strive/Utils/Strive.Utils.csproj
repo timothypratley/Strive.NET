@@ -136,16 +136,6 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "bmp2db\WinMain.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "bmp2db\WinMain.resx"
-                    DependentUpon = "WinMain.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
                     RelPath = "CommandGenerator\WinMain.cs"
                     SubType = "Form"
                     BuildAction = "Compile"

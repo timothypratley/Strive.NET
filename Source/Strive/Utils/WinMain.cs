@@ -16,7 +16,6 @@ namespace Strive.Utils
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button LoadXSDGenerator;
 		private System.Windows.Forms.Button WorldBuilderButton;
-		private System.Windows.Forms.Button button3;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -60,7 +59,6 @@ namespace Strive.Utils
 			this.button2 = new System.Windows.Forms.Button();
 			this.LoadXSDGenerator = new System.Windows.Forms.Button();
 			this.WorldBuilderButton = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -99,20 +97,11 @@ namespace Strive.Utils
 			this.WorldBuilderButton.Text = "World Builder";
 			this.WorldBuilderButton.Click += new System.EventHandler(this.WorldBuilderButton_Click);
 			// 
-			// button3
-			// 
-			this.button3.Location = new System.Drawing.Point(112, 48);
-			this.button3.Name = "button3";
-			this.button3.TabIndex = 4;
-			this.button3.Text = "bmp2db";
-			this.button3.Click += new System.EventHandler(this.button3_Click);
-			// 
 			// WinMain
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(440, 126);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.button3,
 																		  this.WorldBuilderButton,
 																		  this.LoadXSDGenerator,
 																		  this.button2,
@@ -155,11 +144,6 @@ namespace Strive.Utils
 		private void WorldBuilderButton_Click(object sender, System.EventArgs e)
 		{
 			WorldBuilder.WinMain win = new WorldBuilder.WinMain();
-			win.ShowDialog(this);
-		}
-
-		private void button3_Click(object sender, System.EventArgs e) {
-			bmp2db.WinMain win = new bmp2db.WinMain();
 			win.ShowDialog(this);
 		}
 	}

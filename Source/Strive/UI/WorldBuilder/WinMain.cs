@@ -44,6 +44,8 @@ namespace Strive.UI.WorldBuilder
 
 		string currentFileName;
 		private System.Windows.Forms.MenuItem menuItem6;
+		private System.Windows.Forms.MenuItem menuItem7;
+		private System.Windows.Forms.MenuItem menuItem8;
 		string currentConnectionString;
 
 
@@ -109,10 +111,12 @@ namespace Strive.UI.WorldBuilder
 			this.mainMenu1 = new System.Windows.Forms.MainMenu();
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
 			this.menuItem3 = new System.Windows.Forms.MenuItem();
-			this.menuItem4 = new System.Windows.Forms.MenuItem();
-			this.menuItem2 = new System.Windows.Forms.MenuItem();
 			this.menuItem5 = new System.Windows.Forms.MenuItem();
+			this.menuItem4 = new System.Windows.Forms.MenuItem();
 			this.menuItem6 = new System.Windows.Forms.MenuItem();
+			this.menuItem2 = new System.Windows.Forms.MenuItem();
+			this.menuItem7 = new System.Windows.Forms.MenuItem();
+			this.menuItem8 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -154,7 +158,8 @@ namespace Strive.UI.WorldBuilder
 			// 
 			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.menuItem1,
-																					  this.menuItem2});
+																					  this.menuItem2,
+																					  this.menuItem7});
 			// 
 			// menuItem1
 			// 
@@ -172,28 +177,41 @@ namespace Strive.UI.WorldBuilder
 			this.menuItem3.Text = "Open From File";
 			this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
 			// 
-			// menuItem4
-			// 
-			this.menuItem4.Index = 2;
-			this.menuItem4.Text = "Save To File";
-			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
-			// 
-			// menuItem2
-			// 
-			this.menuItem2.Index = 1;
-			this.menuItem2.Text = "View";
-			// 
 			// menuItem5
 			// 
 			this.menuItem5.Index = 1;
 			this.menuItem5.Text = "Open From Database";
 			this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
 			// 
+			// menuItem4
+			// 
+			this.menuItem4.Index = 2;
+			this.menuItem4.Text = "Save To File";
+			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
+			// 
 			// menuItem6
 			// 
 			this.menuItem6.Index = 3;
 			this.menuItem6.Text = "Save To Database";
 			this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
+			// 
+			// menuItem2
+			// 
+			this.menuItem2.Index = 1;
+			this.menuItem2.Text = "View";
+			// 
+			// menuItem7
+			// 
+			this.menuItem7.Index = 2;
+			this.menuItem7.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					  this.menuItem8});
+			this.menuItem7.Text = "Terrain";
+			// 
+			// menuItem8
+			// 
+			this.menuItem8.Index = 0;
+			this.menuItem8.Text = "Read From Bitmap";
+			this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
 			// 
 			// WinMain
 			// 
@@ -492,6 +510,78 @@ namespace Strive.UI.WorldBuilder
 
 		private void menuItem6_Click(object sender, System.EventArgs e) {
 			MultiverseFactory.persistMultiverseToDatabase( multiverse ); 
+		}
+
+		private void menuItem8_Click(object sender, System.EventArgs e) {
+			OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+			openFileDialog1.Filter = "bmp files (*.bmp)|*.bmp|All files (*.*)|*.*" ;
+			openFileDialog1.FilterIndex = 1;
+			openFileDialog1.RestoreDirectory = true;
+
+			if( openFileDialog1.ShowDialog( this ) == DialogResult.OK ) {
+				st.Stop();
+				Bitmap bmp;
+				try {
+					bmp = new Bitmap( openFileDialog1.FileName );
+				} catch ( Exception ) {
+					MessageBox.Show( this, "Failed to open bitmap" );
+					return;
+				}
+				System.Data.DataTable templateClone = multiverse.TemplateTerrain.Clone();
+
+				foreach(Schema.TemplateTerrainRow terrainRow in templateClone.Rows) {
+					Schema.TemplateTerrainRow realTerrain =  multiverse.TemplateTerrain.FindByObjectTemplateID(terrainRow.ObjectTemplateID);
+					realTerrain.Delete();
+					multiverse.TemplateTerrain.Rows.Remove(realTerrain);
+					//Schema.ObjectInstanceRow[] oirs = realTerrain.ObjectTemplateRow.GetObjectInstanceRows();
+					//realTerrain.ObjectTemplateRow.Delete();
+					
+					//realTerrain.ObjectTemplateRow.AcceptChanges();
+					//foreach ( Schema.ObjectInstanceRow toir in oirs ) {
+					//	toir.Delete();
+					//	toir.AcceptChanges();
+					//}
+					//realTerrain.Delete();
+					//realTerrain.AcceptChanges();
+				}
+				multiverse.TemplateTerrain.AcceptChanges();
+				multiverse.AcceptChanges();
+				MessageBox.Show(multiverse.TemplateTerrain.Rows.Count.ToString());
+				MessageBox.Show("Deleted");
+
+				for ( int i=0; i<bmp.Width; i++ ) {
+					for ( int j=0; j<bmp.Height; j++ ) {
+						Schema.ObjectTemplateRow otr = multiverse.ObjectTemplate.NewObjectTemplateRow();
+						otr.AreaID = 1;
+						otr.ModelID = 20;
+						otr.ObjectTemplateName = "";
+						otr.Height = 0;
+						otr.LastUpdatedBy = otr.PlayerID = 1;
+						otr.LastUpdated = otr.CreationTime = DateTime.Now;						
+						Schema.ObjectInstanceRow oir = multiverse.ObjectInstance.NewObjectInstanceRow();
+						oir.ObjectTemplateID = otr.ObjectTemplateID;
+						oir.X = i*100 - bmp.Width*50;
+						oir.Z = j*100 - bmp.Height*50;
+						oir.Y = bmp.GetPixel( i, j ).GetBrightness() * 400;
+						oir.HeadingX = 0;
+						oir.HeadingY = 0;
+						oir.HeadingZ = 0;
+						Schema.TemplateTerrainRow ttr = multiverse.TemplateTerrain.NewTemplateTerrainRow();
+						ttr.ObjectTemplateID = oir.ObjectTemplateID;
+						ttr.EnumTerrainTypeID = (int)EnumTerrainType.Plains;
+
+						multiverse.ObjectTemplate.AddObjectTemplateRow( otr );
+						multiverse.ObjectInstance.AddObjectInstanceRow( oir );
+						multiverse.TemplateTerrain.AddTemplateTerrainRow( ttr );
+					}
+				}
+				MessageBox.Show("Created about to render");
+				// update the display
+				//renderMultiverse();
+				MessageBox.Show("Renderd");
+				//st.Start();
+			}
 		}
 	}
 }

@@ -56,10 +56,42 @@ namespace Strive.Server.Shared {
 			Log.LogMessage( "Global.multiverse loaded." );
 
 			// find highX and lowX for our world dimensions
-			highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
-			lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
-			highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
-			lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
+			// refactored in an attempt to increase performance:
+			highX = 0;
+			lowX = 0;
+			highZ = 0;
+			lowZ = 0;
+			foreach(Schema.ObjectInstanceRow r in Global.multiverse.ObjectInstance.Rows) {
+				if(highX == 0) {
+					highX = r.X;
+				}
+				if(lowX == 0){
+					lowX = r.X;
+				}
+				if(highZ == 0){ 
+					highZ = r.Z;
+				}
+				if(lowZ == 0) {
+					lowZ = 0;
+				}
+
+				if(r.X > highX) {
+					highX = r.X;
+				}
+				if(r.X < lowX) {
+					lowX = r.X;
+				}
+				if(r.Z > highZ) {
+					highZ = r.Z;
+				}
+				if(r.Z < lowZ) {
+					lowZ = r.Z;
+				}
+			}
+			//highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
+			//lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
+			//highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
+			//lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
 			Log.LogMessage( "Global.multiverse bounds are " + lowX + "," + lowZ + " " + highX + "," + highZ );
 
 			// figure out how many squares we need
@@ -215,7 +247,7 @@ namespace Strive.Server.Shared {
 			// notify all nearby clients that a new
 			// physical object has entered the world
 			InformNearby( po, Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( po ) );
-			Log.LogMessage( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
+			//Log.LogMessage( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
 		}
 
 		public void Remove( PhysicalObject po ) {

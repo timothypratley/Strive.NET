@@ -48,7 +48,7 @@ namespace Strive.UI.WorldView {
 			} else {
 				if ( RenderingScene.Models.Contains( po.ObjectInstanceID ) ) {
 					Log.WarningMessage( "Trying to add existing PhysicalObject " + po.ObjectInstanceID );
-					return (PhysicalObjectInstance)RenderingScene.Models[po.ObjectInstanceID];
+					return (PhysicalObjectInstance)physicalObjectInstances[po.ObjectInstanceID];
 				}
 				PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
