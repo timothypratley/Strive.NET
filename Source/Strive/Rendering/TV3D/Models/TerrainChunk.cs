@@ -50,7 +50,15 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public void SetHeight( float x, float z, float altitude ) {
 			// TODO: remove +1 ... bug in TV3D landscape scaling, z+1
-			_mesh.ChangePointAltitude( x, z+1, altitude, true, false, false );
+
+			/** this wont work, relative is only height relative
+			x = x % (_heights*_gap_size);
+			z = z % (_heights*_gap_size);
+			if ( x < 0 ) x = _height*_gap_size + x;
+			if ( x < 0 ) z = _height*_gap_size + z;
+			*/
+
+			_mesh.ChangePointAltitude( x, z, altitude, true, false, false );
 		}
 
 		public float GetHeight( float x, float z ) {
@@ -67,19 +75,19 @@ namespace Strive.Rendering.TV3D.Models {
 			switch( rot ) {
 				default:
 					Logging.Log.ErrorMessage( "Invalid rotation " + rotation );
-					_mesh.DynDrawTexture( texture_id, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1/32F, 1/32F, 0, 0 );
+					_mesh.DynDrawTexture( texture_id, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 0:
-					_mesh.DynDrawTexture( texture_id, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1/32F, 1/32F, 0, 0 );
+					_mesh.DynDrawTexture( texture_id, x, z, x+_gap_size, z+_gap_size, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 90:
-					_mesh.DynDrawTexture( texture_id, x+_gap_size, z, x, z+_gap_size, -1, false, true, 1/32F, 1/32F, 0, 0 );
+					_mesh.DynDrawTexture( texture_id, x+_gap_size, z, x, z+_gap_size, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), 1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 180:
-					_mesh.DynDrawTexture( texture_id, x+_gap_size, z+_gap_size, x, z, -1, false, true, 1/32F, 1/32F, 0, 0 );
+					_mesh.DynDrawTexture( texture_id, x+_gap_size, z+_gap_size, x, z, -1, false, true, 1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 				case 270:
-					_mesh.DynDrawTexture( texture_id, x, z+_gap_size, x+_gap_size, z, -1, false, true, 1/32F, 1/32F, 0, 0 );
+					_mesh.DynDrawTexture( texture_id, x, z+_gap_size, x+_gap_size, z, -1, false, true, -1F/(256F/Constants.terrainHeightsPerChunk), -1F/(256F/Constants.terrainHeightsPerChunk), 0, 0 );
 					break;
 			}
 		}

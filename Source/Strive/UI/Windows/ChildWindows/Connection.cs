@@ -369,7 +369,7 @@ namespace Strive.UI.Windows.ChildWindows
 
 		void HandleConnectFailed() {
 			// TODO: might want to show a message etc
-			StriveWindowState = ConnectionWindowState.Connected;
+			StriveWindowState = ConnectionWindowState.NotConnected;
 		}
 
 		void HandleDisconnect() {
