@@ -96,52 +96,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MainTabs.DrawGrid" type="System.Boolean, mscorlib, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </data>
-  <data name="MainTabs.Modifiers" type="System.CodeDom.MemberAttributes, System, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>Public</value>
-  </data>
-  <data name="GameTab.Modifiers" type="System.CodeDom.MemberAttributes, System, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>Public</value>
-  </data>
-  <data name="RenderTarget.Modifiers" type="System.CodeDom.MemberAttributes, System, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>Public</value>
-  </data>
-  <data name="MainMenu.DrawGrid" type="System.Boolean, mscorlib, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </data>
-  <data name="FileMenu.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </data>
-  <data name="FileSave.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>640, 17</value>
-  </data>
-  <data name="FileQuit.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>308, 17</value>
-  </data>
-  <data name="ViewMenu.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>113, 17</value>
-  </data>
-  <data name="ViewLog.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>215, 17</value>
-  </data>
-  <data name="ViewConnect.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>525, 17</value>
-  </data>
-  <data name="ViewWhoList.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>112, 42</value>
-  </data>
-  <data name="ViewSkillList.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>216, 41</value>
-  </data>
-  <data name="ViewChat.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>313, 42</value>
-  </data>
-  <data name="ViewCommand.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>388, 18</value>
-  </data>
   <data name="$this.Name">
-    <value>Main</value>
+    <value>CommandInput</value>
   </data>
 </root>

@@ -132,6 +132,22 @@
                     Project = "{92F94EA0-9910-4895-B8A1-FED1543A9DA1}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "stdole"
+                    Guid = "{00020430-0000-0000-C000-000000000046}"
+                    VersionMajor = "2"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "primary"
+                />
+                <Reference
+                    Name = "MSNChat"
+                    Guid = "{0DFE796E-8760-4CBE-BB08-49F589241800}"
+                    VersionMajor = "1"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
+                />
             </References>
         </Build>
         <Files>
@@ -199,16 +215,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Windows\CommandInput.cs"
-                    SubType = "UserControl"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Windows\CommandInput.resx"
-                    DependentUpon = "CommandInput.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
                     RelPath = "Windows\Icon1.ico"
                     BuildAction = "Content"
                 />
@@ -230,6 +236,26 @@
                 <File
                     RelPath = "Windows\SystemFormBase.resx"
                     DependentUpon = "SystemFormBase.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\Chat.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\Chat.resx"
+                    DependentUpon = "Chat.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\Command.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\ChildWindows\Command.resx"
+                    DependentUpon = "Command.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
@@ -270,6 +296,26 @@
                 <File
                     RelPath = "Windows\ChildWindows\WhoList.resx"
                     DependentUpon = "WhoList.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\Controls\CommandInput.cs"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Controls\CommandInput.resx"
+                    DependentUpon = "CommandInput.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\Controls\RichScrollBox.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Controls\RichScrollBox.resx"
+                    DependentUpon = "RichScrollBox.cs"
                     BuildAction = "EmbeddedResource"
                 />
             </Include>

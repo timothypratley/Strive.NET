@@ -28,7 +28,8 @@ namespace Strive.UI.Windows
 		private Crownwood.Magic.Menus.MenuCommand ViewConnect;
 		private Crownwood.Magic.Menus.MenuCommand ViewWhoList;
 		private Crownwood.Magic.Menus.MenuCommand ViewSkillList;
-		private Strive.UI.Windows.CommandInput commandInput;
+		private Crownwood.Magic.Menus.MenuCommand ViewCommand;
+		private Crownwood.Magic.Menus.MenuCommand ViewChat;
 
 		private System.ComponentModel.IContainer components = null;
 
@@ -55,7 +56,6 @@ namespace Strive.UI.Windows
 			this.Controls.Clear();
 
 			this.Controls.Add(MainTabs);
-			this.Controls.Add(commandInput);			
 			this.Controls.Add(MainStatus);
 			this.Controls.Add(MainMenu);
 			
@@ -94,6 +94,12 @@ namespace Strive.UI.Windows
 			// Who
 			Content whoWindow = DockingManager.Contents.Add(new ChildWindows.WhoList(), "Who's online", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection),0);
 			DockingManager.AddContentWithState(whoWindow, State.DockRight);
+			// Command
+			Content commandWindow = DockingManager.Contents.Add(new ChildWindows.Command(), "Command", null, -1);
+			DockingManager.AddContentWithState(commandWindow, State.DockBottom);
+			// Chat
+			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", null, -1);
+			DockingManager.AddContentWithState(chatWindow, State.DockBottom);
 			#endregion
 
 			#region Load Settings
@@ -158,8 +164,9 @@ namespace Strive.UI.Windows
 			this.ViewConnect = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewWhoList = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewSkillList = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewChat = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewCommand = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
-			this.commandInput = new Strive.UI.Windows.CommandInput();
 			this.GameTab.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -170,7 +177,7 @@ namespace Strive.UI.Windows
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(612, 742);
+			this.MainTabs.Size = new System.Drawing.Size(612, 1353);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -180,7 +187,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.AddRange(new System.Windows.Forms.Control[] {
 																				  this.RenderTarget});
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(612, 717);
+			this.GameTab.Size = new System.Drawing.Size(612, 1328);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -189,9 +196,9 @@ namespace Strive.UI.Windows
 			this.RenderTarget.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
-			this.RenderTarget.Location = new System.Drawing.Point(256, 621);
+			this.RenderTarget.Location = new System.Drawing.Point(256, 1112);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(116, 62);
+			this.RenderTarget.Size = new System.Drawing.Size(116, 155);
 			this.RenderTarget.TabIndex = 0;
 			this.RenderTarget.TabStop = false;
 			// 
@@ -241,7 +248,9 @@ namespace Strive.UI.Windows
 																							this.ViewLog,
 																							this.ViewConnect,
 																							this.ViewWhoList,
-																							this.ViewSkillList});
+																							this.ViewSkillList,
+																							this.ViewChat,
+																							this.ViewCommand});
 			this.ViewMenu.Text = "&View";
 			this.ViewMenu.Click += new System.EventHandler(this.ViewMenu_Click);
 			// 
@@ -260,37 +269,39 @@ namespace Strive.UI.Windows
 			// ViewWhoList
 			// 
 			this.ViewWhoList.Description = "MenuItem";
-			this.ViewWhoList.Text = "WhoList";
+			this.ViewWhoList.Text = "Who";
 			this.ViewWhoList.Click += new System.EventHandler(this.ViewWhoList_Click);
 			// 
 			// ViewSkillList
 			// 
 			this.ViewSkillList.Description = "MenuItem";
-			this.ViewSkillList.Text = "SkillList";
+			this.ViewSkillList.Text = "Skills";
 			this.ViewSkillList.Click += new System.EventHandler(this.ViewSkillList_Click);
+			// 
+			// ViewChat
+			// 
+			this.ViewChat.Description = "View Chat";
+			this.ViewChat.Text = "Chat";
+			this.ViewChat.Click += new System.EventHandler(this.ViewChat_Click);
+			// 
+			// ViewCommand
+			// 
+			this.ViewCommand.Description = "View Command";
+			this.ViewCommand.Text = "Command";
+			this.ViewCommand.Click += new System.EventHandler(this.ViewCommand_Click);
 			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 769);
+			this.MainStatus.Location = new System.Drawing.Point(2, 1380);
 			this.MainStatus.Name = "MainStatus";
-			this.MainStatus.Size = new System.Drawing.Size(612, 16);
+			this.MainStatus.Size = new System.Drawing.Size(612, 25);
 			this.MainStatus.TabIndex = 1;
-			// 
-			// commandInput
-			// 
-			this.commandInput.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.commandInput.ForeColor = System.Drawing.SystemColors.WindowText;
-			this.commandInput.Location = new System.Drawing.Point(2, 737);
-			this.commandInput.Name = "commandInput";
-			this.commandInput.Size = new System.Drawing.Size(612, 32);
-			this.commandInput.TabIndex = 2;
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(616, 787);
+			this.ClientSize = new System.Drawing.Size(616, 1407);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.commandInput,
 																		  this.MainTabs,
 																		  this.MainMenu,
 																		  this.MainStatus});
@@ -393,6 +404,19 @@ namespace Strive.UI.Windows
 		private void ViewSkillList_Click(object sender, System.EventArgs e) {
 			Content skillWindow = DockingManager.Contents.Add(new ChildWindows.SkillSelector(), "Skills", Icons.IconManager.GetAsImageList(Icons.AvailableIcons.Connection), 0);
 			DockingManager.AddContentWithState(skillWindow, State.Floating);
+		}
+
+		private void ViewCommand_Click(object sender, System.EventArgs e)
+		{
+			Content commandWindow = DockingManager.Contents.Add(new ChildWindows.Command(), "Command", null, -1);
+			DockingManager.AddContentWithState(commandWindow, State.Floating);
+		
+		}
+
+		private void ViewChat_Click(object sender, System.EventArgs e)
+		{
+			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", null, -1);
+			DockingManager.AddContentWithState(chatWindow, State.Floating);
 		}
 	}
 }
