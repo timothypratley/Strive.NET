@@ -14,34 +14,43 @@ namespace Strive.Rendering.TV3D.Controls
 		short button1down=0, button2down=0, button3down=0, button4down=0;
 		int intellimouseroll=0;
 		
-		public void GetState() {
+		public void GetState() 
+		{
 			Engine.Input.GetMouseState(ref x, ref y, ref button1down, ref button2down, ref button3down, ref intellimouseroll );
 		}
 
-		public void GetAbsState() {
+		public void GetAbsState() 
+		{
 			Engine.Input.GetAbsMouseState( ref x, ref y, ref button1down, ref button2down, ref button3down );
 		}
 
-		public void ShowCursor( bool showCursor ) {
-			//Engine.Tools.ShowCursor( ref showCursor );
+		public void ShowCursor( bool showCursor ) 
+		{
+			Engine.TV3DEngine.ShowWinCursor( showCursor );
 		}
 
-		public int X {
+		public int X 
+		{
 			get { return x; }
 		}
-		public int Y {
+		public int Y 
+		{
 			get { return y; }
 		}
-		public bool Button1down {
+		public bool Button1down 
+		{
 			get { return button1down!=0; }
 		}
-		public bool Button2down {
+		public bool Button2down 
+		{
 			get { return button2down!=0; }
 		}
-		public bool Button3down {
+		public bool Button3down 
+		{
 			get { return button3down!=0; }
 		}
-		public bool Button4down {
+		public bool Button4down 
+		{
 			get { return button4down!=0; }
 		}
 	}

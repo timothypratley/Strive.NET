@@ -347,18 +347,20 @@ namespace Strive.UI.Windows
 		}
 
 		public void SetGameControlMode() {
-			if ( !Game.GameControlMode ) {
+			if ( !Game.GameControlMode ) 
+			{
 				RenderTarget.Focus();
 				Game.GameControlMode = true;
-				Point center = new Point(
+				/*Point center = new Point(
 					RenderTarget.Left + RenderTarget.Width / 2,
 					RenderTarget.Top + RenderTarget.Height / 2
-				);
+					);
 				Cursor.Position = RenderTarget.PointToScreen( center );
 				Rectangle r = new Rectangle( center, new System.Drawing.Size( 0, 0 ) );
 				Cursor.Clip = RenderTarget.RectangleToScreen( r );
 				RenderTarget.Capture = true;
-				Cursor.Hide();
+				Cursor.Hide();*/
+				Game.RenderingFactory.Mouse.ShowCursor(false);
 				Game.CurrentGameCommand = EnumSkill.None;
 			}
 		}
@@ -367,14 +369,13 @@ namespace Strive.UI.Windows
 			if ( Game.GameControlMode ) {
 				Game.GameControlMode = false;
 				RenderTarget.Capture = false;
-				Cursor.Position = RenderTarget.PointToScreen(
+/*				Cursor.Position = RenderTarget.PointToScreen(
 					new Point(
 					RenderTarget.Left + RenderTarget.Width / 2,
 					RenderTarget.Top + RenderTarget.Height / 2
 					)
-				);
-				Cursor.Clip = new Rectangle( new Point(0,0), new Size(0,0) );
-				Cursor.Show();
+				);*/
+				Game.RenderingFactory.Mouse.ShowCursor(true);
 			}
 		}
 

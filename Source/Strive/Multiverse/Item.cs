@@ -18,8 +18,10 @@ namespace Strive.Multiverse
 		) : base( template, instance ) {
 			Value = item.Value;
 			Weight = item.Weight;
+			Energy = (float)instance.EnergyCurrent;
 			MaxHitPoints = (int)Math.Pow( 2, item.EnumItemDurabilityID );
-			HitPoints = MaxHitPoints;
+			MaxEnergy = (int)Math.Pow( 2, item.EnumItemDurabilityID );
+			HitPoints = (float)instance.HitpointsCurrent;
 		}
 	}
 }

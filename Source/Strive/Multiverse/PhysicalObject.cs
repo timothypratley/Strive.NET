@@ -49,7 +49,7 @@ namespace Strive.Multiverse
 				(float)instance.HeadingZ
 			);
 			ModelID = template.ModelID;
-			Height = template.Height;
+			Height = (float)template.Height;
 			// can we get r^2 from modelID?
 			// TODO: make this the proper 3d radius^2
 			// store it in the database

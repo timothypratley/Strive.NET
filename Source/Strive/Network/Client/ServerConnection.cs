@@ -174,9 +174,7 @@ namespace Strive.Network.Client {
 
 		public void Send( IMessage message ) {
 			if ( !connected ) {
-				// TODO: don't return, just throw
 				return;
-				throw new Exception( "Sending message while not connected." );
 			}
 			try {
 				switch(protocol)

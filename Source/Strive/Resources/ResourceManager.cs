@@ -82,7 +82,7 @@ namespace Strive.Resources
 					Http.SaveUrlTargetToDisk(new Uri(downloadUrl), modelPath);
 					return true;
 				}
-				catch(Exception e)
+				catch(Exception )
 				{
 				}
 			}

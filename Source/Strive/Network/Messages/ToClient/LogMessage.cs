@@ -7,8 +7,13 @@ namespace Strive.Network.Messages.ToClient
 	/// Summary description for Acknowledge.
 	/// </summary>
 	[Serializable]
-	public class NegativeAcknowledge : IMessage 
+	public class LogMessage : IMessage 
 	{
-		public NegativeAcknowledge(){}
+		public LogMessage(){}
+		public LogMessage( string Message ) 
+		{
+			this.Message = Message;
+		}
+		public string Message;
 	}
 }

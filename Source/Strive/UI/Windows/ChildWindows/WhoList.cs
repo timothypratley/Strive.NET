@@ -46,9 +46,6 @@ namespace Strive.UI.Windows.ChildWindows
 				new object [] { wl } );
 		}
 
-		class IdButton : Button {
-			public int id;
-		}
 		void HandleWhoList( Strive.Network.Messages.ToClient.WhoList wl ) {
 			CharactersOnline.Items.Clear();
 

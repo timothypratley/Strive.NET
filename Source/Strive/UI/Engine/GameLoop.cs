@@ -38,7 +38,8 @@ namespace Strive.UI.Engine
 			thisThread.Start();
 		}
 
-		public void Stop() {
+		public void Stop() 
+		{
 			thisThread.Stop();
 		}
 
@@ -53,13 +54,16 @@ namespace Strive.UI.Engine
 
 			// handle user input
 			//if ( Game.GameControlMode ) {
-				ProcessPlayerInput();
+			ProcessPlayerInput();
 			//}
 
 			// display the new world
-			try {
+			try 
+			{
 				Game.CurrentWorld.Render();
-			} catch ( Exception ) {
+			} 
+			catch ( Exception ) 
+			{
 				Log.LogMessage( "Render failed." );
 				Stop();
 			}
@@ -68,8 +72,10 @@ namespace Strive.UI.Engine
 			System.Threading.Thread.Sleep( 10 );
 		}
 
-		void ProcessOutstandingMessages() {
-			while(_connection.MessageCount > 0) {
+		void ProcessOutstandingMessages() 
+		{
+			while(_connection.MessageCount > 0) 
+			{
 				IMessage m = _connection.PopNextMessage();
 				_message_processor.Process( m );
 			}
@@ -77,29 +83,42 @@ namespace Strive.UI.Engine
 
 		// todo: replace pitch with a more elegant solution
 		float pitch = 0;
-		void ProcessPlayerInput() {
-			if ( keyboard.GetKeyState( Key.key_F5 ) ) {
+		void ProcessPlayerInput() 
+		{
+			if ( keyboard.GetKeyState( Key.key_F5 ) ) 
+			{
 				Game.CurrentMainWindow.SetGameControlMode();
-			} else if ( keyboard.GetKeyState( Key.key_F6 ) ) {
+			} 
+			else if ( keyboard.GetKeyState( Key.key_F6 ) ) 
+			{
 				Game.CurrentMainWindow.ReleaseGameControlMode();
 			}
-			if ( Game.GameControlMode ) {
-				if ( keyboard.GetKeyState( Key.key_ESCAPE ) ) {
+			if ( Game.GameControlMode ) 
+			{
+				if ( keyboard.GetKeyState( Key.key_ESCAPE ) ) 
+				{
 					Game.CurrentMainWindow.ReleaseGameControlMode();
-				} else if ( keyboard.GetKeyState( Key.key_1 ) ) {
+				} 
+				else if ( keyboard.GetKeyState( Key.key_1 ) ) 
+				{
 					Game.CurrentGameCommand = EnumSkill.Kill;
 					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Kill;
-				} else if ( keyboard.GetKeyState( Key.key_2 ) ) {
+				} 
+				else if ( keyboard.GetKeyState( Key.key_2 ) ) 
+				{
 					Game.CurrentGameCommand = EnumSkill.Flee;
 					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Default;
-				} else if ( keyboard.GetKeyState( Key.key_0 ) ) {
+				} 
+				else if ( keyboard.GetKeyState( Key.key_0 ) ) 
+				{
 					Game.CurrentGameCommand = EnumSkill.None;
 					//Game.CurrentMainWindow.RenderTarget.Cursor = Strive.UI.Cursors.CursorManager.Default;
 				}
 			}
 
 			// if not in game control mode, don't respond to game controls
-			if ( Game.GameControlMode ) {
+			if ( !Game.GameControlMode ) 
+			{
 				return;
 			}
 			
@@ -111,23 +130,26 @@ namespace Strive.UI.Engine
 			const int moveunit = 2;
 			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position.Clone();
 			Vector3D newRotation = Game.CurrentWorld.CurrentAvatar.model.Rotation.Clone();
-
 			mouse.GetState();
-			if( mouse.X != 0 ) {
+			if( mouse.X != 0 ) 
+			{
 				newRotation.Y += mouse.X*0.2f; 
 				newRotation.X = pitch;
 			}
-			if( mouse.Y != 0 ) {
+			if( mouse.Y != 0 ) 
+			{
 				pitch += mouse.Y*0.2f;
 				if ( pitch > 60 ) { pitch = 60; }
 				if ( pitch < -60 ) { pitch = -60; }
 				newRotation.X = pitch;
 			}
 
-			if( keyboard.GetKeyState(Key.key_Q) ) {
+			if( keyboard.GetKeyState(Key.key_Q) ) 
+			{
 				newRotation.Y -= moveunit*2F;
 			}
-			if(keyboard.GetKeyState(Key.key_E)) {
+			if(keyboard.GetKeyState(Key.key_E)) 
+			{
 				newRotation.Y += moveunit*2F;
 			}
 
@@ -135,37 +157,46 @@ namespace Strive.UI.Engine
 			#region 2.0 Process Movement Input
 
 			Vector3D changeOfPosition = new Vector3D( 0, 0, 0 );
-			if ( keyboard.GetKeyState(Key.key_W) ) {
+			if ( keyboard.GetKeyState(Key.key_W) ) 
+			{
 				changeOfPosition.X += (float)Math.Sin( newRotation.Y * Math.PI/180.0 ) * moveunit;
 				changeOfPosition.Z += (float)Math.Cos( newRotation.Y * Math.PI/180.0 ) * moveunit;
 			}
-			if ( keyboard.GetKeyState(Key.key_S) ) {
+			if ( keyboard.GetKeyState(Key.key_S) ) 
+			{
 				changeOfPosition.X -= (float)Math.Sin( newRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 				changeOfPosition.Z -= (float)Math.Cos( newRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 			}
-			if ( keyboard.GetKeyState(Key.key_D) ) {
+			if ( keyboard.GetKeyState(Key.key_D) ) 
+			{
 				changeOfPosition.X += (float)Math.Cos( newRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 				changeOfPosition.Z -= (float)Math.Sin( newRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 			}
-			if( keyboard.GetKeyState(Key.key_A) ) {
+			if( keyboard.GetKeyState(Key.key_A) ) 
+			{
 				changeOfPosition.X -=	(float)Math.Cos( newRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 				changeOfPosition.Z +=	(float)Math.Sin( newRotation.Y * Math.PI/180.0 ) * moveunit/2F;
 			}
 
-			if( changeOfPosition.GetMagnitudeSquared() != 0 ) {
+			if( changeOfPosition.GetMagnitudeSquared() != 0 ) 
+			{
 				// stay on the ground
 				// TODO: What about when walking on objects?
 				Vector3D newPosition = avatarPosition + changeOfPosition;
-				try {
+				try 
+				{
 					newPosition.Y = Game.CurrentWorld.TerrainPieces.AltitudeAt( newPosition.X, newPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
 					changeOfPosition.Y = newPosition.Y - avatarPosition.Y;
 
 					// check that we can go there
-					foreach ( PhysicalObjectInstance poi in Game.CurrentWorld.physicalObjectInstances.Values ) {
-						if ( poi.physicalObject is Terrain ) {
+					foreach ( PhysicalObjectInstance poi in Game.CurrentWorld.physicalObjectInstances.Values ) 
+					{
+						if ( poi.physicalObject is Terrain ) 
+						{
 							continue;
 						}
-						if ( poi == Game.CurrentWorld.CurrentAvatar ) {
+						if ( poi == Game.CurrentWorld.CurrentAvatar ) 
+						{
 							//ignore ourselves
 							continue;
 						}
@@ -180,7 +211,8 @@ namespace Strive.UI.Engine
 						float distance_squared = dx*dx + dy*dy + dz*dz;
 						float distance_moved = changeOfPosition.X * changeOfPosition.X + changeOfPosition.Y * changeOfPosition.Y + changeOfPosition.Z * changeOfPosition.Z;
 						// TODO: optimize, no sqrts
-						if ( Math.Sqrt(distance_squared) < Math.Sqrt(poi.model.RadiusSquared) + Math.Sqrt(Game.CurrentWorld.CurrentAvatar.model.RadiusSquared) + Math.Sqrt(distance_moved)/2F ) {
+						if ( Math.Sqrt(distance_squared) < Math.Sqrt(poi.model.RadiusSquared) + Math.Sqrt(Game.CurrentWorld.CurrentAvatar.model.RadiusSquared) + Math.Sqrt(distance_moved)/2F ) 
+						{
 							// ok, these objects are close enough to collide,
 							// but did a collision really happen?
 							// now we do a more acurate test to find out.
@@ -204,7 +236,8 @@ namespace Strive.UI.Engine
 								&& avatarPosition.X < boxmax2.X
 								&& avatarPosition.Y < boxmax2.Y
 								&& avatarPosition.Z < boxmax2.Z
-								) {
+								) 
+							{
 								// already in a collision, ignore collision detection
 								break;
 							}
@@ -216,7 +249,8 @@ namespace Strive.UI.Engine
 								&& newPosition.X < boxmax2.X
 								&& newPosition.Y < boxmax2.Y
 								&& newPosition.Z < boxmax2.Z
-								) {
+								) 
+							{
 								// would be a collision
 								changeOfPosition.Set( 0, 0, 0 );
 								break;
@@ -224,22 +258,26 @@ namespace Strive.UI.Engine
 							}
 						}
 					}
-				} catch ( TerrainCollection.InvalidLocationException ) {
+				} 
+				catch ( TerrainCollection.InvalidLocationException ) 
+				{
 					changeOfPosition.Set( 0, 0, 0 );
 				}
 				// NB: PlayerMovement is called regardless,
 				// as we need to update values for message throtling
 			}
 
-				#endregion
+			#endregion
 			PlayerMovement( avatarPosition, changeOfPosition, newRotation );
 			Game.CurrentWorld.RepositionCamera();
 		}
 
-		public void PlayerMovement( Vector3D oldPosition, Vector3D velocity, Vector3D newRotation ) {
+		public void PlayerMovement( Vector3D oldPosition, Vector3D velocity, Vector3D newRotation ) 
+		{
 			PhysicalObjectInstance poi = Game.CurrentWorld.CurrentAvatar;
 			poi.Move( oldPosition, velocity, newRotation );
-			if ( poi.NeedsUpdate( Game.now ) ) {
+			if ( poi.NeedsUpdate( Game.now ) ) 
+			{
 				_connection.Position(
 					poi.model.Position, 
 					poi.model.Rotation );

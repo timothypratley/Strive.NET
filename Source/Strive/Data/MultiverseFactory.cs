@@ -14,7 +14,8 @@ namespace Strive.Data
 	/// <summary>
 	/// Responsible for Update and Fill's of the Strive.Data.Multiverse class
 	/// </summary>
-	public class MultiverseFactory {
+	public class MultiverseFactory 
+	{
 		static SqlConnection connection;
 		static ListDictionary  commandBuilders = new ListDictionary();
 		static ListDictionary dataAdapters = new ListDictionary();
@@ -99,25 +100,28 @@ namespace Strive.Data
 		#endregion
 
 
-		public static void refreshPlayerList(Schema multiverse) {
+		public static void refreshPlayerList(Schema multiverse) 
+		{
 			if ( connection == null ) return;
-			try {
+			try 
+			{
 				Schema updatedPlayerPartOfMultiverse = new Schema();
+				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
 				SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
 				playerFiller.Fill( updatedPlayerPartOfMultiverse.Player );
 				multiverse.Merge(updatedPlayerPartOfMultiverse);	
-			} catch ( SqlException e ) {
-				Log.WarningMessage( e.Message );
-				Log.WarningMessage( "Connection to database was lost, reconnecting..." );
-				connection.Open();
-				Thread.Sleep( 10000 );				
-				refreshPlayerList( multiverse );
+			} 
+			catch ( SqlException e ) 
+			{
+				tryReconnect(e, multiverse);
 			}
 		}
 
-		public static void refreshMultiverseForPlayer(Schema multiverse, int PlayerID) {
+		public static void refreshMultiverseForPlayer(Schema multiverse, int PlayerID) 
+		{
 			if ( connection == null ) return;
-			try {
+			try 
+			{
 				Schema updatedPlayerPartOfMultiverse = new Schema();
 				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
 				SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
@@ -129,22 +133,40 @@ namespace Strive.Data
 				mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
 				possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
 				multiverse.Merge(updatedPlayerPartOfMultiverse);			
-			} catch ( SqlException e ) {
-				Log.WarningMessage( e.Message );
-				Log.WarningMessage( "Connection to database was lost, reconnecting..." );
-				connection.Open();
-				Thread.Sleep( 10000 );
-				refreshMultiverseForPlayer( multiverse, PlayerID );
+			} 
+			catch ( SqlException e ) 
+			{
+				tryReconnect(e, multiverse);
 			}
 		}
 
-		public static Schema getMultiverseFromFile( string filename ) {
+		private static void tryReconnect(SqlException e, Schema multiverse)
+		{
+			Log.WarningMessage( e.Message );
+			if(connection != null &&
+				connection.State != ConnectionState.Open)
+			{
+				Log.WarningMessage( "Connection to database was lost, reconnecting..." );
+				connection.Open();
+			}
+			else
+			{
+				throw e;
+			}
+
+			Thread.Sleep( 10000 );				
+			refreshPlayerList( multiverse );
+		}
+
+		public static Schema getMultiverseFromFile( string filename ) 
+		{
 			Schema multiverse = new Schema();
 			multiverse.ReadXml( filename ); 
 			return multiverse;
 		}
 
-		public static Schema getMultiverseFromDatabase( string connectionString ) {
+		public static Schema getMultiverseFromDatabase( string connectionString ) 
+		{
 			Schema multiverse = new Schema();
 
 			connection = new SqlConnection( connectionString );
@@ -180,11 +202,13 @@ namespace Strive.Data
 			return multiverse;
 		}
 
-		public static void persistMultiverseToFile(Schema multiverse, string filename) {
+		public static void persistMultiverseToFile(Schema multiverse, string filename) 
+		{
 			multiverse.WriteXml( filename ); 
 		}
 		
-		public static void persistMultiverseToDatabase(Schema multiverse) {
+		public static void persistMultiverseToDatabase(Schema multiverse) 
+		{
 
 			// get a reverse list:
 			ArrayList reverseTableList = new ArrayList();

@@ -19,7 +19,6 @@ namespace Strive.Server.Shared {
 		StoppableThread engine_thread;
 		int CurrentMilliseconds = 0;
 		int CurrentBeat = 0;
-		int BeatsPerDay = 1000;
 		int MillisecondsPerBeat = 10000;
 
 

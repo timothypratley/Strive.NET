@@ -19,10 +19,9 @@ namespace Strive.Network.Messages {
 			Type t = obj.GetType();
 			byte[] EncodedInt;
 			try {
-				EncodedInt = BitConverter.GetBytes(
-					(int)messageTypeMap.idFromMessageType[t]
+				EncodedInt = BitConverter.GetBytes((int)messageTypeMap.idFromMessageType[t]
 				);
-			} catch ( Exception e ) {
+			} catch ( Exception  ) {
 				throw new Exception( "Message " + t + " has not been added to MessageTypeMap" );
 			}
 			// reserve space for the message length field, we will fill it later,

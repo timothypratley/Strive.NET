@@ -17,7 +17,7 @@ namespace Strive.Rendering.TV3D.Cameras
 		private Vector3D _rotation = Vector3D.Origin;
 		private float _fieldOfView = 60;
 		private float _viewDistance = 1000;
-		private string _key;
+
 
 		static Camera thisCamera = new Camera();
 

@@ -404,7 +404,7 @@ namespace Strive.Server.Shared
 		public float GetCompetancy( EnumSkill skill ) {
 			Schema.MobileHasSkillRow mhs = Global.multiverse.MobileHasSkill.FindByObjectTemplateIDEnumSkillID( ObjectTemplateID, (int)skill );
 			if ( mhs != null ) {
-				return mhs.Rating;
+				return (float)mhs.Rating;
 			} else {
 				return 0;
 			}

@@ -16,7 +16,6 @@ namespace Strive.Server.WindowsService
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.Container components = null;
 
 		public ProjectInstaller()
 		{

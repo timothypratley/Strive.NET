@@ -33,9 +33,9 @@ namespace Strive.Multiverse
 			MobileSize = (EnumMobileSize)mobile.EnumMobileSizeID;
 			MobileState = (EnumMobileState)mobile.EnumMobileStateID;
 			MaxHitPoints = mobile.EnumMobileSizeID*100 + Level * Constitution / 2;
-			HitPoints = (int)MaxHitPoints;
+			HitPoints = (float)instance.HitpointsCurrent;
 			MaxEnergy = mobile.EnumMobileSizeID*100 + Level * Constitution / 2;
-			Energy = (int) MaxEnergy;
+			Energy = (float)instance.EnergyCurrent;
 		}
 	}
 }
