@@ -13,7 +13,7 @@ namespace Strive.Rendering
 		/// </summary>
 		/// <param name="message">The error message that explains the reason for the exception</param>
 		/// <param name="innerException">The exception that is the cause of the current exception</param>
-		public StriveRenderingExceptionBase(string message, Exception innerException) : base("[System:Strive.Rendering]" + message, innerException)
+		public StriveRenderingExceptionBase(string message, Exception innerException) : base("[System:Strive.Rendering.R3D]" + message, innerException)
 		{
 			// TODO: Log this
 			System.Diagnostics.Debug.WriteLine("** StriveRenderingExceptionBase");

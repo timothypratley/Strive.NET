@@ -123,11 +123,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Exceptions.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "Scene.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

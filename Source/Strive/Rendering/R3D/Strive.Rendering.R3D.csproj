@@ -131,7 +131,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Exceptions.cs"
+                    RelPath = "Interop.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
