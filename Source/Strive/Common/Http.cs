@@ -18,7 +18,14 @@ namespace Strive.Common
 			{
 				System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
 			}
-			_webClient.DownloadFile(url.ToString(), path);
+			try
+			{
+				_webClient.DownloadFile(url.ToString(), path);
+			}
+			catch(Exception w)
+			{
+				throw new Exception("Could not download [" + url.ToString() + "] to [" + path + "]", w);
+			}
 		}
 
 		public static bool UrlTargetExists(Uri url)

@@ -11,6 +11,7 @@ namespace Strive.Common
 	public class StoppableThread
 	{
 		Thread thisThread;
+		System.Threading.ThreadPriority _priority = System.Threading.ThreadPriority.Normal;
 		AutoResetEvent iHaveStopped = new AutoResetEvent(false);
 		bool isRunning = false;
 
@@ -24,6 +25,7 @@ namespace Strive.Common
 		public void Start() {
 			if ( isRunning ) return;
 			thisThread = new Thread( new ThreadStart( ThreadLoop ) );
+			thisThread.Priority = _priority;
 			isRunning = true;
 			thisThread.Start();
 		}
@@ -34,6 +36,28 @@ namespace Strive.Common
 			}
 			isRunning = false;
 			WaitHandle.WaitAny( new AutoResetEvent[]{iHaveStopped} );
+		}
+
+		public System.Threading.ThreadPriority Priority
+		{
+			get
+			{
+				if(thisThread != null)
+				{
+					_priority = thisThread.Priority;
+				}
+				return _priority;
+
+			}
+			set
+			{
+				_priority = value;
+				if(thisThread != null)
+				{
+					thisThread.Priority = _priority;
+				}
+
+			}
 		}
 
 		void ThreadLoop() {

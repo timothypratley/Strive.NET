@@ -120,14 +120,9 @@ namespace Strive.Resources
 
 			if(Http.UrlTargetExists(new Uri(downloadUrl)))
 			{
-				try
-				{
-					Http.SaveUrlTargetToDisk(new Uri(downloadUrl), modelPath);
-					return true;
-				}
-				catch(Exception )
-				{
-				}
+				Http.SaveUrlTargetToDisk(new Uri(downloadUrl), modelPath);
+				return true;
+
 			}
 
 			return false;

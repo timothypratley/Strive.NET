@@ -142,44 +142,52 @@ namespace Strive.Rendering.TV3D
 
 				Vector3D cameraPosition = Camera.Position;
 				Vector3D cameraRotation = Camera.Rotation;
-				foreach( IModel m in _models.Values ) {
-					if ( m is Actor ) {
-						((Actor)m).Render();
-					}
-					if ( m.Visible && m.Label != null ) {
-						//Get the vector between camera and object, put in v1
-						//Get the direction vector of the camera (lookat - position normalized) put in v2
-						//Compute the Dot product.
-						//If Dot(V1, V2) > Cos(FOVInRadian) Then 
-						//You can see the object ! 
-						//Using FieldOfView of 90degrees,
-						//so things offscreen infront will still be labeled.
-						
-						Vector3D v1 = m.Position - cameraPosition;
-						if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(cameraRotation) ) <= Math.Cos( Camera.FieldOfView * Math.PI / 180 ) ) {
-							continue;
+				//lock(_models.Values.SyncRoot)
+				{
+					foreach( IModel m in _models.Values ) 
+					{
+						if ( m is Actor ) 
+						{
+							((Actor)m).Render();
 						}
+						if ( m.Visible && m.Label != null ) 
+						{
+							//Get the vector between camera and object, put in v1
+							//Get the direction vector of the camera (lookat - position normalized) put in v2
+							//Compute the Dot product.
+							//If Dot(V1, V2) > Cos(FOVInRadian) Then 
+							//You can see the object ! 
+							//Using FieldOfView of 90degrees,
+							//so things offscreen infront will still be labeled.
+						
+							Vector3D v1 = m.Position - cameraPosition;
+							if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(cameraRotation) ) <= Math.Cos( Camera.FieldOfView * Math.PI / 180 ) ) 
+							{
+								continue;
+							}
 
-						Vector3D labelPos = new Vector3D(
-							m.Position.X,
-							m.Position.Y + m.Height/2 + 2,
-							m.Position.Z
-							);
+							Vector3D labelPos = new Vector3D(
+								m.Position.X,
+								m.Position.Y + m.Height/2 + 2,
+								m.Position.Z
+								);
 
-						DrawText( labelPos, m.Label );
+							DrawText( labelPos, m.Label );
+						}
 					}
-				}
-				Engine.Screen2DText.ACTION_EndText();
+					Engine.Screen2DText.ACTION_EndText();
 
-				if ( cursorTextureID != 0 ) {
-					// TODO: use locally saved values
-					TVViewport vp = Engine.TV3DEngine.GetViewport();
-					float x = vp.Width/2;
-					float y = vp.Height/2;
+					if ( cursorTextureID != 0 ) 
+					{
+						// TODO: use locally saved values
+						TVViewport vp = Engine.TV3DEngine.GetViewport();
+						float x = vp.Width/2;
+						float y = vp.Height/2;
 
-					Engine.Screen2DImmediate.ACTION_Begin2D();
-					Engine.Screen2DImmediate.DRAW_Texture( cursorTextureID, x-8, y-8, x+8, y+8, -2, -2, -2, -2, 0, 0, 1, 1 ); 
-					Engine.Screen2DImmediate.ACTION_End2D();
+						Engine.Screen2DImmediate.ACTION_Begin2D();
+						Engine.Screen2DImmediate.DRAW_Texture( cursorTextureID, x-8, y-8, x+8, y+8, -2, -2, -2, -2, 0, 0, 1, 1 ); 
+						Engine.Screen2DImmediate.ACTION_End2D();
+					}
 				}
 			} catch(Exception e) {
 				throw new RenderingException("Call to 'Render()' failed with '" + e.ToString() + "'", e);
