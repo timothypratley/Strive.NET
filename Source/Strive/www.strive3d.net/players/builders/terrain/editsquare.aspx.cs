@@ -20,6 +20,10 @@ namespace www.strive3d.net.players.builders.terrain
 	public class editsquare : System.Web.UI.Page
 	{
 		protected DataTable terrain = new DataTable("Terrain");
+		protected DropDownList HeightMapDefaultTexture;
+		protected TextBox BaseAltitude;
+		protected Button ApplyHeightMap;
+		protected System.Web.UI.HtmlControls.HtmlInputFile HeightMap;
 		protected int startX;
 		protected int startZ;
 		protected int endX;
@@ -31,16 +35,36 @@ namespace www.strive3d.net.players.builders.terrain
 			startZ = QueryString.GetVariableInt32Value("GroupZStart");
 			endX = QueryString.GetVariableInt32Value("GroupXEnd");
 			endZ = QueryString.GetVariableInt32Value("GroupZEnd");
+				CommandFactory cmd = new CommandFactory();		
+			try 
+			{
 
-			CommandFactory cmd = new CommandFactory();
-			SqlDataAdapter terrainsFiller = new SqlDataAdapter(cmd.EnumTerrainInSquare(startX,
-				startZ,
-				endX,
-				endZ));
+				SqlDataAdapter terrainsFiller = new SqlDataAdapter(cmd.EnumTerrainInSquare(startX,
+					startZ,
+					endX,
+					endZ));
 
-			terrainsFiller.Fill(terrain);
+				terrainsFiller.Fill(terrain);
 
-			cmd.Close();
+				SqlDataAdapter texturefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT *, 'Replace with ' + LTrim(IsNull(ResourcePak, '') + ' ' + ResourceName) AS ResourceDisplayName FROM Resource WHERE EnumResourceTypeID = 1 ORDER BY ResourceDisplayName"));
+				DataTable textures = new DataTable();
+				texturefiller.Fill(textures);
+
+				/*eightMapDefaultTexture.DataSource = textures;
+				HeightMapDefaultTexture.DataBind();
+
+				HeightMapDefaultTexture.Items.Insert(0, new ListItem("Leave existing textures", ""));*/
+
+	
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
 			
 		}
 
