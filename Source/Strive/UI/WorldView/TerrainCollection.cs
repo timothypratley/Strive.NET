@@ -267,7 +267,7 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Render() {
-			int i, j, k, l, m;
+			int i, j, k, l, m, p;
 			int cs;
 			bool renderright;
 			bool renderup;
@@ -279,34 +279,40 @@ namespace Strive.UI.WorldView {
 				if ( k==0 ) _engine.EnableZ();
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 
-				if ( center_x - CX[k]*cs < ( CX[k]+xorder-1)*cs - center_x ) {
+				if ( center_x - CX[k]*cs < ( CX[k]+1)*cs - center_x ) {
 					renderright = true;
 				} else {
 					renderright = false;
 				}
-				if ( center_z - CZ[k]*cs < ( CZ[k]+zorder-1)*cs - center_z ) {
+				if ( center_z - CZ[k]*cs < ( CZ[k]+1)*cs - center_z ) {
 					renderup = true;
 				} else {
 					renderup = false;
 				}
 
-				for ( i=0; i<xorder; i++ ) {
-					if ( renderright ) {
-						l = i;
-					} else {
-						l = xorder-i-1;
-					}
-					for ( j=0; j<zorder; j++ ) {
-						if ( renderup ) {
-							m = j;
+				// the p loop ensures we render the outer squares first
+				// moving in
+				// the l, m mapping ensures we draw the furthest first
+				for ( p=0; p<(int)Math.Ceiling(Math.Max(xorder,zorder)/2.0); p++ ) {
+					for ( i=0; i<xorder; i++ ) {
+						if ( renderright ) {
+							l = i;
 						} else {
-							m = zorder-j-1;
+							l = xorder-i-1;
 						}
-						if ( TC[l,m,k] != null && TC[l,m,k].Visible ) {
-							TC[l,m,k].Render();
+						for ( j=0; j<zorder; j++ ) {
+							if ( i>p && i<xorder-p-1 && j>p && j<zorder-p-1 ) continue;
+							if ( renderup ) {
+								m = j;
+							} else {
+								m = zorder-j-1;
+							}
+							if ( TC[l,m,k] != null && TC[l,m,k].Visible ) {
+								TC[l,m,k].Render();
+							}
 						}
-					}
 
+					}
 				}
 			}
 		}

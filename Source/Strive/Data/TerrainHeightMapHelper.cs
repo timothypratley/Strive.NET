@@ -21,9 +21,10 @@ namespace Strive.Data {
 					float y = heightmap.GetPixel(row, col).GetBrightness();
 					float z = (heightmap.Height-row-1) * Constants.terrainPieceSize;
 					int terrain_id = (int)texturemap.GetPixel(row, col).GetBrightness();
-					ds.Insert( x, y, z, terrain_id );
+//					ds.Insert( x, y, z, terrain_id );
 				}
 			}
+			return ds;
 		}
 
 
