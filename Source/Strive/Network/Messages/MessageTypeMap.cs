@@ -9,6 +9,7 @@ namespace Strive.Network.Messages {
 	/// </summary>
 	public class MessageTypeMap	{
 		public const int BufferSize = 16384;	// max message size
+		public const int MessageLengthLength = 4;
 		public Hashtable messageTypeFromID = new Hashtable();
 		public Hashtable idFromMessageType = new Hashtable();
 		public enum EnumMessageID {

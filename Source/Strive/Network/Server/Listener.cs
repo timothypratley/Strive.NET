@@ -64,7 +64,7 @@ namespace Strive.Network.Server {
 
 				IMessage message;
 				try {
-					message = (IMessage)CustomFormatter.Deserialize( handler.udpbuffer );
+					message = (IMessage)CustomFormatter.Deserialize( handler.udpbuffer, 0 );
 				} catch ( Exception e ) {
 					Log.ErrorMessage( e );
 					Log.ErrorMessage( "Invalid packet received" );

@@ -12,13 +12,14 @@ using Strive.Math3D;
 
 namespace Strive.Network.Client {
 	public class ServerConnection {
-		Queue messageQueue;
+		Queue messageQueue = new Queue();
 		IPEndPoint remoteEndPoint;
 		IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
 		Socket udpsocket;
 		Socket tcpsocket;
 		byte[] udpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
 		byte[] tcpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
+		int tcpoffset = 0;
 		bool connected = false;
 
 		public delegate void OnConnectHandler();
@@ -33,7 +34,8 @@ namespace Strive.Network.Client {
 		public class AlreadyRunningException : Exception{}
 		public void Start( IPEndPoint remoteEndPoint ) {
 			this.remoteEndPoint = remoteEndPoint;
-			messageQueue = new Queue();
+			messageQueue.Clear();
+			tcpoffset = 0;
 
 			// Connect to the remote endpoint.
 			tcpsocket = new Socket(AddressFamily.InterNetwork,
@@ -102,14 +104,39 @@ namespace Strive.Network.Client {
 			try {
 				// Read data from the remote device.
 				int bytesRead = client.tcpsocket.EndReceive(ar);
+				client.tcpoffset += bytesRead;
 
-				// There might be more data, so store the data received so far.
-				IMessage message = (IMessage)CustomFormatter.Deserialize( client.tcpbuffer );
-				client.messageQueue.Enqueue( message );
-				//Log.LogMessage( "enqueued " + message.GetType() + " message" );
+				if ( client.tcpoffset > MessageTypeMap.MessageLengthLength ) {
+					int expected_length = BitConverter.ToInt32( client.tcpbuffer, 0 );
 
-				// the next message
-				client.tcpsocket.BeginReceive( client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
+					while ( client.tcpoffset >= expected_length ) {
+						IMessage message;
+						try {
+							message = (IMessage)CustomFormatter.Deserialize( client.tcpbuffer, MessageTypeMap.MessageLengthLength );
+						} catch ( Exception e ) {
+							Log.ErrorMessage( e );
+							Log.ErrorMessage( "Invalid packet received, closing connection." );
+							client.Stop();
+							return;
+						}
+						client.messageQueue.Enqueue( message );
+						//Log.LogMessage( "enqueued " + message.GetType() + " message" );
+
+						// copy the remaining data to the front of the buffer
+						client.tcpoffset -= expected_length;
+						for ( int i = 0; i<client.tcpoffset; i++ ) {
+							client.tcpbuffer[i] = client.tcpbuffer[i+expected_length];
+						}
+						if ( client.tcpoffset > MessageTypeMap.MessageLengthLength ) {
+							expected_length = BitConverter.ToInt32( client.tcpbuffer, 0 );
+						} else {
+							break;
+						}
+					}
+				}
+
+				// listen for the next message
+				client.tcpsocket.BeginReceive( client.tcpbuffer, client.tcpoffset, MessageTypeMap.BufferSize - client.tcpoffset, 0,
 					new AsyncCallback(ReceiveTCPCallback), client );
 			} catch ( Exception ) {
 				client.Stop();
@@ -128,7 +155,7 @@ namespace Strive.Network.Client {
 				int bytesRead = client.udpsocket.EndReceive(ar);
 
 				// There might be more data, so store the data received so far.
-				IMessage message = (IMessage)CustomFormatter.Deserialize( client.udpbuffer );
+				IMessage message = (IMessage)CustomFormatter.Deserialize( client.udpbuffer, MessageTypeMap.MessageLengthLength );
 				client.messageQueue.Enqueue( message );
 				//Log.LogMessage( "enqueued " + message.GetType() + " message" );
 
@@ -146,16 +173,16 @@ namespace Strive.Network.Client {
 				return;
 				throw new Exception( "Sending message while not connected." );
 			}
-			//try {
+			try {
 				// TODO: some clients may not want to send UDP messages
 				if ( message is Strive.Network.Messages.ToServer.Position ) {
 					SendUDP( message );
 				} else {
 					SendTCP( message );
 				}
-			//} catch ( Exception ) {
-				//Stop();
-			//}
+			} catch ( Exception ) {
+				Stop();
+			}
 		}
 
 		void SendTCP( IMessage message ) {
@@ -182,12 +209,16 @@ namespace Strive.Network.Client {
 		void SendUDP( IMessage message ) {
 			// Custom serialization
 			byte [] buffer = CustomFormatter.Serialize( message );
-			//try {
-				udpsocket.BeginSend( buffer, 0, buffer.Length, 0,
+
+			// NB: for UDP we don't need to send the message length,
+			// as packets arrive as sent, not in a stream.
+			int offset = MessageTypeMap.MessageLengthLength;
+			try {
+				udpsocket.BeginSend( buffer, offset, buffer.Length-offset, 0,
 					new AsyncCallback(SendUDPCallback), this );
-			//} catch ( Exception ) {
-			//	Stop();
-			//}
+			} catch ( Exception ) {
+				Stop();
+			}
 		}
 
 		private static void SendUDPCallback(IAsyncResult ar) {

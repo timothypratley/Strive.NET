@@ -19,6 +19,7 @@ namespace Strive.Network.Server {
 		public int PlayerID = 0;
 		Socket tcpsocket;
 		byte[] tcpbuffer = new byte[MessageTypeMap.BufferSize]; // Receive buffer.
+		int tcpoffset = 0;
 		DateTime lastMessageTimestamp;
 		Listener handler;
 
@@ -39,25 +40,42 @@ namespace Strive.Network.Server {
 			Client client = (Client) ar.AsyncState;
 			try {
 				int bytesRead = client.tcpsocket.EndReceive(ar);
-				if ( bytesRead == MessageTypeMap.BufferSize ) {
-					Log.ErrorMessage( "Reached max buffer size." );
-					throw new Exception();
+				client.tcpoffset += bytesRead;
+
+				if ( client.tcpoffset > MessageTypeMap.MessageLengthLength ) {
+					int expected_length = BitConverter.ToInt32( client.tcpbuffer, 0 );
+
+					while ( client.tcpoffset >= expected_length ) {
+						IMessage message;
+						try {
+							message = (IMessage)CustomFormatter.Deserialize( client.tcpbuffer, MessageTypeMap.MessageLengthLength );
+						} catch ( Exception e ) {
+							Log.ErrorMessage( e );
+							Log.ErrorMessage( "Invalid packet received, closing connection." );
+							client.Close();
+							return;
+						}
+						// TODO: use global now instead?
+						client.LastMessageTimestamp = DateTime.Now;
+						ClientMessage clientMessage = new ClientMessage( client, message );
+						// TODO: ensure threadsafe access to queue
+						client.handler.clientMessageQueue.Enqueue( clientMessage );
+						//Log.LogMessage( "enqueued " + message.GetType() + " message" );
+
+						// copy the remaining data to the front of the buffer
+						client.tcpoffset -= expected_length;
+						for ( int i = 0; i<client.tcpoffset; i++ ) {
+							client.tcpbuffer[i] = client.tcpbuffer[i+expected_length];
+						}
+						if ( client.tcpoffset > MessageTypeMap.MessageLengthLength ) {
+							expected_length = BitConverter.ToInt32( client.tcpbuffer, 0 );
+						} else {
+							break;
+						}
+					}
 				}
 
-				IMessage message;
-				try {
-					message = (IMessage)CustomFormatter.Deserialize( client.tcpbuffer );
-				} catch ( Exception e ) {
-					Log.ErrorMessage( e );
-					Log.ErrorMessage( "Invalid packet received" );
-					return;
-				}
-				client.LastMessageTimestamp = DateTime.Now;
-				ClientMessage clientMessage = new ClientMessage( client, message );
-				// TODO: ensure threadsafe access to queue
-				client.handler.clientMessageQueue.Enqueue( clientMessage );
-
-				client.tcpsocket.BeginReceive( client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
+				client.tcpsocket.BeginReceive( client.tcpbuffer, client.tcpoffset, MessageTypeMap.BufferSize - client.tcpoffset, 0,
 					new AsyncCallback(ReadTCPCallback), client );
 			} catch ( Exception ) {
 				// the underlying socket was closed

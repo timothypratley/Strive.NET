@@ -82,8 +82,6 @@ namespace Strive.UI
 			Strive.Logging.Log.LogMessage( "Connected." );
 			CurrentServerConnection.Login(userName, password);
 			password = null;
-			// TODO: what if login was rejected?
-			System.Threading.Thread.Sleep(1000);
 			CurrentServerConnection.RequestPossessable();
 		}
 

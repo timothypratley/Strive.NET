@@ -15,18 +15,28 @@ namespace Strive.Network.Messages {
 		public static byte[] Serialize( Object obj ) {
 			MemoryStream Buffer = new MemoryStream();
 
-			// message starts with unique type identifier
+			// unique type identifier
 			Type t = obj.GetType();
-			byte[] EncodedID;
+			byte[] EncodedInt;
 			try {
-				EncodedID = BitConverter.GetBytes(
+				EncodedInt = BitConverter.GetBytes(
 					(int)messageTypeMap.idFromMessageType[t]
 				);
 			} catch ( Exception e ) {
 				throw new Exception( "Message " + t + " has not been added to MessageTypeMap" );
 			}
-			Buffer.Write( EncodedID, 0, EncodedID.Length );
+			// reserve space for the message length field, we will fill it later,
+			// and fill out the unique type identifier
+			Buffer.Write( EncodedInt, 0, EncodedInt.Length );
+			Buffer.Write( EncodedInt, 0, EncodedInt.Length );
+
+			// encode the object
 			Encode( obj, Buffer, t );
+
+			// now fill in the length field, the first field in the message.
+			EncodedInt = BitConverter.GetBytes( (int)Buffer.Length );
+			Buffer.Position = 0;
+			Buffer.Write( EncodedInt, 0, EncodedInt.Length );
 			return Buffer.ToArray();
 		}
 
@@ -90,8 +100,7 @@ namespace Strive.Network.Messages {
 			return true;
 		}
 
-		public static Object Deserialize( byte[] buffer ) {
-			int Offset = 0;
+		public static Object Deserialize( byte[] buffer, int Offset ) {
 			MessageTypeMap.EnumMessageID message_id = (MessageTypeMap.EnumMessageID)BitConverter.ToInt32( buffer, Offset );
 			Type t = (Type)messageTypeMap.messageTypeFromID[message_id];
 			Offset += 4;
