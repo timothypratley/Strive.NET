@@ -34,12 +34,12 @@ namespace Strive.Server.Data
 			da.Fill(multiverse, "World");
 			da.SelectCommand = commandFactory.SelectArea;
 			da.Fill(multiverse, "Area");
-			da.SelectCommand = commandFactory.SelectTemplateTerrain;
-			da.Fill(multiverse, "TemplateTerrain");
 			da.SelectCommand = commandFactory.SelectTemplateMobile;
 			da.Fill(multiverse, "TemplateMobile");
 			da.SelectCommand = commandFactory.SelectMobilePossesableByPlayer;
 			da.Fill(multiverse, "MobilePossesableByPlayer");
+			da.SelectCommand = commandFactory.SelectTemplateTerrain;
+			da.Fill(multiverse, "TemplateTerrain");
 			da.SelectCommand = commandFactory.SelectItemWieldable;
 			da.Fill(multiverse, "ItemWieldable");
 			da.SelectCommand = commandFactory.SelectItemQuaffable;

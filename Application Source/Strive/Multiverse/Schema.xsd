@@ -310,7 +310,7 @@
 				<xs:element name="TemplateTerrain">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="PhysicalObjectID" type="xs:int" />
+							<xs:element name="ObjectTemplateID" type="xs:int" />
 							<xs:element name="EnumTerrainTypeID" type="xs:int" />
 						</xs:sequence>
 					</xs:complexType>
@@ -556,7 +556,7 @@
 		</xs:unique>
 		<xs:unique name="SchemaKey31" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:TemplateTerrain" />
-			<xs:field xpath="mstns:PhysicalObjectID" />
+			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
 		<xs:unique name="SchemaKey32" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:ItemEquipable" />

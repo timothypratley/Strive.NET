@@ -68,7 +68,7 @@ namespace Strive.Server {
 				Schema.ItemReadableRow rr = multiverse.ItemReadable.FindByObjectTemplateID( rpr.ObjectTemplateID );
 				Schema.ItemJunkRow jr = multiverse.ItemJunk.FindByObjectTemplateID( rpr.ObjectTemplateID );
 				Schema.ItemWieldableRow wr = multiverse.ItemWieldable.FindByObjectTemplateID( rpr.ObjectTemplateID );
-				Schema.TemplateTerrainRow tr = multiverse.TemplateTerrain.FindByPhysicalObjectID( rpr.ObjectTemplateID );
+				Schema.TemplateTerrainRow tr = multiverse.TemplateTerrain.FindByObjectTemplateID( rpr.ObjectTemplateID );
 				
 				if ( mr != null ) {
 					Avatar a = new Avatar(
