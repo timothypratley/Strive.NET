@@ -27,6 +27,7 @@ namespace www.strive3d.net.players.builders.terrain
 		int ObjectInstanceStartZ;
 		protected System.Web.UI.WebControls.Button Cancel;
 		protected System.Web.UI.WebControls.Button Delete;
+		protected System.Web.UI.WebControls.DropDownList RotationY;
 		int ObjectInstanceY;
 		private void Page_Load(object sender, System.EventArgs e)
 		{
@@ -90,8 +91,10 @@ namespace www.strive3d.net.players.builders.terrain
 							// Set position:
 							float ObjectInstanceX = float.Parse(oDr["X"].ToString());
 							float ObjectInstanceZ = float.Parse(oDr["Z"].ToString());
+							float ObjectInstanceRotationY = float.Parse(oDr["RotationY"].ToString());
 							X.Text = (ObjectInstanceX- ObjectInstanceStartX).ToString();
 							Z.Text = ( ObjectInstanceZ - ObjectInstanceStartZ ).ToString();
+							RotationY.SelectedIndex = RotationY.Items.IndexOf(RotationY.Items.FindByValue(ObjectInstanceRotationY.ToString()));
 						}
 						else
 						{
@@ -147,6 +150,7 @@ namespace www.strive3d.net.players.builders.terrain
 				float NewX = 0;
 				float NewY = QueryString.GetVariableInt32Value("Y");
 				float NewZ = 0;
+				float NewRotationY = float.Parse(RotationY.SelectedValue);
 
 				NewX = float.Parse(X.Text) + ObjectInstanceStartX ;
 				NewZ = float.Parse(Z.Text) + ObjectInstanceStartZ;
@@ -160,6 +164,7 @@ namespace www.strive3d.net.players.builders.terrain
 						"SET X = " + NewX + ", " +
 						"Y = " + NewY + ", " +
 						"Z = " + NewZ + ", " +
+						"RotationY = " + NewRotationY + ", " +
 						"TemplateObjectID = " + TemplateList.SelectedValue.ToString() + " " +
 						"WHERE ObjectInstanceID = " + QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
 				}
@@ -170,7 +175,7 @@ namespace www.strive3d.net.players.builders.terrain
 						"INSERT INTO ObjectInstance " + 
 						"(TemplateObjectID, X, Y, Z, RotationX, RotationY, RotationZ, EnergyCurrent, HitpointsCurrent) " +
 						"VALUES " + 
-						"(" + TemplateList.SelectedValue.ToString() + "," + NewX + "," + NewY + "," + NewZ + ",0,0,0,0,0)").ExecuteNonQuery();
+						"(" + TemplateList.SelectedValue.ToString() + "," + NewX + "," + NewY + "," + NewZ + ",0," + NewRotationY  + ",0,0,0)").ExecuteNonQuery();
 
 				}
 				Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.parent.frames['Editor'].location.reload(true);</script>");

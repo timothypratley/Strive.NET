@@ -159,7 +159,7 @@ namespace www.strive3d.net.players.builders.resources
 				cmd.Close();
 			}
 			
-			Response.Redirect("./default.aspx");
+			Response.Redirect("./default.aspx?" + Utils.TabHref);
 		}
 
 

@@ -45,7 +45,7 @@ namespace www.strive3d.net {
         
             // Ensure that the visiting user has access to the current page
             if (PortalSecurity.IsInRoles(portalSettings.ActiveTab.AuthorizedRoles) == false) {
-                Response.Redirect("~Admin/AccessDenied.aspx");
+                Response.Redirect("~/Admin/AccessDenied.aspx");
             }
 
             // Dynamically Populate the Left, Center and Right pane sections of the portal page

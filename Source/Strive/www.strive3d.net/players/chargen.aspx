@@ -1,7 +1,7 @@
 <%@ Page language="c#" Codebehind="chargen.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.chargen" %>
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
-<%@ Register TagPrefix="Controls" Namespace="www.strive3d.net.players.Controls" Assembly="MyWebSites" %>
+<%@ Register TagPrefix="Controls" Namespace="www.strive3d.net.players.Controls" Assembly="www.strive3d.net" %>
 <Controls:Header title="New Character Generation" runat="server" id=Header1 />
 <form method="post" runat="server">
 <INPUT id="referer" type="hidden" runat="server"> 

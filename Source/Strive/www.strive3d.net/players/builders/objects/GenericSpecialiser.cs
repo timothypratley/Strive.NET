@@ -389,7 +389,7 @@ namespace www.strive3d.net.players.builders.objects
 				cmd.Close();
 			}
 
-			Response.Redirect("./");
+			Response.Redirect("./?" + Utils.TabHref);
 		}
 
 		private void touchColumns(DataRow r)
@@ -401,7 +401,7 @@ namespace www.strive3d.net.players.builders.objects
 		}
 		private void Cancel_Click(object sender, System.EventArgs e)
 		{
-			Response.Redirect("./");
+			Response.Redirect("./?" + Utils.TabHref);
 		}
 	}
 }

@@ -33,6 +33,7 @@ namespace www.strive3d.net
 				Game.Player.Create(PlayerEmail.Text, PlayerPassword.Text);
 				signupform.Visible = false;
 				signupsuccess.Visible = true;
+				Response.Redirect("/players/chargen.aspx");
 			}
 			else
 			{

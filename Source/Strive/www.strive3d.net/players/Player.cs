@@ -11,20 +11,12 @@ namespace www.strive3d.net.players
 	/// </summary>
 	public class Player
 	{
-		public static void Create(string email, string password)
+		public static int Create(string email, string password, CommandFactory c, SqlTransaction t)
 		{
-			// insert record:
-			CommandFactory c = new CommandFactory();
-
-			SqlTransaction t  = c.Connection.BeginTransaction();
-			
 			try
 			{
-
 				SqlCommand createPlayer = c.CreatePlayer(email, password);
-
 				createPlayer.Transaction = t;
-
 				int PlayerID = (int)createPlayer.ExecuteScalar();
 				
 				SqlCommand selectPlayer = c.SelectPlayer(PlayerID);
@@ -36,6 +28,7 @@ namespace www.strive3d.net.players
 				if(playerReader.Read())
 				{
 					Guid playerKey = (Guid)playerReader["PlayerKey"];
+					playerReader.Close();
 					string signuptext = 
 						@"Thanks for your signup.
 
@@ -52,29 +45,26 @@ Regards
 The Strive3d team.
 ";
 
-
 					MailMessage m = new MailMessage();
 
 					m.From = "system@strive3d.net";
 					m.To = email;
 					m.Subject = "Signup Confirmation";
 					m.Body = signuptext.Replace("$PlayerKey$", playerKey.ToString());
-					System.Web.Mail.SmtpMail.SmtpServer = "mail.webhost4life.com";
 					System.Web.Mail.SmtpMail.Send(m);
-					playerReader.Close();
+
+					
 				}
 				else
 				{
 					playerReader.Close();
 				}
+				return PlayerID;
 			}
 			catch(Exception e)
 			{
-				t.Rollback();
-				throw e;
+				throw new Exception("", e);
 			}
-			t.Commit();
-
 		}
 
 		public static string Activate(Guid playerKey)

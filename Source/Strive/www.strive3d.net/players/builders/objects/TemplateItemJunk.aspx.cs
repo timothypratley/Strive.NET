@@ -26,8 +26,6 @@ namespace www.strive3d.net.players.builders.objects
 		protected System.Web.UI.WebControls.TextBox Value;
 		protected System.Web.UI.WebControls.TextBox Weight;
 		protected System.Web.UI.WebControls.DropDownList EnumItemDurabilityID;
-		protected System.Web.UI.WebControls.Button Save;
-		protected System.Web.UI.WebControls.Button Cancel;
 		protected System.Web.UI.WebControls.CheckBox Takeable;
 
 	

@@ -6,9 +6,9 @@
 <strong>Filter By: <%
 	foreach(DataRow d in resourceTypes.Rows)
 	{
-	%><a href="./default.aspx?EnumResourceTypeID=<%=d["EnumResourceTypeID"]%>">[<%=d["EnumResourceTypeName"]%>]</a> <%
+	%><a href="./default.aspx?EnumResourceTypeID=<%=d["EnumResourceTypeID"]%><%=www.strive3d.net.Utils.TabHref%>">[<%=d["EnumResourceTypeName"]%>]</a> <%
 	}
-	%> <a href="./default.aspx">[All]</a></strong><br /><br />
+	%> <a href="./default.aspx?<%=www.strive3d.net.Utils.TabHref%>">[All]</a></strong><br /><br />
 <asp:DataList id=DataList1 runat="server">
 <HeaderTemplate>
 <table>
@@ -21,7 +21,7 @@
 	<th colspan="2"><%
 	foreach(DataRow d in resourceTypes.Rows)
 	{
-	%><a href="./addresource.aspx?EnumResourceTypeID=<%=d["EnumResourceTypeID"]%>">[Add <%=d["EnumResourceTypeName"]%>]</a> <%
+	%><a href="./addresource.aspx?EnumResourceTypeID=<%=d["EnumResourceTypeID"]%><%=www.strive3d.net.Utils.TabHref%>">[Add <%=d["EnumResourceTypeName"]%>]</a> <%
 	}
 	%>
 	
@@ -38,7 +38,7 @@
 <td><%# DataBinder.Eval(Container.DataItem, "ResourceName") %></td>
 <td><%# DataBinder.Eval(Container.DataItem, "Description") %></td>
 <td><a href="./<%# DataBinder.Eval(Container.DataItem, "EnumResourceTypeName") %>/<%# DataBinder.Eval(Container.DataItem, "ResourceID") %><%# DataBinder.Eval(Container.DataItem, "ResourceFileExtension") %>"><img border="0" height="20" width="20" src="./<%# DataBinder.Eval(Container.DataItem, "EnumResourceTypeName") %>/<%# DataBinder.Eval(Container.DataItem, "ResourceID") %><%# DataBinder.Eval(Container.DataItem, "ResourceFileExtension") %>"/></a></td>
-<td><a href="deleteresource.aspx?ResourceID=<%# DataBinder.Eval(Container.DataItem, "ResourceID") %>">[Delete]</a></td>
+<td><a href="deleteresource.aspx?ResourceID=<%# DataBinder.Eval(Container.DataItem, "ResourceID") %><%=www.strive3d.net.Utils.TabHref%>">[Delete]</a></td>
 
 </tr>
 </ItemTemplate>

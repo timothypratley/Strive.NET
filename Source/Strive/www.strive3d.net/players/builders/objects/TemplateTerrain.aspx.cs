@@ -23,10 +23,7 @@ namespace www.strive3d.net.players.builders.objects
 		protected System.Web.UI.WebControls.DropDownList ResourceID;
 		protected System.Web.UI.HtmlControls.HtmlInputHidden Height;
 		protected System.Web.UI.WebControls.DropDownList EnumTerrainTypeID;
-#if FOO
-		protected System.Web.UI.WebControls.Button Save;
-		protected System.Web.UI.WebControls.Button Cancel;
-#endif
+
 		protected System.Web.UI.HtmlControls.HtmlInputHidden AreaID;
 
 		public TemplateTerrain() : base( "Terrain" ) {

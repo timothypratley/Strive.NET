@@ -144,6 +144,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "DesktopDefault.aspx.resx"
+                    DependentUpon = "DesktopDefault.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "DesktopModuleTitle.ascx"
                     BuildAction = "Content"
                 />
@@ -152,6 +157,11 @@
                     DependentUpon = "DesktopModuleTitle.ascx"
                     SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "DesktopModuleTitle.ascx.resx"
+                    DependentUpon = "DesktopModuleTitle.ascx.cs"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "DesktopPortalBanner.ascx"
@@ -881,6 +891,22 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "players\CreateAccount.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\CreateAccount.aspx.cs"
+                    DependentUpon = "CreateAccount.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\CreateAccount.aspx.resx"
+                    DependentUpon = "CreateAccount.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "players\default.aspx"
                     BuildAction = "Content"
                 />
@@ -903,21 +929,6 @@
                     RelPath = "players\Player.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "players\signup.aspx"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "players\signup.aspx.cs"
-                    DependentUpon = "signup.aspx"
-                    SubType = "ASPXCodeBehind"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "players\signup.aspx.resx"
-                    DependentUpon = "signup.aspx.cs"
-                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "players\web.config"
@@ -1144,7 +1155,6 @@
                     DependentUpon = "deleteresource.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
-                <Folder RelPath = "players\builders\resources\texture\" />
                 <File
                     RelPath = "players\builders\terrain\default.aspx"
                     BuildAction = "Content"
@@ -1219,6 +1229,22 @@
                 <File
                     RelPath = "players\builders\terrain\showterrainpiece.aspx.resx"
                     DependentUpon = "showterrainpiece.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\terrain\WorldMap.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\terrain\WorldMap.aspx.cs"
+                    DependentUpon = "WorldMap.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\terrain\WorldMap.aspx.resx"
+                    DependentUpon = "WorldMap.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

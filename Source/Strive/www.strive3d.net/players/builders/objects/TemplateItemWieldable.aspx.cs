@@ -25,16 +25,11 @@ namespace www.strive3d.net.players.builders.objects
 		protected System.Web.UI.WebControls.TextBox Value;
 		protected System.Web.UI.WebControls.TextBox Weight;
 		protected System.Web.UI.WebControls.TextBox ArmourClass;
-#if FOO
-		protected System.Web.UI.WebControls.Button Save;
-		protected System.Web.UI.WebControls.Button Cancel;
-#endif
 		protected System.Web.UI.WebControls.DropDownList EnumDamageTypeID;
 		protected System.Web.UI.WebControls.DropDownList EnumWeaponSizeID;
 		protected System.Web.UI.WebControls.TextBox Damage;
 		protected System.Web.UI.WebControls.TextBox Hitroll;
-		protected System.Web.UI.WebControls.Button Save;
-		protected System.Web.UI.WebControls.Button Cancel;
+
 
 
 

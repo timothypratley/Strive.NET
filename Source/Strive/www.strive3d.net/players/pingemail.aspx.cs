@@ -16,6 +16,10 @@ namespace www.strive3d.net.players
 	/// </summary>
 	public class pingemail : System.Web.UI.Page
 	{
+		protected System.Web.UI.WebControls.TextBox EmailAddress;
+		protected System.Web.UI.WebControls.Panel pingme;
+		protected System.Web.UI.WebControls.Panel pinged;
+	
 		private void Page_Load(object sender, System.EventArgs e)
 		{
 			// Put user code to initialize the page here
@@ -38,6 +42,7 @@ namespace www.strive3d.net.players
 		private void InitializeComponent()
 		{    
 			this.Load += new System.EventHandler(this.Page_Load);
+
 		}
 		#endregion
 	}

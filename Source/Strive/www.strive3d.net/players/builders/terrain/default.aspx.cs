@@ -19,36 +19,65 @@ namespace www.strive3d.net.players.builders.terrain
 	/// </summary>
 	public class _default : System.Web.UI.Page
 	{
-		protected System.Web.UI.WebControls.TextBox TextBox1;
-		protected System.Web.UI.WebControls.TextBox TextBox2;
-		protected System.Web.UI.WebControls.Button Redraw;
-		protected DataTable squares;
-
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
-			if(!IsPostBack)
+			if(IsPostBack)
 			{
-				TextBox1.Text = "100";
-				TextBox2.Text = "100";
-			}
-			CommandFactory cmd = new CommandFactory();
-			try
-			{
+				CommandFactory cmd = new CommandFactory();
+				float Width;
+				float Height;
+				float MinX;
+				float MinZ;
+				float MaxZ;
+				try
+				{
 
-				SqlCommand squaresLoader = cmd.TerrainSquareDetails(int.Parse(TextBox2.Text), int.Parse(TextBox1.Text));
-				SqlDataAdapter squaresFiller = new SqlDataAdapter(squaresLoader);
-				squares = new DataTable("Squares");
-				squaresFiller.Fill(squares);
+					//SqlCommand squaresLoader = cmd.TerrainSquareDetails(int.Parse(TextBox2.Text), int.Parse(TextBox1.Text));
+					//SqlDataAdapter squaresFiller = new SqlDataAdapter(squaresLoader);
+					//squares = new DataTable("Squares");
+					//squaresFiller.Fill(squares);
+
+					SqlDataReader worldStats = cmd.GetSqlCommand("SELECT MAX(X) - MIN(X) AS Width, MAX(Z) AS MaxZ, MAX(Z) - MIN(Z) AS Height, MIN(X) As MinX, MIN(Z) AS MinZ FROM ObjectInstance INNER JOIN TemplateTerrain ON ObjectInstance.TemplateObjectID = TemplateTerrain.TemplateObjectID").ExecuteReader();
+
+
+					if(worldStats.Read())
+					{
+						Width = float.Parse(worldStats["Width"].ToString());
+						Height = float.Parse(worldStats["Height"].ToString());
+						MinX = float.Parse(worldStats["MinX"].ToString());
+						MinZ = float.Parse(worldStats["MinZ"].ToString());
+						MaxZ = float.Parse(worldStats["MaxZ"].ToString());
+						worldStats.Close();
+						
+
+					}
+					else
+					{
+						worldStats.Close();
+						throw new Exception("Could not collect world statistics");
+					}
+				}
+				catch(Exception c)
+				{
+					throw new Exception("Generating world map failed", c);
+				}
+				finally
+				{
+					cmd.Close();
+				}
+				int startX = (int.Parse(Request.Form["x"].ToString()) * Strive.Common.Constants.terrainPieceSize) + (int)MinX;
+				int startZ = (int)MaxZ - (int.Parse(Request.Form["y"].ToString()) * Strive.Common.Constants.terrainPieceSize);
+				// reverse y
+				//startZ = (int)Height - startZ;
+
+				int endX = startX + 99;
+				int endZ = startZ + 99;
+				
+				Response.Redirect("./editsquare.aspx?GroupXStart=" + startX+ "&GroupXEnd=" + endX+ "&GroupZStart=" +startZ + "&GroupZEnd=" + endZ+ Utils.TabHref);
 			}
-			catch(Exception c)
-			{
-				throw c;
-			}
-			finally
-			{
-				cmd.Close();
-			}
+
+
 		}
 
 		#region Web Form Designer generated code
@@ -67,7 +96,7 @@ namespace www.strive3d.net.players.builders.terrain
 		/// </summary>
 		private void InitializeComponent()
 		{    
-			this.Redraw.Click += new System.EventHandler(this.Redraw_Click);
+			
 			this.Load += new System.EventHandler(this.Page_Load);
 
 		}
