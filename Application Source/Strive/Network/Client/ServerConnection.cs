@@ -2,47 +2,39 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections;
-using System.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+
+using Strive.Common;
 using Strive.Network.Messages;
 
 namespace Strive.Network.Client {
 	public class ServerConnection {
-		Queue messageQueue = new Queue();
+		Queue messageQueue;
 		IPEndPoint remoteEndPoint;
-		bool isRunning = false;
+		IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
 		UdpClient serverConnection = new UdpClient();
 		//BinaryFormatter formatter = new BinaryFormatter();
+		StoppableThread myThread;
 		
 		public ServerConnection() {
+			myThread = new StoppableThread( new StoppableThread.WhileRunning( Run ) );
 		}
 
 		public class AlreadyRunningException : Exception{}
 		public void Start( IPEndPoint remoteEndPoint ) {
-			if ( isRunning ) {
-				throw new AlreadyRunningException();
-			}
 			this.remoteEndPoint = remoteEndPoint;
+			messageQueue = new Queue();
 			Console.WriteLine( "remoteEndPoint " + remoteEndPoint );
-			isRunning = true;
-			Thread myThread = new Thread(
-				new ThreadStart( Run )
-			);
 			myThread.Start();
 		}
 
 		public void Stop() {
-			serverConnection.Close();
-			isRunning = false;
+			//serverConnection.Close();
+			myThread.Stop();
 		}
 
 		public void Run() {
-			//Creates an IPEndPoint to record the IP Address and port number of the sender. 
-			// The IPEndPoint will allow you to read datagrams sent from any source.
-			IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
-			try {
-				while ( isRunning ) {
 					// Blocks until a message returns on this socket from a remote host.
 					byte[] receivedBytes = serverConnection.Receive(ref endpoint);
 					try {
@@ -59,18 +51,9 @@ namespace Strive.Network.Client {
 						Console.WriteLine( e );
 						Console.WriteLine( "ERROR: bad message discarded" );
 					}
-				}
-			} catch ( Exception e ) {
-				Console.WriteLine( e );
-				Stop();
-			}
 		}
 
 		public void Send( IMessage message ) {
-			if ( !isRunning ) {
-				Console.WriteLine( "ERROR: trying to send message without active connection" );
-				return;
-			}
 			try {
 				// Generic serialization
 				//MemoryStream ms = new MemoryStream();
@@ -80,13 +63,9 @@ namespace Strive.Network.Client {
 				byte [] buffer = CustomFormatter.Serialize( message );
 				serverConnection.Send( buffer, buffer.Length, remoteEndPoint );
 			} catch ( Exception e ) {
-				Console.WriteLine( e );
 				Stop();
+				throw e;
 			}
-		}
-
-		public bool IsRunning {
-			get { return isRunning; }
 		}
 
 		public int MessageCount {

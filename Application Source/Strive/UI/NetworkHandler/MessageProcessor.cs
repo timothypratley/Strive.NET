@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using System.Threading;
+
+using Strive.Common;
 using Strive.Multiverse;
 using Strive.Network;
 using Strive.Network.Server;
@@ -11,37 +12,29 @@ using Strive.Network.Server.Messages;
 namespace Strive.Network.Client.NetworkHandler {
 	public class MessageProcessor {
 		World world;
-		bool isRunning = false;
 		Queue packetQueue;
 		BinaryFormatter formatter = new BinaryFormatter();
+		StoppableThread myThread;
 
 		public MessageProcessor( World world, Queue packetQueue ) {
 			this.world = world;
 			this.packetQueue = packetQueue;
+			myThread = new StoppableThread( new StoppableThread.WhileRunning( Run ) );
 		}
 
 		public class AlreadyRunningException : Exception {}
 		public void Start() {
-			if ( isRunning ) {
-				throw new AlreadyRunningException();
-			}
-			isRunning = true;
-			Thread myThread = new Thread(
-				new ThreadStart( Run )
-				);
 			myThread.Start();
 		}
 
 		public void Stop() {
-			isRunning = false;
+			myThread.Stop();
 		}
 
 		void Run() {
-			while ( isRunning ) {
 				// deal with incomming messages
 				ProcessOustandingMessages();
 				Thread.Sleep( 100 );
-			}
 		}
 
 		public void ProcessOustandingMessages() {

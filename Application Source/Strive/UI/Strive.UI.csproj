@@ -117,6 +117,11 @@
                     Project = "{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "Strive.Common"
+                    Project = "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>

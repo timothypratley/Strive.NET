@@ -14,6 +14,7 @@ namespace Strive.UI
 	public class Global	{
 		internal static int _myid;
 		internal static Game _game;
+		internal static Modules.GameLoop _gameLoop = new Modules.GameLoop();
 		public static Log _log = new Log();
 		internal static ServerConnection _serverConnection = new ServerConnection();
 
@@ -29,7 +30,7 @@ namespace Strive.UI
 			_game = new Game();
 			Application.Run(_game);
 			_serverConnection.Stop();
-			Modules.GameLoop.Stop();
+			_gameLoop.Stop();
 		}
 	}
 }

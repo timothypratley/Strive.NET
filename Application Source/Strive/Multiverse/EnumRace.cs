@@ -7,6 +7,6 @@ namespace Strive.Multiverse
 	/// </summary>
 	public enum EnumRace
 	{
-		Malandrin, Cvin, Rehan, ElCvin, Jlen
+		Malandrin = 1, Cvin, Rehan, ElCvin, Jlen
 	}
 }

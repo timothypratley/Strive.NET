@@ -6,6 +6,6 @@ namespace Strive.Multiverse
 	/// Summary description for EnumSize.
 	/// </summary>
 	public enum EnumMobileSize {
-		Tiny, Small, Medium, Large, Huge
+		Tiny = 1, Small, Medium, Large, Huge
 	}
 }

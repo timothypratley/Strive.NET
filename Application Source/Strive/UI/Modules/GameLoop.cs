@@ -9,52 +9,43 @@ using Strive.Rendering;
 using Strive.Rendering.Controls;
 using Strive.Rendering.Models;
 using Strive.Resources;
-using System.Threading;
+using Strive.Common;
 
 namespace Strive.UI.Modules
 {
 	public class GameLoop
 	{
-		private static bool _isMainRunning = false;
 		private static Scene _scene;
 		private static System.Windows.Forms.IWin32Window _screen;
 		private static ServerConnection _connection;
 		public static string modelPath;
+		StoppableThread thisThread;
 
-		static GameLoop()
+		public GameLoop()
 		{
-
+			thisThread = new StoppableThread( new StoppableThread.WhileRunning( MainLoop ) );
 		}
 	
 
-		public static void Start(Scene scene, System.Windows.Forms.IWin32Window screen, ServerConnection connection)
+		public void Start(Scene scene, System.Windows.Forms.IWin32Window screen, ServerConnection connection)
 		{
-			if ( _isMainRunning ) {
-				throw new Exception( "already running" );
-			}
 			_scene = scene;
 			_screen = screen;
 			_connection = connection;
-			_isMainRunning = true;
-			Thread thisThread = new Thread(	new ThreadStart( MainLoop )	);
 			thisThread.Start();
 		}
 
-		public static void Stop()
-		{
-			_isMainRunning = false;
+		public void Stop() {
+			thisThread.Stop();
 		}
 
-		public static void MainLoop()
+		public void MainLoop()
 		{
-			while(_isMainRunning)
-			{
 				ProcessOutstandingMessages();
 				ProcessKeyboardInput();
 				ProcessMouseInput();
 				ProcessAnimations();
 				Render();
-			}
 		}
 
 		private static void ProcessAnimations() {
@@ -65,7 +56,7 @@ namespace Strive.UI.Modules
 			}
 		}
 
-		private static void ProcessOutstandingMessages() {
+		private void ProcessOutstandingMessages() {
 			#region 1.0 Check for messages from server and act upon them
 				
 			while(_connection.MessageCount > 0) {
@@ -204,6 +195,10 @@ namespace Strive.UI.Modules
 					#region CanPossess
 				else if ( m is Strive.Network.Messages.ToClient.CanPossess ) {
 					Strive.Network.Messages.ToClient.CanPossess cp = (Strive.Network.Messages.ToClient.CanPossess)m;
+					if ( cp.possesable.Length < 1 ) {
+						Global._log.LogMessage( "You can't possess anything!~" );
+						continue;
+					}
 					Global._log.LogMessage( "You can possess... " );
 					foreach ( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple in cp.possesable ) {
 						Global._log.LogMessage( "	" + tuple.id + " : " + tuple.name );
@@ -219,6 +214,14 @@ namespace Strive.UI.Modules
 					Strive.Network.Messages.ToClient.DropAll da = (Strive.Network.Messages.ToClient.DropAll)m;
 					Global._log.LogMessage( "DropAll recieved" );
 					_scene.DropAll();
+				}
+				#endregion
+					#region Weather
+				else if ( m is Strive.Network.Messages.ToClient.Weather ) {
+					Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
+					Global._log.LogMessage( "Weather update recieved" );
+					string texture_name = ResourceManager.LoadTexture(w.SkyTextureID);
+					_scene.SetSky( "sky", texture_name );
 				}
 				#endregion
 					#region Default

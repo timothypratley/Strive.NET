@@ -240,7 +240,6 @@ namespace Strive.UI.Forms
 			this.LoginNames.Name = "LoginNames";
 			this.LoginNames.Size = new System.Drawing.Size(200, 24);
 			this.LoginNames.TabIndex = 1;
-			this.LoginNames.Leave += new System.EventHandler(this.Complete_LoginNames);
 			// 
 			// InGameTab
 			// 
@@ -276,7 +275,6 @@ namespace Strive.UI.Forms
 			this.GoCommand.Name = "GoCommand";
 			this.GoCommand.TabIndex = 3;
 			this.GoCommand.Text = "Go >";
-			this.GoCommand.Click += new System.EventHandler(this.GoCommand_Click);
 			// 
 			// quickCommand
 			// 
@@ -292,7 +290,6 @@ namespace Strive.UI.Forms
 			this.quickCommand.Name = "quickCommand";
 			this.quickCommand.Sorted = true;
 			this.quickCommand.TabIndex = 1;
-			this.quickCommand.Leave += new System.EventHandler(this.Complete_quickCommand);
 			// 
 			// inGameTabs
 			// 
@@ -364,7 +361,6 @@ namespace Strive.UI.Forms
 			this.RenderTarget.Size = new System.Drawing.Size(800, 500);
 			this.RenderTarget.TabIndex = 1;
 			this.RenderTarget.TabStop = false;
-			this.RenderTarget.Click += new System.EventHandler(this.RenderTarget_Click);
 			// 
 			// NoteBoardTabs
 			// 
@@ -455,7 +451,6 @@ namespace Strive.UI.Forms
 			this.button1.Size = new System.Drawing.Size(272, 23);
 			this.button1.TabIndex = 0;
 			this.button1.Text = "Reload World";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// Game
 			// 
@@ -468,7 +463,6 @@ namespace Strive.UI.Forms
 			this.Name = "Game";
 			this.Text = "Game";
 			this.Load += new System.EventHandler(this.Game_Load);
-			this.Closed += new System.EventHandler(this.Game_Unload);
 			this.gameTabs.ResumeLayout(false);
 			this.ConnectTab.ResumeLayout(false);
 			this.InGameTab.ResumeLayout(false);
@@ -484,25 +478,28 @@ namespace Strive.UI.Forms
 
 		private void Game_Load(object sender, System.EventArgs e)
 		{
-			try {
-				_scene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
-				_scene.View.FieldOfView = 60;
-				_scene.View.ViewDistance = 20000;
-				_scene.View.Position = new Vector3D( 0, 0, 0 );
+		}
 
-				string texture_name = ResourceManager.LoadTexture(1);
-				_scene.SetSky( "sky", texture_name );
-				Modules.GameLoop.Start(_scene, RenderTarget, Global._serverConnection);
-				Mouse.ShowCursor( _mouseCaptured );
-			} catch ( Exception ex) {
-				System.Console.WriteLine( ex );
-			}
+		private void Play(string ServerName, string LoginName, string Password) {
+			Global._serverConnection.Stop();
+			Global._gameLoop.Stop();
+			_scene.DropAll();
+			_scene.Initialise( RenderTarget, Strive.Rendering.RenderTarget.PictureBox, Resolution.Automatic );
+			_scene.View.FieldOfView = 60;
+			_scene.View.ViewDistance = 20000;
+			_scene.View.Position = new Vector3D( 0, 0, 0 );
+			_scene.SetLighting( 255 );
+			_scene.SetFog( 100.0f );
+
+			Mouse.ShowCursor( _mouseCaptured );
+			Global._serverConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName).AddressList[0], int.Parse( PortField.Text ) ) );
+			Global._serverConnection.Send( new Strive.Network.Messages.ToServer.Login( LoginName, Password));
+			Global._gameLoop.Start(_scene, RenderTarget, Global._serverConnection);
 		}
 
 		private void Game_Unload(object sender, System.EventArgs e)
 		{
 			_isRendering = false;			
-			Application.Exit();
 		}
 
 		private void Complete_quickCommand(object sender, System.EventArgs e)
@@ -544,9 +541,8 @@ namespace Strive.UI.Forms
 		}
 
 		private void Go_Click(object sender, System.EventArgs e) {
-			if( LoginNames.Text.CompareTo( "" ) != 0 && ServerNames.Text.CompareTo( "" ) != 0 ) {
-				Global._serverConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerNames.Text ).AddressList[0], int.Parse( PortField.Text ) ) );
-				Global._serverConnection.Send( new Strive.Network.Messages.ToServer.Login( LoginNames.Text, ""));
+			if( LoginNames.Text != "" && ServerNames.Text.CompareTo( "" ) != 0 ) {
+				Play(ServerNames.Text,  LoginNames.Text, "");
 			} else {
 				Global._log.ErrorMessage( "Please specify a server and username" );
 			}

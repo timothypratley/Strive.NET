@@ -22,6 +22,7 @@ namespace Strive.Network.Messages {
 			ToClientNegativeAcknowledge,
 			ToClientPosition,
 			ToClientMobileState,
+			ToClientWeather,
 			ToServerAttack,
 			ToServerChangeStance,
 			ToServerCommunication,
@@ -52,6 +53,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientNegativeAcknowledge, typeof( ToClient.NegativeAcknowledge ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientPosition, typeof( ToClient.Position ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientMobileState, typeof( ToClient.MobileState ) );					
+			messageTypeFromID.Add( EnumMessageID.ToClientWeather, typeof( ToClient.Weather ) );					
 
 			messageTypeFromID.Add( EnumMessageID.ToServerAttack, typeof( ToServer.GameCommand.Attack ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerChangeStance, typeof( ToServer.GameCommand.ChangeStance ) );

@@ -18,6 +18,8 @@ namespace Strive.Rendering.Models
 		private int _id;
 		private Vector3D _position;
 		private Vector3D _rotation;
+		private int frame = 0;
+		private int frame_count = 0;
 		#endregion
 
 		#region "Constructors"
@@ -151,7 +153,10 @@ namespace Strive.Rendering.Models
 
 		public void nextFrame() {
 			setPointer();
-			Interop._instance.MdlSystem.MDL_SequenceMoveFrame( 1, true );
+			if ( frame_count > 0 ) {
+				frame = (frame+1)%frame_count;
+				Interop._instance.MdlSystem.MDL_SequenceSetFrame( (float)frame );
+			}
 		}
 
 		#endregion
@@ -189,32 +194,37 @@ namespace Strive.Rendering.Models
 			set {
 				string sequence;		
 				switch( value ) {
-					case 0:
-						sequence = "look_idle";
-						break;
 					case 1:
-						sequence = "look_idle";
+						sequence = "deadback";
 						break;
 					case 2:
-						sequence = "idle";
+						sequence = "deadstomach";
 						break;
 					case 3:
-						sequence = "run2";
+						sequence = "deadsitting";
 						break;
 					case 4:
-						sequence = "walk2handed";
+						sequence = "crouch_idle";
 						break;
 					case 5:
-						sequence = "crawl";
+						sequence = "deep_idle";
 						break;
 					case 6:
-						sequence = "die_spin";
+						sequence = "walk2handed";
+						break;
+					case 7:
+						sequence = "running";
+						break;
+					case 8:
+						sequence = "ref_shoot_crowbar";
 						break;
 					default:
 						throw new Exception( "Unknown sequence" );
 				}
 				Interop._instance.MdlSystem.MDL_SequenceSet( sequence );
-				Interop._instance.MdlSystem.MDL_SequenceSetFrame( 0 );
+				frame = 0;
+				frame_count = Interop._instance.MdlSystem.MDL_SequenceGetFrameCount();
+				Interop._instance.MdlSystem.MDL_SequenceSetFrame( frame );
 			}
 		}
 

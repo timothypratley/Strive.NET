@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Net;
 using System.Collections;
 using System.Configuration;
@@ -67,7 +66,7 @@ namespace Strive.Network.Client {
 			while ( sc.IsRunning ) {
 				mp.ProcessOustandingMessages();
 				wv.Handle();
-				Thread.Sleep( 3000 );
+				System.Thread.Sleep( 3000 );
 			}
 		}
 	}

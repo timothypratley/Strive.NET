@@ -90,15 +90,36 @@ namespace Strive.Rendering
 		public void DropAll() {
 			_models = new ModelCollection();
 			_views = new Cameras.CameraCollection();
-			Interop._instance.Engine.InitializeMe(true);
-			Interop._instance.MdlSystem.Class_ClearMe();
-			Interop._instance.Meshbuilder.Class_ClearMe();
-			Interop._instance.TextureLib.Class_ReleaseMe();
+			if(_initialised) {
+				Interop._instance.Engine.TerminateMe();
+			}
+			_initialised = false;
 		}
 
 		public void SetSky( string name, string texture ) {
-			Interop._instance.Skydome.Item_Create( name, R3DSKYDOMEITEM.R3DSKYDOMEITEM_SPHERE, 2000 );
+			if ( Interop._instance.Skydome.Class_SetPointer( name ) < 0 ) {
+				Interop._instance.Skydome.Item_Create( name, R3DSKYDOMEITEM.R3DSKYDOMEITEM_SPHERE, 2000 );
+			}
 			Interop._instance.Skydome.Item_SetTexture( 0, texture );
+		}
+
+		public void SetLighting( short level ) {
+			R3DColor color;
+			color.r = level;
+			color.g = level;
+			color.b = level;
+			color.a = level;
+			//Interop._instance.Pipeline.SetAmbientLight( level, level, level );
+			Interop._instance.Pipeline.SetGammaLevel( ref color );
+		}
+
+		public void SetFog( float level ) {
+			R3DColor FogColor;
+			FogColor.r = (short)(level);
+			FogColor.g = (short)(level);
+			FogColor.b = (short)(level);
+			FogColor.a = (short)(level);
+			Interop._instance.Pipeline.SetFog( ref FogColor, R3DFOGTYPE.R3DFOGTYPE_PIXELTABLE, R3DFOGMODE.R3DFOGMODE_LINEAR, 0, 200, level );
 		}
 
 		/// <summary>

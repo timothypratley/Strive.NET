@@ -6,7 +6,7 @@ namespace Strive.Multiverse
 	/// Summary description for EnumWearLocation.
 	/// </summary>
 	public enum EnumWearLocation {
-		Head, Neck, Body, Torso, Arms, Legs, Feet,
+		Head = 1, Neck, Body, Torso, Arms, Legs, Feet,
 		Hands, RightFinger, LeftFinger
 	}
 }

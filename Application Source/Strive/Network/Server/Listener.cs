@@ -3,50 +3,47 @@ using System.Net;
 using System.Net.Sockets;
 using System.Collections;
 using System.Threading;
-using Strive.Network.Messages;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+
+using Strive.Network.Messages;
+using Strive.Common;
 
 namespace Strive.Network.Server {
 	/// <summary>
 	/// Summary description for NetworkHandler.
 	/// </summary>
-	public class Listener	{
+	public class Listener {
 		Queue clientMessageQueue = new Queue();
 		IPEndPoint localEndPoint;
-		bool isRunning;
 		//BinaryFormatter formatter = new BinaryFormatter();
 		Hashtable clients = new Hashtable();
+		StoppableThread myThread;
+
+		//Creates a UdpClient for reading incoming data.
+		UdpClient receivingUdpClient;
+
+		//Creates an IPEndPoint to record the IP Address and port number of the sender. 
+		// The IPEndPoint will allow you to read datagrams sent from any source.
+		IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
 
 		public Listener( IPEndPoint localEndPoint ) {
 			this.localEndPoint = localEndPoint;
+			receivingUdpClient = new UdpClient( localEndPoint );
+			myThread = new StoppableThread( new StoppableThread.WhileRunning( Run ) );
 		}
 
 		public class AlreadyRunningException : Exception{}
 		public void Start() {
-			if ( isRunning ) {
-				throw new AlreadyRunningException();
-			}
-			isRunning = true;
-			Thread myThread = new Thread(
-				new ThreadStart( Run )
-			);
 			myThread.Start();
 		}
 
 		public void Stop() {
-			isRunning = false;
+			//receivingUdpClient.Close();
+			myThread.Stop();
 		}
 
 		public void Run() {
-			//Creates a UdpClient for reading incoming data.
-			UdpClient receivingUdpClient = new UdpClient( localEndPoint );
-
-			//Creates an IPEndPoint to record the IP Address and port number of the sender. 
-			// The IPEndPoint will allow you to read datagrams sent from any source.
-			IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
-			try{
-				while ( isRunning ) {
 					// Blocks until a message returns on this socket from a remote host.
 					Byte[] receivedBytes = receivingUdpClient.Receive(ref endpoint);
 					IMessage message;
@@ -78,10 +75,7 @@ namespace Strive.Network.Server {
 					);
 					clientMessageQueue.Enqueue( clientMessage );
 					//Console.WriteLine( message.GetType() + " message enqueued from " + endpoint );
-				}
-			} catch ( Exception e ) {
-				Console.WriteLine(e.ToString()); 
-			}
+
 		}
 
 		public int MessageCount {
@@ -95,5 +89,6 @@ namespace Strive.Network.Server {
 		public Hashtable Clients {
 			get { return clients; }
 		}
+
 	}
 }
