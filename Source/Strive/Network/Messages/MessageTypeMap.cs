@@ -38,6 +38,7 @@ namespace Strive.Network.Messages {
 			ToClientWeather,
 			ToClientWhoList,
 			ToClientPartyInfo,
+			ToClientPing,
 			ToServerAttack,
 			ToServerChangeStance,
 			ToServerCommunication,
@@ -59,7 +60,8 @@ namespace Strive.Network.Messages {
 			ToServerReloadWorld,
 			ToServerRequestPossessable,
 			ToServerRequestServerInfo,
-			ToServerPosition
+			ToServerPosition,
+			ToServerPong
 		}
 		public MessageTypeMap()	{
 			// build the mapping between message_id and message_type
@@ -84,10 +86,10 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientMobileState, typeof( ToClient.MobileState ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientServerInfo, typeof( ToClient.ServerInfo ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientSkillList, typeof( ToClient.SkillList ) );					
-			messageTypeFromID.Add( EnumMessageID.ToClientWeather, typeof( ToClient.Weather ) );					
+			messageTypeFromID.Add( EnumMessageID.ToClientWeather, typeof( ToClient.TimeAndWeather ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientWhoList, typeof( ToClient.WhoList ) );					
-			messageTypeFromID.Add( EnumMessageID.ToClientBeat, typeof( ToClient.Beat) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientPartyInfo, typeof( ToClient.PartyInfo ) );
+			messageTypeFromID.Add( EnumMessageID.ToClientPing, typeof( ToClient.Ping ) );
 
 			messageTypeFromID.Add( EnumMessageID.ToServerChangeStance, typeof( ToServer.GameCommand.ChangeStance ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerCommunication, typeof( ToServer.GameCommand.Communication ) );
@@ -109,6 +111,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToServerRequestPossessable, typeof( ToServer.RequestPossessable ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerRequestServerInfo, typeof( ToServer.RequestServerInfo ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerPosition, typeof( ToServer.Position ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerPong, typeof( ToServer.Pong ) );
 
 			// build the reverse lookup
 			foreach ( EnumMessageID id in messageTypeFromID.Keys ) {

@@ -220,6 +220,10 @@ namespace Strive.UI.WorldView {
 			RenderingScene.SetClouds( texture );
 		}
 
+		public void SetLighting( float level ) {
+			RenderingScene.SetLighting( level );
+		}
+
 		public EnumCameraMode CameraMode {
 			get{
 				return cameraMode;

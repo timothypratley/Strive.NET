@@ -184,11 +184,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToClient\Beat.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "ToClient\CanPossess.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -249,6 +244,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\Ping.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\Position.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -264,7 +264,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ToClient\Weather.cs"
+                    RelPath = "ToClient\TimeAndWeather.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -285,6 +285,11 @@
                 />
                 <File
                     RelPath = "ToServer\Logout.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\Pong.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

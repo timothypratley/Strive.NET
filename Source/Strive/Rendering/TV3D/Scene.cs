@@ -67,13 +67,13 @@ namespace Strive.Rendering.TV3D
 		}
 
 		public void SetSky( ITexture texture ) {
-//			Engine.Atmosphere.SkySphere_SetRadius( 1000 );
-//			Engine.Atmosphere.SkySphere_SetTexture( texture.ID );
-//			Engine.Atmosphere.SkySphere_Enable( true );
+			Engine.Atmosphere.SkySphere_SetRadius( 1000 );
+			Engine.Atmosphere.SkySphere_SetTexture( texture.ID );
+			Engine.Atmosphere.SkySphere_Enable( true );
 
-			Engine.Atmosphere.SkyBox_SetDistance( 1000 );
-			Engine.Atmosphere.SkyBox_SetTexture( texture.ID,texture.ID,texture.ID,texture.ID,texture.ID,texture.ID );
-			Engine.Atmosphere.SkyBox_Enable(true, true);
+//			Engine.Atmosphere.SkyBox_SetDistance( 1000 );
+//			Engine.Atmosphere.SkyBox_SetTexture( texture.ID,texture.ID,texture.ID,texture.ID,texture.ID,texture.ID );
+//			Engine.Atmosphere.SkyBox_Enable(true, true);
 		}
 
 		public void SetClouds( ITexture texture ) {
@@ -82,7 +82,16 @@ namespace Strive.Rendering.TV3D
 			//Engine.Land.SetCloudVelocity(1, 0.01f, 0.01f);
 		}
 
-		public void SetLighting( short level ) {
+		short sun_light_id = -1;
+		public void SetLighting( float level ) {
+			if ( sun_light_id >= 0 ) {
+				Engine.LightEngine.DeleteLight( sun_light_id );
+			}
+			DxVBLibA.D3DVECTOR dir = new DxVBLibA.D3DVECTOR();
+			dir.x = -1;
+			dir.y = -1;
+			dir.z = -1;
+			sun_light_id = Engine.LightEngine.CreateQuickDirectionalLight( ref dir, 1, 1, 1, "sun", level );
 		}
 
 		public void SetFog( float level ) {

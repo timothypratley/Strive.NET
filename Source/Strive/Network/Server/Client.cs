@@ -24,6 +24,10 @@ namespace Strive.Network.Server {
 		Listener handler;
 		EndPoint remoteEndPoint;
 		Strive.Network.Messages.NetworkProtocolType protocol;
+		public int latency = 0;
+		public DateTime pingedAt = DateTime.MinValue;
+		public int pingSequence = -1;
+
 
 		public Client( Socket tcpsocket, Listener handler ) {
 			this.tcpsocket = tcpsocket;
@@ -195,6 +199,7 @@ namespace Strive.Network.Server {
 		public void Close() {
 			if ( tcpsocket != null ) {
 				Log.LogMessage( "Closing connection to " + EndPoint + "." );
+				tcpsocket.Shutdown( SocketShutdown.Both );
 				tcpsocket.Close();
 				tcpsocket = null;
 			}
@@ -222,6 +227,12 @@ namespace Strive.Network.Server {
 
 		public void SendLog( string message ) {
 			Send( new Strive.Network.Messages.ToClient.LogMessage( message ) );
+		}
+
+		public void Ping() {
+			pingSequence++;
+			Send( new Strive.Network.Messages.ToClient.Ping( pingSequence ) );
+			pingedAt = DateTime.Now;
 		}
 	}
 }

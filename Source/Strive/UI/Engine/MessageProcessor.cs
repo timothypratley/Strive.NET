@@ -173,8 +173,8 @@ namespace Strive.UI.Engine {
 			}
 				#endregion
 			#region Weather
-			else if ( m is Strive.Network.Messages.ToClient.Weather ) {
-				Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
+			else if ( m is Strive.Network.Messages.ToClient.TimeAndWeather ) {
+				Strive.Network.Messages.ToClient.TimeAndWeather w = (Strive.Network.Messages.ToClient.TimeAndWeather)m;
 				//Log.LogMessage( "Weather update recieved" );
 				ITexture t = Game.resources.GetTexture(w.SkyTextureID);
 
@@ -182,8 +182,15 @@ namespace Strive.UI.Engine {
 				ITexture ct = Game.resources.GetTexture( 46 );
 				_world.SetSky( t );
 				_world.SetClouds( ct );
+				_world.SetLighting( w.Lighting );
 			}
-				#endregion
+			#endregion
+			#region Ping
+			else if ( m is Strive.Network.Messages.ToClient.Ping ) {
+				Strive.Network.Messages.ToClient.Ping p = (Strive.Network.Messages.ToClient.Ping)m;
+				Game.CurrentServerConnection.Pong( p.SequenceNumber );
+			}
+			#endregion
 			#region SkillList
 			else if ( m is Strive.Network.Messages.ToClient.SkillList ) {
 				Strive.Network.Messages.ToClient.SkillList sl = (Strive.Network.Messages.ToClient.SkillList)m;
@@ -201,12 +208,6 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.PartyInfo ) {
 				Strive.Network.Messages.ToClient.PartyInfo pi = (Strive.Network.Messages.ToClient.PartyInfo)m;
 				Log.LogMessage( "PartyInfo received: " + pi );
-			}
-			#endregion
-			#region Beat
-			else if (m is Strive.Network.Messages.ToClient.Beat) {
-				Strive.Network.Messages.ToClient.Beat beat = (Strive.Network.Messages.ToClient.Beat)m;
-				Log.LogMessage("Beat [" + beat.BeatNumber.ToString() + "].");
 			}
 			#endregion
 			#region LogMessage

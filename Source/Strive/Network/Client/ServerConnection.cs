@@ -58,10 +58,12 @@ namespace Strive.Network.Client {
 
 		public void Stop() {
 			if ( tcpsocket != null ) {
+				tcpsocket.Shutdown( SocketShutdown.Both );
 				tcpsocket.Close();
 				tcpsocket = null;
 			}
 			if ( udpsocket != null ) {
+				udpsocket.Shutdown( SocketShutdown.Both );
 				udpsocket.Close();
 				udpsocket = null;
 			}
@@ -338,6 +340,10 @@ namespace Strive.Network.Client {
 		public void RequestPossessable()
 		{
 			Send(new RequestPossessable());
+		}
+
+		public void Pong( int SequenceNumber ) {
+			Send( new Pong( SequenceNumber ) );
 		}
 
 		#endregion

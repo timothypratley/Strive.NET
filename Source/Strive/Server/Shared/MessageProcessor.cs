@@ -72,39 +72,31 @@ namespace Strive.Server.Shared {
 			}
 
 			// normal message for logged in user
-			if ( message is Network.Messages.ToServer.Position ) 
-			{
+			if ( message is Network.Messages.ToServer.Position ) {
 				ProcessPositionMessage( client, message as Network.Messages.ToServer.Position );
 			} 
-			else if ( message is Network.Messages.ToServer.GameCommand.Communication ) 
-			{
+			else if ( message is Network.Messages.ToServer.GameCommand.Communication ) {
 				ProcessChatMessage( client, message as Network.Messages.ToServer.GameCommand.Communication );
 			} 
-			else if ( message is Network.Messages.ToServer.GameCommand.UseSkill ) 
-			{
+			else if ( message is Network.Messages.ToServer.GameCommand.UseSkill ) {
 				SkillCommandProcessor.ProcessUseSkill( client, message as Network.Messages.ToServer.GameCommand.UseSkill );
 			} 
 			else if ( message is Network.Messages.ToServer.GameCommand.CancelSkill ) {
 				SkillCommandProcessor.ProcessCancelSkill( client, message as Network.Messages.ToServer.GameCommand.CancelSkill );
 			} 
-			else if ( message is Network.Messages.ToServer.ReloadWorld ) 
-			{
+			else if ( message is Network.Messages.ToServer.ReloadWorld ) {
 				ProcessReloadWorldMessage( client, message as Network.Messages.ToServer.ReloadWorld );
 			} 
-			else if ( message is Network.Messages.ToServer.Logout ) 
-			{
+			else if ( message is Network.Messages.ToServer.Logout ) {
 				ProcessLogout(client);
 			}
-			else if ( message is Network.Messages.ToServer.GameCommand.SkillList )
-			{
+			else if ( message is Network.Messages.ToServer.GameCommand.SkillList ) {
 				ProcessSkillList(client, message as Network.Messages.ToServer.GameCommand.SkillList);
 			}
-			else if ( message is Network.Messages.ToServer.GameCommand.WhoList )
-			{
+			else if ( message is Network.Messages.ToServer.GameCommand.WhoList ) {
 				ProcessWhoList(client, message as Network.Messages.ToServer.GameCommand.WhoList);
 			}
-			else if ( message is Network.Messages.ToServer.GameCommand.Party.CreateParty )
-			{
+			else if ( message is Network.Messages.ToServer.GameCommand.Party.CreateParty ) {
 				ProcessCreateParty(client, message as Network.Messages.ToServer.GameCommand.Party.CreateParty);
 			}
 			else if ( message is Network.Messages.ToServer.GameCommand.Party.CreateParty ) {
@@ -119,8 +111,10 @@ namespace Strive.Server.Shared {
 			else if ( message is Network.Messages.ToServer.GameCommand.Party.TransferPartyLeadership ) {
 				ProcessTransferPartyLeadership(client, message as Network.Messages.ToServer.GameCommand.Party.TransferPartyLeadership);
 			}
-			else 
-			{
+			else if ( message is Network.Messages.ToServer.Pong ) {
+				ProcessPong( client, message as Network.Messages.ToServer.Pong );
+			}
+			else {
 				Log.WarningMessage(
 					"ERROR: Unknown message " + message.GetType()
 					);
@@ -300,6 +294,12 @@ namespace Strive.Server.Shared {
 			}
 			ma.party.Leader = target;
 			ma.party.SendPartyTalk( "Party leadership has been transfered to " + target.TemplateObjectName );
+		}
+
+		void ProcessPong( Client client, Strive.Network.Messages.ToServer.Pong message ) {
+			client.latency = (DateTime.Now - client.pingedAt).Milliseconds;
+			world.weather.Latency = client.latency;
+			client.Send( world.weather );
 		}
 
 		void ProcessLeaveParty(

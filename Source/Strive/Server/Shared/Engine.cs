@@ -17,10 +17,6 @@ namespace Strive.Server.Shared {
 		World world;
 		MessageProcessor mp;
 		StoppableThread engine_thread;
-		int CurrentMilliseconds = 0;
-		int CurrentBeat = 0;
-		int MillisecondsPerBeat = 10000;
-
 
 		public Engine() {
 			Global.ReadConfiguration();
@@ -54,10 +50,6 @@ namespace Strive.Server.Shared {
 				// handle world changes
 				Global.now = DateTime.Now;
 				world.Update();
-				if(CurrentMilliseconds == 0)
-				{
-					CurrentMilliseconds = Environment.TickCount;
-				}
 
 				// handle incomming messages
 
@@ -72,24 +64,6 @@ namespace Strive.Server.Shared {
 					Log.WarningMessage( "An update cycle took longer than one second." );
 				} else {
 					System.Threading.Thread.Sleep( 100 );
-				}
-
-				// TODO: TJP imho we shouldn't have ticks at all,
-				// instead we should use actual time values.
-				// I don't think we need beats, but instead use
-				// the weather message to synchronize client/server time.
-				// NR We (L) (B)s
-
-
-				// calculate if message needs to be sent:
-				int CurrentTicks = Environment.TickCount;
-				int BeatIncrement = (CurrentTicks - CurrentMilliseconds) / MillisecondsPerBeat;
-
-				if(BeatIncrement > 0)
-				{
-					CurrentBeat += BeatIncrement;
-					CurrentMilliseconds += BeatIncrement * MillisecondsPerBeat;
-					networkhandler.SendToAll(new Strive.Network.Messages.ToClient.Beat(CurrentBeat));
 				}
 			} catch ( Exception e ) {
 				// Just log exceptions and stop all threads

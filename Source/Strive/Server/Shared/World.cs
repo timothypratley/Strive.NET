@@ -33,7 +33,7 @@ namespace Strive.Server.Shared {
 		public Hashtable physicalObjects;
 		public ArrayList mobilesArrayList;
 
-		Strive.Network.Messages.ToClient.Weather weather = new Strive.Network.Messages.ToClient.Weather( 1, 0, 0, 0 );
+		public Strive.Network.Messages.ToClient.TimeAndWeather weather = new Strive.Network.Messages.ToClient.TimeAndWeather( Global.now, 0, 1, 0, 0, 0 );
 
 		public World( int world_id ) {
 			this.world_id = world_id;
@@ -180,13 +180,19 @@ namespace Strive.Server.Shared {
 		}
 
 		void WeatherUpdate() {
+			if ( (Global.now - weather.ServerNow).Seconds < 1 ) {
+				return;
+			}
+
+			weather.ServerNow = Global.now;
 			bool weatherChanged = false;
-			if ( Global.random.NextDouble() > 0.999 ) {
+			if ( Global.random.NextDouble() > 0.995 ) {
 				weather.Fog++;
 				weatherChanged = true;
 			}
-			if ( Global.random.NextDouble() > 0.999 ) {
-				weather.Lighting++;
+			if ( Global.random.NextDouble() > 0.995 ) {
+				// TODO: make day/night cycle
+				weather.Lighting = (float)Global.random.NextDouble();
 				weatherChanged = true;
 			}
 			if ( Global.random.NextDouble() > 0.995 ) {
