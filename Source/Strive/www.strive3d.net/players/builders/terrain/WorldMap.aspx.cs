@@ -45,21 +45,20 @@ namespace www.strive3d.net.players.builders.terrain
 					//squares = new DataTable("Squares");
 					//squaresFiller.Fill(squares);
 
-					SqlDataReader worldStats = cmd.GetSqlCommand("SELECT MAX(X) - MIN(X) AS Width, MAX(Z) - MIN(Z) AS Height, MIN(X) As MinX, MIN(Z) AS MinZ FROM ObjectInstance INNER JOIN TemplateTerrain ON ObjectInstance.TemplateObjectID = TemplateTerrain.TemplateObjectID").ExecuteReader();
+					// TODO: You know we really can assume that terrain contains the min and max, so we don't need to explictly join to it (slow)
+					SqlDataReader worldStats = cmd.GetSqlCommand("SELECT MIN(X) As MinX, MIN(Z) AS MinZ, MAX(X) As MaxX, MAX(Z) as MaxZ FROM ObjectInstance INNER JOIN TemplateTerrain ON ObjectInstance.TemplateObjectID = TemplateTerrain.TemplateObjectID").ExecuteReader();
 
-					float Width;
-					float Height;
-					float MinX;
-					float MinZ;
+					int Width, Height;
+					float MinX, MinZ, MaxX, MaxZ;
 					if(worldStats.Read())
 					{
-						Width = float.Parse(worldStats["Width"].ToString()) / Strive.Common.Constants.terrainPieceSize;
-						Height = float.Parse(worldStats["Height"].ToString())  / Strive.Common.Constants.terrainPieceSize ;
 						MinX = float.Parse(worldStats["MinX"].ToString());
 						MinZ = float.Parse(worldStats["MinZ"].ToString());
+						MaxX = float.Parse(worldStats["MaxX"].ToString());
+						MaxZ = float.Parse(worldStats["MaxZ"].ToString());
+						Width = 1+(int)(MaxX-MinX) / Strive.Common.Constants.terrainPieceSize;
+						Height = 1+(int)(MaxZ-MinZ) / Strive.Common.Constants.terrainPieceSize ;
 						worldStats.Close();
-						
-
 					}
 					else
 					{
@@ -69,7 +68,7 @@ namespace www.strive3d.net.players.builders.terrain
 
 
 
-					System.Drawing.Bitmap theMap = new System.Drawing.Bitmap((int)Width+2, (int)Height+2);
+					System.Drawing.Bitmap theMap = new System.Drawing.Bitmap(Width, Height);
 			
 					// build bitmap:
 					SqlCommand worldMapLoader = cmd.GetSqlCommand("SELECT ObjectInstance.X, ObjectInstance.Y, ObjectInstance.Z, TemplateTerrain.EnumTerrainTypeID FROM ObjectInstance INNER JOIN TemplateTerrain ON ObjectInstance.TemplateObjectID = TemplateTerrain.TemplateObjectID ");
@@ -89,12 +88,12 @@ namespace www.strive3d.net.players.builders.terrain
 					SqlDataReader worldReader = worldMapLoader.ExecuteReader();
 					while(worldReader.Read())
 					{
-						int pixelX = (int)(Math.Abs((MinX + float.Parse(worldReader["X"].ToString()))) / Strive.Common.Constants.terrainPieceSize) ;
+						int pixelX = (int)(float.Parse(worldReader["X"].ToString())-MinX) / Strive.Common.Constants.terrainPieceSize;
 						float Altitude = float.Parse(worldReader["Y"].ToString());
 						if(Altitude < 0 ) {
 							 Altitude = 0;
 						}
-						int pixelZ = (int)(Math.Abs((MinZ + float.Parse(worldReader["Z"].ToString()))) / Strive.Common.Constants.terrainPieceSize) ;
+						int pixelZ = (int)(MaxZ - float.Parse(worldReader["Z"].ToString())) / Strive.Common.Constants.terrainPieceSize;
 						int EnumTerrainTypeID = int.Parse(worldReader["EnumTerrainTypeID"].ToString());
 						try
 						{
@@ -117,15 +116,15 @@ namespace www.strive3d.net.players.builders.terrain
 				
 					}
 					worldReader.Close();
-					for(int col = 0; col < theMap.Width; col ++) {
-						for(int row = 0; row < theMap.Height; row ++) {
+					for(int col = 0; col < Width; col ++) {
+						for(int row = 0; row < Height; row ++) {
 							if(theMap.GetPixel(col, row).R  < 1 && col > 0 && WorldMapType == SupportedMap.HeightMap) {
 							//	throw new Exception("col[" + col + "]row[" + row + "][" + theMap.GetPixel(col-1, row).ToString() + "]");
 								theMap.SetPixel(col, row, theMap.GetPixel(col-1, row));
 
 								float WorldX = MinX + (col * Strive.Common.Constants.terrainPieceSize);
-								float PrevWorldX = MinX + ((col - 1) * Strive.Common.Constants.terrainPieceSize);
-								float WorldZ = MinZ + (row * Strive.Common.Constants.terrainPieceSize);
+								float PrevWorldX = WorldX - Strive.Common.Constants.terrainPieceSize;
+								float WorldZ = MaxZ - (row * Strive.Common.Constants.terrainPieceSize);
 
 								cmd.GetSqlCommand("DELETE FROM ObjectInstance WHERE X = " + WorldX + " AND Z = " + WorldZ).ExecuteNonQuery();
 								cmd.GetSqlCommand("INSERT INTO ObjectInstance " +
@@ -146,7 +145,6 @@ namespace www.strive3d.net.players.builders.terrain
 						}
 					}
 					System.IO.MemoryStream newImage = new System.IO.MemoryStream();
-					theMap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
 					theMap.Save(newImage, System.Drawing.Imaging.ImageFormat.Png);
 					image = newImage.GetBuffer();
 					Cache.Add("WorldMap" + WorldMapType.ToString(), image, null, DateTime.Now.AddMinutes(10), TimeSpan.Zero, System.Web.Caching.CacheItemPriority.Default, null);
