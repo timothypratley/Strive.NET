@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <form runat="server">
 			<%if(Loaded) {%>
-			<a style="position:absolute;top:0px;left:0px" target="Editor" href="editterrainpiece.aspx?ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">
+			<a style="position:absolute;top:0px;left:0px" target="Editor" href="editterrainpiece.aspx?view=<%=Request.QueryString["view"]%>&amp;ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">
 				<img src="<%=TextureSrc%>" border="0" />
 			</a>
 			<%
@@ -20,14 +20,14 @@
 				string TemplateObjectTemplateName = foundObject["TemplateName"].ToString();
 				string TemplateObjectName = htmlObjectInstanceID + ": " + foundObject["TemplateObjectName"].ToString() + " (" + TemplateObjectTemplateName.Replace("Item", "") + ")";
 			%>
-				<a target="Editor" style="position:absolute;left:<%=htmlX%>px;top:<%=htmlZ%>px" href="editterrainpiece.aspx?ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>&amp;LoadObjectInstanceID=<%=htmlObjectInstanceID%>&amp;LoadedObjectTemplateName=<%=TemplateObjectTemplateName%>"><img alt="<%=TemplateObjectName%>" src="<%=www.strive3d.net.Utils.ApplicationPath%>/images/object.gif" /></a>
+				<a target="Editor" style="position:absolute;left:<%=htmlX%>px;top:<%=htmlZ%>px" href="editterrainpiece.aspx?view=<%=Request.QueryString["view"]%>&amp;ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>&amp;LoadObjectInstanceID=<%=htmlObjectInstanceID%>&amp;LoadedObjectTemplateName=<%=TemplateObjectTemplateName%>" title="<%=TemplateObjectName%>"><img alt="<%=TemplateObjectName%>" src="<%=www.strive3d.net.Utils.ApplicationPath%>/images/object.gif" /></a>
 			<%		
 			
 			}
 			%>
 		
 			<%} else { %>
-		<a target="Editor" href="editterrainpiece.aspx?X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">[Create]</a></td>
+		<a target="Editor" href="editterrainpiece.aspx?view=<%=Request.QueryString["view"]%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">[Create]</a></td>
 			<%}%>
 		</tr>
 	</table>

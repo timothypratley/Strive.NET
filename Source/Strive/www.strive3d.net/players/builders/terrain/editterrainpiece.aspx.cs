@@ -41,6 +41,23 @@ namespace www.strive3d.net.players.builders.terrain
 			if(QueryString.ContainsVariable("ObjectInstanceID"))
 			{
 				ObjectInstanceID = QueryString.GetVariableInt32Value("ObjectInstanceID");
+				Page.RegisterClientScriptBlock("ResetID", "<script type=\"text/javascript\">window.parent.frames['" + Request.QueryString["FrameID"].ToString() + "'].navigate('showterrainpiece"+Request.QueryString["view"]+".aspx?FrameID="+Request.QueryString["FrameID"]+"&ObjectInstanceID="+ ObjectInstanceID.ToString() + "&X=" + QueryString.GetVariableInt32Value("X") + "&Z=" + QueryString.GetVariableInt32Value("Z") + "&tabindex=6&tabid=11&view="+Request.QueryString["view"]+"');</script>");
+			}
+			else
+			{
+				using(CommandFactory f = new CommandFactory())
+				{
+					object ObjectInstanceID = f.CreateTerrain(65782,
+						QueryString.GetVariableInt32Value("X"),
+						0, 
+						QueryString.GetVariableInt32Value("Z"),
+						0,
+						0,
+						0).ExecuteScalar();
+
+					Response.Redirect(Request.Url.ToString() + "&ObjectInstanceID=" + ObjectInstanceID.ToString());
+				}
+
 			}
 
 			if(!this.IsPostBack) {
@@ -222,11 +239,6 @@ namespace www.strive3d.net.players.builders.terrain
 							TemplateItemEquipableFiller.Fill(TemplateItemEquipableInSquare);
 							TemplateItemEquipableList.DataSource = TemplateItemEquipableInSquare;
 							TemplateItemEquipableList.DataBind();
-
-
-
-
-
 	
 						}
 						// find correct row in datasource
@@ -285,34 +297,20 @@ namespace www.strive3d.net.players.builders.terrain
 
 		private void Save() {
 			CommandFactory cmd = new CommandFactory();
-			try{
-			if(QueryString.ContainsVariable("ObjectInstanceID"))
+			try
 			{
-				cmd.UpdateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"),
-					int.Parse(TemplateObject.SelectedItem.Value),
-					QueryString.GetVariableInt32Value("X"),
-					float.Parse(Altitude.Text),
-					QueryString.GetVariableInt32Value("Z"),
-					0, 
-					0, 
-					0).ExecuteNonQuery();
-
-			}
-			else
-			{
-//				cmd.CreateTerrain(1,
-//					EnumTerrainID.SelectedItem.Text + " - " + ResourceID.SelectedItem.Text,
-//					Int32.Parse(ResourceID.SelectedItem.Value),
-//					PlayerAuthenticator.CurrentLoggedInPlayerID,
-//					Int32.Parse(EnumTerrainID.SelectedItem.Value),
-//					QueryString.GetVariableInt32Value("X"),
-//					Int32.Parse(Altitude.Text),
-//					QueryString.GetVariableInt32Value("Z"),
-//					0, 
-//					0, 
-//					0).ExecuteNonQuery();
-			}
-			Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.parent.frames['" + Request.QueryString["FrameID"].ToString() + "'].location.reload(true);</script>");
+				if(QueryString.ContainsVariable("ObjectInstanceID"))
+				{
+					cmd.UpdateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"),
+						int.Parse(TemplateObject.SelectedItem.Value),
+						QueryString.GetVariableInt32Value("X"),
+						float.Parse(Altitude.Text),
+						QueryString.GetVariableInt32Value("Z"),
+						0, 
+						0, 
+						0).ExecuteNonQuery();
+					Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.parent.frames['" + Request.QueryString["FrameID"].ToString() + "'].location.reload(true);</script>");
+				}
 			}
 			catch(Exception c)
 			{

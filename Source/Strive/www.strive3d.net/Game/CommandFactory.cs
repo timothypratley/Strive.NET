@@ -1527,7 +1527,7 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand CreateTerrain(System.Data.SqlTypes.SqlInt32 AreaID, System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ResourceID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumTerrainTypeID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
+		public System.Data.SqlClient.SqlCommand CreateTerrain(System.Data.SqlTypes.SqlInt32 TemplateObjectID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
 		{
 			const string thisID = "1840061641";
 			System.Data.SqlClient.SqlCommand thisCommand;
@@ -1546,27 +1546,7 @@ namespace www.strive3d.net.Game
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AreaID";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@TemplateObjectName";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ResourceID";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerID";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumTerrainTypeID";
+				param.ParameterName = "@TemplateObjectID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -1613,15 +1593,7 @@ namespace www.strive3d.net.Game
 			}
 				
 				
-			thisCommand.Parameters["@AreaID"].Value = AreaID;
-		
-			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
-		
-			thisCommand.Parameters["@ResourceID"].Value = ResourceID;
-		
-			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
-		
-			thisCommand.Parameters["@EnumTerrainTypeID"].Value = EnumTerrainTypeID;
+			thisCommand.Parameters["@TemplateObjectID"].Value = TemplateObjectID;
 		
 			thisCommand.Parameters["@X"].Value = X;
 		
