@@ -86,17 +86,15 @@ namespace Strive.Server.Shared {
 				// don't load area 0, its players and their eq
 				if ( ar.AreaID == 0 ) continue;
 				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
-					// nb: add terrain pieces first,
-					// we rely on these being the first thing sent to the client.
-					// todo: make groundlevel lookup serverside...
-					// thus client need not have the terrain piece before the
-					// object on top of it.
+					// nb: add all terrain pieces first
 					foreach ( Schema.TemplateTerrainRow ttr in otr.GetTemplateTerrainRows() ) {
 						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 							Terrain t = new Terrain( ttr, otr, oir );
 							Add( t );
 						}
 					}
+				}
+				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
 					foreach ( Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows() ) {
 						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 							// NB: we only add avatars to our world, not mobiles

@@ -80,6 +80,7 @@ namespace Strive.Rendering.TV3D {
 				throw new EngineInitialisationException(e);
 			}
 			TV3DEngine.SetAngleSystem( CONST_TV_ANGLE.TV_ANGLE_DEGREE );
+			TV3DEngine.SetVSync( true );
 			TV3DScene = new TVScene();
 			Land = new TVLandscape();
 			TexFactory = new TVTextureFactory();

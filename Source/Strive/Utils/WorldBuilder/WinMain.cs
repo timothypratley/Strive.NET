@@ -112,7 +112,9 @@ namespace Strive.Utils.WorldBuilder
 
 		private void SaveChanges_Click(object sender, System.EventArgs e)
 		{
-			MultiverseFactory.persistMultiverseToFile((Schema)World.DataSource, "world.xml" );
+			//MultiverseFactory.persistMultiverseToFile((Schema)World.DataSource, "world.xml" );
+			MultiverseFactory.persistMultiverseToDatabase( Multiverse );
+			Close();
 		}
 	}
 }

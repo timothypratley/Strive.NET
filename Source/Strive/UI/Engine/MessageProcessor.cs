@@ -59,7 +59,7 @@ namespace Strive.UI.Engine {
 					Log.LogMessage( "Initial heading is " + Helper.GetHeadingFromRotation(po.Rotation) );
 				} 
 				else {
-					Log.LogMessage( "Added object " + po.ObjectInstanceID + " with model " + po.ModelID + " at " + po.Position );
+					//Log.LogMessage( "Added object " + po.ObjectInstanceID + " with model " + po.ModelID + " at " + po.Position );
 				}
 				if ( poi != null && po is Mobile ) {
 					SetMobileState( ((Mobile)po).MobileState, (IActor)poi.model );
@@ -123,7 +123,7 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.DropPhysicalObject) {
 				Strive.Network.Messages.ToClient.DropPhysicalObject dpo = (Strive.Network.Messages.ToClient.DropPhysicalObject)m;
 				Game.CurrentWorld.Remove( dpo.instance_id );
-				Log.LogMessage( "Removed "+ dpo.instance_id.ToString() );
+				//Log.LogMessage( "Removed "+ dpo.instance_id.ToString() );
 			}
 				#endregion
 			#region MobileState

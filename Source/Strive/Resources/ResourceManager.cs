@@ -36,7 +36,6 @@ namespace Strive.Resources
 		{
 			string actorFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl");
 			string _3dsFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds");
-			string textureFile = System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp");
 
 			// check for local file first:
 			if ( System.IO.File.Exists( actorFile ) ) {
@@ -48,10 +47,6 @@ namespace Strive.Resources
 				return m;
 			} else if ( System.IO.File.Exists(_3dsFile) ) {
 				return factory.LoadStaticModel( InstanceID.ToString(), _3dsFile, height );
-			} else if ( System.IO.File.Exists( textureFile ) ) {
-				throw new Exception( "don't make terrain this way" );
-				//ITexture t = LoadTexture( ModelID );
-				//return factory.CreateTerrain( InstanceID.ToString(), t );
 			}
 
 			// download resource
@@ -60,11 +55,6 @@ namespace Strive.Resources
 			}
 			else if (makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"))) {
 				return factory.LoadStaticModel(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), height);
-			}
-			else if (makeTextureExist(System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp"))) {
-				throw new Exception( "don't make terrain pieces this way" );
-//				ITexture t = LoadTexture( ModelID );
-//				return factory.CreateTerrain( InstanceID.ToString(), t );
 			}
 			else {
 				throw new ResourceNotLoadedException(ModelID, ResourceType.Model);
@@ -147,7 +137,14 @@ namespace Strive.Resources
 			ITexture texture = (ITexture)_textures[TextureID];
 			if ( texture == null ) {
 				// load from file
-				texture = factory.LoadTexture( TextureID.ToString(), System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".bmp" ) );
+				string filename = System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".bmp" );
+				if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
+					filename = System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".dds" );
+					if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
+						throw new ResourceNotLoadedException( TextureID, ResourceType.Texture );
+					}
+				}
+				texture = factory.LoadTexture( TextureID.ToString(), filename );
 				_textures.Add( TextureID, texture );
 			}
 			return texture;
