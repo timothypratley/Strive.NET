@@ -46,7 +46,7 @@ namespace Strive.UI.WorldView {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
 						if ( k > 0 ) {
 							// TODO: bad, don't use hardcoded 20!
-							TC[i,j,k].SetTexture( _resource_manager.GetTexture( 20 ).ID );
+							TC[i,j,k].SetTexture( _resource_manager.GetTexture( 21 ).ID );
 						}
 					}
 				}

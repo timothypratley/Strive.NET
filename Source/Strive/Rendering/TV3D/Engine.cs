@@ -120,8 +120,27 @@ namespace Strive.Rendering.TV3D {
 			Gl = new TVGlobals();
 			Camera = new TVCamera();
 			Atmosphere = new TVAtmosphere();
+			//Atmosphere.Fog_SetParameters( 100F, 10000F, 0.001F );
+			//Atmosphere.Fog_Enable( true );
 			Input = new TVInputEngine();
 			FontIndex = Screen2DText.TextureFont_Create("font", "Verdana", 20, true, false, false, false);
+		}
+
+		bool _fullScreen = false;
+		public bool FullScreen {
+			get { return _fullScreen; }
+			set {
+				if ( value ) {
+					if ( !TV3DEngine.ResizeFullscreen( 800, 600, 16, CONST_TV_DEPTHBUFFER.TV_WBUFFER ) ) {
+						throw new Exception( "Failed to set fullscreen mode" );
+					}
+				} else {
+					if ( !TV3DEngine.ResizeDevice() ) {
+						throw new Exception( "Failed to set windowed mode" );
+					}
+				}
+				_fullScreen = value;
+			}
 		}
 
 		public void Terminate() {

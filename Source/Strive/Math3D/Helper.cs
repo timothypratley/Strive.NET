@@ -29,7 +29,7 @@ namespace Strive.Math3D
 		}
 
 		static public int DivTruncate( int x, int y ) {
-			return (x/y - (x<0?1:0));
+			return (x/y - ((x<0&&(x%y!=0))?1:0));
 		}
 
 	}

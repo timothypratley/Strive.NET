@@ -166,20 +166,20 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void Render() {
-			//renderViewport.SetFocus();
+			renderViewport.SetFocus();
 			RenderingScene.Clear();
 			RenderingScene.RenderAtmosphere();
 			TerrainPieces.Render();
 			RenderingScene.Render();
 			RenderingScene.Display();
-//			if ( miniMapViewport != null ) {
-//				miniMapViewport.SetFocus();
-//				RenderingScene.Clear();
-//				RenderingScene.RenderAtmosphere();
-//				TerrainPieces.Render();
-//				RenderingScene.Render();
-//				RenderingScene.Display();
-//			}
+			if ( miniMapViewport != null ) {
+				miniMapViewport.SetFocus();
+				RenderingScene.Clear();
+				RenderingScene.RenderAtmosphere();
+				TerrainPieces.Render();
+				RenderingScene.Render();
+				RenderingScene.Display();
+			}
 		}
 
 		public void Clear() {

@@ -22,11 +22,13 @@ namespace Strive.Network.Client {
 		int tcpoffset = 0;
 		bool connected = false;
 		public Strive.Network.Messages.NetworkProtocolType protocol;
-		bool isRunning = false;
+		public bool isRunning = false;
 
 		public delegate void OnConnectHandler();
+		public delegate void OnConnectFailedHandler();
 		public delegate void OnDisconnectHandler();
 		public event OnConnectHandler OnConnect;
+		public event OnConnectFailedHandler OnConnectFailed;
 		public event OnDisconnectHandler OnDisconnect;
 
 
@@ -61,7 +63,9 @@ namespace Strive.Network.Client {
 			}
 			if ( connected ) {
 				connected = false;
-				OnDisconnect();
+				if ( OnDisconnect != null ) {
+					OnDisconnect();	
+				}
 			}
 			isRunning = false;
 		}
@@ -73,7 +77,9 @@ namespace Strive.Network.Client {
 				// Complete the connection.
 				client.tcpsocket.EndConnect(ar);
 				client.connected = true;
-				client.OnConnect();
+				if ( client.OnConnect != null ) {
+					client.OnConnect();
+				}
 
 				// Begin reading.
 				client.tcpsocket.BeginReceive( client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
@@ -82,8 +88,10 @@ namespace Strive.Network.Client {
 				client.udpsocket.Bind( client.tcpsocket.LocalEndPoint );
 				client.udpsocket.BeginConnect( client.tcpsocket.RemoteEndPoint,
 					new AsyncCallback(ConnectUDPCallback), client );
-			} catch (Exception) {
+			} catch (Exception e) {
+				Log.ErrorMessage( e );
 				client.Stop();
+				if ( client.OnConnectFailed != null ) client.OnConnectFailed();
 			}
 		}
 
@@ -97,7 +105,8 @@ namespace Strive.Network.Client {
 				// Begin reading.
 				client.udpsocket.BeginReceive( client.udpbuffer, 0, MessageTypeMap.BufferSize, 0,
 					new AsyncCallback(ReceiveUDPCallback), client );
-			} catch (Exception) {
+			} catch (Exception e) {
+				Log.ErrorMessage( e );
 				client.Stop();
 			}
 		}
@@ -143,7 +152,8 @@ namespace Strive.Network.Client {
 				// listen for the next message
 				client.tcpsocket.BeginReceive( client.tcpbuffer, client.tcpoffset, MessageTypeMap.BufferSize - client.tcpoffset, 0,
 					new AsyncCallback(ReceiveTCPCallback), client );
-			} catch ( Exception ) {
+			} catch ( Exception e ) {
+				Log.ErrorMessage( e );
 				client.Stop();
 			}
 		}
@@ -167,7 +177,8 @@ namespace Strive.Network.Client {
 				// Get the next message
 				client.udpsocket.BeginReceive( client.udpbuffer, 0, MessageTypeMap.BufferSize, 0,
 					new AsyncCallback(ReceiveUDPCallback), client );
-			} catch ( Exception ) {
+			} catch ( Exception e ) {
+				Log.ErrorMessage( e );
 				client.Stop();
 			}
 		}
@@ -197,8 +208,8 @@ namespace Strive.Network.Client {
 						}break;
 					}
 				}
-
-			} catch ( Exception ) {
+			} catch ( Exception e ) {
+				Log.ErrorMessage( e );
 				Stop();
 			}
 		}
@@ -209,7 +220,8 @@ namespace Strive.Network.Client {
 			try {
 				tcpsocket.BeginSend( buffer, 0, buffer.Length, 0,
 					new AsyncCallback(SendTCPCallback), this );
-			} catch ( Exception ) {
+			} catch ( Exception e ) {
+				Log.ErrorMessage( e );
 				Stop();
 			}
 		}
@@ -244,7 +256,7 @@ namespace Strive.Network.Client {
 			try {
 				// Complete sending the data to the remote device.
 				int bytesSent = client.udpsocket.EndSend(ar);
-			} catch ( Exception ) {
+			} catch ( Exception e ) {
 				client.Stop();
 			}
 		}

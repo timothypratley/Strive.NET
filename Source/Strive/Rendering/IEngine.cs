@@ -31,6 +31,7 @@ namespace Strive.Rendering
 		float TimeSinceLastFrame();
 		void EnableZ();
 		void DisableZ();
+		bool FullScreen { get; set; }
 
 		IMouse Mouse { get; }
 		IKeyboard Keyboard{ get; }
