@@ -70,6 +70,8 @@ namespace Strive.UI.WorldView {
 				cz = Helper.DivTruncate( cz, hpc );
 				if ( x - (cx*cs) < (cx+1)*cs - x ) cx--;
 				if ( z - (cz*cs) < (cz+1)*cs - z ) cz--;
+				cx -= (xorder/2-1);
+				cz -= (zorder/2-1);
 				xdiff = cx - CX[k];
 				zdiff = cz - CZ[k];
 

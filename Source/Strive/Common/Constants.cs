@@ -12,7 +12,7 @@ namespace Strive.Common
 
 		// TODO: these should be settable per client
 		public const int terrainZoomOrder = 2;
-		public const int terrainXOrder = 2;
-		public const int terrainZOrder = 2;
+		public const int terrainXOrder = 4;
+		public const int terrainZOrder = 4;
 	}
 }
