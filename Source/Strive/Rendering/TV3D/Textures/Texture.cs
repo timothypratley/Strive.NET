@@ -36,6 +36,12 @@ namespace Strive.Rendering.TV3D.Textures
 			t._render_surface = Engine.TV3DScene.CreateAlphaRenderSurface( width, height, false );
 			t._width = width;
 			t._height = height;
+
+			// clear it
+			t._render_surface.StartRender( true );
+			int green = Engine.Gl.RGBA( 0, 1, 0, 1 );
+			Engine.Screen2DImmediate.DRAW_FilledBox( 0, 0, width, height, green, green, green, green );
+			t._render_surface.EndRender();
 			t._id = t._render_surface.GetTexture();
 			return t;
 		}

@@ -40,12 +40,14 @@ namespace Strive.UI.WorldBuilder
 		static Schema multiverse;
 		static IEngine engine;
 		static World world;
+		static ResourceManager resource_manager;
 		private System.Windows.Forms.MenuItem menuItem5;
 
 		string currentFileName;
 		private System.Windows.Forms.MenuItem menuItem6;
 		private System.Windows.Forms.MenuItem menuItem7;
 		private System.Windows.Forms.MenuItem menuItem8;
+		private System.Windows.Forms.MenuItem menuItem9;
 		string currentConnectionString;
 
 
@@ -63,8 +65,8 @@ namespace Strive.UI.WorldBuilder
 			// the 3d rendering engine
 			engine = Strive.Rendering.Activator.GetEngine();
 
-			ResourceManager.SetPath( "c:/strive/resources" );
-			ResourceManager.factory = engine;
+			resource_manager = new ResourceManager( engine );
+			resource_manager.SetPath( @"c:/strive/resources" );
 
 			mouse = engine.Mouse;
 			keyboard = engine.Keyboard;
@@ -114,6 +116,7 @@ namespace Strive.UI.WorldBuilder
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
 			this.menuItem7 = new System.Windows.Forms.MenuItem();
 			this.menuItem8 = new System.Windows.Forms.MenuItem();
+			this.menuItem9 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -138,9 +141,10 @@ namespace Strive.UI.WorldBuilder
 																						this.toolBarButton1,
 																						this.toolBarButton2});
 			this.toolBar1.DropDownArrows = true;
+			this.toolBar1.Location = new System.Drawing.Point(0, 0);
 			this.toolBar1.Name = "toolBar1";
 			this.toolBar1.ShowToolTips = true;
-			this.toolBar1.Size = new System.Drawing.Size(528, 39);
+			this.toolBar1.Size = new System.Drawing.Size(528, 42);
 			this.toolBar1.TabIndex = 4;
 			// 
 			// toolBarButton1
@@ -162,6 +166,7 @@ namespace Strive.UI.WorldBuilder
 			// 
 			this.menuItem1.Index = 0;
 			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					  this.menuItem9,
 																					  this.menuItem3,
 																					  this.menuItem5,
 																					  this.menuItem4,
@@ -170,25 +175,25 @@ namespace Strive.UI.WorldBuilder
 			// 
 			// menuItem3
 			// 
-			this.menuItem3.Index = 0;
+			this.menuItem3.Index = 1;
 			this.menuItem3.Text = "Open From File";
 			this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
 			// 
 			// menuItem5
 			// 
-			this.menuItem5.Index = 1;
+			this.menuItem5.Index = 2;
 			this.menuItem5.Text = "Open From Database";
 			this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
 			// 
 			// menuItem4
 			// 
-			this.menuItem4.Index = 2;
+			this.menuItem4.Index = 3;
 			this.menuItem4.Text = "Save To File";
 			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
 			// 
 			// menuItem6
 			// 
-			this.menuItem6.Index = 3;
+			this.menuItem6.Index = 4;
 			this.menuItem6.Text = "Save To Database";
 			this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
 			// 
@@ -210,14 +215,19 @@ namespace Strive.UI.WorldBuilder
 			this.menuItem8.Text = "Read From Bitmap";
 			this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
 			// 
+			// menuItem9
+			// 
+			this.menuItem9.Index = 0;
+			this.menuItem9.Text = "New";
+			this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
+			// 
 			// WinMain
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(528, 461);
-			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.toolBar1,
-																		  this.statusBar1,
-																		  this.panel1});
+			this.Controls.Add(this.toolBar1);
+			this.Controls.Add(this.statusBar1);
+			this.Controls.Add(this.panel1);
 			this.Menu = this.mainMenu1;
 			this.Name = "WinMain";
 			this.Text = "Main";
@@ -231,7 +241,8 @@ namespace Strive.UI.WorldBuilder
 		Strive.Common.StoppableThread st;
 		private void Main_Load(object sender, System.EventArgs e) {
 			// the worldview
-			world = new World( engine, panel1 );
+			world = new World( resource_manager, engine );
+			world.InitialiseView( this, panel1, null );
 			st = new Strive.Common.StoppableThread( new Strive.Common.StoppableThread.WhileRunning( InputHandler ) );
 		}
 
@@ -266,60 +277,54 @@ namespace Strive.UI.WorldBuilder
 			}
 			
 			Log.LogMessage( "Loading world \"" + wr.WorldName + "\"..." );
-			foreach ( Schema.AreaRow ar in wr.GetAreaRows() ) {
-				Log.LogMessage( "Loading area \"" + ar.AreaName + "\"..." );
-				// don't load area 0, its players and their eq
-				if ( ar.AreaID == 0 ) continue;
-				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
-					// nb: add terrain pieces first,
-					// we rely on these being the first thing sent to the client.
-					// todo: make groundlevel lookup serverside...
-					// thus client need not have the terrain piece before the
-					// object on top of it.
-					foreach ( Schema.TemplateTerrainRow ttr in otr.GetTemplateTerrainRows() ) {
+			Log.LogMessage( "Loading terrain..." );
+			foreach ( Schema.TemplateTerrainRow ttr in multiverse.TemplateTerrain.Rows ) {
+				foreach ( Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows() ) {
+					Terrain t = new Terrain( ttr, ttr.TemplateObjectRow, oir );
+					world.Add( t );
+				}
+			}
+			Log.LogMessage( "Loading physical objects..." );
+			foreach ( Schema.TemplateObjectRow otr in multiverse.TemplateObject.Rows ) {
+				foreach ( Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows() ) {
+					foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+						// NB: don't add players yet
+						if ( oir.GetMobilePossesableByPlayerRows().Length > 0 ) continue;
+						Mobile a = new Mobile( tmr, otr, oir );
+						world.Add( a );
+					}
+				}
+				foreach ( Schema.TemplateItemRow tir in otr.GetTemplateItemRows() ) {
+					foreach ( Schema.TemplateItemEquipableRow ier in tir.GetTemplateItemEquipableRows() ) {
 						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-							Terrain t = new Terrain( ttr, otr, oir );
-							world.Add( t );
+							Equipable e = new Equipable( ier, tir, otr, oir );
+							world.Add( e );
 						}
 					}
-					foreach ( Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows() ) {
+					foreach ( Schema.TemplateItemJunkRow ijr in tir.GetTemplateItemJunkRows() ) {
 						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-							// NB: we only add avatars to our world, not mobiles
-							Mobile m = new Mobile( tmr, otr, oir );
-							world.Add( m );
+							Junk j = new Junk( ijr, tir, otr, oir );
+							world.Add( j );
 						}
 					}
-					foreach ( Schema.TemplateItemRow tir in otr.GetTemplateItemRows() ) {
-						foreach ( Schema.ItemEquipableRow ier in tir.GetItemEquipableRows() ) {
-							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-								Equipable e = new Equipable( ier, tir, otr, oir );
-								world.Add( e );
-							}
+					foreach ( Schema.TemplateItemQuaffableRow iqr in tir.GetTemplateItemQuaffableRows() ) {
+						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+							Quaffable q = new Quaffable( iqr, tir, otr, oir );
+							world.Add( q );
 						}
-						foreach ( Schema.ItemJunkRow ijr in tir.GetItemJunkRows() ) {
-							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-								Junk j = new Junk( ijr, tir, otr, oir );
-								world.Add( j );
-							}
+					}
+					foreach ( Schema.TemplateItemReadableRow irr in tir.GetTemplateItemReadableRows() ) {
+						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+							Readable r = new Readable( irr, tir, otr, oir );
+							world.Add( r );
 						}
-						foreach ( Schema.ItemQuaffableRow iqr in tir.GetItemQuaffableRows() ) {
-							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-								Quaffable q = new Quaffable( iqr, tir, otr, oir );
-								world.Add( q );
-							}
+					}
+					foreach ( Schema.TemplateItemWieldableRow iwr in tir.GetTemplateItemWieldableRows() ) {
+						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+							Wieldable w = new Wieldable( iwr, tir, otr, oir );
+							world.Add( w );
 						}
-						foreach ( Schema.ItemReadableRow irr in tir.GetItemReadableRows() ) {
-							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-								Readable r = new Readable( irr, tir, otr, oir );
-								world.Add( r );
-							}
-						}
-						foreach ( Schema.ItemWieldableRow iwr in tir.GetItemWieldableRows() ) {
-							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-								Wieldable w = new Wieldable( iwr, tir, otr, oir );
-								world.Add( w );
-							}
-						}
+
 					}
 				}
 			}
@@ -345,16 +350,14 @@ namespace Strive.UI.WorldBuilder
 						// TODO: hmk it seems a bit homosexual
 						// to have to loop through like this, prolly there is a better
 						// way?
-						foreach ( TerrainPiece tp in world.TerrainPieces.terrainPieces.Values ) {
-							if ( tp.model == m ) {
-								// readd it with a different altitude
-								// multiple adds are ok
-								tp.altitude += 2;
-								Schema.ObjectInstanceRow oir = multiverse.ObjectInstance.FindByObjectInstanceID( tp.physicalObject.ObjectInstanceID );
-								oir.Y = tp.altitude;
-								world.TerrainPieces.Add( tp );
-								break;
-							}
+						foreach ( Terrain tp in world.TerrainPieces.terrainPiecesXYIndex.Values ) {
+							// readd it with a different altitude
+							// multiple adds are ok
+							tp.Position.Y += 2;
+							Schema.ObjectInstanceRow oir = multiverse.ObjectInstance.FindByObjectInstanceID( tp.ObjectInstanceID );
+							oir.Y = tp.Position.Y;
+							world.TerrainPieces.Add( tp );
+							break;
 						}
 					} else {
 						MessageBox.Show( this, m.Name ); 
@@ -429,6 +432,8 @@ namespace Strive.UI.WorldBuilder
 				WasKeyboardInput = true;
 				avatarRotation.Y += 5.0F;
 			}
+
+			world.RepositionCamera();
 
 			if(WasKeyboardInput) {
 				// check that we can go there
@@ -529,7 +534,7 @@ namespace Strive.UI.WorldBuilder
 				System.Data.DataTable templateClone = multiverse.TemplateTerrain.Clone();
 
 				foreach(Schema.TemplateTerrainRow terrainRow in templateClone.Rows) {
-					Schema.TemplateTerrainRow realTerrain =  multiverse.TemplateTerrain.FindByObjectTemplateID(terrainRow.ObjectTemplateID);
+					Schema.TemplateTerrainRow realTerrain =  multiverse.TemplateTerrain.FindByTemplateObjectID(terrainRow.TemplateObjectID);
 					realTerrain.Delete();
 					multiverse.TemplateTerrain.Rows.Remove(realTerrain);
 					//Schema.ObjectInstanceRow[] oirs = realTerrain.ObjectTemplateRow.GetObjectInstanceRows();
@@ -550,26 +555,25 @@ namespace Strive.UI.WorldBuilder
 
 				for ( int i=0; i<bmp.Width; i++ ) {
 					for ( int j=0; j<bmp.Height; j++ ) {
-						Schema.ObjectTemplateRow otr = multiverse.ObjectTemplate.NewObjectTemplateRow();
-						otr.AreaID = 1;
-						otr.ModelID = 20;
-						otr.ObjectTemplateName = "";
+						Schema.TemplateObjectRow otr = multiverse.TemplateObject.NewTemplateObjectRow();
+						otr.ResourceID = 20;
+						otr.TemplateObjectName = "";
 						otr.Height = 0;
 						otr.LastUpdatedBy = otr.PlayerID = 1;
 						otr.LastUpdated = otr.CreationTime = DateTime.Now;						
 						Schema.ObjectInstanceRow oir = multiverse.ObjectInstance.NewObjectInstanceRow();
-						oir.ObjectTemplateID = otr.ObjectTemplateID;
+						oir.TemplateObjectID = otr.TemplateObjectID;
 						oir.X = i*100 - bmp.Width*50;
 						oir.Z = j*100 - bmp.Height*50;
 						oir.Y = bmp.GetPixel( i, j ).GetBrightness() * 400;
-						oir.HeadingX = 0;
-						oir.HeadingY = 0;
-						oir.HeadingZ = 0;
+						oir.RotationX = 0;
+						oir.RotationY = 0;
+						oir.RotationZ = 0;
 						Schema.TemplateTerrainRow ttr = multiverse.TemplateTerrain.NewTemplateTerrainRow();
-						ttr.ObjectTemplateID = oir.ObjectTemplateID;
+						ttr.TemplateObjectID = oir.TemplateObjectID;
 						ttr.EnumTerrainTypeID = (int)EnumTerrainType.Plains;
 
-						multiverse.ObjectTemplate.AddObjectTemplateRow( otr );
+						multiverse.TemplateObject.AddTemplateObjectRow( otr );
 						multiverse.ObjectInstance.AddObjectInstanceRow( oir );
 						multiverse.TemplateTerrain.AddTemplateTerrainRow( ttr );
 					}
@@ -580,6 +584,12 @@ namespace Strive.UI.WorldBuilder
 				MessageBox.Show("Rendered");
 				//st.Start();
 			}
+		}
+
+		private void menuItem9_Click(object sender, System.EventArgs e) {
+			multiverse.World.AddWorldRow( 1, "default", "default" );
+			renderMultiverse();
+			st.Start();
 		}
 	}
 }

@@ -93,9 +93,15 @@ namespace Strive.UI.WorldView {
 		}
 
 		public void RemoveAll() {
-			TerrainPieces.Clear();
-			physicalObjectInstances.Clear();
-			RenderingScene.Models.Clear();
+			if ( TerrainPieces != null ) {
+				TerrainPieces.Clear();
+			}
+			if ( physicalObjectInstances != null ) {
+				physicalObjectInstances.Clear();
+			}
+			if ( RenderingScene != null ) {
+				RenderingScene.Models.Clear();
+			}
 		}
 
 		public PhysicalObjectInstance Find( int ObjectInstanceID ) {

@@ -15,10 +15,11 @@ namespace Strive.Utils.WorldBuilder
 	public class WinMain : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.DataGrid World;
+		private Schema Multiverse = new Schema();
 		//private Schema Multiverse = MultiverseFactory.getMultiverseFromFile( "world.xml" );
-		private Schema Multiverse = MultiverseFactory.getMultiverseFromDatabase(
-				System.Configuration.ConfigurationSettings.AppSettings["databaseConnectionString"]
-		);
+		//private Schema Multiverse = MultiverseFactory.getMultiverseFromDatabase(
+				//System.Configuration.ConfigurationSettings.AppSettings["databaseConnectionString"]
+		//);
 		private System.Windows.Forms.Button SaveChanges;
 
 		/// <summary>
