@@ -54,8 +54,10 @@ namespace Strive.Rendering.TV3D.Textures
 		public void Clear( float x, float y, float width, float height ) {
 			_render_surface.StartRender(false);
 			Engine.Screen2DImmediate.ACTION_Begin2D();
+			Engine.Screen2DImmediate.SETTINGS_SetBlendingMode( DxVBLibA.CONST_D3DBLEND.D3DBLEND_SRCALPHA, DxVBLibA.CONST_D3DBLEND.D3DBLEND_ZERO, true );
 			int invis = Engine.Gl.RGBA( 0, 0, 0, 0 );
 			Engine.Screen2DImmediate.DRAW_FilledBox( x, y, x+width, y+height, invis, invis, invis, invis );
+			Engine.Screen2DImmediate.SETTINGS_SetBlendingMode( DxVBLibA.CONST_D3DBLEND.D3DBLEND_SRCALPHA, DxVBLibA.CONST_D3DBLEND.D3DBLEND_INVSRCALPHA, true );
 			Engine.Screen2DImmediate.ACTION_End2D();
 			_render_surface.EndRender();
 		}

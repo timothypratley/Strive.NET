@@ -42,11 +42,12 @@ namespace Strive.UI.WorldView {
 				for ( i=0; i<xorder; i++ ) {
 					for ( j=0; j<zorder; j++ ) {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
+
 						ITexture texture = engine.CreateTexture( "land", Constants.terrainPieceTextureWidth*hpc, Constants.terrainPieceTextureWidth*hpc );
 						TC[i,j,k].SetTexture( texture );
 
 						// TODO: how to know which detail texture to use?
-						//TC[i,j,k].SetDetailTexture( _resource_manager.GetTexture( 9 ) );
+						TC[i,j,k].SetDetailTexture( _resource_manager.GetTexture( 9 ) );
 
 						// TODO: fix this don't hardcode it... and don't set it per terrain chunk
 						//if ( k == zoomorder-1 ){
@@ -181,6 +182,10 @@ namespace Strive.UI.WorldView {
 							if ( k<zoomorder-1 ) {
 								MakeVisible( k+1, TC[i,j,k].Position.X, TC[i,j,k].Position.Z );
 							}
+
+							// NB: TODO in order to make sure invis and seaming works,
+							// we need to remove Set() and replace it with this
+							// refresh process, or put the extra checking into Set
 
 							// The new location needs to be made invisible
 							TC[i,j,k].Position = new Vector3D(tcx, 0, tcz );
