@@ -74,10 +74,14 @@ namespace Strive.UI.Engine
 
 		void ProcessOutstandingMessages() 
 		{
+			// TODO: we need to be carefull its not possible to flood
+			int i = 0;
 			while(_connection.MessageCount > 0) 
 			{
 				IMessage m = _connection.PopNextMessage();
 				_message_processor.Process( m );
+				i++;
+				if ( i>5 ) break;
 			}
 		}
 

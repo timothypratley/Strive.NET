@@ -12,83 +12,104 @@ namespace Strive.UI.WorldView
 	/// </summary>
 	public class TerrainCollection {
 		public Hashtable terrainPieces = new Hashtable();
+		public Hashtable terrainPiecesXYIndex = new Hashtable();
 		IEngine _engine;
 		IScene _scene;
+		ResourceManager _resource_manager;
 		public static int terrainSize = 100;
 
 
-		public TerrainCollection( IEngine engine, IScene scene ) {
+		public TerrainCollection( ResourceManager rm, IEngine engine, IScene scene ) {
 			_engine = engine;
 			_scene = scene;
+			_resource_manager = rm;
 		}
 
 		public void Add( TerrainPiece tp ) {
-			foreach ( TerrainPiece tmptp in terrainPieces.Values ) {
-				bool tmptpdirty = false;
-				int xdiff = (int)(tp.x - tmptp.x)/100;
-				int zdiff = (int)(tp.z - tmptp.z)/100;
+			TerrainPiece tpexists = terrainPieces[tp.instance_id] as TerrainPiece;
+			if ( tpexists != null ) {
+				if ( tp.x == tpexists.x && tp.z == tpexists.z &&tp.altitude == tpexists.altitude ) {
+					// already have this peice
+					Strive.Logging.Log.WarningMessage( "Tried to add duplicate terrain peice " + tp.instance_id );
+					return;
+				} else {
+					Remove( tpexists.instance_id );
+				}
+			}
 
-				// everybody needs good neighbours
-				if ( xdiff == 0 ) {
-					if ( zdiff == 1 ) {
-						if ( tmptp.zplusKnown && tmptp.zplus != tp.altitude ) {
-							tmptpdirty = true;
-						}
-						tmptp.zplus = tp.altitude;
-						tmptp.zplusKnown = true;
-					} else if ( zdiff == -1 ) {
-						tp.zplus = tmptp.altitude;
-						tp.zplusKnown = true;
+			int x = (int)tp.x/terrainSize;
+			int z = (int)tp.z/terrainSize;
+			Vector2D loc = new Vector2D( x, z );
+			tpexists = terrainPiecesXYIndex[loc] as TerrainPiece;
+			if ( tpexists != null ) {
+				Strive.Logging.Log.WarningMessage( "Replacing terrain peice " + tpexists.instance_id + " with " + tp.instance_id );
+				Remove( tpexists.instance_id );
+			}
+
+			terrainPieces.Add( tp.instance_id, tp );
+			terrainPiecesXYIndex.Add( loc, tp );
+
+			// everybody needs good neighbours
+			TerrainPiece tptmp;
+			for ( int i=-1; i<=1; i++ ) {
+				for ( int j=-1; j<=1; j++ ) {
+					if ( i==0 && j == 0 ) {
+						continue;
+					} else {
+						loc.Set(x+i, z+j );
+						tptmp = (TerrainPiece)terrainPiecesXYIndex[ loc ];
 					}
-				} else if ( zdiff == 0 ) {
-					if ( xdiff == 1 ) {
-						if ( tmptp.xplusKnown && tmptp.xplus != tp.altitude ) {
-							tmptpdirty = true;
+					if ( tptmp != null ) {
+						if ( i==-1 && j==0 ) {
+							tptmp.xplus = tp.altitude;
+							tptmp.xplusKnown = true;
+						} else if ( i==-1 && j == -1 ) {
+							tptmp.xpluszplus = tp.altitude;
+							tptmp.xpluszplusKnown = true;
+						} else if ( i==0 && j == -1 ) {
+							tptmp.zplus = tp.altitude;
+							tptmp.zplusKnown = true;
+						} else if ( i==1 && j==0 ) {
+							tp.xplus = tptmp.altitude;
+							tp.xplusKnown = true;
+						} else if ( i==1 && j == 1 ) {
+							tp.xpluszplus = tptmp.altitude;
+							tp.xpluszplusKnown = true;
+						} else if ( i==0 && j == 1 ) {
+							tp.zplus = tptmp.altitude;
+							tp.zplusKnown = true;
 						}
-						tmptp.xplus = tp.altitude;
-						tmptp.xplusKnown = true;
-					} else if ( xdiff == -1 ) {
-						tp.xplus = tmptp.altitude;
-						tp.xplusKnown = true;
-					}
-				} else if ( xdiff == 1 ) {
-					if ( zdiff == 1 ) {
-						if ( tmptp.xpluszplusKnown && tmptp.xpluszplus != tp.altitude ) {
-							tmptpdirty = true;
+
+						if ( tptmp.model == null && tptmp.xplusKnown && tptmp.zplusKnown && tptmp.xpluszplusKnown ) {
+							if ( tptmp.model != null ) _scene.Models.Remove( tptmp.instance_id );
+							tptmp.model = _engine.CreateTerrain( tptmp.instance_id.ToString(), _resource_manager.GetTexture(tptmp.texture_id), tptmp.physicalObject.Rotation.Y, tptmp.altitude, tptmp.xplus, tptmp.zplus, tptmp.xpluszplus );
+							tptmp.model.Position = new Vector3D( tptmp.x, 0, tptmp.z );
+							_scene.Models.Add( tptmp.instance_id, tptmp.model );
 						}
-						tmptp.xpluszplus = tp.altitude;
-						tmptp.xpluszplusKnown = true;
-					}
-				} else if ( xdiff == -1 ) {
-					if ( zdiff == -1 ) {
-						tp.xpluszplus = tmptp.altitude;
-						tp.xpluszplusKnown = true;
 					}
 				}
-				if ( (tmptpdirty || tmptp.model == null) && tmptp.xplusKnown && tmptp.zplusKnown && tmptp.xpluszplusKnown ) {
-					if ( tmptp.model != null ) _scene.Models.Remove( tmptp.instance_id );
-					tmptp.model = _engine.CreateTerrain( tmptp.instance_id.ToString(), ResourceManager.LoadTexture( tmptp.texture_id), tmptp.physicalObject.Rotation.Y, tmptp.altitude, tmptp.xplus, tmptp.zplus, tmptp.xpluszplus );
-					tmptp.model.Position = new Vector3D( tmptp.x, 0, tmptp.z );
-					_scene.Models.Add( tmptp.instance_id, tmptp.model );
+				if ( tp.model == null && tp.xplusKnown && tp.zplusKnown && tp.xpluszplusKnown ) {
+					if ( tp.model != null ) _scene.Models.Remove( tp.instance_id );
+					tp.model = _engine.CreateTerrain( tp.instance_id.ToString(), _resource_manager.GetTexture(tp.texture_id), tp.physicalObject.Rotation.Y, tp.altitude, tp.xplus, tp.zplus, tp.xpluszplus );
+					tp.model.Position = new Vector3D( tp.x, 0, tp.z );
+					_scene.Models.Add( tp.instance_id, tp.model );
 				}
 			}
-			if ( tp.xplusKnown && tp.zplusKnown && tp.xpluszplusKnown ) {
-				if ( tp.model != null || _scene.Models.Contains( tp.instance_id ) ) _scene.Models.Remove( tp.instance_id );
-				tp.model = _engine.CreateTerrain( tp.instance_id.ToString(), ResourceManager.LoadTexture( tp.texture_id ), tp.physicalObject.Rotation.Y, tp.altitude, tp.xplus, tp.zplus, tp.xpluszplus );
-				tp.model.Position = new Vector3D( tp.x, 0, tp.z );
-				_scene.Models.Add( tp.instance_id, tp.model );
-			}
-			terrainPieces[ tp.instance_id ] = tp;
+			DateTime b = DateTime.Now;
 		}
 
 		public void Remove( int instance_id ) {
 			// remove it
-			TerrainPiece tp = (TerrainPiece)terrainPieces[ instance_id ];
+			TerrainPiece tp = terrainPieces[ instance_id ] as TerrainPiece;
 			if ( tp != null ) {
 				if ( tp.model != null ) {
 					_scene.Models.Remove( tp.instance_id );
 				}
 				terrainPieces.Remove( instance_id );
+				int x = (int)tp.x/terrainSize;
+				int z = (int)tp.z/terrainSize;
+				Vector2D loc = new Vector2D( x, z );
+				terrainPiecesXYIndex.Remove( loc );
 			}
 		}
 

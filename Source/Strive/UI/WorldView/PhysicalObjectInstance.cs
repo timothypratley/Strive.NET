@@ -32,10 +32,14 @@ namespace Strive.UI.WorldView
 		
 		// Terrain model loading occurs in TerrainCollection,
 		// everything else gets it model loaded upon creation.
-		public PhysicalObjectInstance( PhysicalObject po ) {
+		public PhysicalObjectInstance( PhysicalObject po, ResourceManager rm ) {
 			physicalObject = po;
 			if ( !(po is Terrain) ) {
-				model = ResourceManager.LoadModel( po.ObjectInstanceID, po.ResourceID, po.Height );
+				if ( po is Mobile ) {
+					model = rm.GetActor( po.ObjectInstanceID, po.ResourceID, po.Height );
+				} else {
+					model = rm.GetModel( po.ObjectInstanceID, po.ResourceID, po.Height );
+				}
 				model.Label = po.TemplateObjectName;
 			}
 		}

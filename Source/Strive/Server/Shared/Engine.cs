@@ -78,6 +78,8 @@ namespace Strive.Server.Shared {
 				// instead we should use actual time values.
 				// I don't think we need beats, but instead use
 				// the weather message to synchronize client/server time.
+				// NR We (L) (B)s
+
 
 				// calculate if message needs to be sent:
 				int CurrentTicks = Environment.TickCount;

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Strive.Common;
 using Strive.Math3D;
 using Strive.Rendering;
+using Strive.Rendering.Textures;
 using Strive.Resources;
 using Strive.UI.WorldView;
 using Strive.UI.Engine;
@@ -35,6 +36,7 @@ namespace Strive.UI
 		public static string userName;
 		public static string password;
 		public static Strive.Network.Messages.NetworkProtocolType protocol;
+		public static ResourceManager resources;
 
 		private static EnumSkill currentGameCommand = EnumSkill.None;
 		public static EnumSkill CurrentGameCommand {
@@ -43,7 +45,7 @@ namespace Strive.UI
 			}
 			set {
 				currentGameCommand = value;
-				Strive.Rendering.Textures.ITexture texture = Strive.Resources.ResourceManager.LoadCursor( (int)currentGameCommand );
+				ITexture texture = resources.GetCursor( (int)currentGameCommand );
 				CurrentWorld.RenderingScene.SetCursor( texture );
 			}
 		}
@@ -81,7 +83,7 @@ namespace Strive.UI
 			//Application.ApplicationExit += new EventHandler(OnApplicationExit);
 			//Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(OnThreadException);
 			// todo: umg refactor this out of existance
-			ResourceManager.factory = RenderingFactory;
+			resources = new ResourceManager( RenderingFactory );
 
 			// Initialise required objects
 			CurrentServerConnection = new ServerConnection();
@@ -96,7 +98,7 @@ namespace Strive.UI
 				throw new System.Configuration.ConfigurationException( "ResourcePath" );
 			}
 			string path = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
-			ResourceManager.SetPath( path );
+			resources.SetPath( path );
 			Application.Run(CurrentMainWindow);
 
 			// must terminate all threads to quit

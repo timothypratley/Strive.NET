@@ -20,25 +20,62 @@ namespace Strive.Resources
 	public class ResourceManager
 	{
 
-		public static string _modelPath = "";
-		public static string _texturePath = "";
-		public static string _cursorPath = "";
-		public static string _resourceServer = "";
-		public static Hashtable _textures = new Hashtable();
-		public static Hashtable _cursors = new Hashtable();
-		public static IEngine factory;
+		string _modelPath = "";
+		string _texturePath = "";
+		string _cursorPath = "";
+		string _resourceServer = "";
+		Hashtable _textures = new Hashtable();
+		Hashtable _cursors = new Hashtable();
+		Hashtable _models = new Hashtable();
+		Hashtable _actors = new Hashtable();
+		IEngine factory;
 
-		public static void SetPath( string path ) {
+		IActor _placeHolderActor;
+		IModel _placeHolderModel;
+
+		public ResourceManager( IEngine factory ) {
+			this.factory = factory;
+		}
+
+
+		public void SetPath( string path ) {
 			_modelPath = System.IO.Path.Combine( path, "models" );
 			_texturePath = System.IO.Path.Combine( path, "textures" );
 			_cursorPath = System.IO.Path.Combine( path, "cursors" );
 			_resourceServer = System.Configuration.ConfigurationSettings.AppSettings["ResourceServer"];
+
+			// TODO:
+			// try to load the placeholder models... this is a good sign if things are in order or not
+			//_placeHolderModel = GetModel( 0, 0, 10 );
+			//_placeHolderActor = GetActor( 0, 0, 10 );
 		}
 
-		public static IModel LoadModel( int InstanceID, int ModelID, float height )
-		{
-			string actorFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl");
+		IModel LoadModel( int InstanceID, int ModelID, float height ) {
 			string _3dsFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds");
+
+			if ( System.IO.File.Exists(_3dsFile) ) {
+				return factory.LoadStaticModel( InstanceID.ToString(), _3dsFile, height );
+			}
+
+			// download resource
+			if (makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"))) {
+				return factory.LoadStaticModel(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), height);
+			} else {
+				throw new ResourceNotLoadedException(ModelID, ResourceType.Model);
+			}
+		}
+
+		public IModel GetModel( int InstanceID, int ModelID, float height ) {
+			IModel m = (IModel)_models[ModelID];
+			if ( m == null ) {
+				m = LoadModel( InstanceID, ModelID, height );
+				_models.Add( ModelID, m );
+			}
+			return m.Duplicate( InstanceID.ToString(), height );
+		}
+
+		IActor LoadActor( int InstanceID, int ModelID, float height ) {
+			string actorFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl");
 
 			// check for local file first:
 			if ( System.IO.File.Exists( actorFile ) ) {
@@ -48,25 +85,29 @@ namespace Strive.Resources
 				//ITexture t = LoadTexture( ModelID );
 				//m.applyTexture( t );
 				return m;
-			} else if ( System.IO.File.Exists(_3dsFile) ) {
-				return factory.LoadStaticModel( InstanceID.ToString(), _3dsFile, height );
-			}
+			} 
 
 			// download resource
 			if(makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"))) {
 				return factory.LoadActor(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"), height);
-			}
-			else if (makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"))) {
-				return factory.LoadStaticModel(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), height);
-			}
-			else {
+			} else {
 				throw new ResourceNotLoadedException(ModelID, ResourceType.Model);
 			}
 		}
 
+		public IActor GetActor( int InstanceID, int ModelID, float height ) {
+			IActor a = (IActor)_actors[ModelID];
+			if ( a == null ) {
+				a = LoadActor( InstanceID, ModelID, height );
+				_actors.Add( ModelID, a );
+			}
+			return (IActor)a.Duplicate( InstanceID.ToString(), height );
+		}
+
+
 		#region Automatic Resource Downloading Stuffs
 
-		private static bool makeModelExist(string modelPath)
+		private bool makeModelExist(string modelPath)
 		{
 			if(System.IO.File.Exists(modelPath))
 			{
@@ -92,15 +133,14 @@ namespace Strive.Resources
 			
 		}
 
-		private static string getDownloadUrlFromModelPath(string modelPath)
+		private string getDownloadUrlFromModelPath(string modelPath)
 		{
 			string modelFragment  = modelPath.Substring(modelPath.IndexOf("\\models"));
 			modelFragment = modelFragment.Replace("\\", "/");
 			return _resourceServer + modelFragment;
-
 		}
 
-		private static bool makeTextureExist(string TexturePath)
+		private bool makeTextureExist(string TexturePath)
 		{
 			if(System.IO.File.Exists(TexturePath))
 			{
@@ -125,7 +165,7 @@ namespace Strive.Resources
 			
 		}
 
-		private static string getDownloadUrlFromTexturePath(string TexturePath)
+		private string getDownloadUrlFromTexturePath(string TexturePath)
 		{
 			string TextureFragment  = TexturePath.Substring(TexturePath.IndexOf("\\textures"));
 			TextureFragment = TextureFragment.Replace("\\", "/");
@@ -135,49 +175,62 @@ namespace Strive.Resources
 
 		#endregion
 
-		public static ITexture LoadTexture( int TextureID ) {
-			// see if its already loaded
-			ITexture texture = (ITexture)_textures[TextureID];
-			if ( texture == null ) {
-				// load from file
-				string filename = System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".bmp" );
+		ITexture LoadTexture( int TextureID ) {
+			// load from file
+			string filename = System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".bmp" );
+			if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
+				filename = System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".dds" );
 				if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
-					filename = System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".dds" );
-					if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
-						throw new ResourceNotLoadedException( TextureID, ResourceType.Texture );
-					}
+					throw new ResourceNotLoadedException( TextureID, ResourceType.Texture );
 				}
-				texture = factory.LoadTexture( TextureID.ToString(), filename );
-				_textures.Add( TextureID, texture );
 			}
-			return texture;
+			return factory.LoadTexture( TextureID.ToString(), filename );
 		}
+
+		public ITexture GetTexture( int TextureID ) {
+			ITexture t = (ITexture)_textures[TextureID];
+			if ( t == null ) {
+				t = LoadTexture( TextureID );
+				_textures.Add( TextureID, t );
+			}
+			return t;
+		}
+
 
 		/// <summary>
 		/// LoadCursor just loads a texture, but from the cursor directory
 		/// </summary>
 		/// <param name="CursorID"></param>
 		/// <returns></returns>
-		public static ITexture LoadCursor( int CursorID ) {
-			// see if its already loaded
-			ITexture texture = (ITexture)_cursors[CursorID];
-			if ( texture == null ) {
-				// load from file
-				string filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".bmp" );
-				if ( !System.IO.File.Exists( filename ) ) {
-					filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".dds" );
+		ITexture LoadCursor( int CursorID ) {
+			// load from file
+			string filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".bmp" );
+			if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename )) {
+				filename = System.IO.Path.Combine( _cursorPath, CursorID.ToString() + ".dds" );
+				if ( !System.IO.File.Exists( filename ) && !makeTextureExist( filename ) ) {
+					throw new ResourceNotLoadedException( CursorID, ResourceType.Texture );
 				}
-				texture = factory.LoadTexture( "cursor"+CursorID.ToString(), filename );
-				_cursors.Add( CursorID, texture );
 			}
-			return texture;
+			return factory.LoadTexture( "cursor"+CursorID.ToString(), filename );
 		}
 
+		public ITexture GetCursor( int CursorID ) {
+			ITexture t = (ITexture)_cursors[CursorID];
+			if ( t == null ) {
+				t = LoadTexture( CursorID );
+				_cursors.Add( CursorID, t );
+			}
+			return t;
+		}
+
+
 		// TODO: umg this is a bit ghey...
-		// maybe resourcemanager should be in rendering
-		public static void DropAll() {
+		// really should explicitly destroy them all... though there is a chance they will be garbage collected
+		public void DropAll() {
 			_textures.Clear();
 			_cursors.Clear();
+			_models.Clear();
+			_actors.Clear();
 		}
 	}
 }

@@ -18,6 +18,7 @@ namespace Strive.UI.WorldView {
 	public class World {
 		public Hashtable physicalObjectInstances = new Hashtable();
 		public IEngine RenderingEngine;
+		public ResourceManager Resources;
 		public IScene RenderingScene;
 		public TerrainCollection TerrainPieces;
 		public PhysicalObjectInstance CurrentAvatar;
@@ -25,10 +26,11 @@ namespace Strive.UI.WorldView {
 		Vector3D cameraPosition = new Vector3D( 0, 0, 0 );
 		Vector3D cameraRotation = new Vector3D( 0, 0, 0 );
 
-		public World( IEngine engine, IWin32Window RenderTarget ) {
+		public World( ResourceManager resources, IEngine engine, IWin32Window RenderTarget ) {
+			Resources = resources;
 			RenderingEngine = engine;
 			RenderingScene = engine.CreateScene();
-			TerrainPieces = new TerrainCollection( RenderingEngine, RenderingScene );
+			TerrainPieces = new TerrainCollection( Resources, RenderingEngine, RenderingScene );
 			RenderingEngine.Initialise( RenderTarget, EnumRenderTarget.PictureBox, Resolution.Automatic );
 			//RenderingScene.View.FieldOfView = 90;
 			//RenderingScene.View.ViewDistance = 4000;
@@ -39,14 +41,14 @@ namespace Strive.UI.WorldView {
 		public PhysicalObjectInstance Add( PhysicalObject po ) {
 			if ( po is Terrain ) {
 				Terrain t = (Terrain)po;
-				TerrainPieces.Add( new TerrainPiece( t ) );
+				TerrainPieces.Add( new TerrainPiece( t, Resources ) );
 				return null;
 			} else {
 				if ( RenderingScene.Models.Contains( po.ObjectInstanceID ) ) {
 					Log.WarningMessage( "Trying to add existing PhysicalObject " + po.ObjectInstanceID );
 					return (PhysicalObjectInstance)physicalObjectInstances[po.ObjectInstanceID];
 				}
-				PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
+				PhysicalObjectInstance poi = new PhysicalObjectInstance( po, Resources );
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 				RenderingScene.Models.Add( po.ObjectInstanceID, poi.model );
 				poi.model.Position = po.Position;
@@ -138,7 +140,7 @@ namespace Strive.UI.WorldView {
 			TerrainPieces.Clear();
 			CurrentAvatar = null;
 			RenderingScene.DropAll();
-			ResourceManager.DropAll();
+			Resources.DropAll();
 		}
 
 		public void SetSky( ITexture texture ) {

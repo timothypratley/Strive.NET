@@ -162,10 +162,10 @@ namespace Strive.UI.Engine {
 			else if ( m is Strive.Network.Messages.ToClient.Weather ) {
 				Strive.Network.Messages.ToClient.Weather w = (Strive.Network.Messages.ToClient.Weather)m;
 				//Log.LogMessage( "Weather update recieved" );
-				ITexture t = ResourceManager.LoadTexture(w.SkyTextureID);
+				ITexture t = Game.resources.GetTexture(w.SkyTextureID);
 
 				// TODO: don't hardcode the clouds textureid
-				ITexture ct = ResourceManager.LoadTexture( 46 );
+				ITexture ct = Game.resources.GetTexture( 46 );
 				Game.CurrentWorld.SetSky( t );
 				Game.CurrentWorld.SetClouds( ct );
 			}

@@ -44,7 +44,7 @@ namespace Strive.Rendering.TV3D.Models {
 		/// <param name="path"></param>
 		/// <param name="height">pass zero to retain original height</param>
 		/// <returns></returns>
-		public static Model LoadStaticModel( string name, string path, float height ) {
+		public static IModel LoadStaticModel( string name, string path, float height ) {
 			if(!System.IO.File.Exists(path)) {
 				throw new System.IO.FileNotFoundException("Could not load model '" + path + "'", path);
 			}
@@ -92,6 +92,50 @@ namespace Strive.Rendering.TV3D.Models {
 			);
 			loadedModel._id = loadedModel._mesh.GetMeshIndex();
 			return loadedModel;
+		}
+
+
+		public IModel Duplicate( string name, float height ) {
+			Model dup = new Model();
+			dup._key = name;
+			dup._mesh = this._mesh.DuplicateMesh( name );
+			dup._mesh.SetPosition( 0, 0, 0 );
+			dup._mesh.SetRotation( 0, 0, 0 );
+
+			//loadedModel._mesh.ShowBoundingBox( true );
+			D3DVECTOR boxmin = new D3DVECTOR();
+			D3DVECTOR boxmax = new D3DVECTOR();
+			dup._mesh.GetBoundingBox( ref boxmin, ref boxmax, true );
+			dup._boxmin = new Vector3D( boxmin.x, boxmin.y, boxmin.z );
+			dup._boxmax = new Vector3D( boxmax.x, boxmax.y, boxmax.z );
+
+			dup._height = height;
+			if ( height != 0 ) {
+				// scale the model to the correct height and get new bounding box info
+				float scale_factor = height / ( boxmax.y - boxmin.y );
+				dup._mesh.ScaleMesh( scale_factor, scale_factor, scale_factor );
+				dup._boxmin.X *= scale_factor;
+				dup._boxmin.Y *= scale_factor;
+				dup._boxmin.Z *= scale_factor;
+				dup._boxmax.X *= scale_factor;
+				dup._boxmax.Y *= scale_factor;
+				dup._boxmax.Z *= scale_factor;
+			}
+			float radius = 0;
+			DxVBLibA.D3DVECTOR center = new DxVBLibA.D3DVECTOR();
+			dup._mesh.GetBoundingSphere(ref center, ref radius, true );
+			dup._RadiusSquared = radius * radius;
+			dup._position = new Math3D.Vector3D( 0, 0, 0 );
+			dup._rotation = new Math3D.Vector3D( 0, 0, 0 );
+			// TODO: could get rid of 'offset' if we prenormalize the models
+			// outside
+			dup._offset = new Math3D.Vector3D(
+				(boxmax.x + boxmin.x)/2,
+				(boxmax.y + boxmin.y)/2,
+				(boxmax.z + boxmin.z)/2
+				);
+			dup._id = dup._mesh.GetMeshIndex();
+			return dup;
 		}
 
 

@@ -37,7 +37,6 @@ namespace Strive.Rendering.TV3D.Models {
 			t._mesh = Engine.TV3DScene.CreateMeshBuilder( name );
 			//TODO: use the 1337 texturemod stuffs umg
 
-			int a,b;
 			switch ( (int)texture_rotation ) {
 				case 0:
 					t._mesh.AddTriangle( texture.ID, 0, zy, 100, 100, xzy, 100, 0, y, 0, -1, 1, true, false );
@@ -80,6 +79,12 @@ namespace Strive.Rendering.TV3D.Models {
 		public void Delete() {
 			Engine.TV3DScene.DestroyMesh( ref _mesh );
 			_mesh = null;
+		}
+
+		// TODO:
+		// umg duplicate is a dibarcal!
+		public IModel Duplicate( string name, float height ) {
+			return null;
 		}
 
 		public void applyTexture( ITexture texture ) {

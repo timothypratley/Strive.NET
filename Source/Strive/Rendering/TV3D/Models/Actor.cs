@@ -147,6 +147,62 @@ namespace Strive.Rendering.TV3D.Models {
 			maxbox.Set( _boxmax );
 		}
 
+		public IModel Duplicate( string name, float height ) 
+		{
+			Actor dup = new Actor();
+			dup._model = this._model.Duplicate( name );
+			dup._model.SetPosition( 0, 0, 0 );
+			dup._model.SetRotation( 0, 0, 0 );
+			dup._key = name;
+
+			
+			DxVBLibA.D3DVECTOR boxmin = new DxVBLibA.D3DVECTOR();
+			DxVBLibA.D3DVECTOR boxmax = new DxVBLibA.D3DVECTOR();
+			dup._model.GetBoundingBox( ref boxmin, ref boxmax );
+			
+			// TODO: get bounding boxes dependent upon the animation sequence
+
+			// EEERRR todo: there is a bug in tv3d mdl bounding boxes,
+			// we need to transpose for it
+			dup._boxmin = new Vector3D( boxmin.y, boxmin.z, boxmin.x );
+			dup._boxmax = new Vector3D( boxmax.y, boxmax.z, boxmax.x );
+
+			// todo: use a bounding cylinder instead, would be bett0r!
+
+			dup._height = height;
+			if ( height != 0 ) {
+				// scale the model to the correct height and get new bounding box info
+				float scale_factor = height / ( dup._boxmax.Y - dup._boxmin.Y );
+				dup._model.SetScale( scale_factor, scale_factor, scale_factor );
+				dup._boxmin.X *= scale_factor;
+				dup._boxmin.Y *= scale_factor;
+				dup._boxmin.Z *= scale_factor;
+				dup._boxmax.X *= scale_factor;
+				dup._boxmax.Y *= scale_factor;
+				dup._boxmax.Z *= scale_factor;
+			}
+			float radius = 0;
+			DxVBLibA.D3DVECTOR center = new DxVBLibA.D3DVECTOR();
+			dup._model.GetBoundingSphere(ref center, ref radius );
+			dup._RadiusSquared = radius * radius;
+			dup._position = new Math3D.Vector3D( 0, 0, 0 );
+			// TODO: remove hardcoded initial rotation
+			//dup._rotation = new Math3D.Vector3D( 0, 90, 0 );
+
+			// todo: _offset is ghey I wish we could permenantly transpose
+			// the object.
+			// also, bounding box should be normalised around origin?
+			dup._offset = new Math3D.Vector3D(
+				(dup._boxmax.X + dup._boxmin.X)/2,
+				(dup._boxmax.Y + dup._boxmin.Y)/2,
+				(dup._boxmax.Z + dup._boxmin.Z)/2
+				);
+
+
+			dup._id = dup._model.GetEntity();
+			return dup;
+		}
+
 		#endregion
 
 		#region "Properties"

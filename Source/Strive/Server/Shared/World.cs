@@ -98,9 +98,9 @@ namespace Strive.Server.Shared {
 			squaresInX = (int)(highX-lowX)/Square.squareSize + 1;
 			squaresInZ = (int)(highZ-lowZ)/Square.squareSize + 1;
 
-			if ( squaresInX * squaresInZ > 10000 ) {
-				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize + ". Please fix the database." );
-			}
+//			if ( squaresInX * squaresInZ > 10000 ) {
+//				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize + ". Please fix the database." );
+//			}
 
 			// allocate the grid of squares used for grouping
 			// physical objects that are close to each other
@@ -303,31 +303,38 @@ namespace Strive.Server.Shared {
 			}
 
 			// check that the object can fit there
-			// todo: what about objects that span squares?
-			// these need to be checked as well, or linked from both squares?
-			foreach ( PhysicalObject spo in square[toSquareX,toSquareZ].physicalObjects ) {
-				// ignoring terrain and yourself
-				if ( spo is Terrain || spo == po ) continue;
+			for ( i=-1; i<=1; i++ ) {
+				for ( j=-1; j<=1; j++ ) {
+					if (
+						fromSquareX+i < 0 || fromSquareX+i >= squaresInX
+						|| fromSquareZ+j < 0 || fromSquareZ+j >= squaresInZ
+						|| square[toSquareX+i,toSquareZ+j] == null
+					) continue;
 
-				// distance between two objects in 2d space
-				float dx = newPosition.X - spo.Position.X;
-				float dy = newPosition.Y - spo.Position.Y;
-				float dz = newPosition.Z - spo.Position.Z;
-				float distance_squared = dx*dx + dy*dy + dz*dz;
-				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
-					// only if not already collided!
-					float dx1 = po.Position.X - spo.Position.X;
-					float dy1 = po.Position.Y - spo.Position.Y;
-					float dz1 = po.Position.Z - spo.Position.Z;
-					float distance_squared2 = dx1*dx1 + dy1*dy1 + dz1*dz1;
-					if ( distance_squared2 <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
-						continue;
-					}
-					if ( ma != null && ma.client != null ) 
-					{
-							ma.client.Send(
-								new Strive.Network.Messages.ToClient.Position( ma ) );
-							return;
+					foreach ( PhysicalObject spo in square[toSquareX+i,toSquareZ+j].physicalObjects ) {
+						// ignoring terrain and yourself
+						if ( spo is Terrain || spo == po ) continue;
+
+						// distance between two objects in 2d space
+						float dx = newPosition.X - spo.Position.X;
+						float dy = newPosition.Y - spo.Position.Y;
+						float dz = newPosition.Z - spo.Position.Z;
+						float distance_squared = dx*dx + dy*dy + dz*dz;
+						if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
+							// only if not already collided!
+							float dx1 = po.Position.X - spo.Position.X;
+							float dy1 = po.Position.Y - spo.Position.Y;
+							float dz1 = po.Position.Z - spo.Position.Z;
+							float distance_squared2 = dx1*dx1 + dy1*dy1 + dz1*dz1;
+							if ( distance_squared2 <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
+								continue;
+							}
+							if ( ma != null && ma.client != null ) {
+								ma.client.Send(
+									new Strive.Network.Messages.ToClient.Position( ma ) );
+								return;
+							}
+						}
 					}
 				}
 			}

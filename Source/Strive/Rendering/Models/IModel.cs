@@ -12,6 +12,7 @@ namespace Strive.Rendering.Models {
 		#region "Methods"
 
 		void Delete();
+		IModel Duplicate( string name, float height );
 
 		void GetBoundingBox( Vector3D boxmin, Vector3D boxmax );
 

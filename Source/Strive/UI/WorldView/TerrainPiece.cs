@@ -3,6 +3,7 @@ using System;
 using Strive.Math3D;
 using Strive.Rendering.Models;
 using Strive.Multiverse;
+using Strive.Resources;
 
 namespace Strive.UI.WorldView
 {
@@ -18,7 +19,7 @@ namespace Strive.UI.WorldView
 		public float xpluszplus;
 		public bool xpluszplusKnown = false;
 
-		public TerrainPiece( Terrain t ) : base( t ) {
+		public TerrainPiece( Terrain t, ResourceManager rm ) : base( t, rm ) {
 			this.physicalObject = t;
 		}
 

@@ -478,7 +478,7 @@ namespace Strive.UI.Windows
 
 			this.Show();
 
-			Game.CurrentWorld = new World( Game.RenderingFactory, RenderTarget );
+			Game.CurrentWorld = new World( Game.resources, Game.RenderingFactory, RenderTarget );
 
 			#endregion		
 		}
