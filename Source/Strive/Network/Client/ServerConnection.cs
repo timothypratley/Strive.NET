@@ -95,7 +95,7 @@ namespace Strive.Network.Client {
 
 		public void Chat(string message)
 		{
-			// what to do here?
+			Send(new Strive.Network.Messages.ToServer.GameCommand.Communication( CommunicationType.Chat, message ) );
 		}
 
 		public void PossessMobile(int mobileId)

@@ -337,6 +337,7 @@ namespace Strive.UI.Windows
 		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			saveSettings();
+			Application.Exit();
 		}
 
 		private void FileQuit_Click(object sender, System.EventArgs e)

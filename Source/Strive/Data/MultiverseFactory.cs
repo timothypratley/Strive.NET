@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
+
 using Strive.Multiverse;
+using Strive.Logging;
 
 namespace Strive.Data
 {
@@ -102,24 +105,40 @@ namespace Strive.Data
 
 
 		public static void refreshPlayerList(Schema multiverse) {
-			Schema updatedPlayerPartOfMultiverse = new Schema();
-			SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
-			playerFiller.Fill( updatedPlayerPartOfMultiverse.Player );
-			multiverse.Merge(updatedPlayerPartOfMultiverse);	
+			try {
+				Schema updatedPlayerPartOfMultiverse = new Schema();
+				SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
+				playerFiller.Fill( updatedPlayerPartOfMultiverse.Player );
+				multiverse.Merge(updatedPlayerPartOfMultiverse);	
+			} catch ( SqlException e ) {
+				Log.WarningMessage( e.Message );
+				Log.WarningMessage( "Connection to database was lost, reconnecting..." );
+				connection.Open();
+				Thread.Sleep( 10000 );				
+				refreshPlayerList( multiverse );
+			}
 		}
 
 		public static void refreshMultiverseForPlayer(Schema multiverse, int PlayerID) {
-			Schema updatedPlayerPartOfMultiverse = new Schema();
-			updatedPlayerPartOfMultiverse.EnforceConstraints = false;
-			SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
-			SqlDataAdapter mobileFiller = new SqlDataAdapter(commandFactory.SelectTemplateMobileRows(PlayerID));
-			SqlDataAdapter objectFiller = new SqlDataAdapter(commandFactory.SelectObjectInstanceRows(PlayerID));
-			SqlDataAdapter templateFiller = new SqlDataAdapter(commandFactory.SelectObjectTemplateRows(PlayerID));
-			templateFiller.Fill(updatedPlayerPartOfMultiverse.ObjectTemplate);
-			objectFiller.Fill(updatedPlayerPartOfMultiverse.ObjectInstance);
-			mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
-			possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
-			multiverse.Merge(updatedPlayerPartOfMultiverse);			
+			try {
+				Schema updatedPlayerPartOfMultiverse = new Schema();
+				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
+				SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
+				SqlDataAdapter mobileFiller = new SqlDataAdapter(commandFactory.SelectTemplateMobileRows(PlayerID));
+				SqlDataAdapter objectFiller = new SqlDataAdapter(commandFactory.SelectObjectInstanceRows(PlayerID));
+				SqlDataAdapter templateFiller = new SqlDataAdapter(commandFactory.SelectObjectTemplateRows(PlayerID));
+				templateFiller.Fill(updatedPlayerPartOfMultiverse.ObjectTemplate);
+				objectFiller.Fill(updatedPlayerPartOfMultiverse.ObjectInstance);
+				mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
+				possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
+				multiverse.Merge(updatedPlayerPartOfMultiverse);			
+			} catch ( SqlException e ) {
+				Log.WarningMessage( e.Message );
+				Log.WarningMessage( "Connection to database was lost, reconnecting..." );
+				connection.Open();
+				Thread.Sleep( 10000 );
+				refreshMultiverseForPlayer( multiverse, PlayerID );
+			}
 		}
 
 		public static Schema getMultiverse()

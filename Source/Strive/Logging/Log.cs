@@ -31,6 +31,7 @@ namespace Strive.Logging {
 				logFileWriter.Flush();
 			}
 			StringAppendFinite( message );
+			Console.WriteLine( message );
 		}
 
 		public static void ErrorMessage( Exception e ) {

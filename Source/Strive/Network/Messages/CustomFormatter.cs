@@ -41,7 +41,7 @@ namespace Strive.Network.Messages {
 		
 		public static bool EncodeBasicType( Object obj, MemoryStream Buffer ) {
 			Type t = obj.GetType();
-			if ( t == typeof( Enum ) ) {
+			if ( t.IsEnum ) {
 				byte[] EncodedInt = BitConverter.GetBytes((Int32)obj);
 				Buffer.Write(
 					EncodedInt,
@@ -106,6 +106,9 @@ namespace Strive.Network.Messages {
 			Object result = null;
 			if ( t == typeof( Int32 ) ) {
 				result = BitConverter.ToInt32( buffer, Offset );
+				Offset += 4;
+			} else if ( t.IsEnum ) {
+				result = Enum.ToObject( t, BitConverter.ToInt32( buffer, Offset ) );
 				Offset += 4;
 			} else if ( t == typeof( float ) ) {
 				result = BitConverter.ToSingle( buffer, Offset );

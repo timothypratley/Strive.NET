@@ -34,20 +34,14 @@ namespace Strive.UI.Windows.ChildWindows
 
 		private void ProcessChat(Strive.Network.Messages.ToClient.Communication chatMessage)
 		{
-			ChatOutput.Rtf += Environment.NewLine + chatMessage.name + ":";
-			// Make it red and add colon
-			ChatOutput.Select(ChatOutput.Text.Length - chatMessage.name.Length - 1, chatMessage.name.Length + 1);
-			ChatOutput.SelectionColor = System.Drawing.Color.Red;
-			ChatOutput.Rtf += " " + chatMessage.message;
+			ChatOutput.AppendText( chatMessage.name + ": " + chatMessage.message + Environment.NewLine );
 		}
 
 		private void ProcessClientChat(string message)
 		{
-			ChatOutput.Text += Environment.NewLine + "You say:";
-			// Make it red and add colon
-			ChatOutput.Select(ChatOutput.Text.Length - "You say:".Length, "You say:".Length);
-			ChatOutput.SelectionColor = System.Drawing.Color.Green;
-			ChatOutput.Text += " " + message;
+			ChatOutput.AppendText( "You say: " );
+			ChatOutput.AppendText( message );
+			ChatOutput.AppendText( Environment.NewLine );
 
 			// send the text
 			Game.CurrentServerConnection.Chat(message);
@@ -87,8 +81,10 @@ namespace Strive.UI.Windows.ChildWindows
 			this.ChatOutput.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right);
+			this.ChatOutput.ImeMode = System.Windows.Forms.ImeMode.NoControl;
 			this.ChatOutput.IsBottomPreferred = true;
 			this.ChatOutput.Name = "ChatOutput";
+			this.ChatOutput.ReadOnly = true;
 			this.ChatOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
 			this.ChatOutput.Size = new System.Drawing.Size(648, 184);
 			this.ChatOutput.TabIndex = 0;
@@ -126,7 +122,7 @@ namespace Strive.UI.Windows.ChildWindows
 																		  this.ChatInput,
 																		  this.ChatOutput});
 			this.Name = "Chat";
-			this.Text = "B";
+			this.Text = "Chat";
 			this.Enter += new System.EventHandler(this.Chat_Enter);
 			this.ResumeLayout(false);
 
@@ -140,7 +136,7 @@ namespace Strive.UI.Windows.ChildWindows
 
 		private void Send_Click(object sender, System.EventArgs e)
 		{
-			ProcessClientChat(ChatInput.Rtf);
+			ProcessClientChat(ChatInput.Text);
 		}
 	}
 }

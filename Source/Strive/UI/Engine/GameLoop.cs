@@ -85,16 +85,14 @@ namespace Strive.UI.Engine
 			if( m.x != 0 ) {
 				WasMouseInput = true;
 				cameraRotation.Y += m.x*0.2f; 
-				cameraRotation.X = pitch*(float)Math.Cos( cameraRotation.Y * Math.PI/180.0f );
-				cameraRotation.Z = -pitch*(float)Math.Sin( cameraRotation.Y * Math.PI/180.0f );
+				cameraRotation.X = pitch;
 			}
 			if( m.y != 0 ) {
 				WasMouseInput = true;
 				pitch += m.y*0.2f;
-				if ( pitch > 30 ) { pitch = 30; }
-				if ( pitch < -30 ) { pitch = -30; }
-				cameraRotation.X = pitch*(float)Math.Cos( cameraRotation.Y * Math.PI/180.0f );
-				cameraRotation.Z = -pitch*(float)Math.Sin( cameraRotation.Y * Math.PI/180.0f );
+				if ( pitch > 60 ) { pitch = 60; }
+				if ( pitch < -60 ) { pitch = -60; }
+				cameraRotation.X = pitch;
 			}
 			// todo: only send once for mouse or keyboard input
 			if(WasMouseInput) {

@@ -205,6 +205,7 @@ namespace Strive.Server.Shared {
 				c.Send(
 					new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )
 				);
+				//Log.LogMessage( "Sent communication message to " + c.AuthenticatedUsername );
 			}
 		}
 
