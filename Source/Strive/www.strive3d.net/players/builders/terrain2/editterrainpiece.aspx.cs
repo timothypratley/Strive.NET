@@ -12,7 +12,7 @@ using www.strive3d.net.Game;
 using thisterminal.Web;
 using System.Data.SqlClient;
 
-namespace www.strive3d.net.players.builders.terrain
+namespace www.strive3d.net.players.builders.terrain2
 {
 	/// <summary>
 	/// Summary description for editterrainpiece.
@@ -146,12 +146,13 @@ namespace www.strive3d.net.players.builders.terrain
 					0, 
 					0).ExecuteNonQuery();
 			}
-			Response.Redirect(referer.Value);
+			Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.opener.location.reload(true);</script>");
+			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">window.close()</script>");
 		}
 
 		private void Cancel_Click(object sender, System.EventArgs e)
 		{
-		Response.Redirect(referer.Value);
+			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">window.close()</script>");
 		}
 	}
 }

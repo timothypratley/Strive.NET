@@ -26,12 +26,12 @@ foreach(DataRow t in this.terrain.Rows)
 	lastsx = sx;
 	
 %>
-		<td height="75" width="75" valign="middle" align="center">
+		<td height="75" width="75" valign="middle" align="center" background="<%=www.strive3d.net.Utils.ApplicationPath%>/DesktopModules/Strive/Thumbnailer.aspx?i=<%=www.strive3d.net.Utils.ApplicationPath%>/players/builders/<%=System.Configuration.ConfigurationSettings.AppSettings["resourcepath"]%>/texture/<%=t["ResourceID"]%><%=t["ResourceFileExtension"]%>&amp;h=75&amp;w=75">
 		<a href="editterrainpiece.aspx?X=<%=sx*100%>&Z=<%=sz*100%><%
 	if(t["ObjectInstanceID"].ToString() != "")
 	{
 %>&ObjectInstanceID=<%=t["ObjectInstanceID"]%>">
-	<img border="0" height="75" width="75" src="<%=www.strive3d.net.Utils.ApplicationPath%>/DesktopModules/Strive/Thumbnailer.aspx?i=<%=www.strive3d.net.Utils.ApplicationPath%>/players/builders<%=System.Configuration.ConfigurationSettings.AppSettings["resourcepath"]%>/textures/<%=t["ModelID"]%>.bmp&amp;h=75&amp;w=75" />
+	<img border="0" height="75" width="75" src="<%=www.strive3d.net.Utils.ApplicationPath%>/DesktopModules/Strive/Thumbnailer.aspx?i=<%=www.strive3d.net.Utils.ApplicationPath%>/players/builders/<%=System.Configuration.ConfigurationSettings.AppSettings["resourcepath"]%>/texture/<%=t["ResourceID"]%><%=t["ResourceFileExtension"]%>&amp;h=75&amp;w=75" />
 <%
 	}
 	else

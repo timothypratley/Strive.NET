@@ -95,9 +95,12 @@ namespace www.strive3d.net.Game
 		#endregion
 
 		
+	
+	
+			
 		public System.Data.SqlClient.SqlCommand ActivatePlayer(System.Data.SqlTypes.SqlGuid PlayerKey)
 		{
-			const string thisID = "1774629365";
+			const string thisID = "1648060957";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -110,12 +113,11 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerKey";
-				param.SourceColumn = "PlayerKey";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -142,7 +144,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand ActivatePlayer()
 		{
-			const string thisID = "1774629365";
+			const string thisID = "1648060957";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -152,18 +154,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "ActivatePlayer";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerKey";
-				param.SourceColumn = "PlayerKey";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -183,7 +173,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand AreaSquareDetails(System.Data.SqlTypes.SqlInt32 AbstractionSize, System.Data.SqlTypes.SqlInt32 Offset)
 		{
-			const string thisID = "1950629992";
+			const string thisID = "1664061014";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -196,19 +186,16 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@AbstractionSize";
-				param.SourceColumn = "AbstractionSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Offset";
-				param.SourceColumn = "Offset";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -237,7 +224,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand AreaSquareDetails()
 		{
-			const string thisID = "1950629992";
+			const string thisID = "1664061014";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -247,25 +234,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "AreaSquareDetails";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AbstractionSize";
-				param.SourceColumn = "AbstractionSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Offset";
-				param.SourceColumn = "Offset";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -283,9 +251,9 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand CreateCharacter(System.Data.SqlTypes.SqlString ObjectTemplateName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumRaceID)
+		public System.Data.SqlClient.SqlCommand CreateCharacter(System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumRaceID)
 		{
-			const string thisID = "155147598";
+			const string thisID = "1680061071";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -298,33 +266,26 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectName";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@EnumRaceID";
-				param.SourceColumn = "EnumRaceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -341,7 +302,7 @@ namespace www.strive3d.net.Game
 			}
 				
 				
-			thisCommand.Parameters["@ObjectTemplateName"].Value = ObjectTemplateName;
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
 		
 			thisCommand.Parameters["@ModelID"].Value = ModelID;
 		
@@ -357,7 +318,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateCharacter()
 		{
-			const string thisID = "155147598";
+			const string thisID = "1680061071";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -368,38 +329,162 @@ namespace www.strive3d.net.Game
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "CreateCharacter";
 					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateEquipable(System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 Value, System.Data.SqlTypes.SqlInt32 Weight, System.Data.SqlTypes.SqlInt32 EnumWearLocationID, System.Data.SqlTypes.SqlInt32 ArmorClass, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
+		{
+			const string thisID = "1696061128";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateEquipable";
+					
 				// Parameters:
+					
 					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectName";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumRaceID";
-				param.SourceColumn = "EnumRaceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@Value";
 				thisCommand.Parameters.Add(param);			
 				param = null;
-							
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Weight";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@EnumWearLocationID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ArmorClass";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@X";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Y";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Z";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationX";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationY";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationZ";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
+		
+			thisCommand.Parameters["@ModelID"].Value = ModelID;
+		
+			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
+		
+			thisCommand.Parameters["@Value"].Value = Value;
+		
+			thisCommand.Parameters["@Weight"].Value = Weight;
+		
+			thisCommand.Parameters["@EnumWearLocationID"].Value = EnumWearLocationID;
+		
+			thisCommand.Parameters["@ArmorClass"].Value = ArmorClass;
+		
+			thisCommand.Parameters["@X"].Value = X;
+		
+			thisCommand.Parameters["@Y"].Value = Y;
+		
+			thisCommand.Parameters["@Z"].Value = Z;
+		
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
+		
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
+		
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateEquipable()
+		{
+			const string thisID = "1696061128";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateEquipable";
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -419,7 +504,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateGroupsTable(System.Data.SqlTypes.SqlInt32 AbstractionSize, System.Data.SqlTypes.SqlBoolean AutomaticOffset, System.Data.SqlTypes.SqlInt32 LargestCoordX, System.Data.SqlTypes.SqlInt32 SmallestCoordX, System.Data.SqlTypes.SqlInt32 LargestCoordZ, System.Data.SqlTypes.SqlInt32 SmallestCoordZ)
 		{
-			const string thisID = "1934629935";
+			const string thisID = "1712061185";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -432,47 +517,36 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@AbstractionSize";
-				param.SourceColumn = "AbstractionSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@AutomaticOffset";
-				param.SourceColumn = "AutomaticOffset";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@LargestCoordX";
-				param.SourceColumn = "LargestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@SmallestCoordX";
-				param.SourceColumn = "SmallestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@LargestCoordZ";
-				param.SourceColumn = "LargestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@SmallestCoordZ";
-				param.SourceColumn = "SmallestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -509,7 +583,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateGroupsTable()
 		{
-			const string thisID = "1934629935";
+			const string thisID = "1712061185";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -520,52 +594,155 @@ namespace www.strive3d.net.Game
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "CreateGroupsTable";
 					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateJunk(System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 Value, System.Data.SqlTypes.SqlInt32 Weight, System.Data.SqlTypes.SqlInt32 EnumItemDurabilityID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
+		{
+			const string thisID = "1728061242";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateJunk";
+					
 				// Parameters:
+					
 					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AbstractionSize";
-				param.SourceColumn = "AbstractionSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectName";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AutomaticOffset";
-				param.SourceColumn = "AutomaticOffset";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@ModelID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@LargestCoordX";
-				param.SourceColumn = "LargestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@PlayerID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@SmallestCoordX";
-				param.SourceColumn = "SmallestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@Value";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@LargestCoordZ";
-				param.SourceColumn = "LargestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@Weight";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@SmallestCoordZ";
-				param.SourceColumn = "SmallestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@EnumItemDurabilityID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
-							
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@X";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Y";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Z";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationX";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationY";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationZ";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
+		
+			thisCommand.Parameters["@ModelID"].Value = ModelID;
+		
+			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
+		
+			thisCommand.Parameters["@Value"].Value = Value;
+		
+			thisCommand.Parameters["@Weight"].Value = Weight;
+		
+			thisCommand.Parameters["@EnumItemDurabilityID"].Value = EnumItemDurabilityID;
+		
+			thisCommand.Parameters["@X"].Value = X;
+		
+			thisCommand.Parameters["@Y"].Value = Y;
+		
+			thisCommand.Parameters["@Z"].Value = Z;
+		
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
+		
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
+		
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateJunk()
+		{
+			const string thisID = "1728061242";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateJunk";
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -583,9 +760,9 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand CreateMirror(System.Data.SqlTypes.SqlInt32 ObjectTemplateID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 HeadingX, System.Data.SqlTypes.SqlInt32 HeadingY, System.Data.SqlTypes.SqlInt32 HeadingZ)
+		public System.Data.SqlClient.SqlCommand CreateMirror(System.Data.SqlTypes.SqlInt32 TemplateObjectID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
 		{
-			const string thisID = "1854629650";
+			const string thisID = "1744061299";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -598,54 +775,41 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateID";
-				param.SourceColumn = "ObjectTemplateID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationX";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationY";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationZ";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -662,7 +826,7 @@ namespace www.strive3d.net.Game
 			}
 				
 				
-			thisCommand.Parameters["@ObjectTemplateID"].Value = ObjectTemplateID;
+			thisCommand.Parameters["@TemplateObjectID"].Value = TemplateObjectID;
 		
 			thisCommand.Parameters["@X"].Value = X;
 		
@@ -670,11 +834,11 @@ namespace www.strive3d.net.Game
 		
 			thisCommand.Parameters["@Z"].Value = Z;
 		
-			thisCommand.Parameters["@HeadingX"].Value = HeadingX;
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
 		
-			thisCommand.Parameters["@HeadingY"].Value = HeadingY;
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
 		
-			thisCommand.Parameters["@HeadingZ"].Value = HeadingZ;
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
 		
 								
 			return thisCommand;
@@ -684,7 +848,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateMirror()
 		{
-			const string thisID = "1854629650";
+			const string thisID = "1744061299";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -694,60 +858,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "CreateMirror";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateID";
-				param.SourceColumn = "ObjectTemplateID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -765,9 +875,9 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand CreateMobile(System.Data.SqlTypes.SqlInt32 AreaID, System.Data.SqlTypes.SqlString ObjectTemplateName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumRaceID, System.Data.SqlTypes.SqlInt32 Level, System.Data.SqlTypes.SqlInt32 Strength, System.Data.SqlTypes.SqlInt32 Constitution, System.Data.SqlTypes.SqlInt32 Cognition, System.Data.SqlTypes.SqlInt32 Willpower, System.Data.SqlTypes.SqlInt32 Dexterity, System.Data.SqlTypes.SqlInt32 Hitpoints, System.Data.SqlTypes.SqlInt32 GoldCarried, System.Data.SqlTypes.SqlInt32 GoldBanked, System.Data.SqlTypes.SqlInt32 EnumSexID, System.Data.SqlTypes.SqlInt32 EnumMobileSizeID, System.Data.SqlTypes.SqlInt32 EnumMobileStateID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 HeadingX, System.Data.SqlTypes.SqlInt32 HeadingY, System.Data.SqlTypes.SqlInt32 HeadingZ)
+		public System.Data.SqlClient.SqlCommand CreateMobile(System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumRaceID, System.Data.SqlTypes.SqlInt32 Level, System.Data.SqlTypes.SqlInt32 Strength, System.Data.SqlTypes.SqlInt32 Constitution, System.Data.SqlTypes.SqlInt32 Cognition, System.Data.SqlTypes.SqlInt32 Willpower, System.Data.SqlTypes.SqlInt32 Dexterity, System.Data.SqlTypes.SqlInt32 Hitpoints, System.Data.SqlTypes.SqlInt32 GoldCarried, System.Data.SqlTypes.SqlInt32 GoldBanked, System.Data.SqlTypes.SqlInt32 EnumSexID, System.Data.SqlTypes.SqlInt32 EnumMobileSizeID, System.Data.SqlTypes.SqlInt32 EnumMobileStateID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
 		{
-			const string thisID = "1870629707";
+			const string thisID = "1760061356";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -780,166 +890,116 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AreaID";
-				param.SourceColumn = "AreaID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectName";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@EnumRaceID";
-				param.SourceColumn = "EnumRaceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Level";
-				param.SourceColumn = "Level";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Strength";
-				param.SourceColumn = "Strength";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Constitution";
-				param.SourceColumn = "Constitution";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Cognition";
-				param.SourceColumn = "Cognition";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Willpower";
-				param.SourceColumn = "Willpower";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Dexterity";
-				param.SourceColumn = "Dexterity";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Hitpoints";
-				param.SourceColumn = "Hitpoints";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@GoldCarried";
-				param.SourceColumn = "GoldCarried";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@GoldBanked";
-				param.SourceColumn = "GoldBanked";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@EnumSexID";
-				param.SourceColumn = "EnumSexID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@EnumMobileSizeID";
-				param.SourceColumn = "EnumMobileSizeID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@EnumMobileStateID";
-				param.SourceColumn = "EnumMobileStateID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationX";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationY";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationZ";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -956,9 +1016,7 @@ namespace www.strive3d.net.Game
 			}
 				
 				
-			thisCommand.Parameters["@AreaID"].Value = AreaID;
-		
-			thisCommand.Parameters["@ObjectTemplateName"].Value = ObjectTemplateName;
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
 		
 			thisCommand.Parameters["@ModelID"].Value = ModelID;
 		
@@ -996,11 +1054,11 @@ namespace www.strive3d.net.Game
 		
 			thisCommand.Parameters["@Z"].Value = Z;
 		
-			thisCommand.Parameters["@HeadingX"].Value = HeadingX;
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
 		
-			thisCommand.Parameters["@HeadingY"].Value = HeadingY;
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
 		
-			thisCommand.Parameters["@HeadingZ"].Value = HeadingZ;
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
 		
 								
 			return thisCommand;
@@ -1010,7 +1068,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateMobile()
 		{
-			const string thisID = "1870629707";
+			const string thisID = "1760061356";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1020,172 +1078,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "CreateMobile";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AreaID";
-				param.SourceColumn = "AreaID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumRaceID";
-				param.SourceColumn = "EnumRaceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Level";
-				param.SourceColumn = "Level";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Strength";
-				param.SourceColumn = "Strength";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Constitution";
-				param.SourceColumn = "Constitution";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Cognition";
-				param.SourceColumn = "Cognition";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Willpower";
-				param.SourceColumn = "Willpower";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Dexterity";
-				param.SourceColumn = "Dexterity";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Hitpoints";
-				param.SourceColumn = "Hitpoints";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@GoldCarried";
-				param.SourceColumn = "GoldCarried";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@GoldBanked";
-				param.SourceColumn = "GoldBanked";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumSexID";
-				param.SourceColumn = "EnumSexID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumMobileSizeID";
-				param.SourceColumn = "EnumMobileSizeID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumMobileStateID";
-				param.SourceColumn = "EnumMobileStateID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -1205,7 +1097,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateModel(System.Data.SqlTypes.SqlString ModelName, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlString ModelDescription)
 		{
-			const string thisID = "2046630334";
+			const string thisID = "1776061413";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1218,26 +1110,21 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@ModelName";
-				param.SourceColumn = "ModelName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@ModelDescription";
-				param.SourceColumn = "ModelDescription";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -1268,7 +1155,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateModel()
 		{
-			const string thisID = "2046630334";
+			const string thisID = "1776061413";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1278,32 +1165,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "CreateModel";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ModelName";
-				param.SourceColumn = "ModelName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ModelDescription";
-				param.SourceColumn = "ModelDescription";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -1323,7 +1184,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreatePlayer(System.Data.SqlTypes.SqlString PlayerEmail, System.Data.SqlTypes.SqlString PlayerPassword)
 		{
-			const string thisID = "1790629422";
+			const string thisID = "1792061470";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1336,19 +1197,16 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerEmail";
-				param.SourceColumn = "PlayerEmail";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerPassword";
-				param.SourceColumn = "PlayerPassword";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -1377,7 +1235,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreatePlayer()
 		{
-			const string thisID = "1790629422";
+			const string thisID = "1792061470";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1387,25 +1245,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "CreatePlayer";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerEmail";
-				param.SourceColumn = "PlayerEmail";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerPassword";
-				param.SourceColumn = "PlayerPassword";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -1423,9 +1262,274 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand CreateTerrain(System.Data.SqlTypes.SqlInt32 AreaID, System.Data.SqlTypes.SqlString ObjectTemplateName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumTerrainTypeID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 HeadingX, System.Data.SqlTypes.SqlInt32 HeadingY, System.Data.SqlTypes.SqlInt32 HeadingZ)
+		public System.Data.SqlClient.SqlCommand CreateReadable(System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 Value, System.Data.SqlTypes.SqlInt32 Weight, System.Data.SqlTypes.SqlString Title, System.Data.SqlTypes.SqlString Content, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
 		{
-			const string thisID = "1886629764";
+			const string thisID = "1808061527";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateReadable";
+					
+				// Parameters:
+					
+					
+				System.Data.SqlClient.SqlParameter param;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@TemplateObjectName";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ModelID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@PlayerID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Value";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Weight";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Title";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Content";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@X";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Y";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Z";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationX";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationY";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@RotationZ";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
+		
+			thisCommand.Parameters["@ModelID"].Value = ModelID;
+		
+			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
+		
+			thisCommand.Parameters["@Value"].Value = Value;
+		
+			thisCommand.Parameters["@Weight"].Value = Weight;
+		
+			thisCommand.Parameters["@Title"].Value = Title;
+		
+			thisCommand.Parameters["@Content"].Value = Content;
+		
+			thisCommand.Parameters["@X"].Value = X;
+		
+			thisCommand.Parameters["@Y"].Value = Y;
+		
+			thisCommand.Parameters["@Z"].Value = Z;
+		
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
+		
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
+		
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateReadable()
+		{
+			const string thisID = "1808061527";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateReadable";
+					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateResource(System.Data.SqlTypes.SqlString ResourceName, System.Data.SqlTypes.SqlString ResourceFileExtension, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlString Description, System.Data.SqlTypes.SqlString ResourcePak, System.Data.SqlTypes.SqlInt32 EnumResourceTypeID)
+		{
+			const string thisID = "1824061584";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateResource";
+					
+				// Parameters:
+					
+					
+				System.Data.SqlClient.SqlParameter param;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ResourceName";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ResourceFileExtension";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@PlayerID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Description";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ResourcePak";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@EnumResourceTypeID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@ResourceName"].Value = ResourceName;
+		
+			thisCommand.Parameters["@ResourceFileExtension"].Value = ResourceFileExtension;
+		
+			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
+		
+			thisCommand.Parameters["@Description"].Value = Description;
+		
+			thisCommand.Parameters["@ResourcePak"].Value = ResourcePak;
+		
+			thisCommand.Parameters["@EnumResourceTypeID"].Value = EnumResourceTypeID;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateResource()
+		{
+			const string thisID = "1824061584";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateResource";
+					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateTerrain(System.Data.SqlTypes.SqlInt32 AreaID, System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ResourceID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumTerrainTypeID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
+		{
+			const string thisID = "1840061641";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1438,82 +1542,61 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@AreaID";
-				param.SourceColumn = "AreaID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectName";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@ResourceID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@EnumTerrainTypeID";
-				param.SourceColumn = "EnumTerrainTypeID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationX";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationY";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationZ";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -1532,9 +1615,9 @@ namespace www.strive3d.net.Game
 				
 			thisCommand.Parameters["@AreaID"].Value = AreaID;
 		
-			thisCommand.Parameters["@ObjectTemplateName"].Value = ObjectTemplateName;
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
 		
-			thisCommand.Parameters["@ModelID"].Value = ModelID;
+			thisCommand.Parameters["@ResourceID"].Value = ResourceID;
 		
 			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
 		
@@ -1546,11 +1629,11 @@ namespace www.strive3d.net.Game
 		
 			thisCommand.Parameters["@Z"].Value = Z;
 		
-			thisCommand.Parameters["@HeadingX"].Value = HeadingX;
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
 		
-			thisCommand.Parameters["@HeadingY"].Value = HeadingY;
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
 		
-			thisCommand.Parameters["@HeadingZ"].Value = HeadingZ;
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
 		
 								
 			return thisCommand;
@@ -1560,7 +1643,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand CreateTerrain()
 		{
-			const string thisID = "1886629764";
+			const string thisID = "1840061641";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1571,87 +1654,176 @@ namespace www.strive3d.net.Game
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "CreateTerrain";
 					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateWieldable(System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 Value, System.Data.SqlTypes.SqlInt32 Weight, System.Data.SqlTypes.SqlInt32 Damage, System.Data.SqlTypes.SqlInt32 Hitroll, System.Data.SqlTypes.SqlInt32 EnumDamageTypeID, System.Data.SqlTypes.SqlInt32 EnumWeaponSizeID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 RotationX, System.Data.SqlTypes.SqlInt32 RotationY, System.Data.SqlTypes.SqlInt32 RotationZ)
+		{
+			const string thisID = "1856061698";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateWieldable";
+					
 				// Parameters:
+					
 					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AreaID";
-				param.SourceColumn = "AreaID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectName";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumTerrainTypeID";
-				param.SourceColumn = "EnumTerrainTypeID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@Value";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Weight";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Damage";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Hitroll";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@EnumDamageTypeID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@EnumWeaponSizeID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationX";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationY";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationZ";
 				thisCommand.Parameters.Add(param);			
 				param = null;
-							
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
+		
+			thisCommand.Parameters["@ModelID"].Value = ModelID;
+		
+			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
+		
+			thisCommand.Parameters["@Value"].Value = Value;
+		
+			thisCommand.Parameters["@Weight"].Value = Weight;
+		
+			thisCommand.Parameters["@Damage"].Value = Damage;
+		
+			thisCommand.Parameters["@Hitroll"].Value = Hitroll;
+		
+			thisCommand.Parameters["@EnumDamageTypeID"].Value = EnumDamageTypeID;
+		
+			thisCommand.Parameters["@EnumWeaponSizeID"].Value = EnumWeaponSizeID;
+		
+			thisCommand.Parameters["@X"].Value = X;
+		
+			thisCommand.Parameters["@Y"].Value = Y;
+		
+			thisCommand.Parameters["@Z"].Value = Z;
+		
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
+		
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
+		
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand CreateWieldable()
+		{
+			const string thisID = "1856061698";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "CreateWieldable";
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -1671,7 +1843,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand EnumTerrainInSquare(System.Data.SqlTypes.SqlInt32 SmallestCoordX, System.Data.SqlTypes.SqlInt32 SmallestCoordZ, System.Data.SqlTypes.SqlInt32 LargestCoordX, System.Data.SqlTypes.SqlInt32 LargestCoordZ)
 		{
-			const string thisID = "2014630220";
+			const string thisID = "1872061755";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1684,33 +1856,26 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@SmallestCoordX";
-				param.SourceColumn = "SmallestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@SmallestCoordZ";
-				param.SourceColumn = "SmallestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@LargestCoordX";
-				param.SourceColumn = "LargestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@LargestCoordZ";
-				param.SourceColumn = "LargestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -1743,7 +1908,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand EnumTerrainInSquare()
 		{
-			const string thisID = "2014630220";
+			const string thisID = "1872061755";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1753,39 +1918,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "EnumTerrainInSquare";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@SmallestCoordX";
-				param.SourceColumn = "SmallestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@SmallestCoordZ";
-				param.SourceColumn = "SmallestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@LargestCoordX";
-				param.SourceColumn = "LargestCoordX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@LargestCoordZ";
-				param.SourceColumn = "LargestCoordZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -1805,7 +1937,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand GetAreas(System.Data.SqlTypes.SqlInt32 MetaSize)
 		{
-			const string thisID = "1918629878";
+			const string thisID = "1888061812";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1818,12 +1950,11 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@MetaSize";
-				param.SourceColumn = "MetaSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -1850,7 +1981,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand GetAreas()
 		{
-			const string thisID = "1918629878";
+			const string thisID = "1888061812";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1860,18 +1991,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "GetAreas";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@MetaSize";
-				param.SourceColumn = "MetaSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -1891,7 +2010,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand GetTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID)
 		{
-			const string thisID = "2078630448";
+			const string thisID = "1904061869";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1904,12 +2023,11 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@TerrainInstanceID";
-				param.SourceColumn = "TerrainInstanceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -1936,7 +2054,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand GetTerrain()
 		{
-			const string thisID = "2078630448";
+			const string thisID = "1904061869";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1946,18 +2064,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "GetTerrain";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@TerrainInstanceID";
-				param.SourceColumn = "TerrainInstanceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -1977,7 +2083,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand LogonPlayer(System.Data.SqlTypes.SqlString Email, System.Data.SqlTypes.SqlString Password)
 		{
-			const string thisID = "1838629593";
+			const string thisID = "1920061926";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -1990,19 +2096,16 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Email";
-				param.SourceColumn = "Email";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Password";
-				param.SourceColumn = "Password";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -2031,7 +2134,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand LogonPlayer()
 		{
-			const string thisID = "1838629593";
+			const string thisID = "1920061926";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2042,24 +2145,151 @@ namespace www.strive3d.net.Game
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "LogonPlayer";
 					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand LowerTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID)
+		{
+			const string thisID = "1036582781";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "LowerTerrain";
+					
 				// Parameters:
+					
 					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Email";
-				param.SourceColumn = "Email";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TerrainInstanceID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@TerrainInstanceID"].Value = TerrainInstanceID;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand LowerTerrain()
+		{
+			const string thisID = "1036582781";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "LowerTerrain";
+					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand RaiseTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID)
+		{
+			const string thisID = "1020582724";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "RaiseTerrain";
+					
+				// Parameters:
+					
+					
+				System.Data.SqlClient.SqlParameter param;
+		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Password";
-				param.SourceColumn = "Password";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TerrainInstanceID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
-							
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@TerrainInstanceID"].Value = TerrainInstanceID;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand RaiseTerrain()
+		{
+			const string thisID = "1020582724";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "RaiseTerrain";
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -2079,7 +2309,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand SelectPlayer(System.Data.SqlTypes.SqlInt32 PlayerID)
 		{
-			const string thisID = "1806629479";
+			const string thisID = "844582097";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2092,12 +2322,11 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -2124,7 +2353,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand SelectPlayer()
 		{
-			const string thisID = "1806629479";
+			const string thisID = "844582097";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2134,18 +2363,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "SelectPlayer";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -2165,7 +2382,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand SelectPlayerByPlayerKey(System.Data.SqlTypes.SqlGuid PlayerKey)
 		{
-			const string thisID = "1822629536";
+			const string thisID = "860582154";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2178,12 +2395,11 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerKey";
-				param.SourceColumn = "PlayerKey";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -2210,7 +2426,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand SelectPlayerByPlayerKey()
 		{
-			const string thisID = "1822629536";
+			const string thisID = "860582154";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2220,18 +2436,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "SelectPlayerByPlayerKey";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerKey";
-				param.SourceColumn = "PlayerKey";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -2251,7 +2455,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand TerrainSquareDetails(System.Data.SqlTypes.SqlInt32 AbstractionSize, System.Data.SqlTypes.SqlInt32 Offset)
 		{
-			const string thisID = "1998630163";
+			const string thisID = "876582211";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2264,19 +2468,16 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@AbstractionSize";
-				param.SourceColumn = "AbstractionSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Offset";
-				param.SourceColumn = "Offset";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -2305,7 +2506,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand TerrainSquareDetails()
 		{
-			const string thisID = "1998630163";
+			const string thisID = "876582211";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2315,25 +2516,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "TerrainSquareDetails";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AbstractionSize";
-				param.SourceColumn = "AbstractionSize";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Offset";
-				param.SourceColumn = "Offset";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -2351,9 +2533,124 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand UpdateTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID, System.Data.SqlTypes.SqlInt32 AreaID, System.Data.SqlTypes.SqlString ObjectTemplateName, System.Data.SqlTypes.SqlInt32 ModelID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumTerrainTypeID, System.Data.SqlTypes.SqlInt32 X, System.Data.SqlTypes.SqlInt32 Y, System.Data.SqlTypes.SqlInt32 Z, System.Data.SqlTypes.SqlInt32 HeadingX, System.Data.SqlTypes.SqlInt32 HeadingY, System.Data.SqlTypes.SqlInt32 HeadingZ)
+		public System.Data.SqlClient.SqlCommand UpdateResource(System.Data.SqlTypes.SqlInt32 ResourceID, System.Data.SqlTypes.SqlString ResourceName, System.Data.SqlTypes.SqlString ResourceFileExtension, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlString Description, System.Data.SqlTypes.SqlString ResourcePak, System.Data.SqlTypes.SqlInt32 EnumResourceTypeID)
 		{
-			const string thisID = "2094630505";
+			const string thisID = "892582268";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "UpdateResource";
+					
+				// Parameters:
+					
+					
+				System.Data.SqlClient.SqlParameter param;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ResourceID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ResourceName";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ResourceFileExtension";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@PlayerID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@Description";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@ResourcePak";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+				param = new System.Data.SqlClient.SqlParameter();		
+				param.ParameterName = "@EnumResourceTypeID";
+				thisCommand.Parameters.Add(param);			
+				param = null;
+		
+
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+				
+				
+			thisCommand.Parameters["@ResourceID"].Value = ResourceID;
+		
+			thisCommand.Parameters["@ResourceName"].Value = ResourceName;
+		
+			thisCommand.Parameters["@ResourceFileExtension"].Value = ResourceFileExtension;
+		
+			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
+		
+			thisCommand.Parameters["@Description"].Value = Description;
+		
+			thisCommand.Parameters["@ResourcePak"].Value = ResourcePak;
+		
+			thisCommand.Parameters["@EnumResourceTypeID"].Value = EnumResourceTypeID;
+		
+								
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand UpdateResource()
+		{
+			const string thisID = "892582268";
+			System.Data.SqlClient.SqlCommand thisCommand;
+			if(!this.isCommandCached(thisID))
+			{
+				// create and add to cache
+				thisCommand = new System.Data.SqlClient.SqlCommand();
+
+				thisCommand.Connection = _connection;
+				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
+				thisCommand.CommandText = "UpdateResource";
+					
+				// not sure of the usefullness of this
+				// i never really got prepared statements
+				thisCommand.Prepare();					
+					
+				_commands.Add(thisID, thisCommand);
+			}
+			else
+			{
+				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
+			}
+
+			return thisCommand;
+			
+		}
+	
+			
+		public System.Data.SqlClient.SqlCommand UpdateTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID, System.Data.SqlTypes.SqlInt32 AreaID, System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ResourceID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumTerrainTypeID, System.Data.SqlTypes.SqlDouble X, System.Data.SqlTypes.SqlDouble Y, System.Data.SqlTypes.SqlDouble Z, System.Data.SqlTypes.SqlDouble RotationX, System.Data.SqlTypes.SqlDouble RotationY, System.Data.SqlTypes.SqlDouble RotationZ)
+		{
+			const string thisID = "908582325";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2366,89 +2663,66 @@ namespace www.strive3d.net.Game
 					
 				// Parameters:
 					
+					
 				System.Data.SqlClient.SqlParameter param;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@TerrainInstanceID";
-				param.SourceColumn = "TerrainInstanceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@AreaID";
-				param.SourceColumn = "AreaID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@TemplateObjectName";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@ResourceID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@EnumTerrainTypeID";
-				param.SourceColumn = "EnumTerrainTypeID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
 				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationX";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationY";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
+				param.ParameterName = "@RotationZ";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -2469,9 +2743,9 @@ namespace www.strive3d.net.Game
 		
 			thisCommand.Parameters["@AreaID"].Value = AreaID;
 		
-			thisCommand.Parameters["@ObjectTemplateName"].Value = ObjectTemplateName;
+			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
 		
-			thisCommand.Parameters["@ModelID"].Value = ModelID;
+			thisCommand.Parameters["@ResourceID"].Value = ResourceID;
 		
 			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
 		
@@ -2483,11 +2757,11 @@ namespace www.strive3d.net.Game
 		
 			thisCommand.Parameters["@Z"].Value = Z;
 		
-			thisCommand.Parameters["@HeadingX"].Value = HeadingX;
+			thisCommand.Parameters["@RotationX"].Value = RotationX;
 		
-			thisCommand.Parameters["@HeadingY"].Value = HeadingY;
+			thisCommand.Parameters["@RotationY"].Value = RotationY;
 		
-			thisCommand.Parameters["@HeadingZ"].Value = HeadingZ;
+			thisCommand.Parameters["@RotationZ"].Value = RotationZ;
 		
 								
 			return thisCommand;
@@ -2497,7 +2771,7 @@ namespace www.strive3d.net.Game
 			
 		public System.Data.SqlClient.SqlCommand UpdateTerrain()
 		{
-			const string thisID = "2094630505";
+			const string thisID = "908582325";
 			System.Data.SqlClient.SqlCommand thisCommand;
 			if(!this.isCommandCached(thisID))
 			{
@@ -2507,95 +2781,6 @@ namespace www.strive3d.net.Game
 				thisCommand.Connection = _connection;
 				thisCommand.CommandType = System.Data.CommandType.StoredProcedure;
 				thisCommand.CommandText = "UpdateTerrain";
-					
-				// Parameters:
-					
-				System.Data.SqlClient.SqlParameter param;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@TerrainInstanceID";
-				param.SourceColumn = "TerrainInstanceID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AreaID";
-				param.SourceColumn = "AreaID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ObjectTemplateName";
-				param.SourceColumn = "ObjectTemplateName";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ModelID";
-				param.SourceColumn = "ModelID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerID";
-				param.SourceColumn = "PlayerID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumTerrainTypeID";
-				param.SourceColumn = "EnumTerrainTypeID";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@X";
-				param.SourceColumn = "X";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Y";
-				param.SourceColumn = "Y";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@Z";
-				param.SourceColumn = "Z";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingX";
-				param.SourceColumn = "HeadingX";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingY";
-				param.SourceColumn = "HeadingY";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@HeadingZ";
-				param.SourceColumn = "HeadingZ";
-				param.SourceVersion = System.Data.DataRowVersion.Current;
-				thisCommand.Parameters.Add(param);			
-				param = null;
-							
 					
 				// not sure of the usefullness of this
 				// i never really got prepared statements
@@ -2611,13 +2796,7 @@ namespace www.strive3d.net.Game
 			return thisCommand;
 			
 		}
-	
-	
-
-		
-
-	
 
 	}
-	
+
 }

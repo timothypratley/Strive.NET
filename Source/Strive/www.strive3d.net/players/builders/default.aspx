@@ -7,14 +7,14 @@
 
 
   <ul>
-	<li><strong>Texture Management</strong>
+	<li><strong>Resource Management</strong>
 	<ul>
-		<li><a href="./textures">Create, Delete, View Textures</a>
+		<li><a href="./resources/default.aspx">Create, Delete, View Resources</a>
 			<ul>
-				<li>Follow this link to manage textures</li>
+				<li>Follow this link to manage resources</li>
 			</ul>
 		</li>
-		<li><a href="./terrain">Terrain Builder</a>
+		<li><a href="./terrain2">Terrain Builder</a>
 			<ul>
 				<li>Follow this link to build the terrain of the world</li>
 			</ul>

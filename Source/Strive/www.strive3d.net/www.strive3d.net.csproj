@@ -1,8 +1,8 @@
 <VisualStudioProject>
     <CSHARP
         ProjectType = "Web"
-        ProductVersion = "7.0.9466"
-        SchemaVersion = "1.0"
+        ProductVersion = "7.10.3077"
+        SchemaVersion = "2.0"
         ProjectGuid = "{A8CF7CE5-2128-4AB2-BEA0-DB8E7A244059}"
     >
         <Build>
@@ -16,7 +16,10 @@
                 DefaultTargetSchema = "IE50"
                 DelaySign = "false"
                 OutputType = "Library"
+                PreBuildEvent = ""
+                PostBuildEvent = ""
                 RootNamespace = "www.strive3d.net"
+                RunPostBuildEvent = "OnBuildSuccess"
                 StartupObject = ""
             >
                 <Config
@@ -30,6 +33,8 @@
                     DebugSymbols = "true"
                     FileAlignment = "4096"
                     IncrementalBuild = "true"
+                    NoStdLib = "false"
+                    NoWarn = ""
                     Optimize = "false"
                     OutputPath = "bin\"
                     RegisterForComInterop = "false"
@@ -48,6 +53,8 @@
                     DebugSymbols = "false"
                     FileAlignment = "4096"
                     IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
                     Optimize = "true"
                     OutputPath = "bin\"
                     RegisterForComInterop = "false"
@@ -381,7 +388,7 @@
                 />
                 <File
                     RelPath = "Components\MobileControls.cs"
-                    SubType = "ASPXCodeBehind"
+                    SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
@@ -925,7 +932,39 @@
                     RelPath = "players\builders\web.config"
                     BuildAction = "Content"
                 />
-                <Folder RelPath = "players\builders\resources\textures\" />
+                <File
+                    RelPath = "players\builders\resources\addresource.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\resources\addresource.aspx.cs"
+                    DependentUpon = "addresource.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\resources\addresource.aspx.resx"
+                    DependentUpon = "addresource.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\resources\default.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\resources\default.aspx.cs"
+                    DependentUpon = "default.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\resources\default.aspx.resx"
+                    DependentUpon = "default.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <Folder RelPath = "players\builders\resources\texture\" />
                 <File
                     RelPath = "players\builders\terrain\default.aspx"
                     BuildAction = "Content"
@@ -972,48 +1011,63 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "players\builders\textures\addtexture.aspx"
+                    RelPath = "players\builders\terrain2\default.aspx"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "players\builders\textures\addtexture.aspx.cs"
-                    DependentUpon = "addtexture.aspx"
-                    SubType = "ASPXCodeBehind"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "players\builders\textures\addtexture.aspx.resx"
-                    DependentUpon = "addtexture.aspx.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "players\builders\textures\default.aspx"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "players\builders\textures\default.aspx.cs"
+                    RelPath = "players\builders\terrain2\default.aspx.cs"
                     DependentUpon = "default.aspx"
                     SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "players\builders\textures\default.aspx.resx"
+                    RelPath = "players\builders\terrain2\default.aspx.resx"
                     DependentUpon = "default.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "players\builders\textures\deletetexture.aspx"
+                    RelPath = "players\builders\terrain2\editsquare.aspx"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "players\builders\textures\deletetexture.aspx.cs"
-                    DependentUpon = "deletetexture.aspx"
+                    RelPath = "players\builders\terrain2\editsquare.aspx.cs"
+                    DependentUpon = "editsquare.aspx"
                     SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "players\builders\textures\deletetexture.aspx.resx"
-                    DependentUpon = "deletetexture.aspx.cs"
+                    RelPath = "players\builders\terrain2\editsquare.aspx.resx"
+                    DependentUpon = "editsquare.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\editterrainpiece.aspx"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\editterrainpiece.aspx.cs"
+                    DependentUpon = "editterrainpiece.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\editterrainpiece.aspx.resx"
+                    DependentUpon = "editterrainpiece.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\showterrainpiece.aspx"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\showterrainpiece.aspx.cs"
+                    DependentUpon = "showterrainpiece.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\terrain2\showterrainpiece.aspx.resx"
+                    DependentUpon = "showterrainpiece.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
