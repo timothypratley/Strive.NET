@@ -241,11 +241,16 @@ namespace Strive.UI.WorldView {
 		}
 
 		public float GetHour() {
-			TimeSpan ts = DateTime.Now - localTimestamp;
-			DateTime worldNow = baseWorldTime + ts;
-
-			// TODO: time scale... world time = real time*4
+			DateTime worldNow = GetWorldTime();
 			return (((worldNow.Ticks*24L*60L)%(600000000L*24L))/600000000f);
+		}
+
+		TimeSpan worldTimeOffset = DateTime.Parse("20000101") - DateTime.Parse("00000101");
+		const long worldTimeRatio = 96;
+		public DateTime GetWorldTime() {
+			TimeSpan ts = new TimeSpan((DateTime.Now - localTimestamp).Ticks*worldTimeRatio);  // time elapsed since last sync
+			DateTime worldNow = (baseWorldTime - worldTimeOffset + ts);
+			return worldNow;
 		}
 
 		public EnumCameraMode CameraMode {
