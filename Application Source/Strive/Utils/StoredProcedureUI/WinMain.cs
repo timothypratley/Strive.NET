@@ -93,6 +93,7 @@ namespace Strive.Utils.StoredProcedureUI
 			this.dbPicker1.Name = "dbPicker1";
 			this.dbPicker1.Size = new System.Drawing.Size(640, 176);
 			this.dbPicker1.TabIndex = 0;
+			this.dbPicker1.Load += new System.EventHandler(this.dbPicker1_Load);
 			// 
 			// groupBox1
 			// 
@@ -159,6 +160,10 @@ namespace Strive.Utils.StoredProcedureUI
 				}
 			}
 			return null;
+		}
+
+		private void dbPicker1_Load(object sender, System.EventArgs e) {
+		
 		}
 	}
 }

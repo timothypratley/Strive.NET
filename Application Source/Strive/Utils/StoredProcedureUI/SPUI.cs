@@ -126,7 +126,7 @@ namespace Strive.Utils.StoredProcedureUI
 			foreach(Control enumC in this.Controls)
 			{
 				// first check - I named them all so I could find them again
-				MessageBox.Show(enumC.Name);
+				// MessageBox.Show(enumC.Name);
 				if(enumC.Name.StartsWith("SPUI_param_"))
 				{
 					// this is a param control:
@@ -167,14 +167,14 @@ namespace Strive.Utils.StoredProcedureUI
 					}
 
 					command.Parameters.Add(paramName, paramValue);
-					MessageBox.Show("Added Parameter '" + paramName + "' value '" + paramValue + "'.");
+					// MessageBox.Show("Added Parameter '" + paramName + "' value '" + paramValue + "'.");
 
 					}
 			}
 			try
 			{
-				int rowsAffected = command.ExecuteNonQuery();
-				MessageBox.Show(rowsAffected + " rows affected");
+				int error = command.ExecuteNonQuery();
+				MessageBox.Show( "Succeeded" );
 			}
 			catch(Exception ex)
 			{

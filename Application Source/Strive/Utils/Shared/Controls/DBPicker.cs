@@ -359,6 +359,7 @@ namespace Strive.Utils.Shared.Controls
 					SQLDMOServer.LoginSecure = true;
 					SQLDMOServer.Connect(servers.Text, null, null);
 				}
+				ConnectionStatus.Text += "Connected to " + servers.Text + "\r\n----------------\r\n";
 			}
 			catch(Exception ex)
 			{
