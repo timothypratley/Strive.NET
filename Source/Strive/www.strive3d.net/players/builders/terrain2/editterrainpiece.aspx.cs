@@ -12,25 +12,22 @@ using www.strive3d.net.Game;
 using thisterminal.Web;
 using System.Data.SqlClient;
 
-namespace www.strive3d.net.players.builders.terrain2
+namespace www.strive3d.net.players.builders.terrain
 {
 	/// <summary>
 	/// Summary description for editterrainpiece.
 	/// </summary>
 	public class editterrainpiece : System.Web.UI.Page
-{	
-		protected System.Web.UI.WebControls.DropDownList ResourceID;
+{
 		protected System.Web.UI.HtmlControls.HtmlImage textureshower;
-		protected System.Web.UI.WebControls.DropDownList EnumTerrainID;
-		protected System.Web.UI.WebControls.Button Save;
-		protected System.Web.UI.WebControls.Button Cancel;
 		protected System.Web.UI.WebControls.TextBox Altitude;
 		protected System.Web.UI.HtmlControls.HtmlInputHidden referer;
 		protected int ObjectInstanceID;
 		protected float TerrainX;
 		protected float TerrainZ;
 		protected System.Web.UI.WebControls.Repeater TemplateItemJunkList;
-		protected DataTable textures;
+		protected System.Web.UI.WebControls.Button cancel;
+		protected System.Web.UI.WebControls.DropDownList TemplateObject;
 		
 	
 		private void Page_Load(object sender, System.EventArgs e)
@@ -41,89 +38,77 @@ namespace www.strive3d.net.players.builders.terrain2
 				ObjectInstanceID = QueryString.GetVariableInt32Value("ObjectInstanceID");
 			}
 
-			if(!this.IsPostBack)
-			{
+			if(!this.IsPostBack) {
 				Altitude.Text = "-10";
 				referer.Value = Request.ServerVariables["HTTP_REFERER"].ToString();
 				CommandFactory cmd = new CommandFactory();
 				try {
 
-				SqlDataAdapter texturefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT *, LTrim(IsNull(ResourcePak, '') + ' ' + ResourceName) AS ResourceDisplayName FROM Resource WHERE EnumResourceTypeID = 1 ORDER BY ResourceDisplayName"));
-				SqlDataAdapter terraintypefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM EnumTerrainType ORDER BY EnumTerrainTypeName"));
-				textures = new DataTable();
-				// add to viewstate for handy stuff
-				ViewState.Add("textures", textures);
-				texturefiller.Fill(textures);
+					SqlDataAdapter texturefiller = new SqlDataAdapter(cmd.GetSqlCommand("select * from TemplateTerrain tt, TemplateObject t, Resource r where tt.TemplateObjectID = t.TemplateObjectID and t.ResourceID = r.ResourceID"));
+					DataTable textures = new DataTable();
+					// add to viewstate for handy stuff
+					texturefiller.Fill(textures);
+					ViewState.Add("textures", textures);
 
-				DataTable terrains = new DataTable();
-				terraintypefiller.Fill(terrains);
+					TemplateObject.DataSource = textures;
+					TemplateObject.DataBind();				
+		
+					if(QueryString.ContainsVariable("ObjectInstanceID")) {
+						// set values for edits:
+						SqlDataReader oDr = cmd.GetTerrain(ObjectInstanceID).ExecuteReader();
+						if(!oDr.Read()) {
+							oDr.Close();
+							throw new Exception("Could not find terrain piece '" + ObjectInstanceID + "'.");
+						}
+						else {
+							TemplateObject.SelectedIndex = TemplateObject.Items.IndexOf(TemplateObject.Items.FindByValue(oDr["TemplateObjectID"].ToString()));
+							Altitude.Text = oDr["Y"].ToString();
 
-				ResourceID.DataSource = textures;
-				EnumTerrainID.DataSource = terrains;
-				ResourceID.DataBind();				
-				EnumTerrainID.DataBind();
-				if(QueryString.ContainsVariable("ObjectInstanceID"))
-				{
-					// set values for edits:
-					SqlDataReader oDr = cmd.GetTerrain(ObjectInstanceID).ExecuteReader();
-					if(!oDr.Read())
-					{
-						oDr.Close();
-						throw new Exception("Could not find terrain piece '" + ObjectInstanceID + "'.");
-					}
-					else
-					{
-						ResourceID.SelectedIndex = ResourceID.Items.IndexOf(ResourceID.Items.FindByValue(oDr["ResourceID"].ToString()));
-                        EnumTerrainID.SelectedIndex = EnumTerrainID.Items.IndexOf(EnumTerrainID.Items.FindByValue(oDr["EnumTerrainTypeID"].ToString()));
-						Altitude.Text = oDr["Y"].ToString();
+							TerrainX = float.Parse(oDr["X"].ToString());
+							TerrainZ = float.Parse(oDr["Z"].ToString());
+							oDr.Close();
+							SqlDataAdapter TemplateItemJunkFiller = new SqlDataAdapter(
+								cmd.GetSqlCommand(
+								"SELECT TemplateItemJunk.*, " +
+								"TemplateObject.TemplateObjectName, " +
+								"TemplateItem.Value, " +
+								"TemplateItem.Weight, " +
+								"ObjectInstance.ObjectInstanceID , " +
+								"TemplateItem.EnumItemDurabilityID " +
+								"FROM TemplateItemJunk " +
+								"INNER JOIN TemplateItem " +
+								"ON TemplateItemJunk.TemplateObjectID = TemplateItem.TemplateObjectID " +
+								"INNER JOIN TemplateObject " +
+								"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"INNER JOIN ObjectInstance  " +
+								"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"AND ObjectInstance.X >= " + TerrainX +
+								" AND ObjectInstance.Z >= " + TerrainZ +
+								" AND ObjectInstance.X < " + (TerrainX + 10) +
+								" AND ObjectInstance.Z < " + (TerrainZ + 10) +
+								" ORDER BY TemplateObjectName "));
 
-						TerrainX = float.Parse(oDr["X"].ToString());
-						TerrainZ = float.Parse(oDr["Z"].ToString());
-					oDr.Close();
-						SqlDataAdapter TemplateItemJunkFiller = new SqlDataAdapter(
-							cmd.GetSqlCommand(
-							"SELECT TemplateItemJunk.*, " +
-							"TemplateObject.TemplateObjectName, " +
-							"TemplateItem.Value, " +
-							"TemplateItem.Weight, " +
-							"ObjectInstance.ObjectInstanceID , " +
-							"TemplateItem.EnumItemDurabilityID " +
-							"FROM TemplateItemJunk " +
-							"INNER JOIN TemplateItem " +
-							"ON TemplateItemJunk.TemplateObjectID = TemplateItem.TemplateObjectID " +
-							"INNER JOIN TemplateObject " +
-							"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
-							"INNER JOIN ObjectInstance  " +
-							"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
-							"AND ObjectInstance.X >= " + TerrainX +
-							" AND ObjectInstance.Z >= " + TerrainZ +
-							" AND ObjectInstance.X < " + (TerrainX + 10) +
-							" AND ObjectInstance.Z < " + (TerrainZ + 10) +
-							" ORDER BY TemplateObjectName "));
-
-						DataTable TemplateItemJunkInSquare = new DataTable();
-						TemplateItemJunkFiller.Fill(TemplateItemJunkInSquare);
-						TemplateItemJunkList.DataSource = TemplateItemJunkInSquare;
-						TemplateItemJunkList.DataBind();
+							DataTable TemplateItemJunkInSquare = new DataTable();
+							TemplateItemJunkFiller.Fill(TemplateItemJunkInSquare);
+							TemplateItemJunkList.DataSource = TemplateItemJunkInSquare;
+							TemplateItemJunkList.DataBind();
 
 						
 
 	
+						}
 					}
-				}
 
-				// find correct row in datasource
-				DataRow selectedResourceRow = textures.Select("ResourceID = " + ResourceID.SelectedItem.Value)[0];
-				textureshower.Src = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +selectedResourceRow["ResourceID"] + selectedResourceRow["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
-			}
-			catch(Exception c)
-			{
-				throw new Exception("EditTerrainPiece.Page_Load", c);
-			}
-			finally
-			{
-				cmd.Close();
-			}
+					// find correct row in datasource
+					DataRow selectedResourceRow = textures.Select("TemplateObjectID = " + TemplateObject.SelectedItem.Value)[0];
+					textureshower.Src = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +selectedResourceRow["ResourceID"] + selectedResourceRow["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
+				}
+				catch(Exception c) {
+					throw new Exception("EditTerrainPiece.Page_Load", c);
+				}
+				finally {
+					cmd.Close();
+				}
 			}
 		}
 
@@ -143,56 +128,44 @@ namespace www.strive3d.net.players.builders.terrain2
 		/// </summary>
 		private void InitializeComponent()
 		{    
-			this.ResourceID.SelectedIndexChanged += new System.EventHandler(this.ResourceID_SelectedIndexChanged);
-			this.Save.Click += new System.EventHandler(this.Save_Click);
-			this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
+			this.TemplateObject.SelectedIndexChanged += new System.EventHandler(this.TemplateObject_SelectedIndexChanged);
+			this.cancel.Click += new System.EventHandler(this.cancel_Click);
 			this.Load += new System.EventHandler(this.Page_Load);
 
 		}
 		#endregion
 
-		private void ResourceID_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			// find correct row in datasource
-			DataRow selectedResourceRow = ((DataTable) ViewState["textures"]).Select("ResourceID = " + ResourceID.SelectedItem.Value)[0];
-			textureshower.Src = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +selectedResourceRow["ResourceID"] + selectedResourceRow["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
-		}
 
-		private void Save_Click(object sender, System.EventArgs e)
-		{
+		private void Save() {
 			CommandFactory cmd = new CommandFactory();
 			try{
 			if(QueryString.ContainsVariable("ObjectInstanceID"))
 			{
 				cmd.UpdateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"),
-					1,
-					EnumTerrainID.SelectedItem.Text + " - " + ResourceID.SelectedItem.Text,
-					Int32.Parse(ResourceID.SelectedItem.Value),
-					PlayerAuthenticator.CurrentLoggedInPlayerID,
-					Int32.Parse(EnumTerrainID.SelectedItem.Value),
+					int.Parse(TemplateObject.SelectedItem.Value),
 					QueryString.GetVariableInt32Value("X"),
 					float.Parse(Altitude.Text),
 					QueryString.GetVariableInt32Value("Z"),
 					0, 
 					0, 
 					0).ExecuteNonQuery();
+
 			}
 			else
 			{
-				cmd.CreateTerrain(1,
-					EnumTerrainID.SelectedItem.Text + " - " + ResourceID.SelectedItem.Text,
-					Int32.Parse(ResourceID.SelectedItem.Value),
-					PlayerAuthenticator.CurrentLoggedInPlayerID,
-					Int32.Parse(EnumTerrainID.SelectedItem.Value),
-					QueryString.GetVariableInt32Value("X"),
-					Int32.Parse(Altitude.Text),
-					QueryString.GetVariableInt32Value("Z"),
-					0, 
-					0, 
-					0).ExecuteNonQuery();
+//				cmd.CreateTerrain(1,
+//					EnumTerrainID.SelectedItem.Text + " - " + ResourceID.SelectedItem.Text,
+//					Int32.Parse(ResourceID.SelectedItem.Value),
+//					PlayerAuthenticator.CurrentLoggedInPlayerID,
+//					Int32.Parse(EnumTerrainID.SelectedItem.Value),
+//					QueryString.GetVariableInt32Value("X"),
+//					Int32.Parse(Altitude.Text),
+//					QueryString.GetVariableInt32Value("Z"),
+//					0, 
+//					0, 
+//					0).ExecuteNonQuery();
 			}
 			Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.parent.frames['" + Request.QueryString["FrameID"].ToString() + "'].location.reload(true);</script>");
-			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">location.href='about:blank';</script>");
 			}
 			catch(Exception c)
 			{
@@ -204,8 +177,14 @@ namespace www.strive3d.net.players.builders.terrain2
 			}
 		}
 
-		private void Cancel_Click(object sender, System.EventArgs e)
-		{
+		private void TemplateObject_SelectedIndexChanged(object sender, System.EventArgs e) {
+			DataTable textures = (DataTable)ViewState["textures"];
+			DataRow selectedResourceRow = textures.Select("TemplateObjectID = " + TemplateObject.SelectedItem.Value)[0];
+			textureshower.Src = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +selectedResourceRow["ResourceID"] + selectedResourceRow["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
+			Save();
+		}
+
+		private void cancel_Click(object sender, System.EventArgs e) {
 			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">location.href='about:blank';</script>");
 		}
 	}

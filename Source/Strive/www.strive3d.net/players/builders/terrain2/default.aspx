@@ -1,7 +1,7 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
-<%@ Page language="c#" Codebehind="default.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain2._default" %>
+<%@ Page language="c#" Codebehind="default.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain._default" %>
 
 <Controls:Header runat="Server" title="Terrain Builder - Refedex View" ID="Header1"/>	
 <form runat="server">

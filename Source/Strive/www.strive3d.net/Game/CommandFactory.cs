@@ -2728,12 +2728,10 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand UpdateTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID, System.Data.SqlTypes.SqlInt32 AreaID, System.Data.SqlTypes.SqlString TemplateObjectName, System.Data.SqlTypes.SqlInt32 ResourceID, System.Data.SqlTypes.SqlInt32 PlayerID, System.Data.SqlTypes.SqlInt32 EnumTerrainTypeID, System.Data.SqlTypes.SqlDouble X, System.Data.SqlTypes.SqlDouble Y, System.Data.SqlTypes.SqlDouble Z, System.Data.SqlTypes.SqlDouble RotationX, System.Data.SqlTypes.SqlDouble RotationY, System.Data.SqlTypes.SqlDouble RotationZ)
-		{
+		public System.Data.SqlClient.SqlCommand UpdateTerrain(System.Data.SqlTypes.SqlInt32 TerrainInstanceID, System.Data.SqlTypes.SqlInt32 TemplateObjectID, System.Data.SqlTypes.SqlDouble X, System.Data.SqlTypes.SqlSingle Y, System.Data.SqlTypes.SqlSingle Z, System.Data.SqlTypes.SqlSingle RotationX, System.Data.SqlTypes.SqlSingle RotationY, System.Data.SqlTypes.SqlSingle RotationZ) {
 			const string thisID = "908582325";
 			System.Data.SqlClient.SqlCommand thisCommand;
-			if(!this.isCommandCached(thisID))
-			{
+			if(!this.isCommandCached(thisID)) {
 				// create and add to cache
 				thisCommand = new System.Data.SqlClient.SqlCommand();
 
@@ -2752,27 +2750,7 @@ namespace www.strive3d.net.Game
 				param = null;
 		
 				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@AreaID";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@TemplateObjectName";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@ResourceID";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@PlayerID";
-				thisCommand.Parameters.Add(param);			
-				param = null;
-		
-				param = new System.Data.SqlClient.SqlParameter();		
-				param.ParameterName = "@EnumTerrainTypeID";
+				param.ParameterName = "@TemplateObjectID";
 				thisCommand.Parameters.Add(param);			
 				param = null;
 		
@@ -2813,23 +2791,14 @@ namespace www.strive3d.net.Game
 					
 				_commands.Add(thisID, thisCommand);
 			}
-			else
-			{
+			else {
 				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
 			}
 				
 				
 			thisCommand.Parameters["@TerrainInstanceID"].Value = TerrainInstanceID;
 		
-			thisCommand.Parameters["@AreaID"].Value = AreaID;
-		
-			thisCommand.Parameters["@TemplateObjectName"].Value = TemplateObjectName;
-		
-			thisCommand.Parameters["@ResourceID"].Value = ResourceID;
-		
-			thisCommand.Parameters["@PlayerID"].Value = PlayerID;
-		
-			thisCommand.Parameters["@EnumTerrainTypeID"].Value = EnumTerrainTypeID;
+			thisCommand.Parameters["@TemplateObjectID"].Value = TemplateObjectID;
 		
 			thisCommand.Parameters["@X"].Value = X;
 		
@@ -2849,12 +2818,10 @@ namespace www.strive3d.net.Game
 		}
 	
 			
-		public System.Data.SqlClient.SqlCommand UpdateTerrain()
-		{
+		public System.Data.SqlClient.SqlCommand UpdateTerrain() {
 			const string thisID = "908582325";
 			System.Data.SqlClient.SqlCommand thisCommand;
-			if(!this.isCommandCached(thisID))
-			{
+			if(!this.isCommandCached(thisID)) {
 				// create and add to cache
 				thisCommand = new System.Data.SqlClient.SqlCommand();
 
@@ -2868,14 +2835,15 @@ namespace www.strive3d.net.Game
 					
 				_commands.Add(thisID, thisCommand);
 			}
-			else
-			{
+			else {
 				thisCommand = (System.Data.SqlClient.SqlCommand)this._commands[thisID];
 			}
 
 			return thisCommand;
 			
 		}
+
+
 		#region IDisposable Members
 
 		public void Dispose()

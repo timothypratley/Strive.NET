@@ -52,40 +52,38 @@ namespace www.strive3d.net.players.builders.objects
 
 		protected void setValue(Control c, object v)
 		{
-			if(c is System.Web.UI.WebControls.TextBox)
-			{
+			if(c is System.Web.UI.WebControls.TextBox) {
 				(c as System.Web.UI.WebControls.TextBox).Text = v.ToString();
 			}
-			else if(c is System.Web.UI.WebControls.DropDownList)
-			{
+			else if(c is System.Web.UI.WebControls.DropDownList) {
 				(c as System.Web.UI.WebControls.DropDownList).SelectedValue = v.ToString();
 			}
-			else if(c is System.Web.UI.WebControls.CheckBox)
-			{
+			else if(c is System.Web.UI.WebControls.CheckBox) {
 				(c as System.Web.UI.WebControls.CheckBox).Checked = bool.Parse(v.ToString());
 			}
-			else
-			{
+			else if(c is System.Web.UI.HtmlControls.HtmlInputHidden) {
+				(c as System.Web.UI.HtmlControls.HtmlInputHidden).Value = v.ToString();
+			}
+			else {
 				throw new Exception("setValue can't handle [" + c.GetType().ToString() + "]");
 			}
 		}
 
 		protected object getValue(Control c)
 		{
-			if(c is System.Web.UI.WebControls.TextBox)
-			{
+			if(c is System.Web.UI.WebControls.TextBox) {
 				return (c as System.Web.UI.WebControls.TextBox).Text;
 			}
-			else if(c is System.Web.UI.WebControls.DropDownList)
-			{
+			else if(c is System.Web.UI.WebControls.DropDownList) {
 				return (c as System.Web.UI.WebControls.DropDownList).SelectedValue;
 			}
-			else if(c is System.Web.UI.WebControls.CheckBox)
-			{
+			else if(c is System.Web.UI.WebControls.CheckBox) {
 				return (c as System.Web.UI.WebControls.CheckBox).Checked;
 			}
-			else
-			{
+			else if(c is System.Web.UI.HtmlControls.HtmlInputHidden) {
+				return (c as System.Web.UI.HtmlControls.HtmlInputHidden).Value;
+			}
+			else {
 				throw new Exception("getValue can't handle [" + c.GetType().ToString() + "]");
 			}
 		}

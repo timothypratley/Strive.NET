@@ -1,7 +1,7 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
-<%@ Page language="c#" Codebehind="editterrainpieceobjectinstance.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain2.editterrainpieceobjectinstance" %>
+<%@ Page language="c#" Codebehind="editterrainpieceobjectinstance.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain.editterrainpieceobjectinstance" %>
 <form runat="server">
 	<table>
 		<tr>

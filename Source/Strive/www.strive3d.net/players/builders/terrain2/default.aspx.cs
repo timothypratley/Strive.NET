@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 using www.strive3d.net.Game;
 
 
-namespace www.strive3d.net.players.builders.terrain2
+namespace www.strive3d.net.players.builders.terrain
 {
 	/// <summary>
 	/// Summary description for _default.

@@ -1,40 +1,38 @@
-<%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
-<%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
+<%@ Page language="c#" Codebehind="editterrainpiece.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain.editterrainpiece" %>
 <%@ Import Namespace="System.Data" %>
-<%@ Page language="c#" Codebehind="editterrainpiece.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain2.editterrainpiece" %>
+<%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
+<%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <form runat="server">
-	<input type="hidden" runat="server" id="referer">
+	<input id="referer" type="hidden" runat="server">
 	<table>
 		<tr>
-			<td><span class="Label">Terrain</span></td>
-			<td><asp:DropDownList id="EnumTerrainID" runat="server" DataValueField="EnumTerrainTypeID" DataTextField="EnumTerrainTypeName"></asp:DropDownList></td>
+			<td height="16"><span class="Label">Terrain</span></td>
+			<td height="16"><asp:dropdownlist id="TemplateObject" runat="server" DataTextField="TemplateObjectName" DataValueField="TemplateObjectID"
+					AutoPostBack="True"></asp:dropdownlist></td>
 		</tr>
 		<tr>
-			<td><span class="Label">Texture</span></td>
-			<td><asp:DropDownList id="ResourceID" runat="server" AutoPostBack="True" DataValueField="ResourceID" DataTextField="ResourceDisplayName"></asp:DropDownList></td>
-		</tr>
-		<tr>
-			<td colspan="2"><img runat="server" id="textureshower" height="100" width="100"></td>
+			<td colSpan="2"><img id="textureshower" height="100" width="100" runat="server"></td>
 		</tr>
 		<tr>
 			<td><span class="Label">Altitude</span></td>
-			<td><asp:TextBox id="Altitude" runat="server" Width="30px"></asp:TextBox></td>
-		</tr>
-		<tr>
-			<td colspan="2"><asp:Button id="Save" runat="server" Text="Save"></asp:Button><asp:Button id="Cancel" runat="server" Text="Cancel"></asp:Button></td>
+			<td><asp:textbox id="Altitude" runat="server" Width="30px"></asp:textbox></td>
 		</tr>
 		<tr>
 			<td colspan="2">
+				<asp:button id="cancel" runat="server" text="close"></asp:button></td>
+		</tr>
+		<tr>
+			<td colSpan="2">
 				<table>
 					<tr>
 						<th>
 							Junk</th>
-						<td><a href="./editterrainpieceobjectinstance.aspx?TemplateName=ItemJunk&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target="ObjectInstanceEditor">[Add]</a></td>
+						<td><A href="./editterrainpieceobjectinstance.aspx?TemplateName=ItemJunk&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target=ObjectInstanceEditor >[Add]</A></td>
 					</tr>
 					<tr>
-						<td colSpan="2" valign="top"><asp:Repeater ID="TemplateItemJunkList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemJunk&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateItemJunkList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemJunk&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
 								</ItemTemplate>
-							</asp:Repeater></td>
+							</asp:repeater></td>
 					</tr>
 				</table>
 			</td>

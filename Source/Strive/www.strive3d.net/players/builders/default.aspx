@@ -14,7 +14,7 @@
 				<li>Follow this link to manage resources</li>
 			</ul>
 		</li>
-		<li><a href="./terrain2">Terrain Builder</a>
+		<li><a href="./terrain">Terrain Builder</a>
 			<ul>
 				<li>Follow this link to build the terrain of the world</li>
 			</ul>

@@ -322,11 +322,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "admin\TabLayout.aspx.resx"
-                    DependentUpon = "TabLayout.aspx.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
                     RelPath = "admin\Tabs.ascx"
                     BuildAction = "Content"
                 />
@@ -1012,6 +1007,22 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "players\builders\objects\TemplateTerrain.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateTerrain.aspx.cs"
+                    DependentUpon = "TemplateTerrain.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateTerrain.aspx.resx"
+                    DependentUpon = "TemplateTerrain.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "players\builders\resources\addresource.aspx"
                     SubType = "Form"
                     BuildAction = "Content"
@@ -1106,78 +1117,33 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "players\builders\terrain2\default.aspx"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\default.aspx.cs"
-                    DependentUpon = "default.aspx"
-                    SubType = "ASPXCodeBehind"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\default.aspx.resx"
-                    DependentUpon = "default.aspx.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\editsquare.aspx"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\editsquare.aspx.cs"
-                    DependentUpon = "editsquare.aspx"
-                    SubType = "ASPXCodeBehind"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\editsquare.aspx.resx"
-                    DependentUpon = "editsquare.aspx.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\editterrainpiece.aspx"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\editterrainpiece.aspx.cs"
-                    DependentUpon = "editterrainpiece.aspx"
-                    SubType = "ASPXCodeBehind"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\editterrainpiece.aspx.resx"
-                    DependentUpon = "editterrainpiece.aspx.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "players\builders\terrain2\editterrainpieceobjectinstance.aspx"
+                    RelPath = "players\builders\terrain\editterrainpieceobjectinstance.aspx"
                     SubType = "Form"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "players\builders\terrain2\editterrainpieceobjectinstance.aspx.cs"
+                    RelPath = "players\builders\terrain\editterrainpieceobjectinstance.aspx.cs"
                     DependentUpon = "editterrainpieceobjectinstance.aspx"
                     SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "players\builders\terrain2\editterrainpieceobjectinstance.aspx.resx"
+                    RelPath = "players\builders\terrain\editterrainpieceobjectinstance.aspx.resx"
                     DependentUpon = "editterrainpieceobjectinstance.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "players\builders\terrain2\showterrainpiece.aspx"
+                    RelPath = "players\builders\terrain\showterrainpiece.aspx"
                     BuildAction = "Content"
                 />
                 <File
-                    RelPath = "players\builders\terrain2\showterrainpiece.aspx.cs"
+                    RelPath = "players\builders\terrain\showterrainpiece.aspx.cs"
                     DependentUpon = "showterrainpiece.aspx"
                     SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "players\builders\terrain2\showterrainpiece.aspx.resx"
+                    RelPath = "players\builders\terrain\showterrainpiece.aspx.resx"
                     DependentUpon = "showterrainpiece.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
@@ -1252,10 +1218,7 @@
                     RelPath = "ReferencedAssemblies\thisterminal.Web.pdb"
                     BuildAction = "Content"
                 />
-                <File
-                    RelPath = "screenshots\55.jpg"
-                    BuildAction = "Content"
-                />
+                <Folder RelPath = "screenshots\" />
             </Include>
         </Files>
     </CSHARP>
