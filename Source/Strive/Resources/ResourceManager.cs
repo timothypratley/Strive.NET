@@ -44,7 +44,7 @@ namespace Strive.Resources
 				return Model.Load(InstanceID.ToString(), _3dsFile, ModelFormat.Mesh);
 			} else if ( System.IO.File.Exists(textureFile) ) {
 				// todo: don't hardcode the heightmap file
-				textureFile = System.IO.Path.Combine( _texturePath, "56.bmp");
+				textureFile = System.IO.Path.Combine( _texturePath, "91.bmp");
 				string texture = LoadTexture( ModelID );
 				return Model.CreateTerrain( InstanceID.ToString(), textureFile, texture );
 			}
@@ -58,7 +58,7 @@ namespace Strive.Resources
 			}
 			else if (makeTextureExist(System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp"))) {
 				// todo: don't hardcode the heightmap file
-				textureFile = System.IO.Path.Combine( _texturePath, "56.bmp");
+				textureFile = System.IO.Path.Combine( _texturePath, "91.bmp");
 				string texture = LoadTexture( ModelID );
 				return Model.CreateTerrain( InstanceID.ToString(), textureFile, texture );
 			}

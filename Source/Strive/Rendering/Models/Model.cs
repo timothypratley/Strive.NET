@@ -73,11 +73,11 @@ namespace Strive.Rendering.Models
 			Model created = new Model();
 			created._format = ModelFormat.Scape;
 			created._key = name;
-			created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 200, true, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
+			created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 500, false, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
 			R3DVector3D scale = new R3DVector3D();
-			scale.x = 0.4F;
-			scale.y = 0.4F;
-			scale.z = 0.4F;
+			scale.x = 0.390625F;
+			scale.y = 0.390625F;
+			scale.z = 0.390625F;
 			Interop._instance.PolyVox.Scape_SetScale( ref scale );
 			Interop._instance.PolyVox.Scape_SetTexture( 0, texture, R3DLAYERCONFIG.R3DLAYERCONFIG_COLOR );
 			return created;
