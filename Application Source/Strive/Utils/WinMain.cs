@@ -15,6 +15,7 @@ namespace Strive.Utils
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button LoadXSDGenerator;
+		private System.Windows.Forms.Button WorldBuilderButton;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -57,6 +58,7 @@ namespace Strive.Utils
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.LoadXSDGenerator = new System.Windows.Forms.Button();
+			this.WorldBuilderButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -86,11 +88,21 @@ namespace Strive.Utils
 			this.LoadXSDGenerator.Text = "XSD Generator";
 			this.LoadXSDGenerator.Click += new System.EventHandler(this.LoadXSDGenerator_Click);
 			// 
+			// WorldBuilderButton
+			// 
+			this.WorldBuilderButton.Location = new System.Drawing.Point(8, 48);
+			this.WorldBuilderButton.Name = "WorldBuilderButton";
+			this.WorldBuilderButton.Size = new System.Drawing.Size(88, 23);
+			this.WorldBuilderButton.TabIndex = 3;
+			this.WorldBuilderButton.Text = "World Builder";
+			this.WorldBuilderButton.Click += new System.EventHandler(this.WorldBuilderButton_Click);
+			// 
 			// WinMain
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(440, 126);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
+																		  this.WorldBuilderButton,
 																		  this.LoadXSDGenerator,
 																		  this.button2,
 																		  this.button1});
@@ -126,6 +138,12 @@ namespace Strive.Utils
 		private void LoadXSDGenerator_Click(object sender, System.EventArgs e)
 		{
 			XSDGenerator.WinMain win = new XSDGenerator.WinMain();
+			win.ShowDialog(this);
+		}
+
+		private void WorldBuilderButton_Click(object sender, System.EventArgs e)
+		{
+			WorldBuilder.WinMain win = new WorldBuilder.WinMain();
 			win.ShowDialog(this);
 		}
 	}

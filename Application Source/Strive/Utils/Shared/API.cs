@@ -69,23 +69,7 @@ namespace Strive.Utils
 			}
 		}
 
-		public static string GenerateSchemaFromTableCollection(SQLDMO.Table rootTable, string ConnectionString)
-		{
 
-			SqlConnection con = new SqlConnection(ConnectionString);
-
-			con.Open();
-
-			XmlSchema schema = new XmlSchema();
-
-			DataSet d = new DataSet("parseMe");
-
-			AddTablesToSchema(con, d, rootTable);
-
-			con.Close();
-			return d.GetXmlSchema();
-
-		}
 
 		public static string GenerateSchemaFromTables(SQLDMO.Tables tables, string ConnectionString)
 		{
@@ -204,69 +188,6 @@ namespace Strive.Utils
 			con.Close();
 
 			return schema.GetXmlSchema();
-
-		}
-		
-
-		private static void AddTablesToSchema(SqlConnection con, DataSet schema, SQLDMO.Table t)
-		{
-			string selectList = "SELECT ";
-			
-			// try to build sql string
-			foreach(Column c in t.Columns)
-			{
-				selectList += c.Name + ", ";
-			}
-			if(selectList.EndsWith(", "))
-			{
-				selectList = selectList.Substring(0, selectList.Length -2);
-			}
-
-			selectList += " FROM " + t.Name + " WHERE 1 = 2";
-
-			SqlCommand com = new SqlCommand(selectList, con);
-
-			SqlDataAdapter da = new SqlDataAdapter(selectList, con);
-			da.FillSchema(schema, SchemaType.Source, t.Name);
-
-			SQLDMO.QueryResults qt = t.EnumReferencedTables(false);
-
-			for(int row = 1; row < qt.Rows; row++)
-			{
-				string tablename = qt.GetColumnString(row, 1);
-				tablename = tablename.Replace("[", "");
-				tablename = tablename.Replace("]", "");
-				tablename = tablename.Replace("dbo.", "");
-				Table enumTable = locateTable(((SQLDMO.Database)t.Parent), tablename);
-
-				if(schema.Tables == null ||
-					(!schema.Tables.Contains(tablename)) )
-				{
-					AddTablesToSchema(con, schema, enumTable);
-					SQLDMO.QueryResults qk = t.EnumReferencingKeys(enumTable.Name, false);
-					for(int keyrow = 1; keyrow < qk.Rows; keyrow++)
-					{
-						string keyname = qk.GetColumnString(row, 1);
-						keyname = keyname.Replace("[", "");
-						keyname = keyname.Replace("]", "");
-						keyname = keyname.Replace("dbo.", "");
-						Key k = locateKey(t, keyname);
-
-						if(schema.Relations == null ||
-							(!schema.Relations.Contains(keyname)))
-						{
-							// add keys
-							string[] childColumnNames;
-							string[] parentColumnNames;
-							string parentTableName;
-							string childTableName;
-							
-						}
-					}
-				}
-
-			}
-
 
 		}
 

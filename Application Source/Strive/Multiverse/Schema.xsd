@@ -1,633 +1,1162 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<xs:schema id="Schema" targetNamespace="http://source.strive3d.net/Application Source/Strive/Data/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns="http://source.strive3d.net/Application Source/Strive/Data/Schema.xsd" xmlns:mstns="http://source.strive3d.net/Application Source/Strive/Data/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-	<xs:element name="Schema" msdata:IsDataSet="true">
-		<xs:complexType>
-			<xs:choice maxOccurs="unbounded">
-				<xs:element name="EnumWeaponSize">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumWeaponSizeID" type="xs:int" />
-							<xs:element name="EnumWeaponSizeName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ItemWieldable">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="Damage" type="xs:int" />
-							<xs:element name="Hitroll" type="xs:int" />
-							<xs:element name="EnumDamageTypeID" type="xs:int" />
-							<xs:element name="EnumWeaponSizeID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="MobilePossesableByPlayer">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectInstanceID" type="xs:int" />
-							<xs:element name="PlayerID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Quote">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="QuoteID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
-							<xs:element name="QuoteName" type="xs:string" />
-							<xs:element name="Quoted" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Model">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ModelID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
-							<xs:element name="ModelName" type="xs:string" />
-							<xs:element name="PlayerID" type="xs:int" />
-							<xs:element name="Description" type="xs:string" minOccurs="0" />
-							<xs:element name="CreationTime" type="xs:dateTime" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Clan">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ClanID" type="xs:int" />
-							<xs:element name="ClanName" type="xs:string" />
-							<xs:element name="Gold" type="xs:int" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ClanRank">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ClanID" type="xs:int" />
-							<xs:element name="Rank" type="xs:int" />
-							<xs:element name="RankName" type="xs:string" />
-							<xs:element name="EnumSkillID" type="xs:int" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumDamageType">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumDamageTypeID" type="xs:int" />
-							<xs:element name="EnumDamageTypeName" type="xs:string" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumLiquidType">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumLiquidTypeID" type="xs:int" />
-							<xs:element name="EnumLiquidTypeName" type="xs:string" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumSpecialisation">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumSpecialisationID" type="xs:int" />
-							<xs:element name="EnumSpecialisationName" type="xs:string" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumTerrainType">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumTerrainTypeID" type="xs:int" />
-							<xs:element name="EnumTerrainTypeName" type="xs:string" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ObjectTemplate">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
-							<xs:element name="AreaID" type="xs:int" />
-							<xs:element name="ObjectTemplateName" type="xs:string" />
-							<xs:element name="ModelID" type="xs:int" />
-							<xs:element name="PlayerID" type="xs:int" />
-							<xs:element name="LastUpdatedBy" type="xs:int" />
-							<xs:element name="CreationTime" type="xs:dateTime" />
-							<xs:element name="LastUpdated" type="xs:dateTime" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumActivationType">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumActivationTypeID" type="xs:int" />
-							<xs:element name="EnumActivationName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumCommand">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumCommandID" type="xs:int" />
-							<xs:element name="EnumCommandName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumEmote">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumEmoteID" type="xs:int" />
-							<xs:element name="EnumName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumSex">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumSexID" type="xs:int" />
-							<xs:element name="EnumSexName" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumMobileSize">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumMobileSizeID" type="xs:int" />
-							<xs:element name="EnumMobileSizeName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumTargetType">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumTargetTypeID" type="xs:int" />
-							<xs:element name="EnumTargetName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumWearLocation">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumWearLocationID" type="xs:int" />
-							<xs:element name="EnumWearLocationName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ItemReadable">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="Title" type="xs:string" />
-							<xs:element name="Content" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="World">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="WorldID" type="xs:int" />
-							<xs:element name="WorldName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Area">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="AreaID" type="xs:int" />
-							<xs:element name="WorldID" type="xs:int" />
-							<xs:element name="AreaName" type="xs:string" />
-							<xs:element name="LowX" type="xs:int" />
-							<xs:element name="LowY" type="xs:int" />
-							<xs:element name="LowZ" type="xs:int" />
-							<xs:element name="HighX" type="xs:int" />
-							<xs:element name="HighY" type="xs:int" />
-							<xs:element name="HighZ" type="xs:int" />
-							<xs:element name="ControllingClan" type="xs:int" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumMobileState">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumMobileStateID" type="xs:int" />
-							<xs:element name="EnumMobileStateName" type="xs:string" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Player">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="PlayerID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
-							<xs:element name="PlayerName" type="xs:string" />
-							<xs:element name="Age" type="xs:int" />
-							<xs:element name="FirstName" type="xs:string" minOccurs="0" />
-							<xs:element name="Surname" type="xs:string" minOccurs="0" />
-							<xs:element name="Email" type="xs:string" />
-							<xs:element name="EnumSexID" type="xs:int" minOccurs="0" />
-							<xs:element name="Password" type="xs:string" minOccurs="0" />
-							<xs:element name="TrustLevel" type="xs:int" />
-							<xs:element name="Comment" type="xs:string" minOccurs="0" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="SpecialisationEnablesSpecialisation">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumSpecialisationID" type="xs:int" />
-							<xs:element name="PrerequisiteSpecialisationID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumItemDurability">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumItemDurabilityID" type="xs:int" />
-							<xs:element name="EnumItemDurabilityName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="RaceHasEmote">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumRaceID" type="xs:int" />
-							<xs:element name="EnumEmoteID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="SkillEnablesSkill">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumSkillID" type="xs:int" />
-							<xs:element name="PrerequisiteSkillID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="SpecialisationEnablesSkill">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumSpecialisationID" type="xs:int" />
-							<xs:element name="EnumSkillID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="TemplateItem">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="Value" type="xs:int" />
-							<xs:element name="Weight" type="xs:int" />
-							<xs:element name="EnumItemDurabilityID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="TemplateAffectedBySkill">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="EnumSkillID" type="xs:int" />
-							<xs:element name="Duration" type="xs:int" />
-							<xs:element name="Level" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ObjectInstance">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectInstanceID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="X" type="xs:double" />
-							<xs:element name="Y" type="xs:double" />
-							<xs:element name="Z" type="xs:double" />
-							<xs:element name="HeadingX" type="xs:double" />
-							<xs:element name="HeadingY" type="xs:double" />
-							<xs:element name="HeadingZ" type="xs:double" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="TemplateTerrain">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="EnumTerrainTypeID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ItemEquipable">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="EnumWearLocationID" type="xs:int" />
-							<xs:element name="ArmourClass" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Inventory">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectInstanceID" type="xs:int" />
-							<xs:element name="ContainedObjectInstanceID" type="xs:int" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ItemJunk">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="Takeable" type="xs:boolean" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="MobileHasClanRank">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="ClanID" type="xs:int" />
-							<xs:element name="Rank" type="xs:int" />
-							<xs:element name="ClanPoints" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="MobileHasSkill">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="EnumSkillID" type="xs:int" />
-							<xs:element name="Rating" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="MobileHasSpecialisation">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="EnumSpecialisationID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="ItemQuaffable">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="EnumLiquidTypeID" type="xs:int" />
-							<xs:element name="Capacity" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="TemplateMobile">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="ObjectTemplateID" type="xs:int" />
-							<xs:element name="EnumRaceID" type="xs:int" />
-							<xs:element name="Level" type="xs:int" />
-							<xs:element name="Strength" type="xs:int" />
-							<xs:element name="Constitution" type="xs:int" />
-							<xs:element name="Cognition" type="xs:int" />
-							<xs:element name="Willpower" type="xs:int" />
-							<xs:element name="Dexterity" type="xs:int" />
-							<xs:element name="GoldCarried" type="xs:int" />
-							<xs:element name="GoldBanked" type="xs:int" />
-							<xs:element name="EnumSexID" type="xs:int" />
-							<xs:element name="EnumMobileSizeID" type="xs:int" />
-							<xs:element name="EnumMobileStateID" type="xs:int" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumRace">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumRaceID" type="xs:int" />
-							<xs:element name="EnumRaceName" type="xs:string" />
-							<xs:element name="Sentient" type="xs:boolean" minOccurs="0" />
-							<xs:element name="Description" type="xs:string" />
-							<xs:element name="EnumMobileSizeID" type="xs:int" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="EnumSkill">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="EnumSkillID" type="xs:int" />
-							<xs:element name="EnumSkillName" type="xs:string" />
-							<xs:element name="Description" type="xs:string" />
-							<xs:element name="EnumActivationTypeID" type="xs:int" />
-							<xs:element name="EnergyCost" type="xs:int" />
-							<xs:element name="EnumTargetTypeID" type="xs:int" />
-							<xs:element name="Range" type="xs:int" />
-							<xs:element name="Radius" type="xs:int" />
-							<xs:element name="LeadTime" type="xs:int" />
-							<xs:element name="Duration" type="xs:int" />
-							<xs:element name="AirAffinity" type="xs:int" />
-							<xs:element name="EarthAffinity" type="xs:int" />
-							<xs:element name="FireAffinity" type="xs:int" />
-							<xs:element name="LifeAffinity" type="xs:int" />
-							<xs:element name="WaterAffinity" type="xs:int" />
-							<xs:element name="LearnModifier" type="xs:int" />
-							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:choice>
-		</xs:complexType>
-		<xs:unique name="SchemaKey1" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumWeaponSize" />
-			<xs:field xpath="mstns:EnumWeaponSizeID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey2" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ItemWieldable" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey3" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:MobilePossesableByPlayer" />
-			<xs:field xpath="mstns:ObjectInstanceID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey4" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Quote" />
-			<xs:field xpath="mstns:QuoteID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey5" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Model" />
-			<xs:field xpath="mstns:ModelID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey6" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Clan" />
-			<xs:field xpath="mstns:ClanID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey7" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ClanRank" />
-			<xs:field xpath="mstns:ClanID" />
-			<xs:field xpath="mstns:Rank" />
-		</xs:unique>
-		<xs:unique name="SchemaKey8" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumDamageType" />
-			<xs:field xpath="mstns:EnumDamageTypeID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey9" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumLiquidType" />
-			<xs:field xpath="mstns:EnumLiquidTypeID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey10" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumSpecialisation" />
-			<xs:field xpath="mstns:EnumSpecialisationID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey11" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumTerrainType" />
-			<xs:field xpath="mstns:EnumTerrainTypeID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey12" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ObjectTemplate" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey13" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumActivationType" />
-			<xs:field xpath="mstns:EnumActivationTypeID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey14" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumCommand" />
-			<xs:field xpath="mstns:EnumCommandID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey15" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumEmote" />
-			<xs:field xpath="mstns:EnumEmoteID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey16" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumSex" />
-			<xs:field xpath="mstns:EnumSexID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey17" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumMobileSize" />
-			<xs:field xpath="mstns:EnumMobileSizeID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey18" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumTargetType" />
-			<xs:field xpath="mstns:EnumTargetTypeID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey19" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumWearLocation" />
-			<xs:field xpath="mstns:EnumWearLocationID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey20" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ItemReadable" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey21" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:World" />
-			<xs:field xpath="mstns:WorldID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey22" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Area" />
-			<xs:field xpath="mstns:AreaID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey23" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumMobileState" />
-			<xs:field xpath="mstns:EnumMobileStateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey24" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Player" />
-			<xs:field xpath="mstns:PlayerID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey25" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:SpecialisationEnablesSpecialisation" />
-			<xs:field xpath="mstns:EnumSpecialisationID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey26" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumItemDurability" />
-			<xs:field xpath="mstns:EnumItemDurabilityID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey27" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:RaceHasEmote" />
-			<xs:field xpath="mstns:EnumRaceID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey28" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:SkillEnablesSkill" />
-			<xs:field xpath="mstns:EnumSkillID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey29" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:SpecialisationEnablesSkill" />
-			<xs:field xpath="mstns:EnumSpecialisationID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey30" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:TemplateItem" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey31" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:TemplateAffectedBySkill" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-			<xs:field xpath="mstns:EnumSkillID" />
-			<xs:field xpath="mstns:Duration" />
-			<xs:field xpath="mstns:Level" />
-		</xs:unique>
-		<xs:unique name="SchemaKey32" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ObjectInstance" />
-			<xs:field xpath="mstns:ObjectInstanceID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey33" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:TemplateTerrain" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey34" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ItemEquipable" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey35" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:Inventory" />
-			<xs:field xpath="mstns:ObjectInstanceID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey36" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ItemJunk" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey37" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:MobileHasClanRank" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-			<xs:field xpath="mstns:ClanID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey38" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:MobileHasSkill" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-			<xs:field xpath="mstns:EnumSkillID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey39" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:MobileHasSpecialisation" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey40" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:ItemQuaffable" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey41" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:TemplateMobile" />
-			<xs:field xpath="mstns:ObjectTemplateID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey42" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumRace" />
-			<xs:field xpath="mstns:EnumRaceID" />
-		</xs:unique>
-		<xs:unique name="SchemaKey43" msdata:PrimaryKey="true">
-			<xs:selector xpath=".//mstns:EnumSkill" />
-			<xs:field xpath="mstns:EnumSkillID" />
-		</xs:unique>
-	</xs:element>
+﻿<?xml version="1.0" encoding="utf-16"?>
+<xs:schema id="Schema" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="Schema" msdata:IsDataSet="true" msdata:Locale="en-AU">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Area">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AreaID" type="xs:int" />
+              <xs:element name="WorldID" type="xs:int" />
+              <xs:element name="AreaName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LowX" type="xs:int" />
+              <xs:element name="LowY" type="xs:int" />
+              <xs:element name="LowZ" type="xs:int" />
+              <xs:element name="HighX" type="xs:int" />
+              <xs:element name="HighY" type="xs:int" />
+              <xs:element name="HighZ" type="xs:int" />
+              <xs:element name="ControllingClan" type="xs:int" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Clan">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClanID" type="xs:int" />
+              <xs:element name="ClanName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Gold" type="xs:int" />
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ClanRank">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClanID" type="xs:int" />
+              <xs:element name="Rank" type="xs:int" />
+              <xs:element name="RankName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EnumSkillID" type="xs:int" />
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumActivationType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumActivationTypeID" type="xs:int" />
+              <xs:element name="EnumActivationName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumCommand">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumCommandID" type="xs:int" />
+              <xs:element name="EnumCommandName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumDamageType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumDamageTypeID" type="xs:int" />
+              <xs:element name="EnumDamageTypeName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumEmote">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumEmoteID" type="xs:int" />
+              <xs:element name="EnumName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumItemDurability">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumItemDurabilityID" type="xs:int" />
+              <xs:element name="EnumItemDurabilityName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumLiquidType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumLiquidTypeID" type="xs:int" />
+              <xs:element name="EnumLiquidTypeName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumMobileSize">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumMobileSizeID" type="xs:int" />
+              <xs:element name="EnumMobileSizeName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumMobileState">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumMobileStateID" type="xs:int" />
+              <xs:element name="EnumMobileStateName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumRace">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumRaceID" type="xs:int" />
+              <xs:element name="EnumRaceName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Sentient" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EnumMobileSizeID" type="xs:int" />
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumSex">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumSexID" type="xs:int" />
+              <xs:element name="EnumSexName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumSkill">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumSkillID" type="xs:int" />
+              <xs:element name="EnumSkillName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EnumActivationTypeID" type="xs:int" />
+              <xs:element name="EnergyCost" type="xs:int" />
+              <xs:element name="EnumTargetTypeID" type="xs:int" />
+              <xs:element name="Range" type="xs:int" />
+              <xs:element name="Radius" type="xs:int" />
+              <xs:element name="LeadTime" type="xs:int" />
+              <xs:element name="Duration" type="xs:int" />
+              <xs:element name="AirAffinity" type="xs:int" />
+              <xs:element name="EarthAffinity" type="xs:int" />
+              <xs:element name="FireAffinity" type="xs:int" />
+              <xs:element name="LifeAffinity" type="xs:int" />
+              <xs:element name="WaterAffinity" type="xs:int" />
+              <xs:element name="LearnModifier" type="xs:int" />
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumSpecialisation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumSpecialisationID" type="xs:int" />
+              <xs:element name="EnumSpecialisationName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumTargetType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumTargetTypeID" type="xs:int" />
+              <xs:element name="EnumTargetName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumTerrainType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumTerrainTypeID" type="xs:int" />
+              <xs:element name="EnumTerrainTypeName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumWeaponSize">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumWeaponSizeID" type="xs:int" />
+              <xs:element name="EnumWeaponSizeName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnumWearLocation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumWearLocationID" type="xs:int" />
+              <xs:element name="EnumWearLocationName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Inventory">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectInstanceID" type="xs:int" />
+              <xs:element name="ContainedObjectInstanceID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ItemEquipable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="EnumWearLocationID" type="xs:int" />
+              <xs:element name="ArmourClass" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ItemJunk">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="Takeable" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ItemQuaffable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="EnumLiquidTypeID" type="xs:int" />
+              <xs:element name="Capacity" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ItemReadable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="Title">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Content">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ItemWieldable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="Damage" type="xs:int" />
+              <xs:element name="Hitroll" type="xs:int" />
+              <xs:element name="EnumDamageTypeID" type="xs:int" />
+              <xs:element name="EnumWeaponSizeID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MobileHasClanRank">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="ClanID" type="xs:int" />
+              <xs:element name="Rank" type="xs:int" />
+              <xs:element name="ClanPoints" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MobileHasSkill">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="EnumSkillID" type="xs:int" />
+              <xs:element name="Rating" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MobileHasSpecialisation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="EnumSpecialisationID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MobilePossesableByPlayer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectInstanceID" type="xs:int" />
+              <xs:element name="PlayerID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Model">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ModelID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="ModelName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PlayerID" type="xs:int" />
+              <xs:element name="Description" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CreationTime" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ObjectInstance">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectInstanceID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="X" type="xs:double" />
+              <xs:element name="Y" type="xs:double" />
+              <xs:element name="Z" type="xs:double" />
+              <xs:element name="HeadingX" type="xs:double" />
+              <xs:element name="HeadingY" type="xs:double" />
+              <xs:element name="HeadingZ" type="xs:double" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ObjectTemplate">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="AreaID" type="xs:int" />
+              <xs:element name="ObjectTemplateName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ModelID" type="xs:int" />
+              <xs:element name="PlayerID" type="xs:int" />
+              <xs:element name="LastUpdatedBy" type="xs:int" />
+              <xs:element name="CreationTime" type="xs:dateTime" />
+              <xs:element name="LastUpdated" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Player">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PlayerID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="PlayerName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Age" type="xs:int" />
+              <xs:element name="FirstName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Surname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Email">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EnumSexID" type="xs:int" minOccurs="0" />
+              <xs:element name="Password" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TrustLevel" type="xs:int" />
+              <xs:element name="Comment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="QuoteID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Quote">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="QuoteID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="QuoteName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Quoted">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RaceHasEmote">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumRaceID" type="xs:int" />
+              <xs:element name="EnumEmoteID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SkillEnablesSkill">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumSkillID" type="xs:int" />
+              <xs:element name="PrerequisiteSkillID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SpecialisationEnablesSkill">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumSpecialisationID" type="xs:int" />
+              <xs:element name="EnumSkillID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SpecialisationEnablesSpecialisation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EnumSpecialisationID" type="xs:int" />
+              <xs:element name="PrerequisiteSpecialisationID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TemplateAffectedBySkill">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="EnumSkillID" type="xs:int" />
+              <xs:element name="Duration" type="xs:int" />
+              <xs:element name="Level" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TemplateItem">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="Value" type="xs:int" />
+              <xs:element name="Weight" type="xs:int" />
+              <xs:element name="EnumItemDurabilityID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TemplateMobile">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="EnumRaceID" type="xs:int" />
+              <xs:element name="Level" type="xs:int" />
+              <xs:element name="Strength" type="xs:int" />
+              <xs:element name="Constitution" type="xs:int" />
+              <xs:element name="Cognition" type="xs:int" />
+              <xs:element name="Willpower" type="xs:int" />
+              <xs:element name="Dexterity" type="xs:int" />
+              <xs:element name="GoldCarried" type="xs:int" />
+              <xs:element name="GoldBanked" type="xs:int" />
+              <xs:element name="EnumSexID" type="xs:int" />
+              <xs:element name="EnumMobileSizeID" type="xs:int" />
+              <xs:element name="EnumMobileStateID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TemplateTerrain">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ObjectTemplateID" type="xs:int" />
+              <xs:element name="EnumTerrainTypeID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="World">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="WorldID" type="xs:int" />
+              <xs:element name="WorldName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1073741823" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Area" />
+      <xs:field xpath="AreaID" />
+    </xs:unique>
+    <xs:unique name="Clan_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Clan" />
+      <xs:field xpath="ClanID" />
+    </xs:unique>
+    <xs:unique name="ClanRank_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ClanRank" />
+      <xs:field xpath="ClanID" />
+      <xs:field xpath="Rank" />
+    </xs:unique>
+    <xs:unique name="EnumActivationType_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumActivationType" />
+      <xs:field xpath="EnumActivationTypeID" />
+    </xs:unique>
+    <xs:unique name="EnumCommand_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumCommand" />
+      <xs:field xpath="EnumCommandID" />
+    </xs:unique>
+    <xs:unique name="EnumDamageType_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumDamageType" />
+      <xs:field xpath="EnumDamageTypeID" />
+    </xs:unique>
+    <xs:unique name="EnumEmote_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumEmote" />
+      <xs:field xpath="EnumEmoteID" />
+    </xs:unique>
+    <xs:unique name="EnumItemDurability_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumItemDurability" />
+      <xs:field xpath="EnumItemDurabilityID" />
+    </xs:unique>
+    <xs:unique name="EnumLiquidType_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumLiquidType" />
+      <xs:field xpath="EnumLiquidTypeID" />
+    </xs:unique>
+    <xs:unique name="EnumMobileSize_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumMobileSize" />
+      <xs:field xpath="EnumMobileSizeID" />
+    </xs:unique>
+    <xs:unique name="EnumMobileState_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumMobileState" />
+      <xs:field xpath="EnumMobileStateID" />
+    </xs:unique>
+    <xs:unique name="EnumRace_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumRace" />
+      <xs:field xpath="EnumRaceID" />
+    </xs:unique>
+    <xs:unique name="EnumSex_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumSex" />
+      <xs:field xpath="EnumSexID" />
+    </xs:unique>
+    <xs:unique name="EnumSkill_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumSkill" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:unique>
+    <xs:unique name="EnumSpecialisation_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumSpecialisation" />
+      <xs:field xpath="EnumSpecialisationID" />
+    </xs:unique>
+    <xs:unique name="EnumTargetType_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumTargetType" />
+      <xs:field xpath="EnumTargetTypeID" />
+    </xs:unique>
+    <xs:unique name="EnumTerrainType_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumTerrainType" />
+      <xs:field xpath="EnumTerrainTypeID" />
+    </xs:unique>
+    <xs:unique name="EnumWeaponSize_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumWeaponSize" />
+      <xs:field xpath="EnumWeaponSizeID" />
+    </xs:unique>
+    <xs:unique name="EnumWearLocation_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//EnumWearLocation" />
+      <xs:field xpath="EnumWearLocationID" />
+    </xs:unique>
+    <xs:unique name="Inventory_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Inventory" />
+      <xs:field xpath="ObjectInstanceID" />
+    </xs:unique>
+    <xs:unique name="ItemEquipable_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ItemEquipable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="ItemJunk_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ItemJunk" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="ItemQuaffable_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ItemQuaffable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="ItemReadable_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ItemReadable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="ItemWieldable_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ItemWieldable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="MobileHasClanRank_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//MobileHasClanRank" />
+      <xs:field xpath="ObjectTemplateID" />
+      <xs:field xpath="ClanID" />
+    </xs:unique>
+    <xs:unique name="MobileHasSkill_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//MobileHasSkill" />
+      <xs:field xpath="ObjectTemplateID" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:unique>
+    <xs:unique name="MobileHasSpecialisation_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//MobileHasSpecialisation" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="MobilePossesableByPlayer_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//MobilePossesableByPlayer" />
+      <xs:field xpath="ObjectInstanceID" />
+    </xs:unique>
+    <xs:unique name="Model_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Model" />
+      <xs:field xpath="ModelID" />
+    </xs:unique>
+    <xs:unique name="ObjectInstance_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ObjectInstance" />
+      <xs:field xpath="ObjectInstanceID" />
+    </xs:unique>
+    <xs:unique name="ObjectTemplate_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//ObjectTemplate" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="Player_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Player" />
+      <xs:field xpath="PlayerID" />
+    </xs:unique>
+    <xs:unique name="Quote_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Quote" />
+      <xs:field xpath="QuoteID" />
+    </xs:unique>
+    <xs:unique name="RaceHasEmote_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//RaceHasEmote" />
+      <xs:field xpath="EnumRaceID" />
+    </xs:unique>
+    <xs:unique name="SkillEnablesSkill_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//SkillEnablesSkill" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:unique>
+    <xs:unique name="SpecialisationEnablesSkill_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//SpecialisationEnablesSkill" />
+      <xs:field xpath="EnumSpecialisationID" />
+    </xs:unique>
+    <xs:unique name="SpecialisationEnablesSpecialisation_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//SpecialisationEnablesSpecialisation" />
+      <xs:field xpath="EnumSpecialisationID" />
+    </xs:unique>
+    <xs:unique name="TemplateAffectedBySkill_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//TemplateAffectedBySkill" />
+      <xs:field xpath="ObjectTemplateID" />
+      <xs:field xpath="EnumSkillID" />
+      <xs:field xpath="Duration" />
+      <xs:field xpath="Level" />
+    </xs:unique>
+    <xs:unique name="TemplateItem_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//TemplateItem" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="TemplateMobile_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//TemplateMobile" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="TemplateTerrain_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//TemplateTerrain" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:unique>
+    <xs:unique name="World_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//World" />
+      <xs:field xpath="WorldID" />
+    </xs:unique>
+    <xs:keyref name="FK_TemplateTerrain_ObjectTemplate" refer="ObjectTemplate_Constraint1">
+      <xs:selector xpath=".//TemplateTerrain" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateTerrain_EnumTerrainType" refer="EnumTerrainType_Constraint1">
+      <xs:selector xpath=".//TemplateTerrain" />
+      <xs:field xpath="EnumTerrainTypeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateMobile_Race" refer="EnumRace_Constraint1">
+      <xs:selector xpath=".//TemplateMobile" />
+      <xs:field xpath="EnumRaceID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateMobile_ObjectTemplate" refer="ObjectTemplate_Constraint1">
+      <xs:selector xpath=".//TemplateMobile" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateMobile_EnumSex" refer="EnumSex_Constraint1">
+      <xs:selector xpath=".//TemplateMobile" />
+      <xs:field xpath="EnumSexID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateMobile_EnumMobileState" refer="EnumMobileState_Constraint1">
+      <xs:selector xpath=".//TemplateMobile" />
+      <xs:field xpath="EnumMobileStateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateMobile_EnumMobileSize" refer="EnumMobileSize_Constraint1">
+      <xs:selector xpath=".//TemplateMobile" />
+      <xs:field xpath="EnumMobileSizeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateItem_ObjectTemplate" refer="ObjectTemplate_Constraint1">
+      <xs:selector xpath=".//TemplateItem" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateItem_EnumItemDurability" refer="EnumItemDurability_Constraint1">
+      <xs:selector xpath=".//TemplateItem" />
+      <xs:field xpath="EnumItemDurabilityID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplatetAffectedBySkill_ObjectTemplate" refer="ObjectTemplate_Constraint1">
+      <xs:selector xpath=".//TemplateAffectedBySkill" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_TemplateAffectedBySkill_EnumSkill" refer="EnumSkill_Constraint1">
+      <xs:selector xpath=".//TemplateAffectedBySkill" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:keyref>
+    <xs:keyref name="FK_SpecialisationEnablesSpecialisation_EnumSpecialisation" refer="EnumSpecialisation_Constraint1">
+      <xs:selector xpath=".//SpecialisationEnablesSpecialisation" />
+      <xs:field xpath="EnumSpecialisationID" />
+    </xs:keyref>
+    <xs:keyref name="FK_SpecialisationEnablesSkill_EnumSpecialisation" refer="EnumSpecialisation_Constraint1">
+      <xs:selector xpath=".//SpecialisationEnablesSkill" />
+      <xs:field xpath="EnumSpecialisationID" />
+    </xs:keyref>
+    <xs:keyref name="FK_SpecialisationEnablesSkill_EnumSkill" refer="EnumSkill_Constraint1">
+      <xs:selector xpath=".//SpecialisationEnablesSkill" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:keyref>
+    <xs:keyref name="FK_SkillEnablesSkill_EnumSkill" refer="EnumSkill_Constraint1">
+      <xs:selector xpath=".//SkillEnablesSkill" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:keyref>
+    <xs:keyref name="FK_RaceHasEmote_EnumEmote" refer="EnumEmote_Constraint1">
+      <xs:selector xpath=".//RaceHasEmote" />
+      <xs:field xpath="EnumEmoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Player_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//Player" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Player_EnumSex" refer="EnumSex_Constraint1">
+      <xs:selector xpath=".//Player" />
+      <xs:field xpath="EnumSexID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ObjectTemplate_Player" refer="Player_Constraint1">
+      <xs:selector xpath=".//ObjectTemplate" />
+      <xs:field xpath="PlayerID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ObjectTemplate_Model" refer="Model_Constraint1">
+      <xs:selector xpath=".//ObjectTemplate" />
+      <xs:field xpath="ModelID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ObjectTemplate_Area" refer="Constraint1">
+      <xs:selector xpath=".//ObjectTemplate" />
+      <xs:field xpath="AreaID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ObjectTemplate_ObjectInstance" refer="ObjectTemplate_Constraint1">
+      <xs:selector xpath=".//ObjectInstance" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Model_Player" refer="Player_Constraint1">
+      <xs:selector xpath=".//Model" />
+      <xs:field xpath="PlayerID" />
+    </xs:keyref>
+    <xs:keyref name="FK_MobilePossesableByPlayer_Player" refer="Player_Constraint1">
+      <xs:selector xpath=".//MobilePossesableByPlayer" />
+      <xs:field xpath="PlayerID" />
+    </xs:keyref>
+    <xs:keyref name="FK_MobilePossesableByPlayer_ObjectInstance" refer="ObjectInstance_Constraint1">
+      <xs:selector xpath=".//MobilePossesableByPlayer" />
+      <xs:field xpath="ObjectInstanceID" />
+    </xs:keyref>
+    <xs:keyref name="FK_MobileHasSpecialisation_TemplateMobile" refer="TemplateMobile_Constraint1">
+      <xs:selector xpath=".//MobileHasSpecialisation" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_MobileHasSkill_TemplateMobile" refer="TemplateMobile_Constraint1">
+      <xs:selector xpath=".//MobileHasSkill" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_MobileHasSkill_EnumSkill" refer="EnumSkill_Constraint1">
+      <xs:selector xpath=".//MobileHasSkill" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:keyref>
+    <xs:keyref name="FK_MobileHasClanRank_TemplateMobile" refer="TemplateMobile_Constraint1">
+      <xs:selector xpath=".//MobileHasClanRank" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_MobileHasClanRank_ClanRank" refer="ClanRank_Constraint1">
+      <xs:selector xpath=".//MobileHasClanRank" />
+      <xs:field xpath="ClanID" />
+      <xs:field xpath="Rank" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemWieldable_TemplateItem" refer="TemplateItem_Constraint1">
+      <xs:selector xpath=".//ItemWieldable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemWieldable_EnumWeaponSize" refer="EnumWeaponSize_Constraint1">
+      <xs:selector xpath=".//ItemWieldable" />
+      <xs:field xpath="EnumWeaponSizeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemWieldable_EnumDamageType" refer="EnumDamageType_Constraint1">
+      <xs:selector xpath=".//ItemWieldable" />
+      <xs:field xpath="EnumDamageTypeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemReadable_TemplateItem" refer="TemplateItem_Constraint1">
+      <xs:selector xpath=".//ItemReadable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemQuaffable_TemplateItem" refer="TemplateItem_Constraint1">
+      <xs:selector xpath=".//ItemQuaffable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemQuaffable_EnumLiquidType" refer="EnumLiquidType_Constraint1">
+      <xs:selector xpath=".//ItemQuaffable" />
+      <xs:field xpath="EnumLiquidTypeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemJunk_TemplateItem" refer="TemplateItem_Constraint1">
+      <xs:selector xpath=".//ItemJunk" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemEquipable_TemplateItem" refer="TemplateItem_Constraint1">
+      <xs:selector xpath=".//ItemEquipable" />
+      <xs:field xpath="ObjectTemplateID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ItemEquipable_EnumWearLocation" refer="EnumWearLocation_Constraint1">
+      <xs:selector xpath=".//ItemEquipable" />
+      <xs:field xpath="EnumWearLocationID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Inventory_ObjectInstance" refer="ObjectInstance_Constraint1">
+      <xs:selector xpath=".//Inventory" />
+      <xs:field xpath="ObjectInstanceID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumTerrainType_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//EnumTerrainType" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumSpecialisation_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//EnumSpecialisation" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumSkill_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//EnumSkill" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumSkill_EnumTargetType" refer="EnumTargetType_Constraint1">
+      <xs:selector xpath=".//EnumSkill" />
+      <xs:field xpath="EnumTargetTypeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumSkill_EnumActivationType" refer="EnumActivationType_Constraint1">
+      <xs:selector xpath=".//EnumSkill" />
+      <xs:field xpath="EnumActivationTypeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumRace_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//EnumRace" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumRace_EnumSize" refer="EnumMobileSize_Constraint1">
+      <xs:selector xpath=".//EnumRace" />
+      <xs:field xpath="EnumMobileSizeID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumLiquidType_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//EnumLiquidType" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_EnumDamageType_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//EnumDamageType" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ClanRank_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//ClanRank" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ClanRank_EnumSkill" refer="EnumSkill_Constraint1">
+      <xs:selector xpath=".//ClanRank" />
+      <xs:field xpath="EnumSkillID" />
+    </xs:keyref>
+    <xs:keyref name="FK_ClanRank_Clan" refer="Clan_Constraint1">
+      <xs:selector xpath=".//ClanRank" />
+      <xs:field xpath="ClanID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Clan_Quote" refer="Quote_Constraint1">
+      <xs:selector xpath=".//Clan" />
+      <xs:field xpath="QuoteID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Area_World" refer="World_Constraint1">
+      <xs:selector xpath=".//Area" />
+      <xs:field xpath="WorldID" />
+    </xs:keyref>
+  </xs:element>
 </xs:schema>

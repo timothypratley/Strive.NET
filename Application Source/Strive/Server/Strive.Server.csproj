@@ -154,7 +154,6 @@
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
-                <Folder RelPath = "Data\" />
             </Include>
         </Files>
     </CSHARP>

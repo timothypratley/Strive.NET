@@ -145,10 +145,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "user.config"
-                    BuildAction = "None"
-                />
-                <File
                     RelPath = "Forms\Acknowledgements.cs"
                     SubType = "Form"
                     BuildAction = "Compile"

@@ -87,11 +87,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "CommandFactory.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "MultiverseFactory.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

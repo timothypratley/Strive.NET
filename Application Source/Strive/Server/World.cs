@@ -30,7 +30,7 @@ namespace Strive.Server {
 
 		public World() {
 			System.Console.WriteLine( "Loading world..." );
-			multiverse = Strive.Data.MultiverseFactory.loadMultiverse();
+			multiverse = Strive.Data.MultiverseFactory.getMultiverse();
 
 			// find highX and lowX for our world dimensions
 			highX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;

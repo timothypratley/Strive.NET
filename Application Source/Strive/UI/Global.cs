@@ -63,6 +63,8 @@ namespace Strive.UI
 			
 			_serverConnection.Stop();
 
+			Console.ReadLine();
+
 		}
 
 	}

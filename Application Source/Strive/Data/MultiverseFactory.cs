@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Specialized;
+using System.Data;
 using System.Data.SqlClient;
 using Strive.Multiverse;
 
@@ -9,53 +12,143 @@ namespace Strive.Data
 	/// </summary>
 	public class MultiverseFactory {
 		static SqlConnection connection;
-		static CommandFactory commandFactory;
+		static ListDictionary  commandBuilders = new ListDictionary();
+		static ListDictionary dataAdapters = new ListDictionary();
+		static ListDictionary commands = new ListDictionary();
+		static ArrayList tableList = new ArrayList();
+		static bool isInitialised;
+
 		static MultiverseFactory() {
 			connection = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["databaseConnectionString"].ToString());
 			connection.Open();
-			commandFactory = new CommandFactory(connection);
 		}
 
-		public static Schema loadMultiverse()
+
+		#region Utility methods
+
+		private static void initaliseState(Schema multiverse)
+		{
+			if(!isInitialised)
+			{
+				// Create all the commands:
+				foreach(DataTable multiverseTable in multiverse.Tables)
+				{
+					string selectCommandText = "SELECT ";
+
+					foreach(DataColumn tableColumn in multiverseTable.Columns)
+					{
+						selectCommandText += tableColumn.ColumnName + ", ";
+					}
+
+					if(selectCommandText.EndsWith(", "))
+					{
+						selectCommandText = selectCommandText.Substring(0, selectCommandText.Length - 2);
+					}
+
+					selectCommandText += " FROM " + multiverseTable.TableName;
+					
+					SqlCommand tableSelectCommand = new SqlCommand(selectCommandText, connection);
+
+					SqlDataAdapter tableAdapter = new SqlDataAdapter(tableSelectCommand);
+					SqlCommandBuilder tableBuilder = new SqlCommandBuilder(tableAdapter);
+					
+					commandBuilders.Add(multiverseTable.TableName, tableBuilder);
+					dataAdapters.Add(multiverseTable.TableName, tableAdapter);
+					commands.Add(multiverseTable.TableName, tableSelectCommand);
+				}			
+
+				// get the tables in order:
+				foreach(DataTable orderedTable in multiverse.Tables)
+				{
+					// add ultimate parent
+					addUltimateParents(orderedTable);
+					if(!tableList.Contains(orderedTable))
+					{
+						tableList.Add(orderedTable);
+					}
+
+
+				}
+
+				isInitialised = true;
+			}
+		}
+
+		private static void addUltimateParents(DataTable table)
+		{
+			if(!tableList.Contains(table))
+			{
+				tableList.Insert(0, table);
+			}
+			else
+			{
+				// shuffle it:
+				tableList.Remove(table);
+				tableList.Insert(0, table);
+			}
+			if(table.ParentRelations != null &&
+				table.ParentRelations.Count != 0 )
+			{
+				foreach(DataRelation relation in table.ParentRelations)
+				{
+					addUltimateParents(relation.ParentTable);
+				}
+			}
+		}
+
+		#endregion
+
+		public static Schema getMultiverse()
 		{
 			Schema multiverse = new Schema();
-			SqlDataAdapter da = new SqlDataAdapter();
 
-			// NB: Order is important here:
-			da.SelectCommand = commandFactory.SelectObjectTemplate;
-			da.Fill( multiverse, "ObjectTemplate" );
-			da.SelectCommand = commandFactory.SelectObjectInstance;
-			da.Fill( multiverse, "ObjectInstance" );
-			da.SelectCommand = commandFactory.SelectTemplateItem;
-			da.Fill( multiverse, "TemplateItem" );
-			da.SelectCommand = commandFactory.SelectPlayer;
-			da.Fill(multiverse, "Player");
-			da.SelectCommand = commandFactory.SelectWorld;
-			da.Fill(multiverse, "World");
-			da.SelectCommand = commandFactory.SelectArea;
-			da.Fill(multiverse, "Area");
-			da.SelectCommand = commandFactory.SelectTemplateMobile;
-			da.Fill(multiverse, "TemplateMobile");
-			da.SelectCommand = commandFactory.SelectMobilePossesableByPlayer;
-			da.Fill(multiverse, "MobilePossesableByPlayer");
-			da.SelectCommand = commandFactory.SelectTemplateTerrain;
-			da.Fill(multiverse, "TemplateTerrain");
-			da.SelectCommand = commandFactory.SelectItemWieldable;
-			da.Fill(multiverse, "ItemWieldable");
-			da.SelectCommand = commandFactory.SelectItemQuaffable;
-			da.Fill(multiverse, "ItemQuaffable");
-			da.SelectCommand = commandFactory.SelectItemReadable;
-			da.Fill(multiverse, "ItemReadable");
-			da.SelectCommand = commandFactory.SelectItemJunk;
-			da.Fill(multiverse, "ItemJunk");
-			da.SelectCommand = commandFactory.SelectItemEquipable;
-			da.Fill(multiverse, "ItemEquipable");
+			initaliseState(multiverse);
+			string Tables = "";
+			System.Diagnostics.Debug.WriteLine("***********************");
+			foreach(object mt in tableList)
+			{
+				DataTable multiverseTable = (DataTable)mt;
+				Tables += "\r\n" + multiverseTable.TableName;
+			}
 
-			return multiverse;			
+			System.Diagnostics.Debug.Write(Tables);
+			System.Diagnostics.Debug.WriteLine("***********************");
+
+			foreach(object mt in tableList)
+			{
+				DataTable multiverseTable = (DataTable)mt;
+				System.Diagnostics.Debug.WriteLine(multiverseTable.TableName);
+				SqlDataAdapter tableAdapter = (SqlDataAdapter)dataAdapters[multiverseTable.TableName];
+				try
+				{
+					tableAdapter.Fill(multiverse, multiverseTable.TableName);
+				}
+				catch(Exception e)
+				{
+					throw new Exception("Could not execute '" + tableAdapter.SelectCommand.CommandText + "'\r\nThe error was '" + e.Message + "'.", e);
+				}
+			}
+
+			return multiverse;
 		}
 
-		public static void saveMultiverse( Schema multiverse ) {
-			// w00t w00t EEERRR fill me out
+		public static void persistMultiverse(Schema multiverse)
+		{
+			// get a reverse list:
+			ArrayList reverseTableList = new ArrayList();
+			foreach(object mt in tableList)
+			{
+				reverseTableList.Insert(reverseTableList.Count, (DataTable)mt);
+			}
+
+			// process in reverse order
+			foreach(object mt in reverseTableList)
+			{
+				DataTable multiverseTable = (DataTable)mt;
+				SqlDataAdapter tableAdapter = (SqlDataAdapter)dataAdapters[multiverseTable.TableName];
+				tableAdapter.Update(multiverse, multiverseTable.TableName);
+			}
 		}
 	}
+
 }

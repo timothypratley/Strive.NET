@@ -35,6 +35,7 @@ namespace Strive.UI.Forms
 		private System.Windows.Forms.TextBox CommandText;
 		private System.Windows.Forms.RichTextBox Communications;
 		private System.Windows.Forms.Button butSpell1;
+		private System.Windows.Forms.TabPage ConnectTab;
 		private System.Windows.Forms.TabPage aLogTab;
 		internal System.Windows.Forms.PictureBox RenderTarget;
 		private System.Windows.Forms.RichTextBox logOutput;
@@ -91,9 +92,11 @@ namespace Strive.UI.Forms
 			this.CommandText = new System.Windows.Forms.TextBox();
 			this.NoteBoardTabs = new System.Windows.Forms.TabPage();
 			this.CharacterSheet = new System.Windows.Forms.TabPage();
+			this.ConnectTab = new System.Windows.Forms.TabPage();
 			this.aLogTab = new System.Windows.Forms.TabPage();
 			this.RenderTarget = new System.Windows.Forms.PictureBox();
 			this.logOutput = new System.Windows.Forms.RichTextBox();
+
 			this.gameTabs.SuspendLayout();
 			this.InGameTab.SuspendLayout();
 			this.inGameTabs.SuspendLayout();
@@ -108,10 +111,12 @@ namespace Strive.UI.Forms
 				| System.Windows.Forms.AnchorStyles.Right);
 			this.gameTabs.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
 			this.gameTabs.Controls.AddRange(new System.Windows.Forms.Control[] {
+																				   this.ConnectTab,
 																				   this.InGameTab,
 																				   this.NoteBoardTabs,
 																				   this.CharacterSheet,
 																				   this.aLogTab});
+			this.gameTabs.Enabled = false;
 			this.gameTabs.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.gameTabs.HotTrack = true;
 			this.gameTabs.Location = new System.Drawing.Point(3, 8);
@@ -279,6 +284,14 @@ namespace Strive.UI.Forms
 			this.logOutput.Size = new System.Drawing.Size(976, 616);
 			this.logOutput.TabIndex = 0;
 			this.logOutput.Text = "";
+			// 
+			// ConnectTab
+			// 
+			this.ConnectTab.Location = new System.Drawing.Point(4, 28);
+			this.ConnectTab.Name = "ConnectTab";
+			this.ConnectTab.Size = new System.Drawing.Size(1008, 648);
+			this.ConnectTab.TabIndex = 3;
+			this.ConnectTab.Text = "Connect";
 			// 
 			// Game
 			// 
