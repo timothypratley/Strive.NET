@@ -37,7 +37,9 @@ namespace Strive.Rendering.TV3D.Models {
 			t._mesh = Engine.TV3DScene.CreateMeshBuilder( name );
 			t._mesh.AddTriangle( texture.ID, 0, zy, 100, 100, xzy, 100, 0, y, 0, 1, 1, true, false );
 			t._mesh.AddTriangle( texture.ID, 100, xy, 0, 0, y, 0, 100, xzy, 100, 1, 1, true, false );
+			t._mesh.Optimize();
 			t._mesh.ComputeBoundingVolumes();
+
 			// TODO: bumpmapping would be cool :)
 			//t._mesh.SetBumpMapping( true, texture.ID, -1, -1, 10 );
 			t._key = name;

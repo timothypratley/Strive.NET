@@ -142,6 +142,7 @@ namespace Strive.UI.Engine {
 
 				IActor actor = (IActor)poi.model;
 				SetMobileState( ms.State, actor );
+				poi.model.Position = ms.position;
 			}
 				#endregion
 			#region CurrentHitpoints

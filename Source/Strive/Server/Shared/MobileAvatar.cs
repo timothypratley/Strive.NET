@@ -16,8 +16,7 @@ namespace Strive.Server.Shared
 	/// If a client is associated to an Avatar,
 	/// that client is controlling the Mobile in question.
 	/// </summary>
-	public class MobileAvatar : Mobile
-	{
+	public class MobileAvatar : Mobile {
 		public Client client = null;
 		public World world = null;
 		public DateTime lastAttackUpdate = Global.now;
@@ -41,12 +40,20 @@ namespace Strive.Server.Shared
 			Schema.TemplateMobileRow mobile,
 			Schema.ObjectTemplateRow template,
 			Schema.ObjectInstanceRow instance
-		) : base( mobile, template, instance ) {
+			) : base( mobile, template, instance ) {
 			this.world = world;
 		}
 
 		public void SetMobileState( EnumMobileState ms ) {
 			MobileState = ms;
+			// TODO: this will prolly change if we use anything more
+			// advance than stick to ground.
+			// changing state may have moved the mobile.
+			float altitude = world.AltitudeAt( Position.X, Position.Z ) + CurrentHeight/2;
+			Position.Y = altitude;
+
+			// NB: MobileState message has position info
+			// as it is likely that this will have changed
 			world.InformNearby( this, new Strive.Network.Messages.ToClient.MobileState( this ) );
 		}
 
@@ -337,6 +344,16 @@ namespace Strive.Server.Shared
 				return true;
 			} else {
 				return false;
+			}
+		}
+
+		public float CurrentHeight {
+			get {
+				if ( MobileState <= EnumMobileState.Resting ) {
+					return 0;
+				} else {
+					return Height;
+				}
 			}
 		}
 	}

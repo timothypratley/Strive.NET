@@ -24,7 +24,6 @@ namespace Strive.Server.Shared
 		public static int terrainSize = 100;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
-		public float[,] heightMap = new float[squareSize/terrainSize,squareSize/terrainSize];
 
 		public Square() {
 		}
@@ -39,10 +38,6 @@ namespace Strive.Server.Shared
 			}
 			if ( po is Terrain ) {
 				Terrain t = (Terrain)po;
-				heightMap[
-					((int)t.Position.X % squareSize) / terrainSize,
-					((int)t.Position.Z % squareSize) / terrainSize
-				] = t.Position.Y;
 			}
 		}
 

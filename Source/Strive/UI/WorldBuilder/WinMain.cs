@@ -334,6 +334,8 @@ namespace Strive.UI.WorldBuilder
 								// readd it with a different altitude
 								// multiple adds are ok
 								tp.altitude += 2;
+								Schema.ObjectInstanceRow oir = multiverse.ObjectInstance.FindByObjectInstanceID( tp.physicalObject.ObjectInstanceID );
+								oir.Y = tp.altitude;
 								world.TerrainPieces.Add( tp );
 								break;
 							}
@@ -489,7 +491,7 @@ namespace Strive.UI.WorldBuilder
 		}
 
 		private void menuItem6_Click(object sender, System.EventArgs e) {
-		
+			MultiverseFactory.persistMultiverseToDatabase( multiverse ); 
 		}
 	}
 }

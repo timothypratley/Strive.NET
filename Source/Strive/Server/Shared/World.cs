@@ -253,7 +253,12 @@ namespace Strive.Server.Shared {
 			// keep everything on the ground
 			try {
 				float altitude = AltitudeAt( newPosition.X, newPosition.Z );
-				newPosition.Y = altitude + po.Height / 2;
+				if ( po is MobileAvatar ) {
+					altitude += ((MobileAvatar)po).CurrentHeight/2;
+				} else {
+					altitude += po.Height / 2;
+				}
+				newPosition.Y = altitude;
 			} catch ( InvalidLocationException ) {
 				// disallow the relocation
 				return;
