@@ -19,7 +19,7 @@ namespace Strive.UI.Engine {
 		// TODO: refactor into a strongly typed collection?
 		public Hashtable physicalObjectInstances = new Hashtable();
 		IScene scene = Game.RenderingFactory.CreateScene();
-		TerrainCollection terrainPieces = new TerrainCollection( Game.RenderingFactory );
+		public TerrainCollection terrainPieces = new TerrainCollection( Game.RenderingFactory );
 		public PhysicalObjectInstance CurrentAvatar;
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
 		Vector3D cameraHeading;
@@ -44,10 +44,6 @@ namespace Strive.UI.Engine {
 				PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
 				physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 				scene.Models.Add( po.ObjectInstanceID, poi.model );
-				//todo: serverside ground level/gravity control
-				//instead of clientside.
-				po.Position.Y = GroundLevel( po.Position.X, po.Position.Z );
-
 				poi.model.Position = po.Position;
 				poi.model.Rotation = po.Rotation;
 			}
@@ -169,28 +165,6 @@ namespace Strive.UI.Engine {
 					}
 				}
 			}
-		}
-
-		int terrainSize = 100;
-		public float GroundLevel( float x, float z ) {
-			// check every terrain piece, is this point on it?
-			foreach ( PhysicalObjectInstance poi in physicalObjectInstances.Values ) {
-				// todo: Terrain pieces should be cross index in their own
-				// collection for speed.
-				if ( !(poi.physicalObject is Terrain) ) continue;
-
-				Terrain t = (Terrain)poi.physicalObject;
-				if (
-					x >= t.Position.X && x < t.Position.X+terrainSize
-					&& z >= t.Position.Z && z < t.Position.Z+terrainSize
-				) {
-					// w00t on this piece lookup its height
-					return poi.physicalObject.Position.Y;
-				}
-			}
-
-			// ack, this is not on terrain!
-			return 0;
 		}
 	}
 }

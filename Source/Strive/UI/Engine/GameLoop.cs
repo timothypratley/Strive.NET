@@ -179,6 +179,7 @@ namespace Strive.UI.Engine
 						return;
 					}
 				} */
+				avatarPosition.Y = Game.CurrentWorld.terrainPieces.AltitudeAt( avatarPosition.X, avatarPosition.Z );
 				Game.CurrentWorld.CurrentAvatar.model.Position = avatarPosition;
 				Game.CurrentWorld.CurrentAvatar.model.Rotation = avatarRotation;
 				Game.CurrentWorld.RepositionCamera();

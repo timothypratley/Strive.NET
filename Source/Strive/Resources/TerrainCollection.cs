@@ -9,10 +9,11 @@ namespace Strive.Resources
 	/// <summary>
 	/// Summary description for TerrrainPieces.
 	/// </summary>
-	public class TerrainCollection
-	{
+	public class TerrainCollection {
 		public Hashtable terrainPieces = new Hashtable();
 		IEngine _engine;
+		public static int terrainSize = 100;
+
 
 		public TerrainCollection( IEngine engine ) {
 			_engine = engine;
@@ -67,6 +68,48 @@ namespace Strive.Resources
 		public void Remove( int instance_id ) {
 			// remove it
 			terrainPieces.Remove( instance_id );
+		}
+
+		public float AltitudeAt( float x, float z ) {
+			// check every terrain piece, is this point on it?
+			foreach ( TerrainPiece t in terrainPieces.Values ) {
+				if (
+					x >= t.x && x < t.x + terrainSize
+					&& z >= t.z && z < t.z + terrainSize
+				) {
+					// w00t on this piece lookup its height
+					// if it is fully defined
+					if ( t.xplusKnown && t.zplusKnown && t.xpluszplusKnown ) {
+						float dx = (float)(x % terrainSize);
+						float dz = (float)(z % terrainSize);
+						if ( dx < 0 ) dx += terrainSize;
+						if ( dz < 0 ) dz += terrainSize;
+
+						// terrain is a diagonally split square, forming two triangles
+						// which touch the altitude points of 4 neighbouring terrain
+						// points, the current terrain and its xplus, zplus, xpluszplus.
+						// so for either triangle, just apply the slope in x and z
+						// to find the altitude at that point
+						float xslope;
+						float zslope;
+						if ( dz <= 1 - dx ) {
+							// lower triangle
+							xslope = ( t.xpluszplus - t.zplus ) / terrainSize;
+							zslope = ( t.zplus - t.altitude ) / terrainSize;
+						} else {
+							// upper triangle
+							xslope = ( t.xplus - t.altitude ) / terrainSize;
+							zslope = ( t.xpluszplus - t.xplus ) / terrainSize;
+						}
+						return t.altitude + xslope * dx + zslope * dz;
+					} else {
+						// no terrain here
+						return 0;
+					}
+				}
+			}
+			// no terrain here
+			return 0;
 		}
 	}
 }

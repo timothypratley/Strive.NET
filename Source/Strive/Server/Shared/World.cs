@@ -140,14 +140,6 @@ namespace Strive.Server.Shared {
 				}
 			}
 			Log.LogMessage( "Loaded world." );
-
-			// Calculate Terrain heightmaps
-			for ( int i=0; i<squaresInX; i++ ) {
-				for ( int j=0; j<squaresInZ; j++ ) {
-					// EEERRR not working just yet
-					//squares[i,j].CalculateHeightMap();
-				}
-			}
 		}
 
 		public void Update() {
@@ -193,6 +185,12 @@ namespace Strive.Server.Shared {
 			) {
 				Log.ErrorMessage( "Tried to add physical object outside the world." );
 				return;
+			}
+
+			// keep everything at ground level
+			if ( !(po is Terrain) ) {
+				float altitude = AltitudeAt( po.Position.X, po.Position.Z );
+				po.Position.Y = altitude + po.Height / 2;
 			}
 
 			// add the object to the world
@@ -249,11 +247,8 @@ namespace Strive.Server.Shared {
 			int i, j;
 
 			// keep everything on the ground
-			// todo: take slope into consideration
-			newPosition.Y = square[toSquareX,toSquareZ].heightMap[
-				( (int)newPosition.X % Square.squareSize ) / Square.terrainSize,
-				( (int)newPosition.Z % Square.squareSize ) / Square.terrainSize
-			] + po.Height / 2;
+			float altitude = AltitudeAt( newPosition.X, newPosition.Z );
+			newPosition.Y = altitude + po.Height / 2;
 
 			MobileAvatar ma;
 			if ( po is MobileAvatar ) {
@@ -472,26 +467,39 @@ namespace Strive.Server.Shared {
 			return (Strive.Network.Messages.ToClient.CanPossess.id_name_tuple [])list.ToArray( typeof( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple ) );
 		}
 
-		public float altitudeAt( float x, float z ) {
-			int terrain_x = (int) x / Square.terrainSize;
-			int terrain_z = (int) z / Square.terrainSize;
-			float offset_x = x - ( terrain_x * Square.terrainSize );
-			float offset_z = z - ( terrain_z * Square.terrainSize );
-			return 0;
-/*
-			if ( offset_z < offset_x && offset_z < Square.terrainSize - offset_x ) {
-				// bottom triangle
-				float xalt = xminuszminus.altitude + (xminuszplus.altitude - xminusxminus.altitude) * offset_x;
-				return xalt + (xalt - t.altitude) * (offset_z - Square.terrainSize/2);
-			} else if ( offset_z > offset_x && offset_z > Square.terrainSize - offset_x ) {
-				// top triangle
-			} else if ( offset_z > offset_x && offset_z < Square.terrainSize - offset_x ) {
-				// left triangle
-			} else {
-				// ( offset_z < offset_x && offset_z > Square.terrainSize - offset_x )
-				// right triangle
+		public float AltitudeAt( float x, float z ) {
+			int terrainX = (int)(x - lowX)/Square.terrainSize;
+			int terrainZ = (int)(z - lowZ)/Square.terrainSize;
+
+			// if terrain piece exists, keep everything on the ground
+			if (	terrain[ terrainX, terrainZ ] != null
+				&&  terrain[ terrainX+1, terrainZ ] != null
+				&&  terrain[ terrainX, terrainZ+1 ] != null
+				&&  terrain[ terrainX+1, terrainZ+1 ] != null 
+				) {
+				float dx = (float)((x - lowX) % Square.terrainSize);
+				float dz = (float)((z - lowZ) % Square.terrainSize);
+
+				// terrain is a diagonally split square, forming two triangles
+				// which touch the altitude points of 4 neighbouring terrain
+				// points, the current terrain and its xplus, zplus, xpluszplus.
+				// so for either triangle, just apply the slope in x and z
+				// to find the altitude at that point
+				float xslope;
+				float zslope;
+				if ( dz <= 1 - dx ) {
+					// lower triangle
+					xslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ+1 ].Position.Y ) / Square.terrainSize;
+					zslope = ( terrain[ terrainX, terrainZ+1 ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Square.terrainSize;
+				} else {
+					// upper triangle
+					xslope = ( terrain[ terrainX+1, terrainZ ].Position.Y - terrain[ terrainX, terrainZ ].Position.Y ) / Square.terrainSize;
+					zslope = ( terrain[ terrainX+1, terrainZ+1 ].Position.Y - terrain[ terrainX+1, terrainZ ].Position.Y ) / Square.terrainSize;
+				}
+				return terrain[ terrainX, terrainZ ].Position.Y + xslope * dx + zslope * dz;
 			}
-*/
+			// no terrain here
+			return 0;
 		}
 	}
 }

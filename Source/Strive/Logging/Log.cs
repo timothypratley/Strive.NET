@@ -6,6 +6,9 @@ using System.Windows.Forms;
 namespace Strive.Logging {
 	/// <summary>
 	/// Summary description for Log.
+	/// TODO: need to keep the log string regardless of if there is a display,
+	/// so that if a log window is created, we can populate it with old log
+	/// messages... alternatively write/read from a log file.
 	/// </summary>
 	public class Log {
 		static private TextBoxBase textBoxOutput = null;

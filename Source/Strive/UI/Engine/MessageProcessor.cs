@@ -73,7 +73,7 @@ namespace Strive.UI.Engine {
 				}
 
 				// todo: serverside groundlevel/gravity instead of client side
-				p.position.Y = Game.CurrentWorld.GroundLevel( p.position.X, p.position.Z );
+				p.position.Y = Game.CurrentWorld.terrainPieces.AltitudeAt( p.position.X, p.position.Z );
 
 				poi.model.Position = p.position;
 				poi.model.Rotation = p.rotation;
