@@ -355,6 +355,10 @@ namespace Strive.Server.Shared {
 					int tbx = Helper.DivTruncate( (int)newPosition.X, Constants.terrainPieceSize) - xradius;
 					int tbz = Helper.DivTruncate( (int)newPosition.Z, Constants.terrainPieceSize) - zradius;
 
+					// Normalise to a 'grid' point
+					tbx = Helper.DivTruncate( tbx, chs ) * chs;
+					tbz = Helper.DivTruncate( tbz, chs ) * chs;
+
 					for ( i=0; i<=xradius*2; i+=chs ) {
 						for ( j=0; j<=zradius*2; j+=chs ) {
 							int tx = tbx+i;
@@ -559,6 +563,10 @@ namespace Strive.Server.Shared {
 					int zradius = chs * Constants.terrainHeightsPerChunk * Constants.terrainZOrder / 2 + 2*chs;
 					int tbx = Helper.DivTruncate( (int)mob.Position.X, Constants.terrainPieceSize) - xradius;
 					int tbz = Helper.DivTruncate( (int)mob.Position.Z, Constants.terrainPieceSize) - zradius;
+
+					// Normalise to a 'grid' point
+					tbx = Helper.DivTruncate( tbx, chs ) * chs;
+					tbz = Helper.DivTruncate( tbz, chs ) * chs;
 
 					for ( i=0; i<=xradius*2; i+=chs ) {
 						for ( j=0; j<=zradius*2; j+=chs ) {
