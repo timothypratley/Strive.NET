@@ -7,7 +7,7 @@ namespace Strive.Multiverse
 	/// </summary>
 	public class Equipable : Item
 	{
-		//EnumWearLocation WearLocationID;
+		EnumWearLocation WearLocationID;
 		int ArmourClass;
 
 		public Equipable(
@@ -17,7 +17,7 @@ namespace Strive.Multiverse
 			Schema.ObjectInstanceRow instance
 		) : base( item,	template, instance ) {
 			ArmourClass = equipable.ArmourClass;
-			//EnumWearLocationID = equipable.EnumWearLocationID;
+			WearLocationID = (EnumWearLocation)equipable.EnumWearLocationID;
 		}
 	}
 }

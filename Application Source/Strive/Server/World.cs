@@ -9,8 +9,6 @@ using Strive.Multiverse;
 
 namespace Strive.Server {
 	public class World {
-		bool isRunning = false;
-
 		double highX = 100000.0;
 		double highZ = 100000.0;
 		double lowX = -100000.0;
@@ -125,47 +123,9 @@ namespace Strive.Server {
 			System.Console.WriteLine( "Loaded world" );
 		}
 
-		public void Start() {
-			isRunning = true;
-			Thread myThread = new Thread(
-				new ThreadStart( Handle )
-				);
-			myThread.Start();
-		}
-
-		public void Stop() {
-			isRunning = false;
-		}
-
-		private void Handle() {
-			while ( isRunning ) {
-				// mobiles processed in random order
-				Shuffle( mobilesArrayList );
-
-				// combat update
-				foreach ( MobileAvatar mob in mobilesArrayList ) {
-					mob.CombatUpdate();
-				}
-
-				// peace update
-				foreach ( MobileAvatar mob in mobilesArrayList ) {
-					mob.PeaceUpdate();
-				}
-
-				// don't be too CPU greedy
-				// EEERRR is there a better way?
-				Thread.Sleep( 100 );
-			}
-		}
-
-		public void Shuffle( ArrayList list ) {
-			int i, j;
-			object tmp;
-			for ( i=0; i<list.Count; i++ ) {
-				j = Global.random.Next( list.Count );
-				tmp = list[i];
-				list[i] = list[j];
-				list[j] = tmp;
+		public void Update() {
+			foreach ( MobileAvatar mob in physicalObjects ) {
+				mob.Update();
 			}
 		}
 

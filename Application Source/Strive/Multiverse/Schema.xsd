@@ -226,6 +226,14 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="EnumMobileState">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="EnumMobileStateID" type="xs:int" />
+							<xs:element name="EnumMobileStateName" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="Player">
 					<xs:complexType>
 						<xs:sequence>
@@ -239,6 +247,7 @@
 							<xs:element name="Password" type="xs:string" minOccurs="0" />
 							<xs:element name="TrustLevel" type="xs:int" />
 							<xs:element name="Comment" type="xs:string" minOccurs="0" />
+							<xs:element name="QuoteID" type="xs:int" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -247,6 +256,15 @@
 						<xs:sequence>
 							<xs:element name="EnumSpecialisationID" type="xs:int" />
 							<xs:element name="PrerequisiteSpecialisationID" type="xs:int" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EnumItemDurability">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="EnumItemDurabilityID" type="xs:int" />
+							<xs:element name="EnumItemDurabilityName" type="xs:string" />
+							<xs:element name="Description" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -261,7 +279,7 @@
 				<xs:element name="SkillEnablesSkill">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="SkillID" type="xs:int" />
+							<xs:element name="EnumSkillID" type="xs:int" />
 							<xs:element name="PrerequisiteSkillID" type="xs:int" />
 						</xs:sequence>
 					</xs:complexType>
@@ -280,6 +298,7 @@
 							<xs:element name="ObjectTemplateID" type="xs:int" />
 							<xs:element name="Value" type="xs:int" />
 							<xs:element name="Weight" type="xs:int" />
+							<xs:element name="EnumItemDurabilityID" type="xs:int" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -390,6 +409,8 @@
 							<xs:element name="GoldCarried" type="xs:int" />
 							<xs:element name="GoldBanked" type="xs:int" />
 							<xs:element name="EnumSexID" type="xs:int" />
+							<xs:element name="EnumMobileSizeID" type="xs:int" />
+							<xs:element name="EnumMobileStateID" type="xs:int" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -520,83 +541,91 @@
 			<xs:field xpath="mstns:AreaID" />
 		</xs:unique>
 		<xs:unique name="SchemaKey23" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:EnumMobileState" />
+			<xs:field xpath="mstns:EnumMobileStateID" />
+		</xs:unique>
+		<xs:unique name="SchemaKey24" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:Player" />
 			<xs:field xpath="mstns:PlayerID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey24" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey25" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:SpecialisationEnablesSpecialisation" />
 			<xs:field xpath="mstns:EnumSpecialisationID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey25" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey26" msdata:PrimaryKey="true">
+			<xs:selector xpath=".//mstns:EnumItemDurability" />
+			<xs:field xpath="mstns:EnumItemDurabilityID" />
+		</xs:unique>
+		<xs:unique name="SchemaKey27" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:RaceHasEmote" />
 			<xs:field xpath="mstns:EnumRaceID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey26" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey28" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:SkillEnablesSkill" />
-			<xs:field xpath="mstns:SkillID" />
+			<xs:field xpath="mstns:EnumSkillID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey27" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey29" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:SpecialisationEnablesSkill" />
 			<xs:field xpath="mstns:EnumSpecialisationID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey28" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey30" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:TemplateItem" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey29" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey31" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:TemplateAffectedBySkill" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 			<xs:field xpath="mstns:EnumSkillID" />
 			<xs:field xpath="mstns:Duration" />
 			<xs:field xpath="mstns:Level" />
 		</xs:unique>
-		<xs:unique name="SchemaKey30" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey32" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:ObjectInstance" />
 			<xs:field xpath="mstns:ObjectInstanceID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey31" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey33" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:TemplateTerrain" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey32" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey34" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:ItemEquipable" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey33" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey35" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:Inventory" />
 			<xs:field xpath="mstns:ObjectInstanceID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey34" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey36" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:ItemJunk" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey35" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey37" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:MobileHasClanRank" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 			<xs:field xpath="mstns:ClanID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey36" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey38" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:MobileHasSkill" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 			<xs:field xpath="mstns:EnumSkillID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey37" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey39" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:MobileHasSpecialisation" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey38" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey40" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:ItemQuaffable" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey39" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey41" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:TemplateMobile" />
 			<xs:field xpath="mstns:ObjectTemplateID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey40" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey42" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:EnumRace" />
 			<xs:field xpath="mstns:EnumRaceID" />
 		</xs:unique>
-		<xs:unique name="SchemaKey41" msdata:PrimaryKey="true">
+		<xs:unique name="SchemaKey43" msdata:PrimaryKey="true">
 			<xs:selector xpath=".//mstns:EnumSkill" />
 			<xs:field xpath="mstns:EnumSkillID" />
 		</xs:unique>

@@ -25,7 +25,17 @@ namespace Strive.Server {
 			
 			World world = new World();
 			MessageProcessor mp = new MessageProcessor( world, listener	);
-			mp.Start();
+
+			while ( true ) {
+				// handle world changes
+				//world.Update();
+
+				// handle incomming messages
+				while ( listener.MessageCount > 0 ) {
+					mp.ProcessNextMessage();
+				}
+				mp.CleanupDeadConnections();
+			}
 		}
 	}
 }

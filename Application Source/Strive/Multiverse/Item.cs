@@ -9,6 +9,8 @@ namespace Strive.Multiverse
 	{
 		public int Value;
 		public int Weight;
+		public float HitPoints;
+		public int MaxHitPoints;
 
 		public Item(
 			Schema.TemplateItemRow item,
@@ -17,6 +19,8 @@ namespace Strive.Multiverse
 		) : base( template, instance ) {
 			Value = item.Value;
 			Weight = item.Weight;
+			MaxHitPoints = (int)Math.Pow( 2, item.EnumItemDurabilityID );
+			HitPoints = MaxHitPoints;
 		}
 	}
 }

@@ -14,8 +14,10 @@ namespace Strive.Multiverse
 		public int Strength;
 		public int Constitution;
 		public EnumRace Race;
-		public int HitPoints;
-		public int Size;
+		public float HitPoints;
+		int MaxHitPoints;
+		public EnumMobileSize MobileSize;
+		public EnumMobileState MobileState;
 
 		public Mobile (
 			Schema.TemplateMobileRow mobile,
@@ -29,8 +31,10 @@ namespace Strive.Multiverse
 			Strength = mobile.Strength;
 			Constitution = mobile.Constitution;
 			Race = (EnumRace)mobile.EnumRaceID;
-			Size = 4; // EEERRR add to db omg
-			HitPoints = Size*100 + Level * Constitution / 2;
+			MobileSize = (EnumMobileSize)mobile.EnumMobileSizeID;
+			MobileState = (EnumMobileState)mobile.EnumMobileStateID;
+			MaxHitPoints = mobile.EnumMobileSizeID*100 + Level * Constitution / 2;
+			HitPoints = (int)MaxHitPoints;
 		}
 	}
 }

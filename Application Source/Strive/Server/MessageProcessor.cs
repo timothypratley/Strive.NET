@@ -8,7 +8,6 @@ using Strive.Network.Server;
 namespace Strive.Server {
 	public class MessageProcessor {
 		World world;
-		bool isRunning = false;
 		Listener listener;
 
 		public MessageProcessor(
@@ -16,35 +15,6 @@ namespace Strive.Server {
 		) {
 			this.world = world;
 			this.listener = listener;
-		}
-
-		public class AlreadyRunningException : Exception{}
-		public void Start() {
-			if ( isRunning ) {
-				throw new AlreadyRunningException();
-			}
-			isRunning = true;
-			Thread myThread = new Thread(
-				new ThreadStart( Run )
-			);
-			myThread.Start();
-		}
-
-		public void Stop() {
-			isRunning = false;
-		}
-
-		void Run() {
-			// process messages on the message queue
-			while ( isRunning ) {
-				for ( int i=0; i<10; i++ ) {
-					while ( listener.MessageCount > 0 ) {
-						ProcessNextMessage();
-					}
-					Thread.Sleep( 100 );
-				}
-				CleanupDeadConnections();
-			}
 		}
 
 		public void ProcessNextMessage() {
@@ -147,7 +117,7 @@ namespace Strive.Server {
 			}
 		}
 
-		void CleanupDeadConnections() {
+		public void CleanupDeadConnections() {
 			// Make a list of dead connections and remove them all
 			ArrayList al = new ArrayList();
 			foreach ( Client c in listener.Clients.Values ) {

@@ -92,7 +92,22 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "EnumMobileSize.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "EnumMobileState.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "EnumRace.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "EnumWearLocation.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

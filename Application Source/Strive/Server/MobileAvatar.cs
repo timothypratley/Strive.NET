@@ -17,6 +17,9 @@ namespace Strive.Server
 		public Client client = null;
 		public PhysicalObject target = null;
 		public bool hasStruck = false;
+		DateTime lastAttack = DateTime.Now;
+		DateTime lastHeal = DateTime.Now;
+		DateTime lastAI = DateTime.Now;
 
 		public MobileAvatar(
 			Schema.TemplateMobileRow mobile,
@@ -25,14 +28,33 @@ namespace Strive.Server
 		) : base( mobile, template, instance ) {
 		}
 
-		public void CombatUpdate() {
-			if (  target != null ) {
-				PhysicalAttack( target );
+		public void Update() {
+			if ( target != null ) {
+				if ( lastAttack - Global.now > TimeSpan.FromSeconds(3) ) {
+					// combat
+					PhysicalAttack( target );
+				}
+			} else {
+				if ( lastAI - Global.now > TimeSpan.FromSeconds( 1 ) ) {
+					// wander
+				}
 			}
+			if ( lastHeal - Global.now > TimeSpan.FromSeconds( 1 ) ) {
+				// heal
+			}
+			
 		}
 
 		public void PeaceUpdate() {
-
+			if ( MobileState == EnumMobileState.Dead ) {
+				// respawn!
+			} else if ( MobileState == EnumMobileState.Incapacitated ) {
+				HitPoints -= 0.1F;
+			} else if ( MobileState == EnumMobileState.Sleeping ) {
+				HitPoints += Constitution/10.0F;
+			} else if ( MobileState == EnumMobileState.Resting ) {
+				HitPoints += Constitution/40.0F;
+			}
 		}
 
 		public void PhysicalAttack( PhysicalObject po ) {
@@ -55,6 +77,12 @@ namespace Strive.Server
 				opponent.HitPoints -= damage;
 			} else {
 				// attacking object
+				Item item = target as Item;
+				int damage = 10;
+				item.HitPoints -= damage;
+				if ( item.HitPoints <= 0 ) {
+					// omg j00 destoryed teh item!
+				}
 			}
 		}
 	}
