@@ -18,7 +18,11 @@ namespace Strive.Rendering.Models
 		/// <summary>
 		/// 3D studio format
 		/// </summary>
-		_3DS
+		_3DS,
+		/// <summary>
+		/// a mesh of terrain, don't collision detect v1.
+		/// </summary>
+		Terrain
 	}
 
 

@@ -48,7 +48,7 @@ namespace Strive.Rendering.Models
 			Model created = new Model();
 			created._key = name;
 			created._id = id;
-			created._format = ModelFormat._3DS;
+			created._format = ModelFormat.Terrain;
 			// todo: fix this hax,
 			// atm set to 0 as this is assumed to be terrain...
 			created.BoundingSphereRadiusSquared = 0;
@@ -88,6 +88,7 @@ namespace Strive.Rendering.Models
 			// 1.1 Load return type
 			Model loadedModel = new Model();
 
+
 			// 1.2 Initialise fields
 			loadedModel._format = format;
 			loadedModel._key = key;
@@ -120,12 +121,13 @@ namespace Strive.Rendering.Models
 						//System.Environment.CurrentDirectory = path.Substring(0, path.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
 						//Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
 						// todo: fix texture loading here
-						Interop._instance.Meshbuilder.Mesh_Add3DS( path, false, false, false, true);
+						Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
 						Interop._instance.Meshbuilder.Mesh_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
 						//R3DVector3D center = new R3DVector3D();
 						//bool worldspace = false;
 						//Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref loadedModel.BoundingSphereRadiusSquared, ref worldspace );
 						// square it ofc
+						loadedModel.BoundingSphereRadiusSquared = 1000;
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -375,13 +377,15 @@ namespace Strive.Rendering.Models
 						}
 						break;
 					}
-					case ModelFormat._3DS: {
+					case ModelFormat._3DS:
+					case ModelFormat.Terrain:
+					{
 						setPointer();
 						Interop._instance.Meshbuilder.Mesh_SetRotation( -value.X, -value.Y, -value.Z );
 						break;
 					}
 					default:
-							throw new Exception( "fall through" );
+						throw new Exception( "fall through" );
 				
 				}
 				_rotation = value;

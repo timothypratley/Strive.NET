@@ -150,17 +150,17 @@ namespace Strive.UI.Engine
 			if(WasKeyboardInput) {
 				// check that we can go there
 				foreach ( Model m in _scene.Models.Values ) {
-					if ( m.ModelFormat != ModelFormat.MDL ) {
-						// only check other players for now
+					if ( m.ModelFormat == ModelFormat.Terrain ) {
 						continue;
 					}
+					//Game.CurrentLog.LogMessage(	"CD2 model " + m.Key + " at " + m.Position + " from " + cameraPosition );
 					//todo  convert to 3d when centers is sorted
 					float dx1 = _scene.View.Position.X - m.Position.X;
 					float dz1 = _scene.View.Position.Z - m.Position.Z;
 					//float dy1 = _scene.View.Position.Y - m.Position.Y;
 					float distance_squared1 = dx1*dx1 + dz1*dz1;// + dy1*dy1;
 					if ( distance_squared1 < m.BoundingSphereRadiusSquared + 100 ) {
-						// already a collision
+						// already a collision, ignore collision detection
 						continue;
 					}
 					float dx = cameraPosition.X - m.Position.X;
