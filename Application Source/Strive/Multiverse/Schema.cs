@@ -21,9 +21,53 @@ namespace Strive.Multiverse {
     [System.ComponentModel.ToolboxItem(true)]
     public class Schema : DataSet {
         
-        private ItemPhysicalObjectDataTable tableItemPhysicalObject;
+        private AreaDataTable tableArea;
+        
+        private WorldDataTable tableWorld;
+        
+        private ClanDataTable tableClan;
+        
+        private ClanRankDataTable tableClanRank;
+        
+        private CreatorDataTable tableCreator;
+        
+        private EnumActivationTypeDataTable tableEnumActivationType;
+        
+        private EnumCommandDataTable tableEnumCommand;
+        
+        private EnumDamageTypeDataTable tableEnumDamageType;
+        
+        private EnumEmoteDataTable tableEnumEmote;
+        
+        private EnumLiquidTypeDataTable tableEnumLiquidType;
+        
+        private EnumMobileSizeDataTable tableEnumMobileSize;
+        
+        private EnumRaceDataTable tableEnumRace;
+        
+        private EnumSexDataTable tableEnumSex;
         
         private EnumSkillDataTable tableEnumSkill;
+        
+        private EnumSpecialisationDataTable tableEnumSpecialisation;
+        
+        private EnumTargetTypeDataTable tableEnumTargetType;
+        
+        private EnumTerrainTypeDataTable tableEnumTerrainType;
+        
+        private EnumWeaponSizeDataTable tableEnumWeaponSize;
+        
+        private EnumWearLocationDataTable tableEnumWearLocation;
+        
+        private EquipableItemDataTable tableEquipableItem;
+        
+        private InventoryDataTable tableInventory;
+        
+        private ItemPhysicalObjectDataTable tableItemPhysicalObject;
+        
+        private JunkItemDataTable tableJunkItem;
+        
+        private MobileHasClanRankDataTable tableMobileHasClanRank;
         
         private MobileHasSkillDataTable tableMobileHasSkill;
         
@@ -31,13 +75,27 @@ namespace Strive.Multiverse {
         
         private MobilePhysicalObjectDataTable tableMobilePhysicalObject;
         
+        private MobilePossesableByPlayerDataTable tableMobilePossesableByPlayer;
+        
+        private ModelDataTable tableModel;
+        
+        private PhysicalObjectDataTable tablePhysicalObject;
+        
         private PhysicalObjectAffectedBySkillDataTable tablePhysicalObjectAffectedBySkill;
         
-        private EquipableItemDataTable tableEquipableItem;
-        
-        private SkillEnablesSkillDataTable tableSkillEnablesSkill;
+        private PlayerDataTable tablePlayer;
         
         private QuaffableItemDataTable tableQuaffableItem;
+        
+        private QuoteDataTable tableQuote;
+        
+        private RaceHasEmoteDataTable tableRaceHasEmote;
+        
+        private ReadableItemDataTable tableReadableItem;
+        
+        private RespawnPointDataTable tableRespawnPoint;
+        
+        private SkillEnablesSkillDataTable tableSkillEnablesSkill;
         
         private SpecialisationEnablesSkillDataTable tableSpecialisationEnablesSkill;
         
@@ -46,54 +104,6 @@ namespace Strive.Multiverse {
         private TerrainPhysicalObjectDataTable tableTerrainPhysicalObject;
         
         private WieldableItemDataTable tableWieldableItem;
-        
-        private PhysicalObjectDataTable tablePhysicalObject;
-        
-        private WorldDataTable tableWorld;
-        
-        private ReadableItemDataTable tableReadableItem;
-        
-        private JunkItemDataTable tableJunkItem;
-        
-        private EnumActivationTypeDataTable tableEnumActivationType;
-        
-        private EnumCommandDataTable tableEnumCommand;
-        
-        private EnumEmoteDataTable tableEnumEmote;
-        
-        private RaceHasEmoteDataTable tableRaceHasEmote;
-        
-        private MobileHasClanRankDataTable tableMobileHasClanRank;
-        
-        private MobilePossesableByPlayerDataTable tableMobilePossesableByPlayer;
-        
-        private PlayerDataTable tablePlayer;
-        
-        private InventoryDataTable tableInventory;
-        
-        private RespawnPointDataTable tableRespawnPoint;
-        
-        private AreaDataTable tableArea;
-        
-        private ClanDataTable tableClan;
-        
-        private ClanRankDataTable tableClanRank;
-        
-        private EnumDamageTypeDataTable tableEnumDamageType;
-        
-        private RaceDataTable tableRace;
-        
-        private EnumLiquidTypeDataTable tableEnumLiquidType;
-        
-        private EnumSizeDataTable tableEnumSize;
-        
-        private EnumSpecialisationDataTable tableEnumSpecialisation;
-        
-        private EnumTargetTypeDataTable tableEnumTargetType;
-        
-        private EnumTerrainTypeDataTable tableEnumTerrainType;
-        
-        private EnumWearLocationDataTable tableEnumWearLocation;
         
         public Schema() {
             this.InitClass();
@@ -107,11 +117,77 @@ namespace Strive.Multiverse {
             if ((strSchema != null)) {
                 DataSet ds = new DataSet();
                 ds.ReadXmlSchema(new XmlTextReader(new System.IO.StringReader(strSchema)));
-                if ((ds.Tables["ItemPhysicalObject"] != null)) {
-                    this.Tables.Add(new ItemPhysicalObjectDataTable(ds.Tables["ItemPhysicalObject"]));
+                if ((ds.Tables["Area"] != null)) {
+                    this.Tables.Add(new AreaDataTable(ds.Tables["Area"]));
+                }
+                if ((ds.Tables["World"] != null)) {
+                    this.Tables.Add(new WorldDataTable(ds.Tables["World"]));
+                }
+                if ((ds.Tables["Clan"] != null)) {
+                    this.Tables.Add(new ClanDataTable(ds.Tables["Clan"]));
+                }
+                if ((ds.Tables["ClanRank"] != null)) {
+                    this.Tables.Add(new ClanRankDataTable(ds.Tables["ClanRank"]));
+                }
+                if ((ds.Tables["Creator"] != null)) {
+                    this.Tables.Add(new CreatorDataTable(ds.Tables["Creator"]));
+                }
+                if ((ds.Tables["EnumActivationType"] != null)) {
+                    this.Tables.Add(new EnumActivationTypeDataTable(ds.Tables["EnumActivationType"]));
+                }
+                if ((ds.Tables["EnumCommand"] != null)) {
+                    this.Tables.Add(new EnumCommandDataTable(ds.Tables["EnumCommand"]));
+                }
+                if ((ds.Tables["EnumDamageType"] != null)) {
+                    this.Tables.Add(new EnumDamageTypeDataTable(ds.Tables["EnumDamageType"]));
+                }
+                if ((ds.Tables["EnumEmote"] != null)) {
+                    this.Tables.Add(new EnumEmoteDataTable(ds.Tables["EnumEmote"]));
+                }
+                if ((ds.Tables["EnumLiquidType"] != null)) {
+                    this.Tables.Add(new EnumLiquidTypeDataTable(ds.Tables["EnumLiquidType"]));
+                }
+                if ((ds.Tables["EnumMobileSize"] != null)) {
+                    this.Tables.Add(new EnumMobileSizeDataTable(ds.Tables["EnumMobileSize"]));
+                }
+                if ((ds.Tables["EnumRace"] != null)) {
+                    this.Tables.Add(new EnumRaceDataTable(ds.Tables["EnumRace"]));
+                }
+                if ((ds.Tables["EnumSex"] != null)) {
+                    this.Tables.Add(new EnumSexDataTable(ds.Tables["EnumSex"]));
                 }
                 if ((ds.Tables["EnumSkill"] != null)) {
                     this.Tables.Add(new EnumSkillDataTable(ds.Tables["EnumSkill"]));
+                }
+                if ((ds.Tables["EnumSpecialisation"] != null)) {
+                    this.Tables.Add(new EnumSpecialisationDataTable(ds.Tables["EnumSpecialisation"]));
+                }
+                if ((ds.Tables["EnumTargetType"] != null)) {
+                    this.Tables.Add(new EnumTargetTypeDataTable(ds.Tables["EnumTargetType"]));
+                }
+                if ((ds.Tables["EnumTerrainType"] != null)) {
+                    this.Tables.Add(new EnumTerrainTypeDataTable(ds.Tables["EnumTerrainType"]));
+                }
+                if ((ds.Tables["EnumWeaponSize"] != null)) {
+                    this.Tables.Add(new EnumWeaponSizeDataTable(ds.Tables["EnumWeaponSize"]));
+                }
+                if ((ds.Tables["EnumWearLocation"] != null)) {
+                    this.Tables.Add(new EnumWearLocationDataTable(ds.Tables["EnumWearLocation"]));
+                }
+                if ((ds.Tables["EquipableItem"] != null)) {
+                    this.Tables.Add(new EquipableItemDataTable(ds.Tables["EquipableItem"]));
+                }
+                if ((ds.Tables["Inventory"] != null)) {
+                    this.Tables.Add(new InventoryDataTable(ds.Tables["Inventory"]));
+                }
+                if ((ds.Tables["ItemPhysicalObject"] != null)) {
+                    this.Tables.Add(new ItemPhysicalObjectDataTable(ds.Tables["ItemPhysicalObject"]));
+                }
+                if ((ds.Tables["JunkItem"] != null)) {
+                    this.Tables.Add(new JunkItemDataTable(ds.Tables["JunkItem"]));
+                }
+                if ((ds.Tables["MobileHasClanRank"] != null)) {
+                    this.Tables.Add(new MobileHasClanRankDataTable(ds.Tables["MobileHasClanRank"]));
                 }
                 if ((ds.Tables["MobileHasSkill"] != null)) {
                     this.Tables.Add(new MobileHasSkillDataTable(ds.Tables["MobileHasSkill"]));
@@ -122,17 +198,38 @@ namespace Strive.Multiverse {
                 if ((ds.Tables["MobilePhysicalObject"] != null)) {
                     this.Tables.Add(new MobilePhysicalObjectDataTable(ds.Tables["MobilePhysicalObject"]));
                 }
+                if ((ds.Tables["MobilePossesableByPlayer"] != null)) {
+                    this.Tables.Add(new MobilePossesableByPlayerDataTable(ds.Tables["MobilePossesableByPlayer"]));
+                }
+                if ((ds.Tables["Model"] != null)) {
+                    this.Tables.Add(new ModelDataTable(ds.Tables["Model"]));
+                }
+                if ((ds.Tables["PhysicalObject"] != null)) {
+                    this.Tables.Add(new PhysicalObjectDataTable(ds.Tables["PhysicalObject"]));
+                }
                 if ((ds.Tables["PhysicalObjectAffectedBySkill"] != null)) {
                     this.Tables.Add(new PhysicalObjectAffectedBySkillDataTable(ds.Tables["PhysicalObjectAffectedBySkill"]));
                 }
-                if ((ds.Tables["EquipableItem"] != null)) {
-                    this.Tables.Add(new EquipableItemDataTable(ds.Tables["EquipableItem"]));
-                }
-                if ((ds.Tables["SkillEnablesSkill"] != null)) {
-                    this.Tables.Add(new SkillEnablesSkillDataTable(ds.Tables["SkillEnablesSkill"]));
+                if ((ds.Tables["Player"] != null)) {
+                    this.Tables.Add(new PlayerDataTable(ds.Tables["Player"]));
                 }
                 if ((ds.Tables["QuaffableItem"] != null)) {
                     this.Tables.Add(new QuaffableItemDataTable(ds.Tables["QuaffableItem"]));
+                }
+                if ((ds.Tables["Quote"] != null)) {
+                    this.Tables.Add(new QuoteDataTable(ds.Tables["Quote"]));
+                }
+                if ((ds.Tables["RaceHasEmote"] != null)) {
+                    this.Tables.Add(new RaceHasEmoteDataTable(ds.Tables["RaceHasEmote"]));
+                }
+                if ((ds.Tables["ReadableItem"] != null)) {
+                    this.Tables.Add(new ReadableItemDataTable(ds.Tables["ReadableItem"]));
+                }
+                if ((ds.Tables["RespawnPoint"] != null)) {
+                    this.Tables.Add(new RespawnPointDataTable(ds.Tables["RespawnPoint"]));
+                }
+                if ((ds.Tables["SkillEnablesSkill"] != null)) {
+                    this.Tables.Add(new SkillEnablesSkillDataTable(ds.Tables["SkillEnablesSkill"]));
                 }
                 if ((ds.Tables["SpecialisationEnablesSkill"] != null)) {
                     this.Tables.Add(new SpecialisationEnablesSkillDataTable(ds.Tables["SpecialisationEnablesSkill"]));
@@ -145,78 +242,6 @@ namespace Strive.Multiverse {
                 }
                 if ((ds.Tables["WieldableItem"] != null)) {
                     this.Tables.Add(new WieldableItemDataTable(ds.Tables["WieldableItem"]));
-                }
-                if ((ds.Tables["PhysicalObject"] != null)) {
-                    this.Tables.Add(new PhysicalObjectDataTable(ds.Tables["PhysicalObject"]));
-                }
-                if ((ds.Tables["World"] != null)) {
-                    this.Tables.Add(new WorldDataTable(ds.Tables["World"]));
-                }
-                if ((ds.Tables["ReadableItem"] != null)) {
-                    this.Tables.Add(new ReadableItemDataTable(ds.Tables["ReadableItem"]));
-                }
-                if ((ds.Tables["JunkItem"] != null)) {
-                    this.Tables.Add(new JunkItemDataTable(ds.Tables["JunkItem"]));
-                }
-                if ((ds.Tables["EnumActivationType"] != null)) {
-                    this.Tables.Add(new EnumActivationTypeDataTable(ds.Tables["EnumActivationType"]));
-                }
-                if ((ds.Tables["EnumCommand"] != null)) {
-                    this.Tables.Add(new EnumCommandDataTable(ds.Tables["EnumCommand"]));
-                }
-                if ((ds.Tables["EnumEmote"] != null)) {
-                    this.Tables.Add(new EnumEmoteDataTable(ds.Tables["EnumEmote"]));
-                }
-                if ((ds.Tables["RaceHasEmote"] != null)) {
-                    this.Tables.Add(new RaceHasEmoteDataTable(ds.Tables["RaceHasEmote"]));
-                }
-                if ((ds.Tables["MobileHasClanRank"] != null)) {
-                    this.Tables.Add(new MobileHasClanRankDataTable(ds.Tables["MobileHasClanRank"]));
-                }
-                if ((ds.Tables["MobilePossesableByPlayer"] != null)) {
-                    this.Tables.Add(new MobilePossesableByPlayerDataTable(ds.Tables["MobilePossesableByPlayer"]));
-                }
-                if ((ds.Tables["Player"] != null)) {
-                    this.Tables.Add(new PlayerDataTable(ds.Tables["Player"]));
-                }
-                if ((ds.Tables["Inventory"] != null)) {
-                    this.Tables.Add(new InventoryDataTable(ds.Tables["Inventory"]));
-                }
-                if ((ds.Tables["RespawnPoint"] != null)) {
-                    this.Tables.Add(new RespawnPointDataTable(ds.Tables["RespawnPoint"]));
-                }
-                if ((ds.Tables["Area"] != null)) {
-                    this.Tables.Add(new AreaDataTable(ds.Tables["Area"]));
-                }
-                if ((ds.Tables["Clan"] != null)) {
-                    this.Tables.Add(new ClanDataTable(ds.Tables["Clan"]));
-                }
-                if ((ds.Tables["ClanRank"] != null)) {
-                    this.Tables.Add(new ClanRankDataTable(ds.Tables["ClanRank"]));
-                }
-                if ((ds.Tables["EnumDamageType"] != null)) {
-                    this.Tables.Add(new EnumDamageTypeDataTable(ds.Tables["EnumDamageType"]));
-                }
-                if ((ds.Tables["Race"] != null)) {
-                    this.Tables.Add(new RaceDataTable(ds.Tables["Race"]));
-                }
-                if ((ds.Tables["EnumLiquidType"] != null)) {
-                    this.Tables.Add(new EnumLiquidTypeDataTable(ds.Tables["EnumLiquidType"]));
-                }
-                if ((ds.Tables["EnumSize"] != null)) {
-                    this.Tables.Add(new EnumSizeDataTable(ds.Tables["EnumSize"]));
-                }
-                if ((ds.Tables["EnumSpecialisation"] != null)) {
-                    this.Tables.Add(new EnumSpecialisationDataTable(ds.Tables["EnumSpecialisation"]));
-                }
-                if ((ds.Tables["EnumTargetType"] != null)) {
-                    this.Tables.Add(new EnumTargetTypeDataTable(ds.Tables["EnumTargetType"]));
-                }
-                if ((ds.Tables["EnumTerrainType"] != null)) {
-                    this.Tables.Add(new EnumTerrainTypeDataTable(ds.Tables["EnumTerrainType"]));
-                }
-                if ((ds.Tables["EnumWearLocation"] != null)) {
-                    this.Tables.Add(new EnumWearLocationDataTable(ds.Tables["EnumWearLocation"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -238,9 +263,105 @@ namespace Strive.Multiverse {
         
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ItemPhysicalObjectDataTable ItemPhysicalObject {
+        public AreaDataTable Area {
             get {
-                return this.tableItemPhysicalObject;
+                return this.tableArea;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public WorldDataTable World {
+            get {
+                return this.tableWorld;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ClanDataTable Clan {
+            get {
+                return this.tableClan;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ClanRankDataTable ClanRank {
+            get {
+                return this.tableClanRank;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public CreatorDataTable Creator {
+            get {
+                return this.tableCreator;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumActivationTypeDataTable EnumActivationType {
+            get {
+                return this.tableEnumActivationType;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumCommandDataTable EnumCommand {
+            get {
+                return this.tableEnumCommand;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumDamageTypeDataTable EnumDamageType {
+            get {
+                return this.tableEnumDamageType;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumEmoteDataTable EnumEmote {
+            get {
+                return this.tableEnumEmote;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumLiquidTypeDataTable EnumLiquidType {
+            get {
+                return this.tableEnumLiquidType;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumMobileSizeDataTable EnumMobileSize {
+            get {
+                return this.tableEnumMobileSize;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumRaceDataTable EnumRace {
+            get {
+                return this.tableEnumRace;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumSexDataTable EnumSex {
+            get {
+                return this.tableEnumSex;
             }
         }
         
@@ -249,6 +370,86 @@ namespace Strive.Multiverse {
         public EnumSkillDataTable EnumSkill {
             get {
                 return this.tableEnumSkill;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumSpecialisationDataTable EnumSpecialisation {
+            get {
+                return this.tableEnumSpecialisation;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumTargetTypeDataTable EnumTargetType {
+            get {
+                return this.tableEnumTargetType;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumTerrainTypeDataTable EnumTerrainType {
+            get {
+                return this.tableEnumTerrainType;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumWeaponSizeDataTable EnumWeaponSize {
+            get {
+                return this.tableEnumWeaponSize;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnumWearLocationDataTable EnumWearLocation {
+            get {
+                return this.tableEnumWearLocation;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EquipableItemDataTable EquipableItem {
+            get {
+                return this.tableEquipableItem;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public InventoryDataTable Inventory {
+            get {
+                return this.tableInventory;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ItemPhysicalObjectDataTable ItemPhysicalObject {
+            get {
+                return this.tableItemPhysicalObject;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public JunkItemDataTable JunkItem {
+            get {
+                return this.tableJunkItem;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public MobileHasClanRankDataTable MobileHasClanRank {
+            get {
+                return this.tableMobileHasClanRank;
             }
         }
         
@@ -278,6 +479,30 @@ namespace Strive.Multiverse {
         
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public MobilePossesableByPlayerDataTable MobilePossesableByPlayer {
+            get {
+                return this.tableMobilePossesableByPlayer;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ModelDataTable Model {
+            get {
+                return this.tableModel;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public PhysicalObjectDataTable PhysicalObject {
+            get {
+                return this.tablePhysicalObject;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public PhysicalObjectAffectedBySkillDataTable PhysicalObjectAffectedBySkill {
             get {
                 return this.tablePhysicalObjectAffectedBySkill;
@@ -286,17 +511,9 @@ namespace Strive.Multiverse {
         
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EquipableItemDataTable EquipableItem {
+        public PlayerDataTable Player {
             get {
-                return this.tableEquipableItem;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SkillEnablesSkillDataTable SkillEnablesSkill {
-            get {
-                return this.tableSkillEnablesSkill;
+                return this.tablePlayer;
             }
         }
         
@@ -305,6 +522,46 @@ namespace Strive.Multiverse {
         public QuaffableItemDataTable QuaffableItem {
             get {
                 return this.tableQuaffableItem;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public QuoteDataTable Quote {
+            get {
+                return this.tableQuote;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public RaceHasEmoteDataTable RaceHasEmote {
+            get {
+                return this.tableRaceHasEmote;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ReadableItemDataTable ReadableItem {
+            get {
+                return this.tableReadableItem;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public RespawnPointDataTable RespawnPoint {
+            get {
+                return this.tableRespawnPoint;
+            }
+        }
+        
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public SkillEnablesSkillDataTable SkillEnablesSkill {
+            get {
+                return this.tableSkillEnablesSkill;
             }
         }
         
@@ -340,198 +597,6 @@ namespace Strive.Multiverse {
             }
         }
         
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public PhysicalObjectDataTable PhysicalObject {
-            get {
-                return this.tablePhysicalObject;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public WorldDataTable World {
-            get {
-                return this.tableWorld;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ReadableItemDataTable ReadableItem {
-            get {
-                return this.tableReadableItem;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public JunkItemDataTable JunkItem {
-            get {
-                return this.tableJunkItem;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumActivationTypeDataTable EnumActivationType {
-            get {
-                return this.tableEnumActivationType;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumCommandDataTable EnumCommand {
-            get {
-                return this.tableEnumCommand;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumEmoteDataTable EnumEmote {
-            get {
-                return this.tableEnumEmote;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public RaceHasEmoteDataTable RaceHasEmote {
-            get {
-                return this.tableRaceHasEmote;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public MobileHasClanRankDataTable MobileHasClanRank {
-            get {
-                return this.tableMobileHasClanRank;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public MobilePossesableByPlayerDataTable MobilePossesableByPlayer {
-            get {
-                return this.tableMobilePossesableByPlayer;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public PlayerDataTable Player {
-            get {
-                return this.tablePlayer;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public InventoryDataTable Inventory {
-            get {
-                return this.tableInventory;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public RespawnPointDataTable RespawnPoint {
-            get {
-                return this.tableRespawnPoint;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public AreaDataTable Area {
-            get {
-                return this.tableArea;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ClanDataTable Clan {
-            get {
-                return this.tableClan;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ClanRankDataTable ClanRank {
-            get {
-                return this.tableClanRank;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumDamageTypeDataTable EnumDamageType {
-            get {
-                return this.tableEnumDamageType;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public RaceDataTable Race {
-            get {
-                return this.tableRace;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumLiquidTypeDataTable EnumLiquidType {
-            get {
-                return this.tableEnumLiquidType;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumSizeDataTable EnumSize {
-            get {
-                return this.tableEnumSize;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumSpecialisationDataTable EnumSpecialisation {
-            get {
-                return this.tableEnumSpecialisation;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumTargetTypeDataTable EnumTargetType {
-            get {
-                return this.tableEnumTargetType;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumTerrainTypeDataTable EnumTerrainType {
-            get {
-                return this.tableEnumTerrainType;
-            }
-        }
-        
-        [System.ComponentModel.Browsable(false)]
-        [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EnumWearLocationDataTable EnumWearLocation {
-            get {
-                return this.tableEnumWearLocation;
-            }
-        }
-        
         public override DataSet Clone() {
             Schema cln = ((Schema)(base.Clone()));
             cln.InitVars();
@@ -550,11 +615,77 @@ namespace Strive.Multiverse {
             this.Reset();
             DataSet ds = new DataSet();
             ds.ReadXml(reader);
-            if ((ds.Tables["ItemPhysicalObject"] != null)) {
-                this.Tables.Add(new ItemPhysicalObjectDataTable(ds.Tables["ItemPhysicalObject"]));
+            if ((ds.Tables["Area"] != null)) {
+                this.Tables.Add(new AreaDataTable(ds.Tables["Area"]));
+            }
+            if ((ds.Tables["World"] != null)) {
+                this.Tables.Add(new WorldDataTable(ds.Tables["World"]));
+            }
+            if ((ds.Tables["Clan"] != null)) {
+                this.Tables.Add(new ClanDataTable(ds.Tables["Clan"]));
+            }
+            if ((ds.Tables["ClanRank"] != null)) {
+                this.Tables.Add(new ClanRankDataTable(ds.Tables["ClanRank"]));
+            }
+            if ((ds.Tables["Creator"] != null)) {
+                this.Tables.Add(new CreatorDataTable(ds.Tables["Creator"]));
+            }
+            if ((ds.Tables["EnumActivationType"] != null)) {
+                this.Tables.Add(new EnumActivationTypeDataTable(ds.Tables["EnumActivationType"]));
+            }
+            if ((ds.Tables["EnumCommand"] != null)) {
+                this.Tables.Add(new EnumCommandDataTable(ds.Tables["EnumCommand"]));
+            }
+            if ((ds.Tables["EnumDamageType"] != null)) {
+                this.Tables.Add(new EnumDamageTypeDataTable(ds.Tables["EnumDamageType"]));
+            }
+            if ((ds.Tables["EnumEmote"] != null)) {
+                this.Tables.Add(new EnumEmoteDataTable(ds.Tables["EnumEmote"]));
+            }
+            if ((ds.Tables["EnumLiquidType"] != null)) {
+                this.Tables.Add(new EnumLiquidTypeDataTable(ds.Tables["EnumLiquidType"]));
+            }
+            if ((ds.Tables["EnumMobileSize"] != null)) {
+                this.Tables.Add(new EnumMobileSizeDataTable(ds.Tables["EnumMobileSize"]));
+            }
+            if ((ds.Tables["EnumRace"] != null)) {
+                this.Tables.Add(new EnumRaceDataTable(ds.Tables["EnumRace"]));
+            }
+            if ((ds.Tables["EnumSex"] != null)) {
+                this.Tables.Add(new EnumSexDataTable(ds.Tables["EnumSex"]));
             }
             if ((ds.Tables["EnumSkill"] != null)) {
                 this.Tables.Add(new EnumSkillDataTable(ds.Tables["EnumSkill"]));
+            }
+            if ((ds.Tables["EnumSpecialisation"] != null)) {
+                this.Tables.Add(new EnumSpecialisationDataTable(ds.Tables["EnumSpecialisation"]));
+            }
+            if ((ds.Tables["EnumTargetType"] != null)) {
+                this.Tables.Add(new EnumTargetTypeDataTable(ds.Tables["EnumTargetType"]));
+            }
+            if ((ds.Tables["EnumTerrainType"] != null)) {
+                this.Tables.Add(new EnumTerrainTypeDataTable(ds.Tables["EnumTerrainType"]));
+            }
+            if ((ds.Tables["EnumWeaponSize"] != null)) {
+                this.Tables.Add(new EnumWeaponSizeDataTable(ds.Tables["EnumWeaponSize"]));
+            }
+            if ((ds.Tables["EnumWearLocation"] != null)) {
+                this.Tables.Add(new EnumWearLocationDataTable(ds.Tables["EnumWearLocation"]));
+            }
+            if ((ds.Tables["EquipableItem"] != null)) {
+                this.Tables.Add(new EquipableItemDataTable(ds.Tables["EquipableItem"]));
+            }
+            if ((ds.Tables["Inventory"] != null)) {
+                this.Tables.Add(new InventoryDataTable(ds.Tables["Inventory"]));
+            }
+            if ((ds.Tables["ItemPhysicalObject"] != null)) {
+                this.Tables.Add(new ItemPhysicalObjectDataTable(ds.Tables["ItemPhysicalObject"]));
+            }
+            if ((ds.Tables["JunkItem"] != null)) {
+                this.Tables.Add(new JunkItemDataTable(ds.Tables["JunkItem"]));
+            }
+            if ((ds.Tables["MobileHasClanRank"] != null)) {
+                this.Tables.Add(new MobileHasClanRankDataTable(ds.Tables["MobileHasClanRank"]));
             }
             if ((ds.Tables["MobileHasSkill"] != null)) {
                 this.Tables.Add(new MobileHasSkillDataTable(ds.Tables["MobileHasSkill"]));
@@ -565,17 +696,38 @@ namespace Strive.Multiverse {
             if ((ds.Tables["MobilePhysicalObject"] != null)) {
                 this.Tables.Add(new MobilePhysicalObjectDataTable(ds.Tables["MobilePhysicalObject"]));
             }
+            if ((ds.Tables["MobilePossesableByPlayer"] != null)) {
+                this.Tables.Add(new MobilePossesableByPlayerDataTable(ds.Tables["MobilePossesableByPlayer"]));
+            }
+            if ((ds.Tables["Model"] != null)) {
+                this.Tables.Add(new ModelDataTable(ds.Tables["Model"]));
+            }
+            if ((ds.Tables["PhysicalObject"] != null)) {
+                this.Tables.Add(new PhysicalObjectDataTable(ds.Tables["PhysicalObject"]));
+            }
             if ((ds.Tables["PhysicalObjectAffectedBySkill"] != null)) {
                 this.Tables.Add(new PhysicalObjectAffectedBySkillDataTable(ds.Tables["PhysicalObjectAffectedBySkill"]));
             }
-            if ((ds.Tables["EquipableItem"] != null)) {
-                this.Tables.Add(new EquipableItemDataTable(ds.Tables["EquipableItem"]));
-            }
-            if ((ds.Tables["SkillEnablesSkill"] != null)) {
-                this.Tables.Add(new SkillEnablesSkillDataTable(ds.Tables["SkillEnablesSkill"]));
+            if ((ds.Tables["Player"] != null)) {
+                this.Tables.Add(new PlayerDataTable(ds.Tables["Player"]));
             }
             if ((ds.Tables["QuaffableItem"] != null)) {
                 this.Tables.Add(new QuaffableItemDataTable(ds.Tables["QuaffableItem"]));
+            }
+            if ((ds.Tables["Quote"] != null)) {
+                this.Tables.Add(new QuoteDataTable(ds.Tables["Quote"]));
+            }
+            if ((ds.Tables["RaceHasEmote"] != null)) {
+                this.Tables.Add(new RaceHasEmoteDataTable(ds.Tables["RaceHasEmote"]));
+            }
+            if ((ds.Tables["ReadableItem"] != null)) {
+                this.Tables.Add(new ReadableItemDataTable(ds.Tables["ReadableItem"]));
+            }
+            if ((ds.Tables["RespawnPoint"] != null)) {
+                this.Tables.Add(new RespawnPointDataTable(ds.Tables["RespawnPoint"]));
+            }
+            if ((ds.Tables["SkillEnablesSkill"] != null)) {
+                this.Tables.Add(new SkillEnablesSkillDataTable(ds.Tables["SkillEnablesSkill"]));
             }
             if ((ds.Tables["SpecialisationEnablesSkill"] != null)) {
                 this.Tables.Add(new SpecialisationEnablesSkillDataTable(ds.Tables["SpecialisationEnablesSkill"]));
@@ -588,78 +740,6 @@ namespace Strive.Multiverse {
             }
             if ((ds.Tables["WieldableItem"] != null)) {
                 this.Tables.Add(new WieldableItemDataTable(ds.Tables["WieldableItem"]));
-            }
-            if ((ds.Tables["PhysicalObject"] != null)) {
-                this.Tables.Add(new PhysicalObjectDataTable(ds.Tables["PhysicalObject"]));
-            }
-            if ((ds.Tables["World"] != null)) {
-                this.Tables.Add(new WorldDataTable(ds.Tables["World"]));
-            }
-            if ((ds.Tables["ReadableItem"] != null)) {
-                this.Tables.Add(new ReadableItemDataTable(ds.Tables["ReadableItem"]));
-            }
-            if ((ds.Tables["JunkItem"] != null)) {
-                this.Tables.Add(new JunkItemDataTable(ds.Tables["JunkItem"]));
-            }
-            if ((ds.Tables["EnumActivationType"] != null)) {
-                this.Tables.Add(new EnumActivationTypeDataTable(ds.Tables["EnumActivationType"]));
-            }
-            if ((ds.Tables["EnumCommand"] != null)) {
-                this.Tables.Add(new EnumCommandDataTable(ds.Tables["EnumCommand"]));
-            }
-            if ((ds.Tables["EnumEmote"] != null)) {
-                this.Tables.Add(new EnumEmoteDataTable(ds.Tables["EnumEmote"]));
-            }
-            if ((ds.Tables["RaceHasEmote"] != null)) {
-                this.Tables.Add(new RaceHasEmoteDataTable(ds.Tables["RaceHasEmote"]));
-            }
-            if ((ds.Tables["MobileHasClanRank"] != null)) {
-                this.Tables.Add(new MobileHasClanRankDataTable(ds.Tables["MobileHasClanRank"]));
-            }
-            if ((ds.Tables["MobilePossesableByPlayer"] != null)) {
-                this.Tables.Add(new MobilePossesableByPlayerDataTable(ds.Tables["MobilePossesableByPlayer"]));
-            }
-            if ((ds.Tables["Player"] != null)) {
-                this.Tables.Add(new PlayerDataTable(ds.Tables["Player"]));
-            }
-            if ((ds.Tables["Inventory"] != null)) {
-                this.Tables.Add(new InventoryDataTable(ds.Tables["Inventory"]));
-            }
-            if ((ds.Tables["RespawnPoint"] != null)) {
-                this.Tables.Add(new RespawnPointDataTable(ds.Tables["RespawnPoint"]));
-            }
-            if ((ds.Tables["Area"] != null)) {
-                this.Tables.Add(new AreaDataTable(ds.Tables["Area"]));
-            }
-            if ((ds.Tables["Clan"] != null)) {
-                this.Tables.Add(new ClanDataTable(ds.Tables["Clan"]));
-            }
-            if ((ds.Tables["ClanRank"] != null)) {
-                this.Tables.Add(new ClanRankDataTable(ds.Tables["ClanRank"]));
-            }
-            if ((ds.Tables["EnumDamageType"] != null)) {
-                this.Tables.Add(new EnumDamageTypeDataTable(ds.Tables["EnumDamageType"]));
-            }
-            if ((ds.Tables["Race"] != null)) {
-                this.Tables.Add(new RaceDataTable(ds.Tables["Race"]));
-            }
-            if ((ds.Tables["EnumLiquidType"] != null)) {
-                this.Tables.Add(new EnumLiquidTypeDataTable(ds.Tables["EnumLiquidType"]));
-            }
-            if ((ds.Tables["EnumSize"] != null)) {
-                this.Tables.Add(new EnumSizeDataTable(ds.Tables["EnumSize"]));
-            }
-            if ((ds.Tables["EnumSpecialisation"] != null)) {
-                this.Tables.Add(new EnumSpecialisationDataTable(ds.Tables["EnumSpecialisation"]));
-            }
-            if ((ds.Tables["EnumTargetType"] != null)) {
-                this.Tables.Add(new EnumTargetTypeDataTable(ds.Tables["EnumTargetType"]));
-            }
-            if ((ds.Tables["EnumTerrainType"] != null)) {
-                this.Tables.Add(new EnumTerrainTypeDataTable(ds.Tables["EnumTerrainType"]));
-            }
-            if ((ds.Tables["EnumWearLocation"] != null)) {
-                this.Tables.Add(new EnumWearLocationDataTable(ds.Tables["EnumWearLocation"]));
             }
             this.DataSetName = ds.DataSetName;
             this.Prefix = ds.Prefix;
@@ -679,13 +759,101 @@ namespace Strive.Multiverse {
         }
         
         internal void InitVars() {
-            this.tableItemPhysicalObject = ((ItemPhysicalObjectDataTable)(this.Tables["ItemPhysicalObject"]));
-            if ((this.tableItemPhysicalObject != null)) {
-                this.tableItemPhysicalObject.InitVars();
+            this.tableArea = ((AreaDataTable)(this.Tables["Area"]));
+            if ((this.tableArea != null)) {
+                this.tableArea.InitVars();
+            }
+            this.tableWorld = ((WorldDataTable)(this.Tables["World"]));
+            if ((this.tableWorld != null)) {
+                this.tableWorld.InitVars();
+            }
+            this.tableClan = ((ClanDataTable)(this.Tables["Clan"]));
+            if ((this.tableClan != null)) {
+                this.tableClan.InitVars();
+            }
+            this.tableClanRank = ((ClanRankDataTable)(this.Tables["ClanRank"]));
+            if ((this.tableClanRank != null)) {
+                this.tableClanRank.InitVars();
+            }
+            this.tableCreator = ((CreatorDataTable)(this.Tables["Creator"]));
+            if ((this.tableCreator != null)) {
+                this.tableCreator.InitVars();
+            }
+            this.tableEnumActivationType = ((EnumActivationTypeDataTable)(this.Tables["EnumActivationType"]));
+            if ((this.tableEnumActivationType != null)) {
+                this.tableEnumActivationType.InitVars();
+            }
+            this.tableEnumCommand = ((EnumCommandDataTable)(this.Tables["EnumCommand"]));
+            if ((this.tableEnumCommand != null)) {
+                this.tableEnumCommand.InitVars();
+            }
+            this.tableEnumDamageType = ((EnumDamageTypeDataTable)(this.Tables["EnumDamageType"]));
+            if ((this.tableEnumDamageType != null)) {
+                this.tableEnumDamageType.InitVars();
+            }
+            this.tableEnumEmote = ((EnumEmoteDataTable)(this.Tables["EnumEmote"]));
+            if ((this.tableEnumEmote != null)) {
+                this.tableEnumEmote.InitVars();
+            }
+            this.tableEnumLiquidType = ((EnumLiquidTypeDataTable)(this.Tables["EnumLiquidType"]));
+            if ((this.tableEnumLiquidType != null)) {
+                this.tableEnumLiquidType.InitVars();
+            }
+            this.tableEnumMobileSize = ((EnumMobileSizeDataTable)(this.Tables["EnumMobileSize"]));
+            if ((this.tableEnumMobileSize != null)) {
+                this.tableEnumMobileSize.InitVars();
+            }
+            this.tableEnumRace = ((EnumRaceDataTable)(this.Tables["EnumRace"]));
+            if ((this.tableEnumRace != null)) {
+                this.tableEnumRace.InitVars();
+            }
+            this.tableEnumSex = ((EnumSexDataTable)(this.Tables["EnumSex"]));
+            if ((this.tableEnumSex != null)) {
+                this.tableEnumSex.InitVars();
             }
             this.tableEnumSkill = ((EnumSkillDataTable)(this.Tables["EnumSkill"]));
             if ((this.tableEnumSkill != null)) {
                 this.tableEnumSkill.InitVars();
+            }
+            this.tableEnumSpecialisation = ((EnumSpecialisationDataTable)(this.Tables["EnumSpecialisation"]));
+            if ((this.tableEnumSpecialisation != null)) {
+                this.tableEnumSpecialisation.InitVars();
+            }
+            this.tableEnumTargetType = ((EnumTargetTypeDataTable)(this.Tables["EnumTargetType"]));
+            if ((this.tableEnumTargetType != null)) {
+                this.tableEnumTargetType.InitVars();
+            }
+            this.tableEnumTerrainType = ((EnumTerrainTypeDataTable)(this.Tables["EnumTerrainType"]));
+            if ((this.tableEnumTerrainType != null)) {
+                this.tableEnumTerrainType.InitVars();
+            }
+            this.tableEnumWeaponSize = ((EnumWeaponSizeDataTable)(this.Tables["EnumWeaponSize"]));
+            if ((this.tableEnumWeaponSize != null)) {
+                this.tableEnumWeaponSize.InitVars();
+            }
+            this.tableEnumWearLocation = ((EnumWearLocationDataTable)(this.Tables["EnumWearLocation"]));
+            if ((this.tableEnumWearLocation != null)) {
+                this.tableEnumWearLocation.InitVars();
+            }
+            this.tableEquipableItem = ((EquipableItemDataTable)(this.Tables["EquipableItem"]));
+            if ((this.tableEquipableItem != null)) {
+                this.tableEquipableItem.InitVars();
+            }
+            this.tableInventory = ((InventoryDataTable)(this.Tables["Inventory"]));
+            if ((this.tableInventory != null)) {
+                this.tableInventory.InitVars();
+            }
+            this.tableItemPhysicalObject = ((ItemPhysicalObjectDataTable)(this.Tables["ItemPhysicalObject"]));
+            if ((this.tableItemPhysicalObject != null)) {
+                this.tableItemPhysicalObject.InitVars();
+            }
+            this.tableJunkItem = ((JunkItemDataTable)(this.Tables["JunkItem"]));
+            if ((this.tableJunkItem != null)) {
+                this.tableJunkItem.InitVars();
+            }
+            this.tableMobileHasClanRank = ((MobileHasClanRankDataTable)(this.Tables["MobileHasClanRank"]));
+            if ((this.tableMobileHasClanRank != null)) {
+                this.tableMobileHasClanRank.InitVars();
             }
             this.tableMobileHasSkill = ((MobileHasSkillDataTable)(this.Tables["MobileHasSkill"]));
             if ((this.tableMobileHasSkill != null)) {
@@ -699,21 +867,49 @@ namespace Strive.Multiverse {
             if ((this.tableMobilePhysicalObject != null)) {
                 this.tableMobilePhysicalObject.InitVars();
             }
+            this.tableMobilePossesableByPlayer = ((MobilePossesableByPlayerDataTable)(this.Tables["MobilePossesableByPlayer"]));
+            if ((this.tableMobilePossesableByPlayer != null)) {
+                this.tableMobilePossesableByPlayer.InitVars();
+            }
+            this.tableModel = ((ModelDataTable)(this.Tables["Model"]));
+            if ((this.tableModel != null)) {
+                this.tableModel.InitVars();
+            }
+            this.tablePhysicalObject = ((PhysicalObjectDataTable)(this.Tables["PhysicalObject"]));
+            if ((this.tablePhysicalObject != null)) {
+                this.tablePhysicalObject.InitVars();
+            }
             this.tablePhysicalObjectAffectedBySkill = ((PhysicalObjectAffectedBySkillDataTable)(this.Tables["PhysicalObjectAffectedBySkill"]));
             if ((this.tablePhysicalObjectAffectedBySkill != null)) {
                 this.tablePhysicalObjectAffectedBySkill.InitVars();
             }
-            this.tableEquipableItem = ((EquipableItemDataTable)(this.Tables["EquipableItem"]));
-            if ((this.tableEquipableItem != null)) {
-                this.tableEquipableItem.InitVars();
-            }
-            this.tableSkillEnablesSkill = ((SkillEnablesSkillDataTable)(this.Tables["SkillEnablesSkill"]));
-            if ((this.tableSkillEnablesSkill != null)) {
-                this.tableSkillEnablesSkill.InitVars();
+            this.tablePlayer = ((PlayerDataTable)(this.Tables["Player"]));
+            if ((this.tablePlayer != null)) {
+                this.tablePlayer.InitVars();
             }
             this.tableQuaffableItem = ((QuaffableItemDataTable)(this.Tables["QuaffableItem"]));
             if ((this.tableQuaffableItem != null)) {
                 this.tableQuaffableItem.InitVars();
+            }
+            this.tableQuote = ((QuoteDataTable)(this.Tables["Quote"]));
+            if ((this.tableQuote != null)) {
+                this.tableQuote.InitVars();
+            }
+            this.tableRaceHasEmote = ((RaceHasEmoteDataTable)(this.Tables["RaceHasEmote"]));
+            if ((this.tableRaceHasEmote != null)) {
+                this.tableRaceHasEmote.InitVars();
+            }
+            this.tableReadableItem = ((ReadableItemDataTable)(this.Tables["ReadableItem"]));
+            if ((this.tableReadableItem != null)) {
+                this.tableReadableItem.InitVars();
+            }
+            this.tableRespawnPoint = ((RespawnPointDataTable)(this.Tables["RespawnPoint"]));
+            if ((this.tableRespawnPoint != null)) {
+                this.tableRespawnPoint.InitVars();
+            }
+            this.tableSkillEnablesSkill = ((SkillEnablesSkillDataTable)(this.Tables["SkillEnablesSkill"]));
+            if ((this.tableSkillEnablesSkill != null)) {
+                this.tableSkillEnablesSkill.InitVars();
             }
             this.tableSpecialisationEnablesSkill = ((SpecialisationEnablesSkillDataTable)(this.Tables["SpecialisationEnablesSkill"]));
             if ((this.tableSpecialisationEnablesSkill != null)) {
@@ -731,102 +927,6 @@ namespace Strive.Multiverse {
             if ((this.tableWieldableItem != null)) {
                 this.tableWieldableItem.InitVars();
             }
-            this.tablePhysicalObject = ((PhysicalObjectDataTable)(this.Tables["PhysicalObject"]));
-            if ((this.tablePhysicalObject != null)) {
-                this.tablePhysicalObject.InitVars();
-            }
-            this.tableWorld = ((WorldDataTable)(this.Tables["World"]));
-            if ((this.tableWorld != null)) {
-                this.tableWorld.InitVars();
-            }
-            this.tableReadableItem = ((ReadableItemDataTable)(this.Tables["ReadableItem"]));
-            if ((this.tableReadableItem != null)) {
-                this.tableReadableItem.InitVars();
-            }
-            this.tableJunkItem = ((JunkItemDataTable)(this.Tables["JunkItem"]));
-            if ((this.tableJunkItem != null)) {
-                this.tableJunkItem.InitVars();
-            }
-            this.tableEnumActivationType = ((EnumActivationTypeDataTable)(this.Tables["EnumActivationType"]));
-            if ((this.tableEnumActivationType != null)) {
-                this.tableEnumActivationType.InitVars();
-            }
-            this.tableEnumCommand = ((EnumCommandDataTable)(this.Tables["EnumCommand"]));
-            if ((this.tableEnumCommand != null)) {
-                this.tableEnumCommand.InitVars();
-            }
-            this.tableEnumEmote = ((EnumEmoteDataTable)(this.Tables["EnumEmote"]));
-            if ((this.tableEnumEmote != null)) {
-                this.tableEnumEmote.InitVars();
-            }
-            this.tableRaceHasEmote = ((RaceHasEmoteDataTable)(this.Tables["RaceHasEmote"]));
-            if ((this.tableRaceHasEmote != null)) {
-                this.tableRaceHasEmote.InitVars();
-            }
-            this.tableMobileHasClanRank = ((MobileHasClanRankDataTable)(this.Tables["MobileHasClanRank"]));
-            if ((this.tableMobileHasClanRank != null)) {
-                this.tableMobileHasClanRank.InitVars();
-            }
-            this.tableMobilePossesableByPlayer = ((MobilePossesableByPlayerDataTable)(this.Tables["MobilePossesableByPlayer"]));
-            if ((this.tableMobilePossesableByPlayer != null)) {
-                this.tableMobilePossesableByPlayer.InitVars();
-            }
-            this.tablePlayer = ((PlayerDataTable)(this.Tables["Player"]));
-            if ((this.tablePlayer != null)) {
-                this.tablePlayer.InitVars();
-            }
-            this.tableInventory = ((InventoryDataTable)(this.Tables["Inventory"]));
-            if ((this.tableInventory != null)) {
-                this.tableInventory.InitVars();
-            }
-            this.tableRespawnPoint = ((RespawnPointDataTable)(this.Tables["RespawnPoint"]));
-            if ((this.tableRespawnPoint != null)) {
-                this.tableRespawnPoint.InitVars();
-            }
-            this.tableArea = ((AreaDataTable)(this.Tables["Area"]));
-            if ((this.tableArea != null)) {
-                this.tableArea.InitVars();
-            }
-            this.tableClan = ((ClanDataTable)(this.Tables["Clan"]));
-            if ((this.tableClan != null)) {
-                this.tableClan.InitVars();
-            }
-            this.tableClanRank = ((ClanRankDataTable)(this.Tables["ClanRank"]));
-            if ((this.tableClanRank != null)) {
-                this.tableClanRank.InitVars();
-            }
-            this.tableEnumDamageType = ((EnumDamageTypeDataTable)(this.Tables["EnumDamageType"]));
-            if ((this.tableEnumDamageType != null)) {
-                this.tableEnumDamageType.InitVars();
-            }
-            this.tableRace = ((RaceDataTable)(this.Tables["Race"]));
-            if ((this.tableRace != null)) {
-                this.tableRace.InitVars();
-            }
-            this.tableEnumLiquidType = ((EnumLiquidTypeDataTable)(this.Tables["EnumLiquidType"]));
-            if ((this.tableEnumLiquidType != null)) {
-                this.tableEnumLiquidType.InitVars();
-            }
-            this.tableEnumSize = ((EnumSizeDataTable)(this.Tables["EnumSize"]));
-            if ((this.tableEnumSize != null)) {
-                this.tableEnumSize.InitVars();
-            }
-            this.tableEnumSpecialisation = ((EnumSpecialisationDataTable)(this.Tables["EnumSpecialisation"]));
-            if ((this.tableEnumSpecialisation != null)) {
-                this.tableEnumSpecialisation.InitVars();
-            }
-            this.tableEnumTargetType = ((EnumTargetTypeDataTable)(this.Tables["EnumTargetType"]));
-            if ((this.tableEnumTargetType != null)) {
-                this.tableEnumTargetType.InitVars();
-            }
-            this.tableEnumTerrainType = ((EnumTerrainTypeDataTable)(this.Tables["EnumTerrainType"]));
-            if ((this.tableEnumTerrainType != null)) {
-                this.tableEnumTerrainType.InitVars();
-            }
-            this.tableEnumWearLocation = ((EnumWearLocationDataTable)(this.Tables["EnumWearLocation"]));
-            if ((this.tableEnumWearLocation != null)) {
-                this.tableEnumWearLocation.InitVars();
-            }
         }
         
         private void InitClass() {
@@ -836,24 +936,82 @@ namespace Strive.Multiverse {
             this.Locale = new System.Globalization.CultureInfo("en-US");
             this.CaseSensitive = false;
             this.EnforceConstraints = true;
-            this.tableItemPhysicalObject = new ItemPhysicalObjectDataTable();
-            this.Tables.Add(this.tableItemPhysicalObject);
+            this.tableArea = new AreaDataTable();
+            this.Tables.Add(this.tableArea);
+            this.tableWorld = new WorldDataTable();
+            this.Tables.Add(this.tableWorld);
+            this.tableClan = new ClanDataTable();
+            this.Tables.Add(this.tableClan);
+            this.tableClanRank = new ClanRankDataTable();
+            this.Tables.Add(this.tableClanRank);
+            this.tableCreator = new CreatorDataTable();
+            this.Tables.Add(this.tableCreator);
+            this.tableEnumActivationType = new EnumActivationTypeDataTable();
+            this.Tables.Add(this.tableEnumActivationType);
+            this.tableEnumCommand = new EnumCommandDataTable();
+            this.Tables.Add(this.tableEnumCommand);
+            this.tableEnumDamageType = new EnumDamageTypeDataTable();
+            this.Tables.Add(this.tableEnumDamageType);
+            this.tableEnumEmote = new EnumEmoteDataTable();
+            this.Tables.Add(this.tableEnumEmote);
+            this.tableEnumLiquidType = new EnumLiquidTypeDataTable();
+            this.Tables.Add(this.tableEnumLiquidType);
+            this.tableEnumMobileSize = new EnumMobileSizeDataTable();
+            this.Tables.Add(this.tableEnumMobileSize);
+            this.tableEnumRace = new EnumRaceDataTable();
+            this.Tables.Add(this.tableEnumRace);
+            this.tableEnumSex = new EnumSexDataTable();
+            this.Tables.Add(this.tableEnumSex);
             this.tableEnumSkill = new EnumSkillDataTable();
             this.Tables.Add(this.tableEnumSkill);
+            this.tableEnumSpecialisation = new EnumSpecialisationDataTable();
+            this.Tables.Add(this.tableEnumSpecialisation);
+            this.tableEnumTargetType = new EnumTargetTypeDataTable();
+            this.Tables.Add(this.tableEnumTargetType);
+            this.tableEnumTerrainType = new EnumTerrainTypeDataTable();
+            this.Tables.Add(this.tableEnumTerrainType);
+            this.tableEnumWeaponSize = new EnumWeaponSizeDataTable();
+            this.Tables.Add(this.tableEnumWeaponSize);
+            this.tableEnumWearLocation = new EnumWearLocationDataTable();
+            this.Tables.Add(this.tableEnumWearLocation);
+            this.tableEquipableItem = new EquipableItemDataTable();
+            this.Tables.Add(this.tableEquipableItem);
+            this.tableInventory = new InventoryDataTable();
+            this.Tables.Add(this.tableInventory);
+            this.tableItemPhysicalObject = new ItemPhysicalObjectDataTable();
+            this.Tables.Add(this.tableItemPhysicalObject);
+            this.tableJunkItem = new JunkItemDataTable();
+            this.Tables.Add(this.tableJunkItem);
+            this.tableMobileHasClanRank = new MobileHasClanRankDataTable();
+            this.Tables.Add(this.tableMobileHasClanRank);
             this.tableMobileHasSkill = new MobileHasSkillDataTable();
             this.Tables.Add(this.tableMobileHasSkill);
             this.tableMobileHasSpecialisation = new MobileHasSpecialisationDataTable();
             this.Tables.Add(this.tableMobileHasSpecialisation);
             this.tableMobilePhysicalObject = new MobilePhysicalObjectDataTable();
             this.Tables.Add(this.tableMobilePhysicalObject);
+            this.tableMobilePossesableByPlayer = new MobilePossesableByPlayerDataTable();
+            this.Tables.Add(this.tableMobilePossesableByPlayer);
+            this.tableModel = new ModelDataTable();
+            this.Tables.Add(this.tableModel);
+            this.tablePhysicalObject = new PhysicalObjectDataTable();
+            this.Tables.Add(this.tablePhysicalObject);
             this.tablePhysicalObjectAffectedBySkill = new PhysicalObjectAffectedBySkillDataTable();
             this.Tables.Add(this.tablePhysicalObjectAffectedBySkill);
-            this.tableEquipableItem = new EquipableItemDataTable();
-            this.Tables.Add(this.tableEquipableItem);
-            this.tableSkillEnablesSkill = new SkillEnablesSkillDataTable();
-            this.Tables.Add(this.tableSkillEnablesSkill);
+            this.tablePlayer = new PlayerDataTable();
+            this.Tables.Add(this.tablePlayer);
             this.tableQuaffableItem = new QuaffableItemDataTable();
             this.Tables.Add(this.tableQuaffableItem);
+            this.tableQuote = new QuoteDataTable();
+            this.Tables.Add(this.tableQuote);
+            this.tableRaceHasEmote = new RaceHasEmoteDataTable();
+            this.Tables.Add(this.tableRaceHasEmote);
+            this.tableReadableItem = new ReadableItemDataTable();
+            this.Tables.Add(this.tableReadableItem);
+            this.tableRespawnPoint = new RespawnPointDataTable();
+            this.Tables.Add(this.tableRespawnPoint);
+            this.tableSkillEnablesSkill = new SkillEnablesSkillDataTable();
+            this.Tables.Add(this.tableSkillEnablesSkill);
             this.tableSpecialisationEnablesSkill = new SpecialisationEnablesSkillDataTable();
             this.Tables.Add(this.tableSpecialisationEnablesSkill);
             this.tableSpecialisationEnablesSpecialisation = new SpecialisationEnablesSpecialisationDataTable();
@@ -862,61 +1020,101 @@ namespace Strive.Multiverse {
             this.Tables.Add(this.tableTerrainPhysicalObject);
             this.tableWieldableItem = new WieldableItemDataTable();
             this.Tables.Add(this.tableWieldableItem);
-            this.tablePhysicalObject = new PhysicalObjectDataTable();
-            this.Tables.Add(this.tablePhysicalObject);
-            this.tableWorld = new WorldDataTable();
-            this.Tables.Add(this.tableWorld);
-            this.tableReadableItem = new ReadableItemDataTable();
-            this.Tables.Add(this.tableReadableItem);
-            this.tableJunkItem = new JunkItemDataTable();
-            this.Tables.Add(this.tableJunkItem);
-            this.tableEnumActivationType = new EnumActivationTypeDataTable();
-            this.Tables.Add(this.tableEnumActivationType);
-            this.tableEnumCommand = new EnumCommandDataTable();
-            this.Tables.Add(this.tableEnumCommand);
-            this.tableEnumEmote = new EnumEmoteDataTable();
-            this.Tables.Add(this.tableEnumEmote);
-            this.tableRaceHasEmote = new RaceHasEmoteDataTable();
-            this.Tables.Add(this.tableRaceHasEmote);
-            this.tableMobileHasClanRank = new MobileHasClanRankDataTable();
-            this.Tables.Add(this.tableMobileHasClanRank);
-            this.tableMobilePossesableByPlayer = new MobilePossesableByPlayerDataTable();
-            this.Tables.Add(this.tableMobilePossesableByPlayer);
-            this.tablePlayer = new PlayerDataTable();
-            this.Tables.Add(this.tablePlayer);
-            this.tableInventory = new InventoryDataTable();
-            this.Tables.Add(this.tableInventory);
-            this.tableRespawnPoint = new RespawnPointDataTable();
-            this.Tables.Add(this.tableRespawnPoint);
-            this.tableArea = new AreaDataTable();
-            this.Tables.Add(this.tableArea);
-            this.tableClan = new ClanDataTable();
-            this.Tables.Add(this.tableClan);
-            this.tableClanRank = new ClanRankDataTable();
-            this.Tables.Add(this.tableClanRank);
-            this.tableEnumDamageType = new EnumDamageTypeDataTable();
-            this.Tables.Add(this.tableEnumDamageType);
-            this.tableRace = new RaceDataTable();
-            this.Tables.Add(this.tableRace);
-            this.tableEnumLiquidType = new EnumLiquidTypeDataTable();
-            this.Tables.Add(this.tableEnumLiquidType);
-            this.tableEnumSize = new EnumSizeDataTable();
-            this.Tables.Add(this.tableEnumSize);
-            this.tableEnumSpecialisation = new EnumSpecialisationDataTable();
-            this.Tables.Add(this.tableEnumSpecialisation);
-            this.tableEnumTargetType = new EnumTargetTypeDataTable();
-            this.Tables.Add(this.tableEnumTargetType);
-            this.tableEnumTerrainType = new EnumTerrainTypeDataTable();
-            this.Tables.Add(this.tableEnumTerrainType);
-            this.tableEnumWearLocation = new EnumWearLocationDataTable();
-            this.Tables.Add(this.tableEnumWearLocation);
+        }
+        
+        private bool ShouldSerializeArea() {
+            return false;
+        }
+        
+        private bool ShouldSerializeWorld() {
+            return false;
+        }
+        
+        private bool ShouldSerializeClan() {
+            return false;
+        }
+        
+        private bool ShouldSerializeClanRank() {
+            return false;
+        }
+        
+        private bool ShouldSerializeCreator() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumActivationType() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumCommand() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumDamageType() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumEmote() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumLiquidType() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumMobileSize() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumRace() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumSex() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumSkill() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumSpecialisation() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumTargetType() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumTerrainType() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumWeaponSize() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEnumWearLocation() {
+            return false;
+        }
+        
+        private bool ShouldSerializeEquipableItem() {
+            return false;
+        }
+        
+        private bool ShouldSerializeInventory() {
+            return false;
         }
         
         private bool ShouldSerializeItemPhysicalObject() {
             return false;
         }
         
-        private bool ShouldSerializeEnumSkill() {
+        private bool ShouldSerializeJunkItem() {
+            return false;
+        }
+        
+        private bool ShouldSerializeMobileHasClanRank() {
             return false;
         }
         
@@ -932,19 +1130,47 @@ namespace Strive.Multiverse {
             return false;
         }
         
+        private bool ShouldSerializeMobilePossesableByPlayer() {
+            return false;
+        }
+        
+        private bool ShouldSerializeModel() {
+            return false;
+        }
+        
+        private bool ShouldSerializePhysicalObject() {
+            return false;
+        }
+        
         private bool ShouldSerializePhysicalObjectAffectedBySkill() {
             return false;
         }
         
-        private bool ShouldSerializeEquipableItem() {
-            return false;
-        }
-        
-        private bool ShouldSerializeSkillEnablesSkill() {
+        private bool ShouldSerializePlayer() {
             return false;
         }
         
         private bool ShouldSerializeQuaffableItem() {
+            return false;
+        }
+        
+        private bool ShouldSerializeQuote() {
+            return false;
+        }
+        
+        private bool ShouldSerializeRaceHasEmote() {
+            return false;
+        }
+        
+        private bool ShouldSerializeReadableItem() {
+            return false;
+        }
+        
+        private bool ShouldSerializeRespawnPoint() {
+            return false;
+        }
+        
+        private bool ShouldSerializeSkillEnablesSkill() {
             return false;
         }
         
@@ -964,111 +1190,59 @@ namespace Strive.Multiverse {
             return false;
         }
         
-        private bool ShouldSerializePhysicalObject() {
-            return false;
-        }
-        
-        private bool ShouldSerializeWorld() {
-            return false;
-        }
-        
-        private bool ShouldSerializeReadableItem() {
-            return false;
-        }
-        
-        private bool ShouldSerializeJunkItem() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumActivationType() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumCommand() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumEmote() {
-            return false;
-        }
-        
-        private bool ShouldSerializeRaceHasEmote() {
-            return false;
-        }
-        
-        private bool ShouldSerializeMobileHasClanRank() {
-            return false;
-        }
-        
-        private bool ShouldSerializeMobilePossesableByPlayer() {
-            return false;
-        }
-        
-        private bool ShouldSerializePlayer() {
-            return false;
-        }
-        
-        private bool ShouldSerializeInventory() {
-            return false;
-        }
-        
-        private bool ShouldSerializeRespawnPoint() {
-            return false;
-        }
-        
-        private bool ShouldSerializeArea() {
-            return false;
-        }
-        
-        private bool ShouldSerializeClan() {
-            return false;
-        }
-        
-        private bool ShouldSerializeClanRank() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumDamageType() {
-            return false;
-        }
-        
-        private bool ShouldSerializeRace() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumLiquidType() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumSize() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumSpecialisation() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumTargetType() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumTerrainType() {
-            return false;
-        }
-        
-        private bool ShouldSerializeEnumWearLocation() {
-            return false;
-        }
-        
         private void SchemaChanged(object sender, System.ComponentModel.CollectionChangeEventArgs e) {
             if ((e.Action == System.ComponentModel.CollectionChangeAction.Remove)) {
                 this.InitVars();
             }
         }
         
-        public delegate void ItemPhysicalObjectRowChangeEventHandler(object sender, ItemPhysicalObjectRowChangeEvent e);
+        public delegate void AreaRowChangeEventHandler(object sender, AreaRowChangeEvent e);
+        
+        public delegate void WorldRowChangeEventHandler(object sender, WorldRowChangeEvent e);
+        
+        public delegate void ClanRowChangeEventHandler(object sender, ClanRowChangeEvent e);
+        
+        public delegate void ClanRankRowChangeEventHandler(object sender, ClanRankRowChangeEvent e);
+        
+        public delegate void CreatorRowChangeEventHandler(object sender, CreatorRowChangeEvent e);
+        
+        public delegate void EnumActivationTypeRowChangeEventHandler(object sender, EnumActivationTypeRowChangeEvent e);
+        
+        public delegate void EnumCommandRowChangeEventHandler(object sender, EnumCommandRowChangeEvent e);
+        
+        public delegate void EnumDamageTypeRowChangeEventHandler(object sender, EnumDamageTypeRowChangeEvent e);
+        
+        public delegate void EnumEmoteRowChangeEventHandler(object sender, EnumEmoteRowChangeEvent e);
+        
+        public delegate void EnumLiquidTypeRowChangeEventHandler(object sender, EnumLiquidTypeRowChangeEvent e);
+        
+        public delegate void EnumMobileSizeRowChangeEventHandler(object sender, EnumMobileSizeRowChangeEvent e);
+        
+        public delegate void EnumRaceRowChangeEventHandler(object sender, EnumRaceRowChangeEvent e);
+        
+        public delegate void EnumSexRowChangeEventHandler(object sender, EnumSexRowChangeEvent e);
         
         public delegate void EnumSkillRowChangeEventHandler(object sender, EnumSkillRowChangeEvent e);
+        
+        public delegate void EnumSpecialisationRowChangeEventHandler(object sender, EnumSpecialisationRowChangeEvent e);
+        
+        public delegate void EnumTargetTypeRowChangeEventHandler(object sender, EnumTargetTypeRowChangeEvent e);
+        
+        public delegate void EnumTerrainTypeRowChangeEventHandler(object sender, EnumTerrainTypeRowChangeEvent e);
+        
+        public delegate void EnumWeaponSizeRowChangeEventHandler(object sender, EnumWeaponSizeRowChangeEvent e);
+        
+        public delegate void EnumWearLocationRowChangeEventHandler(object sender, EnumWearLocationRowChangeEvent e);
+        
+        public delegate void EquipableItemRowChangeEventHandler(object sender, EquipableItemRowChangeEvent e);
+        
+        public delegate void InventoryRowChangeEventHandler(object sender, InventoryRowChangeEvent e);
+        
+        public delegate void ItemPhysicalObjectRowChangeEventHandler(object sender, ItemPhysicalObjectRowChangeEvent e);
+        
+        public delegate void JunkItemRowChangeEventHandler(object sender, JunkItemRowChangeEvent e);
+        
+        public delegate void MobileHasClanRankRowChangeEventHandler(object sender, MobileHasClanRankRowChangeEvent e);
         
         public delegate void MobileHasSkillRowChangeEventHandler(object sender, MobileHasSkillRowChangeEvent e);
         
@@ -1076,13 +1250,27 @@ namespace Strive.Multiverse {
         
         public delegate void MobilePhysicalObjectRowChangeEventHandler(object sender, MobilePhysicalObjectRowChangeEvent e);
         
+        public delegate void MobilePossesableByPlayerRowChangeEventHandler(object sender, MobilePossesableByPlayerRowChangeEvent e);
+        
+        public delegate void ModelRowChangeEventHandler(object sender, ModelRowChangeEvent e);
+        
+        public delegate void PhysicalObjectRowChangeEventHandler(object sender, PhysicalObjectRowChangeEvent e);
+        
         public delegate void PhysicalObjectAffectedBySkillRowChangeEventHandler(object sender, PhysicalObjectAffectedBySkillRowChangeEvent e);
         
-        public delegate void EquipableItemRowChangeEventHandler(object sender, EquipableItemRowChangeEvent e);
-        
-        public delegate void SkillEnablesSkillRowChangeEventHandler(object sender, SkillEnablesSkillRowChangeEvent e);
+        public delegate void PlayerRowChangeEventHandler(object sender, PlayerRowChangeEvent e);
         
         public delegate void QuaffableItemRowChangeEventHandler(object sender, QuaffableItemRowChangeEvent e);
+        
+        public delegate void QuoteRowChangeEventHandler(object sender, QuoteRowChangeEvent e);
+        
+        public delegate void RaceHasEmoteRowChangeEventHandler(object sender, RaceHasEmoteRowChangeEvent e);
+        
+        public delegate void ReadableItemRowChangeEventHandler(object sender, ReadableItemRowChangeEvent e);
+        
+        public delegate void RespawnPointRowChangeEventHandler(object sender, RespawnPointRowChangeEvent e);
+        
+        public delegate void SkillEnablesSkillRowChangeEventHandler(object sender, SkillEnablesSkillRowChangeEvent e);
         
         public delegate void SpecialisationEnablesSkillRowChangeEventHandler(object sender, SpecialisationEnablesSkillRowChangeEvent e);
         
@@ -1092,53 +1280,5881 @@ namespace Strive.Multiverse {
         
         public delegate void WieldableItemRowChangeEventHandler(object sender, WieldableItemRowChangeEvent e);
         
-        public delegate void PhysicalObjectRowChangeEventHandler(object sender, PhysicalObjectRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class AreaDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnAreaID;
+            
+            private DataColumn columnWorldID;
+            
+            private DataColumn columnAreaName;
+            
+            private DataColumn columnLowX;
+            
+            private DataColumn columnLowY;
+            
+            private DataColumn columnLowZ;
+            
+            private DataColumn columnHighX;
+            
+            private DataColumn columnHighY;
+            
+            private DataColumn columnHighZ;
+            
+            private DataColumn columnControllingClan;
+            
+            private DataColumn columnDescription;
+            
+            internal AreaDataTable() : 
+                    base("Area") {
+                this.InitClass();
+            }
+            
+            internal AreaDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn AreaIDColumn {
+                get {
+                    return this.columnAreaID;
+                }
+            }
+            
+            internal DataColumn WorldIDColumn {
+                get {
+                    return this.columnWorldID;
+                }
+            }
+            
+            internal DataColumn AreaNameColumn {
+                get {
+                    return this.columnAreaName;
+                }
+            }
+            
+            internal DataColumn LowXColumn {
+                get {
+                    return this.columnLowX;
+                }
+            }
+            
+            internal DataColumn LowYColumn {
+                get {
+                    return this.columnLowY;
+                }
+            }
+            
+            internal DataColumn LowZColumn {
+                get {
+                    return this.columnLowZ;
+                }
+            }
+            
+            internal DataColumn HighXColumn {
+                get {
+                    return this.columnHighX;
+                }
+            }
+            
+            internal DataColumn HighYColumn {
+                get {
+                    return this.columnHighY;
+                }
+            }
+            
+            internal DataColumn HighZColumn {
+                get {
+                    return this.columnHighZ;
+                }
+            }
+            
+            internal DataColumn ControllingClanColumn {
+                get {
+                    return this.columnControllingClan;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public AreaRow this[int index] {
+                get {
+                    return ((AreaRow)(this.Rows[index]));
+                }
+            }
+            
+            public event AreaRowChangeEventHandler AreaRowChanged;
+            
+            public event AreaRowChangeEventHandler AreaRowChanging;
+            
+            public event AreaRowChangeEventHandler AreaRowDeleted;
+            
+            public event AreaRowChangeEventHandler AreaRowDeleting;
+            
+            public void AddAreaRow(AreaRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public AreaRow AddAreaRow(int AreaID, int WorldID, string AreaName, int LowX, int LowY, int LowZ, int HighX, int HighY, int HighZ, int ControllingClan, string Description) {
+                AreaRow rowAreaRow = ((AreaRow)(this.NewRow()));
+                rowAreaRow.ItemArray = new object[] {
+                        AreaID,
+                        WorldID,
+                        AreaName,
+                        LowX,
+                        LowY,
+                        LowZ,
+                        HighX,
+                        HighY,
+                        HighZ,
+                        ControllingClan,
+                        Description};
+                this.Rows.Add(rowAreaRow);
+                return rowAreaRow;
+            }
+            
+            public AreaRow FindByAreaID(int AreaID) {
+                return ((AreaRow)(this.Rows.Find(new object[] {
+                            AreaID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                AreaDataTable cln = ((AreaDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new AreaDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnAreaID = this.Columns["AreaID"];
+                this.columnWorldID = this.Columns["WorldID"];
+                this.columnAreaName = this.Columns["AreaName"];
+                this.columnLowX = this.Columns["LowX"];
+                this.columnLowY = this.Columns["LowY"];
+                this.columnLowZ = this.Columns["LowZ"];
+                this.columnHighX = this.Columns["HighX"];
+                this.columnHighY = this.Columns["HighY"];
+                this.columnHighZ = this.Columns["HighZ"];
+                this.columnControllingClan = this.Columns["ControllingClan"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnAreaID = new DataColumn("AreaID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnAreaID);
+                this.columnWorldID = new DataColumn("WorldID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnWorldID);
+                this.columnAreaName = new DataColumn("AreaName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnAreaName);
+                this.columnLowX = new DataColumn("LowX", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnLowX);
+                this.columnLowY = new DataColumn("LowY", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnLowY);
+                this.columnLowZ = new DataColumn("LowZ", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnLowZ);
+                this.columnHighX = new DataColumn("HighX", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnHighX);
+                this.columnHighY = new DataColumn("HighY", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnHighY);
+                this.columnHighZ = new DataColumn("HighZ", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnHighZ);
+                this.columnControllingClan = new DataColumn("ControllingClan", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnControllingClan);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey1", new DataColumn[] {
+                                this.columnAreaID}, true));
+                this.columnAreaID.AllowDBNull = false;
+                this.columnAreaID.Unique = true;
+                this.columnWorldID.AllowDBNull = false;
+                this.columnAreaName.AllowDBNull = false;
+                this.columnLowX.AllowDBNull = false;
+                this.columnLowY.AllowDBNull = false;
+                this.columnLowZ.AllowDBNull = false;
+                this.columnHighX.AllowDBNull = false;
+                this.columnHighY.AllowDBNull = false;
+                this.columnHighZ.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public AreaRow NewAreaRow() {
+                return ((AreaRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new AreaRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(AreaRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AreaRowChanged != null)) {
+                    this.AreaRowChanged(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AreaRowChanging != null)) {
+                    this.AreaRowChanging(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AreaRowDeleted != null)) {
+                    this.AreaRowDeleted(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AreaRowDeleting != null)) {
+                    this.AreaRowDeleting(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveAreaRow(AreaRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void WorldRowChangeEventHandler(object sender, WorldRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class AreaRow : DataRow {
+            
+            private AreaDataTable tableArea;
+            
+            internal AreaRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableArea = ((AreaDataTable)(this.Table));
+            }
+            
+            public int AreaID {
+                get {
+                    return ((int)(this[this.tableArea.AreaIDColumn]));
+                }
+                set {
+                    this[this.tableArea.AreaIDColumn] = value;
+                }
+            }
+            
+            public int WorldID {
+                get {
+                    return ((int)(this[this.tableArea.WorldIDColumn]));
+                }
+                set {
+                    this[this.tableArea.WorldIDColumn] = value;
+                }
+            }
+            
+            public string AreaName {
+                get {
+                    return ((string)(this[this.tableArea.AreaNameColumn]));
+                }
+                set {
+                    this[this.tableArea.AreaNameColumn] = value;
+                }
+            }
+            
+            public int LowX {
+                get {
+                    return ((int)(this[this.tableArea.LowXColumn]));
+                }
+                set {
+                    this[this.tableArea.LowXColumn] = value;
+                }
+            }
+            
+            public int LowY {
+                get {
+                    return ((int)(this[this.tableArea.LowYColumn]));
+                }
+                set {
+                    this[this.tableArea.LowYColumn] = value;
+                }
+            }
+            
+            public int LowZ {
+                get {
+                    return ((int)(this[this.tableArea.LowZColumn]));
+                }
+                set {
+                    this[this.tableArea.LowZColumn] = value;
+                }
+            }
+            
+            public int HighX {
+                get {
+                    return ((int)(this[this.tableArea.HighXColumn]));
+                }
+                set {
+                    this[this.tableArea.HighXColumn] = value;
+                }
+            }
+            
+            public int HighY {
+                get {
+                    return ((int)(this[this.tableArea.HighYColumn]));
+                }
+                set {
+                    this[this.tableArea.HighYColumn] = value;
+                }
+            }
+            
+            public int HighZ {
+                get {
+                    return ((int)(this[this.tableArea.HighZColumn]));
+                }
+                set {
+                    this[this.tableArea.HighZColumn] = value;
+                }
+            }
+            
+            public int ControllingClan {
+                get {
+                    try {
+                        return ((int)(this[this.tableArea.ControllingClanColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableArea.ControllingClanColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableArea.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableArea.DescriptionColumn] = value;
+                }
+            }
+            
+            public bool IsControllingClanNull() {
+                return this.IsNull(this.tableArea.ControllingClanColumn);
+            }
+            
+            public void SetControllingClanNull() {
+                this[this.tableArea.ControllingClanColumn] = System.Convert.DBNull;
+            }
+        }
         
-        public delegate void ReadableItemRowChangeEventHandler(object sender, ReadableItemRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class AreaRowChangeEvent : EventArgs {
+            
+            private AreaRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public AreaRowChangeEvent(AreaRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public AreaRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
-        public delegate void JunkItemRowChangeEventHandler(object sender, JunkItemRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class WorldDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnWorldID;
+            
+            private DataColumn columnWorldName;
+            
+            private DataColumn columnDescription;
+            
+            internal WorldDataTable() : 
+                    base("World") {
+                this.InitClass();
+            }
+            
+            internal WorldDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn WorldIDColumn {
+                get {
+                    return this.columnWorldID;
+                }
+            }
+            
+            internal DataColumn WorldNameColumn {
+                get {
+                    return this.columnWorldName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public WorldRow this[int index] {
+                get {
+                    return ((WorldRow)(this.Rows[index]));
+                }
+            }
+            
+            public event WorldRowChangeEventHandler WorldRowChanged;
+            
+            public event WorldRowChangeEventHandler WorldRowChanging;
+            
+            public event WorldRowChangeEventHandler WorldRowDeleted;
+            
+            public event WorldRowChangeEventHandler WorldRowDeleting;
+            
+            public void AddWorldRow(WorldRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public WorldRow AddWorldRow(int WorldID, string WorldName, string Description) {
+                WorldRow rowWorldRow = ((WorldRow)(this.NewRow()));
+                rowWorldRow.ItemArray = new object[] {
+                        WorldID,
+                        WorldName,
+                        Description};
+                this.Rows.Add(rowWorldRow);
+                return rowWorldRow;
+            }
+            
+            public WorldRow FindByWorldID(int WorldID) {
+                return ((WorldRow)(this.Rows.Find(new object[] {
+                            WorldID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                WorldDataTable cln = ((WorldDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new WorldDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnWorldID = this.Columns["WorldID"];
+                this.columnWorldName = this.Columns["WorldName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnWorldID = new DataColumn("WorldID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnWorldID);
+                this.columnWorldName = new DataColumn("WorldName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnWorldName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey2", new DataColumn[] {
+                                this.columnWorldID}, true));
+                this.columnWorldID.AllowDBNull = false;
+                this.columnWorldID.Unique = true;
+                this.columnWorldName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public WorldRow NewWorldRow() {
+                return ((WorldRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new WorldRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(WorldRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.WorldRowChanged != null)) {
+                    this.WorldRowChanged(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.WorldRowChanging != null)) {
+                    this.WorldRowChanging(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.WorldRowDeleted != null)) {
+                    this.WorldRowDeleted(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.WorldRowDeleting != null)) {
+                    this.WorldRowDeleting(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveWorldRow(WorldRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void EnumActivationTypeRowChangeEventHandler(object sender, EnumActivationTypeRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class WorldRow : DataRow {
+            
+            private WorldDataTable tableWorld;
+            
+            internal WorldRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableWorld = ((WorldDataTable)(this.Table));
+            }
+            
+            public int WorldID {
+                get {
+                    return ((int)(this[this.tableWorld.WorldIDColumn]));
+                }
+                set {
+                    this[this.tableWorld.WorldIDColumn] = value;
+                }
+            }
+            
+            public string WorldName {
+                get {
+                    return ((string)(this[this.tableWorld.WorldNameColumn]));
+                }
+                set {
+                    this[this.tableWorld.WorldNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableWorld.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableWorld.DescriptionColumn] = value;
+                }
+            }
+        }
         
-        public delegate void EnumCommandRowChangeEventHandler(object sender, EnumCommandRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class WorldRowChangeEvent : EventArgs {
+            
+            private WorldRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public WorldRowChangeEvent(WorldRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public WorldRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
-        public delegate void EnumEmoteRowChangeEventHandler(object sender, EnumEmoteRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ClanDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnClanID;
+            
+            private DataColumn columnClanName;
+            
+            private DataColumn columnGold;
+            
+            private DataColumn columnQuoteID;
+            
+            private DataColumn columnDescription;
+            
+            internal ClanDataTable() : 
+                    base("Clan") {
+                this.InitClass();
+            }
+            
+            internal ClanDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn ClanIDColumn {
+                get {
+                    return this.columnClanID;
+                }
+            }
+            
+            internal DataColumn ClanNameColumn {
+                get {
+                    return this.columnClanName;
+                }
+            }
+            
+            internal DataColumn GoldColumn {
+                get {
+                    return this.columnGold;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public ClanRow this[int index] {
+                get {
+                    return ((ClanRow)(this.Rows[index]));
+                }
+            }
+            
+            public event ClanRowChangeEventHandler ClanRowChanged;
+            
+            public event ClanRowChangeEventHandler ClanRowChanging;
+            
+            public event ClanRowChangeEventHandler ClanRowDeleted;
+            
+            public event ClanRowChangeEventHandler ClanRowDeleting;
+            
+            public void AddClanRow(ClanRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public ClanRow AddClanRow(int ClanID, string ClanName, int Gold, int QuoteID, string Description) {
+                ClanRow rowClanRow = ((ClanRow)(this.NewRow()));
+                rowClanRow.ItemArray = new object[] {
+                        ClanID,
+                        ClanName,
+                        Gold,
+                        QuoteID,
+                        Description};
+                this.Rows.Add(rowClanRow);
+                return rowClanRow;
+            }
+            
+            public ClanRow FindByClanID(int ClanID) {
+                return ((ClanRow)(this.Rows.Find(new object[] {
+                            ClanID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                ClanDataTable cln = ((ClanDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new ClanDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnClanID = this.Columns["ClanID"];
+                this.columnClanName = this.Columns["ClanName"];
+                this.columnGold = this.Columns["Gold"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnClanID = new DataColumn("ClanID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnClanID);
+                this.columnClanName = new DataColumn("ClanName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnClanName);
+                this.columnGold = new DataColumn("Gold", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnGold);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey3", new DataColumn[] {
+                                this.columnClanID}, true));
+                this.columnClanID.AllowDBNull = false;
+                this.columnClanID.Unique = true;
+                this.columnClanName.AllowDBNull = false;
+                this.columnGold.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public ClanRow NewClanRow() {
+                return ((ClanRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new ClanRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(ClanRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ClanRowChanged != null)) {
+                    this.ClanRowChanged(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ClanRowChanging != null)) {
+                    this.ClanRowChanging(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ClanRowDeleted != null)) {
+                    this.ClanRowDeleted(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ClanRowDeleting != null)) {
+                    this.ClanRowDeleting(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveClanRow(ClanRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void RaceHasEmoteRowChangeEventHandler(object sender, RaceHasEmoteRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ClanRow : DataRow {
+            
+            private ClanDataTable tableClan;
+            
+            internal ClanRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableClan = ((ClanDataTable)(this.Table));
+            }
+            
+            public int ClanID {
+                get {
+                    return ((int)(this[this.tableClan.ClanIDColumn]));
+                }
+                set {
+                    this[this.tableClan.ClanIDColumn] = value;
+                }
+            }
+            
+            public string ClanName {
+                get {
+                    return ((string)(this[this.tableClan.ClanNameColumn]));
+                }
+                set {
+                    this[this.tableClan.ClanNameColumn] = value;
+                }
+            }
+            
+            public int Gold {
+                get {
+                    return ((int)(this[this.tableClan.GoldColumn]));
+                }
+                set {
+                    this[this.tableClan.GoldColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableClan.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableClan.QuoteIDColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableClan.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableClan.DescriptionColumn] = value;
+                }
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableClan.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableClan.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
         
-        public delegate void MobileHasClanRankRowChangeEventHandler(object sender, MobileHasClanRankRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ClanRowChangeEvent : EventArgs {
+            
+            private ClanRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public ClanRowChangeEvent(ClanRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public ClanRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
-        public delegate void MobilePossesableByPlayerRowChangeEventHandler(object sender, MobilePossesableByPlayerRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ClanRankDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnClanID;
+            
+            private DataColumn columnRank;
+            
+            private DataColumn columnRankName;
+            
+            private DataColumn columnSkillID;
+            
+            private DataColumn columnQuoteID;
+            
+            private DataColumn columnDescription;
+            
+            internal ClanRankDataTable() : 
+                    base("ClanRank") {
+                this.InitClass();
+            }
+            
+            internal ClanRankDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn ClanIDColumn {
+                get {
+                    return this.columnClanID;
+                }
+            }
+            
+            internal DataColumn RankColumn {
+                get {
+                    return this.columnRank;
+                }
+            }
+            
+            internal DataColumn RankNameColumn {
+                get {
+                    return this.columnRankName;
+                }
+            }
+            
+            internal DataColumn SkillIDColumn {
+                get {
+                    return this.columnSkillID;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public ClanRankRow this[int index] {
+                get {
+                    return ((ClanRankRow)(this.Rows[index]));
+                }
+            }
+            
+            public event ClanRankRowChangeEventHandler ClanRankRowChanged;
+            
+            public event ClanRankRowChangeEventHandler ClanRankRowChanging;
+            
+            public event ClanRankRowChangeEventHandler ClanRankRowDeleted;
+            
+            public event ClanRankRowChangeEventHandler ClanRankRowDeleting;
+            
+            public void AddClanRankRow(ClanRankRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public ClanRankRow AddClanRankRow(int ClanID, int Rank, string RankName, int SkillID, int QuoteID, string Description) {
+                ClanRankRow rowClanRankRow = ((ClanRankRow)(this.NewRow()));
+                rowClanRankRow.ItemArray = new object[] {
+                        ClanID,
+                        Rank,
+                        RankName,
+                        SkillID,
+                        QuoteID,
+                        Description};
+                this.Rows.Add(rowClanRankRow);
+                return rowClanRankRow;
+            }
+            
+            public ClanRankRow FindByClanIDRank(int ClanID, int Rank) {
+                return ((ClanRankRow)(this.Rows.Find(new object[] {
+                            ClanID,
+                            Rank})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                ClanRankDataTable cln = ((ClanRankDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new ClanRankDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnClanID = this.Columns["ClanID"];
+                this.columnRank = this.Columns["Rank"];
+                this.columnRankName = this.Columns["RankName"];
+                this.columnSkillID = this.Columns["SkillID"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnClanID = new DataColumn("ClanID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnClanID);
+                this.columnRank = new DataColumn("Rank", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnRank);
+                this.columnRankName = new DataColumn("RankName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnRankName);
+                this.columnSkillID = new DataColumn("SkillID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnSkillID);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey4", new DataColumn[] {
+                                this.columnClanID,
+                                this.columnRank}, true));
+                this.columnClanID.AllowDBNull = false;
+                this.columnRank.AllowDBNull = false;
+                this.columnRankName.AllowDBNull = false;
+                this.columnSkillID.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public ClanRankRow NewClanRankRow() {
+                return ((ClanRankRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new ClanRankRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(ClanRankRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ClanRankRowChanged != null)) {
+                    this.ClanRankRowChanged(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ClanRankRowChanging != null)) {
+                    this.ClanRankRowChanging(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ClanRankRowDeleted != null)) {
+                    this.ClanRankRowDeleted(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ClanRankRowDeleting != null)) {
+                    this.ClanRankRowDeleting(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveClanRankRow(ClanRankRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void PlayerRowChangeEventHandler(object sender, PlayerRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ClanRankRow : DataRow {
+            
+            private ClanRankDataTable tableClanRank;
+            
+            internal ClanRankRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableClanRank = ((ClanRankDataTable)(this.Table));
+            }
+            
+            public int ClanID {
+                get {
+                    return ((int)(this[this.tableClanRank.ClanIDColumn]));
+                }
+                set {
+                    this[this.tableClanRank.ClanIDColumn] = value;
+                }
+            }
+            
+            public int Rank {
+                get {
+                    return ((int)(this[this.tableClanRank.RankColumn]));
+                }
+                set {
+                    this[this.tableClanRank.RankColumn] = value;
+                }
+            }
+            
+            public string RankName {
+                get {
+                    return ((string)(this[this.tableClanRank.RankNameColumn]));
+                }
+                set {
+                    this[this.tableClanRank.RankNameColumn] = value;
+                }
+            }
+            
+            public int SkillID {
+                get {
+                    return ((int)(this[this.tableClanRank.SkillIDColumn]));
+                }
+                set {
+                    this[this.tableClanRank.SkillIDColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableClanRank.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableClanRank.QuoteIDColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableClanRank.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableClanRank.DescriptionColumn] = value;
+                }
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableClanRank.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableClanRank.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
         
-        public delegate void InventoryRowChangeEventHandler(object sender, InventoryRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ClanRankRowChangeEvent : EventArgs {
+            
+            private ClanRankRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public ClanRankRowChangeEvent(ClanRankRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public ClanRankRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
-        public delegate void RespawnPointRowChangeEventHandler(object sender, RespawnPointRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class CreatorDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnCreatorID;
+            
+            private DataColumn columnCreatorName;
+            
+            private DataColumn columnAge;
+            
+            private DataColumn columnFirstName;
+            
+            private DataColumn columnSurname;
+            
+            private DataColumn columnEmail;
+            
+            private DataColumn columnEnumSexID;
+            
+            private DataColumn columnComment;
+            
+            internal CreatorDataTable() : 
+                    base("Creator") {
+                this.InitClass();
+            }
+            
+            internal CreatorDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn CreatorIDColumn {
+                get {
+                    return this.columnCreatorID;
+                }
+            }
+            
+            internal DataColumn CreatorNameColumn {
+                get {
+                    return this.columnCreatorName;
+                }
+            }
+            
+            internal DataColumn AgeColumn {
+                get {
+                    return this.columnAge;
+                }
+            }
+            
+            internal DataColumn FirstNameColumn {
+                get {
+                    return this.columnFirstName;
+                }
+            }
+            
+            internal DataColumn SurnameColumn {
+                get {
+                    return this.columnSurname;
+                }
+            }
+            
+            internal DataColumn EmailColumn {
+                get {
+                    return this.columnEmail;
+                }
+            }
+            
+            internal DataColumn EnumSexIDColumn {
+                get {
+                    return this.columnEnumSexID;
+                }
+            }
+            
+            internal DataColumn CommentColumn {
+                get {
+                    return this.columnComment;
+                }
+            }
+            
+            public CreatorRow this[int index] {
+                get {
+                    return ((CreatorRow)(this.Rows[index]));
+                }
+            }
+            
+            public event CreatorRowChangeEventHandler CreatorRowChanged;
+            
+            public event CreatorRowChangeEventHandler CreatorRowChanging;
+            
+            public event CreatorRowChangeEventHandler CreatorRowDeleted;
+            
+            public event CreatorRowChangeEventHandler CreatorRowDeleting;
+            
+            public void AddCreatorRow(CreatorRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public CreatorRow AddCreatorRow(string CreatorName, int Age, string FirstName, string Surname, string Email, int EnumSexID, string Comment) {
+                CreatorRow rowCreatorRow = ((CreatorRow)(this.NewRow()));
+                rowCreatorRow.ItemArray = new object[] {
+                        null,
+                        CreatorName,
+                        Age,
+                        FirstName,
+                        Surname,
+                        Email,
+                        EnumSexID,
+                        Comment};
+                this.Rows.Add(rowCreatorRow);
+                return rowCreatorRow;
+            }
+            
+            public CreatorRow FindByCreatorID(int CreatorID) {
+                return ((CreatorRow)(this.Rows.Find(new object[] {
+                            CreatorID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                CreatorDataTable cln = ((CreatorDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new CreatorDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnCreatorID = this.Columns["CreatorID"];
+                this.columnCreatorName = this.Columns["CreatorName"];
+                this.columnAge = this.Columns["Age"];
+                this.columnFirstName = this.Columns["FirstName"];
+                this.columnSurname = this.Columns["Surname"];
+                this.columnEmail = this.Columns["Email"];
+                this.columnEnumSexID = this.Columns["EnumSexID"];
+                this.columnComment = this.Columns["Comment"];
+            }
+            
+            private void InitClass() {
+                this.columnCreatorID = new DataColumn("CreatorID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnCreatorID);
+                this.columnCreatorName = new DataColumn("CreatorName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnCreatorName);
+                this.columnAge = new DataColumn("Age", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnAge);
+                this.columnFirstName = new DataColumn("FirstName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnFirstName);
+                this.columnSurname = new DataColumn("Surname", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnSurname);
+                this.columnEmail = new DataColumn("Email", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEmail);
+                this.columnEnumSexID = new DataColumn("EnumSexID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSexID);
+                this.columnComment = new DataColumn("Comment", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnComment);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey5", new DataColumn[] {
+                                this.columnCreatorID}, true));
+                this.columnCreatorID.AutoIncrement = true;
+                this.columnCreatorID.AllowDBNull = false;
+                this.columnCreatorID.ReadOnly = true;
+                this.columnCreatorID.Unique = true;
+                this.columnCreatorName.AllowDBNull = false;
+                this.columnAge.AllowDBNull = false;
+                this.columnEmail.AllowDBNull = false;
+            }
+            
+            public CreatorRow NewCreatorRow() {
+                return ((CreatorRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new CreatorRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(CreatorRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.CreatorRowChanged != null)) {
+                    this.CreatorRowChanged(this, new CreatorRowChangeEvent(((CreatorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.CreatorRowChanging != null)) {
+                    this.CreatorRowChanging(this, new CreatorRowChangeEvent(((CreatorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.CreatorRowDeleted != null)) {
+                    this.CreatorRowDeleted(this, new CreatorRowChangeEvent(((CreatorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.CreatorRowDeleting != null)) {
+                    this.CreatorRowDeleting(this, new CreatorRowChangeEvent(((CreatorRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveCreatorRow(CreatorRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void AreaRowChangeEventHandler(object sender, AreaRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class CreatorRow : DataRow {
+            
+            private CreatorDataTable tableCreator;
+            
+            internal CreatorRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableCreator = ((CreatorDataTable)(this.Table));
+            }
+            
+            public int CreatorID {
+                get {
+                    return ((int)(this[this.tableCreator.CreatorIDColumn]));
+                }
+                set {
+                    this[this.tableCreator.CreatorIDColumn] = value;
+                }
+            }
+            
+            public string CreatorName {
+                get {
+                    return ((string)(this[this.tableCreator.CreatorNameColumn]));
+                }
+                set {
+                    this[this.tableCreator.CreatorNameColumn] = value;
+                }
+            }
+            
+            public int Age {
+                get {
+                    return ((int)(this[this.tableCreator.AgeColumn]));
+                }
+                set {
+                    this[this.tableCreator.AgeColumn] = value;
+                }
+            }
+            
+            public string FirstName {
+                get {
+                    try {
+                        return ((string)(this[this.tableCreator.FirstNameColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCreator.FirstNameColumn] = value;
+                }
+            }
+            
+            public string Surname {
+                get {
+                    try {
+                        return ((string)(this[this.tableCreator.SurnameColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCreator.SurnameColumn] = value;
+                }
+            }
+            
+            public string Email {
+                get {
+                    return ((string)(this[this.tableCreator.EmailColumn]));
+                }
+                set {
+                    this[this.tableCreator.EmailColumn] = value;
+                }
+            }
+            
+            public int EnumSexID {
+                get {
+                    try {
+                        return ((int)(this[this.tableCreator.EnumSexIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCreator.EnumSexIDColumn] = value;
+                }
+            }
+            
+            public string Comment {
+                get {
+                    try {
+                        return ((string)(this[this.tableCreator.CommentColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCreator.CommentColumn] = value;
+                }
+            }
+            
+            public bool IsFirstNameNull() {
+                return this.IsNull(this.tableCreator.FirstNameColumn);
+            }
+            
+            public void SetFirstNameNull() {
+                this[this.tableCreator.FirstNameColumn] = System.Convert.DBNull;
+            }
+            
+            public bool IsSurnameNull() {
+                return this.IsNull(this.tableCreator.SurnameColumn);
+            }
+            
+            public void SetSurnameNull() {
+                this[this.tableCreator.SurnameColumn] = System.Convert.DBNull;
+            }
+            
+            public bool IsEnumSexIDNull() {
+                return this.IsNull(this.tableCreator.EnumSexIDColumn);
+            }
+            
+            public void SetEnumSexIDNull() {
+                this[this.tableCreator.EnumSexIDColumn] = System.Convert.DBNull;
+            }
+            
+            public bool IsCommentNull() {
+                return this.IsNull(this.tableCreator.CommentColumn);
+            }
+            
+            public void SetCommentNull() {
+                this[this.tableCreator.CommentColumn] = System.Convert.DBNull;
+            }
+        }
         
-        public delegate void ClanRowChangeEventHandler(object sender, ClanRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class CreatorRowChangeEvent : EventArgs {
+            
+            private CreatorRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public CreatorRowChangeEvent(CreatorRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public CreatorRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
-        public delegate void ClanRankRowChangeEventHandler(object sender, ClanRankRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumActivationTypeDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumActivationTypeID;
+            
+            private DataColumn columnEnumActivationName;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumActivationTypeDataTable() : 
+                    base("EnumActivationType") {
+                this.InitClass();
+            }
+            
+            internal EnumActivationTypeDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumActivationTypeIDColumn {
+                get {
+                    return this.columnEnumActivationTypeID;
+                }
+            }
+            
+            internal DataColumn EnumActivationNameColumn {
+                get {
+                    return this.columnEnumActivationName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumActivationTypeRow this[int index] {
+                get {
+                    return ((EnumActivationTypeRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowChanged;
+            
+            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowChanging;
+            
+            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowDeleted;
+            
+            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowDeleting;
+            
+            public void AddEnumActivationTypeRow(EnumActivationTypeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumActivationTypeRow AddEnumActivationTypeRow(int EnumActivationTypeID, string EnumActivationName, string Description) {
+                EnumActivationTypeRow rowEnumActivationTypeRow = ((EnumActivationTypeRow)(this.NewRow()));
+                rowEnumActivationTypeRow.ItemArray = new object[] {
+                        EnumActivationTypeID,
+                        EnumActivationName,
+                        Description};
+                this.Rows.Add(rowEnumActivationTypeRow);
+                return rowEnumActivationTypeRow;
+            }
+            
+            public EnumActivationTypeRow FindByEnumActivationTypeID(int EnumActivationTypeID) {
+                return ((EnumActivationTypeRow)(this.Rows.Find(new object[] {
+                            EnumActivationTypeID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumActivationTypeDataTable cln = ((EnumActivationTypeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumActivationTypeDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumActivationTypeID = this.Columns["EnumActivationTypeID"];
+                this.columnEnumActivationName = this.Columns["EnumActivationName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumActivationTypeID = new DataColumn("EnumActivationTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumActivationTypeID);
+                this.columnEnumActivationName = new DataColumn("EnumActivationName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumActivationName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey6", new DataColumn[] {
+                                this.columnEnumActivationTypeID}, true));
+                this.columnEnumActivationTypeID.AllowDBNull = false;
+                this.columnEnumActivationTypeID.Unique = true;
+                this.columnEnumActivationName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumActivationTypeRow NewEnumActivationTypeRow() {
+                return ((EnumActivationTypeRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumActivationTypeRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumActivationTypeRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumActivationTypeRowChanged != null)) {
+                    this.EnumActivationTypeRowChanged(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumActivationTypeRowChanging != null)) {
+                    this.EnumActivationTypeRowChanging(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumActivationTypeRowDeleted != null)) {
+                    this.EnumActivationTypeRowDeleted(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumActivationTypeRowDeleting != null)) {
+                    this.EnumActivationTypeRowDeleting(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumActivationTypeRow(EnumActivationTypeRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void EnumDamageTypeRowChangeEventHandler(object sender, EnumDamageTypeRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumActivationTypeRow : DataRow {
+            
+            private EnumActivationTypeDataTable tableEnumActivationType;
+            
+            internal EnumActivationTypeRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumActivationType = ((EnumActivationTypeDataTable)(this.Table));
+            }
+            
+            public int EnumActivationTypeID {
+                get {
+                    return ((int)(this[this.tableEnumActivationType.EnumActivationTypeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumActivationType.EnumActivationTypeIDColumn] = value;
+                }
+            }
+            
+            public string EnumActivationName {
+                get {
+                    return ((string)(this[this.tableEnumActivationType.EnumActivationNameColumn]));
+                }
+                set {
+                    this[this.tableEnumActivationType.EnumActivationNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumActivationType.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumActivationType.DescriptionColumn] = value;
+                }
+            }
+        }
         
-        public delegate void RaceRowChangeEventHandler(object sender, RaceRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumActivationTypeRowChangeEvent : EventArgs {
+            
+            private EnumActivationTypeRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumActivationTypeRowChangeEvent(EnumActivationTypeRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumActivationTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
-        public delegate void EnumLiquidTypeRowChangeEventHandler(object sender, EnumLiquidTypeRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumCommandDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumCommandID;
+            
+            private DataColumn columnEnumCommandName;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumCommandDataTable() : 
+                    base("EnumCommand") {
+                this.InitClass();
+            }
+            
+            internal EnumCommandDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumCommandIDColumn {
+                get {
+                    return this.columnEnumCommandID;
+                }
+            }
+            
+            internal DataColumn EnumCommandNameColumn {
+                get {
+                    return this.columnEnumCommandName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumCommandRow this[int index] {
+                get {
+                    return ((EnumCommandRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumCommandRowChangeEventHandler EnumCommandRowChanged;
+            
+            public event EnumCommandRowChangeEventHandler EnumCommandRowChanging;
+            
+            public event EnumCommandRowChangeEventHandler EnumCommandRowDeleted;
+            
+            public event EnumCommandRowChangeEventHandler EnumCommandRowDeleting;
+            
+            public void AddEnumCommandRow(EnumCommandRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumCommandRow AddEnumCommandRow(int EnumCommandID, string EnumCommandName, string Description) {
+                EnumCommandRow rowEnumCommandRow = ((EnumCommandRow)(this.NewRow()));
+                rowEnumCommandRow.ItemArray = new object[] {
+                        EnumCommandID,
+                        EnumCommandName,
+                        Description};
+                this.Rows.Add(rowEnumCommandRow);
+                return rowEnumCommandRow;
+            }
+            
+            public EnumCommandRow FindByEnumCommandID(int EnumCommandID) {
+                return ((EnumCommandRow)(this.Rows.Find(new object[] {
+                            EnumCommandID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumCommandDataTable cln = ((EnumCommandDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumCommandDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumCommandID = this.Columns["EnumCommandID"];
+                this.columnEnumCommandName = this.Columns["EnumCommandName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumCommandID = new DataColumn("EnumCommandID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumCommandID);
+                this.columnEnumCommandName = new DataColumn("EnumCommandName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumCommandName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey7", new DataColumn[] {
+                                this.columnEnumCommandID}, true));
+                this.columnEnumCommandID.AllowDBNull = false;
+                this.columnEnumCommandID.Unique = true;
+                this.columnEnumCommandName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumCommandRow NewEnumCommandRow() {
+                return ((EnumCommandRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumCommandRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumCommandRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumCommandRowChanged != null)) {
+                    this.EnumCommandRowChanged(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumCommandRowChanging != null)) {
+                    this.EnumCommandRowChanging(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumCommandRowDeleted != null)) {
+                    this.EnumCommandRowDeleted(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumCommandRowDeleting != null)) {
+                    this.EnumCommandRowDeleting(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumCommandRow(EnumCommandRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void EnumSizeRowChangeEventHandler(object sender, EnumSizeRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumCommandRow : DataRow {
+            
+            private EnumCommandDataTable tableEnumCommand;
+            
+            internal EnumCommandRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumCommand = ((EnumCommandDataTable)(this.Table));
+            }
+            
+            public int EnumCommandID {
+                get {
+                    return ((int)(this[this.tableEnumCommand.EnumCommandIDColumn]));
+                }
+                set {
+                    this[this.tableEnumCommand.EnumCommandIDColumn] = value;
+                }
+            }
+            
+            public string EnumCommandName {
+                get {
+                    return ((string)(this[this.tableEnumCommand.EnumCommandNameColumn]));
+                }
+                set {
+                    this[this.tableEnumCommand.EnumCommandNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumCommand.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumCommand.DescriptionColumn] = value;
+                }
+            }
+        }
         
-        public delegate void EnumSpecialisationRowChangeEventHandler(object sender, EnumSpecialisationRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumCommandRowChangeEvent : EventArgs {
+            
+            private EnumCommandRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumCommandRowChangeEvent(EnumCommandRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumCommandRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
-        public delegate void EnumTargetTypeRowChangeEventHandler(object sender, EnumTargetTypeRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumDamageTypeDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumDamageTypeID;
+            
+            private DataColumn columnEnumDamageTypeName;
+            
+            private DataColumn columnQuoteID;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumDamageTypeDataTable() : 
+                    base("EnumDamageType") {
+                this.InitClass();
+            }
+            
+            internal EnumDamageTypeDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumDamageTypeIDColumn {
+                get {
+                    return this.columnEnumDamageTypeID;
+                }
+            }
+            
+            internal DataColumn EnumDamageTypeNameColumn {
+                get {
+                    return this.columnEnumDamageTypeName;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumDamageTypeRow this[int index] {
+                get {
+                    return ((EnumDamageTypeRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowChanged;
+            
+            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowChanging;
+            
+            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowDeleted;
+            
+            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowDeleting;
+            
+            public void AddEnumDamageTypeRow(EnumDamageTypeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumDamageTypeRow AddEnumDamageTypeRow(int EnumDamageTypeID, string EnumDamageTypeName, int QuoteID, string Description) {
+                EnumDamageTypeRow rowEnumDamageTypeRow = ((EnumDamageTypeRow)(this.NewRow()));
+                rowEnumDamageTypeRow.ItemArray = new object[] {
+                        EnumDamageTypeID,
+                        EnumDamageTypeName,
+                        QuoteID,
+                        Description};
+                this.Rows.Add(rowEnumDamageTypeRow);
+                return rowEnumDamageTypeRow;
+            }
+            
+            public EnumDamageTypeRow FindByEnumDamageTypeID(int EnumDamageTypeID) {
+                return ((EnumDamageTypeRow)(this.Rows.Find(new object[] {
+                            EnumDamageTypeID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumDamageTypeDataTable cln = ((EnumDamageTypeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumDamageTypeDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumDamageTypeID = this.Columns["EnumDamageTypeID"];
+                this.columnEnumDamageTypeName = this.Columns["EnumDamageTypeName"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumDamageTypeID = new DataColumn("EnumDamageTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumDamageTypeID);
+                this.columnEnumDamageTypeName = new DataColumn("EnumDamageTypeName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumDamageTypeName);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey8", new DataColumn[] {
+                                this.columnEnumDamageTypeID}, true));
+                this.columnEnumDamageTypeID.AllowDBNull = false;
+                this.columnEnumDamageTypeID.Unique = true;
+                this.columnEnumDamageTypeName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumDamageTypeRow NewEnumDamageTypeRow() {
+                return ((EnumDamageTypeRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumDamageTypeRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumDamageTypeRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumDamageTypeRowChanged != null)) {
+                    this.EnumDamageTypeRowChanged(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumDamageTypeRowChanging != null)) {
+                    this.EnumDamageTypeRowChanging(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumDamageTypeRowDeleted != null)) {
+                    this.EnumDamageTypeRowDeleted(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumDamageTypeRowDeleting != null)) {
+                    this.EnumDamageTypeRowDeleting(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumDamageTypeRow(EnumDamageTypeRow row) {
+                this.Rows.Remove(row);
+            }
+        }
         
-        public delegate void EnumTerrainTypeRowChangeEventHandler(object sender, EnumTerrainTypeRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumDamageTypeRow : DataRow {
+            
+            private EnumDamageTypeDataTable tableEnumDamageType;
+            
+            internal EnumDamageTypeRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumDamageType = ((EnumDamageTypeDataTable)(this.Table));
+            }
+            
+            public int EnumDamageTypeID {
+                get {
+                    return ((int)(this[this.tableEnumDamageType.EnumDamageTypeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumDamageType.EnumDamageTypeIDColumn] = value;
+                }
+            }
+            
+            public string EnumDamageTypeName {
+                get {
+                    return ((string)(this[this.tableEnumDamageType.EnumDamageTypeNameColumn]));
+                }
+                set {
+                    this[this.tableEnumDamageType.EnumDamageTypeNameColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnumDamageType.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnumDamageType.QuoteIDColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumDamageType.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumDamageType.DescriptionColumn] = value;
+                }
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableEnumDamageType.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableEnumDamageType.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
         
-        public delegate void EnumWearLocationRowChangeEventHandler(object sender, EnumWearLocationRowChangeEvent e);
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumDamageTypeRowChangeEvent : EventArgs {
+            
+            private EnumDamageTypeRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumDamageTypeRowChangeEvent(EnumDamageTypeRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumDamageTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumEmoteDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumEmoteID;
+            
+            private DataColumn columnEnumName;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumEmoteDataTable() : 
+                    base("EnumEmote") {
+                this.InitClass();
+            }
+            
+            internal EnumEmoteDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumEmoteIDColumn {
+                get {
+                    return this.columnEnumEmoteID;
+                }
+            }
+            
+            internal DataColumn EnumNameColumn {
+                get {
+                    return this.columnEnumName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumEmoteRow this[int index] {
+                get {
+                    return ((EnumEmoteRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumEmoteRowChangeEventHandler EnumEmoteRowChanged;
+            
+            public event EnumEmoteRowChangeEventHandler EnumEmoteRowChanging;
+            
+            public event EnumEmoteRowChangeEventHandler EnumEmoteRowDeleted;
+            
+            public event EnumEmoteRowChangeEventHandler EnumEmoteRowDeleting;
+            
+            public void AddEnumEmoteRow(EnumEmoteRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumEmoteRow AddEnumEmoteRow(int EnumEmoteID, string EnumName, string Description) {
+                EnumEmoteRow rowEnumEmoteRow = ((EnumEmoteRow)(this.NewRow()));
+                rowEnumEmoteRow.ItemArray = new object[] {
+                        EnumEmoteID,
+                        EnumName,
+                        Description};
+                this.Rows.Add(rowEnumEmoteRow);
+                return rowEnumEmoteRow;
+            }
+            
+            public EnumEmoteRow FindByEnumEmoteID(int EnumEmoteID) {
+                return ((EnumEmoteRow)(this.Rows.Find(new object[] {
+                            EnumEmoteID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumEmoteDataTable cln = ((EnumEmoteDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumEmoteDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumEmoteID = this.Columns["EnumEmoteID"];
+                this.columnEnumName = this.Columns["EnumName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumEmoteID = new DataColumn("EnumEmoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumEmoteID);
+                this.columnEnumName = new DataColumn("EnumName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey9", new DataColumn[] {
+                                this.columnEnumEmoteID}, true));
+                this.columnEnumEmoteID.AllowDBNull = false;
+                this.columnEnumEmoteID.Unique = true;
+                this.columnEnumName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumEmoteRow NewEnumEmoteRow() {
+                return ((EnumEmoteRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumEmoteRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumEmoteRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumEmoteRowChanged != null)) {
+                    this.EnumEmoteRowChanged(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumEmoteRowChanging != null)) {
+                    this.EnumEmoteRowChanging(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumEmoteRowDeleted != null)) {
+                    this.EnumEmoteRowDeleted(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumEmoteRowDeleting != null)) {
+                    this.EnumEmoteRowDeleting(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumEmoteRow(EnumEmoteRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumEmoteRow : DataRow {
+            
+            private EnumEmoteDataTable tableEnumEmote;
+            
+            internal EnumEmoteRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumEmote = ((EnumEmoteDataTable)(this.Table));
+            }
+            
+            public int EnumEmoteID {
+                get {
+                    return ((int)(this[this.tableEnumEmote.EnumEmoteIDColumn]));
+                }
+                set {
+                    this[this.tableEnumEmote.EnumEmoteIDColumn] = value;
+                }
+            }
+            
+            public string EnumName {
+                get {
+                    return ((string)(this[this.tableEnumEmote.EnumNameColumn]));
+                }
+                set {
+                    this[this.tableEnumEmote.EnumNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumEmote.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumEmote.DescriptionColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumEmoteRowChangeEvent : EventArgs {
+            
+            private EnumEmoteRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumEmoteRowChangeEvent(EnumEmoteRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumEmoteRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumLiquidTypeDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumLiquidTypeID;
+            
+            private DataColumn columnEnumLiquidTypeName;
+            
+            private DataColumn columnQuoteID;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumLiquidTypeDataTable() : 
+                    base("EnumLiquidType") {
+                this.InitClass();
+            }
+            
+            internal EnumLiquidTypeDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumLiquidTypeIDColumn {
+                get {
+                    return this.columnEnumLiquidTypeID;
+                }
+            }
+            
+            internal DataColumn EnumLiquidTypeNameColumn {
+                get {
+                    return this.columnEnumLiquidTypeName;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumLiquidTypeRow this[int index] {
+                get {
+                    return ((EnumLiquidTypeRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowChanged;
+            
+            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowChanging;
+            
+            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowDeleted;
+            
+            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowDeleting;
+            
+            public void AddEnumLiquidTypeRow(EnumLiquidTypeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumLiquidTypeRow AddEnumLiquidTypeRow(int EnumLiquidTypeID, string EnumLiquidTypeName, int QuoteID, string Description) {
+                EnumLiquidTypeRow rowEnumLiquidTypeRow = ((EnumLiquidTypeRow)(this.NewRow()));
+                rowEnumLiquidTypeRow.ItemArray = new object[] {
+                        EnumLiquidTypeID,
+                        EnumLiquidTypeName,
+                        QuoteID,
+                        Description};
+                this.Rows.Add(rowEnumLiquidTypeRow);
+                return rowEnumLiquidTypeRow;
+            }
+            
+            public EnumLiquidTypeRow FindByEnumLiquidTypeID(int EnumLiquidTypeID) {
+                return ((EnumLiquidTypeRow)(this.Rows.Find(new object[] {
+                            EnumLiquidTypeID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumLiquidTypeDataTable cln = ((EnumLiquidTypeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumLiquidTypeDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumLiquidTypeID = this.Columns["EnumLiquidTypeID"];
+                this.columnEnumLiquidTypeName = this.Columns["EnumLiquidTypeName"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumLiquidTypeID = new DataColumn("EnumLiquidTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumLiquidTypeID);
+                this.columnEnumLiquidTypeName = new DataColumn("EnumLiquidTypeName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumLiquidTypeName);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey10", new DataColumn[] {
+                                this.columnEnumLiquidTypeID}, true));
+                this.columnEnumLiquidTypeID.AllowDBNull = false;
+                this.columnEnumLiquidTypeID.Unique = true;
+                this.columnEnumLiquidTypeName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumLiquidTypeRow NewEnumLiquidTypeRow() {
+                return ((EnumLiquidTypeRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumLiquidTypeRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumLiquidTypeRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumLiquidTypeRowChanged != null)) {
+                    this.EnumLiquidTypeRowChanged(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumLiquidTypeRowChanging != null)) {
+                    this.EnumLiquidTypeRowChanging(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumLiquidTypeRowDeleted != null)) {
+                    this.EnumLiquidTypeRowDeleted(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumLiquidTypeRowDeleting != null)) {
+                    this.EnumLiquidTypeRowDeleting(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumLiquidTypeRow(EnumLiquidTypeRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumLiquidTypeRow : DataRow {
+            
+            private EnumLiquidTypeDataTable tableEnumLiquidType;
+            
+            internal EnumLiquidTypeRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumLiquidType = ((EnumLiquidTypeDataTable)(this.Table));
+            }
+            
+            public int EnumLiquidTypeID {
+                get {
+                    return ((int)(this[this.tableEnumLiquidType.EnumLiquidTypeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumLiquidType.EnumLiquidTypeIDColumn] = value;
+                }
+            }
+            
+            public string EnumLiquidTypeName {
+                get {
+                    return ((string)(this[this.tableEnumLiquidType.EnumLiquidTypeNameColumn]));
+                }
+                set {
+                    this[this.tableEnumLiquidType.EnumLiquidTypeNameColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnumLiquidType.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnumLiquidType.QuoteIDColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumLiquidType.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumLiquidType.DescriptionColumn] = value;
+                }
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableEnumLiquidType.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableEnumLiquidType.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumLiquidTypeRowChangeEvent : EventArgs {
+            
+            private EnumLiquidTypeRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumLiquidTypeRowChangeEvent(EnumLiquidTypeRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumLiquidTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumMobileSizeDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumMobileSizeID;
+            
+            private DataColumn columnEnumMobileSizeName;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumMobileSizeDataTable() : 
+                    base("EnumMobileSize") {
+                this.InitClass();
+            }
+            
+            internal EnumMobileSizeDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumMobileSizeIDColumn {
+                get {
+                    return this.columnEnumMobileSizeID;
+                }
+            }
+            
+            internal DataColumn EnumMobileSizeNameColumn {
+                get {
+                    return this.columnEnumMobileSizeName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumMobileSizeRow this[int index] {
+                get {
+                    return ((EnumMobileSizeRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumMobileSizeRowChangeEventHandler EnumMobileSizeRowChanged;
+            
+            public event EnumMobileSizeRowChangeEventHandler EnumMobileSizeRowChanging;
+            
+            public event EnumMobileSizeRowChangeEventHandler EnumMobileSizeRowDeleted;
+            
+            public event EnumMobileSizeRowChangeEventHandler EnumMobileSizeRowDeleting;
+            
+            public void AddEnumMobileSizeRow(EnumMobileSizeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumMobileSizeRow AddEnumMobileSizeRow(int EnumMobileSizeID, string EnumMobileSizeName, string Description) {
+                EnumMobileSizeRow rowEnumMobileSizeRow = ((EnumMobileSizeRow)(this.NewRow()));
+                rowEnumMobileSizeRow.ItemArray = new object[] {
+                        EnumMobileSizeID,
+                        EnumMobileSizeName,
+                        Description};
+                this.Rows.Add(rowEnumMobileSizeRow);
+                return rowEnumMobileSizeRow;
+            }
+            
+            public EnumMobileSizeRow FindByEnumMobileSizeID(int EnumMobileSizeID) {
+                return ((EnumMobileSizeRow)(this.Rows.Find(new object[] {
+                            EnumMobileSizeID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumMobileSizeDataTable cln = ((EnumMobileSizeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumMobileSizeDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumMobileSizeID = this.Columns["EnumMobileSizeID"];
+                this.columnEnumMobileSizeName = this.Columns["EnumMobileSizeName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumMobileSizeID = new DataColumn("EnumMobileSizeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumMobileSizeID);
+                this.columnEnumMobileSizeName = new DataColumn("EnumMobileSizeName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumMobileSizeName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey11", new DataColumn[] {
+                                this.columnEnumMobileSizeID}, true));
+                this.columnEnumMobileSizeID.AllowDBNull = false;
+                this.columnEnumMobileSizeID.Unique = true;
+                this.columnEnumMobileSizeName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumMobileSizeRow NewEnumMobileSizeRow() {
+                return ((EnumMobileSizeRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumMobileSizeRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumMobileSizeRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumMobileSizeRowChanged != null)) {
+                    this.EnumMobileSizeRowChanged(this, new EnumMobileSizeRowChangeEvent(((EnumMobileSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumMobileSizeRowChanging != null)) {
+                    this.EnumMobileSizeRowChanging(this, new EnumMobileSizeRowChangeEvent(((EnumMobileSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumMobileSizeRowDeleted != null)) {
+                    this.EnumMobileSizeRowDeleted(this, new EnumMobileSizeRowChangeEvent(((EnumMobileSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumMobileSizeRowDeleting != null)) {
+                    this.EnumMobileSizeRowDeleting(this, new EnumMobileSizeRowChangeEvent(((EnumMobileSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumMobileSizeRow(EnumMobileSizeRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumMobileSizeRow : DataRow {
+            
+            private EnumMobileSizeDataTable tableEnumMobileSize;
+            
+            internal EnumMobileSizeRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumMobileSize = ((EnumMobileSizeDataTable)(this.Table));
+            }
+            
+            public int EnumMobileSizeID {
+                get {
+                    return ((int)(this[this.tableEnumMobileSize.EnumMobileSizeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumMobileSize.EnumMobileSizeIDColumn] = value;
+                }
+            }
+            
+            public string EnumMobileSizeName {
+                get {
+                    return ((string)(this[this.tableEnumMobileSize.EnumMobileSizeNameColumn]));
+                }
+                set {
+                    this[this.tableEnumMobileSize.EnumMobileSizeNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumMobileSize.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumMobileSize.DescriptionColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumMobileSizeRowChangeEvent : EventArgs {
+            
+            private EnumMobileSizeRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumMobileSizeRowChangeEvent(EnumMobileSizeRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumMobileSizeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumRaceDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumRaceID;
+            
+            private DataColumn columnEnumRaceName;
+            
+            private DataColumn columnSentient;
+            
+            private DataColumn columnDescription;
+            
+            private DataColumn columnEnumMobileSizeID;
+            
+            private DataColumn columnQuoteID;
+            
+            internal EnumRaceDataTable() : 
+                    base("EnumRace") {
+                this.InitClass();
+            }
+            
+            internal EnumRaceDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumRaceIDColumn {
+                get {
+                    return this.columnEnumRaceID;
+                }
+            }
+            
+            internal DataColumn EnumRaceNameColumn {
+                get {
+                    return this.columnEnumRaceName;
+                }
+            }
+            
+            internal DataColumn SentientColumn {
+                get {
+                    return this.columnSentient;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            internal DataColumn EnumMobileSizeIDColumn {
+                get {
+                    return this.columnEnumMobileSizeID;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            public EnumRaceRow this[int index] {
+                get {
+                    return ((EnumRaceRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumRaceRowChangeEventHandler EnumRaceRowChanged;
+            
+            public event EnumRaceRowChangeEventHandler EnumRaceRowChanging;
+            
+            public event EnumRaceRowChangeEventHandler EnumRaceRowDeleted;
+            
+            public event EnumRaceRowChangeEventHandler EnumRaceRowDeleting;
+            
+            public void AddEnumRaceRow(EnumRaceRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumRaceRow AddEnumRaceRow(int EnumRaceID, string EnumRaceName, bool Sentient, string Description, int EnumMobileSizeID, int QuoteID) {
+                EnumRaceRow rowEnumRaceRow = ((EnumRaceRow)(this.NewRow()));
+                rowEnumRaceRow.ItemArray = new object[] {
+                        EnumRaceID,
+                        EnumRaceName,
+                        Sentient,
+                        Description,
+                        EnumMobileSizeID,
+                        QuoteID};
+                this.Rows.Add(rowEnumRaceRow);
+                return rowEnumRaceRow;
+            }
+            
+            public EnumRaceRow FindByEnumRaceID(int EnumRaceID) {
+                return ((EnumRaceRow)(this.Rows.Find(new object[] {
+                            EnumRaceID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumRaceDataTable cln = ((EnumRaceDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumRaceDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumRaceID = this.Columns["EnumRaceID"];
+                this.columnEnumRaceName = this.Columns["EnumRaceName"];
+                this.columnSentient = this.Columns["Sentient"];
+                this.columnDescription = this.Columns["Description"];
+                this.columnEnumMobileSizeID = this.Columns["EnumMobileSizeID"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumRaceID = new DataColumn("EnumRaceID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumRaceID);
+                this.columnEnumRaceName = new DataColumn("EnumRaceName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumRaceName);
+                this.columnSentient = new DataColumn("Sentient", typeof(bool), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnSentient);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.columnEnumMobileSizeID = new DataColumn("EnumMobileSizeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumMobileSizeID);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey12", new DataColumn[] {
+                                this.columnEnumRaceID}, true));
+                this.columnEnumRaceID.AllowDBNull = false;
+                this.columnEnumRaceID.Unique = true;
+                this.columnEnumRaceName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+                this.columnEnumMobileSizeID.AllowDBNull = false;
+            }
+            
+            public EnumRaceRow NewEnumRaceRow() {
+                return ((EnumRaceRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumRaceRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumRaceRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumRaceRowChanged != null)) {
+                    this.EnumRaceRowChanged(this, new EnumRaceRowChangeEvent(((EnumRaceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumRaceRowChanging != null)) {
+                    this.EnumRaceRowChanging(this, new EnumRaceRowChangeEvent(((EnumRaceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumRaceRowDeleted != null)) {
+                    this.EnumRaceRowDeleted(this, new EnumRaceRowChangeEvent(((EnumRaceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumRaceRowDeleting != null)) {
+                    this.EnumRaceRowDeleting(this, new EnumRaceRowChangeEvent(((EnumRaceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumRaceRow(EnumRaceRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumRaceRow : DataRow {
+            
+            private EnumRaceDataTable tableEnumRace;
+            
+            internal EnumRaceRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumRace = ((EnumRaceDataTable)(this.Table));
+            }
+            
+            public int EnumRaceID {
+                get {
+                    return ((int)(this[this.tableEnumRace.EnumRaceIDColumn]));
+                }
+                set {
+                    this[this.tableEnumRace.EnumRaceIDColumn] = value;
+                }
+            }
+            
+            public string EnumRaceName {
+                get {
+                    return ((string)(this[this.tableEnumRace.EnumRaceNameColumn]));
+                }
+                set {
+                    this[this.tableEnumRace.EnumRaceNameColumn] = value;
+                }
+            }
+            
+            public bool Sentient {
+                get {
+                    try {
+                        return ((bool)(this[this.tableEnumRace.SentientColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnumRace.SentientColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumRace.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumRace.DescriptionColumn] = value;
+                }
+            }
+            
+            public int EnumMobileSizeID {
+                get {
+                    return ((int)(this[this.tableEnumRace.EnumMobileSizeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumRace.EnumMobileSizeIDColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnumRace.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnumRace.QuoteIDColumn] = value;
+                }
+            }
+            
+            public bool IsSentientNull() {
+                return this.IsNull(this.tableEnumRace.SentientColumn);
+            }
+            
+            public void SetSentientNull() {
+                this[this.tableEnumRace.SentientColumn] = System.Convert.DBNull;
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableEnumRace.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableEnumRace.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumRaceRowChangeEvent : EventArgs {
+            
+            private EnumRaceRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumRaceRowChangeEvent(EnumRaceRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumRaceRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSexDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumSexID;
+            
+            private DataColumn columnEnumSexName;
+            
+            internal EnumSexDataTable() : 
+                    base("EnumSex") {
+                this.InitClass();
+            }
+            
+            internal EnumSexDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumSexIDColumn {
+                get {
+                    return this.columnEnumSexID;
+                }
+            }
+            
+            internal DataColumn EnumSexNameColumn {
+                get {
+                    return this.columnEnumSexName;
+                }
+            }
+            
+            public EnumSexRow this[int index] {
+                get {
+                    return ((EnumSexRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumSexRowChangeEventHandler EnumSexRowChanged;
+            
+            public event EnumSexRowChangeEventHandler EnumSexRowChanging;
+            
+            public event EnumSexRowChangeEventHandler EnumSexRowDeleted;
+            
+            public event EnumSexRowChangeEventHandler EnumSexRowDeleting;
+            
+            public void AddEnumSexRow(EnumSexRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumSexRow AddEnumSexRow(int EnumSexID, string EnumSexName) {
+                EnumSexRow rowEnumSexRow = ((EnumSexRow)(this.NewRow()));
+                rowEnumSexRow.ItemArray = new object[] {
+                        EnumSexID,
+                        EnumSexName};
+                this.Rows.Add(rowEnumSexRow);
+                return rowEnumSexRow;
+            }
+            
+            public EnumSexRow FindByEnumSexID(int EnumSexID) {
+                return ((EnumSexRow)(this.Rows.Find(new object[] {
+                            EnumSexID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumSexDataTable cln = ((EnumSexDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumSexDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumSexID = this.Columns["EnumSexID"];
+                this.columnEnumSexName = this.Columns["EnumSexName"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumSexID = new DataColumn("EnumSexID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSexID);
+                this.columnEnumSexName = new DataColumn("EnumSexName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSexName);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey13", new DataColumn[] {
+                                this.columnEnumSexID}, true));
+                this.columnEnumSexID.AllowDBNull = false;
+                this.columnEnumSexID.Unique = true;
+                this.columnEnumSexName.AllowDBNull = false;
+            }
+            
+            public EnumSexRow NewEnumSexRow() {
+                return ((EnumSexRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumSexRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumSexRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumSexRowChanged != null)) {
+                    this.EnumSexRowChanged(this, new EnumSexRowChangeEvent(((EnumSexRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumSexRowChanging != null)) {
+                    this.EnumSexRowChanging(this, new EnumSexRowChangeEvent(((EnumSexRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumSexRowDeleted != null)) {
+                    this.EnumSexRowDeleted(this, new EnumSexRowChangeEvent(((EnumSexRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumSexRowDeleting != null)) {
+                    this.EnumSexRowDeleting(this, new EnumSexRowChangeEvent(((EnumSexRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumSexRow(EnumSexRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSexRow : DataRow {
+            
+            private EnumSexDataTable tableEnumSex;
+            
+            internal EnumSexRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumSex = ((EnumSexDataTable)(this.Table));
+            }
+            
+            public int EnumSexID {
+                get {
+                    return ((int)(this[this.tableEnumSex.EnumSexIDColumn]));
+                }
+                set {
+                    this[this.tableEnumSex.EnumSexIDColumn] = value;
+                }
+            }
+            
+            public string EnumSexName {
+                get {
+                    return ((string)(this[this.tableEnumSex.EnumSexNameColumn]));
+                }
+                set {
+                    this[this.tableEnumSex.EnumSexNameColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSexRowChangeEvent : EventArgs {
+            
+            private EnumSexRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumSexRowChangeEvent(EnumSexRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumSexRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSkillDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumSkillID;
+            
+            private DataColumn columnEnumSkillName;
+            
+            private DataColumn columnDescription;
+            
+            private DataColumn columnActivationTypeID;
+            
+            private DataColumn columnEnergyCost;
+            
+            private DataColumn columnTargetTypeID;
+            
+            private DataColumn columnRange;
+            
+            private DataColumn columnRadius;
+            
+            private DataColumn columnLeadTime;
+            
+            private DataColumn columnDuration;
+            
+            private DataColumn columnAirAffinity;
+            
+            private DataColumn columnEarthAffinity;
+            
+            private DataColumn columnFireAffinity;
+            
+            private DataColumn columnLifeAffinity;
+            
+            private DataColumn columnWaterAffinity;
+            
+            private DataColumn columnLearnModifier;
+            
+            private DataColumn columnQuoteID;
+            
+            internal EnumSkillDataTable() : 
+                    base("EnumSkill") {
+                this.InitClass();
+            }
+            
+            internal EnumSkillDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumSkillIDColumn {
+                get {
+                    return this.columnEnumSkillID;
+                }
+            }
+            
+            internal DataColumn EnumSkillNameColumn {
+                get {
+                    return this.columnEnumSkillName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            internal DataColumn ActivationTypeIDColumn {
+                get {
+                    return this.columnActivationTypeID;
+                }
+            }
+            
+            internal DataColumn EnergyCostColumn {
+                get {
+                    return this.columnEnergyCost;
+                }
+            }
+            
+            internal DataColumn TargetTypeIDColumn {
+                get {
+                    return this.columnTargetTypeID;
+                }
+            }
+            
+            internal DataColumn RangeColumn {
+                get {
+                    return this.columnRange;
+                }
+            }
+            
+            internal DataColumn RadiusColumn {
+                get {
+                    return this.columnRadius;
+                }
+            }
+            
+            internal DataColumn LeadTimeColumn {
+                get {
+                    return this.columnLeadTime;
+                }
+            }
+            
+            internal DataColumn DurationColumn {
+                get {
+                    return this.columnDuration;
+                }
+            }
+            
+            internal DataColumn AirAffinityColumn {
+                get {
+                    return this.columnAirAffinity;
+                }
+            }
+            
+            internal DataColumn EarthAffinityColumn {
+                get {
+                    return this.columnEarthAffinity;
+                }
+            }
+            
+            internal DataColumn FireAffinityColumn {
+                get {
+                    return this.columnFireAffinity;
+                }
+            }
+            
+            internal DataColumn LifeAffinityColumn {
+                get {
+                    return this.columnLifeAffinity;
+                }
+            }
+            
+            internal DataColumn WaterAffinityColumn {
+                get {
+                    return this.columnWaterAffinity;
+                }
+            }
+            
+            internal DataColumn LearnModifierColumn {
+                get {
+                    return this.columnLearnModifier;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            public EnumSkillRow this[int index] {
+                get {
+                    return ((EnumSkillRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumSkillRowChangeEventHandler EnumSkillRowChanged;
+            
+            public event EnumSkillRowChangeEventHandler EnumSkillRowChanging;
+            
+            public event EnumSkillRowChangeEventHandler EnumSkillRowDeleted;
+            
+            public event EnumSkillRowChangeEventHandler EnumSkillRowDeleting;
+            
+            public void AddEnumSkillRow(EnumSkillRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumSkillRow AddEnumSkillRow(
+                        int EnumSkillID, 
+                        string EnumSkillName, 
+                        string Description, 
+                        int ActivationTypeID, 
+                        int EnergyCost, 
+                        int TargetTypeID, 
+                        int Range, 
+                        int Radius, 
+                        int LeadTime, 
+                        int Duration, 
+                        int AirAffinity, 
+                        int EarthAffinity, 
+                        int FireAffinity, 
+                        int LifeAffinity, 
+                        int WaterAffinity, 
+                        int LearnModifier, 
+                        int QuoteID) {
+                EnumSkillRow rowEnumSkillRow = ((EnumSkillRow)(this.NewRow()));
+                rowEnumSkillRow.ItemArray = new object[] {
+                        EnumSkillID,
+                        EnumSkillName,
+                        Description,
+                        ActivationTypeID,
+                        EnergyCost,
+                        TargetTypeID,
+                        Range,
+                        Radius,
+                        LeadTime,
+                        Duration,
+                        AirAffinity,
+                        EarthAffinity,
+                        FireAffinity,
+                        LifeAffinity,
+                        WaterAffinity,
+                        LearnModifier,
+                        QuoteID};
+                this.Rows.Add(rowEnumSkillRow);
+                return rowEnumSkillRow;
+            }
+            
+            public EnumSkillRow FindByEnumSkillID(int EnumSkillID) {
+                return ((EnumSkillRow)(this.Rows.Find(new object[] {
+                            EnumSkillID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumSkillDataTable cln = ((EnumSkillDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumSkillDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumSkillID = this.Columns["EnumSkillID"];
+                this.columnEnumSkillName = this.Columns["EnumSkillName"];
+                this.columnDescription = this.Columns["Description"];
+                this.columnActivationTypeID = this.Columns["ActivationTypeID"];
+                this.columnEnergyCost = this.Columns["EnergyCost"];
+                this.columnTargetTypeID = this.Columns["TargetTypeID"];
+                this.columnRange = this.Columns["Range"];
+                this.columnRadius = this.Columns["Radius"];
+                this.columnLeadTime = this.Columns["LeadTime"];
+                this.columnDuration = this.Columns["Duration"];
+                this.columnAirAffinity = this.Columns["AirAffinity"];
+                this.columnEarthAffinity = this.Columns["EarthAffinity"];
+                this.columnFireAffinity = this.Columns["FireAffinity"];
+                this.columnLifeAffinity = this.Columns["LifeAffinity"];
+                this.columnWaterAffinity = this.Columns["WaterAffinity"];
+                this.columnLearnModifier = this.Columns["LearnModifier"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumSkillID = new DataColumn("EnumSkillID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSkillID);
+                this.columnEnumSkillName = new DataColumn("EnumSkillName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSkillName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.columnActivationTypeID = new DataColumn("ActivationTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnActivationTypeID);
+                this.columnEnergyCost = new DataColumn("EnergyCost", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnergyCost);
+                this.columnTargetTypeID = new DataColumn("TargetTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnTargetTypeID);
+                this.columnRange = new DataColumn("Range", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnRange);
+                this.columnRadius = new DataColumn("Radius", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnRadius);
+                this.columnLeadTime = new DataColumn("LeadTime", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnLeadTime);
+                this.columnDuration = new DataColumn("Duration", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDuration);
+                this.columnAirAffinity = new DataColumn("AirAffinity", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnAirAffinity);
+                this.columnEarthAffinity = new DataColumn("EarthAffinity", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEarthAffinity);
+                this.columnFireAffinity = new DataColumn("FireAffinity", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnFireAffinity);
+                this.columnLifeAffinity = new DataColumn("LifeAffinity", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnLifeAffinity);
+                this.columnWaterAffinity = new DataColumn("WaterAffinity", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnWaterAffinity);
+                this.columnLearnModifier = new DataColumn("LearnModifier", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnLearnModifier);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey14", new DataColumn[] {
+                                this.columnEnumSkillID}, true));
+                this.columnEnumSkillID.AllowDBNull = false;
+                this.columnEnumSkillID.Unique = true;
+                this.columnEnumSkillName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+                this.columnActivationTypeID.AllowDBNull = false;
+                this.columnEnergyCost.AllowDBNull = false;
+                this.columnTargetTypeID.AllowDBNull = false;
+                this.columnRange.AllowDBNull = false;
+                this.columnRadius.AllowDBNull = false;
+                this.columnLeadTime.AllowDBNull = false;
+                this.columnDuration.AllowDBNull = false;
+                this.columnAirAffinity.AllowDBNull = false;
+                this.columnEarthAffinity.AllowDBNull = false;
+                this.columnFireAffinity.AllowDBNull = false;
+                this.columnLifeAffinity.AllowDBNull = false;
+                this.columnWaterAffinity.AllowDBNull = false;
+                this.columnLearnModifier.AllowDBNull = false;
+            }
+            
+            public EnumSkillRow NewEnumSkillRow() {
+                return ((EnumSkillRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumSkillRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumSkillRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumSkillRowChanged != null)) {
+                    this.EnumSkillRowChanged(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumSkillRowChanging != null)) {
+                    this.EnumSkillRowChanging(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumSkillRowDeleted != null)) {
+                    this.EnumSkillRowDeleted(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumSkillRowDeleting != null)) {
+                    this.EnumSkillRowDeleting(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumSkillRow(EnumSkillRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSkillRow : DataRow {
+            
+            private EnumSkillDataTable tableEnumSkill;
+            
+            internal EnumSkillRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumSkill = ((EnumSkillDataTable)(this.Table));
+            }
+            
+            public int EnumSkillID {
+                get {
+                    return ((int)(this[this.tableEnumSkill.EnumSkillIDColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.EnumSkillIDColumn] = value;
+                }
+            }
+            
+            public string EnumSkillName {
+                get {
+                    return ((string)(this[this.tableEnumSkill.EnumSkillNameColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.EnumSkillNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumSkill.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.DescriptionColumn] = value;
+                }
+            }
+            
+            public int ActivationTypeID {
+                get {
+                    return ((int)(this[this.tableEnumSkill.ActivationTypeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.ActivationTypeIDColumn] = value;
+                }
+            }
+            
+            public int EnergyCost {
+                get {
+                    return ((int)(this[this.tableEnumSkill.EnergyCostColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.EnergyCostColumn] = value;
+                }
+            }
+            
+            public int TargetTypeID {
+                get {
+                    return ((int)(this[this.tableEnumSkill.TargetTypeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.TargetTypeIDColumn] = value;
+                }
+            }
+            
+            public int Range {
+                get {
+                    return ((int)(this[this.tableEnumSkill.RangeColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.RangeColumn] = value;
+                }
+            }
+            
+            public int Radius {
+                get {
+                    return ((int)(this[this.tableEnumSkill.RadiusColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.RadiusColumn] = value;
+                }
+            }
+            
+            public int LeadTime {
+                get {
+                    return ((int)(this[this.tableEnumSkill.LeadTimeColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.LeadTimeColumn] = value;
+                }
+            }
+            
+            public int Duration {
+                get {
+                    return ((int)(this[this.tableEnumSkill.DurationColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.DurationColumn] = value;
+                }
+            }
+            
+            public int AirAffinity {
+                get {
+                    return ((int)(this[this.tableEnumSkill.AirAffinityColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.AirAffinityColumn] = value;
+                }
+            }
+            
+            public int EarthAffinity {
+                get {
+                    return ((int)(this[this.tableEnumSkill.EarthAffinityColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.EarthAffinityColumn] = value;
+                }
+            }
+            
+            public int FireAffinity {
+                get {
+                    return ((int)(this[this.tableEnumSkill.FireAffinityColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.FireAffinityColumn] = value;
+                }
+            }
+            
+            public int LifeAffinity {
+                get {
+                    return ((int)(this[this.tableEnumSkill.LifeAffinityColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.LifeAffinityColumn] = value;
+                }
+            }
+            
+            public int WaterAffinity {
+                get {
+                    return ((int)(this[this.tableEnumSkill.WaterAffinityColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.WaterAffinityColumn] = value;
+                }
+            }
+            
+            public int LearnModifier {
+                get {
+                    return ((int)(this[this.tableEnumSkill.LearnModifierColumn]));
+                }
+                set {
+                    this[this.tableEnumSkill.LearnModifierColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnumSkill.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnumSkill.QuoteIDColumn] = value;
+                }
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableEnumSkill.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableEnumSkill.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSkillRowChangeEvent : EventArgs {
+            
+            private EnumSkillRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumSkillRowChangeEvent(EnumSkillRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumSkillRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSpecialisationDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumSpecialisationID;
+            
+            private DataColumn columnEnumSpecialisationName;
+            
+            private DataColumn columnQuoteID;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumSpecialisationDataTable() : 
+                    base("EnumSpecialisation") {
+                this.InitClass();
+            }
+            
+            internal EnumSpecialisationDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumSpecialisationIDColumn {
+                get {
+                    return this.columnEnumSpecialisationID;
+                }
+            }
+            
+            internal DataColumn EnumSpecialisationNameColumn {
+                get {
+                    return this.columnEnumSpecialisationName;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumSpecialisationRow this[int index] {
+                get {
+                    return ((EnumSpecialisationRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowChanged;
+            
+            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowChanging;
+            
+            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowDeleted;
+            
+            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowDeleting;
+            
+            public void AddEnumSpecialisationRow(EnumSpecialisationRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumSpecialisationRow AddEnumSpecialisationRow(int EnumSpecialisationID, string EnumSpecialisationName, int QuoteID, string Description) {
+                EnumSpecialisationRow rowEnumSpecialisationRow = ((EnumSpecialisationRow)(this.NewRow()));
+                rowEnumSpecialisationRow.ItemArray = new object[] {
+                        EnumSpecialisationID,
+                        EnumSpecialisationName,
+                        QuoteID,
+                        Description};
+                this.Rows.Add(rowEnumSpecialisationRow);
+                return rowEnumSpecialisationRow;
+            }
+            
+            public EnumSpecialisationRow FindByEnumSpecialisationID(int EnumSpecialisationID) {
+                return ((EnumSpecialisationRow)(this.Rows.Find(new object[] {
+                            EnumSpecialisationID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumSpecialisationDataTable cln = ((EnumSpecialisationDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumSpecialisationDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumSpecialisationID = this.Columns["EnumSpecialisationID"];
+                this.columnEnumSpecialisationName = this.Columns["EnumSpecialisationName"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumSpecialisationID = new DataColumn("EnumSpecialisationID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSpecialisationID);
+                this.columnEnumSpecialisationName = new DataColumn("EnumSpecialisationName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSpecialisationName);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey15", new DataColumn[] {
+                                this.columnEnumSpecialisationID}, true));
+                this.columnEnumSpecialisationID.AllowDBNull = false;
+                this.columnEnumSpecialisationID.Unique = true;
+                this.columnEnumSpecialisationName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumSpecialisationRow NewEnumSpecialisationRow() {
+                return ((EnumSpecialisationRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumSpecialisationRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumSpecialisationRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumSpecialisationRowChanged != null)) {
+                    this.EnumSpecialisationRowChanged(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumSpecialisationRowChanging != null)) {
+                    this.EnumSpecialisationRowChanging(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumSpecialisationRowDeleted != null)) {
+                    this.EnumSpecialisationRowDeleted(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumSpecialisationRowDeleting != null)) {
+                    this.EnumSpecialisationRowDeleting(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumSpecialisationRow(EnumSpecialisationRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSpecialisationRow : DataRow {
+            
+            private EnumSpecialisationDataTable tableEnumSpecialisation;
+            
+            internal EnumSpecialisationRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumSpecialisation = ((EnumSpecialisationDataTable)(this.Table));
+            }
+            
+            public int EnumSpecialisationID {
+                get {
+                    return ((int)(this[this.tableEnumSpecialisation.EnumSpecialisationIDColumn]));
+                }
+                set {
+                    this[this.tableEnumSpecialisation.EnumSpecialisationIDColumn] = value;
+                }
+            }
+            
+            public string EnumSpecialisationName {
+                get {
+                    return ((string)(this[this.tableEnumSpecialisation.EnumSpecialisationNameColumn]));
+                }
+                set {
+                    this[this.tableEnumSpecialisation.EnumSpecialisationNameColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnumSpecialisation.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnumSpecialisation.QuoteIDColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumSpecialisation.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumSpecialisation.DescriptionColumn] = value;
+                }
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableEnumSpecialisation.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableEnumSpecialisation.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumSpecialisationRowChangeEvent : EventArgs {
+            
+            private EnumSpecialisationRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumSpecialisationRowChangeEvent(EnumSpecialisationRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumSpecialisationRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumTargetTypeDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumTargetTypeID;
+            
+            private DataColumn columnEnumTargetName;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumTargetTypeDataTable() : 
+                    base("EnumTargetType") {
+                this.InitClass();
+            }
+            
+            internal EnumTargetTypeDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumTargetTypeIDColumn {
+                get {
+                    return this.columnEnumTargetTypeID;
+                }
+            }
+            
+            internal DataColumn EnumTargetNameColumn {
+                get {
+                    return this.columnEnumTargetName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumTargetTypeRow this[int index] {
+                get {
+                    return ((EnumTargetTypeRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowChanged;
+            
+            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowChanging;
+            
+            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowDeleted;
+            
+            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowDeleting;
+            
+            public void AddEnumTargetTypeRow(EnumTargetTypeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumTargetTypeRow AddEnumTargetTypeRow(int EnumTargetTypeID, string EnumTargetName, string Description) {
+                EnumTargetTypeRow rowEnumTargetTypeRow = ((EnumTargetTypeRow)(this.NewRow()));
+                rowEnumTargetTypeRow.ItemArray = new object[] {
+                        EnumTargetTypeID,
+                        EnumTargetName,
+                        Description};
+                this.Rows.Add(rowEnumTargetTypeRow);
+                return rowEnumTargetTypeRow;
+            }
+            
+            public EnumTargetTypeRow FindByEnumTargetTypeID(int EnumTargetTypeID) {
+                return ((EnumTargetTypeRow)(this.Rows.Find(new object[] {
+                            EnumTargetTypeID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumTargetTypeDataTable cln = ((EnumTargetTypeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumTargetTypeDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumTargetTypeID = this.Columns["EnumTargetTypeID"];
+                this.columnEnumTargetName = this.Columns["EnumTargetName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumTargetTypeID = new DataColumn("EnumTargetTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumTargetTypeID);
+                this.columnEnumTargetName = new DataColumn("EnumTargetName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumTargetName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey16", new DataColumn[] {
+                                this.columnEnumTargetTypeID}, true));
+                this.columnEnumTargetTypeID.AllowDBNull = false;
+                this.columnEnumTargetTypeID.Unique = true;
+                this.columnEnumTargetName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumTargetTypeRow NewEnumTargetTypeRow() {
+                return ((EnumTargetTypeRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumTargetTypeRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumTargetTypeRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumTargetTypeRowChanged != null)) {
+                    this.EnumTargetTypeRowChanged(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumTargetTypeRowChanging != null)) {
+                    this.EnumTargetTypeRowChanging(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumTargetTypeRowDeleted != null)) {
+                    this.EnumTargetTypeRowDeleted(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumTargetTypeRowDeleting != null)) {
+                    this.EnumTargetTypeRowDeleting(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumTargetTypeRow(EnumTargetTypeRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumTargetTypeRow : DataRow {
+            
+            private EnumTargetTypeDataTable tableEnumTargetType;
+            
+            internal EnumTargetTypeRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumTargetType = ((EnumTargetTypeDataTable)(this.Table));
+            }
+            
+            public int EnumTargetTypeID {
+                get {
+                    return ((int)(this[this.tableEnumTargetType.EnumTargetTypeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumTargetType.EnumTargetTypeIDColumn] = value;
+                }
+            }
+            
+            public string EnumTargetName {
+                get {
+                    return ((string)(this[this.tableEnumTargetType.EnumTargetNameColumn]));
+                }
+                set {
+                    this[this.tableEnumTargetType.EnumTargetNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumTargetType.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumTargetType.DescriptionColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumTargetTypeRowChangeEvent : EventArgs {
+            
+            private EnumTargetTypeRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumTargetTypeRowChangeEvent(EnumTargetTypeRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumTargetTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumTerrainTypeDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumTerrainTypeID;
+            
+            private DataColumn columnEnumTerrainTypeName;
+            
+            private DataColumn columnQuoteID;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumTerrainTypeDataTable() : 
+                    base("EnumTerrainType") {
+                this.InitClass();
+            }
+            
+            internal EnumTerrainTypeDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumTerrainTypeIDColumn {
+                get {
+                    return this.columnEnumTerrainTypeID;
+                }
+            }
+            
+            internal DataColumn EnumTerrainTypeNameColumn {
+                get {
+                    return this.columnEnumTerrainTypeName;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumTerrainTypeRow this[int index] {
+                get {
+                    return ((EnumTerrainTypeRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowChanged;
+            
+            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowChanging;
+            
+            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowDeleted;
+            
+            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowDeleting;
+            
+            public void AddEnumTerrainTypeRow(EnumTerrainTypeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumTerrainTypeRow AddEnumTerrainTypeRow(int EnumTerrainTypeID, string EnumTerrainTypeName, int QuoteID, string Description) {
+                EnumTerrainTypeRow rowEnumTerrainTypeRow = ((EnumTerrainTypeRow)(this.NewRow()));
+                rowEnumTerrainTypeRow.ItemArray = new object[] {
+                        EnumTerrainTypeID,
+                        EnumTerrainTypeName,
+                        QuoteID,
+                        Description};
+                this.Rows.Add(rowEnumTerrainTypeRow);
+                return rowEnumTerrainTypeRow;
+            }
+            
+            public EnumTerrainTypeRow FindByEnumTerrainTypeID(int EnumTerrainTypeID) {
+                return ((EnumTerrainTypeRow)(this.Rows.Find(new object[] {
+                            EnumTerrainTypeID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumTerrainTypeDataTable cln = ((EnumTerrainTypeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumTerrainTypeDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumTerrainTypeID = this.Columns["EnumTerrainTypeID"];
+                this.columnEnumTerrainTypeName = this.Columns["EnumTerrainTypeName"];
+                this.columnQuoteID = this.Columns["QuoteID"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumTerrainTypeID = new DataColumn("EnumTerrainTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumTerrainTypeID);
+                this.columnEnumTerrainTypeName = new DataColumn("EnumTerrainTypeName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumTerrainTypeName);
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey17", new DataColumn[] {
+                                this.columnEnumTerrainTypeID}, true));
+                this.columnEnumTerrainTypeID.AllowDBNull = false;
+                this.columnEnumTerrainTypeID.Unique = true;
+                this.columnEnumTerrainTypeName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumTerrainTypeRow NewEnumTerrainTypeRow() {
+                return ((EnumTerrainTypeRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumTerrainTypeRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumTerrainTypeRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumTerrainTypeRowChanged != null)) {
+                    this.EnumTerrainTypeRowChanged(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumTerrainTypeRowChanging != null)) {
+                    this.EnumTerrainTypeRowChanging(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumTerrainTypeRowDeleted != null)) {
+                    this.EnumTerrainTypeRowDeleted(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumTerrainTypeRowDeleting != null)) {
+                    this.EnumTerrainTypeRowDeleting(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumTerrainTypeRow(EnumTerrainTypeRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumTerrainTypeRow : DataRow {
+            
+            private EnumTerrainTypeDataTable tableEnumTerrainType;
+            
+            internal EnumTerrainTypeRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumTerrainType = ((EnumTerrainTypeDataTable)(this.Table));
+            }
+            
+            public int EnumTerrainTypeID {
+                get {
+                    return ((int)(this[this.tableEnumTerrainType.EnumTerrainTypeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumTerrainType.EnumTerrainTypeIDColumn] = value;
+                }
+            }
+            
+            public string EnumTerrainTypeName {
+                get {
+                    return ((string)(this[this.tableEnumTerrainType.EnumTerrainTypeNameColumn]));
+                }
+                set {
+                    this[this.tableEnumTerrainType.EnumTerrainTypeNameColumn] = value;
+                }
+            }
+            
+            public int QuoteID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnumTerrainType.QuoteIDColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnumTerrainType.QuoteIDColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumTerrainType.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumTerrainType.DescriptionColumn] = value;
+                }
+            }
+            
+            public bool IsQuoteIDNull() {
+                return this.IsNull(this.tableEnumTerrainType.QuoteIDColumn);
+            }
+            
+            public void SetQuoteIDNull() {
+                this[this.tableEnumTerrainType.QuoteIDColumn] = System.Convert.DBNull;
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumTerrainTypeRowChangeEvent : EventArgs {
+            
+            private EnumTerrainTypeRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumTerrainTypeRowChangeEvent(EnumTerrainTypeRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumTerrainTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumWeaponSizeDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumWeaponSizeID;
+            
+            private DataColumn columnEnumWeaponSizeName;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumWeaponSizeDataTable() : 
+                    base("EnumWeaponSize") {
+                this.InitClass();
+            }
+            
+            internal EnumWeaponSizeDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumWeaponSizeIDColumn {
+                get {
+                    return this.columnEnumWeaponSizeID;
+                }
+            }
+            
+            internal DataColumn EnumWeaponSizeNameColumn {
+                get {
+                    return this.columnEnumWeaponSizeName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumWeaponSizeRow this[int index] {
+                get {
+                    return ((EnumWeaponSizeRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumWeaponSizeRowChangeEventHandler EnumWeaponSizeRowChanged;
+            
+            public event EnumWeaponSizeRowChangeEventHandler EnumWeaponSizeRowChanging;
+            
+            public event EnumWeaponSizeRowChangeEventHandler EnumWeaponSizeRowDeleted;
+            
+            public event EnumWeaponSizeRowChangeEventHandler EnumWeaponSizeRowDeleting;
+            
+            public void AddEnumWeaponSizeRow(EnumWeaponSizeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumWeaponSizeRow AddEnumWeaponSizeRow(int EnumWeaponSizeID, string EnumWeaponSizeName, string Description) {
+                EnumWeaponSizeRow rowEnumWeaponSizeRow = ((EnumWeaponSizeRow)(this.NewRow()));
+                rowEnumWeaponSizeRow.ItemArray = new object[] {
+                        EnumWeaponSizeID,
+                        EnumWeaponSizeName,
+                        Description};
+                this.Rows.Add(rowEnumWeaponSizeRow);
+                return rowEnumWeaponSizeRow;
+            }
+            
+            public EnumWeaponSizeRow FindByEnumWeaponSizeID(int EnumWeaponSizeID) {
+                return ((EnumWeaponSizeRow)(this.Rows.Find(new object[] {
+                            EnumWeaponSizeID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumWeaponSizeDataTable cln = ((EnumWeaponSizeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumWeaponSizeDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumWeaponSizeID = this.Columns["EnumWeaponSizeID"];
+                this.columnEnumWeaponSizeName = this.Columns["EnumWeaponSizeName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumWeaponSizeID = new DataColumn("EnumWeaponSizeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumWeaponSizeID);
+                this.columnEnumWeaponSizeName = new DataColumn("EnumWeaponSizeName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumWeaponSizeName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey18", new DataColumn[] {
+                                this.columnEnumWeaponSizeID}, true));
+                this.columnEnumWeaponSizeID.AllowDBNull = false;
+                this.columnEnumWeaponSizeID.Unique = true;
+                this.columnEnumWeaponSizeName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumWeaponSizeRow NewEnumWeaponSizeRow() {
+                return ((EnumWeaponSizeRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumWeaponSizeRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumWeaponSizeRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumWeaponSizeRowChanged != null)) {
+                    this.EnumWeaponSizeRowChanged(this, new EnumWeaponSizeRowChangeEvent(((EnumWeaponSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumWeaponSizeRowChanging != null)) {
+                    this.EnumWeaponSizeRowChanging(this, new EnumWeaponSizeRowChangeEvent(((EnumWeaponSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumWeaponSizeRowDeleted != null)) {
+                    this.EnumWeaponSizeRowDeleted(this, new EnumWeaponSizeRowChangeEvent(((EnumWeaponSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumWeaponSizeRowDeleting != null)) {
+                    this.EnumWeaponSizeRowDeleting(this, new EnumWeaponSizeRowChangeEvent(((EnumWeaponSizeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumWeaponSizeRow(EnumWeaponSizeRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumWeaponSizeRow : DataRow {
+            
+            private EnumWeaponSizeDataTable tableEnumWeaponSize;
+            
+            internal EnumWeaponSizeRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumWeaponSize = ((EnumWeaponSizeDataTable)(this.Table));
+            }
+            
+            public int EnumWeaponSizeID {
+                get {
+                    return ((int)(this[this.tableEnumWeaponSize.EnumWeaponSizeIDColumn]));
+                }
+                set {
+                    this[this.tableEnumWeaponSize.EnumWeaponSizeIDColumn] = value;
+                }
+            }
+            
+            public string EnumWeaponSizeName {
+                get {
+                    return ((string)(this[this.tableEnumWeaponSize.EnumWeaponSizeNameColumn]));
+                }
+                set {
+                    this[this.tableEnumWeaponSize.EnumWeaponSizeNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumWeaponSize.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumWeaponSize.DescriptionColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumWeaponSizeRowChangeEvent : EventArgs {
+            
+            private EnumWeaponSizeRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumWeaponSizeRowChangeEvent(EnumWeaponSizeRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumWeaponSizeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumWearLocationDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumWearLocationID;
+            
+            private DataColumn columnEnumWearLocationName;
+            
+            private DataColumn columnDescription;
+            
+            internal EnumWearLocationDataTable() : 
+                    base("EnumWearLocation") {
+                this.InitClass();
+            }
+            
+            internal EnumWearLocationDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumWearLocationIDColumn {
+                get {
+                    return this.columnEnumWearLocationID;
+                }
+            }
+            
+            internal DataColumn EnumWearLocationNameColumn {
+                get {
+                    return this.columnEnumWearLocationName;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public EnumWearLocationRow this[int index] {
+                get {
+                    return ((EnumWearLocationRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowChanged;
+            
+            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowChanging;
+            
+            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowDeleted;
+            
+            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowDeleting;
+            
+            public void AddEnumWearLocationRow(EnumWearLocationRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EnumWearLocationRow AddEnumWearLocationRow(int EnumWearLocationID, string EnumWearLocationName, string Description) {
+                EnumWearLocationRow rowEnumWearLocationRow = ((EnumWearLocationRow)(this.NewRow()));
+                rowEnumWearLocationRow.ItemArray = new object[] {
+                        EnumWearLocationID,
+                        EnumWearLocationName,
+                        Description};
+                this.Rows.Add(rowEnumWearLocationRow);
+                return rowEnumWearLocationRow;
+            }
+            
+            public EnumWearLocationRow FindByEnumWearLocationID(int EnumWearLocationID) {
+                return ((EnumWearLocationRow)(this.Rows.Find(new object[] {
+                            EnumWearLocationID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EnumWearLocationDataTable cln = ((EnumWearLocationDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EnumWearLocationDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumWearLocationID = this.Columns["EnumWearLocationID"];
+                this.columnEnumWearLocationName = this.Columns["EnumWearLocationName"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumWearLocationID = new DataColumn("EnumWearLocationID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumWearLocationID);
+                this.columnEnumWearLocationName = new DataColumn("EnumWearLocationName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumWearLocationName);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey19", new DataColumn[] {
+                                this.columnEnumWearLocationID}, true));
+                this.columnEnumWearLocationID.AllowDBNull = false;
+                this.columnEnumWearLocationID.Unique = true;
+                this.columnEnumWearLocationName.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public EnumWearLocationRow NewEnumWearLocationRow() {
+                return ((EnumWearLocationRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EnumWearLocationRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EnumWearLocationRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnumWearLocationRowChanged != null)) {
+                    this.EnumWearLocationRowChanged(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnumWearLocationRowChanging != null)) {
+                    this.EnumWearLocationRowChanging(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnumWearLocationRowDeleted != null)) {
+                    this.EnumWearLocationRowDeleted(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnumWearLocationRowDeleting != null)) {
+                    this.EnumWearLocationRowDeleting(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEnumWearLocationRow(EnumWearLocationRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumWearLocationRow : DataRow {
+            
+            private EnumWearLocationDataTable tableEnumWearLocation;
+            
+            internal EnumWearLocationRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnumWearLocation = ((EnumWearLocationDataTable)(this.Table));
+            }
+            
+            public int EnumWearLocationID {
+                get {
+                    return ((int)(this[this.tableEnumWearLocation.EnumWearLocationIDColumn]));
+                }
+                set {
+                    this[this.tableEnumWearLocation.EnumWearLocationIDColumn] = value;
+                }
+            }
+            
+            public string EnumWearLocationName {
+                get {
+                    return ((string)(this[this.tableEnumWearLocation.EnumWearLocationNameColumn]));
+                }
+                set {
+                    this[this.tableEnumWearLocation.EnumWearLocationNameColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableEnumWearLocation.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableEnumWearLocation.DescriptionColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EnumWearLocationRowChangeEvent : EventArgs {
+            
+            private EnumWearLocationRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EnumWearLocationRowChangeEvent(EnumWearLocationRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EnumWearLocationRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EquipableItemDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnItemID;
+            
+            private DataColumn columnEnumWearLocationID;
+            
+            private DataColumn columnArmourClass;
+            
+            internal EquipableItemDataTable() : 
+                    base("EquipableItem") {
+                this.InitClass();
+            }
+            
+            internal EquipableItemDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn ItemIDColumn {
+                get {
+                    return this.columnItemID;
+                }
+            }
+            
+            internal DataColumn EnumWearLocationIDColumn {
+                get {
+                    return this.columnEnumWearLocationID;
+                }
+            }
+            
+            internal DataColumn ArmourClassColumn {
+                get {
+                    return this.columnArmourClass;
+                }
+            }
+            
+            public EquipableItemRow this[int index] {
+                get {
+                    return ((EquipableItemRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EquipableItemRowChangeEventHandler EquipableItemRowChanged;
+            
+            public event EquipableItemRowChangeEventHandler EquipableItemRowChanging;
+            
+            public event EquipableItemRowChangeEventHandler EquipableItemRowDeleted;
+            
+            public event EquipableItemRowChangeEventHandler EquipableItemRowDeleting;
+            
+            public void AddEquipableItemRow(EquipableItemRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public EquipableItemRow AddEquipableItemRow(int ItemID, int EnumWearLocationID, int ArmourClass) {
+                EquipableItemRow rowEquipableItemRow = ((EquipableItemRow)(this.NewRow()));
+                rowEquipableItemRow.ItemArray = new object[] {
+                        ItemID,
+                        EnumWearLocationID,
+                        ArmourClass};
+                this.Rows.Add(rowEquipableItemRow);
+                return rowEquipableItemRow;
+            }
+            
+            public EquipableItemRow FindByItemID(int ItemID) {
+                return ((EquipableItemRow)(this.Rows.Find(new object[] {
+                            ItemID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                EquipableItemDataTable cln = ((EquipableItemDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new EquipableItemDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnItemID = this.Columns["ItemID"];
+                this.columnEnumWearLocationID = this.Columns["EnumWearLocationID"];
+                this.columnArmourClass = this.Columns["ArmourClass"];
+            }
+            
+            private void InitClass() {
+                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnItemID);
+                this.columnEnumWearLocationID = new DataColumn("EnumWearLocationID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumWearLocationID);
+                this.columnArmourClass = new DataColumn("ArmourClass", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnArmourClass);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey20", new DataColumn[] {
+                                this.columnItemID}, true));
+                this.columnItemID.AllowDBNull = false;
+                this.columnItemID.Unique = true;
+                this.columnEnumWearLocationID.AllowDBNull = false;
+                this.columnArmourClass.AllowDBNull = false;
+            }
+            
+            public EquipableItemRow NewEquipableItemRow() {
+                return ((EquipableItemRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new EquipableItemRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(EquipableItemRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EquipableItemRowChanged != null)) {
+                    this.EquipableItemRowChanged(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EquipableItemRowChanging != null)) {
+                    this.EquipableItemRowChanging(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EquipableItemRowDeleted != null)) {
+                    this.EquipableItemRowDeleted(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EquipableItemRowDeleting != null)) {
+                    this.EquipableItemRowDeleting(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveEquipableItemRow(EquipableItemRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EquipableItemRow : DataRow {
+            
+            private EquipableItemDataTable tableEquipableItem;
+            
+            internal EquipableItemRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEquipableItem = ((EquipableItemDataTable)(this.Table));
+            }
+            
+            public int ItemID {
+                get {
+                    return ((int)(this[this.tableEquipableItem.ItemIDColumn]));
+                }
+                set {
+                    this[this.tableEquipableItem.ItemIDColumn] = value;
+                }
+            }
+            
+            public int EnumWearLocationID {
+                get {
+                    return ((int)(this[this.tableEquipableItem.EnumWearLocationIDColumn]));
+                }
+                set {
+                    this[this.tableEquipableItem.EnumWearLocationIDColumn] = value;
+                }
+            }
+            
+            public int ArmourClass {
+                get {
+                    return ((int)(this[this.tableEquipableItem.ArmourClassColumn]));
+                }
+                set {
+                    this[this.tableEquipableItem.ArmourClassColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class EquipableItemRowChangeEvent : EventArgs {
+            
+            private EquipableItemRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public EquipableItemRowChangeEvent(EquipableItemRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public EquipableItemRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class InventoryDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnPhysicalObjectID;
+            
+            private DataColumn columnItemID;
+            
+            private DataColumn columnSpawnID;
+            
+            internal InventoryDataTable() : 
+                    base("Inventory") {
+                this.InitClass();
+            }
+            
+            internal InventoryDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn PhysicalObjectIDColumn {
+                get {
+                    return this.columnPhysicalObjectID;
+                }
+            }
+            
+            internal DataColumn ItemIDColumn {
+                get {
+                    return this.columnItemID;
+                }
+            }
+            
+            internal DataColumn SpawnIDColumn {
+                get {
+                    return this.columnSpawnID;
+                }
+            }
+            
+            public InventoryRow this[int index] {
+                get {
+                    return ((InventoryRow)(this.Rows[index]));
+                }
+            }
+            
+            public event InventoryRowChangeEventHandler InventoryRowChanged;
+            
+            public event InventoryRowChangeEventHandler InventoryRowChanging;
+            
+            public event InventoryRowChangeEventHandler InventoryRowDeleted;
+            
+            public event InventoryRowChangeEventHandler InventoryRowDeleting;
+            
+            public void AddInventoryRow(InventoryRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public InventoryRow AddInventoryRow(int PhysicalObjectID, int ItemID, int SpawnID) {
+                InventoryRow rowInventoryRow = ((InventoryRow)(this.NewRow()));
+                rowInventoryRow.ItemArray = new object[] {
+                        PhysicalObjectID,
+                        ItemID,
+                        SpawnID};
+                this.Rows.Add(rowInventoryRow);
+                return rowInventoryRow;
+            }
+            
+            public InventoryRow FindByPhysicalObjectIDSpawnID(int PhysicalObjectID, int SpawnID) {
+                return ((InventoryRow)(this.Rows.Find(new object[] {
+                            PhysicalObjectID,
+                            SpawnID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                InventoryDataTable cln = ((InventoryDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new InventoryDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnPhysicalObjectID = this.Columns["PhysicalObjectID"];
+                this.columnItemID = this.Columns["ItemID"];
+                this.columnSpawnID = this.Columns["SpawnID"];
+            }
+            
+            private void InitClass() {
+                this.columnPhysicalObjectID = new DataColumn("PhysicalObjectID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPhysicalObjectID);
+                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnItemID);
+                this.columnSpawnID = new DataColumn("SpawnID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnSpawnID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey21", new DataColumn[] {
+                                this.columnPhysicalObjectID,
+                                this.columnSpawnID}, true));
+                this.columnPhysicalObjectID.AllowDBNull = false;
+                this.columnItemID.AllowDBNull = false;
+                this.columnSpawnID.AllowDBNull = false;
+            }
+            
+            public InventoryRow NewInventoryRow() {
+                return ((InventoryRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new InventoryRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(InventoryRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.InventoryRowChanged != null)) {
+                    this.InventoryRowChanged(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.InventoryRowChanging != null)) {
+                    this.InventoryRowChanging(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.InventoryRowDeleted != null)) {
+                    this.InventoryRowDeleted(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.InventoryRowDeleting != null)) {
+                    this.InventoryRowDeleting(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveInventoryRow(InventoryRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class InventoryRow : DataRow {
+            
+            private InventoryDataTable tableInventory;
+            
+            internal InventoryRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableInventory = ((InventoryDataTable)(this.Table));
+            }
+            
+            public int PhysicalObjectID {
+                get {
+                    return ((int)(this[this.tableInventory.PhysicalObjectIDColumn]));
+                }
+                set {
+                    this[this.tableInventory.PhysicalObjectIDColumn] = value;
+                }
+            }
+            
+            public int ItemID {
+                get {
+                    return ((int)(this[this.tableInventory.ItemIDColumn]));
+                }
+                set {
+                    this[this.tableInventory.ItemIDColumn] = value;
+                }
+            }
+            
+            public int SpawnID {
+                get {
+                    return ((int)(this[this.tableInventory.SpawnIDColumn]));
+                }
+                set {
+                    this[this.tableInventory.SpawnIDColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class InventoryRowChangeEvent : EventArgs {
+            
+            private InventoryRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public InventoryRowChangeEvent(InventoryRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public InventoryRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
         
         [System.Diagnostics.DebuggerStepThrough()]
         public class ItemPhysicalObjectDataTable : DataTable, System.Collections.IEnumerable {
@@ -1255,7 +7271,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnValue);
                 this.columnWeight = new DataColumn("Weight", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnWeight);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey1", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey22", new DataColumn[] {
                                 this.columnItemID}, true));
                 this.columnItemID.AllowDBNull = false;
                 this.columnItemID.Unique = true;
@@ -1372,46 +7388,16 @@ namespace Strive.Multiverse {
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSkillDataTable : DataTable, System.Collections.IEnumerable {
+        public class JunkItemDataTable : DataTable, System.Collections.IEnumerable {
             
-            private DataColumn columnSkillID;
+            private DataColumn columnItemID;
             
-            private DataColumn columnName;
-            
-            private DataColumn columnDescription;
-            
-            private DataColumn columnActivationTypeID;
-            
-            private DataColumn columnEnergyCost;
-            
-            private DataColumn columnTargetTypeID;
-            
-            private DataColumn columnRange;
-            
-            private DataColumn columnRadius;
-            
-            private DataColumn columnLeadTime;
-            
-            private DataColumn columnDuration;
-            
-            private DataColumn columnAirAffinity;
-            
-            private DataColumn columnEarthAffinity;
-            
-            private DataColumn columnFireAffinity;
-            
-            private DataColumn columnLifeAffinity;
-            
-            private DataColumn columnWaterAffinity;
-            
-            private DataColumn columnLearnModifier;
-            
-            internal EnumSkillDataTable() : 
-                    base("EnumSkill") {
+            internal JunkItemDataTable() : 
+                    base("JunkItem") {
                 this.InitClass();
             }
             
-            internal EnumSkillDataTable(DataTable table) : 
+            internal JunkItemDataTable(DataTable table) : 
                     base(table.TableName) {
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -1434,162 +7420,41 @@ namespace Strive.Multiverse {
                 }
             }
             
-            internal DataColumn SkillIDColumn {
+            internal DataColumn ItemIDColumn {
                 get {
-                    return this.columnSkillID;
+                    return this.columnItemID;
                 }
             }
             
-            internal DataColumn NameColumn {
+            public JunkItemRow this[int index] {
                 get {
-                    return this.columnName;
+                    return ((JunkItemRow)(this.Rows[index]));
                 }
             }
             
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
+            public event JunkItemRowChangeEventHandler JunkItemRowChanged;
             
-            internal DataColumn ActivationTypeIDColumn {
-                get {
-                    return this.columnActivationTypeID;
-                }
-            }
+            public event JunkItemRowChangeEventHandler JunkItemRowChanging;
             
-            internal DataColumn EnergyCostColumn {
-                get {
-                    return this.columnEnergyCost;
-                }
-            }
+            public event JunkItemRowChangeEventHandler JunkItemRowDeleted;
             
-            internal DataColumn TargetTypeIDColumn {
-                get {
-                    return this.columnTargetTypeID;
-                }
-            }
+            public event JunkItemRowChangeEventHandler JunkItemRowDeleting;
             
-            internal DataColumn RangeColumn {
-                get {
-                    return this.columnRange;
-                }
-            }
-            
-            internal DataColumn RadiusColumn {
-                get {
-                    return this.columnRadius;
-                }
-            }
-            
-            internal DataColumn LeadTimeColumn {
-                get {
-                    return this.columnLeadTime;
-                }
-            }
-            
-            internal DataColumn DurationColumn {
-                get {
-                    return this.columnDuration;
-                }
-            }
-            
-            internal DataColumn AirAffinityColumn {
-                get {
-                    return this.columnAirAffinity;
-                }
-            }
-            
-            internal DataColumn EarthAffinityColumn {
-                get {
-                    return this.columnEarthAffinity;
-                }
-            }
-            
-            internal DataColumn FireAffinityColumn {
-                get {
-                    return this.columnFireAffinity;
-                }
-            }
-            
-            internal DataColumn LifeAffinityColumn {
-                get {
-                    return this.columnLifeAffinity;
-                }
-            }
-            
-            internal DataColumn WaterAffinityColumn {
-                get {
-                    return this.columnWaterAffinity;
-                }
-            }
-            
-            internal DataColumn LearnModifierColumn {
-                get {
-                    return this.columnLearnModifier;
-                }
-            }
-            
-            public EnumSkillRow this[int index] {
-                get {
-                    return ((EnumSkillRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumSkillRowChangeEventHandler EnumSkillRowChanged;
-            
-            public event EnumSkillRowChangeEventHandler EnumSkillRowChanging;
-            
-            public event EnumSkillRowChangeEventHandler EnumSkillRowDeleted;
-            
-            public event EnumSkillRowChangeEventHandler EnumSkillRowDeleting;
-            
-            public void AddEnumSkillRow(EnumSkillRow row) {
+            public void AddJunkItemRow(JunkItemRow row) {
                 this.Rows.Add(row);
             }
             
-            public EnumSkillRow AddEnumSkillRow(
-                        int SkillID, 
-                        string Name, 
-                        string Description, 
-                        int ActivationTypeID, 
-                        int EnergyCost, 
-                        int TargetTypeID, 
-                        int Range, 
-                        int Radius, 
-                        int LeadTime, 
-                        int Duration, 
-                        int AirAffinity, 
-                        int EarthAffinity, 
-                        int FireAffinity, 
-                        int LifeAffinity, 
-                        int WaterAffinity, 
-                        int LearnModifier) {
-                EnumSkillRow rowEnumSkillRow = ((EnumSkillRow)(this.NewRow()));
-                rowEnumSkillRow.ItemArray = new object[] {
-                        SkillID,
-                        Name,
-                        Description,
-                        ActivationTypeID,
-                        EnergyCost,
-                        TargetTypeID,
-                        Range,
-                        Radius,
-                        LeadTime,
-                        Duration,
-                        AirAffinity,
-                        EarthAffinity,
-                        FireAffinity,
-                        LifeAffinity,
-                        WaterAffinity,
-                        LearnModifier};
-                this.Rows.Add(rowEnumSkillRow);
-                return rowEnumSkillRow;
+            public JunkItemRow AddJunkItemRow(int ItemID) {
+                JunkItemRow rowJunkItemRow = ((JunkItemRow)(this.NewRow()));
+                rowJunkItemRow.ItemArray = new object[] {
+                        ItemID};
+                this.Rows.Add(rowJunkItemRow);
+                return rowJunkItemRow;
             }
             
-            public EnumSkillRow FindBySkillID(int SkillID) {
-                return ((EnumSkillRow)(this.Rows.Find(new object[] {
-                            SkillID})));
+            public JunkItemRow FindByItemID(int ItemID) {
+                return ((JunkItemRow)(this.Rows.Find(new object[] {
+                            ItemID})));
             }
             
             public System.Collections.IEnumerator GetEnumerator() {
@@ -1597,445 +7462,360 @@ namespace Strive.Multiverse {
             }
             
             public override DataTable Clone() {
-                EnumSkillDataTable cln = ((EnumSkillDataTable)(base.Clone()));
+                JunkItemDataTable cln = ((JunkItemDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
             
             protected override DataTable CreateInstance() {
-                return new EnumSkillDataTable();
+                return new JunkItemDataTable();
             }
             
             internal void InitVars() {
-                this.columnSkillID = this.Columns["SkillID"];
-                this.columnName = this.Columns["Name"];
-                this.columnDescription = this.Columns["Description"];
-                this.columnActivationTypeID = this.Columns["ActivationTypeID"];
-                this.columnEnergyCost = this.Columns["EnergyCost"];
-                this.columnTargetTypeID = this.Columns["TargetTypeID"];
-                this.columnRange = this.Columns["Range"];
-                this.columnRadius = this.Columns["Radius"];
-                this.columnLeadTime = this.Columns["LeadTime"];
-                this.columnDuration = this.Columns["Duration"];
-                this.columnAirAffinity = this.Columns["AirAffinity"];
-                this.columnEarthAffinity = this.Columns["EarthAffinity"];
-                this.columnFireAffinity = this.Columns["FireAffinity"];
-                this.columnLifeAffinity = this.Columns["LifeAffinity"];
-                this.columnWaterAffinity = this.Columns["WaterAffinity"];
-                this.columnLearnModifier = this.Columns["LearnModifier"];
+                this.columnItemID = this.Columns["ItemID"];
             }
             
             private void InitClass() {
-                this.columnSkillID = new DataColumn("SkillID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSkillID);
-                this.columnName = new DataColumn("Name", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.columnActivationTypeID = new DataColumn("ActivationTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnActivationTypeID);
-                this.columnEnergyCost = new DataColumn("EnergyCost", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnEnergyCost);
-                this.columnTargetTypeID = new DataColumn("TargetTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnTargetTypeID);
-                this.columnRange = new DataColumn("Range", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRange);
-                this.columnRadius = new DataColumn("Radius", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRadius);
-                this.columnLeadTime = new DataColumn("LeadTime", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLeadTime);
-                this.columnDuration = new DataColumn("Duration", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDuration);
-                this.columnAirAffinity = new DataColumn("AirAffinity", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnAirAffinity);
-                this.columnEarthAffinity = new DataColumn("EarthAffinity", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnEarthAffinity);
-                this.columnFireAffinity = new DataColumn("FireAffinity", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnFireAffinity);
-                this.columnLifeAffinity = new DataColumn("LifeAffinity", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLifeAffinity);
-                this.columnWaterAffinity = new DataColumn("WaterAffinity", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnWaterAffinity);
-                this.columnLearnModifier = new DataColumn("LearnModifier", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLearnModifier);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey2", new DataColumn[] {
-                                this.columnSkillID}, true));
-                this.columnSkillID.AllowDBNull = false;
-                this.columnSkillID.Unique = true;
-                this.columnActivationTypeID.AllowDBNull = false;
-                this.columnTargetTypeID.AllowDBNull = false;
-                this.columnLearnModifier.AllowDBNull = false;
+                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnItemID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey23", new DataColumn[] {
+                                this.columnItemID}, true));
+                this.columnItemID.AllowDBNull = false;
+                this.columnItemID.Unique = true;
             }
             
-            public EnumSkillRow NewEnumSkillRow() {
-                return ((EnumSkillRow)(this.NewRow()));
+            public JunkItemRow NewJunkItemRow() {
+                return ((JunkItemRow)(this.NewRow()));
             }
             
             protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumSkillRow(builder);
+                return new JunkItemRow(builder);
             }
             
             protected override System.Type GetRowType() {
-                return typeof(EnumSkillRow);
+                return typeof(JunkItemRow);
             }
             
             protected override void OnRowChanged(DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.EnumSkillRowChanged != null)) {
-                    this.EnumSkillRowChanged(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                if ((this.JunkItemRowChanged != null)) {
+                    this.JunkItemRowChanged(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
                 }
             }
             
             protected override void OnRowChanging(DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.EnumSkillRowChanging != null)) {
-                    this.EnumSkillRowChanging(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                if ((this.JunkItemRowChanging != null)) {
+                    this.JunkItemRowChanging(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
                 }
             }
             
             protected override void OnRowDeleted(DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.EnumSkillRowDeleted != null)) {
-                    this.EnumSkillRowDeleted(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                if ((this.JunkItemRowDeleted != null)) {
+                    this.JunkItemRowDeleted(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
                 }
             }
             
             protected override void OnRowDeleting(DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.EnumSkillRowDeleting != null)) {
-                    this.EnumSkillRowDeleting(this, new EnumSkillRowChangeEvent(((EnumSkillRow)(e.Row)), e.Action));
+                if ((this.JunkItemRowDeleting != null)) {
+                    this.JunkItemRowDeleting(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
                 }
             }
             
-            public void RemoveEnumSkillRow(EnumSkillRow row) {
+            public void RemoveJunkItemRow(JunkItemRow row) {
                 this.Rows.Remove(row);
             }
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSkillRow : DataRow {
+        public class JunkItemRow : DataRow {
             
-            private EnumSkillDataTable tableEnumSkill;
+            private JunkItemDataTable tableJunkItem;
             
-            internal EnumSkillRow(DataRowBuilder rb) : 
+            internal JunkItemRow(DataRowBuilder rb) : 
                     base(rb) {
-                this.tableEnumSkill = ((EnumSkillDataTable)(this.Table));
+                this.tableJunkItem = ((JunkItemDataTable)(this.Table));
             }
             
-            public int SkillID {
+            public int ItemID {
                 get {
-                    return ((int)(this[this.tableEnumSkill.SkillIDColumn]));
+                    return ((int)(this[this.tableJunkItem.ItemIDColumn]));
                 }
                 set {
-                    this[this.tableEnumSkill.SkillIDColumn] = value;
+                    this[this.tableJunkItem.ItemIDColumn] = value;
                 }
-            }
-            
-            public string Name {
-                get {
-                    try {
-                        return ((string)(this[this.tableEnumSkill.NameColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.NameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    try {
-                        return ((string)(this[this.tableEnumSkill.DescriptionColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.DescriptionColumn] = value;
-                }
-            }
-            
-            public int ActivationTypeID {
-                get {
-                    return ((int)(this[this.tableEnumSkill.ActivationTypeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumSkill.ActivationTypeIDColumn] = value;
-                }
-            }
-            
-            public int EnergyCost {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.EnergyCostColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.EnergyCostColumn] = value;
-                }
-            }
-            
-            public int TargetTypeID {
-                get {
-                    return ((int)(this[this.tableEnumSkill.TargetTypeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumSkill.TargetTypeIDColumn] = value;
-                }
-            }
-            
-            public int Range {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.RangeColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.RangeColumn] = value;
-                }
-            }
-            
-            public int Radius {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.RadiusColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.RadiusColumn] = value;
-                }
-            }
-            
-            public int LeadTime {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.LeadTimeColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.LeadTimeColumn] = value;
-                }
-            }
-            
-            public int Duration {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.DurationColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.DurationColumn] = value;
-                }
-            }
-            
-            public int AirAffinity {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.AirAffinityColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.AirAffinityColumn] = value;
-                }
-            }
-            
-            public int EarthAffinity {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.EarthAffinityColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.EarthAffinityColumn] = value;
-                }
-            }
-            
-            public int FireAffinity {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.FireAffinityColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.FireAffinityColumn] = value;
-                }
-            }
-            
-            public int LifeAffinity {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.LifeAffinityColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.LifeAffinityColumn] = value;
-                }
-            }
-            
-            public int WaterAffinity {
-                get {
-                    try {
-                        return ((int)(this[this.tableEnumSkill.WaterAffinityColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEnumSkill.WaterAffinityColumn] = value;
-                }
-            }
-            
-            public int LearnModifier {
-                get {
-                    return ((int)(this[this.tableEnumSkill.LearnModifierColumn]));
-                }
-                set {
-                    this[this.tableEnumSkill.LearnModifierColumn] = value;
-                }
-            }
-            
-            public bool IsNameNull() {
-                return this.IsNull(this.tableEnumSkill.NameColumn);
-            }
-            
-            public void SetNameNull() {
-                this[this.tableEnumSkill.NameColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsDescriptionNull() {
-                return this.IsNull(this.tableEnumSkill.DescriptionColumn);
-            }
-            
-            public void SetDescriptionNull() {
-                this[this.tableEnumSkill.DescriptionColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsEnergyCostNull() {
-                return this.IsNull(this.tableEnumSkill.EnergyCostColumn);
-            }
-            
-            public void SetEnergyCostNull() {
-                this[this.tableEnumSkill.EnergyCostColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsRangeNull() {
-                return this.IsNull(this.tableEnumSkill.RangeColumn);
-            }
-            
-            public void SetRangeNull() {
-                this[this.tableEnumSkill.RangeColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsRadiusNull() {
-                return this.IsNull(this.tableEnumSkill.RadiusColumn);
-            }
-            
-            public void SetRadiusNull() {
-                this[this.tableEnumSkill.RadiusColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsLeadTimeNull() {
-                return this.IsNull(this.tableEnumSkill.LeadTimeColumn);
-            }
-            
-            public void SetLeadTimeNull() {
-                this[this.tableEnumSkill.LeadTimeColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsDurationNull() {
-                return this.IsNull(this.tableEnumSkill.DurationColumn);
-            }
-            
-            public void SetDurationNull() {
-                this[this.tableEnumSkill.DurationColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsAirAffinityNull() {
-                return this.IsNull(this.tableEnumSkill.AirAffinityColumn);
-            }
-            
-            public void SetAirAffinityNull() {
-                this[this.tableEnumSkill.AirAffinityColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsEarthAffinityNull() {
-                return this.IsNull(this.tableEnumSkill.EarthAffinityColumn);
-            }
-            
-            public void SetEarthAffinityNull() {
-                this[this.tableEnumSkill.EarthAffinityColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsFireAffinityNull() {
-                return this.IsNull(this.tableEnumSkill.FireAffinityColumn);
-            }
-            
-            public void SetFireAffinityNull() {
-                this[this.tableEnumSkill.FireAffinityColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsLifeAffinityNull() {
-                return this.IsNull(this.tableEnumSkill.LifeAffinityColumn);
-            }
-            
-            public void SetLifeAffinityNull() {
-                this[this.tableEnumSkill.LifeAffinityColumn] = System.Convert.DBNull;
-            }
-            
-            public bool IsWaterAffinityNull() {
-                return this.IsNull(this.tableEnumSkill.WaterAffinityColumn);
-            }
-            
-            public void SetWaterAffinityNull() {
-                this[this.tableEnumSkill.WaterAffinityColumn] = System.Convert.DBNull;
             }
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSkillRowChangeEvent : EventArgs {
+        public class JunkItemRowChangeEvent : EventArgs {
             
-            private EnumSkillRow eventRow;
+            private JunkItemRow eventRow;
             
             private DataRowAction eventAction;
             
-            public EnumSkillRowChangeEvent(EnumSkillRow row, DataRowAction action) {
+            public JunkItemRowChangeEvent(JunkItemRow row, DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
-            public EnumSkillRow Row {
+            public JunkItemRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class MobileHasClanRankDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnMobileID;
+            
+            private DataColumn columnClanID;
+            
+            private DataColumn columnRank;
+            
+            private DataColumn columnClanPoints;
+            
+            internal MobileHasClanRankDataTable() : 
+                    base("MobileHasClanRank") {
+                this.InitClass();
+            }
+            
+            internal MobileHasClanRankDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn MobileIDColumn {
+                get {
+                    return this.columnMobileID;
+                }
+            }
+            
+            internal DataColumn ClanIDColumn {
+                get {
+                    return this.columnClanID;
+                }
+            }
+            
+            internal DataColumn RankColumn {
+                get {
+                    return this.columnRank;
+                }
+            }
+            
+            internal DataColumn ClanPointsColumn {
+                get {
+                    return this.columnClanPoints;
+                }
+            }
+            
+            public MobileHasClanRankRow this[int index] {
+                get {
+                    return ((MobileHasClanRankRow)(this.Rows[index]));
+                }
+            }
+            
+            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowChanged;
+            
+            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowChanging;
+            
+            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowDeleted;
+            
+            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowDeleting;
+            
+            public void AddMobileHasClanRankRow(MobileHasClanRankRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public MobileHasClanRankRow AddMobileHasClanRankRow(int MobileID, int ClanID, int Rank, int ClanPoints) {
+                MobileHasClanRankRow rowMobileHasClanRankRow = ((MobileHasClanRankRow)(this.NewRow()));
+                rowMobileHasClanRankRow.ItemArray = new object[] {
+                        MobileID,
+                        ClanID,
+                        Rank,
+                        ClanPoints};
+                this.Rows.Add(rowMobileHasClanRankRow);
+                return rowMobileHasClanRankRow;
+            }
+            
+            public MobileHasClanRankRow FindByMobileIDClanID(int MobileID, int ClanID) {
+                return ((MobileHasClanRankRow)(this.Rows.Find(new object[] {
+                            MobileID,
+                            ClanID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                MobileHasClanRankDataTable cln = ((MobileHasClanRankDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new MobileHasClanRankDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnMobileID = this.Columns["MobileID"];
+                this.columnClanID = this.Columns["ClanID"];
+                this.columnRank = this.Columns["Rank"];
+                this.columnClanPoints = this.Columns["ClanPoints"];
+            }
+            
+            private void InitClass() {
+                this.columnMobileID = new DataColumn("MobileID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnMobileID);
+                this.columnClanID = new DataColumn("ClanID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnClanID);
+                this.columnRank = new DataColumn("Rank", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnRank);
+                this.columnClanPoints = new DataColumn("ClanPoints", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnClanPoints);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey24", new DataColumn[] {
+                                this.columnMobileID,
+                                this.columnClanID}, true));
+                this.columnMobileID.AllowDBNull = false;
+                this.columnClanID.AllowDBNull = false;
+                this.columnRank.AllowDBNull = false;
+                this.columnClanPoints.AllowDBNull = false;
+            }
+            
+            public MobileHasClanRankRow NewMobileHasClanRankRow() {
+                return ((MobileHasClanRankRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new MobileHasClanRankRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(MobileHasClanRankRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.MobileHasClanRankRowChanged != null)) {
+                    this.MobileHasClanRankRowChanged(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.MobileHasClanRankRowChanging != null)) {
+                    this.MobileHasClanRankRowChanging(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.MobileHasClanRankRowDeleted != null)) {
+                    this.MobileHasClanRankRowDeleted(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.MobileHasClanRankRowDeleting != null)) {
+                    this.MobileHasClanRankRowDeleting(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveMobileHasClanRankRow(MobileHasClanRankRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class MobileHasClanRankRow : DataRow {
+            
+            private MobileHasClanRankDataTable tableMobileHasClanRank;
+            
+            internal MobileHasClanRankRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableMobileHasClanRank = ((MobileHasClanRankDataTable)(this.Table));
+            }
+            
+            public int MobileID {
+                get {
+                    return ((int)(this[this.tableMobileHasClanRank.MobileIDColumn]));
+                }
+                set {
+                    this[this.tableMobileHasClanRank.MobileIDColumn] = value;
+                }
+            }
+            
+            public int ClanID {
+                get {
+                    return ((int)(this[this.tableMobileHasClanRank.ClanIDColumn]));
+                }
+                set {
+                    this[this.tableMobileHasClanRank.ClanIDColumn] = value;
+                }
+            }
+            
+            public int Rank {
+                get {
+                    return ((int)(this[this.tableMobileHasClanRank.RankColumn]));
+                }
+                set {
+                    this[this.tableMobileHasClanRank.RankColumn] = value;
+                }
+            }
+            
+            public int ClanPoints {
+                get {
+                    return ((int)(this[this.tableMobileHasClanRank.ClanPointsColumn]));
+                }
+                set {
+                    this[this.tableMobileHasClanRank.ClanPointsColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class MobileHasClanRankRowChangeEvent : EventArgs {
+            
+            private MobileHasClanRankRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public MobileHasClanRankRowChangeEvent(MobileHasClanRankRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public MobileHasClanRankRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -2164,7 +7944,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnSkillID);
                 this.columnRating = new DataColumn("Rating", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnRating);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey3", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey25", new DataColumn[] {
                                 this.columnMobileID,
                                 this.columnSkillID}, true));
                 this.columnMobileID.AllowDBNull = false;
@@ -2383,7 +8163,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnMobileID);
                 this.columnSpecialisationID = new DataColumn("SpecialisationID", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnSpecialisationID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey4", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey26", new DataColumn[] {
                                 this.columnMobileID}, true));
                 this.columnMobileID.AllowDBNull = false;
                 this.columnMobileID.Unique = true;
@@ -2494,7 +8274,7 @@ namespace Strive.Multiverse {
             
             private DataColumn columnMobileID;
             
-            private DataColumn columnRaceID;
+            private DataColumn columnEnumRaceID;
             
             private DataColumn columnLevel;
             
@@ -2511,6 +8291,8 @@ namespace Strive.Multiverse {
             private DataColumn columnGoldCarried;
             
             private DataColumn columnGoldBanked;
+            
+            private DataColumn columnEnumSexID;
             
             internal MobilePhysicalObjectDataTable() : 
                     base("MobilePhysicalObject") {
@@ -2546,9 +8328,9 @@ namespace Strive.Multiverse {
                 }
             }
             
-            internal DataColumn RaceIDColumn {
+            internal DataColumn EnumRaceIDColumn {
                 get {
-                    return this.columnRaceID;
+                    return this.columnEnumRaceID;
                 }
             }
             
@@ -2600,6 +8382,12 @@ namespace Strive.Multiverse {
                 }
             }
             
+            internal DataColumn EnumSexIDColumn {
+                get {
+                    return this.columnEnumSexID;
+                }
+            }
+            
             public MobilePhysicalObjectRow this[int index] {
                 get {
                     return ((MobilePhysicalObjectRow)(this.Rows[index]));
@@ -2618,11 +8406,11 @@ namespace Strive.Multiverse {
                 this.Rows.Add(row);
             }
             
-            public MobilePhysicalObjectRow AddMobilePhysicalObjectRow(int MobileID, int RaceID, int Level, int Strength, int Constitution, int Cognition, int Willpower, int Dexterity, int GoldCarried, int GoldBanked) {
+            public MobilePhysicalObjectRow AddMobilePhysicalObjectRow(int MobileID, int EnumRaceID, int Level, int Strength, int Constitution, int Cognition, int Willpower, int Dexterity, int GoldCarried, int GoldBanked, int EnumSexID) {
                 MobilePhysicalObjectRow rowMobilePhysicalObjectRow = ((MobilePhysicalObjectRow)(this.NewRow()));
                 rowMobilePhysicalObjectRow.ItemArray = new object[] {
                         MobileID,
-                        RaceID,
+                        EnumRaceID,
                         Level,
                         Strength,
                         Constitution,
@@ -2630,7 +8418,8 @@ namespace Strive.Multiverse {
                         Willpower,
                         Dexterity,
                         GoldCarried,
-                        GoldBanked};
+                        GoldBanked,
+                        EnumSexID};
                 this.Rows.Add(rowMobilePhysicalObjectRow);
                 return rowMobilePhysicalObjectRow;
             }
@@ -2656,7 +8445,7 @@ namespace Strive.Multiverse {
             
             internal void InitVars() {
                 this.columnMobileID = this.Columns["MobileID"];
-                this.columnRaceID = this.Columns["RaceID"];
+                this.columnEnumRaceID = this.Columns["EnumRaceID"];
                 this.columnLevel = this.Columns["Level"];
                 this.columnStrength = this.Columns["Strength"];
                 this.columnConstitution = this.Columns["Constitution"];
@@ -2665,13 +8454,14 @@ namespace Strive.Multiverse {
                 this.columnDexterity = this.Columns["Dexterity"];
                 this.columnGoldCarried = this.Columns["GoldCarried"];
                 this.columnGoldBanked = this.Columns["GoldBanked"];
+                this.columnEnumSexID = this.Columns["EnumSexID"];
             }
             
             private void InitClass() {
                 this.columnMobileID = new DataColumn("MobileID", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnMobileID);
-                this.columnRaceID = new DataColumn("RaceID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRaceID);
+                this.columnEnumRaceID = new DataColumn("EnumRaceID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumRaceID);
                 this.columnLevel = new DataColumn("Level", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnLevel);
                 this.columnStrength = new DataColumn("Strength", typeof(int), null, System.Data.MappingType.Element);
@@ -2688,11 +8478,13 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnGoldCarried);
                 this.columnGoldBanked = new DataColumn("GoldBanked", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnGoldBanked);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey5", new DataColumn[] {
+                this.columnEnumSexID = new DataColumn("EnumSexID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumSexID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey27", new DataColumn[] {
                                 this.columnMobileID}, true));
                 this.columnMobileID.AllowDBNull = false;
                 this.columnMobileID.Unique = true;
-                this.columnRaceID.AllowDBNull = false;
+                this.columnEnumRaceID.AllowDBNull = false;
                 this.columnLevel.AllowDBNull = false;
                 this.columnStrength.AllowDBNull = false;
                 this.columnConstitution.AllowDBNull = false;
@@ -2701,6 +8493,7 @@ namespace Strive.Multiverse {
                 this.columnDexterity.AllowDBNull = false;
                 this.columnGoldCarried.AllowDBNull = false;
                 this.columnGoldBanked.AllowDBNull = false;
+                this.columnEnumSexID.AllowDBNull = false;
             }
             
             public MobilePhysicalObjectRow NewMobilePhysicalObjectRow() {
@@ -2767,12 +8560,12 @@ namespace Strive.Multiverse {
                 }
             }
             
-            public int RaceID {
+            public int EnumRaceID {
                 get {
-                    return ((int)(this[this.tableMobilePhysicalObject.RaceIDColumn]));
+                    return ((int)(this[this.tableMobilePhysicalObject.EnumRaceIDColumn]));
                 }
                 set {
-                    this[this.tableMobilePhysicalObject.RaceIDColumn] = value;
+                    this[this.tableMobilePhysicalObject.EnumRaceIDColumn] = value;
                 }
             }
             
@@ -2847,6 +8640,15 @@ namespace Strive.Multiverse {
                     this[this.tableMobilePhysicalObject.GoldBankedColumn] = value;
                 }
             }
+            
+            public int EnumSexID {
+                get {
+                    return ((int)(this[this.tableMobilePhysicalObject.EnumSexIDColumn]));
+                }
+                set {
+                    this[this.tableMobilePhysicalObject.EnumSexIDColumn] = value;
+                }
+            }
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
@@ -2862,6 +8664,816 @@ namespace Strive.Multiverse {
             }
             
             public MobilePhysicalObjectRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class MobilePossesableByPlayerDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnMobileID;
+            
+            private DataColumn columnPlayerID;
+            
+            private DataColumn columnSpawnID;
+            
+            internal MobilePossesableByPlayerDataTable() : 
+                    base("MobilePossesableByPlayer") {
+                this.InitClass();
+            }
+            
+            internal MobilePossesableByPlayerDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn MobileIDColumn {
+                get {
+                    return this.columnMobileID;
+                }
+            }
+            
+            internal DataColumn PlayerIDColumn {
+                get {
+                    return this.columnPlayerID;
+                }
+            }
+            
+            internal DataColumn SpawnIDColumn {
+                get {
+                    return this.columnSpawnID;
+                }
+            }
+            
+            public MobilePossesableByPlayerRow this[int index] {
+                get {
+                    return ((MobilePossesableByPlayerRow)(this.Rows[index]));
+                }
+            }
+            
+            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowChanged;
+            
+            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowChanging;
+            
+            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowDeleted;
+            
+            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowDeleting;
+            
+            public void AddMobilePossesableByPlayerRow(MobilePossesableByPlayerRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public MobilePossesableByPlayerRow AddMobilePossesableByPlayerRow(int MobileID, int PlayerID, int SpawnID) {
+                MobilePossesableByPlayerRow rowMobilePossesableByPlayerRow = ((MobilePossesableByPlayerRow)(this.NewRow()));
+                rowMobilePossesableByPlayerRow.ItemArray = new object[] {
+                        MobileID,
+                        PlayerID,
+                        SpawnID};
+                this.Rows.Add(rowMobilePossesableByPlayerRow);
+                return rowMobilePossesableByPlayerRow;
+            }
+            
+            public MobilePossesableByPlayerRow FindByMobileID(int MobileID) {
+                return ((MobilePossesableByPlayerRow)(this.Rows.Find(new object[] {
+                            MobileID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                MobilePossesableByPlayerDataTable cln = ((MobilePossesableByPlayerDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new MobilePossesableByPlayerDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnMobileID = this.Columns["MobileID"];
+                this.columnPlayerID = this.Columns["PlayerID"];
+                this.columnSpawnID = this.Columns["SpawnID"];
+            }
+            
+            private void InitClass() {
+                this.columnMobileID = new DataColumn("MobileID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnMobileID);
+                this.columnPlayerID = new DataColumn("PlayerID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPlayerID);
+                this.columnSpawnID = new DataColumn("SpawnID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnSpawnID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey28", new DataColumn[] {
+                                this.columnMobileID}, true));
+                this.columnMobileID.AllowDBNull = false;
+                this.columnMobileID.Unique = true;
+                this.columnPlayerID.AllowDBNull = false;
+                this.columnSpawnID.AllowDBNull = false;
+            }
+            
+            public MobilePossesableByPlayerRow NewMobilePossesableByPlayerRow() {
+                return ((MobilePossesableByPlayerRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new MobilePossesableByPlayerRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(MobilePossesableByPlayerRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.MobilePossesableByPlayerRowChanged != null)) {
+                    this.MobilePossesableByPlayerRowChanged(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.MobilePossesableByPlayerRowChanging != null)) {
+                    this.MobilePossesableByPlayerRowChanging(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.MobilePossesableByPlayerRowDeleted != null)) {
+                    this.MobilePossesableByPlayerRowDeleted(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.MobilePossesableByPlayerRowDeleting != null)) {
+                    this.MobilePossesableByPlayerRowDeleting(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveMobilePossesableByPlayerRow(MobilePossesableByPlayerRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class MobilePossesableByPlayerRow : DataRow {
+            
+            private MobilePossesableByPlayerDataTable tableMobilePossesableByPlayer;
+            
+            internal MobilePossesableByPlayerRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableMobilePossesableByPlayer = ((MobilePossesableByPlayerDataTable)(this.Table));
+            }
+            
+            public int MobileID {
+                get {
+                    return ((int)(this[this.tableMobilePossesableByPlayer.MobileIDColumn]));
+                }
+                set {
+                    this[this.tableMobilePossesableByPlayer.MobileIDColumn] = value;
+                }
+            }
+            
+            public int PlayerID {
+                get {
+                    return ((int)(this[this.tableMobilePossesableByPlayer.PlayerIDColumn]));
+                }
+                set {
+                    this[this.tableMobilePossesableByPlayer.PlayerIDColumn] = value;
+                }
+            }
+            
+            public int SpawnID {
+                get {
+                    return ((int)(this[this.tableMobilePossesableByPlayer.SpawnIDColumn]));
+                }
+                set {
+                    this[this.tableMobilePossesableByPlayer.SpawnIDColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class MobilePossesableByPlayerRowChangeEvent : EventArgs {
+            
+            private MobilePossesableByPlayerRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public MobilePossesableByPlayerRowChangeEvent(MobilePossesableByPlayerRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public MobilePossesableByPlayerRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ModelDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnModelID;
+            
+            private DataColumn columnModelName;
+            
+            private DataColumn columnCreatorID;
+            
+            private DataColumn columnDescription;
+            
+            private DataColumn columnCreationTime;
+            
+            internal ModelDataTable() : 
+                    base("Model") {
+                this.InitClass();
+            }
+            
+            internal ModelDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn ModelIDColumn {
+                get {
+                    return this.columnModelID;
+                }
+            }
+            
+            internal DataColumn ModelNameColumn {
+                get {
+                    return this.columnModelName;
+                }
+            }
+            
+            internal DataColumn CreatorIDColumn {
+                get {
+                    return this.columnCreatorID;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            internal DataColumn CreationTimeColumn {
+                get {
+                    return this.columnCreationTime;
+                }
+            }
+            
+            public ModelRow this[int index] {
+                get {
+                    return ((ModelRow)(this.Rows[index]));
+                }
+            }
+            
+            public event ModelRowChangeEventHandler ModelRowChanged;
+            
+            public event ModelRowChangeEventHandler ModelRowChanging;
+            
+            public event ModelRowChangeEventHandler ModelRowDeleted;
+            
+            public event ModelRowChangeEventHandler ModelRowDeleting;
+            
+            public void AddModelRow(ModelRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public ModelRow AddModelRow(string ModelName, int CreatorID, string Description, System.Byte[] CreationTime) {
+                ModelRow rowModelRow = ((ModelRow)(this.NewRow()));
+                rowModelRow.ItemArray = new object[] {
+                        null,
+                        ModelName,
+                        CreatorID,
+                        Description,
+                        CreationTime};
+                this.Rows.Add(rowModelRow);
+                return rowModelRow;
+            }
+            
+            public ModelRow FindByModelID(int ModelID) {
+                return ((ModelRow)(this.Rows.Find(new object[] {
+                            ModelID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                ModelDataTable cln = ((ModelDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new ModelDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnModelID = this.Columns["ModelID"];
+                this.columnModelName = this.Columns["ModelName"];
+                this.columnCreatorID = this.Columns["CreatorID"];
+                this.columnDescription = this.Columns["Description"];
+                this.columnCreationTime = this.Columns["CreationTime"];
+            }
+            
+            private void InitClass() {
+                this.columnModelID = new DataColumn("ModelID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnModelID);
+                this.columnModelName = new DataColumn("ModelName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnModelName);
+                this.columnCreatorID = new DataColumn("CreatorID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnCreatorID);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.columnCreationTime = new DataColumn("CreationTime", typeof(System.Byte[]), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnCreationTime);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey29", new DataColumn[] {
+                                this.columnModelID}, true));
+                this.columnModelID.AutoIncrement = true;
+                this.columnModelID.AllowDBNull = false;
+                this.columnModelID.ReadOnly = true;
+                this.columnModelID.Unique = true;
+                this.columnModelName.AllowDBNull = false;
+                this.columnCreatorID.AllowDBNull = false;
+                this.columnCreationTime.ReadOnly = true;
+            }
+            
+            public ModelRow NewModelRow() {
+                return ((ModelRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new ModelRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(ModelRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ModelRowChanged != null)) {
+                    this.ModelRowChanged(this, new ModelRowChangeEvent(((ModelRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ModelRowChanging != null)) {
+                    this.ModelRowChanging(this, new ModelRowChangeEvent(((ModelRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ModelRowDeleted != null)) {
+                    this.ModelRowDeleted(this, new ModelRowChangeEvent(((ModelRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ModelRowDeleting != null)) {
+                    this.ModelRowDeleting(this, new ModelRowChangeEvent(((ModelRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveModelRow(ModelRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ModelRow : DataRow {
+            
+            private ModelDataTable tableModel;
+            
+            internal ModelRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableModel = ((ModelDataTable)(this.Table));
+            }
+            
+            public int ModelID {
+                get {
+                    return ((int)(this[this.tableModel.ModelIDColumn]));
+                }
+                set {
+                    this[this.tableModel.ModelIDColumn] = value;
+                }
+            }
+            
+            public string ModelName {
+                get {
+                    return ((string)(this[this.tableModel.ModelNameColumn]));
+                }
+                set {
+                    this[this.tableModel.ModelNameColumn] = value;
+                }
+            }
+            
+            public int CreatorID {
+                get {
+                    return ((int)(this[this.tableModel.CreatorIDColumn]));
+                }
+                set {
+                    this[this.tableModel.CreatorIDColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    try {
+                        return ((string)(this[this.tableModel.DescriptionColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableModel.DescriptionColumn] = value;
+                }
+            }
+            
+            public System.Byte[] CreationTime {
+                get {
+                    try {
+                        return ((System.Byte[])(this[this.tableModel.CreationTimeColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableModel.CreationTimeColumn] = value;
+                }
+            }
+            
+            public bool IsDescriptionNull() {
+                return this.IsNull(this.tableModel.DescriptionColumn);
+            }
+            
+            public void SetDescriptionNull() {
+                this[this.tableModel.DescriptionColumn] = System.Convert.DBNull;
+            }
+            
+            public bool IsCreationTimeNull() {
+                return this.IsNull(this.tableModel.CreationTimeColumn);
+            }
+            
+            public void SetCreationTimeNull() {
+                this[this.tableModel.CreationTimeColumn] = System.Convert.DBNull;
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ModelRowChangeEvent : EventArgs {
+            
+            private ModelRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public ModelRowChangeEvent(ModelRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public ModelRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class PhysicalObjectDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnPhysicalObjectID;
+            
+            private DataColumn columnAreaID;
+            
+            private DataColumn columnPhysicalObjectName;
+            
+            private DataColumn columnModelID;
+            
+            private DataColumn columnCreatorID;
+            
+            internal PhysicalObjectDataTable() : 
+                    base("PhysicalObject") {
+                this.InitClass();
+            }
+            
+            internal PhysicalObjectDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn PhysicalObjectIDColumn {
+                get {
+                    return this.columnPhysicalObjectID;
+                }
+            }
+            
+            internal DataColumn AreaIDColumn {
+                get {
+                    return this.columnAreaID;
+                }
+            }
+            
+            internal DataColumn PhysicalObjectNameColumn {
+                get {
+                    return this.columnPhysicalObjectName;
+                }
+            }
+            
+            internal DataColumn ModelIDColumn {
+                get {
+                    return this.columnModelID;
+                }
+            }
+            
+            internal DataColumn CreatorIDColumn {
+                get {
+                    return this.columnCreatorID;
+                }
+            }
+            
+            public PhysicalObjectRow this[int index] {
+                get {
+                    return ((PhysicalObjectRow)(this.Rows[index]));
+                }
+            }
+            
+            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowChanged;
+            
+            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowChanging;
+            
+            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowDeleted;
+            
+            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowDeleting;
+            
+            public void AddPhysicalObjectRow(PhysicalObjectRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public PhysicalObjectRow AddPhysicalObjectRow(int AreaID, string PhysicalObjectName, int ModelID, int CreatorID) {
+                PhysicalObjectRow rowPhysicalObjectRow = ((PhysicalObjectRow)(this.NewRow()));
+                rowPhysicalObjectRow.ItemArray = new object[] {
+                        null,
+                        AreaID,
+                        PhysicalObjectName,
+                        ModelID,
+                        CreatorID};
+                this.Rows.Add(rowPhysicalObjectRow);
+                return rowPhysicalObjectRow;
+            }
+            
+            public PhysicalObjectRow FindByPhysicalObjectID(int PhysicalObjectID) {
+                return ((PhysicalObjectRow)(this.Rows.Find(new object[] {
+                            PhysicalObjectID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                PhysicalObjectDataTable cln = ((PhysicalObjectDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new PhysicalObjectDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnPhysicalObjectID = this.Columns["PhysicalObjectID"];
+                this.columnAreaID = this.Columns["AreaID"];
+                this.columnPhysicalObjectName = this.Columns["PhysicalObjectName"];
+                this.columnModelID = this.Columns["ModelID"];
+                this.columnCreatorID = this.Columns["CreatorID"];
+            }
+            
+            private void InitClass() {
+                this.columnPhysicalObjectID = new DataColumn("PhysicalObjectID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPhysicalObjectID);
+                this.columnAreaID = new DataColumn("AreaID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnAreaID);
+                this.columnPhysicalObjectName = new DataColumn("PhysicalObjectName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPhysicalObjectName);
+                this.columnModelID = new DataColumn("ModelID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnModelID);
+                this.columnCreatorID = new DataColumn("CreatorID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnCreatorID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey30", new DataColumn[] {
+                                this.columnPhysicalObjectID}, true));
+                this.columnPhysicalObjectID.AutoIncrement = true;
+                this.columnPhysicalObjectID.AllowDBNull = false;
+                this.columnPhysicalObjectID.ReadOnly = true;
+                this.columnPhysicalObjectID.Unique = true;
+                this.columnAreaID.AllowDBNull = false;
+                this.columnPhysicalObjectName.AllowDBNull = false;
+                this.columnModelID.AllowDBNull = false;
+                this.columnCreatorID.AllowDBNull = false;
+            }
+            
+            public PhysicalObjectRow NewPhysicalObjectRow() {
+                return ((PhysicalObjectRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new PhysicalObjectRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(PhysicalObjectRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.PhysicalObjectRowChanged != null)) {
+                    this.PhysicalObjectRowChanged(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.PhysicalObjectRowChanging != null)) {
+                    this.PhysicalObjectRowChanging(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.PhysicalObjectRowDeleted != null)) {
+                    this.PhysicalObjectRowDeleted(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.PhysicalObjectRowDeleting != null)) {
+                    this.PhysicalObjectRowDeleting(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemovePhysicalObjectRow(PhysicalObjectRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class PhysicalObjectRow : DataRow {
+            
+            private PhysicalObjectDataTable tablePhysicalObject;
+            
+            internal PhysicalObjectRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablePhysicalObject = ((PhysicalObjectDataTable)(this.Table));
+            }
+            
+            public int PhysicalObjectID {
+                get {
+                    return ((int)(this[this.tablePhysicalObject.PhysicalObjectIDColumn]));
+                }
+                set {
+                    this[this.tablePhysicalObject.PhysicalObjectIDColumn] = value;
+                }
+            }
+            
+            public int AreaID {
+                get {
+                    return ((int)(this[this.tablePhysicalObject.AreaIDColumn]));
+                }
+                set {
+                    this[this.tablePhysicalObject.AreaIDColumn] = value;
+                }
+            }
+            
+            public string PhysicalObjectName {
+                get {
+                    return ((string)(this[this.tablePhysicalObject.PhysicalObjectNameColumn]));
+                }
+                set {
+                    this[this.tablePhysicalObject.PhysicalObjectNameColumn] = value;
+                }
+            }
+            
+            public int ModelID {
+                get {
+                    return ((int)(this[this.tablePhysicalObject.ModelIDColumn]));
+                }
+                set {
+                    this[this.tablePhysicalObject.ModelIDColumn] = value;
+                }
+            }
+            
+            public int CreatorID {
+                get {
+                    return ((int)(this[this.tablePhysicalObject.CreatorIDColumn]));
+                }
+                set {
+                    this[this.tablePhysicalObject.CreatorIDColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class PhysicalObjectRowChangeEvent : EventArgs {
+            
+            private PhysicalObjectRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public PhysicalObjectRowChangeEvent(PhysicalObjectRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public PhysicalObjectRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3004,7 +9616,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnDuration);
                 this.columnLevel = new DataColumn("Level", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnLevel);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey6", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey31", new DataColumn[] {
                                 this.columnPhysicalObjectID,
                                 this.columnSkillID,
                                 this.columnDuration,
@@ -3133,20 +9745,20 @@ namespace Strive.Multiverse {
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
-        public class EquipableItemDataTable : DataTable, System.Collections.IEnumerable {
+        public class PlayerDataTable : DataTable, System.Collections.IEnumerable {
             
-            private DataColumn columnItemID;
+            private DataColumn columnPlayerID;
             
-            private DataColumn columnWearLocationID;
+            private DataColumn columnEmail;
             
-            private DataColumn columnArmourClass;
+            private DataColumn columnPassword;
             
-            internal EquipableItemDataTable() : 
-                    base("EquipableItem") {
+            internal PlayerDataTable() : 
+                    base("Player") {
                 this.InitClass();
             }
             
-            internal EquipableItemDataTable(DataTable table) : 
+            internal PlayerDataTable(DataTable table) : 
                     base(table.TableName) {
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -3169,55 +9781,55 @@ namespace Strive.Multiverse {
                 }
             }
             
-            internal DataColumn ItemIDColumn {
+            internal DataColumn PlayerIDColumn {
                 get {
-                    return this.columnItemID;
+                    return this.columnPlayerID;
                 }
             }
             
-            internal DataColumn WearLocationIDColumn {
+            internal DataColumn EmailColumn {
                 get {
-                    return this.columnWearLocationID;
+                    return this.columnEmail;
                 }
             }
             
-            internal DataColumn ArmourClassColumn {
+            internal DataColumn PasswordColumn {
                 get {
-                    return this.columnArmourClass;
+                    return this.columnPassword;
                 }
             }
             
-            public EquipableItemRow this[int index] {
+            public PlayerRow this[int index] {
                 get {
-                    return ((EquipableItemRow)(this.Rows[index]));
+                    return ((PlayerRow)(this.Rows[index]));
                 }
             }
             
-            public event EquipableItemRowChangeEventHandler EquipableItemRowChanged;
+            public event PlayerRowChangeEventHandler PlayerRowChanged;
             
-            public event EquipableItemRowChangeEventHandler EquipableItemRowChanging;
+            public event PlayerRowChangeEventHandler PlayerRowChanging;
             
-            public event EquipableItemRowChangeEventHandler EquipableItemRowDeleted;
+            public event PlayerRowChangeEventHandler PlayerRowDeleted;
             
-            public event EquipableItemRowChangeEventHandler EquipableItemRowDeleting;
+            public event PlayerRowChangeEventHandler PlayerRowDeleting;
             
-            public void AddEquipableItemRow(EquipableItemRow row) {
+            public void AddPlayerRow(PlayerRow row) {
                 this.Rows.Add(row);
             }
             
-            public EquipableItemRow AddEquipableItemRow(int ItemID, int WearLocationID, int ArmourClass) {
-                EquipableItemRow rowEquipableItemRow = ((EquipableItemRow)(this.NewRow()));
-                rowEquipableItemRow.ItemArray = new object[] {
-                        ItemID,
-                        WearLocationID,
-                        ArmourClass};
-                this.Rows.Add(rowEquipableItemRow);
-                return rowEquipableItemRow;
+            public PlayerRow AddPlayerRow(string Email, string Password) {
+                PlayerRow rowPlayerRow = ((PlayerRow)(this.NewRow()));
+                rowPlayerRow.ItemArray = new object[] {
+                        null,
+                        Email,
+                        Password};
+                this.Rows.Add(rowPlayerRow);
+                return rowPlayerRow;
             }
             
-            public EquipableItemRow FindByItemID(int ItemID) {
-                return ((EquipableItemRow)(this.Rows.Find(new object[] {
-                            ItemID})));
+            public PlayerRow FindByPlayerID(int PlayerID) {
+                return ((PlayerRow)(this.Rows.Find(new object[] {
+                            PlayerID})));
             }
             
             public System.Collections.IEnumerator GetEnumerator() {
@@ -3225,341 +9837,134 @@ namespace Strive.Multiverse {
             }
             
             public override DataTable Clone() {
-                EquipableItemDataTable cln = ((EquipableItemDataTable)(base.Clone()));
+                PlayerDataTable cln = ((PlayerDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
             
             protected override DataTable CreateInstance() {
-                return new EquipableItemDataTable();
+                return new PlayerDataTable();
             }
             
             internal void InitVars() {
-                this.columnItemID = this.Columns["ItemID"];
-                this.columnWearLocationID = this.Columns["WearLocationID"];
-                this.columnArmourClass = this.Columns["ArmourClass"];
+                this.columnPlayerID = this.Columns["PlayerID"];
+                this.columnEmail = this.Columns["Email"];
+                this.columnPassword = this.Columns["Password"];
             }
             
             private void InitClass() {
-                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnItemID);
-                this.columnWearLocationID = new DataColumn("WearLocationID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnWearLocationID);
-                this.columnArmourClass = new DataColumn("ArmourClass", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnArmourClass);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey7", new DataColumn[] {
-                                this.columnItemID}, true));
-                this.columnItemID.AllowDBNull = false;
-                this.columnItemID.Unique = true;
-                this.columnWearLocationID.AllowDBNull = false;
-                this.columnArmourClass.AllowDBNull = false;
+                this.columnPlayerID = new DataColumn("PlayerID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPlayerID);
+                this.columnEmail = new DataColumn("Email", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEmail);
+                this.columnPassword = new DataColumn("Password", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPassword);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey32", new DataColumn[] {
+                                this.columnPlayerID}, true));
+                this.columnPlayerID.AutoIncrement = true;
+                this.columnPlayerID.AllowDBNull = false;
+                this.columnPlayerID.ReadOnly = true;
+                this.columnPlayerID.Unique = true;
+                this.columnEmail.AllowDBNull = false;
+                this.columnPassword.AllowDBNull = false;
             }
             
-            public EquipableItemRow NewEquipableItemRow() {
-                return ((EquipableItemRow)(this.NewRow()));
+            public PlayerRow NewPlayerRow() {
+                return ((PlayerRow)(this.NewRow()));
             }
             
             protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EquipableItemRow(builder);
+                return new PlayerRow(builder);
             }
             
             protected override System.Type GetRowType() {
-                return typeof(EquipableItemRow);
+                return typeof(PlayerRow);
             }
             
             protected override void OnRowChanged(DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.EquipableItemRowChanged != null)) {
-                    this.EquipableItemRowChanged(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                if ((this.PlayerRowChanged != null)) {
+                    this.PlayerRowChanged(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
                 }
             }
             
             protected override void OnRowChanging(DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.EquipableItemRowChanging != null)) {
-                    this.EquipableItemRowChanging(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                if ((this.PlayerRowChanging != null)) {
+                    this.PlayerRowChanging(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
                 }
             }
             
             protected override void OnRowDeleted(DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.EquipableItemRowDeleted != null)) {
-                    this.EquipableItemRowDeleted(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                if ((this.PlayerRowDeleted != null)) {
+                    this.PlayerRowDeleted(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
                 }
             }
             
             protected override void OnRowDeleting(DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.EquipableItemRowDeleting != null)) {
-                    this.EquipableItemRowDeleting(this, new EquipableItemRowChangeEvent(((EquipableItemRow)(e.Row)), e.Action));
+                if ((this.PlayerRowDeleting != null)) {
+                    this.PlayerRowDeleting(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
                 }
             }
             
-            public void RemoveEquipableItemRow(EquipableItemRow row) {
+            public void RemovePlayerRow(PlayerRow row) {
                 this.Rows.Remove(row);
             }
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
-        public class EquipableItemRow : DataRow {
+        public class PlayerRow : DataRow {
             
-            private EquipableItemDataTable tableEquipableItem;
+            private PlayerDataTable tablePlayer;
             
-            internal EquipableItemRow(DataRowBuilder rb) : 
+            internal PlayerRow(DataRowBuilder rb) : 
                     base(rb) {
-                this.tableEquipableItem = ((EquipableItemDataTable)(this.Table));
+                this.tablePlayer = ((PlayerDataTable)(this.Table));
             }
             
-            public int ItemID {
+            public int PlayerID {
                 get {
-                    return ((int)(this[this.tableEquipableItem.ItemIDColumn]));
+                    return ((int)(this[this.tablePlayer.PlayerIDColumn]));
                 }
                 set {
-                    this[this.tableEquipableItem.ItemIDColumn] = value;
-                }
-            }
-            
-            public int WearLocationID {
-                get {
-                    return ((int)(this[this.tableEquipableItem.WearLocationIDColumn]));
-                }
-                set {
-                    this[this.tableEquipableItem.WearLocationIDColumn] = value;
+                    this[this.tablePlayer.PlayerIDColumn] = value;
                 }
             }
             
-            public int ArmourClass {
+            public string Email {
                 get {
-                    return ((int)(this[this.tableEquipableItem.ArmourClassColumn]));
+                    return ((string)(this[this.tablePlayer.EmailColumn]));
                 }
                 set {
-                    this[this.tableEquipableItem.ArmourClassColumn] = value;
+                    this[this.tablePlayer.EmailColumn] = value;
+                }
+            }
+            
+            public string Password {
+                get {
+                    return ((string)(this[this.tablePlayer.PasswordColumn]));
+                }
+                set {
+                    this[this.tablePlayer.PasswordColumn] = value;
                 }
             }
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
-        public class EquipableItemRowChangeEvent : EventArgs {
+        public class PlayerRowChangeEvent : EventArgs {
             
-            private EquipableItemRow eventRow;
+            private PlayerRow eventRow;
             
             private DataRowAction eventAction;
             
-            public EquipableItemRowChangeEvent(EquipableItemRow row, DataRowAction action) {
+            public PlayerRowChangeEvent(PlayerRow row, DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
-            public EquipableItemRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class SkillEnablesSkillDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnSkillID;
-            
-            private DataColumn columnPrerequisiteSkillID;
-            
-            internal SkillEnablesSkillDataTable() : 
-                    base("SkillEnablesSkill") {
-                this.InitClass();
-            }
-            
-            internal SkillEnablesSkillDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn SkillIDColumn {
-                get {
-                    return this.columnSkillID;
-                }
-            }
-            
-            internal DataColumn PrerequisiteSkillIDColumn {
-                get {
-                    return this.columnPrerequisiteSkillID;
-                }
-            }
-            
-            public SkillEnablesSkillRow this[int index] {
-                get {
-                    return ((SkillEnablesSkillRow)(this.Rows[index]));
-                }
-            }
-            
-            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowChanged;
-            
-            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowChanging;
-            
-            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowDeleted;
-            
-            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowDeleting;
-            
-            public void AddSkillEnablesSkillRow(SkillEnablesSkillRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public SkillEnablesSkillRow AddSkillEnablesSkillRow(int SkillID, int PrerequisiteSkillID) {
-                SkillEnablesSkillRow rowSkillEnablesSkillRow = ((SkillEnablesSkillRow)(this.NewRow()));
-                rowSkillEnablesSkillRow.ItemArray = new object[] {
-                        SkillID,
-                        PrerequisiteSkillID};
-                this.Rows.Add(rowSkillEnablesSkillRow);
-                return rowSkillEnablesSkillRow;
-            }
-            
-            public SkillEnablesSkillRow FindBySkillID(int SkillID) {
-                return ((SkillEnablesSkillRow)(this.Rows.Find(new object[] {
-                            SkillID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                SkillEnablesSkillDataTable cln = ((SkillEnablesSkillDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new SkillEnablesSkillDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnSkillID = this.Columns["SkillID"];
-                this.columnPrerequisiteSkillID = this.Columns["PrerequisiteSkillID"];
-            }
-            
-            private void InitClass() {
-                this.columnSkillID = new DataColumn("SkillID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSkillID);
-                this.columnPrerequisiteSkillID = new DataColumn("PrerequisiteSkillID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPrerequisiteSkillID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey8", new DataColumn[] {
-                                this.columnSkillID}, true));
-                this.columnSkillID.AllowDBNull = false;
-                this.columnSkillID.Unique = true;
-                this.columnPrerequisiteSkillID.AllowDBNull = false;
-            }
-            
-            public SkillEnablesSkillRow NewSkillEnablesSkillRow() {
-                return ((SkillEnablesSkillRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new SkillEnablesSkillRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(SkillEnablesSkillRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.SkillEnablesSkillRowChanged != null)) {
-                    this.SkillEnablesSkillRowChanged(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.SkillEnablesSkillRowChanging != null)) {
-                    this.SkillEnablesSkillRowChanging(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.SkillEnablesSkillRowDeleted != null)) {
-                    this.SkillEnablesSkillRowDeleted(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.SkillEnablesSkillRowDeleting != null)) {
-                    this.SkillEnablesSkillRowDeleting(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveSkillEnablesSkillRow(SkillEnablesSkillRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class SkillEnablesSkillRow : DataRow {
-            
-            private SkillEnablesSkillDataTable tableSkillEnablesSkill;
-            
-            internal SkillEnablesSkillRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableSkillEnablesSkill = ((SkillEnablesSkillDataTable)(this.Table));
-            }
-            
-            public int SkillID {
-                get {
-                    return ((int)(this[this.tableSkillEnablesSkill.SkillIDColumn]));
-                }
-                set {
-                    this[this.tableSkillEnablesSkill.SkillIDColumn] = value;
-                }
-            }
-            
-            public int PrerequisiteSkillID {
-                get {
-                    return ((int)(this[this.tableSkillEnablesSkill.PrerequisiteSkillIDColumn]));
-                }
-                set {
-                    this[this.tableSkillEnablesSkill.PrerequisiteSkillIDColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class SkillEnablesSkillRowChangeEvent : EventArgs {
-            
-            private SkillEnablesSkillRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public SkillEnablesSkillRowChangeEvent(SkillEnablesSkillRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public SkillEnablesSkillRow Row {
+            public PlayerRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3687,7 +10092,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnLiquidTypeID);
                 this.columnCapacity = new DataColumn("Capacity", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnCapacity);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey9", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey33", new DataColumn[] {
                                 this.columnItemID}, true));
                 this.columnItemID.AllowDBNull = false;
                 this.columnItemID.Unique = true;
@@ -3804,6 +10209,1253 @@ namespace Strive.Multiverse {
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
+        public class QuoteDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnQuoteID;
+            
+            private DataColumn columnQuoteName;
+            
+            private DataColumn columnQuoted;
+            
+            private DataColumn columnDescription;
+            
+            internal QuoteDataTable() : 
+                    base("Quote") {
+                this.InitClass();
+            }
+            
+            internal QuoteDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn QuoteIDColumn {
+                get {
+                    return this.columnQuoteID;
+                }
+            }
+            
+            internal DataColumn QuoteNameColumn {
+                get {
+                    return this.columnQuoteName;
+                }
+            }
+            
+            internal DataColumn QuotedColumn {
+                get {
+                    return this.columnQuoted;
+                }
+            }
+            
+            internal DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            public QuoteRow this[int index] {
+                get {
+                    return ((QuoteRow)(this.Rows[index]));
+                }
+            }
+            
+            public event QuoteRowChangeEventHandler QuoteRowChanged;
+            
+            public event QuoteRowChangeEventHandler QuoteRowChanging;
+            
+            public event QuoteRowChangeEventHandler QuoteRowDeleted;
+            
+            public event QuoteRowChangeEventHandler QuoteRowDeleting;
+            
+            public void AddQuoteRow(QuoteRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public QuoteRow AddQuoteRow(string QuoteName, string Quoted, string Description) {
+                QuoteRow rowQuoteRow = ((QuoteRow)(this.NewRow()));
+                rowQuoteRow.ItemArray = new object[] {
+                        null,
+                        QuoteName,
+                        Quoted,
+                        Description};
+                this.Rows.Add(rowQuoteRow);
+                return rowQuoteRow;
+            }
+            
+            public QuoteRow FindByQuoteID(int QuoteID) {
+                return ((QuoteRow)(this.Rows.Find(new object[] {
+                            QuoteID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                QuoteDataTable cln = ((QuoteDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new QuoteDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnQuoteID = this.Columns["QuoteID"];
+                this.columnQuoteName = this.Columns["QuoteName"];
+                this.columnQuoted = this.Columns["Quoted"];
+                this.columnDescription = this.Columns["Description"];
+            }
+            
+            private void InitClass() {
+                this.columnQuoteID = new DataColumn("QuoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteID);
+                this.columnQuoteName = new DataColumn("QuoteName", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoteName);
+                this.columnQuoted = new DataColumn("Quoted", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnQuoted);
+                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnDescription);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey34", new DataColumn[] {
+                                this.columnQuoteID}, true));
+                this.columnQuoteID.AutoIncrement = true;
+                this.columnQuoteID.AllowDBNull = false;
+                this.columnQuoteID.ReadOnly = true;
+                this.columnQuoteID.Unique = true;
+                this.columnQuoteName.AllowDBNull = false;
+                this.columnQuoted.AllowDBNull = false;
+                this.columnDescription.AllowDBNull = false;
+            }
+            
+            public QuoteRow NewQuoteRow() {
+                return ((QuoteRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new QuoteRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(QuoteRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.QuoteRowChanged != null)) {
+                    this.QuoteRowChanged(this, new QuoteRowChangeEvent(((QuoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.QuoteRowChanging != null)) {
+                    this.QuoteRowChanging(this, new QuoteRowChangeEvent(((QuoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.QuoteRowDeleted != null)) {
+                    this.QuoteRowDeleted(this, new QuoteRowChangeEvent(((QuoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.QuoteRowDeleting != null)) {
+                    this.QuoteRowDeleting(this, new QuoteRowChangeEvent(((QuoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveQuoteRow(QuoteRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class QuoteRow : DataRow {
+            
+            private QuoteDataTable tableQuote;
+            
+            internal QuoteRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableQuote = ((QuoteDataTable)(this.Table));
+            }
+            
+            public int QuoteID {
+                get {
+                    return ((int)(this[this.tableQuote.QuoteIDColumn]));
+                }
+                set {
+                    this[this.tableQuote.QuoteIDColumn] = value;
+                }
+            }
+            
+            public string QuoteName {
+                get {
+                    return ((string)(this[this.tableQuote.QuoteNameColumn]));
+                }
+                set {
+                    this[this.tableQuote.QuoteNameColumn] = value;
+                }
+            }
+            
+            public string Quoted {
+                get {
+                    return ((string)(this[this.tableQuote.QuotedColumn]));
+                }
+                set {
+                    this[this.tableQuote.QuotedColumn] = value;
+                }
+            }
+            
+            public string Description {
+                get {
+                    return ((string)(this[this.tableQuote.DescriptionColumn]));
+                }
+                set {
+                    this[this.tableQuote.DescriptionColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class QuoteRowChangeEvent : EventArgs {
+            
+            private QuoteRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public QuoteRowChangeEvent(QuoteRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public QuoteRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class RaceHasEmoteDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnEnumRaceID;
+            
+            private DataColumn columnEnumEmoteID;
+            
+            internal RaceHasEmoteDataTable() : 
+                    base("RaceHasEmote") {
+                this.InitClass();
+            }
+            
+            internal RaceHasEmoteDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn EnumRaceIDColumn {
+                get {
+                    return this.columnEnumRaceID;
+                }
+            }
+            
+            internal DataColumn EnumEmoteIDColumn {
+                get {
+                    return this.columnEnumEmoteID;
+                }
+            }
+            
+            public RaceHasEmoteRow this[int index] {
+                get {
+                    return ((RaceHasEmoteRow)(this.Rows[index]));
+                }
+            }
+            
+            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowChanged;
+            
+            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowChanging;
+            
+            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowDeleted;
+            
+            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowDeleting;
+            
+            public void AddRaceHasEmoteRow(RaceHasEmoteRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public RaceHasEmoteRow AddRaceHasEmoteRow(int EnumRaceID, int EnumEmoteID) {
+                RaceHasEmoteRow rowRaceHasEmoteRow = ((RaceHasEmoteRow)(this.NewRow()));
+                rowRaceHasEmoteRow.ItemArray = new object[] {
+                        EnumRaceID,
+                        EnumEmoteID};
+                this.Rows.Add(rowRaceHasEmoteRow);
+                return rowRaceHasEmoteRow;
+            }
+            
+            public RaceHasEmoteRow FindByEnumRaceID(int EnumRaceID) {
+                return ((RaceHasEmoteRow)(this.Rows.Find(new object[] {
+                            EnumRaceID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                RaceHasEmoteDataTable cln = ((RaceHasEmoteDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new RaceHasEmoteDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnEnumRaceID = this.Columns["EnumRaceID"];
+                this.columnEnumEmoteID = this.Columns["EnumEmoteID"];
+            }
+            
+            private void InitClass() {
+                this.columnEnumRaceID = new DataColumn("EnumRaceID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumRaceID);
+                this.columnEnumEmoteID = new DataColumn("EnumEmoteID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumEmoteID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey35", new DataColumn[] {
+                                this.columnEnumRaceID}, true));
+                this.columnEnumRaceID.AllowDBNull = false;
+                this.columnEnumRaceID.Unique = true;
+                this.columnEnumEmoteID.AllowDBNull = false;
+            }
+            
+            public RaceHasEmoteRow NewRaceHasEmoteRow() {
+                return ((RaceHasEmoteRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new RaceHasEmoteRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(RaceHasEmoteRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.RaceHasEmoteRowChanged != null)) {
+                    this.RaceHasEmoteRowChanged(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.RaceHasEmoteRowChanging != null)) {
+                    this.RaceHasEmoteRowChanging(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.RaceHasEmoteRowDeleted != null)) {
+                    this.RaceHasEmoteRowDeleted(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.RaceHasEmoteRowDeleting != null)) {
+                    this.RaceHasEmoteRowDeleting(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveRaceHasEmoteRow(RaceHasEmoteRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class RaceHasEmoteRow : DataRow {
+            
+            private RaceHasEmoteDataTable tableRaceHasEmote;
+            
+            internal RaceHasEmoteRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableRaceHasEmote = ((RaceHasEmoteDataTable)(this.Table));
+            }
+            
+            public int EnumRaceID {
+                get {
+                    return ((int)(this[this.tableRaceHasEmote.EnumRaceIDColumn]));
+                }
+                set {
+                    this[this.tableRaceHasEmote.EnumRaceIDColumn] = value;
+                }
+            }
+            
+            public int EnumEmoteID {
+                get {
+                    return ((int)(this[this.tableRaceHasEmote.EnumEmoteIDColumn]));
+                }
+                set {
+                    this[this.tableRaceHasEmote.EnumEmoteIDColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class RaceHasEmoteRowChangeEvent : EventArgs {
+            
+            private RaceHasEmoteRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public RaceHasEmoteRowChangeEvent(RaceHasEmoteRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public RaceHasEmoteRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ReadableItemDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnItemID;
+            
+            private DataColumn columnTitle;
+            
+            private DataColumn columnContent;
+            
+            internal ReadableItemDataTable() : 
+                    base("ReadableItem") {
+                this.InitClass();
+            }
+            
+            internal ReadableItemDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn ItemIDColumn {
+                get {
+                    return this.columnItemID;
+                }
+            }
+            
+            internal DataColumn TitleColumn {
+                get {
+                    return this.columnTitle;
+                }
+            }
+            
+            internal DataColumn ContentColumn {
+                get {
+                    return this.columnContent;
+                }
+            }
+            
+            public ReadableItemRow this[int index] {
+                get {
+                    return ((ReadableItemRow)(this.Rows[index]));
+                }
+            }
+            
+            public event ReadableItemRowChangeEventHandler ReadableItemRowChanged;
+            
+            public event ReadableItemRowChangeEventHandler ReadableItemRowChanging;
+            
+            public event ReadableItemRowChangeEventHandler ReadableItemRowDeleted;
+            
+            public event ReadableItemRowChangeEventHandler ReadableItemRowDeleting;
+            
+            public void AddReadableItemRow(ReadableItemRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public ReadableItemRow AddReadableItemRow(int ItemID, string Title, string Content) {
+                ReadableItemRow rowReadableItemRow = ((ReadableItemRow)(this.NewRow()));
+                rowReadableItemRow.ItemArray = new object[] {
+                        ItemID,
+                        Title,
+                        Content};
+                this.Rows.Add(rowReadableItemRow);
+                return rowReadableItemRow;
+            }
+            
+            public ReadableItemRow FindByItemID(int ItemID) {
+                return ((ReadableItemRow)(this.Rows.Find(new object[] {
+                            ItemID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                ReadableItemDataTable cln = ((ReadableItemDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new ReadableItemDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnItemID = this.Columns["ItemID"];
+                this.columnTitle = this.Columns["Title"];
+                this.columnContent = this.Columns["Content"];
+            }
+            
+            private void InitClass() {
+                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnItemID);
+                this.columnTitle = new DataColumn("Title", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnTitle);
+                this.columnContent = new DataColumn("Content", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnContent);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey36", new DataColumn[] {
+                                this.columnItemID}, true));
+                this.columnItemID.AllowDBNull = false;
+                this.columnItemID.Unique = true;
+                this.columnTitle.AllowDBNull = false;
+                this.columnContent.AllowDBNull = false;
+            }
+            
+            public ReadableItemRow NewReadableItemRow() {
+                return ((ReadableItemRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new ReadableItemRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(ReadableItemRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ReadableItemRowChanged != null)) {
+                    this.ReadableItemRowChanged(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ReadableItemRowChanging != null)) {
+                    this.ReadableItemRowChanging(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ReadableItemRowDeleted != null)) {
+                    this.ReadableItemRowDeleted(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ReadableItemRowDeleting != null)) {
+                    this.ReadableItemRowDeleting(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveReadableItemRow(ReadableItemRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ReadableItemRow : DataRow {
+            
+            private ReadableItemDataTable tableReadableItem;
+            
+            internal ReadableItemRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableReadableItem = ((ReadableItemDataTable)(this.Table));
+            }
+            
+            public int ItemID {
+                get {
+                    return ((int)(this[this.tableReadableItem.ItemIDColumn]));
+                }
+                set {
+                    this[this.tableReadableItem.ItemIDColumn] = value;
+                }
+            }
+            
+            public string Title {
+                get {
+                    return ((string)(this[this.tableReadableItem.TitleColumn]));
+                }
+                set {
+                    this[this.tableReadableItem.TitleColumn] = value;
+                }
+            }
+            
+            public string Content {
+                get {
+                    return ((string)(this[this.tableReadableItem.ContentColumn]));
+                }
+                set {
+                    this[this.tableReadableItem.ContentColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class ReadableItemRowChangeEvent : EventArgs {
+            
+            private ReadableItemRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public ReadableItemRowChangeEvent(ReadableItemRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public ReadableItemRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class RespawnPointDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnSpawnID;
+            
+            private DataColumn columnPhysicalObjectID;
+            
+            private DataColumn columnX;
+            
+            private DataColumn columnY;
+            
+            private DataColumn columnZ;
+            
+            private DataColumn columnHeadingX;
+            
+            private DataColumn columnHeadingY;
+            
+            private DataColumn columnHeadingZ;
+            
+            internal RespawnPointDataTable() : 
+                    base("RespawnPoint") {
+                this.InitClass();
+            }
+            
+            internal RespawnPointDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn SpawnIDColumn {
+                get {
+                    return this.columnSpawnID;
+                }
+            }
+            
+            internal DataColumn PhysicalObjectIDColumn {
+                get {
+                    return this.columnPhysicalObjectID;
+                }
+            }
+            
+            internal DataColumn XColumn {
+                get {
+                    return this.columnX;
+                }
+            }
+            
+            internal DataColumn YColumn {
+                get {
+                    return this.columnY;
+                }
+            }
+            
+            internal DataColumn ZColumn {
+                get {
+                    return this.columnZ;
+                }
+            }
+            
+            internal DataColumn HeadingXColumn {
+                get {
+                    return this.columnHeadingX;
+                }
+            }
+            
+            internal DataColumn HeadingYColumn {
+                get {
+                    return this.columnHeadingY;
+                }
+            }
+            
+            internal DataColumn HeadingZColumn {
+                get {
+                    return this.columnHeadingZ;
+                }
+            }
+            
+            public RespawnPointRow this[int index] {
+                get {
+                    return ((RespawnPointRow)(this.Rows[index]));
+                }
+            }
+            
+            public event RespawnPointRowChangeEventHandler RespawnPointRowChanged;
+            
+            public event RespawnPointRowChangeEventHandler RespawnPointRowChanging;
+            
+            public event RespawnPointRowChangeEventHandler RespawnPointRowDeleted;
+            
+            public event RespawnPointRowChangeEventHandler RespawnPointRowDeleting;
+            
+            public void AddRespawnPointRow(RespawnPointRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public RespawnPointRow AddRespawnPointRow(int PhysicalObjectID, System.Double X, System.Double Y, System.Double Z, System.Double HeadingX, System.Double HeadingY, System.Double HeadingZ) {
+                RespawnPointRow rowRespawnPointRow = ((RespawnPointRow)(this.NewRow()));
+                rowRespawnPointRow.ItemArray = new object[] {
+                        null,
+                        PhysicalObjectID,
+                        X,
+                        Y,
+                        Z,
+                        HeadingX,
+                        HeadingY,
+                        HeadingZ};
+                this.Rows.Add(rowRespawnPointRow);
+                return rowRespawnPointRow;
+            }
+            
+            public RespawnPointRow FindBySpawnID(int SpawnID) {
+                return ((RespawnPointRow)(this.Rows.Find(new object[] {
+                            SpawnID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                RespawnPointDataTable cln = ((RespawnPointDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new RespawnPointDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnSpawnID = this.Columns["SpawnID"];
+                this.columnPhysicalObjectID = this.Columns["PhysicalObjectID"];
+                this.columnX = this.Columns["X"];
+                this.columnY = this.Columns["Y"];
+                this.columnZ = this.Columns["Z"];
+                this.columnHeadingX = this.Columns["HeadingX"];
+                this.columnHeadingY = this.Columns["HeadingY"];
+                this.columnHeadingZ = this.Columns["HeadingZ"];
+            }
+            
+            private void InitClass() {
+                this.columnSpawnID = new DataColumn("SpawnID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnSpawnID);
+                this.columnPhysicalObjectID = new DataColumn("PhysicalObjectID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPhysicalObjectID);
+                this.columnX = new DataColumn("X", typeof(System.Double), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnX);
+                this.columnY = new DataColumn("Y", typeof(System.Double), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnY);
+                this.columnZ = new DataColumn("Z", typeof(System.Double), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnZ);
+                this.columnHeadingX = new DataColumn("HeadingX", typeof(System.Double), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnHeadingX);
+                this.columnHeadingY = new DataColumn("HeadingY", typeof(System.Double), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnHeadingY);
+                this.columnHeadingZ = new DataColumn("HeadingZ", typeof(System.Double), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnHeadingZ);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey37", new DataColumn[] {
+                                this.columnSpawnID}, true));
+                this.columnSpawnID.AutoIncrement = true;
+                this.columnSpawnID.AllowDBNull = false;
+                this.columnSpawnID.ReadOnly = true;
+                this.columnSpawnID.Unique = true;
+                this.columnPhysicalObjectID.AllowDBNull = false;
+                this.columnX.AllowDBNull = false;
+                this.columnY.AllowDBNull = false;
+                this.columnZ.AllowDBNull = false;
+                this.columnHeadingX.AllowDBNull = false;
+                this.columnHeadingY.AllowDBNull = false;
+                this.columnHeadingZ.AllowDBNull = false;
+            }
+            
+            public RespawnPointRow NewRespawnPointRow() {
+                return ((RespawnPointRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new RespawnPointRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(RespawnPointRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.RespawnPointRowChanged != null)) {
+                    this.RespawnPointRowChanged(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.RespawnPointRowChanging != null)) {
+                    this.RespawnPointRowChanging(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.RespawnPointRowDeleted != null)) {
+                    this.RespawnPointRowDeleted(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.RespawnPointRowDeleting != null)) {
+                    this.RespawnPointRowDeleting(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveRespawnPointRow(RespawnPointRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class RespawnPointRow : DataRow {
+            
+            private RespawnPointDataTable tableRespawnPoint;
+            
+            internal RespawnPointRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableRespawnPoint = ((RespawnPointDataTable)(this.Table));
+            }
+            
+            public int SpawnID {
+                get {
+                    return ((int)(this[this.tableRespawnPoint.SpawnIDColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.SpawnIDColumn] = value;
+                }
+            }
+            
+            public int PhysicalObjectID {
+                get {
+                    return ((int)(this[this.tableRespawnPoint.PhysicalObjectIDColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.PhysicalObjectIDColumn] = value;
+                }
+            }
+            
+            public System.Double X {
+                get {
+                    return ((System.Double)(this[this.tableRespawnPoint.XColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.XColumn] = value;
+                }
+            }
+            
+            public System.Double Y {
+                get {
+                    return ((System.Double)(this[this.tableRespawnPoint.YColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.YColumn] = value;
+                }
+            }
+            
+            public System.Double Z {
+                get {
+                    return ((System.Double)(this[this.tableRespawnPoint.ZColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.ZColumn] = value;
+                }
+            }
+            
+            public System.Double HeadingX {
+                get {
+                    return ((System.Double)(this[this.tableRespawnPoint.HeadingXColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.HeadingXColumn] = value;
+                }
+            }
+            
+            public System.Double HeadingY {
+                get {
+                    return ((System.Double)(this[this.tableRespawnPoint.HeadingYColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.HeadingYColumn] = value;
+                }
+            }
+            
+            public System.Double HeadingZ {
+                get {
+                    return ((System.Double)(this[this.tableRespawnPoint.HeadingZColumn]));
+                }
+                set {
+                    this[this.tableRespawnPoint.HeadingZColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class RespawnPointRowChangeEvent : EventArgs {
+            
+            private RespawnPointRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public RespawnPointRowChangeEvent(RespawnPointRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public RespawnPointRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class SkillEnablesSkillDataTable : DataTable, System.Collections.IEnumerable {
+            
+            private DataColumn columnSkillID;
+            
+            private DataColumn columnPrerequisiteSkillID;
+            
+            internal SkillEnablesSkillDataTable() : 
+                    base("SkillEnablesSkill") {
+                this.InitClass();
+            }
+            
+            internal SkillEnablesSkillDataTable(DataTable table) : 
+                    base(table.TableName) {
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+                this.DisplayExpression = table.DisplayExpression;
+            }
+            
+            [System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            internal DataColumn SkillIDColumn {
+                get {
+                    return this.columnSkillID;
+                }
+            }
+            
+            internal DataColumn PrerequisiteSkillIDColumn {
+                get {
+                    return this.columnPrerequisiteSkillID;
+                }
+            }
+            
+            public SkillEnablesSkillRow this[int index] {
+                get {
+                    return ((SkillEnablesSkillRow)(this.Rows[index]));
+                }
+            }
+            
+            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowChanged;
+            
+            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowChanging;
+            
+            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowDeleted;
+            
+            public event SkillEnablesSkillRowChangeEventHandler SkillEnablesSkillRowDeleting;
+            
+            public void AddSkillEnablesSkillRow(SkillEnablesSkillRow row) {
+                this.Rows.Add(row);
+            }
+            
+            public SkillEnablesSkillRow AddSkillEnablesSkillRow(int SkillID, int PrerequisiteSkillID) {
+                SkillEnablesSkillRow rowSkillEnablesSkillRow = ((SkillEnablesSkillRow)(this.NewRow()));
+                rowSkillEnablesSkillRow.ItemArray = new object[] {
+                        SkillID,
+                        PrerequisiteSkillID};
+                this.Rows.Add(rowSkillEnablesSkillRow);
+                return rowSkillEnablesSkillRow;
+            }
+            
+            public SkillEnablesSkillRow FindBySkillID(int SkillID) {
+                return ((SkillEnablesSkillRow)(this.Rows.Find(new object[] {
+                            SkillID})));
+            }
+            
+            public System.Collections.IEnumerator GetEnumerator() {
+                return this.Rows.GetEnumerator();
+            }
+            
+            public override DataTable Clone() {
+                SkillEnablesSkillDataTable cln = ((SkillEnablesSkillDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            protected override DataTable CreateInstance() {
+                return new SkillEnablesSkillDataTable();
+            }
+            
+            internal void InitVars() {
+                this.columnSkillID = this.Columns["SkillID"];
+                this.columnPrerequisiteSkillID = this.Columns["PrerequisiteSkillID"];
+            }
+            
+            private void InitClass() {
+                this.columnSkillID = new DataColumn("SkillID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnSkillID);
+                this.columnPrerequisiteSkillID = new DataColumn("PrerequisiteSkillID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnPrerequisiteSkillID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey38", new DataColumn[] {
+                                this.columnSkillID}, true));
+                this.columnSkillID.AllowDBNull = false;
+                this.columnSkillID.Unique = true;
+                this.columnPrerequisiteSkillID.AllowDBNull = false;
+            }
+            
+            public SkillEnablesSkillRow NewSkillEnablesSkillRow() {
+                return ((SkillEnablesSkillRow)(this.NewRow()));
+            }
+            
+            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
+                return new SkillEnablesSkillRow(builder);
+            }
+            
+            protected override System.Type GetRowType() {
+                return typeof(SkillEnablesSkillRow);
+            }
+            
+            protected override void OnRowChanged(DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.SkillEnablesSkillRowChanged != null)) {
+                    this.SkillEnablesSkillRowChanged(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowChanging(DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.SkillEnablesSkillRowChanging != null)) {
+                    this.SkillEnablesSkillRowChanging(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.SkillEnablesSkillRowDeleted != null)) {
+                    this.SkillEnablesSkillRowDeleted(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.SkillEnablesSkillRowDeleting != null)) {
+                    this.SkillEnablesSkillRowDeleting(this, new SkillEnablesSkillRowChangeEvent(((SkillEnablesSkillRow)(e.Row)), e.Action));
+                }
+            }
+            
+            public void RemoveSkillEnablesSkillRow(SkillEnablesSkillRow row) {
+                this.Rows.Remove(row);
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class SkillEnablesSkillRow : DataRow {
+            
+            private SkillEnablesSkillDataTable tableSkillEnablesSkill;
+            
+            internal SkillEnablesSkillRow(DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableSkillEnablesSkill = ((SkillEnablesSkillDataTable)(this.Table));
+            }
+            
+            public int SkillID {
+                get {
+                    return ((int)(this[this.tableSkillEnablesSkill.SkillIDColumn]));
+                }
+                set {
+                    this[this.tableSkillEnablesSkill.SkillIDColumn] = value;
+                }
+            }
+            
+            public int PrerequisiteSkillID {
+                get {
+                    return ((int)(this[this.tableSkillEnablesSkill.PrerequisiteSkillIDColumn]));
+                }
+                set {
+                    this[this.tableSkillEnablesSkill.PrerequisiteSkillIDColumn] = value;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
+        public class SkillEnablesSkillRowChangeEvent : EventArgs {
+            
+            private SkillEnablesSkillRow eventRow;
+            
+            private DataRowAction eventAction;
+            
+            public SkillEnablesSkillRowChangeEvent(SkillEnablesSkillRow row, DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            public SkillEnablesSkillRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            public DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThrough()]
         public class SpecialisationEnablesSkillDataTable : DataTable, System.Collections.IEnumerable {
             
             private DataColumn columnSpecialisationID;
@@ -3906,7 +11558,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnSpecialisationID);
                 this.columnSkillID = new DataColumn("SkillID", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnSkillID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey10", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey39", new DataColumn[] {
                                 this.columnSpecialisationID}, true));
                 this.columnSpecialisationID.AllowDBNull = false;
                 this.columnSpecialisationID.Unique = true;
@@ -4115,7 +11767,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnSpecialisationID);
                 this.columnPrerequisiteSpecialisationID = new DataColumn("PrerequisiteSpecialisationID", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnPrerequisiteSpecialisationID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey11", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey40", new DataColumn[] {
                                 this.columnSpecialisationID}, true));
                 this.columnSpecialisationID.AllowDBNull = false;
                 this.columnSpecialisationID.Unique = true;
@@ -4324,7 +11976,7 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnTerrainID);
                 this.columnTerrainTypeID = new DataColumn("TerrainTypeID", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnTerrainTypeID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey12", new DataColumn[] {
+                this.Constraints.Add(new UniqueConstraint("SchemaKey41", new DataColumn[] {
                                 this.columnTerrainID}, true));
                 this.columnTerrainID.AllowDBNull = false;
                 this.columnTerrainID.Unique = true;
@@ -4439,7 +12091,9 @@ namespace Strive.Multiverse {
             
             private DataColumn columnHitroll;
             
-            private DataColumn columnDamageTypeID;
+            private DataColumn columnEnumDamageTypeID;
+            
+            private DataColumn columnEnumWeaponSizeID;
             
             internal WieldableItemDataTable() : 
                     base("WieldableItem") {
@@ -4487,9 +12141,15 @@ namespace Strive.Multiverse {
                 }
             }
             
-            internal DataColumn DamageTypeIDColumn {
+            internal DataColumn EnumDamageTypeIDColumn {
                 get {
-                    return this.columnDamageTypeID;
+                    return this.columnEnumDamageTypeID;
+                }
+            }
+            
+            internal DataColumn EnumWeaponSizeIDColumn {
+                get {
+                    return this.columnEnumWeaponSizeID;
                 }
             }
             
@@ -4511,13 +12171,14 @@ namespace Strive.Multiverse {
                 this.Rows.Add(row);
             }
             
-            public WieldableItemRow AddWieldableItemRow(int ItemID, int Damage, int Hitroll, int DamageTypeID) {
+            public WieldableItemRow AddWieldableItemRow(int ItemID, int Damage, int Hitroll, int EnumDamageTypeID, int EnumWeaponSizeID) {
                 WieldableItemRow rowWieldableItemRow = ((WieldableItemRow)(this.NewRow()));
                 rowWieldableItemRow.ItemArray = new object[] {
                         ItemID,
                         Damage,
                         Hitroll,
-                        DamageTypeID};
+                        EnumDamageTypeID,
+                        EnumWeaponSizeID};
                 this.Rows.Add(rowWieldableItemRow);
                 return rowWieldableItemRow;
             }
@@ -4545,7 +12206,8 @@ namespace Strive.Multiverse {
                 this.columnItemID = this.Columns["ItemID"];
                 this.columnDamage = this.Columns["Damage"];
                 this.columnHitroll = this.Columns["Hitroll"];
-                this.columnDamageTypeID = this.Columns["DamageTypeID"];
+                this.columnEnumDamageTypeID = this.Columns["EnumDamageTypeID"];
+                this.columnEnumWeaponSizeID = this.Columns["EnumWeaponSizeID"];
             }
             
             private void InitClass() {
@@ -4555,15 +12217,18 @@ namespace Strive.Multiverse {
                 this.Columns.Add(this.columnDamage);
                 this.columnHitroll = new DataColumn("Hitroll", typeof(int), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnHitroll);
-                this.columnDamageTypeID = new DataColumn("DamageTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDamageTypeID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey13", new DataColumn[] {
+                this.columnEnumDamageTypeID = new DataColumn("EnumDamageTypeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumDamageTypeID);
+                this.columnEnumWeaponSizeID = new DataColumn("EnumWeaponSizeID", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnEnumWeaponSizeID);
+                this.Constraints.Add(new UniqueConstraint("SchemaKey42", new DataColumn[] {
                                 this.columnItemID}, true));
                 this.columnItemID.AllowDBNull = false;
                 this.columnItemID.Unique = true;
                 this.columnDamage.AllowDBNull = false;
                 this.columnHitroll.AllowDBNull = false;
-                this.columnDamageTypeID.AllowDBNull = false;
+                this.columnEnumDamageTypeID.AllowDBNull = false;
+                this.columnEnumWeaponSizeID.AllowDBNull = false;
             }
             
             public WieldableItemRow NewWieldableItemRow() {
@@ -4648,12 +12313,21 @@ namespace Strive.Multiverse {
                 }
             }
             
-            public int DamageTypeID {
+            public int EnumDamageTypeID {
                 get {
-                    return ((int)(this[this.tableWieldableItem.DamageTypeIDColumn]));
+                    return ((int)(this[this.tableWieldableItem.EnumDamageTypeIDColumn]));
                 }
                 set {
-                    this[this.tableWieldableItem.DamageTypeIDColumn] = value;
+                    this[this.tableWieldableItem.EnumDamageTypeIDColumn] = value;
+                }
+            }
+            
+            public int EnumWeaponSizeID {
+                get {
+                    return ((int)(this[this.tableWieldableItem.EnumWeaponSizeIDColumn]));
+                }
+                set {
+                    this[this.tableWieldableItem.EnumWeaponSizeIDColumn] = value;
                 }
             }
         }
@@ -4671,5975 +12345,6 @@ namespace Strive.Multiverse {
             }
             
             public WieldableItemRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class PhysicalObjectDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnPhysicalObjectID;
-            
-            private DataColumn columnAreaID;
-            
-            private DataColumn columnPhysicalObjectName;
-            
-            private DataColumn columnModelID;
-            
-            internal PhysicalObjectDataTable() : 
-                    base("PhysicalObject") {
-                this.InitClass();
-            }
-            
-            internal PhysicalObjectDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn PhysicalObjectIDColumn {
-                get {
-                    return this.columnPhysicalObjectID;
-                }
-            }
-            
-            internal DataColumn AreaIDColumn {
-                get {
-                    return this.columnAreaID;
-                }
-            }
-            
-            internal DataColumn PhysicalObjectNameColumn {
-                get {
-                    return this.columnPhysicalObjectName;
-                }
-            }
-            
-            internal DataColumn ModelIDColumn {
-                get {
-                    return this.columnModelID;
-                }
-            }
-            
-            public PhysicalObjectRow this[int index] {
-                get {
-                    return ((PhysicalObjectRow)(this.Rows[index]));
-                }
-            }
-            
-            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowChanged;
-            
-            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowChanging;
-            
-            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowDeleted;
-            
-            public event PhysicalObjectRowChangeEventHandler PhysicalObjectRowDeleting;
-            
-            public void AddPhysicalObjectRow(PhysicalObjectRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public PhysicalObjectRow AddPhysicalObjectRow(int PhysicalObjectID, int AreaID, string PhysicalObjectName, int ModelID) {
-                PhysicalObjectRow rowPhysicalObjectRow = ((PhysicalObjectRow)(this.NewRow()));
-                rowPhysicalObjectRow.ItemArray = new object[] {
-                        PhysicalObjectID,
-                        AreaID,
-                        PhysicalObjectName,
-                        ModelID};
-                this.Rows.Add(rowPhysicalObjectRow);
-                return rowPhysicalObjectRow;
-            }
-            
-            public PhysicalObjectRow FindByPhysicalObjectID(int PhysicalObjectID) {
-                return ((PhysicalObjectRow)(this.Rows.Find(new object[] {
-                            PhysicalObjectID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                PhysicalObjectDataTable cln = ((PhysicalObjectDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new PhysicalObjectDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnPhysicalObjectID = this.Columns["PhysicalObjectID"];
-                this.columnAreaID = this.Columns["AreaID"];
-                this.columnPhysicalObjectName = this.Columns["PhysicalObjectName"];
-                this.columnModelID = this.Columns["ModelID"];
-            }
-            
-            private void InitClass() {
-                this.columnPhysicalObjectID = new DataColumn("PhysicalObjectID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPhysicalObjectID);
-                this.columnAreaID = new DataColumn("AreaID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnAreaID);
-                this.columnPhysicalObjectName = new DataColumn("PhysicalObjectName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPhysicalObjectName);
-                this.columnModelID = new DataColumn("ModelID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnModelID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey14", new DataColumn[] {
-                                this.columnPhysicalObjectID}, true));
-                this.columnPhysicalObjectID.AllowDBNull = false;
-                this.columnPhysicalObjectID.Unique = true;
-                this.columnAreaID.AllowDBNull = false;
-                this.columnPhysicalObjectName.AllowDBNull = false;
-                this.columnModelID.AllowDBNull = false;
-            }
-            
-            public PhysicalObjectRow NewPhysicalObjectRow() {
-                return ((PhysicalObjectRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new PhysicalObjectRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(PhysicalObjectRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.PhysicalObjectRowChanged != null)) {
-                    this.PhysicalObjectRowChanged(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.PhysicalObjectRowChanging != null)) {
-                    this.PhysicalObjectRowChanging(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.PhysicalObjectRowDeleted != null)) {
-                    this.PhysicalObjectRowDeleted(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.PhysicalObjectRowDeleting != null)) {
-                    this.PhysicalObjectRowDeleting(this, new PhysicalObjectRowChangeEvent(((PhysicalObjectRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemovePhysicalObjectRow(PhysicalObjectRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class PhysicalObjectRow : DataRow {
-            
-            private PhysicalObjectDataTable tablePhysicalObject;
-            
-            internal PhysicalObjectRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablePhysicalObject = ((PhysicalObjectDataTable)(this.Table));
-            }
-            
-            public int PhysicalObjectID {
-                get {
-                    return ((int)(this[this.tablePhysicalObject.PhysicalObjectIDColumn]));
-                }
-                set {
-                    this[this.tablePhysicalObject.PhysicalObjectIDColumn] = value;
-                }
-            }
-            
-            public int AreaID {
-                get {
-                    return ((int)(this[this.tablePhysicalObject.AreaIDColumn]));
-                }
-                set {
-                    this[this.tablePhysicalObject.AreaIDColumn] = value;
-                }
-            }
-            
-            public string PhysicalObjectName {
-                get {
-                    return ((string)(this[this.tablePhysicalObject.PhysicalObjectNameColumn]));
-                }
-                set {
-                    this[this.tablePhysicalObject.PhysicalObjectNameColumn] = value;
-                }
-            }
-            
-            public int ModelID {
-                get {
-                    return ((int)(this[this.tablePhysicalObject.ModelIDColumn]));
-                }
-                set {
-                    this[this.tablePhysicalObject.ModelIDColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class PhysicalObjectRowChangeEvent : EventArgs {
-            
-            private PhysicalObjectRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public PhysicalObjectRowChangeEvent(PhysicalObjectRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public PhysicalObjectRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class WorldDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnWorldID;
-            
-            private DataColumn columnWorldName;
-            
-            private DataColumn columnDescription;
-            
-            internal WorldDataTable() : 
-                    base("World") {
-                this.InitClass();
-            }
-            
-            internal WorldDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn WorldIDColumn {
-                get {
-                    return this.columnWorldID;
-                }
-            }
-            
-            internal DataColumn WorldNameColumn {
-                get {
-                    return this.columnWorldName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public WorldRow this[int index] {
-                get {
-                    return ((WorldRow)(this.Rows[index]));
-                }
-            }
-            
-            public event WorldRowChangeEventHandler WorldRowChanged;
-            
-            public event WorldRowChangeEventHandler WorldRowChanging;
-            
-            public event WorldRowChangeEventHandler WorldRowDeleted;
-            
-            public event WorldRowChangeEventHandler WorldRowDeleting;
-            
-            public void AddWorldRow(WorldRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public WorldRow AddWorldRow(int WorldID, string WorldName, string Description) {
-                WorldRow rowWorldRow = ((WorldRow)(this.NewRow()));
-                rowWorldRow.ItemArray = new object[] {
-                        WorldID,
-                        WorldName,
-                        Description};
-                this.Rows.Add(rowWorldRow);
-                return rowWorldRow;
-            }
-            
-            public WorldRow FindByWorldID(int WorldID) {
-                return ((WorldRow)(this.Rows.Find(new object[] {
-                            WorldID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                WorldDataTable cln = ((WorldDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new WorldDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnWorldID = this.Columns["WorldID"];
-                this.columnWorldName = this.Columns["WorldName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnWorldID = new DataColumn("WorldID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnWorldID);
-                this.columnWorldName = new DataColumn("WorldName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnWorldName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey15", new DataColumn[] {
-                                this.columnWorldID}, true));
-                this.columnWorldID.AllowDBNull = false;
-                this.columnWorldID.Unique = true;
-                this.columnWorldName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public WorldRow NewWorldRow() {
-                return ((WorldRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new WorldRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(WorldRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.WorldRowChanged != null)) {
-                    this.WorldRowChanged(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.WorldRowChanging != null)) {
-                    this.WorldRowChanging(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.WorldRowDeleted != null)) {
-                    this.WorldRowDeleted(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.WorldRowDeleting != null)) {
-                    this.WorldRowDeleting(this, new WorldRowChangeEvent(((WorldRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveWorldRow(WorldRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class WorldRow : DataRow {
-            
-            private WorldDataTable tableWorld;
-            
-            internal WorldRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableWorld = ((WorldDataTable)(this.Table));
-            }
-            
-            public int WorldID {
-                get {
-                    return ((int)(this[this.tableWorld.WorldIDColumn]));
-                }
-                set {
-                    this[this.tableWorld.WorldIDColumn] = value;
-                }
-            }
-            
-            public string WorldName {
-                get {
-                    return ((string)(this[this.tableWorld.WorldNameColumn]));
-                }
-                set {
-                    this[this.tableWorld.WorldNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableWorld.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableWorld.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class WorldRowChangeEvent : EventArgs {
-            
-            private WorldRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public WorldRowChangeEvent(WorldRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public WorldRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ReadableItemDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnItemID;
-            
-            private DataColumn columnTitle;
-            
-            private DataColumn columnContent;
-            
-            internal ReadableItemDataTable() : 
-                    base("ReadableItem") {
-                this.InitClass();
-            }
-            
-            internal ReadableItemDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn ItemIDColumn {
-                get {
-                    return this.columnItemID;
-                }
-            }
-            
-            internal DataColumn TitleColumn {
-                get {
-                    return this.columnTitle;
-                }
-            }
-            
-            internal DataColumn ContentColumn {
-                get {
-                    return this.columnContent;
-                }
-            }
-            
-            public ReadableItemRow this[int index] {
-                get {
-                    return ((ReadableItemRow)(this.Rows[index]));
-                }
-            }
-            
-            public event ReadableItemRowChangeEventHandler ReadableItemRowChanged;
-            
-            public event ReadableItemRowChangeEventHandler ReadableItemRowChanging;
-            
-            public event ReadableItemRowChangeEventHandler ReadableItemRowDeleted;
-            
-            public event ReadableItemRowChangeEventHandler ReadableItemRowDeleting;
-            
-            public void AddReadableItemRow(ReadableItemRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public ReadableItemRow AddReadableItemRow(int ItemID, string Title, string Content) {
-                ReadableItemRow rowReadableItemRow = ((ReadableItemRow)(this.NewRow()));
-                rowReadableItemRow.ItemArray = new object[] {
-                        ItemID,
-                        Title,
-                        Content};
-                this.Rows.Add(rowReadableItemRow);
-                return rowReadableItemRow;
-            }
-            
-            public ReadableItemRow FindByItemID(int ItemID) {
-                return ((ReadableItemRow)(this.Rows.Find(new object[] {
-                            ItemID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                ReadableItemDataTable cln = ((ReadableItemDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new ReadableItemDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnItemID = this.Columns["ItemID"];
-                this.columnTitle = this.Columns["Title"];
-                this.columnContent = this.Columns["Content"];
-            }
-            
-            private void InitClass() {
-                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnItemID);
-                this.columnTitle = new DataColumn("Title", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnTitle);
-                this.columnContent = new DataColumn("Content", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnContent);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey16", new DataColumn[] {
-                                this.columnItemID}, true));
-                this.columnItemID.AllowDBNull = false;
-                this.columnItemID.Unique = true;
-                this.columnTitle.AllowDBNull = false;
-                this.columnContent.AllowDBNull = false;
-            }
-            
-            public ReadableItemRow NewReadableItemRow() {
-                return ((ReadableItemRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new ReadableItemRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(ReadableItemRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.ReadableItemRowChanged != null)) {
-                    this.ReadableItemRowChanged(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.ReadableItemRowChanging != null)) {
-                    this.ReadableItemRowChanging(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.ReadableItemRowDeleted != null)) {
-                    this.ReadableItemRowDeleted(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.ReadableItemRowDeleting != null)) {
-                    this.ReadableItemRowDeleting(this, new ReadableItemRowChangeEvent(((ReadableItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveReadableItemRow(ReadableItemRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ReadableItemRow : DataRow {
-            
-            private ReadableItemDataTable tableReadableItem;
-            
-            internal ReadableItemRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableReadableItem = ((ReadableItemDataTable)(this.Table));
-            }
-            
-            public int ItemID {
-                get {
-                    return ((int)(this[this.tableReadableItem.ItemIDColumn]));
-                }
-                set {
-                    this[this.tableReadableItem.ItemIDColumn] = value;
-                }
-            }
-            
-            public string Title {
-                get {
-                    return ((string)(this[this.tableReadableItem.TitleColumn]));
-                }
-                set {
-                    this[this.tableReadableItem.TitleColumn] = value;
-                }
-            }
-            
-            public string Content {
-                get {
-                    return ((string)(this[this.tableReadableItem.ContentColumn]));
-                }
-                set {
-                    this[this.tableReadableItem.ContentColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ReadableItemRowChangeEvent : EventArgs {
-            
-            private ReadableItemRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public ReadableItemRowChangeEvent(ReadableItemRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public ReadableItemRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class JunkItemDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnItemID;
-            
-            internal JunkItemDataTable() : 
-                    base("JunkItem") {
-                this.InitClass();
-            }
-            
-            internal JunkItemDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn ItemIDColumn {
-                get {
-                    return this.columnItemID;
-                }
-            }
-            
-            public JunkItemRow this[int index] {
-                get {
-                    return ((JunkItemRow)(this.Rows[index]));
-                }
-            }
-            
-            public event JunkItemRowChangeEventHandler JunkItemRowChanged;
-            
-            public event JunkItemRowChangeEventHandler JunkItemRowChanging;
-            
-            public event JunkItemRowChangeEventHandler JunkItemRowDeleted;
-            
-            public event JunkItemRowChangeEventHandler JunkItemRowDeleting;
-            
-            public void AddJunkItemRow(JunkItemRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public JunkItemRow AddJunkItemRow(int ItemID) {
-                JunkItemRow rowJunkItemRow = ((JunkItemRow)(this.NewRow()));
-                rowJunkItemRow.ItemArray = new object[] {
-                        ItemID};
-                this.Rows.Add(rowJunkItemRow);
-                return rowJunkItemRow;
-            }
-            
-            public JunkItemRow FindByItemID(int ItemID) {
-                return ((JunkItemRow)(this.Rows.Find(new object[] {
-                            ItemID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                JunkItemDataTable cln = ((JunkItemDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new JunkItemDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnItemID = this.Columns["ItemID"];
-            }
-            
-            private void InitClass() {
-                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnItemID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey17", new DataColumn[] {
-                                this.columnItemID}, true));
-                this.columnItemID.AllowDBNull = false;
-                this.columnItemID.Unique = true;
-            }
-            
-            public JunkItemRow NewJunkItemRow() {
-                return ((JunkItemRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new JunkItemRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(JunkItemRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.JunkItemRowChanged != null)) {
-                    this.JunkItemRowChanged(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.JunkItemRowChanging != null)) {
-                    this.JunkItemRowChanging(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.JunkItemRowDeleted != null)) {
-                    this.JunkItemRowDeleted(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.JunkItemRowDeleting != null)) {
-                    this.JunkItemRowDeleting(this, new JunkItemRowChangeEvent(((JunkItemRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveJunkItemRow(JunkItemRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class JunkItemRow : DataRow {
-            
-            private JunkItemDataTable tableJunkItem;
-            
-            internal JunkItemRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableJunkItem = ((JunkItemDataTable)(this.Table));
-            }
-            
-            public int ItemID {
-                get {
-                    return ((int)(this[this.tableJunkItem.ItemIDColumn]));
-                }
-                set {
-                    this[this.tableJunkItem.ItemIDColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class JunkItemRowChangeEvent : EventArgs {
-            
-            private JunkItemRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public JunkItemRowChangeEvent(JunkItemRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public JunkItemRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumActivationTypeDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnActivationTypeID;
-            
-            private DataColumn columnActivationName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumActivationTypeDataTable() : 
-                    base("EnumActivationType") {
-                this.InitClass();
-            }
-            
-            internal EnumActivationTypeDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn ActivationTypeIDColumn {
-                get {
-                    return this.columnActivationTypeID;
-                }
-            }
-            
-            internal DataColumn ActivationNameColumn {
-                get {
-                    return this.columnActivationName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumActivationTypeRow this[int index] {
-                get {
-                    return ((EnumActivationTypeRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowChanged;
-            
-            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowChanging;
-            
-            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowDeleted;
-            
-            public event EnumActivationTypeRowChangeEventHandler EnumActivationTypeRowDeleting;
-            
-            public void AddEnumActivationTypeRow(EnumActivationTypeRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumActivationTypeRow AddEnumActivationTypeRow(int ActivationTypeID, string ActivationName, string Description) {
-                EnumActivationTypeRow rowEnumActivationTypeRow = ((EnumActivationTypeRow)(this.NewRow()));
-                rowEnumActivationTypeRow.ItemArray = new object[] {
-                        ActivationTypeID,
-                        ActivationName,
-                        Description};
-                this.Rows.Add(rowEnumActivationTypeRow);
-                return rowEnumActivationTypeRow;
-            }
-            
-            public EnumActivationTypeRow FindByActivationTypeID(int ActivationTypeID) {
-                return ((EnumActivationTypeRow)(this.Rows.Find(new object[] {
-                            ActivationTypeID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumActivationTypeDataTable cln = ((EnumActivationTypeDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumActivationTypeDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnActivationTypeID = this.Columns["ActivationTypeID"];
-                this.columnActivationName = this.Columns["ActivationName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnActivationTypeID = new DataColumn("ActivationTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnActivationTypeID);
-                this.columnActivationName = new DataColumn("ActivationName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnActivationName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey18", new DataColumn[] {
-                                this.columnActivationTypeID}, true));
-                this.columnActivationTypeID.AllowDBNull = false;
-                this.columnActivationTypeID.Unique = true;
-                this.columnActivationName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumActivationTypeRow NewEnumActivationTypeRow() {
-                return ((EnumActivationTypeRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumActivationTypeRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumActivationTypeRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumActivationTypeRowChanged != null)) {
-                    this.EnumActivationTypeRowChanged(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumActivationTypeRowChanging != null)) {
-                    this.EnumActivationTypeRowChanging(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumActivationTypeRowDeleted != null)) {
-                    this.EnumActivationTypeRowDeleted(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumActivationTypeRowDeleting != null)) {
-                    this.EnumActivationTypeRowDeleting(this, new EnumActivationTypeRowChangeEvent(((EnumActivationTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumActivationTypeRow(EnumActivationTypeRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumActivationTypeRow : DataRow {
-            
-            private EnumActivationTypeDataTable tableEnumActivationType;
-            
-            internal EnumActivationTypeRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumActivationType = ((EnumActivationTypeDataTable)(this.Table));
-            }
-            
-            public int ActivationTypeID {
-                get {
-                    return ((int)(this[this.tableEnumActivationType.ActivationTypeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumActivationType.ActivationTypeIDColumn] = value;
-                }
-            }
-            
-            public string ActivationName {
-                get {
-                    return ((string)(this[this.tableEnumActivationType.ActivationNameColumn]));
-                }
-                set {
-                    this[this.tableEnumActivationType.ActivationNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumActivationType.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumActivationType.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumActivationTypeRowChangeEvent : EventArgs {
-            
-            private EnumActivationTypeRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumActivationTypeRowChangeEvent(EnumActivationTypeRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumActivationTypeRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumCommandDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnCommandID;
-            
-            private DataColumn columnName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumCommandDataTable() : 
-                    base("EnumCommand") {
-                this.InitClass();
-            }
-            
-            internal EnumCommandDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn CommandIDColumn {
-                get {
-                    return this.columnCommandID;
-                }
-            }
-            
-            internal DataColumn NameColumn {
-                get {
-                    return this.columnName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumCommandRow this[int index] {
-                get {
-                    return ((EnumCommandRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumCommandRowChangeEventHandler EnumCommandRowChanged;
-            
-            public event EnumCommandRowChangeEventHandler EnumCommandRowChanging;
-            
-            public event EnumCommandRowChangeEventHandler EnumCommandRowDeleted;
-            
-            public event EnumCommandRowChangeEventHandler EnumCommandRowDeleting;
-            
-            public void AddEnumCommandRow(EnumCommandRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumCommandRow AddEnumCommandRow(int CommandID, string Name, string Description) {
-                EnumCommandRow rowEnumCommandRow = ((EnumCommandRow)(this.NewRow()));
-                rowEnumCommandRow.ItemArray = new object[] {
-                        CommandID,
-                        Name,
-                        Description};
-                this.Rows.Add(rowEnumCommandRow);
-                return rowEnumCommandRow;
-            }
-            
-            public EnumCommandRow FindByCommandID(int CommandID) {
-                return ((EnumCommandRow)(this.Rows.Find(new object[] {
-                            CommandID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumCommandDataTable cln = ((EnumCommandDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumCommandDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnCommandID = this.Columns["CommandID"];
-                this.columnName = this.Columns["Name"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnCommandID = new DataColumn("CommandID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnCommandID);
-                this.columnName = new DataColumn("Name", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey19", new DataColumn[] {
-                                this.columnCommandID}, true));
-                this.columnCommandID.AllowDBNull = false;
-                this.columnCommandID.Unique = true;
-                this.columnName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumCommandRow NewEnumCommandRow() {
-                return ((EnumCommandRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumCommandRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumCommandRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumCommandRowChanged != null)) {
-                    this.EnumCommandRowChanged(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumCommandRowChanging != null)) {
-                    this.EnumCommandRowChanging(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumCommandRowDeleted != null)) {
-                    this.EnumCommandRowDeleted(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumCommandRowDeleting != null)) {
-                    this.EnumCommandRowDeleting(this, new EnumCommandRowChangeEvent(((EnumCommandRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumCommandRow(EnumCommandRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumCommandRow : DataRow {
-            
-            private EnumCommandDataTable tableEnumCommand;
-            
-            internal EnumCommandRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumCommand = ((EnumCommandDataTable)(this.Table));
-            }
-            
-            public int CommandID {
-                get {
-                    return ((int)(this[this.tableEnumCommand.CommandIDColumn]));
-                }
-                set {
-                    this[this.tableEnumCommand.CommandIDColumn] = value;
-                }
-            }
-            
-            public string Name {
-                get {
-                    return ((string)(this[this.tableEnumCommand.NameColumn]));
-                }
-                set {
-                    this[this.tableEnumCommand.NameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumCommand.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumCommand.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumCommandRowChangeEvent : EventArgs {
-            
-            private EnumCommandRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumCommandRowChangeEvent(EnumCommandRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumCommandRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumEmoteDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnEmoteID;
-            
-            private DataColumn columnName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumEmoteDataTable() : 
-                    base("EnumEmote") {
-                this.InitClass();
-            }
-            
-            internal EnumEmoteDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn EmoteIDColumn {
-                get {
-                    return this.columnEmoteID;
-                }
-            }
-            
-            internal DataColumn NameColumn {
-                get {
-                    return this.columnName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumEmoteRow this[int index] {
-                get {
-                    return ((EnumEmoteRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumEmoteRowChangeEventHandler EnumEmoteRowChanged;
-            
-            public event EnumEmoteRowChangeEventHandler EnumEmoteRowChanging;
-            
-            public event EnumEmoteRowChangeEventHandler EnumEmoteRowDeleted;
-            
-            public event EnumEmoteRowChangeEventHandler EnumEmoteRowDeleting;
-            
-            public void AddEnumEmoteRow(EnumEmoteRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumEmoteRow AddEnumEmoteRow(int EmoteID, string Name, string Description) {
-                EnumEmoteRow rowEnumEmoteRow = ((EnumEmoteRow)(this.NewRow()));
-                rowEnumEmoteRow.ItemArray = new object[] {
-                        EmoteID,
-                        Name,
-                        Description};
-                this.Rows.Add(rowEnumEmoteRow);
-                return rowEnumEmoteRow;
-            }
-            
-            public EnumEmoteRow FindByEmoteID(int EmoteID) {
-                return ((EnumEmoteRow)(this.Rows.Find(new object[] {
-                            EmoteID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumEmoteDataTable cln = ((EnumEmoteDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumEmoteDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnEmoteID = this.Columns["EmoteID"];
-                this.columnName = this.Columns["Name"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnEmoteID = new DataColumn("EmoteID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnEmoteID);
-                this.columnName = new DataColumn("Name", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey20", new DataColumn[] {
-                                this.columnEmoteID}, true));
-                this.columnEmoteID.AllowDBNull = false;
-                this.columnEmoteID.Unique = true;
-                this.columnName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumEmoteRow NewEnumEmoteRow() {
-                return ((EnumEmoteRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumEmoteRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumEmoteRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumEmoteRowChanged != null)) {
-                    this.EnumEmoteRowChanged(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumEmoteRowChanging != null)) {
-                    this.EnumEmoteRowChanging(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumEmoteRowDeleted != null)) {
-                    this.EnumEmoteRowDeleted(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumEmoteRowDeleting != null)) {
-                    this.EnumEmoteRowDeleting(this, new EnumEmoteRowChangeEvent(((EnumEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumEmoteRow(EnumEmoteRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumEmoteRow : DataRow {
-            
-            private EnumEmoteDataTable tableEnumEmote;
-            
-            internal EnumEmoteRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumEmote = ((EnumEmoteDataTable)(this.Table));
-            }
-            
-            public int EmoteID {
-                get {
-                    return ((int)(this[this.tableEnumEmote.EmoteIDColumn]));
-                }
-                set {
-                    this[this.tableEnumEmote.EmoteIDColumn] = value;
-                }
-            }
-            
-            public string Name {
-                get {
-                    return ((string)(this[this.tableEnumEmote.NameColumn]));
-                }
-                set {
-                    this[this.tableEnumEmote.NameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumEmote.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumEmote.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumEmoteRowChangeEvent : EventArgs {
-            
-            private EnumEmoteRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumEmoteRowChangeEvent(EnumEmoteRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumEmoteRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RaceHasEmoteDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnRaceID;
-            
-            private DataColumn columnEmoteID;
-            
-            internal RaceHasEmoteDataTable() : 
-                    base("RaceHasEmote") {
-                this.InitClass();
-            }
-            
-            internal RaceHasEmoteDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn RaceIDColumn {
-                get {
-                    return this.columnRaceID;
-                }
-            }
-            
-            internal DataColumn EmoteIDColumn {
-                get {
-                    return this.columnEmoteID;
-                }
-            }
-            
-            public RaceHasEmoteRow this[int index] {
-                get {
-                    return ((RaceHasEmoteRow)(this.Rows[index]));
-                }
-            }
-            
-            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowChanged;
-            
-            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowChanging;
-            
-            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowDeleted;
-            
-            public event RaceHasEmoteRowChangeEventHandler RaceHasEmoteRowDeleting;
-            
-            public void AddRaceHasEmoteRow(RaceHasEmoteRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public RaceHasEmoteRow AddRaceHasEmoteRow(int RaceID, int EmoteID) {
-                RaceHasEmoteRow rowRaceHasEmoteRow = ((RaceHasEmoteRow)(this.NewRow()));
-                rowRaceHasEmoteRow.ItemArray = new object[] {
-                        RaceID,
-                        EmoteID};
-                this.Rows.Add(rowRaceHasEmoteRow);
-                return rowRaceHasEmoteRow;
-            }
-            
-            public RaceHasEmoteRow FindByRaceID(int RaceID) {
-                return ((RaceHasEmoteRow)(this.Rows.Find(new object[] {
-                            RaceID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                RaceHasEmoteDataTable cln = ((RaceHasEmoteDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new RaceHasEmoteDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnRaceID = this.Columns["RaceID"];
-                this.columnEmoteID = this.Columns["EmoteID"];
-            }
-            
-            private void InitClass() {
-                this.columnRaceID = new DataColumn("RaceID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRaceID);
-                this.columnEmoteID = new DataColumn("EmoteID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnEmoteID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey21", new DataColumn[] {
-                                this.columnRaceID}, true));
-                this.columnRaceID.AllowDBNull = false;
-                this.columnRaceID.Unique = true;
-                this.columnEmoteID.AllowDBNull = false;
-            }
-            
-            public RaceHasEmoteRow NewRaceHasEmoteRow() {
-                return ((RaceHasEmoteRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new RaceHasEmoteRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(RaceHasEmoteRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.RaceHasEmoteRowChanged != null)) {
-                    this.RaceHasEmoteRowChanged(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.RaceHasEmoteRowChanging != null)) {
-                    this.RaceHasEmoteRowChanging(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.RaceHasEmoteRowDeleted != null)) {
-                    this.RaceHasEmoteRowDeleted(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.RaceHasEmoteRowDeleting != null)) {
-                    this.RaceHasEmoteRowDeleting(this, new RaceHasEmoteRowChangeEvent(((RaceHasEmoteRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveRaceHasEmoteRow(RaceHasEmoteRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RaceHasEmoteRow : DataRow {
-            
-            private RaceHasEmoteDataTable tableRaceHasEmote;
-            
-            internal RaceHasEmoteRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableRaceHasEmote = ((RaceHasEmoteDataTable)(this.Table));
-            }
-            
-            public int RaceID {
-                get {
-                    return ((int)(this[this.tableRaceHasEmote.RaceIDColumn]));
-                }
-                set {
-                    this[this.tableRaceHasEmote.RaceIDColumn] = value;
-                }
-            }
-            
-            public int EmoteID {
-                get {
-                    return ((int)(this[this.tableRaceHasEmote.EmoteIDColumn]));
-                }
-                set {
-                    this[this.tableRaceHasEmote.EmoteIDColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RaceHasEmoteRowChangeEvent : EventArgs {
-            
-            private RaceHasEmoteRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public RaceHasEmoteRowChangeEvent(RaceHasEmoteRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public RaceHasEmoteRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class MobileHasClanRankDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnMobileID;
-            
-            private DataColumn columnClanID;
-            
-            private DataColumn columnRank;
-            
-            private DataColumn columnClanPoints;
-            
-            internal MobileHasClanRankDataTable() : 
-                    base("MobileHasClanRank") {
-                this.InitClass();
-            }
-            
-            internal MobileHasClanRankDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn MobileIDColumn {
-                get {
-                    return this.columnMobileID;
-                }
-            }
-            
-            internal DataColumn ClanIDColumn {
-                get {
-                    return this.columnClanID;
-                }
-            }
-            
-            internal DataColumn RankColumn {
-                get {
-                    return this.columnRank;
-                }
-            }
-            
-            internal DataColumn ClanPointsColumn {
-                get {
-                    return this.columnClanPoints;
-                }
-            }
-            
-            public MobileHasClanRankRow this[int index] {
-                get {
-                    return ((MobileHasClanRankRow)(this.Rows[index]));
-                }
-            }
-            
-            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowChanged;
-            
-            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowChanging;
-            
-            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowDeleted;
-            
-            public event MobileHasClanRankRowChangeEventHandler MobileHasClanRankRowDeleting;
-            
-            public void AddMobileHasClanRankRow(MobileHasClanRankRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public MobileHasClanRankRow AddMobileHasClanRankRow(int MobileID, int ClanID, int Rank, int ClanPoints) {
-                MobileHasClanRankRow rowMobileHasClanRankRow = ((MobileHasClanRankRow)(this.NewRow()));
-                rowMobileHasClanRankRow.ItemArray = new object[] {
-                        MobileID,
-                        ClanID,
-                        Rank,
-                        ClanPoints};
-                this.Rows.Add(rowMobileHasClanRankRow);
-                return rowMobileHasClanRankRow;
-            }
-            
-            public MobileHasClanRankRow FindByMobileIDClanID(int MobileID, int ClanID) {
-                return ((MobileHasClanRankRow)(this.Rows.Find(new object[] {
-                            MobileID,
-                            ClanID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                MobileHasClanRankDataTable cln = ((MobileHasClanRankDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new MobileHasClanRankDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnMobileID = this.Columns["MobileID"];
-                this.columnClanID = this.Columns["ClanID"];
-                this.columnRank = this.Columns["Rank"];
-                this.columnClanPoints = this.Columns["ClanPoints"];
-            }
-            
-            private void InitClass() {
-                this.columnMobileID = new DataColumn("MobileID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnMobileID);
-                this.columnClanID = new DataColumn("ClanID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnClanID);
-                this.columnRank = new DataColumn("Rank", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRank);
-                this.columnClanPoints = new DataColumn("ClanPoints", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnClanPoints);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey22", new DataColumn[] {
-                                this.columnMobileID,
-                                this.columnClanID}, true));
-                this.columnMobileID.AllowDBNull = false;
-                this.columnClanID.AllowDBNull = false;
-                this.columnRank.AllowDBNull = false;
-                this.columnClanPoints.AllowDBNull = false;
-            }
-            
-            public MobileHasClanRankRow NewMobileHasClanRankRow() {
-                return ((MobileHasClanRankRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new MobileHasClanRankRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(MobileHasClanRankRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.MobileHasClanRankRowChanged != null)) {
-                    this.MobileHasClanRankRowChanged(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.MobileHasClanRankRowChanging != null)) {
-                    this.MobileHasClanRankRowChanging(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.MobileHasClanRankRowDeleted != null)) {
-                    this.MobileHasClanRankRowDeleted(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.MobileHasClanRankRowDeleting != null)) {
-                    this.MobileHasClanRankRowDeleting(this, new MobileHasClanRankRowChangeEvent(((MobileHasClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveMobileHasClanRankRow(MobileHasClanRankRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class MobileHasClanRankRow : DataRow {
-            
-            private MobileHasClanRankDataTable tableMobileHasClanRank;
-            
-            internal MobileHasClanRankRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableMobileHasClanRank = ((MobileHasClanRankDataTable)(this.Table));
-            }
-            
-            public int MobileID {
-                get {
-                    return ((int)(this[this.tableMobileHasClanRank.MobileIDColumn]));
-                }
-                set {
-                    this[this.tableMobileHasClanRank.MobileIDColumn] = value;
-                }
-            }
-            
-            public int ClanID {
-                get {
-                    return ((int)(this[this.tableMobileHasClanRank.ClanIDColumn]));
-                }
-                set {
-                    this[this.tableMobileHasClanRank.ClanIDColumn] = value;
-                }
-            }
-            
-            public int Rank {
-                get {
-                    return ((int)(this[this.tableMobileHasClanRank.RankColumn]));
-                }
-                set {
-                    this[this.tableMobileHasClanRank.RankColumn] = value;
-                }
-            }
-            
-            public int ClanPoints {
-                get {
-                    return ((int)(this[this.tableMobileHasClanRank.ClanPointsColumn]));
-                }
-                set {
-                    this[this.tableMobileHasClanRank.ClanPointsColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class MobileHasClanRankRowChangeEvent : EventArgs {
-            
-            private MobileHasClanRankRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public MobileHasClanRankRowChangeEvent(MobileHasClanRankRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public MobileHasClanRankRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class MobilePossesableByPlayerDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnMobileID;
-            
-            private DataColumn columnPlayerID;
-            
-            private DataColumn columnSpawnID;
-            
-            internal MobilePossesableByPlayerDataTable() : 
-                    base("MobilePossesableByPlayer") {
-                this.InitClass();
-            }
-            
-            internal MobilePossesableByPlayerDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn MobileIDColumn {
-                get {
-                    return this.columnMobileID;
-                }
-            }
-            
-            internal DataColumn PlayerIDColumn {
-                get {
-                    return this.columnPlayerID;
-                }
-            }
-            
-            internal DataColumn SpawnIDColumn {
-                get {
-                    return this.columnSpawnID;
-                }
-            }
-            
-            public MobilePossesableByPlayerRow this[int index] {
-                get {
-                    return ((MobilePossesableByPlayerRow)(this.Rows[index]));
-                }
-            }
-            
-            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowChanged;
-            
-            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowChanging;
-            
-            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowDeleted;
-            
-            public event MobilePossesableByPlayerRowChangeEventHandler MobilePossesableByPlayerRowDeleting;
-            
-            public void AddMobilePossesableByPlayerRow(MobilePossesableByPlayerRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public MobilePossesableByPlayerRow AddMobilePossesableByPlayerRow(int MobileID, int PlayerID, int SpawnID) {
-                MobilePossesableByPlayerRow rowMobilePossesableByPlayerRow = ((MobilePossesableByPlayerRow)(this.NewRow()));
-                rowMobilePossesableByPlayerRow.ItemArray = new object[] {
-                        MobileID,
-                        PlayerID,
-                        SpawnID};
-                this.Rows.Add(rowMobilePossesableByPlayerRow);
-                return rowMobilePossesableByPlayerRow;
-            }
-            
-            public MobilePossesableByPlayerRow FindByMobileID(int MobileID) {
-                return ((MobilePossesableByPlayerRow)(this.Rows.Find(new object[] {
-                            MobileID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                MobilePossesableByPlayerDataTable cln = ((MobilePossesableByPlayerDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new MobilePossesableByPlayerDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnMobileID = this.Columns["MobileID"];
-                this.columnPlayerID = this.Columns["PlayerID"];
-                this.columnSpawnID = this.Columns["SpawnID"];
-            }
-            
-            private void InitClass() {
-                this.columnMobileID = new DataColumn("MobileID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnMobileID);
-                this.columnPlayerID = new DataColumn("PlayerID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPlayerID);
-                this.columnSpawnID = new DataColumn("SpawnID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSpawnID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey23", new DataColumn[] {
-                                this.columnMobileID}, true));
-                this.columnMobileID.AllowDBNull = false;
-                this.columnMobileID.Unique = true;
-                this.columnPlayerID.AllowDBNull = false;
-                this.columnSpawnID.AllowDBNull = false;
-            }
-            
-            public MobilePossesableByPlayerRow NewMobilePossesableByPlayerRow() {
-                return ((MobilePossesableByPlayerRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new MobilePossesableByPlayerRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(MobilePossesableByPlayerRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.MobilePossesableByPlayerRowChanged != null)) {
-                    this.MobilePossesableByPlayerRowChanged(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.MobilePossesableByPlayerRowChanging != null)) {
-                    this.MobilePossesableByPlayerRowChanging(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.MobilePossesableByPlayerRowDeleted != null)) {
-                    this.MobilePossesableByPlayerRowDeleted(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.MobilePossesableByPlayerRowDeleting != null)) {
-                    this.MobilePossesableByPlayerRowDeleting(this, new MobilePossesableByPlayerRowChangeEvent(((MobilePossesableByPlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveMobilePossesableByPlayerRow(MobilePossesableByPlayerRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class MobilePossesableByPlayerRow : DataRow {
-            
-            private MobilePossesableByPlayerDataTable tableMobilePossesableByPlayer;
-            
-            internal MobilePossesableByPlayerRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableMobilePossesableByPlayer = ((MobilePossesableByPlayerDataTable)(this.Table));
-            }
-            
-            public int MobileID {
-                get {
-                    return ((int)(this[this.tableMobilePossesableByPlayer.MobileIDColumn]));
-                }
-                set {
-                    this[this.tableMobilePossesableByPlayer.MobileIDColumn] = value;
-                }
-            }
-            
-            public int PlayerID {
-                get {
-                    return ((int)(this[this.tableMobilePossesableByPlayer.PlayerIDColumn]));
-                }
-                set {
-                    this[this.tableMobilePossesableByPlayer.PlayerIDColumn] = value;
-                }
-            }
-            
-            public int SpawnID {
-                get {
-                    return ((int)(this[this.tableMobilePossesableByPlayer.SpawnIDColumn]));
-                }
-                set {
-                    this[this.tableMobilePossesableByPlayer.SpawnIDColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class MobilePossesableByPlayerRowChangeEvent : EventArgs {
-            
-            private MobilePossesableByPlayerRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public MobilePossesableByPlayerRowChangeEvent(MobilePossesableByPlayerRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public MobilePossesableByPlayerRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class PlayerDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnPlayerID;
-            
-            private DataColumn columnUserName;
-            
-            private DataColumn columnPassword;
-            
-            private DataColumn columnEmail;
-            
-            internal PlayerDataTable() : 
-                    base("Player") {
-                this.InitClass();
-            }
-            
-            internal PlayerDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn PlayerIDColumn {
-                get {
-                    return this.columnPlayerID;
-                }
-            }
-            
-            internal DataColumn UserNameColumn {
-                get {
-                    return this.columnUserName;
-                }
-            }
-            
-            internal DataColumn PasswordColumn {
-                get {
-                    return this.columnPassword;
-                }
-            }
-            
-            internal DataColumn EmailColumn {
-                get {
-                    return this.columnEmail;
-                }
-            }
-            
-            public PlayerRow this[int index] {
-                get {
-                    return ((PlayerRow)(this.Rows[index]));
-                }
-            }
-            
-            public event PlayerRowChangeEventHandler PlayerRowChanged;
-            
-            public event PlayerRowChangeEventHandler PlayerRowChanging;
-            
-            public event PlayerRowChangeEventHandler PlayerRowDeleted;
-            
-            public event PlayerRowChangeEventHandler PlayerRowDeleting;
-            
-            public void AddPlayerRow(PlayerRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public PlayerRow AddPlayerRow(string UserName, string Password, string Email) {
-                PlayerRow rowPlayerRow = ((PlayerRow)(this.NewRow()));
-                rowPlayerRow.ItemArray = new object[] {
-                        null,
-                        UserName,
-                        Password,
-                        Email};
-                this.Rows.Add(rowPlayerRow);
-                return rowPlayerRow;
-            }
-            
-            public PlayerRow FindByPlayerID(int PlayerID) {
-                return ((PlayerRow)(this.Rows.Find(new object[] {
-                            PlayerID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                PlayerDataTable cln = ((PlayerDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new PlayerDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnPlayerID = this.Columns["PlayerID"];
-                this.columnUserName = this.Columns["UserName"];
-                this.columnPassword = this.Columns["Password"];
-                this.columnEmail = this.Columns["Email"];
-            }
-            
-            private void InitClass() {
-                this.columnPlayerID = new DataColumn("PlayerID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPlayerID);
-                this.columnUserName = new DataColumn("UserName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnUserName);
-                this.columnPassword = new DataColumn("Password", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPassword);
-                this.columnEmail = new DataColumn("Email", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnEmail);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey24", new DataColumn[] {
-                                this.columnPlayerID}, true));
-                this.columnPlayerID.AutoIncrement = true;
-                this.columnPlayerID.AllowDBNull = false;
-                this.columnPlayerID.ReadOnly = true;
-                this.columnPlayerID.Unique = true;
-                this.columnUserName.AllowDBNull = false;
-                this.columnPassword.AllowDBNull = false;
-                this.columnEmail.AllowDBNull = false;
-            }
-            
-            public PlayerRow NewPlayerRow() {
-                return ((PlayerRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new PlayerRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(PlayerRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.PlayerRowChanged != null)) {
-                    this.PlayerRowChanged(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.PlayerRowChanging != null)) {
-                    this.PlayerRowChanging(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.PlayerRowDeleted != null)) {
-                    this.PlayerRowDeleted(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.PlayerRowDeleting != null)) {
-                    this.PlayerRowDeleting(this, new PlayerRowChangeEvent(((PlayerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemovePlayerRow(PlayerRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class PlayerRow : DataRow {
-            
-            private PlayerDataTable tablePlayer;
-            
-            internal PlayerRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablePlayer = ((PlayerDataTable)(this.Table));
-            }
-            
-            public int PlayerID {
-                get {
-                    return ((int)(this[this.tablePlayer.PlayerIDColumn]));
-                }
-                set {
-                    this[this.tablePlayer.PlayerIDColumn] = value;
-                }
-            }
-            
-            public string UserName {
-                get {
-                    return ((string)(this[this.tablePlayer.UserNameColumn]));
-                }
-                set {
-                    this[this.tablePlayer.UserNameColumn] = value;
-                }
-            }
-            
-            public string Password {
-                get {
-                    return ((string)(this[this.tablePlayer.PasswordColumn]));
-                }
-                set {
-                    this[this.tablePlayer.PasswordColumn] = value;
-                }
-            }
-            
-            public string Email {
-                get {
-                    return ((string)(this[this.tablePlayer.EmailColumn]));
-                }
-                set {
-                    this[this.tablePlayer.EmailColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class PlayerRowChangeEvent : EventArgs {
-            
-            private PlayerRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public PlayerRowChangeEvent(PlayerRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public PlayerRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class InventoryDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnPhysicalObjectID;
-            
-            private DataColumn columnItemID;
-            
-            private DataColumn columnSpawnID;
-            
-            internal InventoryDataTable() : 
-                    base("Inventory") {
-                this.InitClass();
-            }
-            
-            internal InventoryDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn PhysicalObjectIDColumn {
-                get {
-                    return this.columnPhysicalObjectID;
-                }
-            }
-            
-            internal DataColumn ItemIDColumn {
-                get {
-                    return this.columnItemID;
-                }
-            }
-            
-            internal DataColumn SpawnIDColumn {
-                get {
-                    return this.columnSpawnID;
-                }
-            }
-            
-            public InventoryRow this[int index] {
-                get {
-                    return ((InventoryRow)(this.Rows[index]));
-                }
-            }
-            
-            public event InventoryRowChangeEventHandler InventoryRowChanged;
-            
-            public event InventoryRowChangeEventHandler InventoryRowChanging;
-            
-            public event InventoryRowChangeEventHandler InventoryRowDeleted;
-            
-            public event InventoryRowChangeEventHandler InventoryRowDeleting;
-            
-            public void AddInventoryRow(InventoryRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public InventoryRow AddInventoryRow(int PhysicalObjectID, int ItemID, int SpawnID) {
-                InventoryRow rowInventoryRow = ((InventoryRow)(this.NewRow()));
-                rowInventoryRow.ItemArray = new object[] {
-                        PhysicalObjectID,
-                        ItemID,
-                        SpawnID};
-                this.Rows.Add(rowInventoryRow);
-                return rowInventoryRow;
-            }
-            
-            public InventoryRow FindByPhysicalObjectIDSpawnID(int PhysicalObjectID, int SpawnID) {
-                return ((InventoryRow)(this.Rows.Find(new object[] {
-                            PhysicalObjectID,
-                            SpawnID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                InventoryDataTable cln = ((InventoryDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new InventoryDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnPhysicalObjectID = this.Columns["PhysicalObjectID"];
-                this.columnItemID = this.Columns["ItemID"];
-                this.columnSpawnID = this.Columns["SpawnID"];
-            }
-            
-            private void InitClass() {
-                this.columnPhysicalObjectID = new DataColumn("PhysicalObjectID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPhysicalObjectID);
-                this.columnItemID = new DataColumn("ItemID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnItemID);
-                this.columnSpawnID = new DataColumn("SpawnID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSpawnID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey25", new DataColumn[] {
-                                this.columnPhysicalObjectID,
-                                this.columnSpawnID}, true));
-                this.columnPhysicalObjectID.AllowDBNull = false;
-                this.columnItemID.AllowDBNull = false;
-                this.columnSpawnID.AllowDBNull = false;
-            }
-            
-            public InventoryRow NewInventoryRow() {
-                return ((InventoryRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new InventoryRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(InventoryRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.InventoryRowChanged != null)) {
-                    this.InventoryRowChanged(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.InventoryRowChanging != null)) {
-                    this.InventoryRowChanging(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.InventoryRowDeleted != null)) {
-                    this.InventoryRowDeleted(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.InventoryRowDeleting != null)) {
-                    this.InventoryRowDeleting(this, new InventoryRowChangeEvent(((InventoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveInventoryRow(InventoryRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class InventoryRow : DataRow {
-            
-            private InventoryDataTable tableInventory;
-            
-            internal InventoryRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableInventory = ((InventoryDataTable)(this.Table));
-            }
-            
-            public int PhysicalObjectID {
-                get {
-                    return ((int)(this[this.tableInventory.PhysicalObjectIDColumn]));
-                }
-                set {
-                    this[this.tableInventory.PhysicalObjectIDColumn] = value;
-                }
-            }
-            
-            public int ItemID {
-                get {
-                    return ((int)(this[this.tableInventory.ItemIDColumn]));
-                }
-                set {
-                    this[this.tableInventory.ItemIDColumn] = value;
-                }
-            }
-            
-            public int SpawnID {
-                get {
-                    return ((int)(this[this.tableInventory.SpawnIDColumn]));
-                }
-                set {
-                    this[this.tableInventory.SpawnIDColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class InventoryRowChangeEvent : EventArgs {
-            
-            private InventoryRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public InventoryRowChangeEvent(InventoryRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public InventoryRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RespawnPointDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnSpawnID;
-            
-            private DataColumn columnPhysicalObjectID;
-            
-            private DataColumn columnX;
-            
-            private DataColumn columnY;
-            
-            private DataColumn columnZ;
-            
-            private DataColumn columnHeadingX;
-            
-            private DataColumn columnHeadingY;
-            
-            private DataColumn columnHeadingZ;
-            
-            internal RespawnPointDataTable() : 
-                    base("RespawnPoint") {
-                this.InitClass();
-            }
-            
-            internal RespawnPointDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn SpawnIDColumn {
-                get {
-                    return this.columnSpawnID;
-                }
-            }
-            
-            internal DataColumn PhysicalObjectIDColumn {
-                get {
-                    return this.columnPhysicalObjectID;
-                }
-            }
-            
-            internal DataColumn XColumn {
-                get {
-                    return this.columnX;
-                }
-            }
-            
-            internal DataColumn YColumn {
-                get {
-                    return this.columnY;
-                }
-            }
-            
-            internal DataColumn ZColumn {
-                get {
-                    return this.columnZ;
-                }
-            }
-            
-            internal DataColumn HeadingXColumn {
-                get {
-                    return this.columnHeadingX;
-                }
-            }
-            
-            internal DataColumn HeadingYColumn {
-                get {
-                    return this.columnHeadingY;
-                }
-            }
-            
-            internal DataColumn HeadingZColumn {
-                get {
-                    return this.columnHeadingZ;
-                }
-            }
-            
-            public RespawnPointRow this[int index] {
-                get {
-                    return ((RespawnPointRow)(this.Rows[index]));
-                }
-            }
-            
-            public event RespawnPointRowChangeEventHandler RespawnPointRowChanged;
-            
-            public event RespawnPointRowChangeEventHandler RespawnPointRowChanging;
-            
-            public event RespawnPointRowChangeEventHandler RespawnPointRowDeleted;
-            
-            public event RespawnPointRowChangeEventHandler RespawnPointRowDeleting;
-            
-            public void AddRespawnPointRow(RespawnPointRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public RespawnPointRow AddRespawnPointRow(int SpawnID, int PhysicalObjectID, System.Double X, System.Double Y, System.Double Z, System.Double HeadingX, System.Double HeadingY, System.Double HeadingZ) {
-                RespawnPointRow rowRespawnPointRow = ((RespawnPointRow)(this.NewRow()));
-                rowRespawnPointRow.ItemArray = new object[] {
-                        SpawnID,
-                        PhysicalObjectID,
-                        X,
-                        Y,
-                        Z,
-                        HeadingX,
-                        HeadingY,
-                        HeadingZ};
-                this.Rows.Add(rowRespawnPointRow);
-                return rowRespawnPointRow;
-            }
-            
-            public RespawnPointRow FindBySpawnID(int SpawnID) {
-                return ((RespawnPointRow)(this.Rows.Find(new object[] {
-                            SpawnID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                RespawnPointDataTable cln = ((RespawnPointDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new RespawnPointDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnSpawnID = this.Columns["SpawnID"];
-                this.columnPhysicalObjectID = this.Columns["PhysicalObjectID"];
-                this.columnX = this.Columns["X"];
-                this.columnY = this.Columns["Y"];
-                this.columnZ = this.Columns["Z"];
-                this.columnHeadingX = this.Columns["HeadingX"];
-                this.columnHeadingY = this.Columns["HeadingY"];
-                this.columnHeadingZ = this.Columns["HeadingZ"];
-            }
-            
-            private void InitClass() {
-                this.columnSpawnID = new DataColumn("SpawnID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSpawnID);
-                this.columnPhysicalObjectID = new DataColumn("PhysicalObjectID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnPhysicalObjectID);
-                this.columnX = new DataColumn("X", typeof(System.Double), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnX);
-                this.columnY = new DataColumn("Y", typeof(System.Double), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnY);
-                this.columnZ = new DataColumn("Z", typeof(System.Double), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnZ);
-                this.columnHeadingX = new DataColumn("HeadingX", typeof(System.Double), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnHeadingX);
-                this.columnHeadingY = new DataColumn("HeadingY", typeof(System.Double), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnHeadingY);
-                this.columnHeadingZ = new DataColumn("HeadingZ", typeof(System.Double), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnHeadingZ);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey26", new DataColumn[] {
-                                this.columnSpawnID}, true));
-                this.columnSpawnID.AllowDBNull = false;
-                this.columnSpawnID.Unique = true;
-                this.columnPhysicalObjectID.AllowDBNull = false;
-                this.columnX.AllowDBNull = false;
-                this.columnY.AllowDBNull = false;
-                this.columnZ.AllowDBNull = false;
-                this.columnHeadingX.AllowDBNull = false;
-                this.columnHeadingY.AllowDBNull = false;
-                this.columnHeadingZ.AllowDBNull = false;
-            }
-            
-            public RespawnPointRow NewRespawnPointRow() {
-                return ((RespawnPointRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new RespawnPointRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(RespawnPointRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.RespawnPointRowChanged != null)) {
-                    this.RespawnPointRowChanged(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.RespawnPointRowChanging != null)) {
-                    this.RespawnPointRowChanging(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.RespawnPointRowDeleted != null)) {
-                    this.RespawnPointRowDeleted(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.RespawnPointRowDeleting != null)) {
-                    this.RespawnPointRowDeleting(this, new RespawnPointRowChangeEvent(((RespawnPointRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveRespawnPointRow(RespawnPointRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RespawnPointRow : DataRow {
-            
-            private RespawnPointDataTable tableRespawnPoint;
-            
-            internal RespawnPointRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableRespawnPoint = ((RespawnPointDataTable)(this.Table));
-            }
-            
-            public int SpawnID {
-                get {
-                    return ((int)(this[this.tableRespawnPoint.SpawnIDColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.SpawnIDColumn] = value;
-                }
-            }
-            
-            public int PhysicalObjectID {
-                get {
-                    return ((int)(this[this.tableRespawnPoint.PhysicalObjectIDColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.PhysicalObjectIDColumn] = value;
-                }
-            }
-            
-            public System.Double X {
-                get {
-                    return ((System.Double)(this[this.tableRespawnPoint.XColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.XColumn] = value;
-                }
-            }
-            
-            public System.Double Y {
-                get {
-                    return ((System.Double)(this[this.tableRespawnPoint.YColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.YColumn] = value;
-                }
-            }
-            
-            public System.Double Z {
-                get {
-                    return ((System.Double)(this[this.tableRespawnPoint.ZColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.ZColumn] = value;
-                }
-            }
-            
-            public System.Double HeadingX {
-                get {
-                    return ((System.Double)(this[this.tableRespawnPoint.HeadingXColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.HeadingXColumn] = value;
-                }
-            }
-            
-            public System.Double HeadingY {
-                get {
-                    return ((System.Double)(this[this.tableRespawnPoint.HeadingYColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.HeadingYColumn] = value;
-                }
-            }
-            
-            public System.Double HeadingZ {
-                get {
-                    return ((System.Double)(this[this.tableRespawnPoint.HeadingZColumn]));
-                }
-                set {
-                    this[this.tableRespawnPoint.HeadingZColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RespawnPointRowChangeEvent : EventArgs {
-            
-            private RespawnPointRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public RespawnPointRowChangeEvent(RespawnPointRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public RespawnPointRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class AreaDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnAreaID;
-            
-            private DataColumn columnWorldID;
-            
-            private DataColumn columnAreaName;
-            
-            private DataColumn columnLowX;
-            
-            private DataColumn columnLowY;
-            
-            private DataColumn columnLowZ;
-            
-            private DataColumn columnHighX;
-            
-            private DataColumn columnHighY;
-            
-            private DataColumn columnHighZ;
-            
-            private DataColumn columnControllingClan;
-            
-            private DataColumn columnDescription;
-            
-            internal AreaDataTable() : 
-                    base("Area") {
-                this.InitClass();
-            }
-            
-            internal AreaDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn AreaIDColumn {
-                get {
-                    return this.columnAreaID;
-                }
-            }
-            
-            internal DataColumn WorldIDColumn {
-                get {
-                    return this.columnWorldID;
-                }
-            }
-            
-            internal DataColumn AreaNameColumn {
-                get {
-                    return this.columnAreaName;
-                }
-            }
-            
-            internal DataColumn LowXColumn {
-                get {
-                    return this.columnLowX;
-                }
-            }
-            
-            internal DataColumn LowYColumn {
-                get {
-                    return this.columnLowY;
-                }
-            }
-            
-            internal DataColumn LowZColumn {
-                get {
-                    return this.columnLowZ;
-                }
-            }
-            
-            internal DataColumn HighXColumn {
-                get {
-                    return this.columnHighX;
-                }
-            }
-            
-            internal DataColumn HighYColumn {
-                get {
-                    return this.columnHighY;
-                }
-            }
-            
-            internal DataColumn HighZColumn {
-                get {
-                    return this.columnHighZ;
-                }
-            }
-            
-            internal DataColumn ControllingClanColumn {
-                get {
-                    return this.columnControllingClan;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public AreaRow this[int index] {
-                get {
-                    return ((AreaRow)(this.Rows[index]));
-                }
-            }
-            
-            public event AreaRowChangeEventHandler AreaRowChanged;
-            
-            public event AreaRowChangeEventHandler AreaRowChanging;
-            
-            public event AreaRowChangeEventHandler AreaRowDeleted;
-            
-            public event AreaRowChangeEventHandler AreaRowDeleting;
-            
-            public void AddAreaRow(AreaRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public AreaRow AddAreaRow(int AreaID, int WorldID, string AreaName, int LowX, int LowY, int LowZ, int HighX, int HighY, int HighZ, int ControllingClan, string Description) {
-                AreaRow rowAreaRow = ((AreaRow)(this.NewRow()));
-                rowAreaRow.ItemArray = new object[] {
-                        AreaID,
-                        WorldID,
-                        AreaName,
-                        LowX,
-                        LowY,
-                        LowZ,
-                        HighX,
-                        HighY,
-                        HighZ,
-                        ControllingClan,
-                        Description};
-                this.Rows.Add(rowAreaRow);
-                return rowAreaRow;
-            }
-            
-            public AreaRow FindByAreaID(int AreaID) {
-                return ((AreaRow)(this.Rows.Find(new object[] {
-                            AreaID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                AreaDataTable cln = ((AreaDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new AreaDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnAreaID = this.Columns["AreaID"];
-                this.columnWorldID = this.Columns["WorldID"];
-                this.columnAreaName = this.Columns["AreaName"];
-                this.columnLowX = this.Columns["LowX"];
-                this.columnLowY = this.Columns["LowY"];
-                this.columnLowZ = this.Columns["LowZ"];
-                this.columnHighX = this.Columns["HighX"];
-                this.columnHighY = this.Columns["HighY"];
-                this.columnHighZ = this.Columns["HighZ"];
-                this.columnControllingClan = this.Columns["ControllingClan"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnAreaID = new DataColumn("AreaID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnAreaID);
-                this.columnWorldID = new DataColumn("WorldID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnWorldID);
-                this.columnAreaName = new DataColumn("AreaName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnAreaName);
-                this.columnLowX = new DataColumn("LowX", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLowX);
-                this.columnLowY = new DataColumn("LowY", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLowY);
-                this.columnLowZ = new DataColumn("LowZ", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLowZ);
-                this.columnHighX = new DataColumn("HighX", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnHighX);
-                this.columnHighY = new DataColumn("HighY", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnHighY);
-                this.columnHighZ = new DataColumn("HighZ", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnHighZ);
-                this.columnControllingClan = new DataColumn("ControllingClan", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnControllingClan);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey27", new DataColumn[] {
-                                this.columnAreaID}, true));
-                this.columnAreaID.AllowDBNull = false;
-                this.columnAreaID.Unique = true;
-                this.columnWorldID.AllowDBNull = false;
-                this.columnAreaName.AllowDBNull = false;
-                this.columnLowX.AllowDBNull = false;
-                this.columnLowY.AllowDBNull = false;
-                this.columnLowZ.AllowDBNull = false;
-                this.columnHighX.AllowDBNull = false;
-                this.columnHighY.AllowDBNull = false;
-                this.columnHighZ.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public AreaRow NewAreaRow() {
-                return ((AreaRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new AreaRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(AreaRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.AreaRowChanged != null)) {
-                    this.AreaRowChanged(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.AreaRowChanging != null)) {
-                    this.AreaRowChanging(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.AreaRowDeleted != null)) {
-                    this.AreaRowDeleted(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.AreaRowDeleting != null)) {
-                    this.AreaRowDeleting(this, new AreaRowChangeEvent(((AreaRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveAreaRow(AreaRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class AreaRow : DataRow {
-            
-            private AreaDataTable tableArea;
-            
-            internal AreaRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableArea = ((AreaDataTable)(this.Table));
-            }
-            
-            public int AreaID {
-                get {
-                    return ((int)(this[this.tableArea.AreaIDColumn]));
-                }
-                set {
-                    this[this.tableArea.AreaIDColumn] = value;
-                }
-            }
-            
-            public int WorldID {
-                get {
-                    return ((int)(this[this.tableArea.WorldIDColumn]));
-                }
-                set {
-                    this[this.tableArea.WorldIDColumn] = value;
-                }
-            }
-            
-            public string AreaName {
-                get {
-                    return ((string)(this[this.tableArea.AreaNameColumn]));
-                }
-                set {
-                    this[this.tableArea.AreaNameColumn] = value;
-                }
-            }
-            
-            public int LowX {
-                get {
-                    return ((int)(this[this.tableArea.LowXColumn]));
-                }
-                set {
-                    this[this.tableArea.LowXColumn] = value;
-                }
-            }
-            
-            public int LowY {
-                get {
-                    return ((int)(this[this.tableArea.LowYColumn]));
-                }
-                set {
-                    this[this.tableArea.LowYColumn] = value;
-                }
-            }
-            
-            public int LowZ {
-                get {
-                    return ((int)(this[this.tableArea.LowZColumn]));
-                }
-                set {
-                    this[this.tableArea.LowZColumn] = value;
-                }
-            }
-            
-            public int HighX {
-                get {
-                    return ((int)(this[this.tableArea.HighXColumn]));
-                }
-                set {
-                    this[this.tableArea.HighXColumn] = value;
-                }
-            }
-            
-            public int HighY {
-                get {
-                    return ((int)(this[this.tableArea.HighYColumn]));
-                }
-                set {
-                    this[this.tableArea.HighYColumn] = value;
-                }
-            }
-            
-            public int HighZ {
-                get {
-                    return ((int)(this[this.tableArea.HighZColumn]));
-                }
-                set {
-                    this[this.tableArea.HighZColumn] = value;
-                }
-            }
-            
-            public int ControllingClan {
-                get {
-                    try {
-                        return ((int)(this[this.tableArea.ControllingClanColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableArea.ControllingClanColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableArea.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableArea.DescriptionColumn] = value;
-                }
-            }
-            
-            public bool IsControllingClanNull() {
-                return this.IsNull(this.tableArea.ControllingClanColumn);
-            }
-            
-            public void SetControllingClanNull() {
-                this[this.tableArea.ControllingClanColumn] = System.Convert.DBNull;
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class AreaRowChangeEvent : EventArgs {
-            
-            private AreaRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public AreaRowChangeEvent(AreaRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public AreaRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ClanDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnClanID;
-            
-            private DataColumn columnClanName;
-            
-            private DataColumn columnGold;
-            
-            private DataColumn columnDescription;
-            
-            internal ClanDataTable() : 
-                    base("Clan") {
-                this.InitClass();
-            }
-            
-            internal ClanDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn ClanIDColumn {
-                get {
-                    return this.columnClanID;
-                }
-            }
-            
-            internal DataColumn ClanNameColumn {
-                get {
-                    return this.columnClanName;
-                }
-            }
-            
-            internal DataColumn GoldColumn {
-                get {
-                    return this.columnGold;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public ClanRow this[int index] {
-                get {
-                    return ((ClanRow)(this.Rows[index]));
-                }
-            }
-            
-            public event ClanRowChangeEventHandler ClanRowChanged;
-            
-            public event ClanRowChangeEventHandler ClanRowChanging;
-            
-            public event ClanRowChangeEventHandler ClanRowDeleted;
-            
-            public event ClanRowChangeEventHandler ClanRowDeleting;
-            
-            public void AddClanRow(ClanRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public ClanRow AddClanRow(int ClanID, string ClanName, int Gold, string Description) {
-                ClanRow rowClanRow = ((ClanRow)(this.NewRow()));
-                rowClanRow.ItemArray = new object[] {
-                        ClanID,
-                        ClanName,
-                        Gold,
-                        Description};
-                this.Rows.Add(rowClanRow);
-                return rowClanRow;
-            }
-            
-            public ClanRow FindByClanID(int ClanID) {
-                return ((ClanRow)(this.Rows.Find(new object[] {
-                            ClanID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                ClanDataTable cln = ((ClanDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new ClanDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnClanID = this.Columns["ClanID"];
-                this.columnClanName = this.Columns["ClanName"];
-                this.columnGold = this.Columns["Gold"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnClanID = new DataColumn("ClanID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnClanID);
-                this.columnClanName = new DataColumn("ClanName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnClanName);
-                this.columnGold = new DataColumn("Gold", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnGold);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey28", new DataColumn[] {
-                                this.columnClanID}, true));
-                this.columnClanID.AllowDBNull = false;
-                this.columnClanID.Unique = true;
-                this.columnClanName.AllowDBNull = false;
-                this.columnGold.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public ClanRow NewClanRow() {
-                return ((ClanRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new ClanRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(ClanRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.ClanRowChanged != null)) {
-                    this.ClanRowChanged(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.ClanRowChanging != null)) {
-                    this.ClanRowChanging(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.ClanRowDeleted != null)) {
-                    this.ClanRowDeleted(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.ClanRowDeleting != null)) {
-                    this.ClanRowDeleting(this, new ClanRowChangeEvent(((ClanRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveClanRow(ClanRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ClanRow : DataRow {
-            
-            private ClanDataTable tableClan;
-            
-            internal ClanRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableClan = ((ClanDataTable)(this.Table));
-            }
-            
-            public int ClanID {
-                get {
-                    return ((int)(this[this.tableClan.ClanIDColumn]));
-                }
-                set {
-                    this[this.tableClan.ClanIDColumn] = value;
-                }
-            }
-            
-            public string ClanName {
-                get {
-                    return ((string)(this[this.tableClan.ClanNameColumn]));
-                }
-                set {
-                    this[this.tableClan.ClanNameColumn] = value;
-                }
-            }
-            
-            public int Gold {
-                get {
-                    return ((int)(this[this.tableClan.GoldColumn]));
-                }
-                set {
-                    this[this.tableClan.GoldColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableClan.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableClan.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ClanRowChangeEvent : EventArgs {
-            
-            private ClanRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public ClanRowChangeEvent(ClanRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public ClanRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ClanRankDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnClanID;
-            
-            private DataColumn columnRank;
-            
-            private DataColumn columnRankName;
-            
-            private DataColumn columnSkillID;
-            
-            private DataColumn columnDescription;
-            
-            internal ClanRankDataTable() : 
-                    base("ClanRank") {
-                this.InitClass();
-            }
-            
-            internal ClanRankDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn ClanIDColumn {
-                get {
-                    return this.columnClanID;
-                }
-            }
-            
-            internal DataColumn RankColumn {
-                get {
-                    return this.columnRank;
-                }
-            }
-            
-            internal DataColumn RankNameColumn {
-                get {
-                    return this.columnRankName;
-                }
-            }
-            
-            internal DataColumn SkillIDColumn {
-                get {
-                    return this.columnSkillID;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public ClanRankRow this[int index] {
-                get {
-                    return ((ClanRankRow)(this.Rows[index]));
-                }
-            }
-            
-            public event ClanRankRowChangeEventHandler ClanRankRowChanged;
-            
-            public event ClanRankRowChangeEventHandler ClanRankRowChanging;
-            
-            public event ClanRankRowChangeEventHandler ClanRankRowDeleted;
-            
-            public event ClanRankRowChangeEventHandler ClanRankRowDeleting;
-            
-            public void AddClanRankRow(ClanRankRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public ClanRankRow AddClanRankRow(int ClanID, int Rank, string RankName, int SkillID, string Description) {
-                ClanRankRow rowClanRankRow = ((ClanRankRow)(this.NewRow()));
-                rowClanRankRow.ItemArray = new object[] {
-                        ClanID,
-                        Rank,
-                        RankName,
-                        SkillID,
-                        Description};
-                this.Rows.Add(rowClanRankRow);
-                return rowClanRankRow;
-            }
-            
-            public ClanRankRow FindByClanIDRank(int ClanID, int Rank) {
-                return ((ClanRankRow)(this.Rows.Find(new object[] {
-                            ClanID,
-                            Rank})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                ClanRankDataTable cln = ((ClanRankDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new ClanRankDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnClanID = this.Columns["ClanID"];
-                this.columnRank = this.Columns["Rank"];
-                this.columnRankName = this.Columns["RankName"];
-                this.columnSkillID = this.Columns["SkillID"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnClanID = new DataColumn("ClanID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnClanID);
-                this.columnRank = new DataColumn("Rank", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRank);
-                this.columnRankName = new DataColumn("RankName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRankName);
-                this.columnSkillID = new DataColumn("SkillID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSkillID);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey29", new DataColumn[] {
-                                this.columnClanID,
-                                this.columnRank}, true));
-                this.columnClanID.AllowDBNull = false;
-                this.columnRank.AllowDBNull = false;
-                this.columnRankName.AllowDBNull = false;
-                this.columnSkillID.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public ClanRankRow NewClanRankRow() {
-                return ((ClanRankRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new ClanRankRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(ClanRankRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.ClanRankRowChanged != null)) {
-                    this.ClanRankRowChanged(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.ClanRankRowChanging != null)) {
-                    this.ClanRankRowChanging(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.ClanRankRowDeleted != null)) {
-                    this.ClanRankRowDeleted(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.ClanRankRowDeleting != null)) {
-                    this.ClanRankRowDeleting(this, new ClanRankRowChangeEvent(((ClanRankRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveClanRankRow(ClanRankRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ClanRankRow : DataRow {
-            
-            private ClanRankDataTable tableClanRank;
-            
-            internal ClanRankRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableClanRank = ((ClanRankDataTable)(this.Table));
-            }
-            
-            public int ClanID {
-                get {
-                    return ((int)(this[this.tableClanRank.ClanIDColumn]));
-                }
-                set {
-                    this[this.tableClanRank.ClanIDColumn] = value;
-                }
-            }
-            
-            public int Rank {
-                get {
-                    return ((int)(this[this.tableClanRank.RankColumn]));
-                }
-                set {
-                    this[this.tableClanRank.RankColumn] = value;
-                }
-            }
-            
-            public string RankName {
-                get {
-                    return ((string)(this[this.tableClanRank.RankNameColumn]));
-                }
-                set {
-                    this[this.tableClanRank.RankNameColumn] = value;
-                }
-            }
-            
-            public int SkillID {
-                get {
-                    return ((int)(this[this.tableClanRank.SkillIDColumn]));
-                }
-                set {
-                    this[this.tableClanRank.SkillIDColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableClanRank.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableClanRank.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class ClanRankRowChangeEvent : EventArgs {
-            
-            private ClanRankRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public ClanRankRowChangeEvent(ClanRankRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public ClanRankRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumDamageTypeDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnDamageTypeID;
-            
-            private DataColumn columnDamageTypeName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumDamageTypeDataTable() : 
-                    base("EnumDamageType") {
-                this.InitClass();
-            }
-            
-            internal EnumDamageTypeDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn DamageTypeIDColumn {
-                get {
-                    return this.columnDamageTypeID;
-                }
-            }
-            
-            internal DataColumn DamageTypeNameColumn {
-                get {
-                    return this.columnDamageTypeName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumDamageTypeRow this[int index] {
-                get {
-                    return ((EnumDamageTypeRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowChanged;
-            
-            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowChanging;
-            
-            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowDeleted;
-            
-            public event EnumDamageTypeRowChangeEventHandler EnumDamageTypeRowDeleting;
-            
-            public void AddEnumDamageTypeRow(EnumDamageTypeRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumDamageTypeRow AddEnumDamageTypeRow(int DamageTypeID, string DamageTypeName, string Description) {
-                EnumDamageTypeRow rowEnumDamageTypeRow = ((EnumDamageTypeRow)(this.NewRow()));
-                rowEnumDamageTypeRow.ItemArray = new object[] {
-                        DamageTypeID,
-                        DamageTypeName,
-                        Description};
-                this.Rows.Add(rowEnumDamageTypeRow);
-                return rowEnumDamageTypeRow;
-            }
-            
-            public EnumDamageTypeRow FindByDamageTypeID(int DamageTypeID) {
-                return ((EnumDamageTypeRow)(this.Rows.Find(new object[] {
-                            DamageTypeID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumDamageTypeDataTable cln = ((EnumDamageTypeDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumDamageTypeDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnDamageTypeID = this.Columns["DamageTypeID"];
-                this.columnDamageTypeName = this.Columns["DamageTypeName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnDamageTypeID = new DataColumn("DamageTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDamageTypeID);
-                this.columnDamageTypeName = new DataColumn("DamageTypeName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDamageTypeName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey30", new DataColumn[] {
-                                this.columnDamageTypeID}, true));
-                this.columnDamageTypeID.AllowDBNull = false;
-                this.columnDamageTypeID.Unique = true;
-                this.columnDamageTypeName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumDamageTypeRow NewEnumDamageTypeRow() {
-                return ((EnumDamageTypeRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumDamageTypeRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumDamageTypeRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumDamageTypeRowChanged != null)) {
-                    this.EnumDamageTypeRowChanged(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumDamageTypeRowChanging != null)) {
-                    this.EnumDamageTypeRowChanging(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumDamageTypeRowDeleted != null)) {
-                    this.EnumDamageTypeRowDeleted(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumDamageTypeRowDeleting != null)) {
-                    this.EnumDamageTypeRowDeleting(this, new EnumDamageTypeRowChangeEvent(((EnumDamageTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumDamageTypeRow(EnumDamageTypeRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumDamageTypeRow : DataRow {
-            
-            private EnumDamageTypeDataTable tableEnumDamageType;
-            
-            internal EnumDamageTypeRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumDamageType = ((EnumDamageTypeDataTable)(this.Table));
-            }
-            
-            public int DamageTypeID {
-                get {
-                    return ((int)(this[this.tableEnumDamageType.DamageTypeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumDamageType.DamageTypeIDColumn] = value;
-                }
-            }
-            
-            public string DamageTypeName {
-                get {
-                    return ((string)(this[this.tableEnumDamageType.DamageTypeNameColumn]));
-                }
-                set {
-                    this[this.tableEnumDamageType.DamageTypeNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumDamageType.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumDamageType.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumDamageTypeRowChangeEvent : EventArgs {
-            
-            private EnumDamageTypeRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumDamageTypeRowChangeEvent(EnumDamageTypeRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumDamageTypeRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RaceDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnRaceID;
-            
-            private DataColumn columnSentient;
-            
-            private DataColumn columnRaceName;
-            
-            private DataColumn columnDescription;
-            
-            private DataColumn columnSizeID;
-            
-            internal RaceDataTable() : 
-                    base("Race") {
-                this.InitClass();
-            }
-            
-            internal RaceDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn RaceIDColumn {
-                get {
-                    return this.columnRaceID;
-                }
-            }
-            
-            internal DataColumn SentientColumn {
-                get {
-                    return this.columnSentient;
-                }
-            }
-            
-            internal DataColumn RaceNameColumn {
-                get {
-                    return this.columnRaceName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            internal DataColumn SizeIDColumn {
-                get {
-                    return this.columnSizeID;
-                }
-            }
-            
-            public RaceRow this[int index] {
-                get {
-                    return ((RaceRow)(this.Rows[index]));
-                }
-            }
-            
-            public event RaceRowChangeEventHandler RaceRowChanged;
-            
-            public event RaceRowChangeEventHandler RaceRowChanging;
-            
-            public event RaceRowChangeEventHandler RaceRowDeleted;
-            
-            public event RaceRowChangeEventHandler RaceRowDeleting;
-            
-            public void AddRaceRow(RaceRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public RaceRow AddRaceRow(int RaceID, bool Sentient, string RaceName, string Description, int SizeID) {
-                RaceRow rowRaceRow = ((RaceRow)(this.NewRow()));
-                rowRaceRow.ItemArray = new object[] {
-                        RaceID,
-                        Sentient,
-                        RaceName,
-                        Description,
-                        SizeID};
-                this.Rows.Add(rowRaceRow);
-                return rowRaceRow;
-            }
-            
-            public RaceRow FindByRaceID(int RaceID) {
-                return ((RaceRow)(this.Rows.Find(new object[] {
-                            RaceID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                RaceDataTable cln = ((RaceDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new RaceDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnRaceID = this.Columns["RaceID"];
-                this.columnSentient = this.Columns["Sentient"];
-                this.columnRaceName = this.Columns["RaceName"];
-                this.columnDescription = this.Columns["Description"];
-                this.columnSizeID = this.Columns["SizeID"];
-            }
-            
-            private void InitClass() {
-                this.columnRaceID = new DataColumn("RaceID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRaceID);
-                this.columnSentient = new DataColumn("Sentient", typeof(bool), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSentient);
-                this.columnRaceName = new DataColumn("RaceName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnRaceName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.columnSizeID = new DataColumn("SizeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSizeID);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey31", new DataColumn[] {
-                                this.columnRaceID}, true));
-                this.columnRaceID.AllowDBNull = false;
-                this.columnRaceID.Unique = true;
-                this.columnRaceName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-                this.columnSizeID.AllowDBNull = false;
-            }
-            
-            public RaceRow NewRaceRow() {
-                return ((RaceRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new RaceRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(RaceRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.RaceRowChanged != null)) {
-                    this.RaceRowChanged(this, new RaceRowChangeEvent(((RaceRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.RaceRowChanging != null)) {
-                    this.RaceRowChanging(this, new RaceRowChangeEvent(((RaceRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.RaceRowDeleted != null)) {
-                    this.RaceRowDeleted(this, new RaceRowChangeEvent(((RaceRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.RaceRowDeleting != null)) {
-                    this.RaceRowDeleting(this, new RaceRowChangeEvent(((RaceRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveRaceRow(RaceRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RaceRow : DataRow {
-            
-            private RaceDataTable tableRace;
-            
-            internal RaceRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableRace = ((RaceDataTable)(this.Table));
-            }
-            
-            public int RaceID {
-                get {
-                    return ((int)(this[this.tableRace.RaceIDColumn]));
-                }
-                set {
-                    this[this.tableRace.RaceIDColumn] = value;
-                }
-            }
-            
-            public bool Sentient {
-                get {
-                    try {
-                        return ((bool)(this[this.tableRace.SentientColumn]));
-                    }
-                    catch (InvalidCastException e) {
-                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableRace.SentientColumn] = value;
-                }
-            }
-            
-            public string RaceName {
-                get {
-                    return ((string)(this[this.tableRace.RaceNameColumn]));
-                }
-                set {
-                    this[this.tableRace.RaceNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableRace.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableRace.DescriptionColumn] = value;
-                }
-            }
-            
-            public int SizeID {
-                get {
-                    return ((int)(this[this.tableRace.SizeIDColumn]));
-                }
-                set {
-                    this[this.tableRace.SizeIDColumn] = value;
-                }
-            }
-            
-            public bool IsSentientNull() {
-                return this.IsNull(this.tableRace.SentientColumn);
-            }
-            
-            public void SetSentientNull() {
-                this[this.tableRace.SentientColumn] = System.Convert.DBNull;
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class RaceRowChangeEvent : EventArgs {
-            
-            private RaceRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public RaceRowChangeEvent(RaceRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public RaceRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumLiquidTypeDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnLiquidTypeID;
-            
-            private DataColumn columnLiquidName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumLiquidTypeDataTable() : 
-                    base("EnumLiquidType") {
-                this.InitClass();
-            }
-            
-            internal EnumLiquidTypeDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn LiquidTypeIDColumn {
-                get {
-                    return this.columnLiquidTypeID;
-                }
-            }
-            
-            internal DataColumn LiquidNameColumn {
-                get {
-                    return this.columnLiquidName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumLiquidTypeRow this[int index] {
-                get {
-                    return ((EnumLiquidTypeRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowChanged;
-            
-            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowChanging;
-            
-            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowDeleted;
-            
-            public event EnumLiquidTypeRowChangeEventHandler EnumLiquidTypeRowDeleting;
-            
-            public void AddEnumLiquidTypeRow(EnumLiquidTypeRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumLiquidTypeRow AddEnumLiquidTypeRow(int LiquidTypeID, string LiquidName, string Description) {
-                EnumLiquidTypeRow rowEnumLiquidTypeRow = ((EnumLiquidTypeRow)(this.NewRow()));
-                rowEnumLiquidTypeRow.ItemArray = new object[] {
-                        LiquidTypeID,
-                        LiquidName,
-                        Description};
-                this.Rows.Add(rowEnumLiquidTypeRow);
-                return rowEnumLiquidTypeRow;
-            }
-            
-            public EnumLiquidTypeRow FindByLiquidTypeID(int LiquidTypeID) {
-                return ((EnumLiquidTypeRow)(this.Rows.Find(new object[] {
-                            LiquidTypeID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumLiquidTypeDataTable cln = ((EnumLiquidTypeDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumLiquidTypeDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnLiquidTypeID = this.Columns["LiquidTypeID"];
-                this.columnLiquidName = this.Columns["LiquidName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnLiquidTypeID = new DataColumn("LiquidTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLiquidTypeID);
-                this.columnLiquidName = new DataColumn("LiquidName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnLiquidName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey32", new DataColumn[] {
-                                this.columnLiquidTypeID}, true));
-                this.columnLiquidTypeID.AllowDBNull = false;
-                this.columnLiquidTypeID.Unique = true;
-                this.columnLiquidName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumLiquidTypeRow NewEnumLiquidTypeRow() {
-                return ((EnumLiquidTypeRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumLiquidTypeRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumLiquidTypeRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumLiquidTypeRowChanged != null)) {
-                    this.EnumLiquidTypeRowChanged(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumLiquidTypeRowChanging != null)) {
-                    this.EnumLiquidTypeRowChanging(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumLiquidTypeRowDeleted != null)) {
-                    this.EnumLiquidTypeRowDeleted(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumLiquidTypeRowDeleting != null)) {
-                    this.EnumLiquidTypeRowDeleting(this, new EnumLiquidTypeRowChangeEvent(((EnumLiquidTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumLiquidTypeRow(EnumLiquidTypeRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumLiquidTypeRow : DataRow {
-            
-            private EnumLiquidTypeDataTable tableEnumLiquidType;
-            
-            internal EnumLiquidTypeRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumLiquidType = ((EnumLiquidTypeDataTable)(this.Table));
-            }
-            
-            public int LiquidTypeID {
-                get {
-                    return ((int)(this[this.tableEnumLiquidType.LiquidTypeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumLiquidType.LiquidTypeIDColumn] = value;
-                }
-            }
-            
-            public string LiquidName {
-                get {
-                    return ((string)(this[this.tableEnumLiquidType.LiquidNameColumn]));
-                }
-                set {
-                    this[this.tableEnumLiquidType.LiquidNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumLiquidType.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumLiquidType.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumLiquidTypeRowChangeEvent : EventArgs {
-            
-            private EnumLiquidTypeRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumLiquidTypeRowChangeEvent(EnumLiquidTypeRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumLiquidTypeRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSizeDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnSizeID;
-            
-            private DataColumn columnSizeName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumSizeDataTable() : 
-                    base("EnumSize") {
-                this.InitClass();
-            }
-            
-            internal EnumSizeDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn SizeIDColumn {
-                get {
-                    return this.columnSizeID;
-                }
-            }
-            
-            internal DataColumn SizeNameColumn {
-                get {
-                    return this.columnSizeName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumSizeRow this[int index] {
-                get {
-                    return ((EnumSizeRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumSizeRowChangeEventHandler EnumSizeRowChanged;
-            
-            public event EnumSizeRowChangeEventHandler EnumSizeRowChanging;
-            
-            public event EnumSizeRowChangeEventHandler EnumSizeRowDeleted;
-            
-            public event EnumSizeRowChangeEventHandler EnumSizeRowDeleting;
-            
-            public void AddEnumSizeRow(EnumSizeRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumSizeRow AddEnumSizeRow(int SizeID, string SizeName, string Description) {
-                EnumSizeRow rowEnumSizeRow = ((EnumSizeRow)(this.NewRow()));
-                rowEnumSizeRow.ItemArray = new object[] {
-                        SizeID,
-                        SizeName,
-                        Description};
-                this.Rows.Add(rowEnumSizeRow);
-                return rowEnumSizeRow;
-            }
-            
-            public EnumSizeRow FindBySizeID(int SizeID) {
-                return ((EnumSizeRow)(this.Rows.Find(new object[] {
-                            SizeID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumSizeDataTable cln = ((EnumSizeDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumSizeDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnSizeID = this.Columns["SizeID"];
-                this.columnSizeName = this.Columns["SizeName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnSizeID = new DataColumn("SizeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSizeID);
-                this.columnSizeName = new DataColumn("SizeName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSizeName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey33", new DataColumn[] {
-                                this.columnSizeID}, true));
-                this.columnSizeID.AllowDBNull = false;
-                this.columnSizeID.Unique = true;
-                this.columnSizeName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumSizeRow NewEnumSizeRow() {
-                return ((EnumSizeRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumSizeRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumSizeRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumSizeRowChanged != null)) {
-                    this.EnumSizeRowChanged(this, new EnumSizeRowChangeEvent(((EnumSizeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumSizeRowChanging != null)) {
-                    this.EnumSizeRowChanging(this, new EnumSizeRowChangeEvent(((EnumSizeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumSizeRowDeleted != null)) {
-                    this.EnumSizeRowDeleted(this, new EnumSizeRowChangeEvent(((EnumSizeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumSizeRowDeleting != null)) {
-                    this.EnumSizeRowDeleting(this, new EnumSizeRowChangeEvent(((EnumSizeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumSizeRow(EnumSizeRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSizeRow : DataRow {
-            
-            private EnumSizeDataTable tableEnumSize;
-            
-            internal EnumSizeRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumSize = ((EnumSizeDataTable)(this.Table));
-            }
-            
-            public int SizeID {
-                get {
-                    return ((int)(this[this.tableEnumSize.SizeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumSize.SizeIDColumn] = value;
-                }
-            }
-            
-            public string SizeName {
-                get {
-                    return ((string)(this[this.tableEnumSize.SizeNameColumn]));
-                }
-                set {
-                    this[this.tableEnumSize.SizeNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumSize.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumSize.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSizeRowChangeEvent : EventArgs {
-            
-            private EnumSizeRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumSizeRowChangeEvent(EnumSizeRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumSizeRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSpecialisationDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnSpecialisationID;
-            
-            private DataColumn columnSpecialisationName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumSpecialisationDataTable() : 
-                    base("EnumSpecialisation") {
-                this.InitClass();
-            }
-            
-            internal EnumSpecialisationDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn SpecialisationIDColumn {
-                get {
-                    return this.columnSpecialisationID;
-                }
-            }
-            
-            internal DataColumn SpecialisationNameColumn {
-                get {
-                    return this.columnSpecialisationName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumSpecialisationRow this[int index] {
-                get {
-                    return ((EnumSpecialisationRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowChanged;
-            
-            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowChanging;
-            
-            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowDeleted;
-            
-            public event EnumSpecialisationRowChangeEventHandler EnumSpecialisationRowDeleting;
-            
-            public void AddEnumSpecialisationRow(EnumSpecialisationRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumSpecialisationRow AddEnumSpecialisationRow(int SpecialisationID, string SpecialisationName, string Description) {
-                EnumSpecialisationRow rowEnumSpecialisationRow = ((EnumSpecialisationRow)(this.NewRow()));
-                rowEnumSpecialisationRow.ItemArray = new object[] {
-                        SpecialisationID,
-                        SpecialisationName,
-                        Description};
-                this.Rows.Add(rowEnumSpecialisationRow);
-                return rowEnumSpecialisationRow;
-            }
-            
-            public EnumSpecialisationRow FindBySpecialisationID(int SpecialisationID) {
-                return ((EnumSpecialisationRow)(this.Rows.Find(new object[] {
-                            SpecialisationID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumSpecialisationDataTable cln = ((EnumSpecialisationDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumSpecialisationDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnSpecialisationID = this.Columns["SpecialisationID"];
-                this.columnSpecialisationName = this.Columns["SpecialisationName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnSpecialisationID = new DataColumn("SpecialisationID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSpecialisationID);
-                this.columnSpecialisationName = new DataColumn("SpecialisationName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnSpecialisationName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey34", new DataColumn[] {
-                                this.columnSpecialisationID}, true));
-                this.columnSpecialisationID.AllowDBNull = false;
-                this.columnSpecialisationID.Unique = true;
-                this.columnSpecialisationName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumSpecialisationRow NewEnumSpecialisationRow() {
-                return ((EnumSpecialisationRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumSpecialisationRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumSpecialisationRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumSpecialisationRowChanged != null)) {
-                    this.EnumSpecialisationRowChanged(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumSpecialisationRowChanging != null)) {
-                    this.EnumSpecialisationRowChanging(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumSpecialisationRowDeleted != null)) {
-                    this.EnumSpecialisationRowDeleted(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumSpecialisationRowDeleting != null)) {
-                    this.EnumSpecialisationRowDeleting(this, new EnumSpecialisationRowChangeEvent(((EnumSpecialisationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumSpecialisationRow(EnumSpecialisationRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSpecialisationRow : DataRow {
-            
-            private EnumSpecialisationDataTable tableEnumSpecialisation;
-            
-            internal EnumSpecialisationRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumSpecialisation = ((EnumSpecialisationDataTable)(this.Table));
-            }
-            
-            public int SpecialisationID {
-                get {
-                    return ((int)(this[this.tableEnumSpecialisation.SpecialisationIDColumn]));
-                }
-                set {
-                    this[this.tableEnumSpecialisation.SpecialisationIDColumn] = value;
-                }
-            }
-            
-            public string SpecialisationName {
-                get {
-                    return ((string)(this[this.tableEnumSpecialisation.SpecialisationNameColumn]));
-                }
-                set {
-                    this[this.tableEnumSpecialisation.SpecialisationNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumSpecialisation.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumSpecialisation.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumSpecialisationRowChangeEvent : EventArgs {
-            
-            private EnumSpecialisationRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumSpecialisationRowChangeEvent(EnumSpecialisationRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumSpecialisationRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumTargetTypeDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnTargetTypeID;
-            
-            private DataColumn columnTargetName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumTargetTypeDataTable() : 
-                    base("EnumTargetType") {
-                this.InitClass();
-            }
-            
-            internal EnumTargetTypeDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn TargetTypeIDColumn {
-                get {
-                    return this.columnTargetTypeID;
-                }
-            }
-            
-            internal DataColumn TargetNameColumn {
-                get {
-                    return this.columnTargetName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumTargetTypeRow this[int index] {
-                get {
-                    return ((EnumTargetTypeRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowChanged;
-            
-            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowChanging;
-            
-            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowDeleted;
-            
-            public event EnumTargetTypeRowChangeEventHandler EnumTargetTypeRowDeleting;
-            
-            public void AddEnumTargetTypeRow(EnumTargetTypeRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumTargetTypeRow AddEnumTargetTypeRow(int TargetTypeID, string TargetName, string Description) {
-                EnumTargetTypeRow rowEnumTargetTypeRow = ((EnumTargetTypeRow)(this.NewRow()));
-                rowEnumTargetTypeRow.ItemArray = new object[] {
-                        TargetTypeID,
-                        TargetName,
-                        Description};
-                this.Rows.Add(rowEnumTargetTypeRow);
-                return rowEnumTargetTypeRow;
-            }
-            
-            public EnumTargetTypeRow FindByTargetTypeID(int TargetTypeID) {
-                return ((EnumTargetTypeRow)(this.Rows.Find(new object[] {
-                            TargetTypeID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumTargetTypeDataTable cln = ((EnumTargetTypeDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumTargetTypeDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnTargetTypeID = this.Columns["TargetTypeID"];
-                this.columnTargetName = this.Columns["TargetName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnTargetTypeID = new DataColumn("TargetTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnTargetTypeID);
-                this.columnTargetName = new DataColumn("TargetName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnTargetName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey35", new DataColumn[] {
-                                this.columnTargetTypeID}, true));
-                this.columnTargetTypeID.AllowDBNull = false;
-                this.columnTargetTypeID.Unique = true;
-                this.columnTargetName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumTargetTypeRow NewEnumTargetTypeRow() {
-                return ((EnumTargetTypeRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumTargetTypeRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumTargetTypeRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumTargetTypeRowChanged != null)) {
-                    this.EnumTargetTypeRowChanged(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumTargetTypeRowChanging != null)) {
-                    this.EnumTargetTypeRowChanging(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumTargetTypeRowDeleted != null)) {
-                    this.EnumTargetTypeRowDeleted(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumTargetTypeRowDeleting != null)) {
-                    this.EnumTargetTypeRowDeleting(this, new EnumTargetTypeRowChangeEvent(((EnumTargetTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumTargetTypeRow(EnumTargetTypeRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumTargetTypeRow : DataRow {
-            
-            private EnumTargetTypeDataTable tableEnumTargetType;
-            
-            internal EnumTargetTypeRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumTargetType = ((EnumTargetTypeDataTable)(this.Table));
-            }
-            
-            public int TargetTypeID {
-                get {
-                    return ((int)(this[this.tableEnumTargetType.TargetTypeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumTargetType.TargetTypeIDColumn] = value;
-                }
-            }
-            
-            public string TargetName {
-                get {
-                    return ((string)(this[this.tableEnumTargetType.TargetNameColumn]));
-                }
-                set {
-                    this[this.tableEnumTargetType.TargetNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumTargetType.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumTargetType.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumTargetTypeRowChangeEvent : EventArgs {
-            
-            private EnumTargetTypeRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumTargetTypeRowChangeEvent(EnumTargetTypeRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumTargetTypeRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumTerrainTypeDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnTerrainTypeID;
-            
-            private DataColumn columnTerrainTypeName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumTerrainTypeDataTable() : 
-                    base("EnumTerrainType") {
-                this.InitClass();
-            }
-            
-            internal EnumTerrainTypeDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn TerrainTypeIDColumn {
-                get {
-                    return this.columnTerrainTypeID;
-                }
-            }
-            
-            internal DataColumn TerrainTypeNameColumn {
-                get {
-                    return this.columnTerrainTypeName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumTerrainTypeRow this[int index] {
-                get {
-                    return ((EnumTerrainTypeRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowChanged;
-            
-            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowChanging;
-            
-            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowDeleted;
-            
-            public event EnumTerrainTypeRowChangeEventHandler EnumTerrainTypeRowDeleting;
-            
-            public void AddEnumTerrainTypeRow(EnumTerrainTypeRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumTerrainTypeRow AddEnumTerrainTypeRow(int TerrainTypeID, string TerrainTypeName, string Description) {
-                EnumTerrainTypeRow rowEnumTerrainTypeRow = ((EnumTerrainTypeRow)(this.NewRow()));
-                rowEnumTerrainTypeRow.ItemArray = new object[] {
-                        TerrainTypeID,
-                        TerrainTypeName,
-                        Description};
-                this.Rows.Add(rowEnumTerrainTypeRow);
-                return rowEnumTerrainTypeRow;
-            }
-            
-            public EnumTerrainTypeRow FindByTerrainTypeID(int TerrainTypeID) {
-                return ((EnumTerrainTypeRow)(this.Rows.Find(new object[] {
-                            TerrainTypeID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumTerrainTypeDataTable cln = ((EnumTerrainTypeDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumTerrainTypeDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnTerrainTypeID = this.Columns["TerrainTypeID"];
-                this.columnTerrainTypeName = this.Columns["TerrainTypeName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnTerrainTypeID = new DataColumn("TerrainTypeID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnTerrainTypeID);
-                this.columnTerrainTypeName = new DataColumn("TerrainTypeName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnTerrainTypeName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey36", new DataColumn[] {
-                                this.columnTerrainTypeID}, true));
-                this.columnTerrainTypeID.AllowDBNull = false;
-                this.columnTerrainTypeID.Unique = true;
-                this.columnTerrainTypeName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumTerrainTypeRow NewEnumTerrainTypeRow() {
-                return ((EnumTerrainTypeRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumTerrainTypeRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumTerrainTypeRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumTerrainTypeRowChanged != null)) {
-                    this.EnumTerrainTypeRowChanged(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumTerrainTypeRowChanging != null)) {
-                    this.EnumTerrainTypeRowChanging(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumTerrainTypeRowDeleted != null)) {
-                    this.EnumTerrainTypeRowDeleted(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumTerrainTypeRowDeleting != null)) {
-                    this.EnumTerrainTypeRowDeleting(this, new EnumTerrainTypeRowChangeEvent(((EnumTerrainTypeRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumTerrainTypeRow(EnumTerrainTypeRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumTerrainTypeRow : DataRow {
-            
-            private EnumTerrainTypeDataTable tableEnumTerrainType;
-            
-            internal EnumTerrainTypeRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumTerrainType = ((EnumTerrainTypeDataTable)(this.Table));
-            }
-            
-            public int TerrainTypeID {
-                get {
-                    return ((int)(this[this.tableEnumTerrainType.TerrainTypeIDColumn]));
-                }
-                set {
-                    this[this.tableEnumTerrainType.TerrainTypeIDColumn] = value;
-                }
-            }
-            
-            public string TerrainTypeName {
-                get {
-                    return ((string)(this[this.tableEnumTerrainType.TerrainTypeNameColumn]));
-                }
-                set {
-                    this[this.tableEnumTerrainType.TerrainTypeNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumTerrainType.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumTerrainType.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumTerrainTypeRowChangeEvent : EventArgs {
-            
-            private EnumTerrainTypeRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumTerrainTypeRowChangeEvent(EnumTerrainTypeRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumTerrainTypeRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            public DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumWearLocationDataTable : DataTable, System.Collections.IEnumerable {
-            
-            private DataColumn columnWearLocationID;
-            
-            private DataColumn columnWearLocationName;
-            
-            private DataColumn columnDescription;
-            
-            internal EnumWearLocationDataTable() : 
-                    base("EnumWearLocation") {
-                this.InitClass();
-            }
-            
-            internal EnumWearLocationDataTable(DataTable table) : 
-                    base(table.TableName) {
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-                this.DisplayExpression = table.DisplayExpression;
-            }
-            
-            [System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            internal DataColumn WearLocationIDColumn {
-                get {
-                    return this.columnWearLocationID;
-                }
-            }
-            
-            internal DataColumn WearLocationNameColumn {
-                get {
-                    return this.columnWearLocationName;
-                }
-            }
-            
-            internal DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            public EnumWearLocationRow this[int index] {
-                get {
-                    return ((EnumWearLocationRow)(this.Rows[index]));
-                }
-            }
-            
-            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowChanged;
-            
-            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowChanging;
-            
-            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowDeleted;
-            
-            public event EnumWearLocationRowChangeEventHandler EnumWearLocationRowDeleting;
-            
-            public void AddEnumWearLocationRow(EnumWearLocationRow row) {
-                this.Rows.Add(row);
-            }
-            
-            public EnumWearLocationRow AddEnumWearLocationRow(int WearLocationID, string WearLocationName, string Description) {
-                EnumWearLocationRow rowEnumWearLocationRow = ((EnumWearLocationRow)(this.NewRow()));
-                rowEnumWearLocationRow.ItemArray = new object[] {
-                        WearLocationID,
-                        WearLocationName,
-                        Description};
-                this.Rows.Add(rowEnumWearLocationRow);
-                return rowEnumWearLocationRow;
-            }
-            
-            public EnumWearLocationRow FindByWearLocationID(int WearLocationID) {
-                return ((EnumWearLocationRow)(this.Rows.Find(new object[] {
-                            WearLocationID})));
-            }
-            
-            public System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            public override DataTable Clone() {
-                EnumWearLocationDataTable cln = ((EnumWearLocationDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            protected override DataTable CreateInstance() {
-                return new EnumWearLocationDataTable();
-            }
-            
-            internal void InitVars() {
-                this.columnWearLocationID = this.Columns["WearLocationID"];
-                this.columnWearLocationName = this.Columns["WearLocationName"];
-                this.columnDescription = this.Columns["Description"];
-            }
-            
-            private void InitClass() {
-                this.columnWearLocationID = new DataColumn("WearLocationID", typeof(int), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnWearLocationID);
-                this.columnWearLocationName = new DataColumn("WearLocationName", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnWearLocationName);
-                this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
-                this.Columns.Add(this.columnDescription);
-                this.Constraints.Add(new UniqueConstraint("SchemaKey37", new DataColumn[] {
-                                this.columnWearLocationID}, true));
-                this.columnWearLocationID.AllowDBNull = false;
-                this.columnWearLocationID.Unique = true;
-                this.columnWearLocationName.AllowDBNull = false;
-                this.columnDescription.AllowDBNull = false;
-            }
-            
-            public EnumWearLocationRow NewEnumWearLocationRow() {
-                return ((EnumWearLocationRow)(this.NewRow()));
-            }
-            
-            protected override DataRow NewRowFromBuilder(DataRowBuilder builder) {
-                return new EnumWearLocationRow(builder);
-            }
-            
-            protected override System.Type GetRowType() {
-                return typeof(EnumWearLocationRow);
-            }
-            
-            protected override void OnRowChanged(DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.EnumWearLocationRowChanged != null)) {
-                    this.EnumWearLocationRowChanged(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowChanging(DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.EnumWearLocationRowChanging != null)) {
-                    this.EnumWearLocationRowChanging(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleted(DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.EnumWearLocationRowDeleted != null)) {
-                    this.EnumWearLocationRowDeleted(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            protected override void OnRowDeleting(DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.EnumWearLocationRowDeleting != null)) {
-                    this.EnumWearLocationRowDeleting(this, new EnumWearLocationRowChangeEvent(((EnumWearLocationRow)(e.Row)), e.Action));
-                }
-            }
-            
-            public void RemoveEnumWearLocationRow(EnumWearLocationRow row) {
-                this.Rows.Remove(row);
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumWearLocationRow : DataRow {
-            
-            private EnumWearLocationDataTable tableEnumWearLocation;
-            
-            internal EnumWearLocationRow(DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableEnumWearLocation = ((EnumWearLocationDataTable)(this.Table));
-            }
-            
-            public int WearLocationID {
-                get {
-                    return ((int)(this[this.tableEnumWearLocation.WearLocationIDColumn]));
-                }
-                set {
-                    this[this.tableEnumWearLocation.WearLocationIDColumn] = value;
-                }
-            }
-            
-            public string WearLocationName {
-                get {
-                    return ((string)(this[this.tableEnumWearLocation.WearLocationNameColumn]));
-                }
-                set {
-                    this[this.tableEnumWearLocation.WearLocationNameColumn] = value;
-                }
-            }
-            
-            public string Description {
-                get {
-                    return ((string)(this[this.tableEnumWearLocation.DescriptionColumn]));
-                }
-                set {
-                    this[this.tableEnumWearLocation.DescriptionColumn] = value;
-                }
-            }
-        }
-        
-        [System.Diagnostics.DebuggerStepThrough()]
-        public class EnumWearLocationRowChangeEvent : EventArgs {
-            
-            private EnumWearLocationRow eventRow;
-            
-            private DataRowAction eventAction;
-            
-            public EnumWearLocationRowChangeEvent(EnumWearLocationRow row, DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            public EnumWearLocationRow Row {
                 get {
                     return this.eventRow;
                 }
