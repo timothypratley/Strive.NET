@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
-
+using System.Data;
 using System.Data.SqlClient;
 
 using SQLDMO;
@@ -21,10 +21,11 @@ namespace Strive.Utils.StoredProcedureUI
 		private System.ComponentModel.Container components = null;
 
 		private SQLDMO.StoredProcedure _storedProcedure;
+		private SqlConnection _connection;
 
-		public SPUI(SQLDMO.StoredProcedure storedProcedure)
+		public SPUI(SQLDMO.StoredProcedure storedProcedure, SqlConnection connection)
 		{
-
+			_connection = connection;
 			_storedProcedure = storedProcedure;
 			
 			InitializeComponent();
@@ -89,35 +90,8 @@ namespace Strive.Utils.StoredProcedureUI
 
 		private void ButtonExecute_OnClick(object sender, System.EventArgs e)
 		{
-			// try to execute with values oh boy
-			// get connection
-			SQLDMO.Database sqldmoDatabase = (SQLDMO.Database)_storedProcedure.Parent;
-			SQLDMO.SQLServer sqldmoServer = (SQLDMO.SQLServer)sqldmoDatabase.Parent;
-
-			SqlConnection connection = new SqlConnection();
-			// build a connection string it hurts
-
-			string connectionString = "Data Source=" + sqldmoServer.Name + ";";
-			connectionString += "Initial Catalog=" + sqldmoDatabase.Name + ";";
-			//Initial Catalog=prdConnectedEvents;Data Source=tehmong\VSdotNET;Integrated Security=SSPI"/>
-			// this hardcoding is strange but should work - albeit stopping anyone using this tool to connect as sa 
-			// (a good thing who knows where I am emailing this password)
-			if(sqldmoServer.Login == "sa")
-			{
-				connectionString += "Integrated Security=SSPI;";
-			}
-			else
-			{
-				connectionString += "User ID=" + sqldmoServer.Login + ";";
-				connectionString += "Password=" + sqldmoServer.Password + ";";
-			}
-
-			connection.ConnectionString = connectionString;
-
-			connection.Open();
-
 			SqlCommand command = new SqlCommand();
-			command.Connection = connection;
+			command.Connection = _connection;
 
 			command.CommandText = _storedProcedure.Name;
 			command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -137,8 +111,9 @@ namespace Strive.Utils.StoredProcedureUI
 					object paramValue = null;
 					
 					// switch would work beautifully here but they're non-integral values
-					if(enumC is TextBox)
-					{
+					if ( enumC is ComboBox ) {
+						paramValue = ((ComboBox)enumC).SelectedValue;
+					} else if (enumC is TextBox) {
 						if(((TextBox)enumC).Text == "")
 						{
 							paramValue = null;
@@ -180,8 +155,6 @@ namespace Strive.Utils.StoredProcedureUI
 			{
 				MessageBox.Show(ex.ToString());
 			}
-			connection.Close();
-
 		}
 
 		private void ButtonCancel_OnClick(object sender, System.EventArgs e)
@@ -191,75 +164,100 @@ namespace Strive.Utils.StoredProcedureUI
 
 		private int LayoutNewControl(SQLDMO.QueryResults paraminfo, int paramPointer,  int LayoutY)
 		{
+			string fieldName = paraminfo.GetColumnString(paramPointer, 1).Remove(0,1);
 			int LayoutNewControlReturn = 0;
-			Control c = null;
 
 			Label lbl = new Label();
 			lbl.Top = LayoutY;
 			lbl.Width = 200;
-			lbl.Text = paraminfo.GetColumnString(paramPointer, 1);
+			lbl.Text = fieldName;
 			lbl.Height = 20;
 			lbl.TextAlign = ContentAlignment.MiddleRight;
 			this.Controls.Add(lbl);
 
+			Control c = null;
+
+			if ( fieldName.EndsWith( "ID" ) ) {
+				// this field joins with another table in the database,
+				// go grab the possible values and put them in a dropdown box
+				// omg if this is a big number I ph33r for you.
+
+				string tablename = fieldName.Substring( 0, fieldName.Length-2 );
+				// create a dropdown
+				SqlCommand sqlc = new SqlCommand(
+					"select " + fieldName + " as id, cast("
+					+ fieldName+ " as nvarchar)+': '+"+tablename+"Name as name from " + tablename,
+					_connection
+				);
+				try {
+					//MessageBox.Show( sqlc.CommandText );
+					ComboBox dropdown = new ComboBox();
+					SqlDataAdapter da = new SqlDataAdapter( sqlc );
+					DataTable dt = new DataTable();
+					da.Fill(dt);
+					dropdown.DataSource = dt;
+					dropdown.DisplayMember = "name";
+					dropdown.ValueMember = "id";
+					dropdown.Left = 220;
+					dropdown.Top = LayoutY;
+					c = dropdown;
+					this.Controls.Add( dropdown );
+				} catch ( Exception e ) {
+					MessageBox.Show( e.Message );
+				}
+			}
+
 			string type = paraminfo.GetColumnString(paramPointer, 2);
-
-			// CHAR, INT, FLOAT etc: the easiest:
-			if(type.IndexOf("char") > -1 ||
-				type.IndexOf("int") > -1 ||
-				type.IndexOf("float") > -1 ||
-				type.IndexOf("text") > -1)
-			{
-				TextBox txt = new TextBox();
-				txt.Left = 220;
-				txt.Top = LayoutY;
-				lbl.Height = 20;
-
-				if(type.IndexOf("char") > -1)
-				{
-					txt.Width = 200;
-					txt.MaxLength = paraminfo.GetColumnLong(paramPointer, 3);
+			if ( c == null ) {
+				// CHAR, INT, FLOAT etc: the easiest:
+				if(type.IndexOf("char") > -1 ||
+					type.IndexOf("int") > -1 ||
+					type.IndexOf("float") > -1 ||
+					type.IndexOf("text") > -1) {
+					TextBox txt = new TextBox();
+					txt.Left = 220;
+					txt.Top = LayoutY;
+					lbl.Height = 20;
+	
+					if(type.IndexOf("char") > -1) {
+						txt.Width = 200;
+						txt.MaxLength = paraminfo.GetColumnLong(paramPointer, 3);
+					}
+					if(type.IndexOf("text") > -1) {
+						txt.Width = 400;
+						txt.Height = 100;
+						LayoutNewControlReturn = 80;
+	
+						txt.Multiline = true;
+						txt.ScrollBars = ScrollBars.Vertical;
+	
+					}
+					this.Controls.Add(txt);
+	
+					c = txt;
+	
+				} else if (type.IndexOf("bit") > -1) {
+					CheckBox chk = new CheckBox();
+					chk.Left = 220;
+					chk.Top = LayoutY;
+	
+					this.Controls.Add(chk);
+					c = chk;
+	
+				} else if (type.IndexOf("datetime") > -1) {
+					DateTimePicker dt = new DateTimePicker();
+					dt.CustomFormat = "dd MMM yyyy h:mm:ss tt";
+					dt.Format = DateTimePickerFormat.Custom;
+					dt.ShowCheckBox = true;
+					dt.Checked = false;
+					dt.Top = LayoutY;
+					dt.Left = 220;
+					dt.Width = 200;
+					dt.Visible = true;
+	
+					this.Controls.Add(dt);
+					c = dt;
 				}
-				if(type.IndexOf("text") > -1)
-				{
-					txt.Width = 400;
-					txt.Height = 100;
-					LayoutNewControlReturn = 80;
-
-					txt.Multiline = true;
-					txt.ScrollBars = ScrollBars.Vertical;
-
-				}
-				this.Controls.Add(txt);
-
-				c = txt;
-
-			}
-			if(type.IndexOf("bit") > -1)
-			{
-				CheckBox chk = new CheckBox();
-				chk.Left = 220;
-				chk.Top = LayoutY;
-
-				this.Controls.Add(chk);
-				c = chk;
-
-			}
-
-			if(type.IndexOf("datetime") > -1)
-			{
-				DateTimePicker dt = new DateTimePicker();
-				dt.CustomFormat = "dd MMM yyyy h:mm:ss tt";
-				dt.Format = DateTimePickerFormat.Custom;
-				dt.ShowCheckBox = true;
-				dt.Checked = false;
-				dt.Top = LayoutY;
-				dt.Left = 220;
-				dt.Width = 200;
-				dt.Visible = true;
-
-				this.Controls.Add(dt);
-				c = dt;
 			}
 
 			if(c == null)

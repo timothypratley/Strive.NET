@@ -37,6 +37,7 @@ namespace Strive.Utils.Shared.Controls
 		private System.Windows.Forms.TextBox ConnectionStatus;
 		private System.Windows.Forms.Button Register; 
 		private SQLDMO.Database SQLDMODatabase;
+		public SqlConnection DotNetSqlConnection = new SqlConnection();
 		
 
 
@@ -359,7 +360,8 @@ namespace Strive.Utils.Shared.Controls
 					SQLDMOServer.LoginSecure = true;
 					SQLDMOServer.Connect(servers.Text, null, null);
 				}
-				ConnectionStatus.Text += "Connected to " + servers.Text + "\r\n----------------\r\n";
+
+				ConnectionStatus.Text += "Now using " + servers.Text + "\r\n----------------\r\n";
 			}
 			catch(Exception ex)
 			{
@@ -401,9 +403,16 @@ namespace Strive.Utils.Shared.Controls
 			{
 				SQLDMODatabase = (Database)SQLDMOServer.Databases.Item(Databases.Text, System.Type.Missing);
 				DatabaseStatus.Text = "Connected to " + SQLDMODatabase.Name;
+				// build a connection string
+				DotNetSqlConnection.ConnectionString =
+					"Data Source=" + SQLDMOServer.Name + ";"
+					+ "Initial Catalog=" + SQLDMODatabase.Name + ";"
+					+ ( SQLDMOServer.LoginSecure
+					? "Integrated Security=SSPI;"
+					: "User ID=" + SQLDMOServer.Login + ";" + "Password=" + SQLDMOServer.Password + ";");
 				DatabaseSelectedEventArgs dbArgs = new DatabaseSelectedEventArgs(SQLDMOApplication, 
 					SQLDMOServer,
-					SQLDMODatabase);
+					SQLDMODatabase );
 				OnDatabaseSelected(dbArgs);
 			}
 		}
@@ -463,10 +472,11 @@ namespace Strive.Utils.Shared.Controls
 			public SQLDMO.Database Database;
 			public SQLDMO.Application Application;
 			public SQLDMO.SQLServer Server;
+			public SqlConnection ConnectionString;
 
 			public DatabaseSelectedEventArgs(SQLDMO.Application application,
 				SQLDMO.SQLServer server,
-				SQLDMO.Database database)
+				SQLDMO.Database database )
 			{
 				Application = application;
 				Server = server;
@@ -475,7 +485,7 @@ namespace Strive.Utils.Shared.Controls
 		}
 	}
 
-	public delegate void DatabaseSelectedEventHandler(object sender, DBPicker.DatabaseSelectedEventArgs e);
+	public delegate void DatabaseSelectedEventHandler(DBPicker sender, DBPicker.DatabaseSelectedEventArgs e);
 
 
 

@@ -49,11 +49,12 @@ namespace Strive.Utils.StoredProcedureUI
 			base.Dispose( disposing );
 		}
 
-		protected void DBPicker_DatabaseSelected(object sender, DBPicker.DatabaseSelectedEventArgs e)
+		protected void DBPicker_DatabaseSelected(DBPicker sender, DBPicker.DatabaseSelectedEventArgs e)
 		{
 			SQLDMODatabase = e.Database;
 			PopulateWithStoredProcedures(StoredProcedures);
 			groupBox1.Enabled = true;
+			sender.DotNetSqlConnection.Open();
 		}
 
 		private void PopulateWithStoredProcedures(ListBox list)
@@ -144,7 +145,7 @@ namespace Strive.Utils.StoredProcedureUI
 				}
 				else
 				{
-					SPUI spui = new SPUI(getSingleStoredProcedure(StoredProcedures.Text));
+					SPUI spui = new SPUI(getSingleStoredProcedure(StoredProcedures.Text), dbPicker1.DotNetSqlConnection);
 					spui.Show();
 				}
 			}

@@ -249,13 +249,14 @@ namespace Strive.Utils.CommandGenerator
 			}
 		}
 
-		protected void DBPicker_DatabaseSelected(object sender, DBPicker.DatabaseSelectedEventArgs e)
+		protected void DBPicker_DatabaseSelected(DBPicker sender, DBPicker.DatabaseSelectedEventArgs e)
 		{
 			SQLDMOApplication = e.Application;
 			SQLDMOServer = e.Server;
 			SQLDMODatabase = e.Database;
 			RefreshStoredProcedures.Enabled = true;
 			listStoredProcedures();
+			sender.DotNetSqlConnection.Open();
 		}
 
 		private void RefreshStoredProcedures_Click(object sender, System.EventArgs e)
