@@ -92,8 +92,8 @@ namespace Strive.UI.Windows.ChildWindows
 			// 
 			// WhoCommands
 			// 
-			this.WhoCommands.Anchor = ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right);
+			this.WhoCommands.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
 			this.WhoCommands.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
 																						   this.RefreshList});
 			this.WhoCommands.Dock = System.Windows.Forms.DockStyle.None;
@@ -101,7 +101,7 @@ namespace Strive.UI.Windows.ChildWindows
 			this.WhoCommands.Location = new System.Drawing.Point(0, 343);
 			this.WhoCommands.Name = "WhoCommands";
 			this.WhoCommands.ShowToolTips = true;
-			this.WhoCommands.Size = new System.Drawing.Size(298, 39);
+			this.WhoCommands.Size = new System.Drawing.Size(298, 28);
 			this.WhoCommands.TabIndex = 1;
 			this.WhoCommands.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.WhoCommands_ButtonClick);
 			// 
@@ -112,13 +112,14 @@ namespace Strive.UI.Windows.ChildWindows
 			// CharactersOnline
 			// 
 			this.CharactersOnline.AllowColumnReorder = true;
-			this.CharactersOnline.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.CharactersOnline.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right);
+				| System.Windows.Forms.AnchorStyles.Right)));
 			this.CharactersOnline.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 																							   this.columnHeader2,
 																							   this.columnHeader1});
 			this.CharactersOnline.FullRowSelect = true;
+			this.CharactersOnline.Location = new System.Drawing.Point(0, 0);
 			this.CharactersOnline.Name = "CharactersOnline";
 			this.CharactersOnline.Size = new System.Drawing.Size(294, 342);
 			this.CharactersOnline.TabIndex = 2;
@@ -136,9 +137,8 @@ namespace Strive.UI.Windows.ChildWindows
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(290, 371);
-			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.CharactersOnline,
-																		  this.WhoCommands});
+			this.Controls.Add(this.CharactersOnline);
+			this.Controls.Add(this.WhoCommands);
 			this.Name = "WhoList";
 			this.Text = "Who List";
 			this.ResumeLayout(false);
@@ -150,7 +150,5 @@ namespace Strive.UI.Windows.ChildWindows
 		{
 			RefreshForm();
 		}
-
-
 	}
 }

@@ -165,6 +165,22 @@
                     Project = "{0D415106-F5A0-4DAD-B8A5-48AE0E7E74AB}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "SHDocVw"
+                    Guid = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}"
+                    VersionMajor = "1"
+                    VersionMinor = "1"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
+                />
+                <Reference
+                    Name = "AxSHDocVw"
+                    Guid = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}"
+                    VersionMajor = "1"
+                    VersionMinor = "1"
+                    Lcid = "0"
+                    WrapperTool = "aximp"
+                />
             </References>
         </Build>
         <Files>
@@ -209,75 +225,6 @@
                     RelPath = "Engine\MessageProcessor.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\CVS\Entries"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "Forms\Controls\CVS\Repository"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "Forms\Controls\CVS\Root"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\BrowserNavigateEvent.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\HtmlControl.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\HtmlControl.resx"
-                    DependentUpon = "HtmlControl.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IHTMLDocument2.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IHTMLElement.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IWebBrowser.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\IWebBrowserEvents.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\WebBrowser.cs"
-                    SubType = "UserControl"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\WebBrowser.resx"
-                    DependentUpon = "WebBrowser.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\CVS\Entries"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\CVS\Repository"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "Forms\Controls\Html\CVS\Root"
-                    BuildAction = "None"
                 />
                 <File
                     RelPath = "Icons\Chat.bmp"
@@ -418,6 +365,16 @@
                 <File
                     RelPath = "Windows\Controls\CommandInput.resx"
                     DependentUpon = "CommandInput.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "Windows\Controls\Html.cs"
+                    SubType = "UserControl"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Controls\Html.resx"
+                    DependentUpon = "Html.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

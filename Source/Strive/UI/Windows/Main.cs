@@ -465,6 +465,8 @@ namespace Strive.UI.Windows
 			// Chat
 			Content chatWindow = DockingManager.Contents.Add(new ChildWindows.Chat(), "Chat", Icons.IconManager.GlobalImageList, (int)Icons.AvailableIcons.Chat);
 			DockingManager.AddContentWithState(chatWindow, State.DockBottom);
+			this.Navigate("http://www.strive3d.net");
+
 			#endregion
 
 			loadSettings();
@@ -479,6 +481,16 @@ namespace Strive.UI.Windows
 			Game.CurrentWorld = new World( Game.RenderingFactory, RenderTarget );
 
 			#endregion		
+		}
+
+		public void Navigate(string url)
+		{
+			// navigates to the supplied url
+			// Web site
+			Windows.Controls.Html webpage = new Windows.Controls.Html(url);
+			Crownwood.Magic.Controls.TabPage website = new Crownwood.Magic.Controls.TabPage(url, webpage);
+			MainTabs.TabPages.Add(website);
+
 		}
 
 		private void ViewFirstPerson_Click(object sender, System.EventArgs e) {
