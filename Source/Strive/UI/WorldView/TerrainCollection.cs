@@ -294,7 +294,7 @@ namespace Strive.UI.WorldView {
 					}
 					for ( j=0; j<zorder; j++ ) {
 						if ( renderup ) {
-							m = i;
+							m = j;
 						} else {
 							m = zorder-j-1;
 						}
