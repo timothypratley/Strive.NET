@@ -183,6 +183,16 @@
                     DependentUpon = "WinMain.cs"
                     BuildAction = "EmbeddedResource"
                 />
+                <File
+                    RelPath = "XSDGenerator\WinMain.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "XSDGenerator\WinMain.resx"
+                    DependentUpon = "WinMain.cs"
+                    BuildAction = "EmbeddedResource"
+                />
             </Include>
         </Files>
     </CSHARP>

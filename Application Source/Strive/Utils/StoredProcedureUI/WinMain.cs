@@ -16,6 +16,7 @@ namespace Strive.Utils.StoredProcedureUI
 		private Strive.Utils.Shared.Controls.DBPicker dbPicker1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ListBox StoredProcedures;
+		private string ConnectionString;
 		private SQLDMO.Database SQLDMODatabase;
 		/// <summary>
 		/// Required designer variable.
@@ -54,7 +55,7 @@ namespace Strive.Utils.StoredProcedureUI
 			SQLDMODatabase = e.Database;
 			PopulateWithStoredProcedures(StoredProcedures);
 			groupBox1.Enabled = true;
-			sender.DotNetSqlConnection.Open();
+			ConnectionString = e.ConnectionString;
 		}
 
 		private void PopulateWithStoredProcedures(ListBox list)
@@ -145,7 +146,9 @@ namespace Strive.Utils.StoredProcedureUI
 				}
 				else
 				{
-					SPUI spui = new SPUI(getSingleStoredProcedure(StoredProcedures.Text), dbPicker1.DotNetSqlConnection);
+					System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(this.ConnectionString);
+					con.Open();
+					SPUI spui = new SPUI(getSingleStoredProcedure(StoredProcedures.Text), con);
 					spui.Show();
 				}
 			}

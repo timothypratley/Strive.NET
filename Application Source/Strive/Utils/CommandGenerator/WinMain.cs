@@ -256,7 +256,6 @@ namespace Strive.Utils.CommandGenerator
 			SQLDMODatabase = e.Database;
 			RefreshStoredProcedures.Enabled = true;
 			listStoredProcedures();
-			sender.DotNetSqlConnection.Open();
 		}
 
 		private void RefreshStoredProcedures_Click(object sender, System.EventArgs e)

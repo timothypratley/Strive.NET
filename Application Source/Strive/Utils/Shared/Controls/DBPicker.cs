@@ -37,9 +37,6 @@ namespace Strive.Utils.Shared.Controls
 		private System.Windows.Forms.TextBox ConnectionStatus;
 		private System.Windows.Forms.Button Register; 
 		private SQLDMO.Database SQLDMODatabase;
-		public SqlConnection DotNetSqlConnection = new SqlConnection();
-		
-
 
 		public event DatabaseSelectedEventHandler DatabaseSelected;
 
@@ -404,15 +401,14 @@ namespace Strive.Utils.Shared.Controls
 				SQLDMODatabase = (Database)SQLDMOServer.Databases.Item(Databases.Text, System.Type.Missing);
 				DatabaseStatus.Text = "Connected to " + SQLDMODatabase.Name;
 				// build a connection string
-				DotNetSqlConnection.ConnectionString =
+				DatabaseSelectedEventArgs dbArgs = new DatabaseSelectedEventArgs(SQLDMOApplication, 
+					SQLDMOServer,
+					SQLDMODatabase,
 					"Data Source=" + SQLDMOServer.Name + ";"
 					+ "Initial Catalog=" + SQLDMODatabase.Name + ";"
 					+ ( SQLDMOServer.LoginSecure
 					? "Integrated Security=SSPI;"
-					: "User ID=" + SQLDMOServer.Login + ";" + "Password=" + SQLDMOServer.Password + ";");
-				DatabaseSelectedEventArgs dbArgs = new DatabaseSelectedEventArgs(SQLDMOApplication, 
-					SQLDMOServer,
-					SQLDMODatabase );
+					: "User ID=" + SQLDMOServer.Login + ";" + "Password=" + SQLDMOServer.Password + ";"));
 				OnDatabaseSelected(dbArgs);
 			}
 		}
@@ -472,15 +468,17 @@ namespace Strive.Utils.Shared.Controls
 			public SQLDMO.Database Database;
 			public SQLDMO.Application Application;
 			public SQLDMO.SQLServer Server;
-			public SqlConnection ConnectionString;
+			public string ConnectionString;
 
 			public DatabaseSelectedEventArgs(SQLDMO.Application application,
 				SQLDMO.SQLServer server,
-				SQLDMO.Database database )
+				SQLDMO.Database database,
+				string connectionString)
 			{
 				Application = application;
 				Server = server;
 				Database = database;
+				ConnectionString = connectionString;
 			}
 		}
 	}

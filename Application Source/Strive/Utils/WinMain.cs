@@ -14,7 +14,7 @@ namespace Strive.Utils
 	{
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.DateTimePicker dateTimePicker1;
+		private System.Windows.Forms.Button LoadXSDGenerator;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -56,7 +56,7 @@ namespace Strive.Utils
 		{
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+			this.LoadXSDGenerator = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -77,18 +77,21 @@ namespace Strive.Utils
 			this.button2.Text = "Stored Procedure UI";
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
-			// dateTimePicker1
+			// LoadXSDGenerator
 			// 
-			this.dateTimePicker1.Location = new System.Drawing.Point(136, 72);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.TabIndex = 2;
+			this.LoadXSDGenerator.Location = new System.Drawing.Point(312, 16);
+			this.LoadXSDGenerator.Name = "LoadXSDGenerator";
+			this.LoadXSDGenerator.Size = new System.Drawing.Size(88, 23);
+			this.LoadXSDGenerator.TabIndex = 2;
+			this.LoadXSDGenerator.Text = "XSD Generator";
+			this.LoadXSDGenerator.Click += new System.EventHandler(this.LoadXSDGenerator_Click);
 			// 
 			// WinMain
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(440, 126);
 			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.dateTimePicker1,
+																		  this.LoadXSDGenerator,
 																		  this.button2,
 																		  this.button1});
 			this.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
@@ -117,6 +120,12 @@ namespace Strive.Utils
 		private void button2_Click(object sender, System.EventArgs e)
 		{
 			StoredProcedureUI.WinMain win = new StoredProcedureUI.WinMain();
+			win.ShowDialog(this);
+		}
+
+		private void LoadXSDGenerator_Click(object sender, System.EventArgs e)
+		{
+			XSDGenerator.WinMain win = new XSDGenerator.WinMain();
 			win.ShowDialog(this);
 		}
 	}
