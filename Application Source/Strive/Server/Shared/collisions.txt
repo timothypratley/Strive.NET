@@ -1,0 +1,11 @@
+Problem: Server side collision detection
+
+Main Aim: To restrict movement. Pinpoint accuracy is not required, as the game systems are stat based not physically based.
+
+Normal objects will be tested for bounding sphere collisions. These should be accurate enough for our purposes (server side validation) and the client can adjust object positions slightly to make them look better if it so chooses. This is extreemly cheap and relatively good if our objects aren't too oddly shaped.
+
+Terrain is special because in general it is flat with concave and convex bumps. Bounding sphere tests wont work on it. Terrain (mostly) doesn't move or get destroyed. The main function of terrain is to limit movement, and keep the characters on the ground. A heightmap representation fits the bill. This heightmap need only be on the server, pre-calcuated from models that will be rendered client side, though it may prove useful for the client also. In anycase trees and so forth would still require their original model for rendering on the client, however to the server it would just be a big bump in the heightmap.
+
+The problem with heightmaps is that there is only one height for a given location. Hence you cannot be under the branches of a tree, you can only be above the tree. The solution is to instead have a list of 'occupiable space'. So instead of a height, we store ranges of heights that may be occupied. ie: ground level to branch level, and above tree to sky roof. Generating this data structure is slow but we shall do it only rarely.
+
+Still there is the question of memory usage. For a world 10km by 10km or larger it is not possible to store a heightmap of granularity 1m in memory. In large worlds, disk access would become unavoidable. This may not be such a terrible thing.
