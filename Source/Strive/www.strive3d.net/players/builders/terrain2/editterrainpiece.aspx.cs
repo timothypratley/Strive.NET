@@ -146,13 +146,13 @@ namespace www.strive3d.net.players.builders.terrain2
 					0, 
 					0).ExecuteNonQuery();
 			}
-			Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.opener.location.reload(true);</script>");
-			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">window.close()</script>");
+			Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.parent.frames['" + Request.QueryString["FrameID"].ToString() + "'].location.reload(true);</script>");
+			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">location.href='about:blank';</script>");
 		}
 
 		private void Cancel_Click(object sender, System.EventArgs e)
 		{
-			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">window.close()</script>");
+			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">location.href='about:blank';</script>");
 		}
 	}
 }

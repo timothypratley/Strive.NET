@@ -2,7 +2,6 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
-<Controls:Header runat="Server" title="Terrain Builder - Edit Terrain Square" ID="Header1" />
 <form runat="server">
 	<input type="hidden" runat="server" id="referer">
 	<table>
@@ -26,4 +25,3 @@
 		</tr>
 	</table>
 </form>
-<Controls:Footer runat="server" id="Footer1" />

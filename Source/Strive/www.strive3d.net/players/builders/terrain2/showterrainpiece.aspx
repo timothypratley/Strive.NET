@@ -9,7 +9,7 @@
 			<td background="<%=TextureSrc%>" valign="middle" align="center" height="100%" width="100%">
 				<table>
 					<tr>
-						<td colspan="3"><a target="_blank" href="editterrainpiece.aspx?ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>">[Edit]</a></td>
+						<td colspan="3"><a target="Editor" href="editterrainpiece.aspx?ObjectInstanceID=<%=ObjectInstanceID.ToString()%>&amp;X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">[Edit]</a></td>
 					</tr>
 					<tr>
 						<td><asp:Button ID="Higher" Text="+" Runat="server" /></td>
@@ -19,7 +19,7 @@
 				</table>
 			</td>
 			<%} else { %>
-			<td><a target="_blank" href="editterrainpiece.aspx?X=<%=X%>&amp;Z=<%=Z%>">[Create]</a></td>
+			<td><a target="Editor" href="editterrainpiece.aspx?X=<%=X%>&amp;Z=<%=Z%>&FrameID=<%=Request.QueryString["FrameID"]%>">[Create]</a></td>
 			<%}%>
 		</tr>
 	</table>
