@@ -22,6 +22,15 @@ namespace Strive.Server.Shared {
 		}
 
 		public void Remove( int ObjectInstanceID ) {
+			if ( _members[ObjectInstanceID] == _leader ) {
+				// find a new leader
+				_leader = null;
+				foreach ( MobileAvatar ma in _members.Values ) {
+					if ( _leader == null || ma.Level > _leader.Level ) {
+						_leader = ma;
+					}
+				}
+			}
 			_members.Remove( ObjectInstanceID );
 		}
 

@@ -8,7 +8,7 @@ namespace Strive.Network.Messages.ToServer.GameCommand.Party
 		public int ObjectInstanceID;	// this is so the client can cancel specific invokations
 		public JoinParty(){}
 		public JoinParty( int ObjectInstanceID ) {
-			this.ObjectInstanceID = ObjectInstanceID;
+			this.ObjectInstanceID = ObjectInstanceID; // party leader
 		}
 	}
 }

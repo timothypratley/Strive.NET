@@ -307,6 +307,7 @@ namespace Strive.Server.Shared {
 		) {
 			MobileAvatar ma = (MobileAvatar)client.Avatar;
 			Party p = ma.party;
+			p.Remove( ma.ObjectInstanceID );
 			ma.SendLog( "You have left party '" + p.Name + "'." );
 			ma.party = null;
 			p.SendPartyTalk( ma.TemplateObjectName + " has left your party." );
@@ -317,11 +318,17 @@ namespace Strive.Server.Shared {
 		) {
 			MobileAvatar ma = (MobileAvatar)client.Avatar;
 
-			// TODO: need some sort of party ID to make sure you don't
-			// join the wrong one if you get invited multiple times
+			// make sure they are trying to join the party they were invited to
+			if ( message.ObjectInstanceID != ma.invitedToParty.Leader.ObjectInstanceID ) {
+				ma.SendLog( "Join party failed, get a new invitation." );
+				return;
+			}
+
 			ma.invitedToParty.SendPartyTalk( ma.TemplateObjectName + " has joined your party." );
 			ma.party = ma.invitedToParty;
+			ma.party.Add( ma );
 			ma.SendLog( "You are now in party '" + ma.party.Name + "'." );
+			ma.invitedToParty = null;
 		}
 
 		void ProcessInviteToParty(
