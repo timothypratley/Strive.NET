@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
+using System.Configuration;
 
 using Strive.Multiverse;
 using Strive.Logging;
@@ -21,12 +22,6 @@ namespace Strive.Data
 		static ArrayList tableList = new ArrayList();
 		static CommandFactory commandFactory;
 		static bool isInitialised;
-
-		static MultiverseFactory() {
-			connection = new SqlConnection(System.Configuration.ConfigurationSettings.AppSettings["databaseConnectionString"].ToString());
-			connection.Open();
-			commandFactory = new CommandFactory(connection);
-		}
 
 
 		#region Utility methods
@@ -105,6 +100,7 @@ namespace Strive.Data
 
 
 		public static void refreshPlayerList(Schema multiverse) {
+			if ( connection == null ) return;
 			try {
 				Schema updatedPlayerPartOfMultiverse = new Schema();
 				SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
@@ -120,6 +116,7 @@ namespace Strive.Data
 		}
 
 		public static void refreshMultiverseForPlayer(Schema multiverse, int PlayerID) {
+			if ( connection == null ) return;
 			try {
 				Schema updatedPlayerPartOfMultiverse = new Schema();
 				updatedPlayerPartOfMultiverse.EnforceConstraints = false;
@@ -141,9 +138,18 @@ namespace Strive.Data
 			}
 		}
 
-		public static Schema getMultiverse()
-		{
+		public static Schema getMultiverseFromFile( string filename ) {
 			Schema multiverse = new Schema();
+			multiverse.ReadXml( filename ); 
+			return multiverse;
+		}
+
+		public static Schema getMultiverseFromDatabase( string connectionString ) {
+			Schema multiverse = new Schema();
+
+			connection = new SqlConnection( connectionString );
+			connection.Open();
+			commandFactory = new CommandFactory(connection);
 
 			initaliseState(multiverse);
 			string Tables = "";
@@ -171,12 +177,15 @@ namespace Strive.Data
 					throw new Exception("Could not execute '" + tableAdapter.SelectCommand.CommandText + "'\r\nThe error was '" + e.Message + "'.", e);
 				}
 			}
-
 			return multiverse;
 		}
 
-		public static void persistMultiverse(Schema multiverse)
-		{
+		public static void persistMultiverseToFile(Schema multiverse, string filename) {
+			multiverse.WriteXml( filename ); 
+		}
+		
+		public static void persistMultiverseToDatabase(Schema multiverse) {
+
 			// get a reverse list:
 			ArrayList reverseTableList = new ArrayList();
 			foreach(object mt in tableList)

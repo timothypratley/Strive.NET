@@ -44,7 +44,13 @@ namespace Strive.Server.Shared {
 			// todo: would be nice to be able to load only the
 			// world in question... but for now load them all
 			Log.LogMessage( "Loading Global.multiverse..." );
-			Global.multiverse = Strive.Data.MultiverseFactory.getMultiverse();
+			if ( Global.worldfilename != null ) {
+				Global.multiverse = Strive.Data.MultiverseFactory.getMultiverseFromFile( Global.worldfilename );
+			} else if ( Global.connectionstring != null ) {
+				Global.multiverse = Strive.Data.MultiverseFactory.getMultiverseFromDatabase( Global.connectionstring );
+			} else {
+				throw new Exception( "must specify a world file or connection string" );
+			}
 			Log.LogMessage( "Global.multiverse loaded." );
 
 			// find highX and lowX for our world dimensions
@@ -82,6 +88,17 @@ namespace Strive.Server.Shared {
 				// don't load area 0, its players and their eq
 				if ( ar.AreaID == 0 ) continue;
 				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
+					// nb: add terrain pieces first,
+					// we rely on these being the first thing sent to the client.
+					// todo: make groundlevel lookup serverside...
+					// thus client need not have the terrain piece before the
+					// object on top of it.
+					foreach ( Schema.TemplateTerrainRow ttr in otr.GetTemplateTerrainRows() ) {
+						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+							Terrain t = new Terrain( ttr, otr, oir );
+							Add( t );
+						}
+					}
 					foreach ( Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows() ) {
 						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 							// NB: we only add avatars to our world, not mobiles
@@ -120,12 +137,6 @@ namespace Strive.Server.Shared {
 								Add( w );
 							}
 
-						}
-					}
-					foreach ( Schema.TemplateTerrainRow ttr in otr.GetTemplateTerrainRows() ) {
-						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-							Terrain t = new Terrain( ttr, otr, oir );
-							Add( t );
 						}
 					}
 				}
@@ -210,23 +221,23 @@ namespace Strive.Server.Shared {
 			Log.LogMessage( "Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world." );
 		}
 
-		public void Relocate( PhysicalObject po, Vector3D newPos, Vector3D newHeading ) {
-			if ( newPos.X > highX ) {
-				newPos.X = (float)highX;
+		public void Relocate( PhysicalObject po, Vector3D newPosition, Vector3D newRotation ) {
+			if ( newPosition.X > highX ) {
+				newPosition.X = (float)highX;
 			}
-			if ( newPos.Z > highZ ) {
-				newPos.Z = (float)highZ;
+			if ( newPosition.Z > highZ ) {
+				newPosition.Z = (float)highZ;
 			}
-			if ( newPos.X < lowX ) {
-				newPos.X = (float)lowX;
+			if ( newPosition.X < lowX ) {
+				newPosition.X = (float)lowX;
 			}
-			if ( newPos.Z < lowZ ) {
-				newPos.Z = (float)lowZ;
+			if ( newPosition.Z < lowZ ) {
+				newPosition.Z = (float)lowZ;
 			}
 			int fromSquareX = (int)(po.Position.X - lowX)/Square.squareSize;
 			int fromSquareZ = (int)(po.Position.Z - lowZ)/Square.squareSize;
-			int toSquareX = (int)(newPos.X - lowX)/Square.squareSize;
-			int toSquareZ = (int)(newPos.Z - lowZ)/Square.squareSize;
+			int toSquareX = (int)(newPosition.X - lowX)/Square.squareSize;
+			int toSquareZ = (int)(newPosition.Z - lowZ)/Square.squareSize;
 			int i, j;
 
 			MobileAvatar ma;
@@ -243,9 +254,9 @@ namespace Strive.Server.Shared {
 				if ( spo is Terrain || spo == po ) continue;
 				// distance between two objects in 2d space
 				// todo, convert to 3d space when object centers is sorted
-				float dx = newPos.X - spo.Position.X;
-				float dz = newPos.Z - spo.Position.Z;
-				//float dy = newPos.Y - spo.Position.Y;
+				float dx = newPosition.X - spo.Position.X;
+				float dz = newPosition.Z - spo.Position.Z;
+				//float dy = newPosition.Y - spo.Position.Y;
 				float distance_squared = dx*dx + dz*dz; // + dy*dy;
 				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
 					// Log.LogMessage( "Collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID + "." );
@@ -269,12 +280,8 @@ namespace Strive.Server.Shared {
 				}
 			} */
 
-			po.Position.X = newPos.X;
-			po.Position.Y = newPos.Y;
-			po.Position.Z = newPos.Z;
-			po.Heading.X = newHeading.X;
-			po.Heading.Y = newHeading.Y;
-			po.Heading.Z = newHeading.Z;
+			po.Position = newPosition;
+			po.Rotation = newRotation;
 
 			for ( i=-1; i<=1; i++ ) {
 				for ( j=-1; j<=1; j++ ) {

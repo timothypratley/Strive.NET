@@ -9,6 +9,7 @@ using Strive.Common;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Logging;
+using Strive.Math3D;
 
 namespace Strive.Network.Client {
 	public class ServerConnection {
@@ -143,23 +144,9 @@ namespace Strive.Network.Client {
 			this.UseSkill((Strive.Multiverse.EnumSkill)SkillID, Targets);
 		}
 
-
-
-		public void Position(float position_x,
-			float position_y,
-			float position_z,
-			float heading_x,
-			float heading_y,
-			float heading_z)
-		{
-			Send(new Position(position_x,
-				position_y,
-				position_z,
-				heading_x,
-				heading_y,
-				heading_z));
+		public void Position( Vector3D position, Vector3D rotation ) {
+			Send(new Position( position, rotation ));
 		}
-
 
 		public void RequestPossessable()
 		{

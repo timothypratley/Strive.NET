@@ -39,8 +39,13 @@ namespace Strive.UI.Engine {
 			PhysicalObjectInstance poi = new PhysicalObjectInstance( po );
 			physicalObjectInstances.Add( po.ObjectInstanceID, poi );
 			scene.Models.Add( poi.model );
+
+			//todo: serverside ground level/gravity control
+			//instead of clientside.
+			po.Position.Y = GroundLevel( po.Position.X, po.Position.Z );
+
 			poi.model.Position = po.Position;
-			poi.model.Rotation = Helper.GetRotationFromHeading( po.Heading );
+			poi.model.Rotation = po.Rotation;
 		}
 
 		public void Remove( int ObjectInstanceID ) {
@@ -67,11 +72,13 @@ namespace Strive.UI.Engine {
 			if ( CurrentAvatar == null ) return;
 
 			if ( cameraMode == EnumCameraMode.FirstPerson ) {
-				scene.View.Position = cameraPosition = CurrentAvatar.model.Position;
+				cameraPosition = CurrentAvatar.model.Position.Clone();
+				cameraPosition.Y += 20;
+				scene.View.Position = cameraPosition;
 				scene.View.Rotation = CurrentAvatar.model.Rotation;
 				cameraHeading = Helper.GetHeadingFromRotation( CurrentAvatar.model.Rotation );
 			} else if ( cameraMode == EnumCameraMode.Chase ) {
-				cameraPosition = CurrentAvatar.model.Position;
+				cameraPosition = CurrentAvatar.model.Position.Clone();
 				cameraPosition.Y += 100;
 				cameraPosition.Z += 100;
 				scene.View.Position = cameraPosition;
@@ -83,6 +90,8 @@ namespace Strive.UI.Engine {
 		}
 
 		void ProcessAnimations() {
+			// todo: make this mobile based,
+			// and only if they are moving.
 			foreach ( Model model in scene.Models.Values ) {
 				if ( model.ModelFormat == ModelFormat.MD2 ) {
 					model.nextFrame();
@@ -158,6 +167,28 @@ namespace Strive.UI.Engine {
 					cameraMode = value;
 				}
 			}
+		}
+
+		int terrainSize = 100;
+		public float GroundLevel( float x, float z ) {
+			// check every terrain piece, is this point on it?
+			foreach ( PhysicalObjectInstance poi in physicalObjectInstances.Values ) {
+				// todo: Terrain pieces should be cross index in their own
+				// collection for speed.
+				if ( !(poi.physicalObject is Terrain) ) continue;
+
+				Terrain t = (Terrain)poi.physicalObject;
+				if (
+					x >= t.Position.X && x < t.Position.X+terrainSize
+					&& z >= t.Position.Z && z < t.Position.Z+terrainSize
+				) {
+					// w00t on this piece lookup its height
+					return poi.model.HeightLookup( x - t.Position.X, z - t.Position.Z );
+				}
+			}
+
+			// ack, this is not on terrain!
+			return 0;
 		}
 	}
 }

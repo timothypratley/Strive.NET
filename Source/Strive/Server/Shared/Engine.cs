@@ -18,29 +18,11 @@ namespace Strive.Server.Shared {
 		World world;
 		MessageProcessor mp;
 		StoppableThread engine_thread;
+		bool loadFromFile = false;
 
 		public Engine() {
-			Strive.Network.Messages.CustomFormatter.Serialize(
-				Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage(
-					new Strive.Multiverse.Mobile() ) );
-
+			Global.ReadConfiguration();
 			engine_thread = new StoppableThread( new StoppableThread.WhileRunning( UpdateLoop ) );
-
-			#region read and apply configuration settings
-			if ( ConfigurationSettings.AppSettings["world_id"] == null ) {
-				throw new ConfigurationException( "world_id" );
-			}
-			world_id = int.Parse(System.Configuration.ConfigurationSettings.AppSettings["world_id"]);
-			if ( ConfigurationSettings.AppSettings["port"] == null ) {
-				throw new ConfigurationException( "port" );
-			}
-			port = int.Parse(ConfigurationSettings.AppSettings["port"]);
-			string logfilename = ConfigurationSettings.AppSettings["logFileName"];
-			if ( logfilename != null ) {
-				Log.SetLogOutput( logfilename );
-			}
-			#endregion
-
 			listener = new UdpHandler( new IPEndPoint( IPAddress.Any, port ) );
 		}
 

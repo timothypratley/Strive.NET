@@ -15,7 +15,7 @@ namespace Strive.Utils.WorldBuilder
 	public class WinMain : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.DataGrid World;
-		private Schema Multiverse = MultiverseFactory.getMultiverse();
+		private Schema Multiverse = MultiverseFactory.getMultiverseFromFile( "world.xml" );
 		private System.Windows.Forms.Button SaveChanges;
 
 		/// <summary>
@@ -109,7 +109,7 @@ namespace Strive.Utils.WorldBuilder
 
 		private void SaveChanges_Click(object sender, System.EventArgs e)
 		{
-			MultiverseFactory.persistMultiverse((Schema)World.DataSource);
+			MultiverseFactory.persistMultiverseToFile((Schema)World.DataSource, "world.xml" );
 		}
 	}
 }

@@ -190,15 +190,9 @@ namespace Strive.UI.Engine
 			// no avatar... no position
 			if ( Game.CurrentWorld.CurrentAvatar == null ) return;
 
-			Vector3D avatarHeading = Helper.GetHeadingFromRotation( Game.CurrentWorld.CurrentAvatar.model.Rotation );
-			Vector3D avatarPosition = Game.CurrentWorld.CurrentAvatar.model.Position;
 			_connection.Position(
-				avatarPosition.X,
-				avatarPosition.Y,
-				avatarPosition.Z,
-				avatarHeading.X,
-				avatarHeading.Y,
-				avatarHeading.Z);
+				Game.CurrentWorld.CurrentAvatar.model.Rotation, 
+				Game.CurrentWorld.CurrentAvatar.model.Position );
 		}
 	}
 }

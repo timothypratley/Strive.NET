@@ -17,8 +17,8 @@ namespace Strive.Rendering
 		#region "Private fields"		
 		// Singleton support
 		private static bool _constructed = false;
-		private bool _initialised;
-		private bool _isRendering;
+		private bool _initialised = false;
+		private bool _isRendering = false;
 		private ModelCollection _models = new ModelCollection();
 		private Cameras.CameraCollection _views = new Cameras.CameraCollection();
 		private IWin32Window _renderTarget;
@@ -101,9 +101,9 @@ namespace Strive.Rendering
 			_models = new ModelCollection();
 			_views = new Cameras.CameraCollection();
 			if(_initialised) {
+				_initialised = false;
 				Interop._instance.Engine.TerminateMe();
 			}
-			_initialised = false;
 		}
 
 		public void SetSky( string name, string texture ) {

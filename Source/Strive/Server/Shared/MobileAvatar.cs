@@ -77,16 +77,21 @@ namespace Strive.Server.Shared
 		public void BehaviourUpdate() {
 			// continue doing whatever you were doing
 			if ( Global.now - lastMoveUpdate > TimeSpan.FromSeconds( 1 ) ) {
+				// EEERRR
+				// how to rotate in euler angles??
+				// todo:
+				/*
 				if ( MobileState >= EnumMobileState.Standing ) {
 					Heading.Transform( Strive.Math3D.Matrix3D.FromRotation( Global.up, (float)(Global.random.NextDouble()/2.0-0.25) ) );
 				}
-				Vector3D velocity = Heading.GetUnit();
+				*/
+				Vector3D velocity = Helper.GetHeadingFromRotation( Rotation );
 				switch ( MobileState ) {
 					case EnumMobileState.Running:
-						world.Relocate( this, (Position+3*velocity), Heading );
+						world.Relocate( this, (Position+3*velocity), Rotation );
 						break;
 					case EnumMobileState.Walking:
-						world.Relocate( this, (Position+velocity), Heading );
+						world.Relocate( this, (Position+velocity), Rotation );
 						break;
 					default:
 						// do nothing
@@ -321,7 +326,7 @@ namespace Strive.Server.Shared
 
 				// EEERRR where should we respawn?
 				this.Position = new Vector3D( 0.0f, 0.0f, 0.0f );
-				this.Heading = new Vector3D( 0.0f, 0.0f, 0.0f );
+				this.Rotation = new Vector3D( 0.0f, 0.0f, 0.0f );
 			} else {
 				world.Remove( this );
 			}

@@ -17,7 +17,7 @@ namespace Strive.Multiverse
 		public int ModelID;
 		public int AreaID;
 		public Vector3D Position = new Vector3D(0,0,0);
-		public Vector3D Heading = new Vector3D(0,0,0);
+		public Vector3D Rotation = new Vector3D(0,0,0);
 		public float HitPoints = 0;
 		public int MaxHitPoints = 0;
 		public float BoundingSphereRadiusSquared;
@@ -36,7 +36,11 @@ namespace Strive.Multiverse
 				(float)instance.Y,
 				(float)instance.Z
 			);
-			Heading = new Vector3D(
+			// TODO: fix meh umg!!!
+			// Shall we use teh ghey euler angles in database?
+			// 1337 quarterions?
+			// whatever the case, heading probabbly is not a good one.
+			Rotation = new Vector3D(
 				(float)instance.HeadingX,
 				(float)instance.HeadingY,
 				(float)instance.HeadingZ

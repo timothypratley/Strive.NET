@@ -49,7 +49,7 @@ namespace Strive.UI.Engine {
 					// load self... this contains the players initial position
 					Game.CurrentWorld.Possess( Game.CurrentPlayerID );
 					Log.LogMessage( "Initial position is " + po.Position );
-					Log.LogMessage( "Initial heading is " + po.Heading );
+					Log.LogMessage( "Initial heading is " + Helper.GetHeadingFromRotation(po.Rotation) );
 					return;
 				}
 				Log.LogMessage( "Added object " + po.ObjectInstanceID + " with model " + po.ModelID + " at " + po.Position );
@@ -64,8 +64,12 @@ namespace Strive.UI.Engine {
 					Log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
 					return;
 				}
-				poi.model.Position = new Vector3D( p.position_x, p.position_y, p.position_z );
-				poi.model.Rotation = Helper.GetRotationFromHeading( p.heading_x, p.heading_y, p.heading_z );
+
+				// todo: serverside groundlevel/gravity instead of client side
+				p.position.Y = Game.CurrentWorld.GroundLevel( p.position.X, p.position.Z );
+
+				poi.model.Position = p.position;
+				poi.model.Rotation = p.rotation;
 				if ( poi == Game.CurrentWorld.CurrentAvatar ) {
 					Game.CurrentWorld.RepositionCamera();
 				}

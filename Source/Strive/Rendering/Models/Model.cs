@@ -19,8 +19,6 @@ namespace Strive.Rendering.Models {
 		private int _id;
 		private Vector3D _position;
 		private Vector3D _rotation;
-		private int frame = 0;
-		private int frame_count = 0;
 		#endregion
 
 		#region "Constructors"
@@ -71,34 +69,31 @@ namespace Strive.Rendering.Models {
 		}
 
 		public static Model CreateTerrain( string name, string filename, string texture ) {
-			Model created = CreatePlane(name, 
-				new Vector3D(0,0,0),
-				new Vector3D(100,0,0),
-				new Vector3D(100,0,100),
-				new Vector3D(0,0,100),
-				texture,
-				"");
-			return created;
-
-			//			Model created = new Model();
-			//			created._format = ModelFormat.Scape;
-			//			created._key = name;
-			//			// TODO TIM: Fix
-			//			// P.S.  Why does this method exist anyway?
-			//			R3DVector2D size = new R3DVector2D();
-			//			size.x = 128;
-			//			size.y = 128;
-			//			created._id = Interop._instance.PolyVox.Scape_Create(name, ref size, 1);
-			//			//created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 500, false, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
-			//			R3DVector3D scale = new R3DVector3D();
-			//			scale.x = 0.390625F;
-			//			scale.y = 0.390625F;
-			//			scale.z = 0.390625F;
-			//			//Interop._instance.PolyVox.Scape_ApplyHeightMap(
-			//			//Interop._instance.PolyVox.Scape_SetScale( ref scale );
-			//			// TODO TIM: Fix
-			//			Interop._instance.PolyVox.Scape_SetTexture( 0, texture);
+			//			Model created = CreatePlane(name, 
+			//				new Vector3D(0,0,0),
+			//				new Vector3D(100,0,0),
+			//				new Vector3D(100,0,100),
+			//				new Vector3D(0,0,100),
+			//				texture,
+			//				"");
 			//			return created;
+
+			Model created = new Model();
+			created._format = ModelFormat.Scape;
+			created._key = name;
+			R3DVector2D size = new R3DVector2D();
+			size.x = 16;
+			size.y = 16;
+			created._id = Interop._instance.PolyVox.Scape_Create(name, ref size, 1);
+			Interop._instance.PolyVox.Scape_ApplyHeightMap( filename, 1000000, R3DCOMBINATION.R3DCOMBINATION_REPLACE );
+			//Interop._instance.PolyVox.Scape_ApplySmoothness( 10 );
+			Interop._instance.PolyVox.Scape_SetTexture( 0, texture);
+			R3DVector3D scale = new R3DVector3D();
+			scale.x = 100.0f/16.0f;
+			scale.z = 100.0f/16.0f;
+			scale.y = 1;
+			Interop._instance.PolyVox.Scape_SetScale( ref scale );
+			return created;
 		}
 
 		/// <summary>
@@ -139,7 +134,6 @@ namespace Strive.Rendering.Models {
 				}
 				case ModelFormat.Mesh: {
 					try {
-						// Changed for 8088c
 						R3D_3DStudio _3dsfile = new R3D_3DStudioClass();
 						_3dsfile.File_Open(path);
 						_3dsfile.File_ReadMaterials();
@@ -147,6 +141,8 @@ namespace Strive.Rendering.Models {
 						//_3dsfile.File_ReadScene(loadedModel.Key, true, false, true);
 						_3dsfile.File_ReadMeshes(key, true, true,true,true,true);	
 						_3dsfile.File_Close();
+
+						Interop._instance.Meshbuilder.Mesh_Create( key );
 						
 						Interop._instance.Meshbuilder.Class_SetPointer(key);
 						//Interop._instance.Meshbuilder.Mesh_SetCullMode(R3DCULLMODE.R3DCULLMODE_DOUBLESIDED);
@@ -254,10 +250,18 @@ namespace Strive.Rendering.Models {
 
 		public void nextFrame() {
 			setPointer();
-			if ( frame_count > 0 ) {
-				frame = (frame+1)%frame_count;
-				Interop._instance.MD2System.Model_SetFrameEx(R3DLERPNODETYPE.R3DLERPNODETYPE_START,  (byte)frame );
+			bool relative = true;
+			Interop._instance.MD2System.Model_Animate( R3DLERPANIMTYPE.R3DLERPANIMTYPE_NODECROSSOVER, R3DCYCLEMODE.R3DCYCLE_LOOP, 0.1f, ref relative );
+		}
+
+		public float HeightLookup( float x, float z ) {
+			if ( _format != ModelFormat.Scape ) {
+				throw new Exception( "Only for scapes!" );
 			}
+			setPointer();
+			R3DVector2D p = new R3DVector2D();
+			p.x = x; p.y = z;
+			return Interop._instance.PolyVox.Scape_GetAltitude( ref p );
 		}
 
 		#endregion

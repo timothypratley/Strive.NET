@@ -188,10 +188,7 @@ namespace Strive.Server.Shared {
 		void ProcessPositionMessage(
 			Client client, Strive.Network.Messages.ToServer.Position message
 		) {
-			world.Relocate( client.Avatar,
-				new Vector3D( message.position_x, message.position_y, message.position_z ),
-				new Vector3D( message.heading_x, message.heading_y, message.heading_z )
-			);
+			world.Relocate( client.Avatar, message.position, message.rotation );
 		}
 
 		void ProcessChatMessage(
