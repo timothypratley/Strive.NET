@@ -31,16 +31,25 @@ namespace www.strive3d.net.players.builders.terrain2
 			startZ = QueryString.GetVariableInt32Value("GroupZStart");
 			endX = QueryString.GetVariableInt32Value("GroupXEnd");
 			endZ = QueryString.GetVariableInt32Value("GroupZEnd");
+				CommandFactory cmd = new CommandFactory();		
+			try 
+			{
 
-			CommandFactory cmd = new CommandFactory();
-			SqlDataAdapter terrainsFiller = new SqlDataAdapter(cmd.EnumTerrainInSquare(startX,
-				startZ,
-				endX,
-				endZ));
+				SqlDataAdapter terrainsFiller = new SqlDataAdapter(cmd.EnumTerrainInSquare(startX,
+					startZ,
+					endX,
+					endZ));
 
-			terrainsFiller.Fill(terrain);
-
-			cmd.Close();
+				terrainsFiller.Fill(terrain);
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
 			
 		}
 

@@ -9,7 +9,7 @@
     <meta name=vs_defaultClientScript content="JavaScript">
     <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie3-2nav3-0">
     <style>
-    BODY { FONT-SIZE: xx-small; background: url(<%=www.strive3d.net.Utils.ApplicationPath%>/net/strive3d/images/background.gif) #FFFFFF no-repeat left 0%;   FONT-FAMILY: Verdana, Arial, Helvetica }
+    BODY { FONT-SIZE: xx-small; background: url(<%=www.strive3d.net.Utils.ApplicationPath%>/images/background.gif) #FFFFFF no-repeat left 0%;   FONT-FAMILY: Verdana, Arial, Helvetica }
     TD { font-size: xx-small; VERTICAL-ALIGN: middle }
     TH { font-size: xx-small; VERTICAL-ALIGN: middle }
     TD.Content {font-size:xx-small; vertical-align:top }

@@ -41,13 +41,14 @@ namespace www.strive3d.net.players.builders.terrain2
 			X = QueryString.GetVariableInt32Value("X");
 			Z = QueryString.GetVariableInt32Value("Z");
 			CommandFactory cmd = new CommandFactory();
+			try {
 			// set values for edits:
 			SqlDataReader oDr = cmd.GetTerrain(ObjectInstanceID).ExecuteReader();
 		
 			if(!oDr.Read())
 			{
 				oDr.Close();
-				cmd.Close();
+
 				Loaded = false;
 			}
 			else
@@ -57,6 +58,15 @@ namespace www.strive3d.net.players.builders.terrain2
 				TextureSrc = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +oDr["ResourceID"] + oDr["ResourceFileExtension"] +"&amp;h=75&amp;w=75&amp;r=" + Rotation; ;
 				oDr.Close();
 				Loaded = true;
+			}
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
 			}
 		}
 
@@ -87,24 +97,54 @@ namespace www.strive3d.net.players.builders.terrain2
 		private void Higher_Click(object sender, System.EventArgs e)
 		{
 			CommandFactory cmd = new CommandFactory();
-			cmd.RaiseTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
-			cmd.Close();
+			try 
+			{
+				cmd.RaiseTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
+
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
 			Response.Redirect(Request.Url.ToString());
 		}
 
 		private void Lower_Click(object sender, System.EventArgs e)
 		{
 			CommandFactory cmd = new CommandFactory();
+			try {
 			cmd.LowerTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
-			cmd.Close();
+
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
 			Response.Redirect(Request.Url.ToString());
 		}
 
 		private void Rotate_Click(object sender, System.EventArgs e)
 		{
 			CommandFactory cmd = new CommandFactory();
+			try {
 			cmd.RotateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"), 90).ExecuteNonQuery();
-			cmd.Close();
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
 			Response.Redirect(Request.Url.ToString());		
 		}
 	}

@@ -42,6 +42,7 @@ namespace www.strive3d.net.players.builders.terrain2
 				Altitude.Text = "-10";
 				referer.Value = Request.ServerVariables["HTTP_REFERER"].ToString();
 				CommandFactory cmd = new CommandFactory();
+				try {
 
 				SqlDataAdapter texturefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM Resource WHERE EnumResourceTypeID = 1 ORDER BY ResourceName"));
 				SqlDataAdapter terraintypefiller = new SqlDataAdapter(cmd.GetSqlCommand("SELECT * FROM EnumTerrainType ORDER BY EnumTerrainTypeName"));
@@ -79,7 +80,15 @@ namespace www.strive3d.net.players.builders.terrain2
 				// find correct row in datasource
 				DataRow selectedResourceRow = textures.Select("ResourceID = " + ResourceID.SelectedItem.Value)[0];
 				textureshower.Src = Utils.ApplicationPath + "/DesktopModules/Strive/Thumbnailer.aspx?i=" + Utils.ApplicationPath + "/players/builders/" + System.Configuration.ConfigurationSettings.AppSettings["resourcepath"] + "/texture/" +selectedResourceRow["ResourceID"] + selectedResourceRow["ResourceFileExtension"] +"&amp;h=75&amp;w=75";
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
 				cmd.Close();
+			}
 			}
 		}
 
@@ -117,6 +126,7 @@ namespace www.strive3d.net.players.builders.terrain2
 		private void Save_Click(object sender, System.EventArgs e)
 		{
 			CommandFactory cmd = new CommandFactory();
+			try{
 			if(QueryString.ContainsVariable("ObjectInstanceID"))
 			{
 				cmd.UpdateTerrain(QueryString.GetVariableInt32Value("ObjectInstanceID"),
@@ -148,6 +158,15 @@ namespace www.strive3d.net.players.builders.terrain2
 			}
 			Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.parent.frames['" + Request.QueryString["FrameID"].ToString() + "'].location.reload(true);</script>");
 			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">location.href='about:blank';</script>");
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
 		}
 
 		private void Cancel_Click(object sender, System.EventArgs e)

@@ -12,7 +12,7 @@
                 AssemblyName = "www.strive3d.net"
                 AssemblyOriginatorKeyFile = ""
                 DefaultClientScript = "JScript"
-                DefaultHTMLPageLayout = "Grid"
+                DefaultHTMLPageLayout = "Flow"
                 DefaultTargetSchema = "IE50"
                 DelaySign = "false"
                 OutputType = "Library"
@@ -315,6 +315,11 @@
                     DependentUpon = "TabLayout.aspx"
                     SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "admin\TabLayout.aspx.resx"
+                    DependentUpon = "TabLayout.aspx.cs"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "admin\Tabs.ascx"
@@ -931,6 +936,75 @@
                 <File
                     RelPath = "players\builders\web.config"
                     BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\default.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\default.aspx.cs"
+                    DependentUpon = "default.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\default.aspx.resx"
+                    DependentUpon = "default.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\objects\GenericSpecialiser.cs"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemEquipable.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemEquipable.aspx.cs"
+                    DependentUpon = "TemplateItemEquipable.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemEquipable.aspx.resx"
+                    DependentUpon = "TemplateItemEquipable.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemJunk.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemJunk.aspx.cs"
+                    DependentUpon = "TemplateItemJunk.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemJunk.aspx.resx"
+                    DependentUpon = "TemplateItemJunk.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateMobile.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateMobile.aspx.cs"
+                    DependentUpon = "TemplateMobile.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateMobile.aspx.resx"
+                    DependentUpon = "TemplateMobile.aspx.cs"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "players\builders\resources\addresource.aspx"

@@ -45,7 +45,7 @@ We've just run this last check to ensure that you are the actual owner of this e
 
 To confirm your signup, please click the following link (watch for line wrap)
 
-http://www.strive3d.net/net/strive3d/players/activate.aspx?PlayerKey=$PlayerKey$
+http://www.strive3d.net/players/activate.aspx?PlayerKey=$PlayerKey$
 
 Regards
 

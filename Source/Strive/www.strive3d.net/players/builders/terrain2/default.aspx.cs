@@ -33,13 +33,22 @@ namespace www.strive3d.net.players.builders.terrain2
 				TextBox2.Text = "1000";
 			}
 			CommandFactory cmd = new CommandFactory();
+			try
+			{
 
-			SqlCommand squaresLoader = cmd.TerrainSquareDetails(int.Parse(TextBox2.Text), int.Parse(TextBox1.Text));
-			SqlDataAdapter squaresFiller = new SqlDataAdapter(squaresLoader);
-			squares = new DataTable("Squares");
-			squaresFiller.Fill(squares);
-
-			cmd.Close();
+				SqlCommand squaresLoader = cmd.TerrainSquareDetails(int.Parse(TextBox2.Text), int.Parse(TextBox1.Text));
+				SqlDataAdapter squaresFiller = new SqlDataAdapter(squaresLoader);
+				squares = new DataTable("Squares");
+				squaresFiller.Fill(squares);
+			}
+			catch(Exception c)
+			{
+				throw c;
+			}
+			finally
+			{
+				cmd.Close();
+			}
 		}
 
 		#region Web Form Designer generated code
