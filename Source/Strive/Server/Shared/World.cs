@@ -261,16 +261,16 @@ namespace Strive.Server.Shared {
 
 		public void Relocate( PhysicalObject po, Vector3D newPosition, Vector3D newRotation ) {
 			// keep everything inside world bounds
-			if ( newPosition.X > highX ) {
+			if ( newPosition.X >= highX ) {
 				newPosition.X = (float)highX-1;
 			}
-			if ( newPosition.Z > highZ ) {
+			if ( newPosition.Z >= highZ ) {
 				newPosition.Z = (float)highZ-1;
 			}
-			if ( newPosition.X < lowX ) {
+			if ( newPosition.X <= lowX ) {
 				newPosition.X = (float)lowX+1;
 			}
-			if ( newPosition.Z < lowZ ) {
+			if ( newPosition.Z <= lowZ ) {
 				newPosition.Z = (float)lowZ+1;
 			}
 
@@ -307,8 +307,8 @@ namespace Strive.Server.Shared {
 			for ( i=-1; i<=1; i++ ) {
 				for ( j=-1; j<=1; j++ ) {
 					if (
-						fromSquareX+i < 0 || fromSquareX+i >= squaresInX
-						|| fromSquareZ+j < 0 || fromSquareZ+j >= squaresInZ
+						toSquareX+i < 0 || toSquareX+i >= squaresInX
+						|| toSquareZ+j < 0 || toSquareZ+j >= squaresInZ
 						|| square[toSquareX+i,toSquareZ+j] == null
 					) continue;
 

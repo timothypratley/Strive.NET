@@ -104,8 +104,10 @@ namespace Strive.Data
 		{
 			if ( connection == null ) return;
 			Log.LogMessage( "refreshPlayerList begin" );
+			multiverse.EnforceConstraints = false;
 			SqlDataAdapter playerFiller = new SqlDataAdapter(commandFactory.SelectPlayer);
 			playerFiller.Fill( multiverse );
+			multiverse.EnforceConstraints = true;
 			Log.LogMessage( "refreshPlayerList done" );
 		}
 
@@ -113,6 +115,7 @@ namespace Strive.Data
 		{
 			if ( connection == null ) return;
 			Log.LogMessage( "refreshMultiverseForPlayer begining sql" );
+			multiverse.EnforceConstraints = false;
 			SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
 			SqlDataAdapter mobileFiller = new SqlDataAdapter(commandFactory.SelectTemplateMobileRows(PlayerID));
 			SqlDataAdapter objectFiller = new SqlDataAdapter(commandFactory.SelectObjectInstanceRows(PlayerID));
@@ -121,6 +124,7 @@ namespace Strive.Data
 			objectFiller.Fill(multiverse);
 			mobileFiller.Fill(multiverse);
 			possesFiller.Fill(multiverse);
+			multiverse.EnforceConstraints = true;
 			Log.LogMessage( "refreshMultiverseForPlayer done" );
 		}
 

@@ -35,12 +35,12 @@ namespace Strive.Rendering.TV3D.Models {
 				x, z );
 			t._mesh.SetTerrainScale( gap_size*heights/256F, 1, gap_size*heights/256F, true );
 
-			if ( gap_size == Constants.terrainPieceSize ) {
+			//if ( gap_size == Constants.terrainPieceSize ) {
 				// TODO: hmmm
 				t._mesh.CreateDynTextures(256, 256, true, true );
-			} else {
+			//} else {
 				//t._mesh.SetTexture( 1, -1 );
-			}
+			//}
 			return t;
 		}
 

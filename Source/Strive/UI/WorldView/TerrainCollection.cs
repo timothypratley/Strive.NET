@@ -44,10 +44,10 @@ namespace Strive.UI.WorldView {
 				for ( i=0; i<xorder; i++ ) {
 					for ( j=0; j<zorder; j++ ) {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
-						if ( k > 0 ) {
+						//if ( k > 0 ) {
 							// TODO: bad, don't use hardcoded 20!
-							TC[i,j,k].SetTexture( _resource_manager.GetTexture( 21 ).ID );
-						}
+							//TC[i,j,k].SetTexture( _resource_manager.GetTexture( 21 ).ID );
+						//}
 					}
 				}
 			}
@@ -129,7 +129,8 @@ namespace Strive.UI.WorldView {
 									t = (Terrain)terrainPiecesXYIndex[loc];
 									if ( t != null ) {
 										TC[i,j,k].SetHeight( px, pz, t.Position.Y );
-										if ( k==0 ) TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ).ID, px, pz, t.Rotation.Y );
+										//if ( k==0 )
+										TC[i,j,k].SetTexture( _resource_manager.GetTexture( t.ResourceID ).ID, px, pz, t.Rotation.Y );
 									} else {
 										TC[i,j,k].SetHeight( px, pz, 0 );
 									}

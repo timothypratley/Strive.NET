@@ -37,7 +37,8 @@ namespace Strive.UI.Engine {
 		int oldMouseX = 0;
 		int oldMouseY = 0;
 		public void ProcessPlayerInput() {
-			frameTime = (999F*frameTime + (float)movementTimer.ElapsedSeconds())/1000F;
+			frameTime = (float)movementTimer.ElapsedSeconds();
+			//frameTime = (999F*frameTime + (float)movementTimer.ElapsedSeconds())/1000F;
 			mouse.AccumulateState();
 			int mdx = mouse.X;
 			int mdy = mouse.Y;
