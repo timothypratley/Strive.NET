@@ -16,7 +16,7 @@ namespace Strive.Rendering.Models {
 
 		void GetBoundingBox( Vector3D boxmin, Vector3D boxmax );
 
-		void SetLOD( EnumLOD lod );
+		void SetLOD( int vertices );
 
 		#endregion
 

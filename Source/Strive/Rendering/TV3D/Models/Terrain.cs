@@ -130,7 +130,7 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 		}
 
-		public void SetLOD( EnumLOD lod ) {
+		public void SetLOD( int vertices ) {
 		}
 
 

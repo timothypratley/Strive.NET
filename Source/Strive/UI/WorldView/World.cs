@@ -184,12 +184,16 @@ namespace Strive.UI.WorldView {
 					// ie: square delimited
 					Remove( poi.physicalObject.ObjectInstanceID );
 				} else {
-					int lod_index = (int)(_first_lod_index + (_max_lod_index-1) * dist / Constants.furthestLOD );
-					if ( lod_index > _max_lod_index ) {
-						lod_index = _max_lod_index;
+					// TODO: evaluate whether the number of vertices should be proportional to sqrt height.
+					// At least it should be proportional to volume, not just height.
+					int lod_vertices;
+					if ( dist == 0 ) {
+						lod_vertices = Constants.mostDetailedLOD;
+					} else {
+						lod_vertices = (int)(Constants.furthestLOD/dist*Constants.mostDetailedLOD*Math.Sqrt(poi.physicalObject.Height));
+						lod_vertices = Math.Min( lod_vertices, Constants.mostDetailedLOD );
 					}
-
-					poi.model.SetLOD( (EnumLOD)lod_index );
+					poi.model.SetLOD( lod_vertices );
 				}
 			}
 		}

@@ -207,7 +207,7 @@ namespace Strive.Rendering.TV3D.Models {
 			return dup;
 		}
 
-		public void SetLOD( EnumLOD lod ) {
+		public void SetLOD( int vertices ) {
 		}
 
 		#endregion

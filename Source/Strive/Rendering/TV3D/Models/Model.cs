@@ -205,8 +205,8 @@ namespace Strive.Rendering.TV3D.Models {
 		public void nextFrame() {
 		}
 
-		public void SetLOD( EnumLOD lod ) {
-			//_mesh.SetLODIndex( (float)lod );
+		public void SetLOD( int vertices ) {
+			_mesh.SetLODVertexes( vertices );
 		}
 
 		public void GetBoundingBox( Vector3D minbox, Vector3D maxbox ) {

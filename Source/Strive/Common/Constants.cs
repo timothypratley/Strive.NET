@@ -24,6 +24,7 @@ namespace Strive.Common
 		public static int[] zRadius = new int[terrainZoomOrder];
 
 		public const float furthestLOD = objectScopeRadius/2;
+		public const int mostDetailedLOD = 5000;
 
 		static Constants() {
 			// set up terrain radius values
