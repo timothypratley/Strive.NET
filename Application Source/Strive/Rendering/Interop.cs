@@ -71,6 +71,8 @@ namespace Strive.Rendering
 		/// </summary>
 		internal DirectX8Class DirectX =  new DirectX8Class();
 
+		internal static R3DCOLORKEY R3DCOLORKEY_NONE = R3DCOLORKEY.R3DCOLORKEY_NONE;
+
 		/// <summary>
 		/// Enforces access to only one Interop object
 		/// </summary>

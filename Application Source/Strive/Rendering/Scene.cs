@@ -200,6 +200,19 @@ namespace Strive.Rendering
 
 		#endregion
  
+		public void addsky()
+		{
+			R3DCOLORKEY r = R3DCOLORKEY.R3DCOLORKEY_NONE;
+			Interop._instance.TextureLib.Texture_Load("sky_panaroma", @"C:\projects\Revolution.NET\Tutorial17\Media\sky_panorama.bmp", ref r );
+
+			Interop._instance.Skydome.Item_Create("sky_panaromasphere", R3DSKYDOMEITEM.R3DSKYDOMEITEM_SPHERE, 200);
+ 
+			Interop._instance.Skydome.Item_SetTexture(0, "sky_panaroma");
+
+
+
+		}
+	
 		#region "Properties"
 		/// <summary>
 		/// Indiactes whether the scene is being rendered

@@ -105,6 +105,7 @@ namespace Strive.Rendering.Models
 						_3dsfile.File_Close();
 
 						Interop._instance.Meshbuilder.Mesh_Create(key);
+						System.Environment.CurrentDirectory = path.Substring(0, path.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
 						Interop._instance.Meshbuilder.Mesh_Add3DS( path, true, true, true, true);
 						Interop._instance.Meshbuilder.Mesh_SetRotationAxis( R3DROTATIONAXIS.R3DAXIS_RELATIVE );
 					}

@@ -84,12 +84,12 @@ namespace Strive.UI.Modules
 						continue;
 					}
 					Model model = ResourceManager.LoadModel(apo.instance_id, apo.model_id);
-					try {
+					//try {
 						_scene.Models.Add( model );
-					} catch ( Exception ) {
-						Global._log.ErrorMessage( "Could not add model " + model.Key );
-						continue;
-					}
+					//} catch ( Exception ) {
+					//	Global._log.ErrorMessage( "Could not add model " + model.Key );
+					//	continue;
+					//}
 					model.Position = new Vector3D( apo.x, apo.y, apo.z );
 					model.Rotation = GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
 					Global._log.LogMessage( "Loaded " + model.Key );
@@ -107,12 +107,12 @@ namespace Strive.UI.Modules
 						// ignoring self positions for now
 						continue;
 					}
-					try {
+					//try {
 						workingModel = _scene.Models[p.instance_id.ToString()];
-					} catch (Exception) {
-						Global._log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
-						continue;
-					}
+					//} catch (Exception) {
+					//	Global._log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
+					//	continue;
+					//}
 						#endregion
 
 						#region 1.1.2 Move and rotate model
@@ -175,12 +175,12 @@ namespace Strive.UI.Modules
 						continue;
 					}
 					Model workingModel;
-					try {
+					//try {
 						workingModel = _scene.Models[ms.ObjectInstanceID.ToString()];
-					} catch (Exception) {
-						Global._log.ErrorMessage( "Model for " + ms.ObjectInstanceID + " has not been loaded" );
-						continue;
-					}
+					//} catch (Exception) {
+					//	Global._log.ErrorMessage( "Model for " + ms.ObjectInstanceID + " has not been loaded" );
+					//	continue;
+					//}
 					#endregion
 
 					workingModel.AnimationSequence = (int)ms.State;

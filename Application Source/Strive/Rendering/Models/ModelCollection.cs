@@ -42,20 +42,27 @@ namespace Strive.Rendering.Models
 				Model indexedModel = (Model)base[key];
 				if(indexedModel != null)
 				{
-					switch(indexedModel.ModelFormat)
+					try
 					{
-						case ModelFormat.MDL:
+						switch(indexedModel.ModelFormat)
 						{
-							// TODO: Investigate if this will lead to double (potentially slow) MDL_SetPointer calls
-							Interop._instance.MdlSystem.MDL_SetPointer(key);
-							break;
-						}
-						case ModelFormat._3DS:
-						{
-							Interop._instance.Meshbuilder.Mesh_SetPointer(key);
-							break;
-						}
+							case ModelFormat.MDL:
+							{
+								// TODO: Investigate if this will lead to double (potentially slow) MDL_SetPointer calls
+								Interop._instance.MdlSystem.MDL_SetPointer(key);
+								break;
+							}
+							case ModelFormat._3DS:
+							{
+								Interop._instance.Meshbuilder.Mesh_SetPointer(key);
+								break;
+							}
 
+						}
+					}
+					catch(Exception e)
+					{
+						throw new ModelException("Could not set pointer to '" + key + "'.", e);
 					}
 					return indexedModel;
 				}

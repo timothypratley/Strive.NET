@@ -150,6 +150,10 @@
                     BuildAction = "Content"
                 />
                 <File
+                    RelPath = "CommandGenerator\xsl\NEWOverloadedCommandClass.xsl"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "CommandGenerator\xsl\sample.xml"
                     BuildAction = "Content"
                 />

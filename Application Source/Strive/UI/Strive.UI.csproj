@@ -7,7 +7,7 @@
     >
         <Build>
             <Settings
-                ApplicationIcon = "Icon1.ico"
+                ApplicationIcon = ""
                 AssemblyKeyContainerName = ""
                 AssemblyName = "Strive.UI"
                 AssemblyOriginatorKeyFile = ""
@@ -153,10 +153,6 @@
                     RelPath = "Global.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Icon1.ico"
-                    BuildAction = "Content"
                 />
                 <File
                     RelPath = "Forms\Acknowledgements.cs"
