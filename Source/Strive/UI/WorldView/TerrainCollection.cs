@@ -99,13 +99,14 @@ namespace Strive.UI.WorldView
 			terrainPieces.Clear();
 		}
 
+		public class InvalidLocationException : Exception {}
 		public float AltitudeAt( float x, float z ) {
 			// check every terrain piece, is this point on it?
 			foreach ( TerrainPiece t in terrainPieces.Values ) {
 				if (
 					x >= t.x && x < t.x + terrainSize
 					&& z >= t.z && z < t.z + terrainSize
-				) {
+					) {
 					// w00t on this piece lookup its height
 					// if it is fully defined
 					if ( t.xplusKnown && t.zplusKnown && t.xpluszplusKnown ) {
@@ -131,12 +132,12 @@ namespace Strive.UI.WorldView
 						return t.altitude + xslope * dx + zslope * dz;
 					} else {
 						// terrain piece not defined yet
-						return -100;
+						throw new InvalidLocationException();
 					}
 				}
 			}
 			// no terrain found
-			return -100;
+			throw new InvalidLocationException();
 		}
 	}
 }

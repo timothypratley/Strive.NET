@@ -19,7 +19,7 @@ namespace Strive.Rendering.Models {
 		#endregion
 
 		#region "Properties"
-		int AnimationSequence { set; }
+		string AnimationSequence { set; }
 		#endregion
 	}
 

@@ -82,10 +82,11 @@ namespace Strive.Rendering.R3D
 			Engine.Pipeline.SetFog( ref FogColor, R3DFOGTYPE.R3DFOGTYPE_PIXELTABLE, R3DFOGMODE.R3DFOGMODE_LINEAR, 0, 200, level );
 		}
 
-		public void DrawText( Vector2D location, string message ) {
+		public void DrawText( Vector3D location, string message ) {
 			R3DVector2D nameLoc = new R3DVector2D();
-			nameLoc.x = location.X;
-			nameLoc.y = location.Y;
+			Vector2D loc2d = View.ProjectPoint( location );
+			nameLoc.x = loc2d.X;
+			nameLoc.y = loc2d.Y;
 			Engine.Interface5D.Primitive_DrawText( ref nameLoc, message );
 		}
 

@@ -111,9 +111,9 @@ namespace Strive.UI.WorldView {
 			} else if ( cameraMode == EnumCameraMode.Chase ) {
 				Vector3D newPos = CurrentAvatar.model.Position.Clone();
 				newPos.Y += 100;
-				newPos.Z += 100;
+				newPos.Z -= 100;
 				CameraPosition = newPos;
-				CameraRotation = CurrentAvatar.model.Rotation;
+				CameraRotation = new Vector3D( 45, 0, 0 );
 			} else if ( cameraMode == EnumCameraMode.Free ) {
 				// do nothing;
 			} else {
@@ -123,8 +123,14 @@ namespace Strive.UI.WorldView {
 
 		public void Render() {
 			RenderingScene.Render();
+
+			// label everything in the world
+			// TODO: optimise this, the text writing is a performance hit atm
 			foreach ( PhysicalObjectInstance poi in physicalObjectInstances.Values ) {
-				if ( poi.physicalObject is Mobile || poi.physicalObject is Item ) {
+				if (
+					( poi != CurrentAvatar || cameraMode != EnumCameraMode.FirstPerson )
+					&& ( poi.physicalObject is Mobile || poi.physicalObject is Item )
+				) {
 					//Get the vector between camera and object, put in v1
 					//Get the direction vector of the camera (lookat - position normalized) put in v2
 					//Compute the Dot product.
@@ -133,30 +139,18 @@ namespace Strive.UI.WorldView {
 					//Using FieldOfView of 90degrees,
 					//so things offscreen infront will still be labeled.
 
-					/** todo: fix this logic
-					 * problem is in cameraHeading I think?
-					 * rotation2heading is not purrfect
-					Vector3D v1 = poi.model.Position - cameraPosition;
-					if ( Vector3D.Dot( v1, cameraHeading ) <= Math.Cos( Math.PI ) ) {
-						continue;
-					}
-					 */
+//					Vector3D v1 = poi.model.Position - CameraPosition;
+//					if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(CameraRotation) ) <= Math.Cos( Math.PI ) ) {
+//						continue;
+//					}
 
 					Vector3D labelPos = new Vector3D(
                         poi.model.Position.X,
-                        poi.model.Position.Y+15,
+                        poi.model.Position.Y + poi.physicalObject.Height/2 + 2,
                         poi.model.Position.Z
 					);
-					Vector2D nameLoc = RenderingScene.View.ProjectPoint( labelPos );
 
-					// center the text
-					// todo: correct this
-					nameLoc.X -= poi.physicalObject.ObjectTemplateName.Length/2;
-
-					// nameDist = namePos - camPos; -> set font size
-					// todo: enable tis
-
-					RenderingScene.DrawText(nameLoc, poi.physicalObject.ObjectTemplateName );
+					RenderingScene.DrawText( labelPos, poi.physicalObject.ObjectTemplateName );
 				}
 			}
 			RenderingScene.Display();

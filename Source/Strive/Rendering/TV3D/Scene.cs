@@ -67,11 +67,8 @@ namespace Strive.Rendering.TV3D
 		public void SetFog( float level ) {
 		}
 
-		public void DrawText( Vector2D location, string message ) {
-			/*
-			Engine.Screen2DText.TextureFont_DrawBillboardText( message, location.X, location.Y, location.Z, 0, 0, 1, 1 );
-			*/
-
+		public void DrawText( Vector3D location, string message ) {
+			Engine.Screen2DText.TextureFont_DrawBillboardText( message, location.X, location.Y, location.Z, Engine.Gl.RGBA(0.0f, 1.0f, 1.0f, 0.8f), Engine.FontIndex, 1, 1 );
 
 			/*
 			Engine.Screen2DText.ACTION_BeginText();

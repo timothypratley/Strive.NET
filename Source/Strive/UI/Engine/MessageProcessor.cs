@@ -167,7 +167,28 @@ namespace Strive.UI.Engine
 				#endregion
 
 				IActor actor = (IActor)poi.model;
-				actor.AnimationSequence = (int)ms.State;
+
+				switch( ms.State ) {
+					case EnumMobileState.Dead:
+						actor.AnimationSequence = "deadback"; break;
+					case EnumMobileState.Incapacitated:
+						actor.AnimationSequence = "deadback"; break;
+					case EnumMobileState.Sleeping:
+						actor.AnimationSequence = "deadstomach"; break;
+					case EnumMobileState.Resting:
+						actor.AnimationSequence = "deadsitting"; break;
+					case EnumMobileState.Standing:
+						actor.AnimationSequence = "idle"; break;
+					case EnumMobileState.Walking:
+						actor.AnimationSequence = "walk"; break;
+					case EnumMobileState.Running:
+						actor.AnimationSequence = "run"; break;
+					case EnumMobileState.Fighting:
+						actor.AnimationSequence = "ref_shoot_crowbar"; break;
+					default:
+						Log.ErrorMessage( "Unknown mobile state " + ms.State );
+						break;
+				}
 				actor.playAnimation();
 			}
 				#endregion

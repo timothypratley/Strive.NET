@@ -18,7 +18,7 @@ namespace Strive.Rendering
 		void SetSky( string name, ITexture texture );
 		void SetLighting( short level );
 		void SetFog( float level );
-		void DrawText( Vector2D location, string message );
+		void DrawText( Vector3D location, string message );
 		/// <remarks>Renders the scene into video memory.</remarks>
 		void Render();
 

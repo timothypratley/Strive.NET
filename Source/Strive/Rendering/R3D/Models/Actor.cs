@@ -107,38 +107,9 @@ namespace Strive.Rendering.R3D.Models {
 			}
 		}
 
-		public int AnimationSequence {
+		public string AnimationSequence {
 			set {
 				Engine.MD2System.Class_SetPointer(this.Name);
-				string sequence;		
-				switch( value ) {
-					case 1:
-						sequence = "stand";
-						break;
-					case 2:
-						sequence = "run";
-						break;
-					case 3:
-						sequence = "stand";
-						break;
-					case 4:
-						sequence = "run";
-						break;
-					case 5:
-						sequence = "stand";
-						break;
-					case 6:
-						sequence = "run";
-						break;
-					case 7:
-						sequence = "stand";
-						break;
-					case 8:
-						sequence = "run";
-						break;
-					default:
-						throw new Exception( "Unknown sequence" );
-				}
 				// todo: fix meh!
 				//Engine.MD2System.Model_Animate();
 			}

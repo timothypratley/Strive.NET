@@ -148,7 +148,11 @@ namespace Strive.UI.Engine
 				// stay on the ground
 				// TODO: What about when walking on objects?
 				Vector3D newPosition = avatarPosition + changeOfPosition;
-				newPosition.Y = Game.CurrentWorld.TerrainPieces.AltitudeAt( avatarPosition.X, avatarPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
+				try {
+					newPosition.Y = Game.CurrentWorld.TerrainPieces.AltitudeAt( newPosition.X, newPosition.Z ) + Game.CurrentWorld.CurrentAvatar.physicalObject.Height/2;
+				} catch ( TerrainCollection.InvalidLocationException ) {
+					return;
+				}
 				changeOfPosition.Y = newPosition.Y - avatarPosition.Y;
 
 				// check that we can go there
@@ -209,9 +213,7 @@ namespace Strive.UI.Engine
 							&& newPosition.Z < boxmax2.Z
 						) {
 							// would be a collision
-							changeOfPosition.Set( 0, 0, 0 );
-							newPosition.Set( avatarPosition );
-							break;
+							return;
 							// TODO: should actually figure out the collision point
 						}
 					}

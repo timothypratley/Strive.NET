@@ -77,14 +77,11 @@ namespace Strive.Server.Shared
 		public void BehaviourUpdate() {
 			// continue doing whatever you were doing
 			if ( Global.now - lastMoveUpdate > TimeSpan.FromSeconds( 1 ) ) {
-				// EEERRR
-				// how to rotate in euler angles??
-				// todo:
-				/*
 				if ( MobileState >= EnumMobileState.Standing ) {
-					Heading.Transform( Strive.Math3D.Matrix3D.FromRotation( Global.up, (float)(Global.random.NextDouble()/2.0-0.25) ) );
+					Rotation.Y += (float)(Global.random.NextDouble()*40-20);
+					while ( Rotation.Y < 0 ) Rotation.Y += 360;
+					while ( Rotation.Y >= 360 ) Rotation.Y -= 360;
 				}
-				*/
 				Vector3D velocity = Helper.GetHeadingFromRotation( Rotation );
 				switch ( MobileState ) {
 					case EnumMobileState.Running:

@@ -30,6 +30,8 @@ namespace Strive.Rendering.TV3D {
 		static internal TVCamera Camera;
 		static internal TVAtmosphere Atmosphere;
 
+		static internal int FontIndex = -1;
+
 		IWin32Window _renderTarget;
 
 		public Engine() {
@@ -88,11 +90,13 @@ namespace Strive.Rendering.TV3D {
 			Camera = new TVCamera();
 			Atmosphere = new TVAtmosphere();
 			Input = new TVInputEngine();
-			
+			FontIndex = Screen2DText.TextureFont_Create("font", "Arial", 12, true, false, false, false);
 		}
+
 		public void Terminate() {
 			TV3DEngine = null;
 		}
+
 		public IWin32Window RenderTarget {
 			get {
 				return _renderTarget;

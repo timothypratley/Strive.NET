@@ -183,14 +183,18 @@ namespace Strive.Server.Shared {
 				po.Position.X > highX || po.Position.Z > highZ
 				|| po.Position.X < lowX || po.Position.Z < lowZ
 			) {
-				Log.ErrorMessage( "Tried to add physical object outside the world." );
+				Log.ErrorMessage( "Tried to add physical object " + po.ObjectInstanceID + " outside the world." );
 				return;
 			}
 
 			// keep everything at ground level
 			if ( !(po is Terrain) ) {
-				float altitude = AltitudeAt( po.Position.X, po.Position.Z );
-				po.Position.Y = altitude + po.Height/2F;
+				try {
+					float altitude = AltitudeAt( po.Position.X, po.Position.Z );
+					po.Position.Y = altitude + po.Height/2F;
+				} catch ( InvalidLocationException ) {
+					Log.WarningMessage( "Physical object " + po.ObjectInstanceID + " is not on terrain." );
+				}
 			}
 
 			// add the object to the world
@@ -228,16 +232,16 @@ namespace Strive.Server.Shared {
 		public void Relocate( PhysicalObject po, Vector3D newPosition, Vector3D newRotation ) {
 			// keep everything inside world bounds
 			if ( newPosition.X > highX ) {
-				newPosition.X = (float)highX;
+				newPosition.X = (float)highX-1;
 			}
 			if ( newPosition.Z > highZ ) {
-				newPosition.Z = (float)highZ;
+				newPosition.Z = (float)highZ-1;
 			}
 			if ( newPosition.X < lowX ) {
-				newPosition.X = (float)lowX;
+				newPosition.X = (float)lowX+1;
 			}
 			if ( newPosition.Z < lowZ ) {
-				newPosition.Z = (float)lowZ;
+				newPosition.Z = (float)lowZ+1;
 			}
 
 			int fromSquareX = (int)(po.Position.X - lowX)/Square.squareSize;
@@ -247,8 +251,13 @@ namespace Strive.Server.Shared {
 			int i, j;
 
 			// keep everything on the ground
-			float altitude = AltitudeAt( newPosition.X, newPosition.Z );
-			newPosition.Y = altitude + po.Height / 2;
+			try {
+				float altitude = AltitudeAt( newPosition.X, newPosition.Z );
+				newPosition.Y = altitude + po.Height / 2;
+			} catch ( InvalidLocationException ) {
+				// disallow the relocation
+				return;
+			}
 
 			MobileAvatar ma;
 			if ( po is MobileAvatar ) {
@@ -256,13 +265,17 @@ namespace Strive.Server.Shared {
 			} else {
 				ma = null;
 			}
-/*
+
 			// check that the object can fit there
 			// todo: what about objects that span squares?
 			// these need to be checked as well, or linked from both squares?
 			foreach ( PhysicalObject spo in square[toSquareX,toSquareZ].physicalObjects ) {
 				// ignoring terrain and yourself
 				if ( spo is Terrain || spo == po ) continue;
+
+				// don't check pcs, they do clientside check
+				if ( ma != null && ma.client != null ) break;
+
 				// distance between two objects in 2d space
 				float dx = newPosition.X - spo.Position.X;
 				float dy = newPosition.Y - spo.Position.Y;
@@ -289,7 +302,7 @@ namespace Strive.Server.Shared {
 					return;
 				}
 			}
-*/
+
 			po.Position = newPosition;
 			po.Rotation = newRotation;
 
@@ -467,6 +480,7 @@ namespace Strive.Server.Shared {
 			return (Strive.Network.Messages.ToClient.CanPossess.id_name_tuple [])list.ToArray( typeof( Strive.Network.Messages.ToClient.CanPossess.id_name_tuple ) );
 		}
 
+		public class InvalidLocationException : Exception {}
 		public float AltitudeAt( float x, float z ) {
 			int terrainX = (int)(x - lowX)/Square.terrainSize;
 			int terrainZ = (int)(z - lowZ)/Square.terrainSize;
@@ -499,7 +513,7 @@ namespace Strive.Server.Shared {
 				return terrain[ terrainX, terrainZ ].Position.Y + xslope * dx + zslope * dz;
 			}
 			// no terrain here
-			return -100;
+			throw new InvalidLocationException();
 		}
 	}
 }

@@ -141,6 +141,12 @@
   <data name="ViewCommand.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>388, 18</value>
   </data>
+  <data name="ViewFirstPerson.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>411, 42</value>
+  </data>
+  <data name="ViewChaseCam.Location" type="System.Drawing.Point, System.Drawing, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>541, 42</value>
+  </data>
   <data name="$this.Name">
     <value>Main</value>
   </data>

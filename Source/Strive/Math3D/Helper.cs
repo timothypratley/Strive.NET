@@ -24,7 +24,7 @@ namespace Strive.Math3D
 			float F = (float)Math.Sin(rotation.Z * Math.PI/180);
 
 			return new Vector3D(
-				-D, -B*C, -A*C
+				D, B*C, A*C
 			);
 		}
 	}

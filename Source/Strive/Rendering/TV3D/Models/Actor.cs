@@ -89,6 +89,10 @@ namespace Strive.Rendering.TV3D.Models {
 			loadedModel._position = new Math3D.Vector3D( 0, 0, 0 );
 			// TODO: remove hardcoded initial rotation
 			//loadedModel._rotation = new Math3D.Vector3D( 0, 90, 0 );
+
+			// todo: _offset is ghey I wish we could permenantly transpose
+			// the object.
+			// also, bounding box should be normalised around origin?
 			loadedModel._offset = new Math3D.Vector3D(
 				(loadedModel._boxmax.X + loadedModel._boxmin.X)/2,
 				(loadedModel._boxmax.Y + loadedModel._boxmin.Y)/2,
@@ -96,6 +100,7 @@ namespace Strive.Rendering.TV3D.Models {
 			);
 			loadedModel._id = loadedModel._model.GetEntity();
 			loadedModel._model.ShowBoundingBox( true, false );
+			loadedModel._model.PlayAnimation( 20 );
 			return loadedModel;
 		}
 
@@ -133,7 +138,7 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public void playAnimation() {
 			// todo: use a better value than 1
-			_model.PlayAnimation( 1 );
+			_model.PlayAnimation( 20 );
 		}
 
 		public void stopAnimation() {
@@ -171,39 +176,9 @@ namespace Strive.Rendering.TV3D.Models {
 		}
 
 
-		public int AnimationSequence {
+		public string AnimationSequence {
 			set {
-				string sequence;		
-				switch( value ) {
-					case 1:
-						sequence = "stand";
-						break;
-					case 2:
-						sequence = "run";
-						break;
-					case 3:
-						sequence = "stand";
-						break;
-					case 4:
-						sequence = "run";
-						break;
-					case 5:
-						sequence = "stand";
-						break;
-					case 6:
-						sequence = "run";
-						break;
-					case 7:
-						sequence = "stand";
-						break;
-					case 8:
-						sequence = "run";
-						break;
-					default:
-						throw new Exception( "Unknown sequence" );
-				}
-				// nb: could set by number also
-				_model.SetAnimationByName( sequence );
+				_model.SetAnimationByName( value );
 			}
 		}
 
@@ -270,7 +245,7 @@ namespace Strive.Rendering.TV3D.Models {
 
 				//TODO: remove this hack to rotate the character,
 				// instead normalise the model.
-				_model.SetRotation( _rotation.X, _rotation.Y+90, _rotation.Z );
+				_model.SetRotation( _rotation.Z, _rotation.Y+90, _rotation.X );
 			}
 		}
 		#endregion
