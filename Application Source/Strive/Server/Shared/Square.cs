@@ -3,9 +3,9 @@ using System.Collections;
 using Strive.Multiverse;
 using Strive.Network.Server;
 using Strive.Network.Messages;
-using Strive.Rendering;
-using Strive.Rendering.Models;
-using Strive.Resources;
+//using Strive.Rendering;
+//using Strive.Rendering.Models;
+//using Strive.Resources;
 
 
 namespace Strive.Server.Shared
@@ -20,7 +20,7 @@ namespace Strive.Server.Shared
 	/// </summary>
 	public class Square
 	{
-		public static int squareSize = 100;
+		public static int squareSize = 1000;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
 		ArrayList[,] heightMap = new ArrayList[Square.squareSize,Square.squareSize];
@@ -56,12 +56,12 @@ namespace Strive.Server.Shared
 
 		public void CalculateHeightMap() {
 			// create a tempory local scene of the terrain in this square
-			Scene scene = new Scene();
-			foreach ( PhysicalObject po in physicalObjects ) {
+//			Scene scene = new Scene();
+//			foreach ( PhysicalObject po in physicalObjects ) {
 				// load it into the local scene
-				Model model = ResourceManager.LoadModel(po.ObjectInstanceID, po.ModelID);
-				scene.Models.Add( model );
-			}
+//				Model model = ResourceManager.LoadModel(po.ObjectInstanceID, po.ModelID);
+//				scene.Models.Add( model );
+//			}
 
 			int i, j;
 			for ( i=0; i<Square.squareSize; i++ ) {
@@ -70,7 +70,7 @@ namespace Strive.Server.Shared
 					// space at this location
 					Math3D.Vector3D start = new Math3D.Vector3D( i, j, 10000 );
 					Math3D.Vector3D end = new Math3D.Vector3D( i, j, -10000 );
-					scene.RayCollision( start, end, 1 );
+//					scene.RayCollision( start, end, 1 );
 
 					float [] occupiableSpace = new float[2];
 					occupiableSpace[0] = 0.0f;

@@ -12,7 +12,7 @@ namespace Strive.Server.Shared {
 		int world_id = 1;
 		int port = 1337;
 		Queue packetQueue = new Queue();
-		Listener listener;
+		UdpHandler listener;
 		World world;
 		MessageProcessor mp;
 		StoppableThread engine_thread;
@@ -32,7 +32,7 @@ namespace Strive.Server.Shared {
 			}
 			port = int.Parse(System.Configuration.ConfigurationSettings.AppSettings["port"]);
 
-			listener = new Listener(
+			listener = new UdpHandler(
 				new IPEndPoint( IPAddress.Any, port )
 			);
 

@@ -10,10 +10,10 @@ using Strive.Math3D;
 namespace Strive.Server.Shared {
 	public class MessageProcessor {
 		World world;
-		Listener listener;
+		UdpHandler listener;
 
 		public MessageProcessor(
-			World world, Listener listener
+			World world, UdpHandler listener
 		) {
 			this.world = world;
 			this.listener = listener;

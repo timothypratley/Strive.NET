@@ -33,8 +33,26 @@ namespace Strive.Resources
 
 		public static Model LoadModel(int InstanceID, int ModelID)
 		{
-			// check MDL first:
-			
+			string mdlFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl");
+			string _3dsFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds");
+			string textureFile = System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp");
+
+			// check for local file first:
+			if ( System.IO.File.Exists(mdlFile) ) {
+				return Model.Load(InstanceID.ToString(), mdlFile, ModelFormat.MDL);
+			} else if ( System.IO.File.Exists(_3dsFile) ) {
+				return Model.Load(InstanceID.ToString(), _3dsFile, ModelFormat._3DS);
+			} else if ( System.IO.File.Exists(textureFile) ) {
+				string texture = LoadTexture( ModelID );
+				return Model.CreatePlane(InstanceID.ToString(),
+					new Vector3D(-50,0,-50), 
+					new Vector3D(50,0,-50),
+					new Vector3D(50,0,50), 
+					new Vector3D(-50,0,50), 
+					texture, "");
+			}
+
+			// download resource
 			if(makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"))) {
 				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"), ModelFormat.MDL);
 			}

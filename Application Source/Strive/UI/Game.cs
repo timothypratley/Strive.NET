@@ -47,7 +47,12 @@ namespace Strive.UI
 			}
 			string path = System.Configuration.ConfigurationSettings.AppSettings["ResourcePath"];
 			ResourceManager.SetPath( path );
-			Application.Run(CurrentMainWindow);			
+			Application.Run(CurrentMainWindow);
+
+			// must terminate all threads to quit
+			CurrentGameLoop.Stop();
+			CurrentServerConnection.Stop();
+			CurrentScene.DropAll();
 		}
 
 
@@ -56,6 +61,7 @@ namespace Strive.UI
 			CurrentServerConnection.Stop();
 			CurrentGameLoop.Stop();
 			CurrentScene.DropAll();
+
 			short screenHeight = System.Convert.ToInt16(((PictureBox)RenderTarget).Height);
 			short screenWidth = System.Convert.ToInt16(((PictureBox)RenderTarget).Width);
 
@@ -68,12 +74,6 @@ namespace Strive.UI
 			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName).AddressList[0], Port ) );
 			CurrentServerConnection.Send( new Strive.Network.Messages.ToServer.Login( LoginName, Password));
 			CurrentGameLoop.Start(CurrentScene, RenderTarget, CurrentServerConnection);
-		}
-
-		public static void Stop()
-		{
-			CurrentServerConnection.Stop();
-			CurrentGameLoop.Stop();
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace Strive.Network.Client {
 		Queue messageQueue;
 		IPEndPoint remoteEndPoint;
 		IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, 0);
-		UdpClient serverConnection = new UdpClient();
+		UdpClient serverConnection;
 		//BinaryFormatter formatter = new BinaryFormatter();
 		StoppableThread myThread;
 		
@@ -26,45 +26,49 @@ namespace Strive.Network.Client {
 			this.remoteEndPoint = remoteEndPoint;
 			messageQueue = new Queue();
 			Console.WriteLine( "remoteEndPoint " + remoteEndPoint );
+			serverConnection = new UdpClient();
 			myThread.Start();
 		}
 
 		public void Stop() {
-			//serverConnection.Close();
+			if ( serverConnection != null ) {
+				serverConnection.Close();
+			}
 			myThread.Stop();
 		}
 
 		public void Run() {
-					// Blocks until a message returns on this socket from a remote host.
-					byte[] receivedBytes = serverConnection.Receive(ref endpoint);
-					try {
-						// Generic serialization
-						//IMessage message = (IMessage)formatter.Deserialize(
-						//	new MemoryStream( receivedBytes )
-						//);
+			byte[] receivedBytes;
+			try {
+				// Blocks until a message returns on this socket from a remote host.
+				receivedBytes = serverConnection.Receive(ref endpoint);
+			} catch ( ObjectDisposedException ) {
+				// do nothing, user has quit the client, causing the
+				// connection to be closed
+				return;
+			}
+			// Generic serialization
+			//IMessage message = (IMessage)formatter.Deserialize(
+			//	new MemoryStream( receivedBytes )
+			//);
 
-						// Custom serialization
-						IMessage message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
-						messageQueue.Enqueue( message );
-						//Console.WriteLine( "enqueued " + message.GetType() + " message" );
-					} catch ( Exception e ) {
-						Console.WriteLine( e );
-						Console.WriteLine( "ERROR: bad message discarded" );
-					}
+			// Custom serialization
+			IMessage message = (IMessage)CustomFormatter.Deserialize( receivedBytes );
+			messageQueue.Enqueue( message );
+			//Console.WriteLine( "enqueued " + message.GetType() + " message" );
 		}
 
 		public void Send( IMessage message ) {
-			try {
-				// Generic serialization
-				//MemoryStream ms = new MemoryStream();
-				//formatter.Serialize( ms, message );
+			// Generic serialization
+			//MemoryStream ms = new MemoryStream();
+			//formatter.Serialize( ms, message );
 
-				// Custom serialization
-				byte [] buffer = CustomFormatter.Serialize( message );
+			// Custom serialization
+			byte [] buffer = CustomFormatter.Serialize( message );
+			try {
 				serverConnection.Send( buffer, buffer.Length, remoteEndPoint );
-			} catch ( Exception e ) {
-				Stop();
-				throw e;
+			} catch ( ObjectDisposedException ) {
+				// do nothing, socket has been closed by another thread
 			}
 		}
 

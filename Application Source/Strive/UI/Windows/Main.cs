@@ -280,7 +280,6 @@ namespace Strive.UI.Windows
 
 		private void saveSettings()
 		{
-
 			DockingManager.SaveConfigToFile(Settings.SettingsManager.MagicWindowSettingsPath);
 			Game.CurrentLog.LogMessage("Saved Magic Window config to '" + Settings.SettingsManager.MagicWindowSettingsPath + "'");
 			Settings.SettingsManager.SaveWindowSetting(this);			
@@ -290,18 +289,7 @@ namespace Strive.UI.Windows
 
 		private void Main_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			DialogResult r = MessageBox.Show(this, "Save Settings?", "Quitting", MessageBoxButtons.YesNoCancel) ;
-			if(r == DialogResult.Cancel)
-			{
-				e.Cancel = true;
-				return;
-			}
-			if(r == DialogResult.Yes)
-			{
-				saveSettings();
-			}
-			Game.Stop();
-
+			saveSettings();
 		}
 
 		private void FileQuit_Click(object sender, System.EventArgs e)
