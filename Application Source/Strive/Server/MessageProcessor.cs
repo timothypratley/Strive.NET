@@ -140,7 +140,7 @@ namespace Strive.Server {
 			foreach ( Client c in listener.Clients.Values ) {
 				if (  c == client ) continue;
 				c.Send(
-					new Network.Messages.ToClient.Communication( client.Avatar.physicalObject.PhysicalObjectName, message.message, message.communicationType )
+					new Network.Messages.ToClient.Communication( client.Avatar.template.ObjectTemplateName, message.message, message.communicationType )
 				);
 			}
 		}

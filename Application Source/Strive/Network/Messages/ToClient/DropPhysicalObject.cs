@@ -9,9 +9,9 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class DropPhysicalObject : IMessage {
 		public DropPhysicalObject( PhysicalObject po ) {
-			this.respawn_id = po.respawnPoint.SpawnID;
+			this.instance_id = po.instance.ObjectInstanceID;
 		}
 
-		public int respawn_id;
+		public int instance_id;
 	}
 }

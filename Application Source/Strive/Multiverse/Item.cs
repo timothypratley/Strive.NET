@@ -7,13 +7,13 @@ namespace Strive.Multiverse
 	/// </summary>
 	public abstract class Item : PhysicalObject
 	{
-		Schema.ItemPhysicalObjectRow item;
+		Schema.TemplateItemRow item;
 
 		public Item(
-			Schema.ItemPhysicalObjectRow item,
-			Schema.PhysicalObjectRow physicalObject,
-			Schema.RespawnPointRow respawnPoint
-		) : base( physicalObject, respawnPoint ) {
+			Schema.TemplateItemRow item,
+			Schema.ObjectTemplateRow template,
+			Schema.ObjectInstanceRow instance
+		) : base( template, instance ) {
 			this.item = item;
 		}
 	}

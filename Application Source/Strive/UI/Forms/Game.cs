@@ -318,6 +318,7 @@ namespace Strive.UI.Forms
 		private void Game_Unload(object sender, System.EventArgs e)
 		{
 			_isRendering = false;			
+			Application.Exit();
 		}
 
 		private void Complete_quickCommand(object sender, System.EventArgs e)

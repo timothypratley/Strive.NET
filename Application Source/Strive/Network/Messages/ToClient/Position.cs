@@ -13,26 +13,26 @@ namespace Strive.Network.Messages.ToClient
 		}
 
 		public Position( PhysicalObject po ) {
-			this.spawn_id = po.respawnPoint.SpawnID;
-			this.position_x = (float)po.respawnPoint.X;
-			this.position_y = (float)po.respawnPoint.Y;
-			this.position_z = (float)po.respawnPoint.Z;
-			this.heading_x = (float)po.respawnPoint.HeadingX;
-			this.heading_y = (float)po.respawnPoint.HeadingY;
-			this.heading_z = (float)po.respawnPoint.HeadingZ;
+			this.instance_id = po.instance.ObjectInstanceID;
+			this.position_x = (float)po.instance.X;
+			this.position_y = (float)po.instance.Y;
+			this.position_z = (float)po.instance.Z;
+			this.heading_x = (float)po.instance.HeadingX;
+			this.heading_y = (float)po.instance.HeadingY;
+			this.heading_z = (float)po.instance.HeadingZ;
 		}
 
 		public void Apply( PhysicalObject po ) {
-			po.respawnPoint.SpawnID = this.spawn_id;
-			po.respawnPoint.X = this.position_x;
-			po.respawnPoint.Y = this.position_y;
-			po.respawnPoint.Z = this.position_z;
-			po.respawnPoint.HeadingX = this.heading_x;
-			po.respawnPoint.HeadingY = this.heading_y;
-			po.respawnPoint.HeadingZ = this.heading_z;
+			po.instance.ObjectInstanceID = this.instance_id;
+			po.instance.X = this.position_x;
+			po.instance.Y = this.position_y;
+			po.instance.Z = this.position_z;
+			po.instance.HeadingX = this.heading_x;
+			po.instance.HeadingY = this.heading_y;
+			po.instance.HeadingZ = this.heading_z;
 		}
 
-		public int spawn_id;
+		public int instance_id;
 		public float position_x;
 		public float position_y;
 		public float position_z;

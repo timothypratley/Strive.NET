@@ -88,69 +88,69 @@ namespace Strive.Server.Data
 
 		#region Hand built commands - DO NOT DELETE
 
-		public System.Data.SqlClient.SqlCommand SelectRespawnPoint {
+		public System.Data.SqlClient.SqlCommand SelectObjectInstance {
 			get {
-				return buildCommandFromSimpleQuery( "select * from RespawnPoint" );
+				return buildCommandFromSimpleQuery( "select * from ObjectInstance" );
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectPhysicalObject {
+		public System.Data.SqlClient.SqlCommand SelectObjectTemplate {
 			get {
-				return buildCommandFromSimpleQuery( "select * from PhysicalObject" );
+				return buildCommandFromSimpleQuery( "select * from ObjectTemplate" );
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectItemPhysicalObject {
+		public System.Data.SqlClient.SqlCommand SelectTemplateItem  {
 			get {
-				return buildCommandFromSimpleQuery( "select * from ItemPhysicalObject" );
+				return buildCommandFromSimpleQuery( "select * from TemplateItem" );
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectEquipableItem
+		public System.Data.SqlClient.SqlCommand SelectItemEquipable
 		{
 			get
 			{
-				return buildCommandFromSimpleQuery("SELECT * FROM EquipableItem");
+				return buildCommandFromSimpleQuery("SELECT * FROM ItemEquipable");
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectJunkItem
+		public System.Data.SqlClient.SqlCommand SelectItemJunk
 		{
 			get
 			{
-				return buildCommandFromSimpleQuery("SELECT * FROM JunkItem");
+				return buildCommandFromSimpleQuery("SELECT * FROM ItemJunk");
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectMobilePhysicalObject
+		public System.Data.SqlClient.SqlCommand SelectTemplateMobile
 		{
 			get
 			{
-				return buildCommandFromSimpleQuery("SELECT * FROM MobilePhysicalObject");
+				return buildCommandFromSimpleQuery("SELECT * FROM TemplateMobile");
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectQuaffableItem
+		public System.Data.SqlClient.SqlCommand SelectItemQuaffable
 		{
 			get
 			{
-				return buildCommandFromSimpleQuery("SELECT * FROM QuaffableItem");
+				return buildCommandFromSimpleQuery("SELECT * FROM ItemQuaffable");
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectTerrainPhysicalObject
+		public System.Data.SqlClient.SqlCommand SelectTemplateTerrain
 		{
 			get
 			{
-				return buildCommandFromSimpleQuery("SELECT * FROM TerrainPhysicalObject");
+				return buildCommandFromSimpleQuery("SELECT * FROM TemplateTerrain");
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectWieldableItem
+		public System.Data.SqlClient.SqlCommand SelectItemWieldable
 		{
 			get
 			{
-				return buildCommandFromSimpleQuery("SELECT * FROM WieldableItem");
+				return buildCommandFromSimpleQuery("SELECT * FROM ItemWieldable");
 			}
 		}
 
@@ -194,9 +194,9 @@ namespace Strive.Server.Data
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectReadableItem {
+		public System.Data.SqlClient.SqlCommand SelectItemReadable {
 			get {
-				return buildCommandFromSimpleQuery("SELECT * FROM ReadableItem");
+				return buildCommandFromSimpleQuery("SELECT * FROM ItemReadable");
 			}
 		}
 
@@ -226,7 +226,7 @@ namespace Strive.Server.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@PhysicalObjectID";
+					param.ParameterName = "@ObjectTemplateID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -266,7 +266,7 @@ namespace Strive.Server.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -338,7 +338,7 @@ namespace Strive.Server.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@PhysicalObjectID";
+					param.ParameterName = "@ObjectTemplateID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -368,7 +368,7 @@ namespace Strive.Server.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -440,12 +440,12 @@ namespace Strive.Server.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@PhysicalObjectID";
+					param.ParameterName = "@ObjectTemplateID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -587,7 +587,7 @@ namespace Strive.Server.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -659,7 +659,7 @@ namespace Strive.Server.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@PhysicalObjectID";
+					param.ParameterName = "@ObjectTemplateID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -699,7 +699,7 @@ namespace Strive.Server.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -771,7 +771,7 @@ namespace Strive.Server.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@PhysicalObjectID";
+					param.ParameterName = "@ObjectTemplateID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -811,7 +811,7 @@ namespace Strive.Server.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -883,7 +883,7 @@ namespace Strive.Server.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@PhysicalObjectID";
+					param.ParameterName = "@ObjectTemplateID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -903,12 +903,12 @@ namespace Strive.Server.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@TerrainTypeID";
+					param.ParameterName = "@EnumTerrainTypeID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -980,7 +980,7 @@ namespace Strive.Server.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@PhysicalObjectID";
+					param.ParameterName = "@ObjectTemplateID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -1025,7 +1025,7 @@ namespace Strive.Server.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@SpawnID";
+					param.ParameterName = "@ObjectInstanceID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		

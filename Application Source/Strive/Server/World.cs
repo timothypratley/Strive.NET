@@ -25,16 +25,17 @@ namespace Strive.Server {
 		protected Square[,] squares;
 		// all physical objects are indexed in a hashtable
 		protected Hashtable physicalObjects = new Hashtable();
+		protected ArrayList mobilesArrayList = new ArrayList();
 
 		public World() {
 			System.Console.WriteLine( "Loading world..." );
 			multiverse = Data.MultiverseFactory.loadMultiverse();
 
 			// find highX and lowX for our world dimensions
-			highX = ((Schema.RespawnPointRow)multiverse.RespawnPoint.Select( "X = max(X)" )[0]).X;
-			lowX = ((Schema.RespawnPointRow)multiverse.RespawnPoint.Select( "X = min(X)" )[0]).X;
-			highZ = ((Schema.RespawnPointRow)multiverse.RespawnPoint.Select( "Z = max(Z)" )[0]).Z;
-			lowZ = ((Schema.RespawnPointRow)multiverse.RespawnPoint.Select( "Z = min(Z)" )[0]).Z;
+			highX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
+			lowX = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
+			highZ = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
+			lowZ = ((Schema.ObjectInstanceRow)multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
 
 			// figure out how many squares we need
 			squaresInX = (int)(highX-lowX)/squareSize + 1;
@@ -50,24 +51,24 @@ namespace Strive.Server {
 			}
 
 			// for each respawn, create the wrapper and add it to the world
-			foreach ( Schema.RespawnPointRow rpr in multiverse.RespawnPoint ) {
+			foreach ( Schema.ObjectInstanceRow rpr in multiverse.ObjectInstance ) {
 				// Load the underlying physical object,
 				// AreaID 0 means it is a Player character or item
-				Schema.PhysicalObjectRow por = multiverse.PhysicalObject.FindByPhysicalObjectID( rpr.PhysicalObjectID );
+				Schema.ObjectTemplateRow por = multiverse.ObjectTemplate.FindByObjectTemplateID( rpr.ObjectTemplateID );
 				if ( por.AreaID == 0 ) {
 					// player objects/items are not loaded until needed
-					System.Console.WriteLine( "Player " + rpr.SpawnID + " not loaded" );
+					System.Console.WriteLine( "Player " + rpr.ObjectInstanceID + " not loaded" );
 					continue;
 				}
 
 				// For each respawn, try to figure out what it is
-				Schema.MobilePhysicalObjectRow mr = multiverse.MobilePhysicalObject.FindByMobileID( rpr.PhysicalObjectID );
-				Schema.QuaffableItemRow qr = multiverse.QuaffableItem.FindByItemID( rpr.PhysicalObjectID );
-				Schema.EquipableItemRow er = multiverse.EquipableItem.FindByItemID( rpr.PhysicalObjectID );
-				Schema.ReadableItemRow rr = multiverse.ReadableItem.FindByItemID( rpr.PhysicalObjectID );
-				Schema.JunkItemRow jr = multiverse.JunkItem.FindByItemID( rpr.PhysicalObjectID );
-				Schema.WieldableItemRow wr = multiverse.WieldableItem.FindByItemID( rpr.PhysicalObjectID );
-				Schema.TerrainPhysicalObjectRow tr = multiverse.TerrainPhysicalObject.FindByTerrainID( rpr.PhysicalObjectID );
+				Schema.TemplateMobileRow mr = multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
+				Schema.ItemQuaffableRow qr = multiverse.ItemQuaffable.FindByObjectTemplateID( rpr.ObjectTemplateID );
+				Schema.ItemEquipableRow er = multiverse.ItemEquipable.FindByObjectTemplateID( rpr.ObjectTemplateID );
+				Schema.ItemReadableRow rr = multiverse.ItemReadable.FindByObjectTemplateID( rpr.ObjectTemplateID );
+				Schema.ItemJunkRow jr = multiverse.ItemJunk.FindByObjectTemplateID( rpr.ObjectTemplateID );
+				Schema.ItemWieldableRow wr = multiverse.ItemWieldable.FindByObjectTemplateID( rpr.ObjectTemplateID );
+				Schema.TemplateTerrainRow tr = multiverse.TemplateTerrain.FindByPhysicalObjectID( rpr.ObjectTemplateID );
 				
 				if ( mr != null ) {
 					Avatar a = new Avatar(
@@ -77,48 +78,48 @@ namespace Strive.Server {
 					// NB: we only add avatars to our world, not mobiles
 					Add( a );
 				} else if ( qr != null ) {
-					Quaffable q = new Quaffable(
+					QuaffableBase q = new QuaffableBase(
 						qr,
-						multiverse.ItemPhysicalObject.FindByItemID( qr.ItemID ),
+						multiverse.TemplateItem.FindByObjectTemplateID( qr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( q );
 				} else if ( er != null ) {
-					Equipable e = new Equipable(
+					EquipableBase e = new EquipableBase(
 						er,
-						multiverse.ItemPhysicalObject.FindByItemID( er.ItemID ),
+						multiverse.TemplateItem.FindByObjectTemplateID( er.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( e );
 				} else if ( rr != null ) {
-					Readable r = new Readable(
+					ReadableBase r = new ReadableBase(
 						rr,
-						multiverse.ItemPhysicalObject.FindByItemID( rr.ItemID ),
+						multiverse.TemplateItem.FindByObjectTemplateID( rr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( r );
 				} else if ( wr != null ) {
-					Wieldable w = new Wieldable(
+					WieldableBase w = new WieldableBase(
 						wr,
-						multiverse.ItemPhysicalObject.FindByItemID( wr.ItemID ),
+						multiverse.TemplateItem.FindByObjectTemplateID( wr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( w );
 				} else if ( jr != null ) {
-					Junk j = new Junk(
+					JunkBase j = new JunkBase(
 						jr,
-						multiverse.ItemPhysicalObject.FindByItemID( jr.ItemID ),
+						multiverse.TemplateItem.FindByObjectTemplateID( jr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( j );
 				} else if ( tr != null ) {
-					Terrain t = new Terrain(
+					TerrainBase t = new TerrainBase(
 						tr,
 						por,
 						rpr );
 					Add( t );
 				} else {
-					System.Console.WriteLine( "ERROR: respawn of non-entity " + rpr.PhysicalObjectID ) ;
+					System.Console.WriteLine( "ERROR: respawn of non-entity " + rpr.ObjectTemplateID ) ;
 				}
 			}
 			System.Console.WriteLine( "Loaded world" );
@@ -138,23 +139,45 @@ namespace Strive.Server {
 
 		private void Handle() {
 			while ( isRunning ) {
-				// update objects
-				foreach ( PhysicalObject po in physicalObjects ) {
-					//PhysicalObjectUpdate( po );
+				// mobiles processed in random order
+				Shuffle( mobilesArrayList );
+
+				// combat update
+				foreach ( Mobile mob in mobilesArrayList ) {
+					mob.CombatUpdate();
 				}
+
+				foreach ( Mobile mob in mobilesArrayList ) {
+					mob.PeaceUpdate();
+				}
+
+				// don't be too CPU greedy
+				// EEERRR is there a better way?
+				Thread.Sleep( 100 );
+			}
+		}
+
+		public void Shuffle( ArrayList list ) {
+			int i, j;
+			object tmp;
+			for ( i=0; i<list.Count; i++ ) {
+				j = Global.random.Next( list.Count );
+				tmp = list[i];
+				list[i] = list[j];
+				list[j] = tmp;
 			}
 		}
 
 		public void Add( PhysicalObject po ) {
 			if (
-				po.respawnPoint.X > highX || po.respawnPoint.Z > highZ
-				|| po.respawnPoint.X < lowX || po.respawnPoint.Z < lowZ
+				po.instance.X > highX || po.instance.Z > highZ
+				|| po.instance.X < lowX || po.instance.Z < lowZ
 			) {
 				System.Console.WriteLine( "ERROR: tried to add physical object outside the world" );
 				return;
 			}
-			int squareX = (int)(po.respawnPoint.X-lowX)/squareSize;
-			int squareZ = (int)(po.respawnPoint.Z-lowZ)/squareSize;
+			int squareX = (int)(po.instance.X-lowX)/squareSize;
+			int squareZ = (int)(po.instance.Z-lowZ)/squareSize;
 			int i, j;
 
 			// if a new client has entered the world,
@@ -210,14 +233,17 @@ namespace Strive.Server {
 			}
 
 			// actually add the object to the world
-			physicalObjects.Add( po.respawnPoint.SpawnID, po );
+			physicalObjects.Add( po.instance.ObjectInstanceID, po );
+			if ( po is Mobile ) {
+				mobilesArrayList.Add( po );
+			}
 			squares[squareX,squareZ].Add( po );
-			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.respawnPoint.SpawnID + " to the world at (" + po.respawnPoint.X + "," + po.respawnPoint.Y + "," +po.respawnPoint.Z + ")" );
+			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.instance.ObjectInstanceID + " to the world at (" + po.instance.X + "," + po.instance.Y + "," +po.instance.Z + ")" );
 		}
 
 		public void Move( PhysicalObject po, float x, float y, float z ) {
-			int fromSquareX = (int)po.respawnPoint.X/squareSize;
-			int fromSquareZ = (int)po.respawnPoint.Z/squareSize;
+			int fromSquareX = (int)po.instance.X/squareSize;
+			int fromSquareZ = (int)po.instance.Z/squareSize;
 			int toSquareX = (int)x/squareSize;
 			int toSquareZ = (int)z/squareSize;
 			int i, j;
@@ -254,17 +280,17 @@ namespace Strive.Server {
 				squares[fromSquareX,fromSquareZ].Remove( po );
 				squares[toSquareX,toSquareZ].Add( po );
 			}
-			po.respawnPoint.X = x;
-			po.respawnPoint.Y = y;
-			po.respawnPoint.Z = z;
+			po.instance.X = x;
+			po.instance.Y = y;
+			po.instance.Z = z;
 		}
 
-		public Mobile LoadMobile( int spawnID ) {
-			Schema.RespawnPointRow rpr = (Schema.RespawnPointRow)multiverse.RespawnPoint.FindBySpawnID( spawnID );
+		public Mobile LoadMobile( int instanceID ) {
+			Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)multiverse.ObjectInstance.FindByObjectInstanceID( instanceID );
 			if ( rpr == null ) return null;
-			Schema.PhysicalObjectRow por = multiverse.PhysicalObject.FindByPhysicalObjectID( rpr.PhysicalObjectID );
+			Schema.ObjectTemplateRow por = multiverse.ObjectTemplate.FindByObjectTemplateID( rpr.ObjectTemplateID );
 			if ( por == null ) return null;
-			Schema.MobilePhysicalObjectRow mr = multiverse.MobilePhysicalObject.FindByMobileID( rpr.PhysicalObjectID );
+			Schema.TemplateMobileRow mr = multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
 			if ( mr == null ) return null;
 			Mobile mobile = new Mobile( mr, por, rpr );
 			return mobile;

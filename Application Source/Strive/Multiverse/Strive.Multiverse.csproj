@@ -92,7 +92,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Equipable.cs"
+                    RelPath = "EquipableBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -102,12 +102,12 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Junk.cs"
+                    RelPath = "JunkBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Mobile.cs"
+                    RelPath = "MobileBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -117,12 +117,12 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Quaffable.cs"
+                    RelPath = "QuaffableBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Readable.cs"
+                    RelPath = "ReadableBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -146,12 +146,12 @@
                     BuildAction = "None"
                 />
                 <File
-                    RelPath = "Terrain.cs"
+                    RelPath = "TerrainBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Wieldable.cs"
+                    RelPath = "WieldableBase.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

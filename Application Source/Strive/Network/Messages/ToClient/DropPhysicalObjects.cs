@@ -10,14 +10,14 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class DropPhysicalObjects : IMessage {
 		public DropPhysicalObjects( ArrayList physicalObjects ) {
-			spawnIDs = new int[physicalObjects.Count];
+			instanceIDs = new int[physicalObjects.Count];
 			int i = 0;
 			foreach ( PhysicalObject po in physicalObjects ) {
-				spawnIDs[i] = po.respawnPoint.SpawnID;
+				instanceIDs[i] = po.instance.ObjectInstanceID;
 				i++;
 			}
 		}
 
-		public int [] spawnIDs;
+		public int [] instanceIDs;
 	}
 }

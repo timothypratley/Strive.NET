@@ -16,15 +16,15 @@ namespace Strive.Server
 	{
 		public Client client = null;
 
-		public Avatar( Client c, Mobile m ) : base( m.mobile, m.physicalObject, m.respawnPoint ) {
+		public Avatar( Client c, MobileBase m ) : base( m.mobile, m.template, m.instance ) {
 			client = c;
 		}
 
 		public Avatar(
-			Schema.MobilePhysicalObjectRow mobile,
-			Schema.PhysicalObjectRow physicalObject,
-			Schema.RespawnPointRow respawnPoint
-		) : base( mobile, physicalObject, respawnPoint ) {
+			Schema.TemplateMobileRow mobile,
+			Schema.ObjectTemplateRow template,
+			Schema.ObjectInstanceRow instance
+		) : base( mobile, template, instance ) {
 		}
 	}
 }

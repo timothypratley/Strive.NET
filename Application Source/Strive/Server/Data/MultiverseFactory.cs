@@ -22,34 +22,34 @@ namespace Strive.Server.Data
 			SqlDataAdapter da = new SqlDataAdapter();
 
 			// NB: Order is important here:
-			da.SelectCommand = commandFactory.SelectRespawnPoint;
-			da.Fill( multiverse, "RespawnPoint" );
-			da.SelectCommand = commandFactory.SelectPhysicalObject;
-			da.Fill( multiverse, "PhysicalObject" );
-			da.SelectCommand = commandFactory.SelectItemPhysicalObject;
-			da.Fill( multiverse, "ItemPhysicalObject" );
+			da.SelectCommand = commandFactory.SelectObjectTemplate;
+			da.Fill( multiverse, "ObjectTemplate" );
+			da.SelectCommand = commandFactory.SelectObjectInstance;
+			da.Fill( multiverse, "ObjectInstance" );
+			da.SelectCommand = commandFactory.SelectTemplateItem;
+			da.Fill( multiverse, "TemplateItem" );
 			da.SelectCommand = commandFactory.SelectPlayer;
 			da.Fill(multiverse, "Player");
 			da.SelectCommand = commandFactory.SelectWorld;
 			da.Fill(multiverse, "World");
 			da.SelectCommand = commandFactory.SelectArea;
 			da.Fill(multiverse, "Area");
-			da.SelectCommand = commandFactory.SelectTerrainPhysicalObject;
-			da.Fill(multiverse, "TerrainPhysicalObject");
-			da.SelectCommand = commandFactory.SelectMobilePhysicalObject;
-			da.Fill(multiverse, "MobilePhysicalObject");
+			da.SelectCommand = commandFactory.SelectTemplateTerrain;
+			da.Fill(multiverse, "TemplateTerrain");
+			da.SelectCommand = commandFactory.SelectTemplateMobile;
+			da.Fill(multiverse, "TemplateMobile");
 			da.SelectCommand = commandFactory.SelectMobilePossesableByPlayer;
 			da.Fill(multiverse, "MobilePossesableByPlayer");
-			da.SelectCommand = commandFactory.SelectWieldableItem;
-			da.Fill(multiverse, "WieldableItem");
-			da.SelectCommand = commandFactory.SelectQuaffableItem;
-			da.Fill(multiverse, "QuaffableItem");
-			da.SelectCommand = commandFactory.SelectReadableItem;
-			da.Fill(multiverse, "ReadableItem");
-			da.SelectCommand = commandFactory.SelectJunkItem;
-			da.Fill(multiverse, "JunkItem");
-			da.SelectCommand = commandFactory.SelectEquipableItem;
-			da.Fill(multiverse, "EquipableItem");
+			da.SelectCommand = commandFactory.SelectItemWieldable;
+			da.Fill(multiverse, "ItemWieldable");
+			da.SelectCommand = commandFactory.SelectItemQuaffable;
+			da.Fill(multiverse, "ItemQuaffable");
+			da.SelectCommand = commandFactory.SelectItemReadable;
+			da.Fill(multiverse, "ItemReadable");
+			da.SelectCommand = commandFactory.SelectItemJunk;
+			da.Fill(multiverse, "ItemJunk");
+			da.SelectCommand = commandFactory.SelectItemEquipable;
+			da.Fill(multiverse, "ItemEquipable");
 
 			return multiverse;			
 		}

@@ -115,12 +115,22 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Global.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Main.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
                     RelPath = "MessageProcessor.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Mobile.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

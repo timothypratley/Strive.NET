@@ -70,7 +70,7 @@ namespace Strive.UI.Modules
 					#region AddPhysicalObject Message
 				else if ( m is Strive.Network.Messages.ToClient.AddPhysicalObject) {
 					Strive.Network.Messages.ToClient.AddPhysicalObject apo = (Strive.Network.Messages.ToClient.AddPhysicalObject)m;
-					if ( apo.spawn_id == Global._myid ) {
+					if ( apo.instance_id == Global._myid ) {
 						// load self... this contains the players initial position
 						_scene.View.Position = new Vector3D( apo.x, apo.y, apo.z );
 						_scene.View.Rotation = GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
@@ -78,7 +78,7 @@ namespace Strive.UI.Modules
 						Global._log.LogMessage( "Initial rotation is " + _scene.View.Rotation );
 						continue;
 					}
-					Model model = Resources.ResourceManager.LoadModel(apo.spawn_id, apo.model_id);
+					Model model = Resources.ResourceManager.LoadModel(apo.instance_id, apo.model_id);
 					try {
 						_scene.Models.Add( model );
 					} catch ( Exception ) {
@@ -96,14 +96,14 @@ namespace Strive.UI.Modules
 					Model workingModel;
 							
 						#region 1.1.1 Check that the model exists
-					if ( p.spawn_id == Global._myid ) {
+					if ( p.instance_id == Global._myid ) {
 						// ignoring self positions for now
 						continue;
 					}
 					try {
-						workingModel = _scene.Models[p.spawn_id.ToString()];
+						workingModel = _scene.Models[p.instance_id.ToString()];
 					} catch (Exception) {
-						Global._log.ErrorMessage( "Model for " + p.spawn_id + " has not been loaded" );
+						Global._log.ErrorMessage( "Model for " + p.instance_id + " has not been loaded" );
 						continue;
 					}
 						#endregion
@@ -132,7 +132,6 @@ namespace Strive.UI.Modules
 			Vector3D cameraRotation = _scene.View.Rotation;
 
 			if(Keyboard.GetKeyState(Keys.key_W)) {
-				Global._log.DebugMessage("w00t" );
 				WasKeyboardInput = true;
 				cameraPosition.X +=
 					(float)Math.Sin( cameraRotation.Y * Math.PI/180.0 ) * moveunit*2;

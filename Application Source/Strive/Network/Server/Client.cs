@@ -12,7 +12,7 @@ namespace Strive.Network.Server {
 	/// </summary>
 	public class Client	{
 		IPEndPoint endPoint;
-		Mobile avatar = null;
+		MobileBase avatar = null;
 		string authenticatedUsername = null;
 		bool connected = false;
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -53,7 +53,7 @@ namespace Strive.Network.Server {
 			}
 		}
 
-		public Mobile Avatar {
+		public MobileBase Avatar {
 			get { return avatar; }
 			set { avatar = value; }
 		}
