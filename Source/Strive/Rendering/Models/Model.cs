@@ -61,6 +61,7 @@ namespace Strive.Rendering.Models
 			Model created = new Model();
 			created._key = name;
 			created._id = id;
+			created._format = ModelFormat.Mesh;
 			R3DVector3D center = new R3DVector3D();
 			bool worldspace = false;
 			Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref created.BoundingSphereRadiusSquared, ref worldspace );
@@ -189,15 +190,24 @@ namespace Strive.Rendering.Models
 			if ( _format == ModelFormat.MDL ) {
 				Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
 				Interop._instance.MdlSystem.MDL_Delete();
-			} else  {
+			} else if ( _format == ModelFormat.Scape ) {
+				Interop._instance.PolyVox.Scape_SetPointer(this.Key);
+				Interop._instance.PolyVox.Scape_Delete();
+			} else if ( _format == ModelFormat.Mesh ) {
 				Interop._instance.Meshbuilder.Mesh_SetPointer(this.Key);
 				Interop._instance.Meshbuilder.Mesh_Delete();
+			} else {
+				throw new Exception( "n0rty n0rty, unknown format for delete" );
 			}
 		}
 
 		public void applyTexture( string texture ) {
-			setPointer();
-			Interop._instance.Meshbuilder.Mesh_SetTexture( 0, texture );
+			if ( _format == ModelFormat.Mesh ) {
+				setPointer();
+				Interop._instance.Meshbuilder.Mesh_SetTexture( 0, texture );
+			} else {
+				throw new Exception( "n0rty n0rty, trying to applytexture to non-mesh" );
+			}
 		}
 
 		public void nextFrame() {
