@@ -1,17 +1,17 @@
+USE STRIVE
+
 BEGIN TRANSACTION
 
 DECLARE @TerrainPieceSize INT
 SET @TerrainPieceSize = 10
 DECLARE @ForestTreeFrequency INT
-SET @ForestTreeFrequency = 2
+SET @ForestTreeFrequency = 10
 DECLARE @ForestTerrainTemplateLowest INT
-SET @ForestTerrainTemplateLowest = 65814
+SET @ForestTerrainTemplateLowest = 65817
 DECLARE @ForestTerrainTemplateHighest INT
-SET @ForestTerrainTemplateHighest = 65816
+SET @ForestTerrainTemplateHighest = 65817
 
--- Script designed to be run again and again
-DELETE FROM ObjectInstance 
-WHERE TemplateObjectID IN (65814,65815,65816)
+DELETE FROM ObjectInstance WHERE TemplateObjectID = 65817
 
 SELECT CAST(ROUND((RAND() * (@ForestTerrainTemplateHighest - @ForestTerrainTemplateLowest)) + @ForestTerrainTemplateLowest, 0) AS INT)
 
@@ -19,9 +19,9 @@ SELECT (RAND() * 10)
 
 INSERT INTO ObjectInstance
 SELECT CAST(ROUND((RAND(CAST(NEWID() AS varbinary(128))) * (@ForestTerrainTemplateHighest - @ForestTerrainTemplateLowest)) + @ForestTerrainTemplateLowest, 0) AS INT) AS TemplateObjectID, 
-	ObjectInstance.X + (RAND(CAST(NEWID() AS varbinary(128))) *@TerrainPieceSize) AS X, 
+	ObjectInstance.X + (RAND(CAST(NEWID() AS varbinary(128))) *@TerrainPieceSize*3) AS X, 
 	ObjectInstance.Y AS Y,
-	ObjectInstance.Z + (RAND(CAST(NEWID() AS varbinary(128))) *@TerrainPieceSize) AS Z,
+	ObjectInstance.Z + (RAND(CAST(NEWID() AS varbinary(128))) *@TerrainPieceSize*3) AS Z,
 	0 AS RotationX,
 	0 AS RotationY,
 	0 AS RotationZ,
@@ -30,14 +30,14 @@ SELECT CAST(ROUND((RAND(CAST(NEWID() AS varbinary(128))) * (@ForestTerrainTempla
 FROM ObjectInstance
 	INNER JOIN TemplateTerrain
 		ON ObjectInstance.TemplateObjectID = TemplateTerrain.TemplateObjectID
-WHERE EnumTerrainTypeID = 9 AND
+WHERE EnumTerrainTypeID = 1 AND
 	CAST(X AS INT) % (@TerrainPieceSize * @ForestTreeFrequency) = 0 AND 
 	CAST(Z AS INT) % (@TerrainPieceSize * @ForestTreeFrequency) = 0
 
 
 SELECT @@ROWCOUNT
 
-ROLLBACK TRANSACTION
+COMMIT TRANSACTION
 /* Dead trees 
 65811
 65812
