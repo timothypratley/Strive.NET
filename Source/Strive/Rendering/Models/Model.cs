@@ -48,7 +48,7 @@ namespace Strive.Rendering.Models
 			Model created = new Model();
 			created._key = name;
 			created._id = id;
-			created._format = ModelFormat.Terrain;
+			created._format = ModelFormat.Mesh;
 			// todo: fix this hax,
 			// atm set to 0 as this is assumed to be terrain...
 			created.BoundingSphereRadiusSquared = 0;
@@ -66,6 +66,20 @@ namespace Strive.Rendering.Models
 			Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref created.BoundingSphereRadiusSquared, ref worldspace );
 			// square it ofc
 			created.BoundingSphereRadiusSquared = created.BoundingSphereRadiusSquared * created.BoundingSphereRadiusSquared;
+			return created;
+		}
+
+		public static Model CreateTerrain( string name, string filename, string texture ) {
+			Model created = new Model();
+			created._format = ModelFormat.Scape;
+			created._key = name;
+			created._id = Interop._instance.PolyVox.Scape_Create( name, filename, 200, true, POLYVOXDETAIL.POLYVOXDETAIL_LOW );
+			R3DVector3D scale = new R3DVector3D();
+			scale.x = 0.4F;
+			scale.y = 0.4F;
+			scale.z = 0.4F;
+			Interop._instance.PolyVox.Scape_SetScale( ref scale );
+			Interop._instance.PolyVox.Scape_SetTexture( 0, texture, R3DLAYERCONFIG.R3DLAYERCONFIG_COLOR );
 			return created;
 		}
 
@@ -107,7 +121,7 @@ namespace Strive.Rendering.Models
 					}
 					break;
 				}
-				case ModelFormat._3DS:
+				case ModelFormat.Mesh:
 				{
 					try
 					{
@@ -153,8 +167,12 @@ namespace Strive.Rendering.Models
 			try {
 				if ( _format == ModelFormat.MDL ) {
 					Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
-				} else  {
+				} else if ( _format == ModelFormat.Mesh )  {
 					Interop._instance.Meshbuilder.Mesh_SetPointer(this.Key);
+				} else if ( _format == ModelFormat.Scape ) {
+					Interop._instance.PolyVox.Scape_SetPointer( this.Key );
+				} else {
+					throw new Exception( "n0rty n0rty, unknown modelformat" );
 				}
 			}
 			catch(Exception e) {
@@ -341,7 +359,7 @@ namespace Strive.Rendering.Models
 						}
 						break;
 					}
-					default: {
+					case ModelFormat.Mesh: {
 						setPointer();
 						try {
 							Interop._instance.Meshbuilder.Mesh_SetPosition(value.X, value.Y, value.Z);
@@ -351,6 +369,22 @@ namespace Strive.Rendering.Models
 						}
 						break;
 					}
+					case ModelFormat.Scape: {
+						setPointer();
+						try {
+							R3DPoint3D position = new R3DPoint3D();
+							position.x = value.X;
+							position.y = value.Y;
+							position.z = value.Z;
+							Interop._instance.PolyVox.Scape_SetPosition( ref position );
+						}
+						catch(Exception e) {
+							throw new ModelException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
+						}
+						break;
+					}
+					default:
+						throw new Exception( "n0rty norty, bad modelformat" );
 				}
 				_position = value;
 			}
@@ -377,12 +411,20 @@ namespace Strive.Rendering.Models
 						}
 						break;
 					}
-					case ModelFormat._3DS:
-					case ModelFormat.Terrain:
+					case ModelFormat.Mesh:
 					{
 						setPointer();
 						Interop._instance.Meshbuilder.Mesh_SetRotation( -value.X, -value.Y, -value.Z );
 						break;
+					}
+					case ModelFormat.Scape: {
+						setPointer();
+						R3DVector3D rotation = new R3DVector3D();
+						rotation.x = -value.X;
+						rotation.y = -value.Y;
+						rotation.z = -value.Z;
+						Interop._instance.PolyVox.Scape_SetRotation( ref rotation );
+						break;					
 					}
 					default:
 						throw new Exception( "fall through" );

@@ -16,13 +16,13 @@ namespace Strive.Rendering.Models
 		/// </summary>
 		MDL,
 		/// <summary>
-		/// 3D studio format
+		/// Mesh
 		/// </summary>
-		_3DS,
+		Mesh,
 		/// <summary>
-		/// a mesh of terrain, don't collision detect v1.
+		/// Scape
 		/// </summary>
-		Terrain
+		Scape
 	}
 
 

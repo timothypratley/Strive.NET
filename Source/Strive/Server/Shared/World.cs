@@ -251,7 +251,7 @@ namespace Strive.Server.Shared {
 				//float dy = newPos.Y - spo.Position.Y;
 				float distance_squared = dx*dx + dz*dz; // + dy*dy;
 				if ( distance_squared <= spo.BoundingSphereRadiusSquared + po.BoundingSphereRadiusSquared ) {
-					System.Console.WriteLine( "collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID );
+					// System.Console.WriteLine( "collision " + po.ObjectInstanceID + " with " + spo.ObjectInstanceID );
 					// objects would be touching, reject the move
 					// if its a player, slap their wrist with a position update
 					if ( ma != null ) {

@@ -75,8 +75,6 @@ namespace Strive.UI
 			CurrentServerConnection.Start( new IPEndPoint( Dns.GetHostByName( ServerName).AddressList[0], Port ) );
 			CurrentServerConnection.Login(LoginName, Password);
 			CurrentGameLoop.Start(CurrentScene, RenderTarget, CurrentServerConnection);
-			Strive.Rendering.Terrain.Landscape.LoadLandscape(
-				"landscape", "C:/strive/resources/textures/74.bmp" );
 		}
 	}
 }

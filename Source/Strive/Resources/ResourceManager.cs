@@ -41,15 +41,12 @@ namespace Strive.Resources
 			if ( System.IO.File.Exists(mdlFile) ) {
 				return Model.Load(InstanceID.ToString(), mdlFile, ModelFormat.MDL);
 			} else if ( System.IO.File.Exists(_3dsFile) ) {
-				return Model.Load(InstanceID.ToString(), _3dsFile, ModelFormat._3DS);
+				return Model.Load(InstanceID.ToString(), _3dsFile, ModelFormat.Mesh);
 			} else if ( System.IO.File.Exists(textureFile) ) {
+				// todo: don't hardcode the heightmap file
+				textureFile = System.IO.Path.Combine( _texturePath, "56.bmp");
 				string texture = LoadTexture( ModelID );
-				return Model.CreatePlane(InstanceID.ToString(),
-					new Vector3D(-50,0,-50), 
-					new Vector3D(50,0,-50),
-					new Vector3D(50,0,50), 
-					new Vector3D(-50,0,50), 
-					texture, "");
+				return Model.CreateTerrain( InstanceID.ToString(), textureFile, texture );
 			}
 
 			// download resource
@@ -57,15 +54,13 @@ namespace Strive.Resources
 				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"), ModelFormat.MDL);
 			}
 			else if (makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"))) {
-				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), ModelFormat._3DS);
+				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), ModelFormat.Mesh);
 			}
 			else if (makeTextureExist(System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp"))) {
+				// todo: don't hardcode the heightmap file
+				textureFile = System.IO.Path.Combine( _texturePath, "56.bmp");
 				string texture = LoadTexture( ModelID );
-				return Model.CreatePlane(InstanceID.ToString(),
-					new Vector3D(-50,0,-50), 
-					new Vector3D(-50,0,50), 
-					new Vector3D(50,0,50), 
-					new Vector3D(50,0,-50), texture, "");
+				return Model.CreateTerrain( InstanceID.ToString(), textureFile, texture );
 			}
 			else {
 				throw new ResourceNotLoadedException(ModelID, ResourceType.Model);
