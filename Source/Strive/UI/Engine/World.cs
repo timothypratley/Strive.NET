@@ -18,15 +18,13 @@ namespace Strive.UI.Engine {
 		// TODO: refactor into a strongly typed collection?
 		public Hashtable physicalObjectInstances = new Hashtable();
 		Scene scene = new Scene();
-		TerrainCollection terrainPieces;
+		TerrainCollection terrainPieces = new TerrainCollection();
 		public PhysicalObjectInstance CurrentAvatar;
 		EnumCameraMode cameraMode = EnumCameraMode.FirstPerson;
 		Vector3D cameraHeading;
 		Vector3D cameraPosition;
 
-		public World() {
-			terrainPieces = new TerrainCollection( scene );
-		}
+		public World() {}
 
 		public void InitialiseView(IWin32Window RenderTarget) {
 			scene.DropAll();
@@ -43,8 +41,11 @@ namespace Strive.UI.Engine {
 			scene.Models.Add( poi.model );
 
 			if ( po is Terrain ) {
+				// todo: don't add the model in the first place
+				scene.Models.Remove( po.ObjectInstanceID.ToString() );
 				Terrain t = (Terrain)po;
-				terrainPieces.Add( new TerrainPiece( t.ObjectInstanceID, t.Position.X, t.Position.Z, t.Position.Y, t.ModelID ) );
+				terrainPieces.Add( new TerrainPieceModel(
+					scene, t.ObjectInstanceID, t.Position.X, t.Position.Z, t.Position.Y, t.ModelID ) );
 			}
 
 			//todo: serverside ground level/gravity control

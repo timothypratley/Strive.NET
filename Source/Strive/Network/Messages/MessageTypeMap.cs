@@ -29,6 +29,7 @@ namespace Strive.Network.Messages {
 			ToClientNegativeAcknowledge,
 			ToClientPosition,
 			ToClientMobileState,
+			ToClientServerInfo,
 			ToClientSkillList,
 			ToClientWeather,
 			ToClientWhoList,
@@ -45,6 +46,7 @@ namespace Strive.Network.Messages {
 			ToServerLogout,
 			ToServerReloadWorld,
 			ToServerRequestPossessable,
+			ToServerRequestServerInfo,
 			ToServerPosition
 		}
 		public MessageTypeMap()	{
@@ -67,6 +69,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToClientNegativeAcknowledge, typeof( ToClient.NegativeAcknowledge ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientPosition, typeof( ToClient.Position ) );
 			messageTypeFromID.Add( EnumMessageID.ToClientMobileState, typeof( ToClient.MobileState ) );					
+			messageTypeFromID.Add( EnumMessageID.ToClientServerInfo, typeof( ToClient.ServerInfo ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientSkillList, typeof( ToClient.SkillList ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientWeather, typeof( ToClient.Weather ) );					
 			messageTypeFromID.Add( EnumMessageID.ToClientWhoList, typeof( ToClient.WhoList ) );					
@@ -84,6 +87,7 @@ namespace Strive.Network.Messages {
 			messageTypeFromID.Add( EnumMessageID.ToServerLogout, typeof( ToServer.Logout ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerReloadWorld, typeof( ToServer.ReloadWorld ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerRequestPossessable, typeof( ToServer.RequestPossessable ) );
+			messageTypeFromID.Add( EnumMessageID.ToServerRequestServerInfo, typeof( ToServer.RequestServerInfo ) );
 			messageTypeFromID.Add( EnumMessageID.ToServerPosition, typeof( ToServer.Position ) );
 
 			// build the reverse lookup

@@ -266,6 +266,8 @@ namespace Strive.Rendering.Models {
 			return Interop._instance.PolyVox.Scape_GetAltitude( ref p );
 		}
 
+
+
 		#endregion
 
 		#region "Properties"

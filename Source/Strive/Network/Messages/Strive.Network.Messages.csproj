@@ -217,6 +217,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ToClient\ServerInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ToClient\SkillList.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -258,6 +263,11 @@
                 />
                 <File
                     RelPath = "ToServer\RequestPossessable.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ToServer\RequestServerInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -1,24 +1,34 @@
 using System;
 
 using Strive.Math3D;
-using Strive.Rendering.Models;
 
 namespace Strive.Resources
 {
 	/// <summary>
-	/// A quadruply linked list, to store neighbourship relationships
+	/// An octally linked list, to store neighbour relationships
 	/// </summary>
 	public class TerrainPiece {
 		public float x, z;
 		public float altitude;
 		public int texture_id;
 		public int instance_id;
+		public bool dirty = false;
 
 		// neighbours
 		public TerrainPiece xplus;
 		public TerrainPiece xminus;
 		public TerrainPiece zplus;
 		public TerrainPiece zminus;
+		public TerrainPiece xpluszplus;
+		public TerrainPiece xpluszminus;
+		public TerrainPiece xminuszplus;
+		public TerrainPiece xminuszminus;
+
+		// Height of each corner
+		public float altitude_xpluszplus = 0;
+		public float altitude_xpluszminus = 0;
+		public float altitude_xminuszplus = 0;
+		public float altitude_xminuszminus = 0;
 
 		public TerrainPiece( int instance_id, float x, float z, float altitude, int texture_id ) {
 			this.altitude = altitude;
@@ -32,13 +42,13 @@ namespace Strive.Resources
 			int count = 4;
 			if ( xplus == null ) count--;
 			if ( zplus == null ) count--;
-			if ( xplus == null || xplus.zplus == null ) count--;
+			if ( xpluszplus == null ) count--;
 
 			return (
 				altitude
 				+ (xplus == null ? 0 : xplus.altitude)
 				+ (zplus == null ? 0 : zplus.altitude)
-                + (xplus == null || xplus.zplus == null ? 0 : xplus.zplus.altitude)
+                + (xpluszplus == null ? 0 : xpluszplus.altitude)
 			) / count;
 		}
 
@@ -46,13 +56,13 @@ namespace Strive.Resources
 			int count = 4;
 			if ( xplus == null ) count--;
 			if ( zminus == null ) count--;
-			if ( xplus == null || xplus.zminus == null ) count--;
+			if ( xpluszminus == null ) count--;
 
 			return (
 				altitude
 				+ (xplus == null ? 0 : xplus.altitude)
 				+ (zminus == null ? 0 : zminus.altitude)
-				+ (xplus == null || xplus.zminus == null ? 0 : xplus.zminus.altitude)
+				+ (xpluszminus == null ? 0 : xpluszminus.altitude)
 			) / count;
 		}
 
@@ -60,13 +70,13 @@ namespace Strive.Resources
 			int count = 4;
 			if ( xminus == null ) count--;
 			if ( zplus == null ) count--;
-			if ( xminus == null || xminus.zplus == null ) count--;
+			if ( xminuszplus == null ) count--;
 
 			return (
 				altitude
 				+ (xminus == null ? 0 : xminus.altitude)
 				+ (zplus == null ? 0 : zplus.altitude)
-				+ (xminus == null || xminus.zplus == null ? 0 : xminus.zplus.altitude)
+				+ (xminuszplus == null ? 0 : xminuszplus.altitude)
 			) / count;
 		}
 
@@ -74,27 +84,41 @@ namespace Strive.Resources
 			int count = 4;
 			if ( xminus == null ) count--;
 			if ( zminus == null ) count--;
-			if ( xminus == null || xminus.zminus == null ) count--;
+			if ( xminuszminus == null ) count--;
 
 			return (
 				altitude
 				+ (xminus == null ? 0 : xminus.altitude)
 				+ (zminus == null ? 0 : zminus.altitude)
-				+ (xminus == null || xminus.zminus == null ? 0 : xminus.zminus.altitude)
+				+ (xminuszminus == null ? 0 : xminuszminus.altitude)
 			) / count;
 		}
 
-		public Model CreateModel() {
-			ResourceManager.LoadTexture( texture_id );
-			return Model.CreatePlane(
-				instance_id.ToString(),
-				new Vector3D( x-50, xminuszminusCornerHeight(), z-50 ),
-				new Vector3D( x+50, xpluszminusCornerHeight(), z-50 ),
-				new Vector3D( x+50, xpluszplusCornerHeight(), z+50 ),
-				new Vector3D( x-50, xminuszplusCornerHeight(), z+50 ),
-				texture_id.ToString(),
-				""
-			);
+		public void Update() {
+			float f;
+			f = xminuszminusCornerHeight();
+			if ( altitude_xminuszminus != f ) {
+				altitude_xminuszminus = f;
+				dirty = true;
+			}
+			f = xminuszplusCornerHeight();
+			if ( altitude_xminuszplus != f ) {
+				altitude_xminuszplus = f;
+				dirty = true;
+			}
+			f = xpluszminusCornerHeight();
+			if ( altitude_xpluszminus != f ) {
+				altitude_xpluszminus = f;
+				dirty = true;
+			}
+			f = xpluszplusCornerHeight();
+			if ( altitude_xpluszplus != f ) {
+				altitude_xpluszplus = f;
+				dirty = true;
+			}
+		}
+
+		public virtual void Display() {
 		}
 	}
 }
