@@ -79,9 +79,9 @@ namespace Strive.Rendering
 				Interop._instance.Pipeline.SetDithering(true);
 				Interop._instance.Pipeline.SetFillMode(R3D089_VBasic.R3DFILLMODE.R3DFILLMODE_SOLID);
 				R3DColor white = new R3DColor();
-				white.r = 0;
-				white.b = 0;
-				white.g = 0;
+				white.r = 128;
+				white.b = 128;
+				white.g = 128;
 				Interop._instance.Pipeline.SetAmbientLight(ref white);
 				Interop._instance.Pipeline.SetColorKeying(true);
 				Interop._instance.Pipeline.SetSpecular(true);
@@ -162,7 +162,7 @@ namespace Strive.Rendering
 					namePos.z = m.Position.Z;
 					nameLoc = Interop._instance.Cameras.Camera_ProjectPoint( ref namePos ) ;
 					// nameDist = namePos - camPos; -> set font size
-					Interop._instance.Interface5D.Primitive_DrawText( ref nameLoc, m.Key );
+					Interop._instance.Interface5D.Primitive_DrawText( ref nameLoc, m.label );
 				}
 			}
 

@@ -39,6 +39,7 @@ namespace Strive.UI.Engine {
 			scene.Models.Add( poi.model );
 			poi.model.Position = position;
 			poi.model.Rotation = rotation;
+			poi.model.label = po.ObjectTemplateName;
 		}
 
 		public void Remove( int ObjectInstanceID ) {
@@ -80,7 +81,7 @@ namespace Strive.UI.Engine {
 
 		void ProcessAnimations() {
 			foreach ( Model model in scene.Models.Values ) {
-				if ( model.ModelFormat == ModelFormat.MDL ) {
+				if ( model.ModelFormat == ModelFormat.MD2 ) {
 					model.nextFrame();
 				}
 			}

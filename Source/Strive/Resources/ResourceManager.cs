@@ -42,13 +42,16 @@ namespace Strive.Resources
 
 		public static Model LoadModel(int InstanceID, int ModelID)
 		{
-			string mdlFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl");
+			string md2File = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2");
 			string _3dsFile = System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds");
 			string textureFile = System.IO.Path.Combine(_texturePath, ModelID.ToString() + ".bmp");
 
 			// check for local file first:
-			if ( System.IO.File.Exists(mdlFile) ) {
-				return Model.Load(InstanceID.ToString(), mdlFile, ModelFormat.MDL);
+			if ( System.IO.File.Exists(md2File) ) {
+				Model m = Model.Load(InstanceID.ToString(), md2File, ModelFormat.MD2);
+				LoadTexture( ModelID );
+				m.applyTexture( ModelID.ToString() );
+				return m;
 			} else if ( System.IO.File.Exists(_3dsFile) ) {
 				return Model.Load(InstanceID.ToString(), _3dsFile, ModelFormat.Mesh);
 			} else if ( System.IO.File.Exists(textureFile) ) {
@@ -59,8 +62,8 @@ namespace Strive.Resources
 			}
 
 			// download resource
-			if(makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"))) {
-				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".mdl"), ModelFormat.MDL);
+			if(makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2"))) {
+				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".md2"), ModelFormat.MD2);
 			}
 			else if (makeModelExist(System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"))) {
 				return Model.Load(InstanceID.ToString(), System.IO.Path.Combine(_modelPath, ModelID.ToString() + ".3ds"), ModelFormat.Mesh);
@@ -77,7 +80,6 @@ namespace Strive.Resources
 		}
 
 		public static string LoadTexture( int TextureID ) {
-			// omg SOMEONE didn't add TEXTURES.CS to cvs
 			Texture.LoadTexture( TextureID.ToString(), System.IO.Path.Combine( _texturePath, TextureID.ToString() + ".bmp" ) );			
 			return TextureID.ToString();
 		}

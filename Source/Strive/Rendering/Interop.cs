@@ -37,7 +37,7 @@ namespace Strive.Rendering
 		/// <summary>
 		/// Revolution3D model system (MDL specific)
 		/// </summary>
-		internal R3D_MD2System MdlSystem = new R3D_MD2SystemClass();
+		internal R3D_MD2System MD2System = new R3D_MD2SystemClass();
 		/// <summary>
 		/// Revolution3D skydome
 		/// </summary>

@@ -128,17 +128,17 @@
                     HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Design.dll"
                 />
                 <Reference
-                    Name = "MagicLibrary"
-                    Project = "{92F94EA0-9910-4895-B8A1-FED1543A9DA1}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
                     Name = "stdole"
                     Guid = "{00020430-0000-0000-C000-000000000046}"
                     VersionMajor = "2"
                     VersionMinor = "0"
                     Lcid = "0"
                     WrapperTool = "primary"
+                />
+                <Reference
+                    Name = "MagicLibrary"
+                    AssemblyName = "MagicLibrary"
+                    HintPath = "C:\Program Files\Crownwood Consulting Ltd\Magic Library 1.7.4\Bin\MagicLibrary.DLL"
                 />
             </References>
         </Build>

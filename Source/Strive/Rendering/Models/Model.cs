@@ -14,6 +14,7 @@ namespace Strive.Rendering.Models {
 		#region "Fields"
 		public float BoundingSphereRadiusSquared;
 		public bool ShowLabel = false;
+		public string label = "no name";
 
 		private ModelFormat _format = ModelFormat.Unspecified;
 		private string _key;
@@ -130,9 +131,9 @@ namespace Strive.Rendering.Models {
 
 			// 2.0 Create appropriate model in interop layer
 			switch(format) {
-				case ModelFormat.MDL: {
+				case ModelFormat.MD2: {
 					try {
-						Interop._instance.MdlSystem.Model_Load(key, path);
+						Interop._instance.MD2System.Model_Load(path, key);
 					}
 					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
@@ -175,12 +176,12 @@ namespace Strive.Rendering.Models {
 
 		#region "Operators"
 		/// <summary>
-		/// Sets the internal MDL pointer
+		/// Sets the internal pointer
 		/// </summary>
 		protected void setPointer() {
 			try {
-				if ( _format == ModelFormat.MDL ) {
-					Interop._instance.MdlSystem.Class_SetPointer(this.Key);
+				if ( _format == ModelFormat.MD2 ) {
+					Interop._instance.MD2System.Class_SetPointer(this.Key);
 				} else if ( _format == ModelFormat.Mesh )  {
 					Interop._instance.Meshbuilder.Class_SetPointer(this.Key);
 				} else if ( _format == ModelFormat.Scape ) {
@@ -200,9 +201,9 @@ namespace Strive.Rendering.Models {
 		#region "Methods"
 
 		public void Delete() {
-			if ( _format == ModelFormat.MDL ) {
-				Interop._instance.MdlSystem.Class_SetPointer(this.Key);
-				Interop._instance.MdlSystem.Model_Release();
+			if ( _format == ModelFormat.MD2 ) {
+				Interop._instance.MD2System.Class_SetPointer(this.Key);
+				Interop._instance.MD2System.Model_Release();
 			} else if ( _format == ModelFormat.Scape ) {
 				Interop._instance.PolyVox.Class_SetPointer(this.Key);
 				Interop._instance.PolyVox.Scape_Release();
@@ -215,9 +216,9 @@ namespace Strive.Rendering.Models {
 		}
 
 		public void Hide() {
-			if ( _format == ModelFormat.MDL ) {
-				Interop._instance.MdlSystem.Class_SetPointer(this.Key);
-				Interop._instance.MdlSystem.Model_SetActivate( false );
+			if ( _format == ModelFormat.MD2 ) {
+				Interop._instance.MD2System.Class_SetPointer(this.Key);
+				Interop._instance.MD2System.Model_SetActivate( false );
 			} else if ( _format == ModelFormat.Scape ) {
 				// no equivalent
 			} else if ( _format == ModelFormat.Mesh ) {
@@ -229,9 +230,9 @@ namespace Strive.Rendering.Models {
 		}
 
 		public void Show() {
-			if ( _format == ModelFormat.MDL ) {
-				Interop._instance.MdlSystem.Class_SetPointer(this.Key);
-				Interop._instance.MdlSystem.Model_SetActivate( true );
+			if ( _format == ModelFormat.MD2 ) {
+				Interop._instance.MD2System.Class_SetPointer(this.Key);
+				Interop._instance.MD2System.Model_SetActivate( true );
 			} else if ( _format == ModelFormat.Scape ) {
 				// no equivalent
 			} else if ( _format == ModelFormat.Mesh ) {
@@ -246,6 +247,9 @@ namespace Strive.Rendering.Models {
 			if ( _format == ModelFormat.Mesh ) {
 				setPointer();
 				Interop._instance.Meshbuilder.Mesh_SetTexture( 0, texture );
+			} else if ( _format == ModelFormat.MD2 ) {
+				setPointer();
+				Interop._instance.MD2System.Model_SetTexture( 0, texture );
 			} else {
 				throw new Exception( "n0rty n0rty, trying to applytexture to non-mesh" );
 			}
@@ -255,7 +259,7 @@ namespace Strive.Rendering.Models {
 			setPointer();
 			if ( frame_count > 0 ) {
 				frame = (frame+1)%frame_count;
-				Interop._instance.MdlSystem.Model_SetFrameEx(R3DLERPNODETYPE.R3DLERPNODETYPE_START,  (byte)frame );
+				Interop._instance.MD2System.Model_SetFrameEx(R3DLERPNODETYPE.R3DLERPNODETYPE_START,  (byte)frame );
 			}
 		}
 
@@ -282,44 +286,40 @@ namespace Strive.Rendering.Models {
 
 		public int AnimationSequence {
 			set {
-				if ( _format != ModelFormat.MDL ) {
-					throw new Exception( "n0rty n0rty there is a mobile with a non mdl model in the database" );
+				if ( _format != ModelFormat.MD2 ) {
+					throw new Exception( "n0rty n0rty there is a mobile with a non md2 model in the database" );
 				}
 				setPointer();
 				string sequence;		
 				switch( value ) {
 					case 1:
-						sequence = "deadback";
+						sequence = "stand";
 						break;
 					case 2:
-						sequence = "deadstomach";
+						sequence = "run";
 						break;
 					case 3:
-						sequence = "deadsitting";
+						sequence = "stand";
 						break;
 					case 4:
-						sequence = "crouch_idle";
+						sequence = "run";
 						break;
 					case 5:
-						sequence = "deep_idle";
+						sequence = "stand";
 						break;
 					case 6:
-						sequence = "walk2handed";
+						sequence = "run";
 						break;
 					case 7:
-						sequence = "running";
+						sequence = "stand";
 						break;
 					case 8:
-						sequence = "ref_shoot_crowbar";
+						sequence = "run";
 						break;
 					default:
 						throw new Exception( "Unknown sequence" );
 				}
-				// TODO: Reimplement
-				//Interop._instance.MdlSystem.Model_SetSe( sequence );
-				//frame = 0;
-				//frame_count = Interop._instance.MdlSystem.MDL_SequenceGetFrameCount();
-				//Interop._instance.MdlSystem.MDL_SequenceSetFrame( frame );
+				//Interop._instance.MD2System.Model_Animate();
 			}
 		}
 
@@ -338,13 +338,13 @@ namespace Strive.Rendering.Models {
 
 			switch(_format)
 			{
-				case ModelFormat.MDL:
+				case ModelFormat.MD2:
 				{
 					setPointer();
 					try
 					{
 						R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(newPosition);
-						Interop._instance.MdlSystem.Model_SetPosition(ref vector);
+						Interop._instance.MD2System.Model_SetPosition(ref vector);
 					}
 					catch(Exception e)
 					{
@@ -371,13 +371,13 @@ namespace Strive.Rendering.Models {
 
 			switch(_format)
 			{
-				case ModelFormat.MDL:
+				case ModelFormat.MD2:
 				{
 					setPointer();
 					try
 					{
 						R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(newRotation);
-						Interop._instance.MdlSystem.Model_SetRotation(ref vector);
+						Interop._instance.MD2System.Model_SetRotation(ref vector);
 					}
 					catch(Exception e)
 					{
@@ -404,11 +404,11 @@ namespace Strive.Rendering.Models {
 			set {
 				R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(value);
 				switch(_format) {
-					case ModelFormat.MDL: {
+					case ModelFormat.MD2: {
 						setPointer();
 						try {
 
-							Interop._instance.MdlSystem.Model_SetPosition(ref vector);
+							Interop._instance.MD2System.Model_SetPosition(ref vector);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set position '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);
@@ -455,12 +455,12 @@ namespace Strive.Rendering.Models {
 			set {
 				R3DVector3D vector = VectorConverter.GetR3DVector3DFromVector3D(value);
 				switch(_format) {
-					case ModelFormat.MDL: {
+					case ModelFormat.MD2: {
 						setPointer();
 						try {
-							// todo: normalise MDLs so we don't need a 90 degree offset?
+							// todo: normalise MD2s so we don't need a 90 degree offset?
 							// todo: our mobs are at different angles to players :(
-							Interop._instance.MdlSystem.Model_SetRotation(ref vector);
+							Interop._instance.MD2System.Model_SetRotation(ref vector);
 						}
 						catch(Exception e) {
 							throw new ModelException("Could not set rotation '" + value.X + "' '" + value.Y + "' '" + value.Z + "' for model '" + this.Key + "'", e);

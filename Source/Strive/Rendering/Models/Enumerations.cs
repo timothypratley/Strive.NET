@@ -12,9 +12,9 @@ namespace Strive.Rendering.Models
 		/// </summary>
 		Unspecified,
 		/// <summary>
-		/// MDL (half-life) format
+		/// MD2 (quakeII) format
 		/// </summary>
-		MDL,
+		MD2,
 		/// <summary>
 		/// Mesh
 		/// </summary>
