@@ -94,10 +94,19 @@ namespace Strive.Server.Shared
 					target = caster;
 					break;
 				case EnumTargetType.TargetMobile:
+					if ( message.TargetPhysicalObjectIDs.Length == 0 ) {
+						caster.SendLog( "No target specified, this skill may only be used on Mobiles." );
+						return;
+					}
 					target = (MobileAvatar)Global.world.physicalObjects[ message.TargetPhysicalObjectIDs[0] ];
-					if ( (caster.Position - target.Position).GetMagnitude() > esr.Range ) {
+					if ( target == null ) {
+						caster.SendLog( "Target not found." );
+						return;
+					}
+					if ( (caster.Position - target.Position).GetMagnitude() > esr.Range ) 
+					{
 						// target is out of range
-						caster.SendLog( target.ObjectTemplateName + " is out of range" );
+						caster.SendLog( target.TemplateObjectName + " is out of range" );
 						return;
 					}
 					break;

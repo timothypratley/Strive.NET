@@ -99,7 +99,7 @@ namespace Strive.Server.Shared {
 			// TODO: instead of looping through the entire world,
 			// we should keep a list of players
 			foreach ( MobileAvatar ma in (ArrayList)world.mobilesArrayList.Clone() ) {
-				if ( ma.IsPlayer() ) {
+				if ( ma.IsPlayer ) {
 					if ( ma.client == null || (!ma.client.Active && (Global.now - ma.client.LastMessageTimestamp) > TimeSpan.FromSeconds(60) ) ) {
 						ma.client = null;
 						world.Remove( ma );

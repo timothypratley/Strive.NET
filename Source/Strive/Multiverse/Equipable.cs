@@ -12,9 +12,9 @@ namespace Strive.Multiverse
 
 		public Equipable(){}
 		public Equipable(
-			Schema.ItemEquipableRow equipable,
+			Schema.TemplateItemEquipableRow equipable,
 			Schema.TemplateItemRow item,
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( item,	template, instance ) {
 			ArmourClass = equipable.ArmourClass;

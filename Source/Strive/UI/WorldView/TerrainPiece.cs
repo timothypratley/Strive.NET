@@ -35,8 +35,8 @@ namespace Strive.UI.WorldView
 			set { physicalObject.Position.Y = value; }
 		}
 		public int texture_id {
-			get { return ((Terrain)physicalObject).ModelID; }
-			set { ((Terrain)physicalObject).ModelID = value; }
+			get { return ((Terrain)physicalObject).ResourceID; }
+			set { ((Terrain)physicalObject).ResourceID = value; }
 		}
 		public int instance_id {
 			get { return physicalObject.ObjectInstanceID; }

@@ -23,7 +23,15 @@ namespace Strive.Server.Shared {
 
 		public void ProcessNextMessage() {
 			ClientMessage clientMessage = (ClientMessage)listener.PopNextMessage();
-			ProcessMessage( clientMessage.Client, clientMessage.Message );
+			try 
+			{
+				ProcessMessage( clientMessage.Client, clientMessage.Message );
+			} 
+			catch ( Exception e ) 
+			{
+				Log.ErrorMessage( e );
+				Log.LogMessage( "Message was not processed correctly, resuming." );
+			}
 		}
 
 		public void ProcessMessage( Client client, IMessage message ) {
@@ -215,7 +223,7 @@ namespace Strive.Server.Shared {
 			Client client, Strive.Network.Messages.ToServer.GameCommand.Communication message
 		) {
 			world.NotifyMobiles(
-				new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )
+				new Network.Messages.ToClient.Communication( client.Avatar.TemplateObjectName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType )
 			);
 			//Log.LogMessage( "Sent communication message" );
 		}
@@ -243,7 +251,7 @@ namespace Strive.Server.Shared {
 			foreach( Client c in listener.Clients.Values ) {
 				if ( c.Avatar != null ) {
 					MobileIDs.Add( c.Avatar.ObjectInstanceID );
-					Names.Add( c.Avatar.ObjectTemplateName );
+					Names.Add( c.Avatar.TemplateObjectName );
 				}
 			}
 			client.Send( new Strive.Network.Messages.ToClient.WhoList( (int[])MobileIDs.ToArray( typeof( int ) ), (string[])Names.ToArray( typeof( string ) ) ) );
@@ -256,7 +264,7 @@ namespace Strive.Server.Shared {
 			ArrayList skillIDs = new ArrayList();
 			ArrayList competancy = new ArrayList();
 			for ( int i = 1; i < Global.multiverse.EnumSkill.Count; i++ ) {
-				Schema.MobileHasSkillRow mhs = Global.multiverse.MobileHasSkill.FindByObjectTemplateIDEnumSkillID( client.Avatar.ObjectTemplateID, i );
+				Schema.MobileHasSkillRow mhs = Global.multiverse.MobileHasSkill.FindByTemplateObjectIDEnumSkillID( client.Avatar.TemplateObjectID, i );
 				if ( mhs != null ) {
 					skillIDs.Add( mhs.EnumSkillID );
 					competancy.Add( mhs.Rating );

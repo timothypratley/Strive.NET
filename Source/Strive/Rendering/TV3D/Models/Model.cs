@@ -53,7 +53,7 @@ namespace Strive.Rendering.TV3D.Models {
 			loadedModel._key = name;
 			try {
 				loadedModel._mesh = Engine.TV3DScene.CreateMeshBuilder( name );
-				loadedModel._mesh.Load3DSMesh( path, true, true, true );
+				loadedModel._mesh.Load3DSMesh( path, true, true, true, true, true );
 			}
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);

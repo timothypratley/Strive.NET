@@ -11,7 +11,7 @@ namespace Strive.Multiverse
 		public EnumTerrainType TerrainType;
 		public Terrain (
 			Schema.TemplateTerrainRow terrain,
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 		) : base ( template, instance ) {
 			TerrainType = (EnumTerrainType)terrain.EnumTerrainTypeID;

@@ -17,7 +17,7 @@ namespace Strive.Rendering.TV3D.Textures
 			// TODO: should be more involved in tracking/unloading textures
 			t._id = Engine.Gl.GetTex( name );
 			if ( t._id == 0 ) {
-				t._id = Engine.TexFactory.LoadTexture( filename, name, 256, 256, CONST_TV_COLORKEY.TV_COLORKEY_NO, false, false );
+				t._id = Engine.TexFactory.LoadTexture( filename, name, 256, 256, CONST_TV_COLORKEY.TV_COLORKEY_NO, true, true );
 			}
 			t._name = name;
 			return t;

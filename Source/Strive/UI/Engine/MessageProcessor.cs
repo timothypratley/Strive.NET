@@ -134,7 +134,9 @@ namespace Strive.UI.Engine {
 
 				IActor actor = (IActor)poi.model;
 				SetMobileState( ms.State, actor );
-				poi.model.Position = ms.position;
+
+				//TODO: evaluate whether just to ignore postion for oneself
+				//poi.model.Position = ms.position;
 			}
 				#endregion
 			#region CurrentHitpoints
@@ -187,9 +189,17 @@ namespace Strive.UI.Engine {
 				Strive.Network.Messages.ToClient.Beat beat = (Strive.Network.Messages.ToClient.Beat)m;
 				Log.LogMessage("Beat [" + beat.BeatNumber.ToString() + "].");
 			}
-				#endregion
+			#endregion
+			#region LogMessage
+			else if (m is Strive.Network.Messages.ToClient.LogMessage) 
+			{
+				Strive.Network.Messages.ToClient.LogMessage logmessage = (Strive.Network.Messages.ToClient.LogMessage)m;
+				Log.LogMessage( logmessage.Message );
+			}
+			#endregion
 			#region Default
-			else {
+			else 
+			{
 				Log.ErrorMessage( "Unknown message of type " + m.GetType() );
 			}
 				#endregion

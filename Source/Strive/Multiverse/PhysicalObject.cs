@@ -12,11 +12,10 @@ namespace Strive.Multiverse
 	public abstract class PhysicalObject
 	{
 		public int ObjectInstanceID;
-		public int ObjectTemplateID;
-		public string ObjectTemplateName = "";
-		public int ModelID;
+		public int TemplateObjectID;
+		public string TemplateObjectName = "";
+		public int ResourceID;
 		public float Height;
-		public int AreaID;
 		public Vector3D Position = new Vector3D(0,0,0);
 		public Vector3D Rotation = new Vector3D(0,0,0);
 		public float HitPoints = 0;
@@ -28,12 +27,12 @@ namespace Strive.Multiverse
 		public PhysicalObject() {}
 
 		public PhysicalObject(
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 		) {
 			ObjectInstanceID = instance.ObjectInstanceID;
-			ObjectTemplateID = template.ObjectTemplateID;
-			ObjectTemplateName = template.ObjectTemplateName;
+			TemplateObjectID = template.TemplateObjectID;
+			TemplateObjectName = template.TemplateObjectName;
 			Position = new Vector3D(
 				(float)instance.X,
 				(float)instance.Y,
@@ -44,17 +43,16 @@ namespace Strive.Multiverse
 			// 1337 quarterions?
 			// whatever the case, heading probabbly is not a good one.
 			Rotation = new Vector3D(
-				(float)instance.HeadingX,
-				(float)instance.HeadingY,
-				(float)instance.HeadingZ
+				(float)instance.RotationX,
+				(float)instance.RotationY,
+				(float)instance.RotationZ
 			);
-			ModelID = template.ModelID;
+			ResourceID = template.ResourceID;
 			Height = (float)template.Height;
-			// can we get r^2 from modelID?
+			// can we get r^2 from ResourceID?
 			// TODO: make this the proper 3d radius^2
 			// store it in the database
 			BoundingSphereRadiusSquared = 100;
-			AreaID = template.AreaID;
 		}
 	}
 }

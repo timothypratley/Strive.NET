@@ -18,6 +18,8 @@ namespace Strive.Network.Messages.ToClient
 		public MobileState( Mobile mob ) {
 			this.ObjectInstanceID = mob.ObjectInstanceID;
 			this.State = mob.MobileState;
+
+			// TODO: evaluate if this should FARKING be here
 			this.position = mob.Position;
 		}
 	}

@@ -109,9 +109,9 @@
                 />
                 <Reference
                     Name = "TrueVision3D"
-                    Guid = "{E6241C9D-371E-44C7-9579-F208B7B5F89F}"
-                    VersionMajor = "10"
-                    VersionMinor = "0"
+                    Guid = "{FA9B475D-C97F-4CFA-AAF7-2D71467D6101}"
+                    VersionMajor = "1"
+                    VersionMinor = "1"
                     Lcid = "0"
                     WrapperTool = "tlbimp"
                 />

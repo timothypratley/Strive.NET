@@ -8,9 +8,9 @@ namespace Strive.Multiverse
 	public class Junk : Item {
 		public Junk(){}
 		public Junk(
-			Schema.ItemJunkRow junk,
+			Schema.TemplateItemJunkRow junk,
 			Schema.TemplateItemRow item,
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( item, template, instance ) {
 		}

@@ -46,7 +46,7 @@ namespace Strive.Server.Shared
 		public MobileAvatar(
 			World world,
 			Schema.TemplateMobileRow mobile,
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 			) : base( mobile, template, instance ) {
 			this.world = world;
@@ -63,10 +63,6 @@ namespace Strive.Server.Shared
 			// NB: MobileState message has position info
 			// as it is likely that this will have changed
 			world.InformNearby( this, new Strive.Network.Messages.ToClient.MobileState( this ) );
-		}
-
-		public bool IsPlayer() {
-			return AreaID == 0;
 		}
 
 
@@ -96,7 +92,7 @@ namespace Strive.Server.Shared
 
 			if ( target != null ) {
 				CombatUpdate();
-			} else if ( !IsPlayer() ) {
+			} else if ( !IsPlayer ) {
 				BehaviourUpdate();
 			} else {
 				if (
@@ -146,10 +142,10 @@ namespace Strive.Server.Shared
 					int rand = Global.random.Next( 5 ) - 2;
 					if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
 						SetMobileState( MobileState-1 );
-						//Log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState + "." );
+						//Log.LogMessage( TemplateObjectName + " changed behaviour from " + (MobileState+1) + " to " + MobileState + "." );
 					} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
 						SetMobileState( MobileState+1 );
-						//Log.LogMessage( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState + "." );
+						//Log.LogMessage( TemplateObjectName + " changed behaviour from " + (MobileState-1) + " to " + MobileState + "." );
 					}
 				}
 			}
@@ -342,7 +338,7 @@ namespace Strive.Server.Shared
 			// RIP
 			SetMobileState( EnumMobileState.Dead );
 
-			if ( IsPlayer() ) {
+			if ( IsPlayer ) {
 				// respawn!
 				HitPoints = MaxHitPoints;
 
@@ -371,7 +367,7 @@ namespace Strive.Server.Shared
 		}
 
 		public float GetCompetancy( EnumSkill skill ) {
-			Schema.MobileHasSkillRow mhs = Global.multiverse.MobileHasSkill.FindByObjectTemplateIDEnumSkillID( ObjectTemplateID, (int)skill );
+			Schema.MobileHasSkillRow mhs = Global.multiverse.MobileHasSkill.FindByTemplateObjectIDEnumSkillID( TemplateObjectID, (int)skill );
 			if ( mhs != null ) {
 				return (float)mhs.Rating;
 			} else {

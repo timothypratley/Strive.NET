@@ -91,7 +91,7 @@ namespace Strive.Data
 		}
 
 		public System.Data.SqlClient.SqlCommand SelectTemplateMobileRows(int PlayerID) {
-			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT tm.* FROM TemplateMobile tm, ObjectInstance oi, MobilePossesableByPlayer mpbp WHERE mpbp.PlayerID = @PlayerID AND oi.ObjectInstanceID = mpbp.ObjectInstanceID AND oi.ObjectTemplateID = tm.ObjectTemplateID" );
+			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT tm.* FROM TemplateMobile tm, ObjectInstance oi, MobilePossesableByPlayer mpbp WHERE mpbp.PlayerID = @PlayerID AND oi.ObjectInstanceID = mpbp.ObjectInstanceID AND oi.TemplateObjectID = tm.TemplateObjectID" );
 			SqlParameter param = new System.Data.SqlClient.SqlParameter();		
 			param.ParameterName = "@PlayerID";
 			param.Value = PlayerID;
@@ -100,8 +100,8 @@ namespace Strive.Data
 			return command;
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectObjectTemplateRows( int PlayerID ) {
-			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT ot.* FROM ObjectTemplate ot, ObjectInstance oi, MobilePossesableByPlayer mpbp WHERE mpbp.PlayerID = @PlayerID AND oi.ObjectInstanceID = mpbp.ObjectInstanceID AND oi.ObjectTemplateID = ot.ObjectTemplateID" );
+		public System.Data.SqlClient.SqlCommand SelectTemplateObjectRows( int PlayerID ) {
+			System.Data.SqlClient.SqlCommand command = buildCommandFromSimpleQuery( "SELECT ot.* FROM TemplateObject ot, ObjectInstance oi, MobilePossesableByPlayer mpbp WHERE mpbp.PlayerID = @PlayerID AND oi.ObjectInstanceID = mpbp.ObjectInstanceID AND oi.TemplateObjectID = ot.TemplateObjectID" );
 			SqlParameter param = new System.Data.SqlClient.SqlParameter();		
 			param.ParameterName = "@PlayerID";
 			param.Value = PlayerID;
@@ -126,9 +126,9 @@ namespace Strive.Data
 			}
 		}
 
-		public System.Data.SqlClient.SqlCommand SelectObjectTemplate {
+		public System.Data.SqlClient.SqlCommand SelectTemplateObject {
 			get {
-				return buildCommandFromSimpleQuery( "select * from ObjectTemplate" );
+				return buildCommandFromSimpleQuery( "select * from TemplateObject" );
 			}
 		}
 
@@ -258,7 +258,7 @@ namespace Strive.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@ObjectTemplateID";
+					param.ParameterName = "@TemplateObjectID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -370,7 +370,7 @@ namespace Strive.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@ObjectTemplateID";
+					param.ParameterName = "@TemplateObjectID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -477,7 +477,7 @@ namespace Strive.Data
 					param = null;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@ObjectTemplateID";
+					param.ParameterName = "@TemplateObjectID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -691,7 +691,7 @@ namespace Strive.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@ObjectTemplateID";
+					param.ParameterName = "@TemplateObjectID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -803,7 +803,7 @@ namespace Strive.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@ObjectTemplateID";
+					param.ParameterName = "@TemplateObjectID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -915,7 +915,7 @@ namespace Strive.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@ObjectTemplateID";
+					param.ParameterName = "@TemplateObjectID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		
@@ -1012,7 +1012,7 @@ namespace Strive.Data
 					System.Data.SqlClient.SqlParameter param;
 		
 					param = new System.Data.SqlClient.SqlParameter();		
-					param.ParameterName = "@ObjectTemplateID";
+					param.ParameterName = "@TemplateObjectID";
 					thisCommand.Parameters.Add(param);			
 					param = null;
 		

@@ -35,8 +35,8 @@ namespace Strive.Rendering.TV3D.Models {
 		public static ITerrain CreateTerrain( string name, ITexture texture, float y, float xy, float zy, float xzy ) {
 			Terrain t = new Terrain();
 			t._mesh = Engine.TV3DScene.CreateMeshBuilder( name );
-			t._mesh.AddTriangle( texture.ID, 0, zy, 100, 100, xzy, 100, 0, y, 0, 1, 1, true, false );
-			t._mesh.AddTriangle( texture.ID, 100, xy, 0, 0, y, 0, 100, xzy, 100, 1, 1, true, false );
+			t._mesh.AddTriangle( texture.ID, 0, zy, 100, 100, xzy, 100, 0, y, 0, -1, 1, true, false );
+			t._mesh.AddTriangle( texture.ID, 100, xy, 0, 0, y, 0, 100, xzy, 100, 1, -1, true, false );
 			t._mesh.Optimize();
 			t._mesh.ComputeBoundingVolumes();
 

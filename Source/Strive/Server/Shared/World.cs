@@ -113,53 +113,51 @@ namespace Strive.Server.Shared {
 			}
 			
 			Log.LogMessage( "Loading world \"" + wr.WorldName + "\"..." );
-			foreach ( Schema.AreaRow ar in wr.GetAreaRows() ) {
-				Log.LogMessage( "Loading area \"" + ar.AreaName + "\"..." );
-				// don't load area 0, its players and their eq
-				if ( ar.AreaID == 0 ) continue;
-				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
-					// nb: add all terrain pieces first
-					foreach ( Schema.TemplateTerrainRow ttr in otr.GetTemplateTerrainRows() ) {
-						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
-							Terrain t = new Terrain( ttr, otr, oir );
-							Add( t );
-						}
-					}
+			Log.LogMessage( "Loading terrain..." );
+			foreach ( Schema.TemplateTerrainRow ttr in Global.multiverse.TemplateTerrain.Rows ) {
+				foreach ( Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows() ) {
+					Terrain t = new Terrain( ttr, ttr.TemplateObjectRow, oir );
+					Add( t );
 				}
-				foreach ( Schema.ObjectTemplateRow otr in ar.GetObjectTemplateRows() ) {
+			}
+			Log.LogMessage( "Loading physical objects..." );
+			foreach ( Schema.TemplateObjectRow otr in Global.multiverse.TemplateObject.Rows ) {
 					foreach ( Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows() ) {
 						foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
+							// NB: don't add players yet
+							if ( oir.GetMobilePossesableByPlayerRows().Length > 0 ) continue;
+
 							// NB: we only add avatars to our world, not mobiles
 							MobileAvatar a = new MobileAvatar( this, tmr, otr, oir );
 							Add( a );
 						}
 					}
 					foreach ( Schema.TemplateItemRow tir in otr.GetTemplateItemRows() ) {
-						foreach ( Schema.ItemEquipableRow ier in tir.GetItemEquipableRows() ) {
+						foreach ( Schema.TemplateItemEquipableRow ier in tir.GetTemplateItemEquipableRows() ) {
 							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 								Equipable e = new Equipable( ier, tir, otr, oir );
 								Add( e );
 							}
 						}
-						foreach ( Schema.ItemJunkRow ijr in tir.GetItemJunkRows() ) {
+						foreach ( Schema.TemplateItemJunkRow ijr in tir.GetTemplateItemJunkRows() ) {
 							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 								Junk j = new Junk( ijr, tir, otr, oir );
 								Add( j );
 							}
 						}
-						foreach ( Schema.ItemQuaffableRow iqr in tir.GetItemQuaffableRows() ) {
+						foreach ( Schema.TemplateItemQuaffableRow iqr in tir.GetTemplateItemQuaffableRows() ) {
 							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 								Quaffable q = new Quaffable( iqr, tir, otr, oir );
 								Add( q );
 							}
 						}
-						foreach ( Schema.ItemReadableRow irr in tir.GetItemReadableRows() ) {
+						foreach ( Schema.TemplateItemReadableRow irr in tir.GetTemplateItemReadableRows() ) {
 							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 								Readable r = new Readable( irr, tir, otr, oir );
 								Add( r );
 							}
 						}
-						foreach ( Schema.ItemWieldableRow iwr in tir.GetItemWieldableRows() ) {
+						foreach ( Schema.TemplateItemWieldableRow iwr in tir.GetTemplateItemWieldableRows() ) {
 							foreach ( Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows() ) {
 								Wieldable w = new Wieldable( iwr, tir, otr, oir );
 								Add( w );
@@ -168,7 +166,6 @@ namespace Strive.Server.Shared {
 						}
 					}
 				}
-			}
 			Log.LogMessage( "Loaded world." );
 		}
 
@@ -420,9 +417,9 @@ namespace Strive.Server.Shared {
 		public MobileAvatar LoadMobile( int instanceID ) {
 			Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.FindByObjectInstanceID( instanceID );
 			if ( rpr == null ) return null;
-			Schema.ObjectTemplateRow por = Global.multiverse.ObjectTemplate.FindByObjectTemplateID( rpr.ObjectTemplateID );
+			Schema.TemplateObjectRow por = Global.multiverse.TemplateObject.FindByTemplateObjectID( rpr.TemplateObjectID );
 			if ( por == null ) return null;
-			Schema.TemplateMobileRow mr = Global.multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
+			Schema.TemplateMobileRow mr = Global.multiverse.TemplateMobile.FindByTemplateObjectID( rpr.TemplateObjectID );
 			if ( mr == null ) return null;
 			return new MobileAvatar( this, mr, por, rpr );
 		}
@@ -514,7 +511,7 @@ namespace Strive.Server.Shared {
 			ArrayList list = new ArrayList();
 			foreach ( Schema.MobilePossesableByPlayerRow mpr in mpbpr ) {
 				Strive.Network.Messages.ToClient.CanPossess.id_name_tuple tuple = new Strive.Network.Messages.ToClient.CanPossess.id_name_tuple(
-					mpr.ObjectInstanceID, mpr.ObjectInstanceRow.ObjectTemplateRow.ObjectTemplateName
+					mpr.ObjectInstanceID, mpr.ObjectInstanceRow.TemplateObjectRow.TemplateObjectName
 				);
 				list.Add( tuple );
 			}

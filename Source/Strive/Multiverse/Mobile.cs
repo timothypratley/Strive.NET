@@ -16,11 +16,12 @@ namespace Strive.Multiverse
 		public EnumRace Race;
 		public EnumMobileSize MobileSize;
 		public EnumMobileState MobileState;
+		public bool IsPlayer = false;
 
 		public Mobile() {}
 		public Mobile (
 			Schema.TemplateMobileRow mobile,
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 		) : base ( template, instance ) {
 			Level = mobile.Level;
@@ -36,6 +37,7 @@ namespace Strive.Multiverse
 			HitPoints = (float)instance.HitpointsCurrent;
 			MaxEnergy = mobile.EnumMobileSizeID*100 + Level * Constitution / 2;
 			Energy = (float)instance.EnergyCurrent;
+			IsPlayer = instance.GetMobilePossesableByPlayerRows().Length > 0;
 		}
 	}
 }

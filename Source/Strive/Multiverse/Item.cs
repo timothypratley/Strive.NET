@@ -13,7 +13,7 @@ namespace Strive.Multiverse
 		public Item(){}
 		public Item(
 			Schema.TemplateItemRow item,
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( template, instance ) {
 			Value = item.Value;

@@ -9,9 +9,9 @@ namespace Strive.Multiverse
 	{
 		public Wieldable(){}
 		public Wieldable(
-			Schema.ItemWieldableRow wieldable,
+			Schema.TemplateItemWieldableRow wieldable,
 			Schema.TemplateItemRow item,
-			Schema.ObjectTemplateRow template,
+			Schema.TemplateObjectRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( item, template, instance ) {
 		}

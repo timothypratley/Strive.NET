@@ -59,7 +59,8 @@ namespace Strive.Network.Messages {
 			}
 		}
 		
-		public static bool EncodeBasicType( Object obj, MemoryStream Buffer ) {
+		public static bool EncodeBasicType( Object obj, MemoryStream Buffer ) 
+		{
 			Type t = obj.GetType();
 			if ( t.IsEnum ) {
 				byte[] EncodedInt = BitConverter.GetBytes((Int32)obj);
@@ -79,6 +80,12 @@ namespace Strive.Network.Messages {
 					EncodedFloat,
 					0, EncodedFloat.Length
 					);
+			} else if ( t == typeof( bool ) ) {
+				byte[] EncodedBool = BitConverter.GetBytes((bool)obj);
+				Buffer.Write(
+					EncodedBool,
+					0, EncodedBool.Length
+				);
 			} else if ( t == typeof( string ) ) {
 				byte[] EncodedString = Encoding.Unicode.GetBytes((string)obj);
 				byte[] EncodedInt = BitConverter.GetBytes( EncodedString.Length );
@@ -114,7 +121,12 @@ namespace Strive.Network.Messages {
 			if ( obj != null ) return obj;
 
 			// otherwise create the complex object, and decode its fields
-			obj = t.GetConstructor( new System.Type[0] ).Invoke( null );
+			ConstructorInfo ci = t.GetConstructor( new System.Type[0] );
+			if ( ci == null ) 
+			{
+				throw new Exception( "Cannot construct a " + t );
+			}
+			obj = ci.Invoke( null );
 			FieldInfo[] fi = t.GetFields();
 			foreach( FieldInfo i in fi ) {
 				if ( i.IsStatic ) continue;
@@ -134,7 +146,12 @@ namespace Strive.Network.Messages {
 			} else if ( t == typeof( float ) ) {
 				result = BitConverter.ToSingle( buffer, Offset );
 				Offset += 4;
-			} else if ( t == typeof( string ) ) {
+			} else if ( t == typeof( bool ) ) {
+				result = BitConverter.ToBoolean( buffer, Offset );
+				Offset += 1;
+			} 
+			else if ( t == typeof( string ) ) 
+			{
 				int StringLength = BitConverter.ToInt32( buffer, Offset );
 				Offset += 4;
 				result = Encoding.Unicode.GetString( buffer, Offset, StringLength );

@@ -127,8 +127,8 @@ namespace Strive.Data
 				SqlDataAdapter possesFiller = new SqlDataAdapter(commandFactory.SelectMobilePossesableByPlayerRows(PlayerID));
 				SqlDataAdapter mobileFiller = new SqlDataAdapter(commandFactory.SelectTemplateMobileRows(PlayerID));
 				SqlDataAdapter objectFiller = new SqlDataAdapter(commandFactory.SelectObjectInstanceRows(PlayerID));
-				SqlDataAdapter templateFiller = new SqlDataAdapter(commandFactory.SelectObjectTemplateRows(PlayerID));
-				templateFiller.Fill(updatedPlayerPartOfMultiverse.ObjectTemplate);
+				SqlDataAdapter templateFiller = new SqlDataAdapter(commandFactory.SelectTemplateObjectRows(PlayerID));
+				templateFiller.Fill(updatedPlayerPartOfMultiverse.TemplateObject);
 				objectFiller.Fill(updatedPlayerPartOfMultiverse.ObjectInstance);
 				mobileFiller.Fill(updatedPlayerPartOfMultiverse.TemplateMobile);
 				possesFiller.Fill(updatedPlayerPartOfMultiverse.MobilePossesableByPlayer);
