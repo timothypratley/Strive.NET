@@ -3,7 +3,7 @@
 
 <HTML>
   <HEAD>
-        <link rel="stylesheet" href='portal.css' type="text/css">
+        <link rel="stylesheet" href='<%=www.strive3d.net.Utils.ApplicationPath%>/portal.css' type="text/css">
   </HEAD>
     <body leftmargin="0" bottommargin="0" rightmargin="0" topmargin="0" marginheight="0" marginwidth="0">
         <form enctype="multipart/form-data" runat="server">

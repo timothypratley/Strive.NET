@@ -120,6 +120,11 @@
                     Project = "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "System.Drawing"
+                    AssemblyName = "System.Drawing"
+                    HintPath = "..\..\..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
+                />
             </References>
         </Build>
         <Files>
@@ -141,6 +146,11 @@
                 />
                 <File
                     RelPath = "Scene.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "TV3DSetting.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -198,6 +208,16 @@
                     RelPath = "Textures\Texture.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Options.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Windows\Options.resx"
+                    DependentUpon = "Options.cs"
+                    BuildAction = "EmbeddedResource"
                 />
             </Include>
         </Files>

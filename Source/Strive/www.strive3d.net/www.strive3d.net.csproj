@@ -502,6 +502,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "DesktopModules\EditDocs.aspx.resx"
+                    DependentUpon = "EditDocs.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "DesktopModules\EditEvents.aspx"
                     BuildAction = "Content"
                 />

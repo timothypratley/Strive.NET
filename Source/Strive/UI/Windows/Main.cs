@@ -44,6 +44,7 @@ namespace Strive.UI.Windows
 		private System.Windows.Forms.StatusBarPanel AreaInformation;
 
 		public Channels.ChannelManager CurrentChannelManager;
+		private Crownwood.Magic.Menus.MenuCommand ViewOptions;
 
 		private System.ComponentModel.IContainer components = null;
 
@@ -114,14 +115,15 @@ namespace Strive.UI.Windows
 			this.ViewFirstPerson = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewChaseCam = new Crownwood.Magic.Menus.MenuCommand();
 			this.ViewMiniMap = new Crownwood.Magic.Menus.MenuCommand();
+			this.ViewOptions = new Crownwood.Magic.Menus.MenuCommand();
 			this.MainStatus = new System.Windows.Forms.StatusBar();
-			this.Coords = new System.Windows.Forms.StatusBarPanel();
-			this.Information = new System.Windows.Forms.StatusBarPanel();
 			this.AreaInformation = new System.Windows.Forms.StatusBarPanel();
+			this.Information = new System.Windows.Forms.StatusBarPanel();
+			this.Coords = new System.Windows.Forms.StatusBarPanel();
 			this.GameTab.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.Coords)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.Information)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.AreaInformation)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Information)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.Coords)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// MainTabs
@@ -131,7 +133,7 @@ namespace Strive.UI.Windows
 			this.MainTabs.Name = "MainTabs";
 			this.MainTabs.SelectedIndex = 0;
 			this.MainTabs.SelectedTab = this.GameTab;
-			this.MainTabs.Size = new System.Drawing.Size(888, 817);
+			this.MainTabs.Size = new System.Drawing.Size(888, 952);
 			this.MainTabs.TabIndex = 0;
 			this.MainTabs.TabPages.AddRange(new Crownwood.Magic.Controls.TabPage[] {
 																					   this.GameTab});
@@ -144,7 +146,7 @@ namespace Strive.UI.Windows
 			this.GameTab.Controls.Add(this.RenderTarget);
 			this.GameTab.Location = new System.Drawing.Point(0, 0);
 			this.GameTab.Name = "GameTab";
-			this.GameTab.Size = new System.Drawing.Size(888, 792);
+			this.GameTab.Size = new System.Drawing.Size(888, 927);
 			this.GameTab.TabIndex = 0;
 			this.GameTab.Title = "Game";
 			// 
@@ -155,7 +157,7 @@ namespace Strive.UI.Windows
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.RenderTarget.Location = new System.Drawing.Point(0, 0);
 			this.RenderTarget.Name = "RenderTarget";
-			this.RenderTarget.Size = new System.Drawing.Size(800, 621);
+			this.RenderTarget.Size = new System.Drawing.Size(800, 728);
 			this.RenderTarget.TabIndex = 1;
 			// 
 			// MainMenu
@@ -209,7 +211,8 @@ namespace Strive.UI.Windows
 																							this.ViewCommand,
 																							this.ViewFirstPerson,
 																							this.ViewChaseCam,
-																							this.ViewMiniMap});
+																							this.ViewMiniMap,
+																							this.ViewOptions});
 			this.ViewMenu.Text = "&View";
 			// 
 			// ViewLog
@@ -266,23 +269,28 @@ namespace Strive.UI.Windows
 			this.ViewMiniMap.Text = "Mini Map";
 			this.ViewMiniMap.Click += new System.EventHandler(this.ViewMiniMap_Click);
 			// 
+			// ViewOptions
+			// 
+			this.ViewOptions.Description = "Options";
+			this.ViewOptions.Text = "Options";
+			this.ViewOptions.Click += new System.EventHandler(this.ViewOptions_Click);
+			// 
 			// MainStatus
 			// 
-			this.MainStatus.Location = new System.Drawing.Point(2, 844);
+			this.MainStatus.Location = new System.Drawing.Point(2, 979);
 			this.MainStatus.Name = "MainStatus";
 			this.MainStatus.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
 																						  this.AreaInformation,
 																						  this.Information,
 																						  this.Coords});
 			this.MainStatus.ShowPanels = true;
-			this.MainStatus.Size = new System.Drawing.Size(888, 26);
+			this.MainStatus.Size = new System.Drawing.Size(888, 30);
 			this.MainStatus.TabIndex = 1;
 			// 
-			// Coords
+			// AreaInformation
 			// 
-			this.Coords.Alignment = System.Windows.Forms.HorizontalAlignment.Right;
-			this.Coords.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
-			this.Coords.Width = 10;
+			this.AreaInformation.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.AreaInformation.Width = 10;
 			// 
 			// Information
 			// 
@@ -290,15 +298,16 @@ namespace Strive.UI.Windows
 			this.Information.Text = "statusBarPanel1";
 			this.Information.Width = 852;
 			// 
-			// AreaInformation
+			// Coords
 			// 
-			this.AreaInformation.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
-			this.AreaInformation.Width = 10;
+			this.Coords.Alignment = System.Windows.Forms.HorizontalAlignment.Right;
+			this.Coords.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Contents;
+			this.Coords.Width = 10;
 			// 
 			// Main
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(892, 872);
+			this.ClientSize = new System.Drawing.Size(892, 1011);
 			this.Controls.Add(this.MainTabs);
 			this.Controls.Add(this.MainMenu);
 			this.Controls.Add(this.MainStatus);
@@ -309,9 +318,9 @@ namespace Strive.UI.Windows
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Main_Closing);
 			this.Load += new System.EventHandler(this.Load_Form);
 			this.GameTab.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.Coords)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.Information)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.AreaInformation)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Information)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.Coords)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -577,6 +586,12 @@ namespace Strive.UI.Windows
 			Content mapWindow = DockingManager.Contents.Add(miniMap, "Mini Map");
 			DockingManager.AddContentWithState(mapWindow, State.Floating);
 			Game.CurrentWorld.MiniMapTarget = miniMap.RenderTarget;
+		}
+
+		private void ViewOptions_Click(object sender, System.EventArgs e)
+		{
+			Strive.Rendering.TV3D.Windows.Options o = new Strive.Rendering.TV3D.Windows.Options();
+			o.ShowDialog(this);
 		}
 
 	}

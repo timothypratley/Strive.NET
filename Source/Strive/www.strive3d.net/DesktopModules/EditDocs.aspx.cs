@@ -118,7 +118,12 @@ namespace www.strive3d.net {
                     if ((Upload.Checked == true) && (FileUpload.PostedFile != null)) {
                 
                         // Calculate virtualPath of the newly uploaded file
-                        String virtualPath = "~uploads/" + Path.GetFileName(FileUpload.PostedFile.FileName);
+						
+                        String virtualPath = "/uploads/" + Path.GetFileName(FileUpload.PostedFile.FileName);
+						if(Request.ApplicationPath != "/" && Request.ApplicationPath != "")
+						{
+							virtualPath = Request.ApplicationPath + virtualPath;
+						}
 
                         // Calculate physical path of the newly uploaded file
                         String phyiscalPath = Server.MapPath(virtualPath);
