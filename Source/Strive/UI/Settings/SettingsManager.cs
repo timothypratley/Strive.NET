@@ -57,7 +57,7 @@ namespace Strive.UI.Settings
 
 			windowRow["windowstate"] = window.WindowState.ToString();
 			windowRow["windowheight"] = window.Height;
-			windowRow["windowwidth"] = window.Height;
+			windowRow["windowwidth"] = window.Width;
 			windowRow["windowleft"] = window.Left;
 			windowRow["windowtop"] = window.Top;
 

@@ -92,6 +92,11 @@ namespace Strive.Network.Client {
 
 		#region Simple Message API
 
+		public void Chat(string message)
+		{
+			// what to do here?
+		}
+
 		public void PossessMobile(int mobileId)
 		{
 			Send(new EnterWorldAsMobile(mobileId));
