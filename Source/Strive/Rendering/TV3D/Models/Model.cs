@@ -182,10 +182,13 @@ namespace Strive.Rendering.TV3D.Models {
 			_mesh = null;
 		}
 
-		public void applyTexture( string texture ) {
+		public void applyTexture( ITexture texture ) {
 		}
 
 		public void nextFrame() {
+		}
+
+		public void SetLOD( float distance ) {
 		}
 
 		public void GetBoundingBox( Vector3D minbox, Vector3D maxbox ) {

@@ -215,33 +215,31 @@ namespace Strive.Server.Shared {
 				return;
 			}
 
-			// keep everything at ground level
-			if ( !(po is Terrain) ) {
+			if ( po is Terrain ) {
+				// keep terrain seperate
+				int terrainX = Helper.DivTruncate( (int)(po.Position.X-lowX), Constants.terrainPieceSize );
+				int terrainZ = Helper.DivTruncate( (int)(po.Position.Z-lowZ), Constants.terrainPieceSize );
+				terrain[terrainX,terrainZ] = (Terrain)po;
+			} else {
+				// keep everything at ground level
 				try {
 					float altitude = AltitudeAt( po.Position.X, po.Position.Z );
 					po.Position.Y = altitude + po.Height/2F;
 				} catch ( InvalidLocationException ) {
 					Log.WarningMessage( "Physical object " + po.ObjectInstanceID + " is not on terrain." );
 				}
+				// add the object to the world
+				physicalObjects.Add( po.ObjectInstanceID, po );
+				if ( po is Mobile ) {
+					mobilesArrayList.Add( po );
+				}
+				int squareX = (int)(po.Position.X-lowX)/Square.squareSize;
+				int squareZ = (int)(po.Position.Z-lowZ)/Square.squareSize;
+				if ( square[squareX,squareZ] == null ) {
+					square[squareX,squareZ] = new Square();
+				}
+				square[squareX,squareZ].Add( po );
 			}
-
-			// add the object to the world
-			physicalObjects.Add( po.ObjectInstanceID, po );
-			if ( po is Mobile ) {
-				mobilesArrayList.Add( po );
-			}
-			int squareX = (int)(po.Position.X-lowX)/Square.squareSize;
-			int squareZ = (int)(po.Position.Z-lowZ)/Square.squareSize;
-			if ( square[squareX,squareZ] == null ) {
-				square[squareX,squareZ] = new Square();
-			}
-			square[squareX,squareZ].Add( po );
-			if ( po is Terrain ) {
-				int terrainX = Helper.DivTruncate( (int)(po.Position.X-lowX), Constants.terrainPieceSize );
-				int terrainZ = Helper.DivTruncate( (int)(po.Position.Z-lowZ), Constants.terrainPieceSize );
-				terrain[terrainX,terrainZ] = (Terrain)po;
-			}
-
 			// notify all nearby clients that a new
 			// physical object has entered the world
 			InformNearby( po, Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( po ) );
@@ -315,8 +313,8 @@ namespace Strive.Server.Shared {
 					) continue;
 
 					foreach ( PhysicalObject spo in square[toSquareX+i,toSquareZ+j].physicalObjects ) {
-						// ignoring terrain and yourself
-						if ( spo is Terrain || spo == po ) continue;
+						// ignoring yourself
+						if ( spo == po ) continue;
 
 						// distance between two objects in 2d space
 						float dx = newPosition.X - spo.Position.X;
@@ -344,7 +342,6 @@ namespace Strive.Server.Shared {
 
 			// send everything nearby
 			//public void server_foo(float x1, float z1, float x, float z) {
-			// TODO: apply -- for -ve div
 			if ( ma != null && ma.client != null && po.Position != newPosition ) {
 				int tx1 = Helper.DivTruncate( (int)po.Position.X, Constants.terrainPieceSize );
 				int tz1 = Helper.DivTruncate( (int)po.Position.Z, Constants.terrainPieceSize );
@@ -431,10 +428,6 @@ namespace Strive.Server.Shared {
 							// of its new world view
 							if ( ma != null && ma.client != null ) {
 								foreach( PhysicalObject toAdd in square[toSquareX-i, toSquareZ-j].physicalObjects ) {
-									if ( toAdd is Terrain ) {
-										// TODO: take terrain out of the po list if thiw works
-										continue;
-									}
 									ma.client.Send(	Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( toAdd ) );
 									//Log.LogMessage( "Told client to add " + toAdd.ObjectInstanceID + "." );
 								}
@@ -533,6 +526,7 @@ namespace Strive.Server.Shared {
 			int i, j;
 			if ( client != null ) {
 				ArrayList nearbyPhysicalObjects = new ArrayList();
+				// TODO: use xorder, zorder to descide the resolution?
 				for ( i=-1; i<=1; i++ ) {
 					for ( j=-1; j<=1; j++ ) {
 						// check that neigbour exists
@@ -545,7 +539,16 @@ namespace Strive.Server.Shared {
 						}
 						// add all neighbouring physical objects
 						// to the clients world view
+						// that are in scope
 						foreach ( PhysicalObject p in square[squareX+i,squareZ+j].physicalObjects ) {
+							/** TODO:
+							 * could only send based upon a radius, but this makes
+							 * relocations harder... maybe be better to just use squares
+							// NB: using Manhattan distance not Cartesian
+							float distx = Math.Abs(p.Position.X - mob.Position.X);
+							float distz = Math.Abs(p.Position.Z - mob.Position.Z);
+							if ( distx <= Constants.objectScopeRadius && distz <= Constants.objectScopeRadius )
+							*/
 							nearbyPhysicalObjects.Add( p );
 						}
 					}
@@ -557,7 +560,6 @@ namespace Strive.Server.Shared {
 				client.Send( message );
 				*/
 				foreach ( PhysicalObject p in nearbyPhysicalObjects ) {
-					if ( p is Terrain ) continue;
 					client.Send( Strive.Network.Messages.ToClient.AddPhysicalObject.CreateMessage( p ) );
 				}
 

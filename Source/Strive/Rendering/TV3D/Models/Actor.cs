@@ -203,6 +203,9 @@ namespace Strive.Rendering.TV3D.Models {
 			return dup;
 		}
 
+		public void SetLOD( float distance ) {
+		}
+
 		#endregion
 
 		#region "Properties"

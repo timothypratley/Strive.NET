@@ -138,6 +138,9 @@ namespace Strive.Rendering.TV3D.Models {
 			}
 		}
 
+		public void SetLOD( float distance ) {
+		}
+
 
 		#region "Fields"
 

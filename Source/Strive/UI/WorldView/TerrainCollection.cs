@@ -203,7 +203,10 @@ namespace Strive.UI.WorldView {
 
 				if ( xdiff >= 0 && xdiff < xorder && zdiff >= 0 && zdiff < zorder ) {
 					TC[xdiff,zdiff,k].SetHeight( x, z, altitude );
-					if ( k==0 ) TC[xdiff,zdiff,k].SetTexture( texture_id, x, z, rotation );
+
+					// set the texture for higher order terrain or not
+					//if ( k==0 )
+					TC[xdiff,zdiff,k].SetTexture( texture_id, x, z, rotation );
 				}
 
 				// edges need to update both chunks

@@ -14,6 +14,7 @@ namespace Strive.Common
 		public const int terrainZoomOrder = 2;
 		public const int terrainXOrder = 4;
 		public const int terrainZOrder = 4;
+		public const int objectScopeRadius = terrainPieceSize*terrainHeightsPerChunk*terrainHeightsPerChunk;
 
 		public static int[] scale = new int[terrainZoomOrder];
 		public static int[] xRadius = new int[terrainZoomOrder];

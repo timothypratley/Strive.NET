@@ -9,6 +9,7 @@ using Strive.Multiverse;
 using Strive.Logging;
 using Strive.Math3D;
 using Strive.Resources;
+using Strive.Common;
 
 
 namespace Strive.UI.WorldView {
@@ -170,10 +171,14 @@ namespace Strive.UI.WorldView {
 				PhysicalObjectInstance poi = (PhysicalObjectInstance)physicalObjectInstances[key];
 				// TODO: some sort of LOD
 				// TODO: not a hard coded const
-				if (
-					Math.Abs( x-poi.model.Position.X ) > 100F
-				) {
+				float dist = Math.Abs( x-poi.model.Position.X );
+
+				// TODO: make this area the same as that used by the server,
+				// ie: square delimited
+				if ( dist > Constants.objectScopeRadius*2 ) {
 					Remove( poi.physicalObject.ObjectInstanceID );
+				} else {
+					poi.model.SetLOD( dist );
 				}
 			}
 		}

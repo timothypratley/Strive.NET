@@ -121,6 +121,10 @@ namespace Strive.Rendering.TV3D.Models {
 		
 		}
 
+		public void SetLOD( float distance ) {
+
+		}
+
 		#region "Implementation of IManeuverable"
 		/// <summary>
 		/// Moves the model
@@ -216,7 +220,6 @@ namespace Strive.Rendering.TV3D.Models {
 		}
 
 		#endregion
-
 
 	}
 

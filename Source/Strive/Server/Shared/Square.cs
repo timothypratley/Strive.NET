@@ -21,7 +21,7 @@ namespace Strive.Server.Shared
 	/// </summary>
 	public class Square
 	{
-		public static int squareSize = Constants.terrainHeightsPerChunk*Constants.terrainPieceSize;
+		public static int squareSize = Constants.objectScopeRadius;
 		public ArrayList physicalObjects = new ArrayList();
 		public ArrayList clients = new ArrayList();
 
@@ -35,9 +35,6 @@ namespace Strive.Server.Shared
 				if ( a.client != null ) {
 					clients.Add( a.client );
 				}
-			}
-			if ( po is Terrain ) {
-				Terrain t = (Terrain)po;
 			}
 		}
 

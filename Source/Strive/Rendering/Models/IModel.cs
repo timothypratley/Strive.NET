@@ -16,6 +16,8 @@ namespace Strive.Rendering.Models {
 
 		void GetBoundingBox( Vector3D boxmin, Vector3D boxmax );
 
+		void SetLOD( float distance );
+
 		#endregion
 
 		#region "Properties"
