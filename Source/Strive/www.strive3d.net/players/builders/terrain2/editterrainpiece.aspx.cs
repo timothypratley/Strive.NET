@@ -27,6 +27,11 @@ namespace www.strive3d.net.players.builders.terrain
 		protected float TerrainZ;
 		protected System.Web.UI.WebControls.Repeater TemplateItemJunkList;
 		protected System.Web.UI.WebControls.Button cancel;
+		protected System.Web.UI.WebControls.Repeater TemplateItemWieldableList;
+		protected System.Web.UI.WebControls.Repeater TemplateItemReadableList;
+		protected System.Web.UI.WebControls.Repeater TemplateItemEquipableList;
+		protected System.Web.UI.WebControls.Repeater TemplateItemQuaffableList;
+		protected System.Web.UI.WebControls.Repeater TemplateMobileList;
 		protected System.Web.UI.WebControls.DropDownList TemplateObject;
 		
 	
@@ -84,8 +89,8 @@ namespace www.strive3d.net.players.builders.terrain
 								"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
 								"AND ObjectInstance.X >= " + TerrainX +
 								" AND ObjectInstance.Z >= " + TerrainZ +
-								" AND ObjectInstance.X < " + (TerrainX + 10) +
-								" AND ObjectInstance.Z < " + (TerrainZ + 10) +
+								" AND ObjectInstance.X < " + (TerrainX + Strive.Common.Constants.terrainPieceSize) +
+								" AND ObjectInstance.Z < " + (TerrainZ + Strive.Common.Constants.terrainPieceSize) +
 								" ORDER BY TemplateObjectName "));
 
 							DataTable TemplateItemJunkInSquare = new DataTable();
@@ -93,7 +98,134 @@ namespace www.strive3d.net.players.builders.terrain
 							TemplateItemJunkList.DataSource = TemplateItemJunkInSquare;
 							TemplateItemJunkList.DataBind();
 
-						
+							SqlDataAdapter TemplateItemWieldableFiller = new SqlDataAdapter(
+								cmd.GetSqlCommand(
+								"SELECT TemplateItemWieldable.*, " +
+								"TemplateObject.TemplateObjectName, " +
+								"TemplateItem.Value, " +
+								"TemplateItem.Weight, " +
+								"ObjectInstance.ObjectInstanceID , " +
+								"TemplateItem.EnumItemDurabilityID " +
+								"FROM TemplateItemWieldable " +
+								"INNER JOIN TemplateItem " +
+								"ON TemplateItemWieldable.TemplateObjectID = TemplateItem.TemplateObjectID " +
+								"INNER JOIN TemplateObject " +
+								"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"INNER JOIN ObjectInstance  " +
+								"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"AND ObjectInstance.X >= " + TerrainX +
+								" AND ObjectInstance.Z >= " + TerrainZ +
+								" AND ObjectInstance.X < " + (TerrainX + Strive.Common.Constants.terrainPieceSize) +
+								" AND ObjectInstance.Z < " + (TerrainZ + Strive.Common.Constants.terrainPieceSize) +
+								" ORDER BY TemplateObjectName "));
+
+							DataTable TemplateItemWieldableInSquare = new DataTable();
+							TemplateItemWieldableFiller.Fill(TemplateItemWieldableInSquare);
+							TemplateItemWieldableList.DataSource = TemplateItemWieldableInSquare;
+							TemplateItemWieldableList.DataBind();
+
+							SqlDataAdapter TemplateItemQuaffableFiller = new SqlDataAdapter(
+								cmd.GetSqlCommand(
+								"SELECT TemplateItemQuaffable.*, " +
+								"TemplateObject.TemplateObjectName, " +
+								"TemplateItem.Value, " +
+								"TemplateItem.Weight, " +
+								"ObjectInstance.ObjectInstanceID , " +
+								"TemplateItem.EnumItemDurabilityID " +
+								"FROM TemplateItemQuaffable " +
+								"INNER JOIN TemplateItem " +
+								"ON TemplateItemQuaffable.TemplateObjectID = TemplateItem.TemplateObjectID " +
+								"INNER JOIN TemplateObject " +
+								"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"INNER JOIN ObjectInstance  " +
+								"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"AND ObjectInstance.X >= " + TerrainX +
+								" AND ObjectInstance.Z >= " + TerrainZ +
+								" AND ObjectInstance.X < " + (TerrainX + Strive.Common.Constants.terrainPieceSize) +
+								" AND ObjectInstance.Z < " + (TerrainZ + Strive.Common.Constants.terrainPieceSize) +
+								" ORDER BY TemplateObjectName "));
+
+							DataTable TemplateItemQuaffableInSquare = new DataTable();
+							TemplateItemQuaffableFiller.Fill(TemplateItemQuaffableInSquare);
+							TemplateItemQuaffableList.DataSource = TemplateItemQuaffableInSquare;
+							TemplateItemQuaffableList.DataBind();
+
+							SqlDataAdapter TemplateItemReadableFiller = new SqlDataAdapter(
+								cmd.GetSqlCommand(
+								"SELECT TemplateItemReadable.*, " +
+								"TemplateObject.TemplateObjectName, " +
+								"TemplateItem.Value, " +
+								"TemplateItem.Weight, " +
+								"ObjectInstance.ObjectInstanceID , " +
+								"TemplateItem.EnumItemDurabilityID " +
+								"FROM TemplateItemReadable " +
+								"INNER JOIN TemplateItem " +
+								"ON TemplateItemReadable.TemplateObjectID = TemplateItem.TemplateObjectID " +
+								"INNER JOIN TemplateObject " +
+								"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"INNER JOIN ObjectInstance  " +
+								"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"AND ObjectInstance.X >= " + TerrainX +
+								" AND ObjectInstance.Z >= " + TerrainZ +
+								" AND ObjectInstance.X < " + (TerrainX + Strive.Common.Constants.terrainPieceSize) +
+								" AND ObjectInstance.Z < " + (TerrainZ + Strive.Common.Constants.terrainPieceSize) +
+								" ORDER BY TemplateObjectName "));
+
+							DataTable TemplateItemReadableInSquare = new DataTable();
+							TemplateItemReadableFiller.Fill(TemplateItemReadableInSquare);
+							TemplateItemReadableList.DataSource = TemplateItemReadableInSquare;
+							TemplateItemReadableList.DataBind();
+
+							SqlDataAdapter TemplateMobileFiller = new SqlDataAdapter(
+								cmd.GetSqlCommand(
+								"SELECT TemplateMobile.*, " +
+								"TemplateObject.TemplateObjectName, " +
+								"ObjectInstance.ObjectInstanceID  " +
+								"FROM TemplateMobile " +
+								"INNER JOIN TemplateObject " +
+								"ON TemplateMobile.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"INNER JOIN ObjectInstance  " +
+								"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"AND ObjectInstance.X >= " + TerrainX +
+								" AND ObjectInstance.Z >= " + TerrainZ +
+								" AND ObjectInstance.X < " + (TerrainX + Strive.Common.Constants.terrainPieceSize) +
+								" AND ObjectInstance.Z < " + (TerrainZ + Strive.Common.Constants.terrainPieceSize) +
+								" ORDER BY TemplateObjectName "));
+
+							DataTable TemplateMobileInSquare = new DataTable();
+							TemplateMobileFiller.Fill(TemplateMobileInSquare);
+							TemplateMobileList.DataSource = TemplateMobileInSquare;
+							TemplateMobileList.DataBind();
+
+							SqlDataAdapter TemplateItemEquipableFiller = new SqlDataAdapter(
+								cmd.GetSqlCommand(
+								"SELECT TemplateItemEquipable.*, " +
+								"TemplateObject.TemplateObjectName, " +
+								"TemplateItem.Value, " +
+								"TemplateItem.Weight, " +
+								"ObjectInstance.ObjectInstanceID , " +
+								"TemplateItem.EnumItemDurabilityID " +
+								"FROM TemplateItemEquipable " +
+								"INNER JOIN TemplateItem " +
+								"ON TemplateItemEquipable.TemplateObjectID = TemplateItem.TemplateObjectID " +
+								"INNER JOIN TemplateObject " +
+								"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"INNER JOIN ObjectInstance  " +
+								"ON ObjectInstance.TemplateObjectID = TemplateObject.TemplateObjectID " +
+								"AND ObjectInstance.X >= " + TerrainX +
+								" AND ObjectInstance.Z >= " + TerrainZ +
+								" AND ObjectInstance.X < " + (TerrainX + Strive.Common.Constants.terrainPieceSize) +
+								" AND ObjectInstance.Z < " + (TerrainZ + Strive.Common.Constants.terrainPieceSize) +
+								" ORDER BY TemplateObjectName "));
+
+							DataTable TemplateItemEquipableInSquare = new DataTable();
+							TemplateItemEquipableFiller.Fill(TemplateItemEquipableInSquare);
+							TemplateItemEquipableList.DataSource = TemplateItemEquipableInSquare;
+							TemplateItemEquipableList.DataBind();
+
+
+
+
 
 	
 						}

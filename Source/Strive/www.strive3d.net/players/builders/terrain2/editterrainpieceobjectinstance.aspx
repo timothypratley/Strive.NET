@@ -1,23 +1,29 @@
-<%@ Import Namespace="System.Data" %>
-<%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
-<%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
 <%@ Page language="c#" Codebehind="editterrainpieceobjectinstance.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain.editterrainpieceobjectinstance" %>
+<%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
+<%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
+<%@ Import Namespace="System.Data" %>
 <form runat="server">
 	<table>
 		<tr>
 			<td><span class="label">Template</span></td>
-			<td><asp:dropdownlist id="TemplateList" runat="Server" cssclass="input" DataTextField="TemplateObjectName"
-					DataValueField="TemplateObjectID"></asp:dropdownlist></td>
+			<td><asp:dropdownlist id="TemplateList" runat="Server" DataValueField="TemplateObjectID" DataTextField="TemplateObjectName"
+					cssclass="input"></asp:dropdownlist></td>
 		</tr>
 		<tr>
-			<td colSpan="2"><span class="label">Position</span></td>
+			<td><span class="label">X</span></td>
+			<td><asp:textbox id="X" runat="server" size="2" CssClass="Input"></asp:textbox></td>
 		</tr>
 		<tr>
-			<td colspan="2"><asp:radiobuttonlist id="Coords" RepeatDirection="Horizontal" cssclass="input" DataTextField="" DataTextFormatString=" " RepeatColumns="10"
-					runat="Server" /></td>
+			<td><span class="label">Z</span></td>
+			<td><asp:textbox id="Z" runat="server" size="2" CssClass="Input"></asp:textbox></td>
 		</tr>
 		<tr>
-			<td colspan="2"><asp:Button ID="Save" runat="server" Text="Save" /></td>
+			<td colSpan="2"></td>
+		</tr>
+		<tr>
+			<td colSpan="2"><asp:button id="Save" runat="server" Text="Save"></asp:button>
+				<asp:Button ID="Cancel" runat="Server" Text="Cancel" />
+				<asp:Button ID="Delete" runat="server" Text="Delete" /></td>
 		</tr>
 	</table>
 </form>

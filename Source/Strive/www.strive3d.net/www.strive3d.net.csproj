@@ -109,6 +109,11 @@
                     Project = "{14818E27-DABB-4332-B572-21BA9983D886}"
                     Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
+                <Reference
+                    Name = "Strive.Common"
+                    Project = "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
@@ -572,6 +577,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "DesktopModules\Links.ascx.resx"
+                    DependentUpon = "Links.ascx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "DesktopModules\Login.ascx"
                     BuildAction = "Content"
                 />
@@ -954,6 +964,22 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "players\builders\objects\GeneralGenericSpecialiser.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\GeneralGenericSpecialiser.aspx.cs"
+                    DependentUpon = "GeneralGenericSpecialiser.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\GeneralGenericSpecialiser.aspx.resx"
+                    DependentUpon = "GeneralGenericSpecialiser.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "players\builders\objects\GenericSpecialiser.cs"
                     SubType = "ASPXCodeBehind"
                     BuildAction = "Compile"
@@ -988,6 +1014,54 @@
                 <File
                     RelPath = "players\builders\objects\TemplateItemJunk.aspx.resx"
                     DependentUpon = "TemplateItemJunk.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemQuaffable.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemQuaffable.aspx.cs"
+                    DependentUpon = "TemplateItemQuaffable.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemQuaffable.aspx.resx"
+                    DependentUpon = "TemplateItemQuaffable.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemReadable.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemReadable.aspx.cs"
+                    DependentUpon = "TemplateItemReadable.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemReadable.aspx.resx"
+                    DependentUpon = "TemplateItemReadable.aspx.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemWieldable.aspx"
+                    SubType = "Form"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemWieldable.aspx.cs"
+                    DependentUpon = "TemplateItemWieldable.aspx"
+                    SubType = "ASPXCodeBehind"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "players\builders\objects\TemplateItemWieldable.aspx.resx"
+                    DependentUpon = "TemplateItemWieldable.aspx.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

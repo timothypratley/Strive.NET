@@ -20,21 +20,21 @@ namespace www.strive3d.net.players.builders.terrain
 	public class editterrainpieceobjectinstance : System.Web.UI.Page
 	{
 		protected System.Web.UI.WebControls.DropDownList TemplateList;
+		protected System.Web.UI.WebControls.TextBox X;
+		protected System.Web.UI.WebControls.TextBox Z;
 		protected System.Web.UI.WebControls.Button Save;
-		protected System.Web.UI.WebControls.RadioButtonList Coords;
-		private ArrayList AvailableCoords;
+		int ObjectInstanceStartX;
+		int ObjectInstanceStartZ;
+		protected System.Web.UI.WebControls.Button Cancel;
+		protected System.Web.UI.WebControls.Button Delete;
+		int ObjectInstanceY;
 		private void Page_Load(object sender, System.EventArgs e)
 		{
-			int ObjectInstanceStartX = QueryString.GetVariableInt32Value("StartX");
-			int ObjectInstanceStartZ = QueryString.GetVariableInt32Value("StartZ");
-			int ObjectInstanceY = QueryString.GetVariableInt32Value("Y");
-			// 1.0 Set up radiobuttons
-			AvailableCoords = new ArrayList();
-			for(int i = 0; i < 100; i++)
-			{
-				Response.Write("[" + (ObjectInstanceStartX + ((i%10)*10)) + "," + (ObjectInstanceStartZ + ((i / 10)*10))  + "]");
-				Strive.Math3D.Vector3D v = new Strive.Math3D.Vector3D(ObjectInstanceStartX + ((i%10)*10), ObjectInstanceY, ObjectInstanceStartZ + ((i / 10)*10) );
-				AvailableCoords.Add(v);
+			ObjectInstanceStartX = QueryString.GetVariableInt32Value("StartX");
+			ObjectInstanceStartZ = QueryString.GetVariableInt32Value("StartZ");
+			ObjectInstanceY = QueryString.GetVariableInt32Value("Y");
+			if(!QueryString.ContainsVariable("ObjectInstanceID")) {
+				Delete.Visible=false;
 			}
 
 			if(!IsPostBack)
@@ -42,25 +42,35 @@ namespace www.strive3d.net.players.builders.terrain
 				CommandFactory cmd = new CommandFactory();
 				try
 				{
-					Coords.DataSource = AvailableCoords;
-					Coords.DataBind();
-
 					string TemplateName = QueryString.GetVariableStringValue("TemplateName");
 
 					// 2.0 Set up drop down:
-					SqlDataAdapter TemplateItemFiller = new SqlDataAdapter(
-						cmd.GetSqlCommand(
-						"SELECT TemplateItem.*, " +
-						"TemplateObject.TemplateObjectName, " +
-						"TemplateItem.Value, " +
-						"TemplateItem.Weight, " +
-						"TemplateItem.EnumItemDurabilityID " +
-						"FROM TemplateItem " +
-						"INNER JOIN Template" + TemplateName + " " +
-						"ON Template" + TemplateName + " " + ".TemplateObjectID = TemplateItem.TemplateObjectID " +
-						"INNER JOIN TemplateObject " +
-						"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
-						"ORDER BY TemplateObjectName "));
+					SqlDataAdapter TemplateItemFiller;
+					if(TemplateName.StartsWith("Mobile")) {
+						TemplateItemFiller = new SqlDataAdapter(
+							cmd.GetSqlCommand(
+							"SELECT TemplateMobile.*, " +
+							"TemplateObject.TemplateObjectName " +
+							"FROM TemplateMobile " +
+							"INNER JOIN TemplateObject " +
+							"ON TemplateMobile.TemplateObjectID = TemplateObject.TemplateObjectID " +
+							"ORDER BY TemplateObjectName "));
+					}
+					else {
+						TemplateItemFiller = new SqlDataAdapter(
+							cmd.GetSqlCommand(
+							"SELECT TemplateItem.*, " +
+							"TemplateObject.TemplateObjectName, " +
+							"TemplateItem.Value, " +
+							"TemplateItem.Weight, " +
+							"TemplateItem.EnumItemDurabilityID " +
+							"FROM TemplateItem " +
+							"INNER JOIN Template" + TemplateName + " " +
+							"ON Template" + TemplateName + " " + ".TemplateObjectID = TemplateItem.TemplateObjectID " +
+							"INNER JOIN TemplateObject " +
+							"ON TemplateItem.TemplateObjectID = TemplateObject.TemplateObjectID " +
+							"ORDER BY TemplateObjectName "));
+					}
 
 					DataTable TemplateItems = new DataTable();
 				
@@ -80,21 +90,8 @@ namespace www.strive3d.net.players.builders.terrain
 							// Set position:
 							float ObjectInstanceX = float.Parse(oDr["X"].ToString());
 							float ObjectInstanceZ = float.Parse(oDr["Z"].ToString());
-
-							// walk through radiobutton list:
-							int selectCoordIndex = 0;
-							foreach(object positionVector in AvailableCoords)
-							{
-								if((positionVector as Strive.Math3D.Vector3D).X > ObjectInstanceX &&
-									(positionVector as Strive.Math3D.Vector3D).Z > ObjectInstanceZ)
-								{
-									break;
-								}
-selectCoordIndex ++;								
-							}
-
-							Coords.SelectedIndex = selectCoordIndex -1;
-
+							X.Text = (ObjectInstanceX- ObjectInstanceStartX).ToString();
+							Z.Text = ( ObjectInstanceZ - ObjectInstanceStartZ ).ToString();
 						}
 						else
 						{
@@ -135,6 +132,8 @@ selectCoordIndex ++;
 		private void InitializeComponent()
 		{    
 			this.Save.Click += new System.EventHandler(this.Save_Click);
+			this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
+			this.Delete.Click += new System.EventHandler(this.Delete_Click);
 			this.Load += new System.EventHandler(this.Page_Load);
 
 		}
@@ -149,8 +148,8 @@ selectCoordIndex ++;
 				float NewY = QueryString.GetVariableInt32Value("Y");
 				float NewZ = 0;
 
-				NewX = (AvailableCoords[Coords.SelectedIndex] as Strive.Math3D.Vector3D).X;
-				NewZ = (AvailableCoords[Coords.SelectedIndex] as Strive.Math3D.Vector3D).Z;
+				NewX = float.Parse(X.Text) + ObjectInstanceStartX ;
+				NewZ = float.Parse(Z.Text) + ObjectInstanceStartZ;
 			
 
 				if(QueryString.ContainsVariable("ObjectInstanceID"))
@@ -187,6 +186,18 @@ selectCoordIndex ++;
 			}
 		
 
+		}
+
+		private void Cancel_Click(object sender, System.EventArgs e) {
+			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">location.href='about:blank';</script>");		
+		}
+
+		private void Delete_Click(object sender, System.EventArgs e) {
+			using(CommandFactory cmd = new CommandFactory()) {
+                cmd.GetSqlCommand("DELETE FROM ObjectInstance WHERE ObjectInstanceID = " + QueryString.GetVariableInt32Value("ObjectInstanceID")).ExecuteNonQuery();
+			}
+			Page.RegisterClientScriptBlock("Refresh", "<script type=\"text/javascript\">window.parent.frames['Editor'].location.reload(true);</script>");
+			Page.RegisterClientScriptBlock("Close", "<script type=\"text/javascript\">location.href='about:blank';</script>");		
 		}
 	}
 }

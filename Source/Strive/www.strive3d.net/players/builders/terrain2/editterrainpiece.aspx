@@ -1,7 +1,7 @@
-<%@ Page language="c#" Codebehind="editterrainpiece.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain.editterrainpiece" %>
-<%@ Import Namespace="System.Data" %>
-<%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
 <%@ Register TagPrefix="Controls" TagName="Footer" Src="~/players/Controls/Footer.ascx" %>
+<%@ Register TagPrefix="Controls" TagName="Header" Src="~/players/Controls/Header.ascx" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Page language="c#" Codebehind="editterrainpiece.aspx.cs" AutoEventWireup="false" Inherits="www.strive3d.net.players.builders.terrain.editterrainpiece" %>
 <form runat="server">
 	<input id="referer" type="hidden" runat="server">
 	<table>
@@ -28,9 +28,47 @@
 						<th>
 							Junk</th>
 						<td><A href="./editterrainpieceobjectinstance.aspx?TemplateName=ItemJunk&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target=ObjectInstanceEditor >[Add]</A></td>
+						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateItemJunkList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemJunk&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a>
+								</ItemTemplate>
+							</asp:repeater></td>
 					</tr>
 					<tr>
-						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateItemJunkList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemJunk&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+						<th>
+							Wieldable</th>
+						<td><A href="./editterrainpieceobjectinstance.aspx?TemplateName=ItemWieldable&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target=ObjectInstanceEditor >[Add]</A></td>
+						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateItemWieldableList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemWieldable&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+								</ItemTemplate>
+							</asp:repeater></td>
+					</tr>
+					<tr>
+						<th>
+							Readable</th>
+						<td><A href="./editterrainpieceobjectinstance.aspx?TemplateName=ItemReadable&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target=ObjectInstanceEditor >[Add]</A></td>
+						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateItemReadableList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemReadable&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+								</ItemTemplate>
+							</asp:repeater></td>
+					</tr>
+					<tr>
+						<th>
+							Equipable</th>
+						<td><A href="./editterrainpieceobjectinstance.aspx?TemplateName=ItemEquipable&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target=ObjectInstanceEditor >[Add]</A></td>
+						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateItemEquipableList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemEquipable&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+								</ItemTemplate>
+							</asp:repeater></td>
+					</tr>
+					<tr>
+						<th>
+							Quaffable</th>
+						<td><A href="./editterrainpieceobjectinstance.aspx?TemplateName=ItemQuaffable&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target=ObjectInstanceEditor >[Add]</A></td>
+						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateItemQuaffableList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=ItemQuaffable&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
+								</ItemTemplate>
+							</asp:repeater></td>
+					</tr>
+					<tr>
+						<th>
+							Mobile</th>
+						<td><A href="./editterrainpieceobjectinstance.aspx?TemplateName=Mobile&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>" target=ObjectInstanceEditor >[Add]</A></td>
+						<td vAlign="top" colSpan="2"><asp:repeater id="TemplateMobileList" runat="server"><ItemTemplate><a target="ObjectInstanceEditor" href='./editterrainpieceobjectinstance.aspx?TemplateName=Mobile&amp;ObjectInstanceID=<%#DataBinder.Eval(Container.DataItem, "ObjectInstanceID")%>&amp;Y=<%=Altitude.Text%>&amp;StartX=<%=TerrainX%>&amp;StartZ=<%=TerrainZ%>'><%#DataBinder.Eval(Container.DataItem, "TemplateObjectName")%></a><br />
 								</ItemTemplate>
 							</asp:repeater></td>
 					</tr>
