@@ -28,7 +28,7 @@ namespace Strive.Rendering
 		IActor LoadActor(string name, string path, float height);
 		ITexture LoadTexture(string name, string path);
 		ITexture CreateTexture( string name, int width, int height );
-		ITexture GetInvisible();
+//		ITexture GetInvisible();
 		void ForceInputUpdate();
 		float TimeSinceLastFrame();
 		void EnableZ();

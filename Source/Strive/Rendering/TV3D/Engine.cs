@@ -77,9 +77,9 @@ namespace Strive.Rendering.TV3D {
 			return Textures.Texture.CreateTexture( name, width, height );
 		}
 
-		public ITexture GetInvisible() {
-			return Textures.Texture.GetInvisible();
-		}
+//		public ITexture GetInvisible() {
+//			return Textures.Texture.GetInvisible();
+//		}
 
 		public void ForceInputUpdate() {
 			Input.ForceUpdate();
@@ -124,6 +124,11 @@ namespace Strive.Rendering.TV3D {
 			TV3DScene.SetTextureFilter( CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC );
 			TexFactory = new TVTextureFactory();
 			Screen2DImmediate = new TVScreen2DImmediate();
+
+			// TODO: this hax setting is to allow for clearing part of a rendersurface
+			// would be nice if there is a better way....
+			Screen2DImmediate.SETTINGS_SetBlendingMode( DxVBLibA.CONST_D3DBLEND.D3DBLEND_ZERO, DxVBLibA.CONST_D3DBLEND.D3DBLEND_ONE, false );
+
 			Screen2DText = new TVScreen2DText();
 			LightEngine = new TVLightEngine();
 			Gl = new TVGlobals();

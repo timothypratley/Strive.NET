@@ -54,38 +54,41 @@ namespace Strive.Rendering.TV3D.Textures
 		public void Clear( float x, float y, float width, float height ) {
 			_render_surface.StartRender(false);
 			Engine.Screen2DImmediate.ACTION_Begin2D();
-			Engine.Screen2DImmediate.SETTINGS_SetAlphaTest( false, 128 );
+			// TODO: this hax setting has been moved out to the engine class
+			// in initialization. would be good if we could get rid of it altogether
+			// but I can't find a way to draw clear alpha onto a texture without it.
+			//Engine.Screen2DImmediate.SETTINGS_SetBlendingMode( DxVBLibA.CONST_D3DBLEND.D3DBLEND_ZERO, DxVBLibA.CONST_D3DBLEND.D3DBLEND_ONE, false );
 			int invis = Engine.Gl.RGBA( 0, 0, 0, 0 );
 			Engine.Screen2DImmediate.DRAW_FilledBox( x, y, x+width, y+height, invis, invis, invis, invis );
-			Engine.Screen2DImmediate.SETTINGS_SetAlphaTest( true, 128 );
+			//Engine.Screen2DImmediate.SETTINGS_SetBlendingMode( DxVBLibA.CONST_D3DBLEND.D3DBLEND_SRCALPHA, DxVBLibA.CONST_D3DBLEND.D3DBLEND_INVSRCALPHA, true );
 			Engine.Screen2DImmediate.ACTION_End2D();
 			_render_surface.EndRender();
 		}
 
-		public static Texture invisible;
-		static int fire_width = 32;
-		static int fire_height = 32;
-		static TVRenderSurface rs = Engine.TV3DScene.CreateRenderSurface(fire_width,fire_height,false,0,0);
-		public static ITexture GetInvisible() {
-			if ( invisible != null ) return invisible;
-			invisible = new Texture();
-			// TODO: what dimensions?
-			rs.StartRender( true );
-			int i, j, cc;
-			cc = Engine.Gl.RGBA(0,0,0,0);
-			Engine.Screen2DImmediate.ACTION_Begin2D();
-			for ( i=0; i<fire_width; i++ ) {
-				for ( j=0; j<fire_height; j++ ) {
-					Engine.Screen2DImmediate.DRAW_Point( i, j, cc );
-				}
-			}
-			Engine.Screen2DImmediate.ACTION_End2D();
-			rs.EndRender();
-			invisible._id = rs.GetTexture();
-			invisible._name = "invisible";
-			//rs.Destroy();
-			return invisible;
-		}
+//		public static Texture invisible;
+//		static int fire_width = 32;
+//		static int fire_height = 32;
+//		static TVRenderSurface rs = Engine.TV3DScene.CreateRenderSurface(fire_width,fire_height,false,0,0);
+//		public static ITexture GetInvisible() {
+//			if ( invisible != null ) return invisible;
+//			invisible = new Texture();
+//			// TODO: what dimensions?
+//			rs.StartRender( true );
+////			int i, j, cc;
+////			cc = Engine.Gl.RGBA(0,0,0,0);
+////			Engine.Screen2DImmediate.ACTION_Begin2D();
+////			for ( i=0; i<fire_width; i++ ) {
+////				for ( j=0; j<fire_height; j++ ) {
+////					Engine.Screen2DImmediate.DRAW_Point( i, j, cc );
+////				}
+////			}
+////			Engine.Screen2DImmediate.ACTION_End2D();
+//			rs.EndRender();
+//			invisible._id = rs.GetTexture();
+//			invisible._name = "invisible";
+//			//rs.Destroy();
+//			return invisible;
+//		}
 
 		public string Name {
 			get { return _name; }
