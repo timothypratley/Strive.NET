@@ -234,7 +234,7 @@
             "SourcePath" = "8:C:\\Program Files\\Microsoft SQL Server\\80\\Tools\\Binn\\sqldmo80.cnt"
             "TargetName" = "8:sqldmo80.cnt"
             "Tag" = "8:"
-            "Folder" = "8:_F04EF641DEBE41D68882D9538613414D"
+            "Folder" = "8:_1F987B663BFE4B86BA4C68A2DB730209"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -314,7 +314,7 @@
             "SourcePath" = "8:C:\\Program Files\\Microsoft SQL Server\\80\\Tools\\Binn\\sqldmo80.hlp"
             "TargetName" = "8:sqldmo80.hlp"
             "Tag" = "8:"
-            "Folder" = "8:_F04EF641DEBE41D68882D9538613414D"
+            "Folder" = "8:_1F987B663BFE4B86BA4C68A2DB730209"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -547,6 +547,20 @@
             "Icon" = "8:"
             "Feature" = "8:"
             }
+            "{D0C99CFE-1238-11D3-8E00-00C04F6837D0}:_31DE94A378DE4DE68D089ABE5206C002"
+            {
+            "Name" = "8:SQLDMO Api Help.hlp"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_A8E0262ED5A64B90B2189B56579BF6A0"
+            "Folder" = "8:_DCADFA6C2B4E42679418057C3199D2A3"
+            "WorkingFolder" = "8:_1F987B663BFE4B86BA4C68A2DB730209"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "Sequences"
         {
@@ -648,7 +662,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SQLDMO Object Library"
         "ProductCode" = "8:{276B296F-1555-43E8-9EDD-69E644A738ED}"
-        "PackageCode" = "8:{BD26794E-0CB0-4BA9-A125-BB72DB64C11D}"
+        "PackageCode" = "8:{A525E842-30E9-4178-99A7-EBB55C7FB919}"
         "UpgradeCode" = "8:{1BB3DF72-4FF2-4D0A-BCDC-6D854952E30B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
