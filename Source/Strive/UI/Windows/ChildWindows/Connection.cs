@@ -342,10 +342,10 @@ namespace Strive.UI.Windows.ChildWindows
 					StriveWindowState = ConnectionWindowState.Connecting;
 					Application.DoEvents();
 
-					Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), protocol, Game.CurrentMainWindow.RenderTarget);
 					ConnectionProgress.Visible = true;
 					ConnectionProgress.Value = 0;
 					timer1.Start();
+					Game.Play(ServerAddress.Text, Email.Text, Password.Text, int.Parse(PortNumber.Text), protocol, Game.CurrentMainWindow.RenderTarget);
 					break;
 				}
 				case ConnectionWindowState.Connecting:
@@ -454,8 +454,8 @@ namespace Strive.UI.Windows.ChildWindows
 				case ConnectionWindowState.Playing:
 				{
 					this.Text = "Playing";
-					this.Close();
 					timer1.Stop();
+					this.Close();
 					break;
 				}
 				

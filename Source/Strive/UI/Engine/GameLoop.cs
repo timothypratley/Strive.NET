@@ -30,22 +30,26 @@ namespace Strive.UI.Engine
 		public GameLoop()
 		{
 			movementTimer = new AccurateTimer();
-			thisThread = new StoppableThread( new StoppableThread.WhileRunning( MainLoop ) );
+			//thisThread = new StoppableThread( new StoppableThread.WhileRunning( MainLoop ) );
 		}
 	
+
+		public bool isRunning = false;
 
 		public void Start(ServerConnection connection)
 		{
 			_connection = connection;
+			isRunning = true;
+			//thisThread.Start();
 
 			// reset the movement timer
 			movementTimer.ElapsedSeconds();
-			thisThread.Start();
 		}
 
 		public void Stop() 
 		{
-			thisThread.Stop();
+			//thisThread.Stop();
+			isRunning = false;
 		}
 
 		public void MainLoop()
