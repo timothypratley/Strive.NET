@@ -40,7 +40,7 @@ namespace Strive.Server
 		public void Update() {
 			if ( target != null ) {
 				CombatUpdate();
-			} else if ( IsPlayer() ) {
+			} else if ( !IsPlayer() ) {
 				BehaviourUpdate();
 			}
 			HealUpdate();
@@ -58,7 +58,7 @@ namespace Strive.Server
 			// continue doing whatever you were doing
 			if ( Global.now - lastMoveUpdate > TimeSpan.FromSeconds( 1 ) ) {
 				if ( MobileState >= EnumMobileState.Standing ) {
-					Heading.Transform( Strive.Math3D.Matrix3D.FromRotation( Global.up, (float)(Global.random.NextDouble()/10.0) ) );
+					Heading.Transform( Strive.Math3D.Matrix3D.FromRotation( Global.up, (float)(Global.random.NextDouble()*3.0-1.5) ) );
 				}
 				Vector3D velocity = Heading.GetUnit();
 				switch ( MobileState ) {
@@ -74,7 +74,7 @@ namespace Strive.Server
 						break;
 				}
 			}
-			if ( Global.now - lastBehaviourUpdate > TimeSpan.FromSeconds( 10 ) ) {
+			if ( Global.now - lastBehaviourUpdate > TimeSpan.FromSeconds( 3 ) ) {
 				// change behaviour?
 				lastBehaviourUpdate = Global.now;
 				if ( MobileState > EnumMobileState.Incapacitated ) {
@@ -82,9 +82,15 @@ namespace Strive.Server
 					if ( rand > 1 && MobileState > EnumMobileState.Sleeping ) {
 						MobileState--;
 						System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState+1) + " to " + MobileState );
+						world.InformNearby( this,
+							new Strive.Network.Messages.ToClient.MobileState( this )
+						);
 					} else if ( rand < -1 && MobileState < EnumMobileState.Running ) {
 						MobileState++;
 						System.Console.WriteLine( ObjectTemplateName + " changed behaviour from " + (MobileState-1) + " to " + MobileState );
+						world.InformNearby( this,
+							new Strive.Network.Messages.ToClient.MobileState( this )
+						);
 					}
 				}
 			}

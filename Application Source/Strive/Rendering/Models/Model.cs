@@ -10,8 +10,7 @@ namespace Strive.Rendering.Models
 	/// Represents a wireframe with textures
 	/// </summary>
 	/// <remarks>This class is designed to shield clients from the internal workings of how models are stored and represented.</remarks>
-	public class Model : IManeuverable
-	{
+	public class Model : IManeuverable {
 
 		#region "Fields"
 		private ModelFormat _format = ModelFormat.Unspecified;
@@ -64,11 +63,9 @@ namespace Strive.Rendering.Models
 		/// <param name="path">The path at which the model can be loaded</param>
 		/// <param name="format">The format of the model</param>
 		/// <returns>A reference to the loaded Model</returns>
-		public static Model Load(string key, string path, ModelFormat format)
-		{
+		public static Model Load(string key, string path, ModelFormat format) {
 			
-			if(!System.IO.File.Exists(path))
-			{
+			if(!System.IO.File.Exists(path)) {
 				throw new System.IO.FileNotFoundException("Could not load model", path);
 			}
 			
@@ -82,36 +79,28 @@ namespace Strive.Rendering.Models
 			loadedModel._key = key;
 
 			// 2.0 Create appropriate model in interop layer
-			switch(format)
-			{
-				case ModelFormat.MDL:
-				{
-					try
-					{
+			switch(format) {
+				case ModelFormat.MDL: {
+					try {
 						Interop._instance.MdlSystem.MDL_Load(key, path);
 					}
-					catch(Exception e)
-					{
+					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
 					}
 					break;
 				}
-				case ModelFormat._3DS:
-				{
-					try
-					{
+				case ModelFormat._3DS: {
+					try {
 						Interop._instance.Meshbuilder.Mesh_Create(key);
 						Interop._instance.Meshbuilder.Mesh_Add3DS( path,false,false,false,false);
 					}
-					catch(Exception e)
-					{
+					catch(Exception e) {
 						throw new ModelNotLoadedException(path, format, e);
 					}
 					break;
 				}
 
-				default:
-				{
+				default: {
 					// Unhandled model format encountered
 					throw new ModelFormatUnknownException(path, format);
 				}
@@ -125,18 +114,15 @@ namespace Strive.Rendering.Models
 		/// <summary>
 		/// Sets the internal MDL pointer
 		/// </summary>
-		protected void setPointer()
-		{
-			try
-			{
+		protected void setPointer() {
+			try {
 				if ( _format == ModelFormat.MDL ) {
 					Interop._instance.MdlSystem.MDL_SetPointer(this.Key);
 				} else  {
 					Interop._instance.Meshbuilder.Mesh_SetPointer(this.Key);
 				}
 			}
-			catch(Exception e)
-			{
+			catch(Exception e) {
 				throw new ModelException("Could not set pointer to '" + this.Key + "'.", e);
 			}
 		}
@@ -151,26 +137,27 @@ namespace Strive.Rendering.Models
 			Interop._instance.Meshbuilder.Mesh_SetTexture( 0, texture );
 		}
 
+		public void nextFrame() {
+			setPointer();
+			Interop._instance.MdlSystem.MDL_SequenceMoveFrame( 1, true );
+		}
+
 		#endregion
 
 		#region "Properties"
 		/// <summary>
 		/// The format of the underlying model
 		/// </summary>
-		public ModelFormat ModelFormat
-		{
-			get
-			{
+		public ModelFormat ModelFormat {
+			get {
 				return _format;
 			}
 		}
 		/// <summary>
 		/// The key of the underlying model
 		/// </summary>
-		public string Key
-		{
-			get
-			{
+		public string Key {
+			get {
 				return _key;
 			}
 		}
@@ -183,6 +170,39 @@ namespace Strive.Rendering.Models
 				setPointer();
 				Interop._instance.Meshbuilder.Mesh_GetBoundingSphere( ref center, ref radius, ref worldspace );
 				return radius;
+			}
+		}
+
+		public int AnimationSequence {
+			set {
+				string sequence;		
+				switch( value ) {
+					case 0:
+						sequence = "look_idle";
+						break;
+					case 1:
+						sequence = "look_idle";
+						break;
+					case 2:
+						sequence = "idle";
+						break;
+					case 3:
+						sequence = "run2";
+						break;
+					case 4:
+						sequence = "walk2handed";
+						break;
+					case 5:
+						sequence = "crawl";
+						break;
+					case 6:
+						sequence = "die_spin";
+						break;
+					default:
+						throw new Exception( "Unknown sequence" );
+				}
+				Interop._instance.MdlSystem.MDL_SequenceSet( sequence );
+				Interop._instance.MdlSystem.MDL_SequenceSetFrame( 0 );
 			}
 		}
 

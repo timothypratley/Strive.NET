@@ -53,7 +53,16 @@ namespace Strive.UI.Modules
 				ProcessOutstandingMessages();
 				ProcessKeyboardInput();
 				ProcessMouseInput();
+				ProcessAnimations();
 				Render();
+			}
+		}
+
+		private static void ProcessAnimations() {
+			foreach ( Model model in _scene.Models.Values ) {
+				if ( model.ModelFormat == ModelFormat.MDL ) {
+					model.nextFrame();
+				}
 			}
 		}
 
@@ -170,6 +179,21 @@ namespace Strive.UI.Modules
 				else if ( m is Strive.Network.Messages.ToClient.MobileState) {
 					Strive.Network.Messages.ToClient.MobileState ms = (Strive.Network.Messages.ToClient.MobileState)m;
 					Global._log.LogMessage( "Mobile " + ms.ObjectInstanceID + " is " + ms.State );
+					#region 1.1.1 Check that the model exists
+					if ( ms.ObjectInstanceID == Global._myid ) {
+						// ignoring self positions for now
+						continue;
+					}
+					Model workingModel;
+					try {
+						workingModel = _scene.Models[ms.ObjectInstanceID.ToString()];
+					} catch (Exception) {
+						Global._log.ErrorMessage( "Model for " + ms.ObjectInstanceID + " has not been loaded" );
+						continue;
+					}
+					#endregion
+
+					workingModel.AnimationSequence = (int)ms.State;
 				}
 				#endregion
 					#region CurrentHitpoints

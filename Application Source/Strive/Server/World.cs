@@ -308,6 +308,11 @@ namespace Strive.Server {
 				foreach ( PhysicalObject p in nearbyPhysicalObjects ) {
 					Strive.Network.Messages.ToClient.AddPhysicalObject message = new Strive.Network.Messages.ToClient.AddPhysicalObject( p );
 					client.Send( message );
+					if ( p is Mobile ) {
+						client.Send(
+							new Strive.Network.Messages.ToClient.MobileState( (Mobile)p )
+						);
+					}
 				}
 			}
 		}
