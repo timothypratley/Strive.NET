@@ -1,6 +1,6 @@
 using System;
 
-namespace Strive.Rendering.R3D.Models
+namespace Strive.Rendering.TV3D.Models
 {
 	/// <summary>
 	/// Used to unique identify a model within the model collection.

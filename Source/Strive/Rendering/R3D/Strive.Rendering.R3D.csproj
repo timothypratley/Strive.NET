@@ -3,20 +3,20 @@
         ProjectType = "Local"
         ProductVersion = "7.0.9466"
         SchemaVersion = "1.0"
-        ProjectGuid = "{F814C2A2-F0A3-4742-A49E-FF3527A03F12}"
+        ProjectGuid = "{60959A92-CEA0-421D-86DE-97F4B5E85D8E}"
     >
         <Build>
             <Settings
                 ApplicationIcon = ""
                 AssemblyKeyContainerName = ""
-                AssemblyName = "Strive.Rendering"
+                AssemblyName = "Strive.Rendering.R3D"
                 AssemblyOriginatorKeyFile = ""
                 DefaultClientScript = "JScript"
                 DefaultHTMLPageLayout = "Grid"
                 DefaultTargetSchema = "IE50"
                 DelaySign = "false"
                 OutputType = "Library"
-                RootNamespace = "Strive.Rendering"
+                RootNamespace = "Strive.Rendering.R3D"
                 StartupObject = ""
             >
                 <Config
@@ -29,7 +29,7 @@
                     DocumentationFile = ""
                     DebugSymbols = "true"
                     FileAlignment = "4096"
-                    IncrementalBuild = "false"
+                    IncrementalBuild = "true"
                     Optimize = "false"
                     OutputPath = "bin\Debug\"
                     RegisterForComInterop = "false"
@@ -60,30 +60,7 @@
                 <Reference
                     Name = "System"
                     AssemblyName = "System"
-                    HintPath = "..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.dll"
-                />
-                <Reference
-                    Name = "stdole"
-                    Guid = "{00020430-0000-0000-C000-000000000046}"
-                    VersionMajor = "2"
-                    VersionMinor = "0"
-                    Lcid = "0"
-                    WrapperTool = "primary"
-                />
-                <Reference
-                    Name = "System.Drawing"
-                    AssemblyName = "System.Drawing"
-                    HintPath = "..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Drawing.dll"
-                />
-                <Reference
-                    Name = "System.Windows.Forms"
-                    AssemblyName = "System.Windows.Forms"
-                    HintPath = "..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Windows.Forms.dll"
-                />
-                <Reference
-                    Name = "Strive.Math3D"
-                    Project = "{14818E27-DABB-4332-B572-21BA9983D886}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.dll"
                 />
                 <Reference
                     Name = "System.Data"
@@ -95,22 +72,61 @@
                     AssemblyName = "System.Xml"
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.XML.dll"
                 />
+                <Reference
+                    Name = "stdole"
+                    Guid = "{00020430-0000-0000-C000-000000000046}"
+                    VersionMajor = "2"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "primary"
+                />
+                <Reference
+                    Name = "R3D089_VBasic"
+                    Guid = "{6124ED39-62F9-4D4B-8CA1-56499F5DC07B}"
+                    VersionMajor = "1"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
+                />
+                <Reference
+                    Name = "DxVBLibA"
+                    Guid = "{E1211242-8E94-11D1-8808-00C04FC2C603}"
+                    VersionMajor = "1"
+                    VersionMinor = "0"
+                    Lcid = "0"
+                    WrapperTool = "tlbimp"
+                />
+                <Reference
+                    Name = "Strive.Common"
+                    Project = "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Strive.Math3D"
+                    Project = "{14818E27-DABB-4332-B572-21BA9983D886}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "System.Windows.Forms"
+                    AssemblyName = "System.Windows.Forms"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.Windows.Forms.dll"
+                />
+                <Reference
+                    Name = "Strive.Rendering"
+                    Project = "{F814C2A2-F0A3-4742-A49E-FF3527A03F12}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
             <Include>
-                <File
-                    RelPath = "Activator.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
                 <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "EnumRenderTarget.cs"
+                    RelPath = "Engine.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -120,52 +136,42 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "IEngine.cs"
+                    RelPath = "Scene.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "IManeuverable.cs"
+                    RelPath = "VectorConverter.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "IScene.cs"
+                    RelPath = "Cameras\Camera.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Resolution.cs"
+                    RelPath = "Cameras\CameraCollection.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Cameras\EnumCommonCameraView.cs"
+                    RelPath = "Controls\Keyboard.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Cameras\ICamera.cs"
+                    RelPath = "Controls\Keys.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Cameras\ICameraCollection.cs"
+                    RelPath = "Controls\Mouse.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Controls\IKeyboard.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Controls\IMouse.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Controls\Key.cs"
+                    RelPath = "Models\Actor.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -175,27 +181,22 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Models\IActor.cs"
+                    RelPath = "Models\Model.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Models\IModel.cs"
+                    RelPath = "Models\ModelCollection.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Models\IModelCollection.cs"
+                    RelPath = "Models\Terrain.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Models\ITerrain.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Textures\ITexture.cs"
+                    RelPath = "Textures\Texture.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

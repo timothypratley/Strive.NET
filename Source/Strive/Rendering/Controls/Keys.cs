@@ -2,7 +2,7 @@ using System;
 using DxVBLibA;
 using R3D089_VBasic;
 
-namespace Strive.Rendering.Controls
+namespace Strive.Rendering.R3D.Controls
 {
 	/// <summary>
 	/// Represents a single keyboard key

@@ -1,10 +1,10 @@
 using System;
 using Strive.Math3D;
 
-using R3D089_VBasic;
+using TrueVision3D;
 using Strive.Rendering.Cameras;
 
-namespace Strive.Rendering.R3D.Cameras
+namespace Strive.Rendering.TV3D.Cameras
 {
 	/// <summary>
 	/// Represents the current view of the scene
@@ -18,6 +18,8 @@ namespace Strive.Rendering.R3D.Cameras
 		private float _viewDistance;
 		private string _key;
 
+		static Camera thisCamera = new Camera();
+
 		#endregion
 
 		#region "Constructors"
@@ -30,52 +32,15 @@ namespace Strive.Rendering.R3D.Cameras
 		#endregion
 
 		#region "Factory initializer"
-		// todo: do we really care about multiple cameras???
 		public static Camera CreateCamera(string cameraKey) {
 			// handle the default view
-			if(cameraKey == EnumCommonCameraView.Default.ToString()) {
-				Camera c = new Camera();
-				c._key = cameraKey;
-				c.Position = Vector3D.Origin;
-				return c;
-			}
-			else {
-			
-				Camera c = new Camera();			
-				c._key = cameraKey;
-				c.Position = Vector3D.Origin;
-				Engine.Cameras.Camera_Create(cameraKey);
-				Engine.Cameras.Class_SetPointer(cameraKey);
-				return c;
-			}
+			// there is only one camera in TV3D
+			Engine.Camera.SetCamera(0f, 0f, 0f, 0f, 0f, 0f);
+			return thisCamera;
 		}
-		#endregion
-
-		#region "Operators
-
 		#endregion
 
 		#region "Properties"
-		/// <summary>
-		/// Revolution specific camera attributes
-		/// </summary>
-		protected R3DCameraAttributes Attributes
-		{
-			get
-			{
-				R3DCameraAttributes _attributes = Engine.Cameras.Camera_GetAttributes();
-				return _attributes;
-			}
-		}
-
-		protected void initialisePointer()
-		{
-			if(_key != EnumCommonCameraView.Default.ToString())
-			{
-				Engine.Cameras.Class_SetPointer(_key);
-			}
-		}
-
 
 		/// <summary>
 		/// The depth of field (width of vision) for the camera
@@ -88,21 +53,10 @@ namespace Strive.Rendering.R3D.Cameras
 			}
 			set
 			{
-				try
-				{
-					initialisePointer();
-					R3DCameraAttributes attributes = this.Attributes;
-					Engine.Cameras.Camera_SetAttributes(ref attributes);
-
-				}
-				catch(Exception e)
-				{
-					throw new SceneException("Could not set field of view", e);
-				}
 				_fieldOfView = value;
-				
 			}
 		}
+
 		/// <summary>
 		/// The view distance for the camera
 		/// </summary>
@@ -141,13 +95,7 @@ namespace Strive.Rendering.R3D.Cameras
 
 		#region "Methods"
 		public Vector2D ProjectPoint( Vector3D point ) {
-			R3DVector3D namePos = new R3DVector3D();
-			namePos.x = point.X;
-			namePos.y = point.Y;
-			namePos.z = point.Z;
-			R3DVector2D nameLoc = new R3DVector2D();
-			nameLoc = Engine.Cameras.Camera_ProjectPoint( ref namePos );
-			return new Vector2D( nameLoc.x, nameLoc.y );
+			return new Vector2D( 0, 0 );
 		}
 
 		#endregion
@@ -163,9 +111,7 @@ namespace Strive.Rendering.R3D.Cameras
 			Vector3D newPosition = _position + movement;
 			try
 			{
-				initialisePointer();
-				R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(newPosition);
-				Engine.Cameras.Camera_SetPosition(ref r);
+				Engine.Camera.SetPosition(newPosition.X, newPosition.Y, newPosition.Z);
 			}
 			catch(Exception e)
 			{
@@ -186,9 +132,7 @@ namespace Strive.Rendering.R3D.Cameras
 			Vector3D newRotation = _rotation + rotation;
 			try
 			{
-				initialisePointer();
-				R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(newRotation);
-				Engine.Cameras.Camera_SetRotation(ref r);
+				Engine.Camera.SetRotation( newRotation.X, newRotation.Y, newRotation.Z );
 			}
 			catch(Exception e)
 			{
@@ -212,9 +156,7 @@ namespace Strive.Rendering.R3D.Cameras
 			{
 				try 
 				{
-					initialisePointer();
-					R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(value);
-					Engine.Cameras.Camera_SetPosition(ref r);
+					Engine.Camera.SetPosition(value.X, value.Y, value.Z);
 				}
 				catch(Exception e) 
 				{
@@ -237,12 +179,7 @@ namespace Strive.Rendering.R3D.Cameras
 			{
 				try 
 				{
-					initialisePointer();
-					R3DVector3D r = VectorConverter.GetR3DVector3DFromVector3D(value);
-					r.x = -r.x;
-					r.y = -r.y;
-					r.z = -r.z;
-					Engine.Cameras.Camera_SetRotation(ref r);
+					Engine.Camera.SetRotation( value.X, value.Y, value.Z );
 				}
 				catch(Exception e) 
 				{

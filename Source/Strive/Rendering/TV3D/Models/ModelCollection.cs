@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 
-using Strive.Rendering.R3D;
+using Strive.Rendering.TV3D;
 using Strive.Rendering.Models;
 
-namespace Strive.Rendering.R3D.Models
+namespace Strive.Rendering.TV3D.Models
 {
 	/// <summary>
 	/// A strongly typed collection of models
@@ -33,12 +33,12 @@ namespace Strive.Rendering.R3D.Models
 			base.Add(model.Name, model);
 		}
 
-		public void Remove( string key )
+		public void Remove( string name )
 		{
-			Model indexedModel = (Model)base[key];
+			Model indexedModel = (Model)base[name];
 			if ( indexedModel != null ) {
 				indexedModel.Delete();
-				base.Remove(key);
+				base.Remove(name);
 			}
 		}
 

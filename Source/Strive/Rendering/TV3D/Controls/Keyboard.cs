@@ -1,10 +1,9 @@
 using System;
 
 using Strive.Rendering.Controls;
-using DxVBLibA;
-using R3D089_VBasic;
+using TrueVision3D;
 
-namespace Strive.Rendering.R3D.Controls
+namespace Strive.Rendering.TV3D.Controls
 {
 	/// <summary>
 	/// Deals with keyboard input
@@ -18,8 +17,7 @@ namespace Strive.Rendering.R3D.Controls
 		/// <returns>A true/false indicating that the Key was pressed</returns>
 		public bool GetKeyState(Strive.Rendering.Controls.Key Key)
 		{
-			R3DKey r = (R3DKey)Key;
-			return Engine.Control.Keyboard_GetKeyState(ref r);
+			return Engine.Input.IsKeyPressed( Keys.getTVKeyFromKey(Key) );
 		}
 	}
 }

@@ -3,6 +3,7 @@ using Strive.Math3D;
 
 using R3D089_VBasic;
 using Strive.Rendering.Models;
+using Strive.Rendering.Textures;
 using Strive.Rendering.R3D;
 
 namespace Strive.Rendering.R3D.Models {
@@ -10,7 +11,7 @@ namespace Strive.Rendering.R3D.Models {
 	/// Represents a wireframe with textures
 	/// </summary>
 	/// <remarks>This class is designed to shield clients from the internal workings of how models are stored and represented.</remarks>
-	public class Model : IModel {
+	public class Terrain : ITerrain {
 
 		#region "Fields"
 		public float BoundingSphereRadiusSquared;
@@ -26,36 +27,29 @@ namespace Strive.Rendering.R3D.Models {
 		#endregion
 
 		#region "Factory Initialisers"
-		public static IModel Load( string name, string path ) {
-			if(!System.IO.File.Exists(path)) {
-				throw new System.IO.FileNotFoundException("Could not load model '" + path + "'", path);
-			}
-			Model loadedModel = new Model();
-			loadedModel._key = name;
-			// todo: fix bounding radius
-			loadedModel.BoundingSphereRadiusSquared = 100;
-
-			try {
-				R3D_3DStudio _3dsfile = new R3D_3DStudioClass();
-				_3dsfile.File_Open(path);
-				_3dsfile.File_ReadMaterials();
-				_3dsfile.File_ReadTextures();
-				//_3dsfile.File_ReadScene(loadedModel.Key, true, false, true);
-				_3dsfile.File_ReadMeshes(name, true, true,true,true,true);	
-				_3dsfile.File_Close();
-
-				Engine.MeshBuilder.Mesh_Create( name );
-				//Engine.Meshbuilder.Mesh_SetCullMode(R3DCULLMODE.R3DCULLMODE_DOUBLESIDED);
-				//Engine.Meshbuilder.Mesh_SetLayerConfig(0, R3DLAYERCONFIG.R3DLAYERCONFIG_MONOCHROME);
-				//System.Windows.Forms.MessageBox.Show(Engine.TextureLib.Class_GetNumTextures().ToString());
-						
-				loadedModel.BoundingSphereRadiusSquared = 1000;
-			}
-			catch(Exception e) {
-				throw new ModelNotLoadedException(path, e);
-			}
-			loadedModel.Position = Vector3D.Origin;
-			return loadedModel;
+		public static Terrain CreateTerrain( string name, ITexture texture ) {
+			int id = Engine.MeshBuilder.Mesh_Create( name );
+			R3DVector3D p1, p2, p3, p4;
+			p1.x = 0;
+			p1.y = 0;
+			p1.z = 0;
+			p2.x = 0;
+			p2.y = 0;
+			p2.z = 100;
+			p3.x = 100;
+			p3.y = 0;
+			p3.z = 100;
+			p4.x = 100;
+			p4.y = 0;
+			p4.z = 0;
+			Engine.MeshBuilder.Mesh_AddPlane( ref p1, ref p2, ref p3, ref p4, texture.Name, "", R3DBLENDMODE.R3DBLENDMODE_NONE, true);
+			Terrain created = new Terrain();
+			created._key = name;
+			created._id = id;
+			// todo: fix this hax,
+			// atm set to 0 as this is assumed to be terrain...
+			created.BoundingSphereRadiusSquared = 0;
+			return created;
 		}
 
 
@@ -79,9 +73,14 @@ namespace Strive.Rendering.R3D.Models {
 				Engine.MeshBuilder.Mesh_SetActivate( true );
 		}
 
-		public void applyTexture( string texture ) {
+		public void applyTexture( ITexture texture ) {
 			Engine.MeshBuilder.Class_SetPointer(this.Name);
-			Engine.MeshBuilder.Mesh_SetTexture( 0, texture );
+			Engine.MeshBuilder.Mesh_SetTexture( 0, texture.Name );
+		}
+
+		public float HeightLookup( float x, float z ) {
+			// todo: implement
+			return 0;
 		}
 
 		#endregion
