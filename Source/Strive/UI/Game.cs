@@ -137,13 +137,19 @@ namespace Strive.UI
 
 			CurrentInputProcessor.ProcessPlayerInput();
 
-			// display the new world
-			Game.CurrentWorld.Render();
-
-			// TODO: UMG this hack is because TV3D updates its relative mouse state
-			// on every render (ghey) AND their absolute mouse pos is shit.
-			CurrentInputProcessor.AccumulateMouse();
-			Game.CurrentWorld.RenderMiniMap();
+			// display the new world if the form is maximised
+			if(Game.CurrentMainWindow.WindowState != FormWindowState.Minimized)
+			{
+				Game.CurrentWorld.Render();
+				// TODO: UMG this hack is because TV3D updates its relative mouse state
+				// on every render (ghey) AND their absolute mouse pos is shit.
+				CurrentInputProcessor.AccumulateMouse();
+				Game.CurrentWorld.RenderMiniMap();
+			}
+			else
+			{
+				System.Threading.Thread.Sleep(1000);
+			}
 		}
 
 		static void ProcessOutstandingMessages() {

@@ -1,6 +1,22 @@
 <%@ Control Language="c#" AutoEventWireup="false" Codebehind="Screenshots.ascx.cs" Inherits="www.strive3d.net.Screenshots" TargetSchema="http://schemas.microsoft.com/intellisense/ie5" %>
 <%@ Register TagPrefix="Portal" TagName="Title" Src="~/DesktopModuleTitle.ascx"%>
 <portal:title runat="server" ID="Title1" NAME="Title1"/>
+<script language=C# runat="server">
+class FileDateSorter : System.Collections.IComparer
+{
+ public int Compare(object a, object b)
+ {
+  System.IO.FileInfo f1 = (System.IO.FileInfo)a;
+  System.IO.FileInfo f2 = (System.IO.FileInfo)b;
+  
+  if(f1.LastWriteTime  > f2.LastWriteTime ) { return -1; } 
+  else if(f1.LastWriteTime  < f2.LastWriteTime ) { return 1; }
+  else {return 0; }
+
+}
+}
+
+</script>
 <%
 const string downloadsFolder = "~/screenshots";
 
@@ -8,10 +24,13 @@ const string downloadsFolder = "~/screenshots";
 <table>
 	<tr>
 <%
+System.IO.FileInfo[] files = new System.IO.DirectoryInfo(Server.MapPath(downloadsFolder)).GetFiles();
+System.Array.Sort(files, new FileDateSorter());
 int count = 0;			
-foreach(string s in System.IO.Directory.GetFiles(Server.MapPath(downloadsFolder)))
+foreach(System.IO.FileInfo f in files)
 {
-	DateTime created = System.IO.File.GetCreationTime(s);
+	DateTime created = f.LastWriteTime ;
+	string s = f.FullName;
 	if(count % 4 == 0)
 	{
 %>

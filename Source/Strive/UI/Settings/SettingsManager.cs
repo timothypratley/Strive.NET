@@ -74,14 +74,17 @@ namespace Strive.UI.Settings
 				windowRow = RecentWindowSettings.Rows.Find(window.Text);
 			}
 
-			windowRow["windowstate"] = window.WindowState.ToString();
-			// only set these values if the window is "normal"
-			if(window.WindowState == System.Windows.Forms.FormWindowState.Normal)
+			if(window.WindowState != System.Windows.Forms.FormWindowState.Minimized)
 			{
-				windowRow["windowheight"] = window.Height;
-				windowRow["windowwidth"] = window.Width;
-				windowRow["windowleft"] = window.Left;
-				windowRow["windowtop"] = window.Top;
+				windowRow["windowstate"] = window.WindowState.ToString();
+				// only set these values if the window is "normal"
+				if(window.WindowState == System.Windows.Forms.FormWindowState.Normal)
+				{
+					windowRow["windowheight"] = window.Height;
+					windowRow["windowwidth"] = window.Width;
+					windowRow["windowleft"] = window.Left;
+					windowRow["windowtop"] = window.Top;
+				}
 			}
 
 			if(!RecentWindowSettings.Rows.Contains(window.Text))
