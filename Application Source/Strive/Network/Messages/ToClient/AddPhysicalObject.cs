@@ -10,15 +10,15 @@ namespace Strive.Network.Messages.ToClient
 	public class AddPhysicalObject : IMessage
 	{
 		public AddPhysicalObject( PhysicalObject po ) {
-			this.instance_id = po.instance.ObjectInstanceID;
-			this.model_id = po.template.ModelID;
-			this.name = po.template.ObjectTemplateName;
-			this.x = (float)po.instance.X;
-			this.y = (float)po.instance.Y;
-			this.z = (float)po.instance.Z;
-			this.heading_x = (float)po.instance.HeadingX;
-			this.heading_y = (float)po.instance.HeadingY;
-			this.heading_z = (float)po.instance.HeadingZ;
+			this.instance_id = po.ObjectInstanceID;
+			this.model_id = po.ModelID;
+			this.name = po.ObjectTemplateName;
+			this.x = (float)po.X;
+			this.y = (float)po.Y;
+			this.z = (float)po.Z;
+			this.heading_x = (float)po.HeadingX;
+			this.heading_y = (float)po.HeadingY;
+			this.heading_z = (float)po.HeadingZ;
 		}
 
 		public int instance_id;

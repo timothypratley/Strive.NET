@@ -71,49 +71,49 @@ namespace Strive.Server {
 				Schema.TemplateTerrainRow tr = multiverse.TemplateTerrain.FindByObjectTemplateID( rpr.ObjectTemplateID );
 				
 				if ( mr != null ) {
-					Avatar a = new Avatar(
+					MobileAvatar a = new MobileAvatar(
 						mr,
 						por,
 						rpr	);
 					// NB: we only add avatars to our world, not mobiles
 					Add( a );
 				} else if ( qr != null ) {
-					QuaffableBase q = new QuaffableBase(
+					Quaffable q = new Quaffable(
 						qr,
 						multiverse.TemplateItem.FindByObjectTemplateID( qr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( q );
 				} else if ( er != null ) {
-					EquipableBase e = new EquipableBase(
+					Equipable e = new Equipable(
 						er,
 						multiverse.TemplateItem.FindByObjectTemplateID( er.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( e );
 				} else if ( rr != null ) {
-					ReadableBase r = new ReadableBase(
+					Readable r = new Readable(
 						rr,
 						multiverse.TemplateItem.FindByObjectTemplateID( rr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( r );
 				} else if ( wr != null ) {
-					WieldableBase w = new WieldableBase(
+					Wieldable w = new Wieldable(
 						wr,
 						multiverse.TemplateItem.FindByObjectTemplateID( wr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( w );
 				} else if ( jr != null ) {
-					JunkBase j = new JunkBase(
+					Junk j = new Junk(
 						jr,
 						multiverse.TemplateItem.FindByObjectTemplateID( jr.ObjectTemplateID ),
 						por,
 						rpr );
 					Add( j );
 				} else if ( tr != null ) {
-					TerrainBase t = new TerrainBase(
+					Terrain t = new Terrain(
 						tr,
 						por,
 						rpr );
@@ -143,11 +143,12 @@ namespace Strive.Server {
 				Shuffle( mobilesArrayList );
 
 				// combat update
-				foreach ( Mobile mob in mobilesArrayList ) {
+				foreach ( MobileAvatar mob in mobilesArrayList ) {
 					mob.CombatUpdate();
 				}
 
-				foreach ( Mobile mob in mobilesArrayList ) {
+				// peace update
+				foreach ( MobileAvatar mob in mobilesArrayList ) {
 					mob.PeaceUpdate();
 				}
 
@@ -170,20 +171,20 @@ namespace Strive.Server {
 
 		public void Add( PhysicalObject po ) {
 			if (
-				po.instance.X > highX || po.instance.Z > highZ
-				|| po.instance.X < lowX || po.instance.Z < lowZ
+				po.X > highX || po.Z > highZ
+				|| po.X < lowX || po.Z < lowZ
 			) {
 				System.Console.WriteLine( "ERROR: tried to add physical object outside the world" );
 				return;
 			}
-			int squareX = (int)(po.instance.X-lowX)/squareSize;
-			int squareZ = (int)(po.instance.Z-lowZ)/squareSize;
+			int squareX = (int)(po.X-lowX)/squareSize;
+			int squareZ = (int)(po.Z-lowZ)/squareSize;
 			int i, j;
 
 			// if a new client has entered the world,
 			// notify them about surrounding physical objects
-			if ( po is Avatar ) {
-				Client client = ((Avatar)po).client;
+			if ( po is MobileAvatar ) {
+				Client client = ((MobileAvatar)po).client;
 				if ( client != null ) {
 					ArrayList nearbyPhysicalObjects = new ArrayList();
 					ArrayList nearbyClients = new ArrayList();
@@ -233,17 +234,17 @@ namespace Strive.Server {
 			}
 
 			// actually add the object to the world
-			physicalObjects.Add( po.instance.ObjectInstanceID, po );
+			physicalObjects.Add( po.ObjectInstanceID, po );
 			if ( po is Mobile ) {
 				mobilesArrayList.Add( po );
 			}
 			squares[squareX,squareZ].Add( po );
-			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.instance.ObjectInstanceID + " to the world at (" + po.instance.X + "," + po.instance.Y + "," +po.instance.Z + ")" );
+			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " to the world at (" + po.X + "," + po.Y + "," +po.Z + ")" );
 		}
 
 		public void Move( PhysicalObject po, float x, float y, float z ) {
-			int fromSquareX = (int)po.instance.X/squareSize;
-			int fromSquareZ = (int)po.instance.Z/squareSize;
+			int fromSquareX = (int)po.X/squareSize;
+			int fromSquareZ = (int)po.Z/squareSize;
 			int toSquareX = (int)x/squareSize;
 			int toSquareZ = (int)z/squareSize;
 			int i, j;
@@ -280,20 +281,19 @@ namespace Strive.Server {
 				squares[fromSquareX,fromSquareZ].Remove( po );
 				squares[toSquareX,toSquareZ].Add( po );
 			}
-			po.instance.X = x;
-			po.instance.Y = y;
-			po.instance.Z = z;
+			po.X = x;
+			po.Y = y;
+			po.Z = z;
 		}
 
-		public Mobile LoadMobile( int instanceID ) {
+		public MobileAvatar LoadMobile( int instanceID ) {
 			Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)multiverse.ObjectInstance.FindByObjectInstanceID( instanceID );
 			if ( rpr == null ) return null;
 			Schema.ObjectTemplateRow por = multiverse.ObjectTemplate.FindByObjectTemplateID( rpr.ObjectTemplateID );
 			if ( por == null ) return null;
 			Schema.TemplateMobileRow mr = multiverse.TemplateMobile.FindByObjectTemplateID( rpr.ObjectTemplateID );
 			if ( mr == null ) return null;
-			Mobile mobile = new Mobile( mr, por, rpr );
-			return mobile;
+			return new MobileAvatar( mr, por, rpr );
 		}
 
 		public bool UserLookup( string email, string password ) {

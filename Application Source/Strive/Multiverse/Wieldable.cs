@@ -3,19 +3,19 @@ using System;
 namespace Strive.Multiverse
 {
 	/// <summary>
-	/// Summary description for Quaffable.
+	/// Summary description for Wieldable.
 	/// </summary>
-	public class QuaffableBase : Item
+	public class Wieldable : Item
 	{
-		public Schema.ItemQuaffableRow quaffable;
+		public Schema.ItemWieldableRow wieldable;
 
-		public QuaffableBase(
-			Schema.ItemQuaffableRow quaffable,
+		public Wieldable(
+			Schema.ItemWieldableRow wieldable,
 			Schema.TemplateItemRow item,
 			Schema.ObjectTemplateRow template,
 			Schema.ObjectInstanceRow instance
 		) : base( item, template, instance ) {
-			this.quaffable = quaffable;
+			this.wieldable = wieldable;
 		}
 	}
 }

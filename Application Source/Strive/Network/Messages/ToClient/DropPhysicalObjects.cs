@@ -13,7 +13,7 @@ namespace Strive.Network.Messages.ToClient
 			instanceIDs = new int[physicalObjects.Count];
 			int i = 0;
 			foreach ( PhysicalObject po in physicalObjects ) {
-				instanceIDs[i] = po.instance.ObjectInstanceID;
+				instanceIDs[i] = po.ObjectInstanceID;
 				i++;
 			}
 		}

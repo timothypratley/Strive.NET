@@ -9,7 +9,7 @@ namespace Strive.Network.Messages.ToClient
 	[Serializable]
 	public class DropPhysicalObject : IMessage {
 		public DropPhysicalObject( PhysicalObject po ) {
-			this.instance_id = po.instance.ObjectInstanceID;
+			this.instance_id = po.ObjectInstanceID;
 		}
 
 		public int instance_id;

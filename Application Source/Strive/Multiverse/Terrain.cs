@@ -5,16 +5,16 @@ namespace Strive.Multiverse
 	/// <summary>
 	/// Summary description for Mobile.
 	/// </summary>
-	public class MobileBase : PhysicalObject
+	public class Terrain : PhysicalObject
 	{
-		public Schema.TemplateMobileRow mobile;
+		public Schema.TemplateTerrainRow terrain;
 
-		public MobileBase (
-			Schema.TemplateMobileRow mobile,
+		public Terrain (
+			Schema.TemplateTerrainRow terrain,
 			Schema.ObjectTemplateRow template,
 			Schema.ObjectInstanceRow instance
 		) : base ( template, instance ) {
-			this.mobile = mobile;
+			this.terrain = terrain;
 		}
 	}
 }

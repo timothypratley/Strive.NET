@@ -8,8 +8,5 @@ namespace Strive.Server
 	public class Global
 	{
 		public static Random random = new Random();
-
-
-		public Global(){}
 	}
 }

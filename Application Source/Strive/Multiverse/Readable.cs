@@ -5,11 +5,11 @@ namespace Strive.Multiverse
 	/// <summary>
 	/// Summary description for Readable.
 	/// </summary>
-	public class ReadableBase : Item
+	public class Readable : Item
 	{
 		public Schema.ItemReadableRow readable;
 
-		public ReadableBase(
+		public Readable(
 			Schema.ItemReadableRow readable,
 			Schema.TemplateItemRow item,
 			Schema.ObjectTemplateRow template,

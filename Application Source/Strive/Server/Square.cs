@@ -24,8 +24,8 @@ namespace Strive.Server
 
 		public void Add( PhysicalObject po ) {
 			physicalObjects.Add( po );
-			if ( po is Avatar ) {
-				Avatar a = (Avatar)po;
+			if ( po is MobileAvatar ) {
+				MobileAvatar a = (MobileAvatar)po;
 				if ( a.client != null ) {
 					clients.Add( a.client );
 				}
@@ -41,8 +41,8 @@ namespace Strive.Server
 
 		public void Remove( PhysicalObject po ) {
 			physicalObjects.Remove( po );
-			if ( po is Avatar ) {
-				Avatar a = (Avatar)po;
+			if ( po is MobileAvatar ) {
+				MobileAvatar a = (MobileAvatar)po;
 				if ( a.client != null ) {
 					clients.Remove( a.client );
 				}

@@ -108,15 +108,17 @@ namespace Strive.Server {
 
 		void ProcessEnterWorldAsMobile( Client client, Strive.Network.Messages.ToServer.EnterWorldAsMobile message ) {
 			// try to load the character
-			client.Avatar = world.LoadMobile( message.SpawnID );
-			if ( client.Avatar == null ) {
+			MobileAvatar a = world.LoadMobile( message.SpawnID );
+			if ( a == null ) {
 				Console.WriteLine( "ERROR: Character "+message.SpawnID+" not found." );
 				return;
 			}
+			a.client = client;
+			client.Avatar = a;
+
 			// try to add the character to the world
-			Avatar a = new Avatar( client, client.Avatar );
 			try {
-				world.Add( a );
+				world.Add( client.Avatar );
 			} catch {
 				// NTR: I don't think this is entirely true.
 				Console.WriteLine( "ERROR: Character "+message.SpawnID+" already logged in." );
@@ -140,7 +142,7 @@ namespace Strive.Server {
 			foreach ( Client c in listener.Clients.Values ) {
 				if (  c == client ) continue;
 				c.Send(
-					new Network.Messages.ToClient.Communication( client.Avatar.template.ObjectTemplateName, message.message, message.communicationType )
+					new Network.Messages.ToClient.Communication( client.Avatar.ObjectTemplateName, message.message, message.communicationType )
 				);
 			}
 		}

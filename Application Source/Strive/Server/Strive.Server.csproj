@@ -105,11 +105,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Avatar.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
                     RelPath = "GameCommandProcessor.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -130,7 +125,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "Mobile.cs"
+                    RelPath = "MobileAvatar.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
