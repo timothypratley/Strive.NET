@@ -52,8 +52,7 @@ namespace Strive.UI.Engine {
 				}
 				model.Position = new Vector3D( apo.x, apo.y, apo.z );
 				model.Rotation = Helper.GetRotationFromHeading( apo.heading_x, apo.heading_y, apo.heading_z );
-				Game.CurrentLog.LogMessage( "Added " + model.Key + " at " + model.Position );
-
+				Game.CurrentLog.LogMessage( "Added object " + apo.instance_id + " with model " + apo.model_id + " at " + model.Position );
 			}
 					#endregion
 					#region Position Message

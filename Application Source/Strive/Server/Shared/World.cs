@@ -193,6 +193,10 @@ namespace Strive.Server.Shared {
 			// notify all nearby clients that a new
 			// physical object has entered the world
 			InformNearby( po, new Strive.Network.Messages.ToClient.AddPhysicalObject( po ) );
+			if ( po is Mobile ) {
+				InformNearby( po, new Strive.Network.Messages.ToClient.MobileState( (Mobile)po )	);
+			}
+
 
 			System.Console.WriteLine( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
 		}
@@ -365,14 +369,13 @@ namespace Strive.Server.Shared {
 			int i, j;
 			if ( client != null ) {
 				ArrayList nearbyPhysicalObjects = new ArrayList();
-				ArrayList nearbyClients = new ArrayList();
 				for ( i=-1; i<=1; i++ ) {
 					for ( j=-1; j<=1; j++ ) {
 						// check that neigbour exists
 						if (
 							squareX+i < 0 || squareX+i >= squaresInX
 							|| squareZ+j < 0 || squareZ+j >= squaresInZ
-							) {
+						) {
 							continue;
 						}
 						// add all neighbouring physical objects
