@@ -13,7 +13,9 @@ namespace Strive.Rendering.TV3D.Models {
 	/// Represents a wireframe with textures
 	/// </summary>
 	/// <remarks>This class is designed to shield clients from the internal workings of how models are stored and represented.</remarks>
-	public class Actor : IActor {
+	/// 
+	// TODO: this class should inherit from Model first, refactor it one day
+	public class Actor : IActor  {
 
 		#region "Fields"
 
@@ -33,6 +35,8 @@ namespace Strive.Rendering.TV3D.Models {
 		private Vector3D _boxmin;
 		private Vector3D _boxmax;
 		private float _height;
+		private float _width;
+		private float _depth;
 		#endregion
 
 		#region "Constructors"
@@ -250,6 +254,12 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public float Height {
 			get { return _height; }
+		}
+		public float Width {
+			get { return _width; }
+		}
+		public float Depth {
+			get { return _depth; }
 		}
 
 		#endregion

@@ -59,7 +59,6 @@ namespace Strive.Network.Client {
 		public void Stop() {
 			if ( tcpsocket != null ) {
 				tcpsocket.Shutdown( SocketShutdown.Both );
-				tcpsocket.Close();
 				tcpsocket = null;
 			}
 			if ( udpsocket != null ) {

@@ -21,6 +21,8 @@ namespace Strive.Rendering.TV3D.Models {
 		private float _RadiusSquared;
 		private bool _show = true;
 		private float _height = 0;
+		private float _width = 0;
+		private float _depth = 0;
 		private float _gap_size = 1;
 		private float _heights;
 		private ITexture _texture = null;
@@ -31,6 +33,8 @@ namespace Strive.Rendering.TV3D.Models {
 			t._heights = heights;
 			t.Position.X = x; t.Position.Z = z;
 			t._mesh = new TVLandscape();
+			t._width = gap_size*heights;
+			t._height = gap_size*heights;
 			t._mesh.CreateEmptyTerrain( (CONST_TV_LANDSCAPE_PRECISION)(256/heights),
 				1, 1,
 				x, z );
@@ -70,11 +74,15 @@ namespace Strive.Rendering.TV3D.Models {
 		}
 
 		public void DrawTexture( ITexture t, float x, float z, float rotation ) {
-			_texture.Draw( t, x, z, rotation, 1 );
+			float tx = (x - Position.X)/_width*Constants.terrainPieceTextureWidth*Constants.terrainHeightsPerChunk;
+			float tz = (z - Position.Z)/_height*Constants.terrainPieceTextureWidth*Constants.terrainHeightsPerChunk;
+			_texture.Draw( t, tx, tz, rotation, 1);
 		}
 
-		public void Clear( float x, float z, float width, float height ) {
-			_texture.Clear( x, z, width, height );
+		public void Clear( float x, float z ) {
+			float tx = (x - Position.X)/_width*Constants.terrainPieceTextureWidth*Constants.terrainHeightsPerChunk;
+			float tz = (z - Position.Z)/_height*Constants.terrainPieceTextureWidth*Constants.terrainHeightsPerChunk;
+			_texture.Clear( tx, tz, Constants.terrainPieceTextureWidth, Constants.terrainPieceTextureWidth );
 		}
 
 		public void SetClouds( ITexture texture ) {
@@ -208,6 +216,12 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public float Height {
 			get { return _height; }
+		}
+		public float Width {
+			get { return _width; }
+		}
+		public float Depth {
+			get { return _depth; }
 		}
 
 		#endregion

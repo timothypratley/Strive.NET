@@ -29,6 +29,8 @@ namespace Strive.Rendering.TV3D.Models {
 		Vector3D _boxmax;
 		bool _show = true;
 		float _height;
+		float _width;
+		float _depth;
 		#endregion
 
 		#region "Constructors"
@@ -46,8 +48,10 @@ namespace Strive.Rendering.TV3D.Models {
 		/// <returns></returns>
 		public static IModel LoadStaticModel( string name, string path, float height ) {
 			if(!System.IO.File.Exists(path)) {
-				throw new System.IO.FileNotFoundException("Could not load model '" + path + "'", path);
+				throw new System.IO.FileNotFoundException("Could not find model '" + path + "'", path);
 			}
+
+			Log.LogMessage( "Loading static model " + path + name );
 
 			Model loadedModel = new Model();
 			loadedModel._key = name;
@@ -58,25 +62,34 @@ namespace Strive.Rendering.TV3D.Models {
 			catch(Exception e) {
 				throw new ModelNotLoadedException(path, e);
 			}
+
 			//loadedModel._mesh.ShowBoundingBox( true );
 			D3DVECTOR boxmin = new D3DVECTOR();
 			D3DVECTOR boxmax = new D3DVECTOR();
 			loadedModel._mesh.GetBoundingBox( ref boxmin, ref boxmax, true );
-			loadedModel._boxmin = new Vector3D( boxmin.x, boxmin.y, boxmin.z );
-			loadedModel._boxmax = new Vector3D( boxmax.x, boxmax.y, boxmax.z );
-
 			loadedModel._height = height;
 			if ( height != 0 ) {
 				// scale the model to the correct height and get new bounding box info
 				float scale_factor = height / ( boxmax.y - boxmin.y );
 				loadedModel._mesh.ScaleMesh( scale_factor, scale_factor, scale_factor );
-				loadedModel._boxmin.X *= scale_factor;
-				loadedModel._boxmin.Y *= scale_factor;
-				loadedModel._boxmin.Z *= scale_factor;
-				loadedModel._boxmax.X *= scale_factor;
-				loadedModel._boxmax.Y *= scale_factor;
-				loadedModel._boxmax.Z *= scale_factor;
+				boxmin.x *= scale_factor;
+				boxmin.y *= scale_factor;
+				boxmin.z *= scale_factor;
+				boxmax.x *= scale_factor;
+				boxmax.y *= scale_factor;
+				boxmax.z *= scale_factor;
 			}
+			loadedModel._width = Math.Max( (boxmax.x - boxmin.x ), (boxmax.z - boxmin.z ) );
+			loadedModel._depth = Math.Min( (boxmax.x - boxmin.x ), (boxmax.z - boxmin.z ) );
+			loadedModel._boxmin = new Vector3D( boxmin.x, boxmin.y, boxmin.z );
+			loadedModel._boxmax = new Vector3D( boxmax.x, boxmax.y, boxmax.z );
+
+			loadedModel._mesh.Optimize();
+			loadedModel._mesh.ComputeNormals();
+			loadedModel._mesh.ComputeSphere();
+			loadedModel._mesh.ComputeBoundingVolumes();
+			//loadedModel._mesh.ShowBoundingBox( true );
+			
 			float radius = 0;
 			DxVBLibA.D3DVECTOR center = new DxVBLibA.D3DVECTOR();
 			loadedModel._mesh.GetBoundingSphere(ref center, ref radius, true );
@@ -107,21 +120,24 @@ namespace Strive.Rendering.TV3D.Models {
 			D3DVECTOR boxmin = new D3DVECTOR();
 			D3DVECTOR boxmax = new D3DVECTOR();
 			dup._mesh.GetBoundingBox( ref boxmin, ref boxmax, true );
-			dup._boxmin = new Vector3D( boxmin.x, boxmin.y, boxmin.z );
-			dup._boxmax = new Vector3D( boxmax.x, boxmax.y, boxmax.z );
 
 			dup._height = height;
 			if ( height != 0 ) {
 				// scale the model to the correct height and get new bounding box info
 				float scale_factor = height / ( boxmax.y - boxmin.y );
 				dup._mesh.ScaleMesh( scale_factor, scale_factor, scale_factor );
-				dup._boxmin.X *= scale_factor;
-				dup._boxmin.Y *= scale_factor;
-				dup._boxmin.Z *= scale_factor;
-				dup._boxmax.X *= scale_factor;
-				dup._boxmax.Y *= scale_factor;
-				dup._boxmax.Z *= scale_factor;
+				boxmin.x *= scale_factor;
+				boxmin.y *= scale_factor;
+				boxmin.z *= scale_factor;
+				boxmax.x *= scale_factor;
+				boxmax.y *= scale_factor;
+				boxmax.z *= scale_factor;
 			}
+			dup._width = Math.Max( (boxmax.x - boxmin.x ), (boxmax.z - boxmin.z ) );
+			dup._depth = Math.Min( (boxmax.x - boxmin.x ), (boxmax.z - boxmin.z ) );
+			dup._boxmin = new Vector3D( boxmin.x, boxmin.y, boxmin.z );
+			dup._boxmax = new Vector3D( boxmax.x, boxmax.y, boxmax.z );
+
 			float radius = 0;
 			DxVBLibA.D3DVECTOR center = new DxVBLibA.D3DVECTOR();
 			dup._mesh.GetBoundingSphere(ref center, ref radius, true );
@@ -235,6 +251,12 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public float Height {
 			get { return _height; }
+		}
+		public float Width {
+			get { return _width; }
+		}
+		public float Depth {
+			get { return _depth; }
 		}
 
 		#endregion

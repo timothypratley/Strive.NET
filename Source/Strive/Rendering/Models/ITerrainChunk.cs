@@ -13,7 +13,7 @@ namespace Strive.Rendering.Models {
 		void SetHeight( float x, float z, float altitude );
 		float GetHeight( float x, float z );
 		void DrawTexture( ITexture t, float x, float z, float rotation );
-		void Clear( float x, float z, float width, float height );
+		void Clear( float x, float z );
 		void SetTexture( ITexture t );
 		void SetDetailTexture( ITexture t );
 		void SetClouds( ITexture t );

@@ -1,6 +1,7 @@
 using System;
 using TrueVision3D;
 using Strive.Rendering.Textures;
+using Strive.Common;
 
 namespace Strive.Rendering.TV3D.Textures
 {
@@ -20,9 +21,8 @@ namespace Strive.Rendering.TV3D.Textures
             Texture t = new Texture();
 			// TODO: should be more involved in tracking/unloading textures
 			t._id = Engine.Gl.GetTex( name );
-			// TODO: don't hardcode 256
-			t._width = 256;
-			t._height = 256;
+			t._width = Constants.terrainPieceTextureWidth;
+			t._height = Constants.terrainPieceTextureWidth;
 			if ( t._id == 0 ) {
 				t._id = Engine.TexFactory.LoadTexture( filename, name, 256, 256, CONST_TV_COLORKEY.TV_COLORKEY_BLACK, false, true );
 			}
@@ -44,7 +44,9 @@ namespace Strive.Rendering.TV3D.Textures
 			_render_surface.StartRender(false);
 			Engine.Screen2DImmediate.ACTION_Begin2D();
 			int white = Engine.Gl.RGBA( 1, 1, 1, 1 );
-			Engine.Screen2DImmediate.DRAW_TextureRotated( t.ID, x, y, t.Width*scale, t.Height*scale, rotation, 0, 0, 1, 1, white, white, white, white );
+// T00 slow!
+//			Engine.Screen2DImmediate.DRAW_TextureRotated( t.ID, x, y, t.Width*scale, t.Height*scale, rotation, 0, 0, 1, 1, white, white, white, white );
+			Engine.Screen2DImmediate.DRAW_Texture( t.ID, x, y, x+Constants.terrainPieceTextureWidth, y+Constants.terrainPieceTextureWidth, white, white, white, white, 0, 0, 1, 1 );
 			Engine.Screen2DImmediate.ACTION_End2D();
 			_render_surface.EndRender();
 		}
@@ -59,19 +61,19 @@ namespace Strive.Rendering.TV3D.Textures
 		}
 
 		public static Texture invisible;
+		static int fire_width = 32;
+		static int fire_height = 32;
+		static TVRenderSurface rs = Engine.TV3DScene.CreateRenderSurface(fire_width,fire_height,false,0,0);
 		public static ITexture GetInvisible() {
 			if ( invisible != null ) return invisible;
 			invisible = new Texture();
 			// TODO: what dimensions?
-			int fire_width = 2;
-			int fire_height = 2;
-			TVRenderSurface rs = Engine.TV3DScene.CreateRenderSurface(fire_width,fire_height,false,0,0);
 			rs.StartRender( true );
-			Engine.Screen2DImmediate.ACTION_Begin2D();
 			int i, j, cc;
-			for ( i=1; i<fire_width-1; i++ ) {
-				for ( j=fire_height-2; j>=0; j-- ) {
-					cc = Engine.Gl.RGBA(0,0,0,0);
+			cc = Engine.Gl.RGBA(0,0,0,0);
+			Engine.Screen2DImmediate.ACTION_Begin2D();
+			for ( i=0; i<fire_width; i++ ) {
+				for ( j=0; j<fire_height; j++ ) {
 					Engine.Screen2DImmediate.DRAW_Point( i, j, cc );
 				}
 			}
@@ -79,7 +81,7 @@ namespace Strive.Rendering.TV3D.Textures
 			rs.EndRender();
 			invisible._id = rs.GetTexture();
 			invisible._name = "invisible";
-			rs.Destroy();
+			//rs.Destroy();
 			return invisible;
 		}
 

@@ -27,6 +27,8 @@ namespace Strive.Rendering.Models {
 		float RadiusSquared { get; }
 		bool Visible { get; set; }
 		float Height { get; }
+		float Width { get; }
+		float Depth { get; }
 
 		#endregion
 	}

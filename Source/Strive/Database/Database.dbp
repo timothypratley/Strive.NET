@@ -363,6 +363,7 @@ Begin DataProject = "Database"
       End
    End
    Begin Folder = "Massage Scripts"
+      Script = "RockGen.sql"
       Script = "TreeGen.sql"
    End
    Begin Folder = "Queries"

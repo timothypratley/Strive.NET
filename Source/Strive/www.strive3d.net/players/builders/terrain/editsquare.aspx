@@ -6,35 +6,35 @@
 <Controls:Header runat="Server" title="Terrain Builder - Map View" ID="Header1"/>	
 <table>
 	<tr>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX - 100)).Replace(
-		"GroupZStart=" + startZ, "GroupZStart=" + (startZ + 100)).Replace(
-		"GroupXEnd=" + endX, "GroupXEnd=" + (endX - 100)).Replace(
-		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ + 100))%>">[NW]</a></td>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupZStart=" + startZ, "GroupZStart=" + (startZ + 100)).Replace(
-		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ + 100))%>">[N]</a></td>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX + 100)).Replace(
-		"GroupZStart=" + startZ, "GroupZStart=" + (startZ + 100)).Replace(
-		"GroupXEnd=" + endX, "GroupXEnd=" + (endX + 100)).Replace(
-		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ + 100))%>">[NE]</a></td>
+		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX - 50)).Replace(
+		"GroupZStart=" + startZ, "GroupZStart=" + (startZ + 50)).Replace(
+		"GroupXEnd=" + endX, "GroupXEnd=" + (endX - 50)).Replace(
+		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ + 50))%>">[NW]</a></td>
+		<td><a href="<%=Request.Url.ToString().Replace("GroupZStart=" + startZ, "GroupZStart=" + (startZ + 50)).Replace(
+		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ + 50))%>">[N]</a></td>
+		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX + 50)).Replace(
+		"GroupZStart=" + startZ, "GroupZStart=" + (startZ + 50)).Replace(
+		"GroupXEnd=" + endX, "GroupXEnd=" + (endX + 50)).Replace(
+		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ + 50))%>">[NE]</a></td>
 	</tr>
 	<tr>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX - 100)).Replace(
-		"GroupXEnd=" + endX, "GroupXEnd=" + (endX - 100))%>">[W]</a></td>
+		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX - 50)).Replace(
+		"GroupXEnd=" + endX, "GroupXEnd=" + (endX - 50))%>">[W]</a></td>
 		<td></td>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX + 100)).Replace(
-		"GroupXEnd=" + endX, "GroupXEnd=" + (endX + 100))%>">[E]</a></td>		
+		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX + 50)).Replace(
+		"GroupXEnd=" + endX, "GroupXEnd=" + (endX + 50))%>">[E]</a></td>		
 	</tr>
 	<tr>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX - 100)).Replace(
-		"GroupZStart=" + startZ, "GroupZStart=" + (startZ - 100)).Replace(
-		"GroupXEnd=" + endX, "GroupXEnd=" + (endX - 100)).Replace(
-		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ - 100))%>">[SW]</a></td>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupZStart=" + startZ, "GroupZStart=" + (startZ - 100)).Replace(
-		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ - 100))%>">[S]</a></td>
-		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX + 100)).Replace(
-		"GroupZStart=" + startZ, "GroupZStart=" + (startZ - 100)).Replace(
-		"GroupXEnd=" + endX, "GroupXEnd=" + (endX + 100)).Replace(
-		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ - 100))%>">[SE]</a></td>
+		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX - 50)).Replace(
+		"GroupZStart=" + startZ, "GroupZStart=" + (startZ - 50)).Replace(
+		"GroupXEnd=" + endX, "GroupXEnd=" + (endX - 50)).Replace(
+		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ - 50))%>">[SW]</a></td>
+		<td><a href="<%=Request.Url.ToString().Replace("GroupZStart=" + startZ, "GroupZStart=" + (startZ - 50)).Replace(
+		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ - 50))%>">[S]</a></td>
+		<td><a href="<%=Request.Url.ToString().Replace("GroupXStart=" + startX, "GroupXStart=" + (startX + 50)).Replace(
+		"GroupZStart=" + startZ, "GroupZStart=" + (startZ - 50)).Replace(
+		"GroupXEnd=" + endX, "GroupXEnd=" + (endX + 50)).Replace(
+		"GroupZEnd=" + endZ, "GroupZEnd=" + (endZ - 50))%>">[SE]</a></td>
 	</tr>		
 </table>
 <%

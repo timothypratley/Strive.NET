@@ -95,14 +95,6 @@ namespace Strive.Rendering.TV3D.Models {
 			tc.DrawTexture( texture, x, z, rotation );
 		}
 
-//		TVRenderSurface rs = Engine.TV3DScene.CreateRenderSurface(256,256,false,0,0);
-//		public void StitchTexture() {
-//			rs.StartRender( true );
-//			Engine.Screen2DImmediate.DRAW_TextureRotated( texture_id, x, y, 32, 32, angle, 0, 0, 1, 1, &HFFFFFFFF, -2, -2, -2 );
-//			rs.EndRender();
-//			texture_id = rs.CreateStaticTextureFromRenderSurface( fire_width, fire_height, CONST_TV_COLORKEY.TV_COLORKEY_BLACK );
-//		}
-
 		public void Clear() {
 			foreach ( TerrainChunk tc in terrainChunks.Values ) {
 				tc.Delete();
@@ -153,6 +145,8 @@ namespace Strive.Rendering.TV3D.Models {
 		private TVMesh _mesh;
 		private bool _show = true;
 		private float _height = 0;
+		private float _width = 0;
+		private float _depth = 0;
 		#endregion
 
 		#region "Constructors"
@@ -261,6 +255,12 @@ namespace Strive.Rendering.TV3D.Models {
 
 		public float Height {
 			get { return _height; }
+		}
+		public float Width {
+			get { return _width; }
+		}
+		public float Depth {
+			get { return _depth; }
 		}
 
 		#endregion

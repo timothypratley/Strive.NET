@@ -263,7 +263,8 @@ namespace Strive.Rendering.TV3D
 							Vector3D v1 = m.Position - cameraPosition;
 							if ( Vector3D.Dot( v1, Helper.GetHeadingFromRotation(cameraRotation) ) <= Math.Cos( Camera.FieldOfView * Math.PI / 180 ) ) 
 							{
-								continue;
+								// TODO: doesn't work for -ve numbers!
+					//			continue;
 							}
 
 							Vector3D labelPos = new Vector3D(
@@ -272,7 +273,7 @@ namespace Strive.Rendering.TV3D
 								m.Position.Z
 								);
 
-							DrawText( labelPos, m.Label );
+							DrawText( labelPos, m.Label + " (w:" + m.Width + ", h:" + m.Height + ", d:" + m.Depth + ")" );
 						}
 					}
 					Engine.Screen2DText.ACTION_EndText();

@@ -40,9 +40,10 @@ namespace Strive.UI.WorldView
 				} else {
 					model = rm.GetModel( po.ObjectInstanceID, po.ResourceID, po.Height );
 				}
-				if ( !(po is Junk) ) {
+				// TODO: just for testing, show junk
+				//if ( !(po is Junk) ) {
 					model.Label = po.TemplateObjectName;
-				}
+				//}
 			}
 		}
 

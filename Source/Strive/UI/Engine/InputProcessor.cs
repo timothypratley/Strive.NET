@@ -143,6 +143,7 @@ namespace Strive.UI.Engine {
 					changeOfPosition.Y = newPosition.Y - avatarPosition.Y;
 
 					// check that we can go there
+					/** TODO
 					foreach ( PhysicalObjectInstance poi in _world.physicalObjectInstances.Values ) 
 					{
 						if ( poi.physicalObject is Terrain ) 
@@ -212,6 +213,7 @@ namespace Strive.UI.Engine {
 							}
 						}
 					}
+					*/
 				} 
 				catch ( InvalidLocationException ) 
 				{

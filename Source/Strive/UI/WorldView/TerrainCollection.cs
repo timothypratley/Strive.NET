@@ -42,11 +42,11 @@ namespace Strive.UI.WorldView {
 				for ( i=0; i<xorder; i++ ) {
 					for ( j=0; j<zorder; j++ ) {
 						TC[i,j,k] = _engine.CreateTerrainChunk(i*cs, j*cs, cs/hpc, hpc);
-						ITexture texture = engine.CreateTexture( "land", 256*hpc, 256*hpc );
+						ITexture texture = engine.CreateTexture( "land", Constants.terrainPieceTextureWidth*hpc, Constants.terrainPieceTextureWidth*hpc );
 						TC[i,j,k].SetTexture( texture );
 
 						// TODO: how to know which detail texture to use?
-						TC[i,j,k].SetDetailTexture( _resource_manager.GetTexture( 9 ) );
+						//TC[i,j,k].SetDetailTexture( _resource_manager.GetTexture( 9 ) );
 
 						// TODO: fix this don't hardcode it... and don't set it per terrain chunk
 						//if ( k == zoomorder-1 ){
@@ -81,7 +81,7 @@ namespace Strive.UI.WorldView {
 							|| (key.X % (ts*Constants.scale[k+1])) != 0 || (key.Y % (ts*Constants.scale[k+1])) != 0
 						) {
 							// TODO: why doesn't this wurk??? umg
-							terrainPiecesXYIndex.Remove( key );
+							//terrainPiecesXYIndex.Remove( key );
 							break;
 						}
 					} else {
@@ -91,7 +91,7 @@ namespace Strive.UI.WorldView {
 			}
 
 			// loop through all chunks to see if any can be reused
-			for ( k=zoomorder-1; k>=0; k++ ) {
+			for ( k=(zoomorder-1); k>=0; k-- ) {
 				cs = (int)(ts*Math.Pow(hpc,k+1));
 				cx = Helper.DivTruncate( (int)x, cs );
 				cz = Helper.DivTruncate( (int)z, cs );
@@ -178,11 +178,15 @@ namespace Strive.UI.WorldView {
 							// TC[i,j,k] is dirty and ready for
 							// reuse... this means that its higher order peice
 							// is going to become visible again (if it exists).
-							MakeVisible( k+1, TC[i,j,k].Position.X, TC[i,j,k].Position.Z );
+							if ( k<zoomorder-1 ) {
+								MakeVisible( k+1, TC[i,j,k].Position.X, TC[i,j,k].Position.Z );
+							}
 
 							// The new location needs to be made invisible
 							TC[i,j,k].Position = new Vector3D(tcx, 0, tcz );
-							MakeInvisible( k+1, TC[i,j,k].Position.X, TC[i,j,k].Position.Z );
+							if ( k<zoomorder-1 ) {
+								MakeInvisible( k+1, TC[i,j,k].Position.X, TC[i,j,k].Position.Z );
+							}
 
 							// update it with any known heights
 							// Refresh( TC[i,j,k] );
@@ -218,7 +222,7 @@ namespace Strive.UI.WorldView {
 									}
 									TC[i,j,k].SetHeight( px, pz, altitude );
 
-									// regardless of altitude, always use the right texture
+									// regardless of altitude, always use the right 
 									loc.Set( px, pz );
 									t1 = (Terrain)terrainPiecesXYIndex[loc];
 									if ( t1 != null ) {
@@ -260,7 +264,7 @@ namespace Strive.UI.WorldView {
 			int i = Helper.DivTruncate( (int)x, cs ) - CX[k];
 			int j = Helper.DivTruncate( (int)z, cs ) - CZ[k];
 			// TODO: need a default 'invis' texture
-			TC[i,j,k].Clear( x, z, 256, 256 );
+			TC[i,j,k].Clear( x, z );
 		}
 
 		public void Set( float x, float z, float altitude, ITexture texture, float rotation ) {

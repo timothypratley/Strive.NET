@@ -311,6 +311,7 @@ namespace Strive.Server.Shared {
 
 			// check that the object can fit there
 			// TODO: revisit
+			/** TODO:
 			for ( i=-1; i<=1; i++ ) {
 				for ( j=-1; j<=1; j++ ) {
 					if (
@@ -346,6 +347,7 @@ namespace Strive.Server.Shared {
 					}
 				}
 			}
+			*/
 
 			// send everything nearby
 			//public void server_foo(float x1, float z1, float x, float z) {
