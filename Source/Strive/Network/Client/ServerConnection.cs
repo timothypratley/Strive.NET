@@ -21,6 +21,7 @@ namespace Strive.Network.Client {
 		byte[] tcpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
 		int tcpoffset = 0;
 		bool connected = false;
+		public Strive.Network.Messages.NetworkProtocolType protocol;
 
 		public delegate void OnConnectHandler();
 		public delegate void OnDisconnectHandler();
@@ -174,12 +175,27 @@ namespace Strive.Network.Client {
 				throw new Exception( "Sending message while not connected." );
 			}
 			try {
-				// TODO: some clients may not want to send UDP messages
-				if ( message is Strive.Network.Messages.ToServer.Position ) {
-					SendUDP( message );
-				} else {
-					SendTCP( message );
+				switch(protocol)
+				{
+					case Strive.Network.Messages.NetworkProtocolType.TcpOnly:
+					{
+						SendTCP(message);
+						break;
+					}
+					case Strive.Network.Messages.NetworkProtocolType.UdpAndTcp:
+					{
+						// TODO: some clients may not want to send UDP messages
+						if ( message is Strive.Network.Messages.ToServer.Position ) 
+						{
+							SendUDP( message );
+						} 
+						else 
+						{
+							SendTCP( message );
+						}break;
+					}
 				}
+
 			} catch ( Exception ) {
 				Stop();
 			}

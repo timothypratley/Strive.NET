@@ -69,6 +69,7 @@ namespace Strive.UI
 
 		public static void Play(string ServerName, string LoginName, string Password, int Port, Strive.Network.Messages.NetworkProtocolType protocol, IWin32Window RenderTarget) 
 		{
+			CurrentServerConnection.protocol = protocol;
 			Stop();
 			CurrentWorld.InitialiseView( RenderTarget );
 			Log.LogMessage( "Connecting to " + ServerName + ":" + Port );

@@ -226,7 +226,7 @@ namespace Strive.UI.Settings
 			}
 
 			DataRow playerRow;
-			string playerKey = emailaddress + password;
+			string playerKey = emailaddress;
 			if(RawSettings.Tables["RecentPlayers"].Rows.Contains(new string[] {playerKey, serverKey}))
 			{
 				playerRow = RawSettings.Tables["RecentPlayers"].Rows.Find(new string[] {playerKey, serverKey});
@@ -266,7 +266,7 @@ namespace Strive.UI.Settings
 			}
 			DataRow serverRow = RecentServers.Rows.Find(serverKey);
 
-			string playerKey = emailaddress + password;
+			string playerKey = emailaddress;
 			if(!RawSettings.Tables["RecentPlayers"].Rows.Contains(new string[] {playerKey, serverKey}))
 			{
 				AddRecentPlayer(serverAddress, serverPort, protocol, emailaddress, password);
