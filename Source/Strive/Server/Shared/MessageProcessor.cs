@@ -130,8 +130,8 @@ namespace Strive.Server.Shared {
 				client.Protocol = loginMessage.protocol;
 			} else {
 				Log.LogMessage(
-					"Login failed for username " + loginMessage.username
-					+ " hehehe " + loginMessage.password
+					"Login failed for username " + loginMessage.username +  " "
+					+ loginMessage.password
 				);
 				client.Close();
 			}

@@ -33,7 +33,7 @@ using www.strive3d.net.Game;
 
 		private void Page_Load(object sender, System.EventArgs e)
 		{
-			if(this.Page.Request.Form["LoginRequested"] == "true")
+			if(this.Page.Request["LoginRequested"] == "true")
 			{
 				if(!thisterminal.Web.Authentication.Basic.LogonCurrentUser(new PlayerAuthenticator(), "www.strive3d.net"))
 				{
