@@ -45,6 +45,11 @@ namespace Strive.Rendering
 		IModelCollection Models { get; }
 
 		/// <summary>
+		/// Useful for debuging
+		/// </summary>
+		long VisibleTriangleCount { get; }
+
+		/// <summary>
 		/// Returns the default view
 		/// </summary>
 		ICamera Camera { get; }

@@ -392,11 +392,15 @@ namespace Strive.Rendering.TV3D
 		/// <summary>
 		/// Model collection
 		/// </summary>
-		public IModelCollection Models
-		{
-			get
-			{
+		public IModelCollection Models {
+			get {
 				return _models;
+			}
+		}
+
+		public long VisibleTriangleCount {
+			get {
+				return Engine.TV3DScene.GetTriangleNumber();
 			}
 		}
 
