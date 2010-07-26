@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{138A87E7-78B2-4BDF-BB5C-06D58414A976}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Strive.Client.NeoAxisView</RootNamespace>
+    <AssemblyName>Strive.Client.NeoAxisView</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DDSFormat, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\DDSFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="DecorativeObjectManager, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\DecorativeObjectManager.dll</HintPath>
+    </Reference>
+    <Reference Include="DirectXSoundSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\DirectXSoundSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="EngineApp">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\EngineApp.dll</HintPath>
+    </Reference>
+    <Reference Include="EntitySystem">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\EntitySystem.dll</HintPath>
+    </Reference>
+    <Reference Include="FileSystem">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="GameCommon">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\GameCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="GameEntities">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\GameEntities.dll</HintPath>
+    </Reference>
+    <Reference Include="HeightmapTerrain, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\HeightmapTerrain.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="Log">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Log.dll</HintPath>
+    </Reference>
+    <Reference Include="MapSystem">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\MapSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="MathEx">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\MathEx.dll</HintPath>
+    </Reference>
+    <Reference Include="ODEPhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\ODEPhysicsSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="OggVorbisTheora, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\OggVorbisTheora.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenALSoundSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\OpenALSoundSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="PhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\PhysicsSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="PhysXPhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\PhysXPhysicsSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Renderer">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Renderer.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleStaticLightingSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\SimpleStaticLightingSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UISystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\UISystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Utils">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsAppFramework">
+      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\WindowsAppFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="ZipArchive, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\ZipArchive.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Splash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Splash.Designer.cs">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WorldViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WorldViewControl.Designer.cs">
+      <DependentUpon>WorldViewControl.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Splash.resx">
+      <DependentUpon>Splash.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Strive.Client.ViewModel\Strive.Client.ViewModel.csproj">
+      <Project>{5092DF71-BFDA-44A0-9C7B-F4C4A5CE7E2B}</Project>
+      <Name>Strive.Client.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WorldMap.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

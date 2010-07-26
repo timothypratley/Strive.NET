@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>Strive.Network.Messages</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Strive.Network.Messages</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Strive.Math3D\Strive.Math3D.csproj">
+      <Name>Strive.Math3D</Name>
+      <Project>{14818E27-DABB-4332-B572-21BA9983D886}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Strive.Server\Strive.Server.Model\Strive.Server.Model.csproj">
+      <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
+      <Name>Strive.Server.Model</Name>
+    </ProjectReference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommunicationType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CustomFormatter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EnumCombatEvent.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MessageTypeMap.cs" />
+    <Compile Include="NetworkProtocolType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ToClient\Acknowledge.cs" />
+    <Compile Include="ToClient\AddEquipable.cs" />
+    <Compile Include="ToClient\AddJunk.cs" />
+    <Compile Include="ToClient\AddMobile.cs" />
+    <Compile Include="ToClient\AddPhysicalObject.cs" />
+    <Compile Include="ToClient\AddQuaffable.cs" />
+    <Compile Include="ToClient\AddReadable.cs" />
+    <Compile Include="ToClient\AddTerrain.cs" />
+    <Compile Include="ToClient\AddTerrainCollection.cs" />
+    <Compile Include="ToClient\AddWieldable.cs" />
+    <Compile Include="ToClient\Beat.cs" />
+    <Compile Include="ToClient\CanPossess.cs" />
+    <Compile Include="ToClient\CombatReport.cs" />
+    <Compile Include="ToClient\Communication.cs" />
+    <Compile Include="ToClient\CurrentHitpoints.cs" />
+    <Compile Include="ToClient\DropAll.cs" />
+    <Compile Include="ToClient\DropPhysicalObject.cs" />
+    <Compile Include="ToClient\DropPhysicalObjects.cs" />
+    <Compile Include="ToClient\LogMessage.cs" />
+    <Compile Include="ToClient\Message.cs" />
+    <Compile Include="ToClient\MobileState.cs" />
+    <Compile Include="ToClient\NegativeAcknowledge.cs" />
+    <Compile Include="ToClient\PartyInfo.cs" />
+    <Compile Include="ToClient\Ping.cs" />
+    <Compile Include="ToClient\Position.cs" />
+    <Compile Include="ToClient\ServerInfo.cs" />
+    <Compile Include="ToClient\SkillList.cs" />
+    <Compile Include="ToClient\TimeAndWeather.cs" />
+    <Compile Include="ToClient\Weather.cs" />
+    <Compile Include="ToClient\WhoList.cs" />
+    <Compile Include="ToServer\CancelSkill.cs" />
+    <Compile Include="ToServer\ChangeStance.cs" />
+    <Compile Include="ToServer\Communication.cs" />
+    <Compile Include="ToServer\CreateParty.cs" />
+    <Compile Include="ToServer\Emote.cs" />
+    <Compile Include="ToServer\EnterWorldAsMobile.cs" />
+    <Compile Include="ToServer\InviteToParty.cs" />
+    <Compile Include="ToServer\JoinParty.cs" />
+    <Compile Include="ToServer\LeaveParty.cs" />
+    <Compile Include="ToServer\Login.cs" />
+    <Compile Include="ToServer\Logout.cs" />
+    <Compile Include="ToServer\Pong.cs" />
+    <Compile Include="ToServer\Position.cs" />
+    <Compile Include="ToServer\Possess.cs" />
+    <Compile Include="ToServer\QueryParty.cs" />
+    <Compile Include="ToServer\ReloadWorld.cs" />
+    <Compile Include="ToServer\RequestPossessable.cs" />
+    <Compile Include="ToServer\RequestServerInfo.cs" />
+    <Compile Include="ToServer\SkillList.cs" />
+    <Compile Include="ToServer\TargetAny.cs" />
+    <Compile Include="ToServer\TargetItem.cs" />
+    <Compile Include="ToServer\TargetMobile.cs" />
+    <Compile Include="ToServer\TargetNone.cs" />
+    <Compile Include="ToServer\TransferPartyLeadership.cs" />
+    <Compile Include="ToServer\UseSkill.cs" />
+    <Compile Include="ToServer\WhoList.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

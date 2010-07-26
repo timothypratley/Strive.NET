@@ -1,7 +1,0 @@
-
-
-Bulk Copy completed successfully.
-Source: [dbo].[EnumMobileState]
-Destination: D:\projects\Strive\cvs.sourceforge.net\Strive\Source\Strive\Database\Create Scripts\dbo.EnumMobileState.dat
-Rows copied: 5
-Bulk Copy duration: 0 minutes and 0.16 seconds

@@ -1,7 +1,0 @@
-
-
-Bulk Copy completed successfully.
-Source: [dbo].[EnumActivationType]
-Destination: D:\projects\Strive\cvs.sourceforge.net\Strive\Source\Strive\Database\Create Scripts\dbo.EnumActivationType.dat
-Rows copied: 6
-Bulk Copy duration: 0 minutes and 0.0 seconds

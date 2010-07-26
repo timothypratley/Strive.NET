@@ -1,7 +1,0 @@
-
-
-Bulk Copy completed successfully.
-Source: [dbo].[EnumWeaponSize]
-Destination: D:\projects\Strive\cvs.sourceforge.net\Strive\Source\Strive\Database\Create Scripts\dbo.EnumWeaponSize.dat
-Rows copied: 2
-Bulk Copy duration: 0 minutes and 0.16 seconds
