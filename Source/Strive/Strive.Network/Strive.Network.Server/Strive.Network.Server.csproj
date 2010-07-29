@@ -78,10 +78,10 @@
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
     <Reference Include="Common.Logging">
-      <HintPath>..\..\..\ThirdParty\Common.Logging-2.0.0\bin\net\2.0\release\Common.Logging.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.Log4Net">
-      <HintPath>..\..\..\ThirdParty\Common.Logging-2.0.0\bin\net\2.0\release\Common.Logging.Log4Net.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

@@ -37,7 +37,7 @@ namespace Strive.Client.NeoAxisView
             _splash.Hide();
 
             //load map
-            WindowsAppWorld.MapLoad("Maps/NWOH/Map.map", true);
+            WindowsAppWorld.MapLoad("Maps/RTSDemo/Map.map", true);
             return true;
         }
 
@@ -137,7 +137,7 @@ namespace Strive.Client.NeoAxisView
         Random r = new Random();
         void renderTargetUserControl1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (mapObject != null)
+            if (mapObject != null && mapObject.PhysicsModel != null)
             {
                 foreach (Body b in mapObject.PhysicsModel.Bodies)
                 {

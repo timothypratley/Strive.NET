@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\ThirdParty\NeoAxis\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -39,97 +39,99 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AvalonDock">
-      <HintPath>..\..\..\ThirdParty\AvalonDock_DLLs_NET35\AvalonDock.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\AvalonDock\AvalonDock.dll</HintPath>
     </Reference>
     <Reference Include="AvalonDock.Themes">
-      <HintPath>..\..\..\ThirdParty\AvalonDock_DLLs_NET35\AvalonDock.Themes.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\AvalonDock\AvalonDock.Themes.dll</HintPath>
     </Reference>
     <Reference Include="DDSFormat, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\DDSFormat.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\DDSFormat.dll</HintPath>
     </Reference>
     <Reference Include="DecorativeObjectManager">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\DecorativeObjectManager.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\DecorativeObjectManager.dll</HintPath>
     </Reference>
     <Reference Include="DirectXSoundSystem">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\DirectXSoundSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\DirectXSoundSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="EditorBase">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\EditorBase.dll</HintPath>
     </Reference>
     <Reference Include="EngineApp, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\EngineApp.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\EngineApp.dll</HintPath>
     </Reference>
     <Reference Include="EntitySystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\EntitySystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\EntitySystem.dll</HintPath>
     </Reference>
     <Reference Include="FileSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\FileSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="GameCommon">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\GameCommon.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\GameCommon.dll</HintPath>
     </Reference>
     <Reference Include="GameEntities">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\GameEntities.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\GameEntities.dll</HintPath>
     </Reference>
     <Reference Include="GridPathFindSystem">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\GridPathFindSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\GridPathFindSystem.dll</HintPath>
     </Reference>
     <Reference Include="HeightmapTerrain">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\HeightmapTerrain.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\HeightmapTerrain.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.NetFwTypeLib">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\Interop.NetFwTypeLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Lidgren.Network">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\Lidgren.Network.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="Log">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Log.dll</HintPath>
     </Reference>
     <Reference Include="MapSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\MapSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\MapSystem.dll</HintPath>
     </Reference>
     <Reference Include="MathEx, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\MathEx.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\MathEx.dll</HintPath>
     </Reference>
     <Reference Include="Networking">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\Networking.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Networking.dll</HintPath>
     </Reference>
     <Reference Include="ODEPhysicsSystem">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\ODEPhysicsSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\ODEPhysicsSystem.dll</HintPath>
     </Reference>
     <Reference Include="OggVorbisTheora, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\OggVorbisTheora.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\OggVorbisTheora.dll</HintPath>
     </Reference>
     <Reference Include="OpenALSoundSystem">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\OpenALSoundSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\OpenALSoundSystem.dll</HintPath>
     </Reference>
     <Reference Include="PhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\PhysicsSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\PhysicsSystem.dll</HintPath>
     </Reference>
     <Reference Include="PhysXPhysicsSystem">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\PhysXPhysicsSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\PhysXPhysicsSystem.dll</HintPath>
     </Reference>
     <Reference Include="Renderer, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\Renderer.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Renderer.dll</HintPath>
     </Reference>
     <Reference Include="SimpleStaticLightingSystem">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\SimpleStaticLightingSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\SimpleStaticLightingSystem.dll</HintPath>
     </Reference>
     <Reference Include="SoundSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\SoundSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\SoundSystem.dll</HintPath>
     </Reference>
     <Reference Include="StaticLightingCalculationSystem">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\StaticLightingCalculationSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\StaticLightingCalculationSystem.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -141,21 +143,21 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="UISystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\UISystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\UISystem.dll</HintPath>
     </Reference>
     <Reference Include="Utils, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\Utils.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Utils.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAppFramework">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\WindowsAppFramework.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\WindowsAppFramework.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="ZipArchive">
-      <HintPath>..\Strive.Client.NeoAxisView\bin\Debug\ZipArchive.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\ZipArchive.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

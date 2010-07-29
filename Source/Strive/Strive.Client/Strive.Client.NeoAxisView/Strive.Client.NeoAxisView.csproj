@@ -32,76 +32,83 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DDSFormat, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\DDSFormat.dll</HintPath>
+    <Reference Include="DDSFormat">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\DDSFormat.dll</HintPath>
     </Reference>
-    <Reference Include="DecorativeObjectManager, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\DecorativeObjectManager.dll</HintPath>
+    <Reference Include="DecorativeObjectManager">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\DecorativeObjectManager.dll</HintPath>
     </Reference>
-    <Reference Include="DirectXSoundSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\DirectXSoundSystem.dll</HintPath>
+    <Reference Include="DecorativeObjectManager.Editor">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\DecorativeObjectManager.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="DirectXSoundSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\DirectXSoundSystem.dll</HintPath>
     </Reference>
     <Reference Include="EngineApp">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\EngineApp.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\EngineApp.dll</HintPath>
     </Reference>
     <Reference Include="EntitySystem">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\EntitySystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\EntitySystem.dll</HintPath>
     </Reference>
     <Reference Include="FileSystem">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\FileSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="GameCommon">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\GameCommon.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\GameCommon.dll</HintPath>
     </Reference>
     <Reference Include="GameEntities">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\GameEntities.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\GameEntities.dll</HintPath>
     </Reference>
-    <Reference Include="HeightmapTerrain, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\HeightmapTerrain.dll</HintPath>
+    <Reference Include="GridPathFindSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\GridPathFindSystem.dll</HintPath>
     </Reference>
-    <Reference Include="Lidgren.Network, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Lidgren.Network.dll</HintPath>
+    <Reference Include="HeightmapTerrain">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\HeightmapTerrain.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="Log">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Log.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Log.dll</HintPath>
     </Reference>
     <Reference Include="MapSystem">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\MapSystem.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\MapSystem.dll</HintPath>
     </Reference>
     <Reference Include="MathEx">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\MathEx.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\MathEx.dll</HintPath>
     </Reference>
-    <Reference Include="ODEPhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\ODEPhysicsSystem.dll</HintPath>
+    <Reference Include="Networking">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Networking.dll</HintPath>
     </Reference>
-    <Reference Include="OggVorbisTheora, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\OggVorbisTheora.dll</HintPath>
+    <Reference Include="ODEPhysicsSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\ODEPhysicsSystem.dll</HintPath>
     </Reference>
-    <Reference Include="OpenALSoundSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\OpenALSoundSystem.dll</HintPath>
+    <Reference Include="OggVorbisTheora">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\OggVorbisTheora.dll</HintPath>
     </Reference>
-    <Reference Include="PhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\PhysicsSystem.dll</HintPath>
+    <Reference Include="OpenALSoundSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\OpenALSoundSystem.dll</HintPath>
     </Reference>
-    <Reference Include="PhysXPhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\PhysXPhysicsSystem.dll</HintPath>
+    <Reference Include="PhysicsSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\PhysicsSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="PhysXPhysicsSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\PhysXPhysicsSystem.dll</HintPath>
     </Reference>
     <Reference Include="Renderer">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Renderer.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Renderer.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleStaticLightingSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\SimpleStaticLightingSystem.dll</HintPath>
+    <Reference Include="SimpleStaticLightingSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\SimpleStaticLightingSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="SoundSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\SoundSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="StaticLightingCalculationSystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\StaticLightingCalculationSystem.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -111,19 +118,17 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UISystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\UISystem.dll</HintPath>
+    <Reference Include="UISystem">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\UISystem.dll</HintPath>
     </Reference>
     <Reference Include="Utils">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\Utils.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\Utils.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAppFramework">
-      <HintPath>..\..\..\..\..\..\..\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\WindowsAppFramework.dll</HintPath>
+      <HintPath>..\..\..\ThirdParty\NeoAxis\WindowsAppFramework.dll</HintPath>
     </Reference>
-    <Reference Include="ZipArchive, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NeoAxis\NeoAxis Engine Non-Commercial SDK 0.852\Game\Bin\ZipArchive.dll</HintPath>
+    <Reference Include="ZipArchive">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\ZipArchive.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
