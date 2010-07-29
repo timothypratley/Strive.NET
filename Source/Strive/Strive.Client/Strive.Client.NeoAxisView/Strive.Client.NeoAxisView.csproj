@@ -38,9 +38,6 @@
     <Reference Include="DecorativeObjectManager">
       <HintPath>..\..\..\ThirdParty\NeoAxis\DecorativeObjectManager.dll</HintPath>
     </Reference>
-    <Reference Include="DecorativeObjectManager.Editor">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\DecorativeObjectManager.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="DirectXSoundSystem">
       <HintPath>..\..\..\ThirdParty\NeoAxis\DirectXSoundSystem.dll</HintPath>
     </Reference>

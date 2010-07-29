@@ -2,7 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
-        Title="MainWindow" Height="600" Width="800" Icon="file:///C:/git/Strive.NET/Source/Strive/Strive.Client/Strive.Client.WPF/Resources/App.ico" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="800" WindowState="Maximized"
+        Icon="file:///C:/git/Strive.NET/Source/Strive/Strive.Client/Strive.Client.WPF/Resources/App.ico"
+        WindowStartupLocation="CenterScreen">
     <Window.CommandBindings>
         <CommandBinding Command="Close"
                         Executed="CloseCmdExecuted"

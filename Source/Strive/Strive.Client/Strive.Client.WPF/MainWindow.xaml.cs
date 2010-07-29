@@ -34,7 +34,9 @@ namespace Strive.Client.WPF
             worldViewModel = new WorldViewModel(serverConnection);
             WorldViewControl.Init(worldViewModel);
             InitializeComponent();
+            NewCmdExecuted(null, null);
         }
+
         private void CloseCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
