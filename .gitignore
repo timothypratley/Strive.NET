@@ -3,6 +3,10 @@ bin
 Bin
 deploy
 deploy/*
+build
+build/*
+publish
+publish/*
 _ReSharper.*
 *.bak
 *.cache
