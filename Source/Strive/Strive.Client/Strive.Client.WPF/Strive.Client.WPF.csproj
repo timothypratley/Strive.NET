@@ -69,7 +69,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AvalonDock">
@@ -236,7 +236,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Strive.Client.WPF_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj">
@@ -291,11 +290,7 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="@(DataFiles)"
-          DestinationFiles="@(DataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(NativeDllFiles)"
-          DestinationFiles="@(NativeDllFiles->'$(TargetDir)/NativeDlls/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DataFiles)" DestinationFiles="@(DataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(NativeDllFiles)" DestinationFiles="@(NativeDllFiles->'$(TargetDir)/NativeDlls/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>
