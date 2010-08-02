@@ -6,11 +6,28 @@ using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Forms;
 
+using Strive.Server.Model;
+
 
 namespace Strive.Client.ViewModel
 {
     public class Perspective
     {
+        private EnumSkill currentGameCommand = EnumSkill.None;
+        public EnumSkill CurrentGameCommand
+        {
+            get
+            {
+                return currentGameCommand;
+            }
+            set
+            {
+                currentGameCommand = value;
+                //ITexture texture = resources.GetCursor((int)currentGameCommand);
+                //CurrentWorld.RenderingScene.SetCursor(texture);
+            }
+        }
+
         double cameraHeading = 1.5;
         public double Heading { get { return cameraHeading; } }
 

@@ -9,18 +9,18 @@ namespace Strive.Client.ViewModel
 {
     public class ViewEntity
     {
-        private string name; public string Name { get { return name; } }
-        private int modelID; public int ModelID { get { return modelID; } }
-        private float x; public float X { get { return x; } }
-        private float y; public float Y { get { return y; } }
-        private float z; public float Z { get { return z; } }
-        private float dirX; public float DirX { get { return dirX; } }
-        private float dirY; public float DirY { get { return dirY; } }
-        private float dirZ; public float DirZ { get { return dirZ; } }
+        public string Name;
+        public int ModelID;
+        public double X;
+        public double Y;
+        public double Z;
+        public double DirX;
+        public double DirY;
+        public double DirZ;
 
-        public ViewEntity(string name, int modelID, float x, float y, float z, float dirX, float dirY, float dirZ)
+        public ViewEntity(string name, int modelID, double x, double y, double z, double dirX, double dirY, double dirZ)
         {
-            this.name = name; this.modelID = modelID; this.x = x; this.y = y; this.z = z; this.dirX = dirX; this.dirY = dirY; this.dirZ = dirZ;
+            Name = name; ModelID = modelID; X = x; Y = y; Z = z; DirX = dirX; DirY = dirY; DirZ = dirZ;
         }
     }
 }

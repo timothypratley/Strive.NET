@@ -61,7 +61,8 @@ namespace Strive.Server.Logic
             Log.Info("Loading Global.modelSchema...");
             if (Global.worldfilename != null)
             {
-                //Global.modelSchema = Strive.Data.MultiverseFactory.getMultiverseFromFile(Global.worldfilename);
+                Global.modelSchema = new Schema();
+                Global.modelSchema.ReadXml(Global.worldfilename);
             }
             else if (Global.connectionstring != null)
             {

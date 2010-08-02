@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using System.Reflection;
 
 using Common.Logging;
 
@@ -16,6 +17,12 @@ namespace Strive.Client.WPF
     public partial class App : Application
     {
         ILog Log = LogManager.GetCurrentClassLogger();
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
+        }
 
         private bool ReportException(Exception ex)
         {
@@ -36,11 +43,6 @@ namespace Strive.Client.WPF
             {
                 e.Handled = true;
             }
-        }
-
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

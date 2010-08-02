@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Collections;
 using System.Configuration;
+using System.Reflection;
 
 using Common.Logging;
 using Strive.Common;
@@ -17,22 +18,22 @@ namespace Strive.Server.Logic {
 		World world;
 		MessageProcessor mp;
 		StoppableThread engine_thread;
-        ILog Log;
+        ILog Log = LogManager.GetCurrentClassLogger();
 
 		public Engine() {
-			Global.ReadConfiguration();
+            Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
+            Global.ReadConfiguration();
 			engine_thread = new StoppableThread( new StoppableThread.WhileRunning( UpdateLoop ) );
 			networkhandler = new Listener( new IPEndPoint( IPAddress.Any, port ) );
             Log = LogManager.GetCurrentClassLogger();
 		}
 
 		public void Start() {
-			Log.Info( "Starting game engine..." );
 			world = new World( Global.world_id );
 			mp = new MessageProcessor( world, networkhandler );
 			Global.world = world;
 			engine_thread.Start();
-			Log.Info( "Listening to new tcp connections..." );
+			Log.Info( "Listening for new connections..." );
 			networkhandler.Start();
 		}
 
@@ -65,7 +66,7 @@ namespace Strive.Server.Logic {
 				}
 			} catch ( Exception e ) {
 				// Just log exceptions and stop all threads
-				Log.Error( e, e );
+				Log.Error( "Update loop exception caught", e );
 				Stop();
 			}
 		}

@@ -22,25 +22,25 @@ namespace Strive.Server.Logic {
 
 		public static void ReadConfiguration() {
 			// manditory fields
-			if ( ConfigurationSettings.AppSettings["world_id"] == null ) {
-				throw new ConfigurationException( "world_id" );
+			if (ConfigurationManager.AppSettings["world_id"] == null ) {
+				throw new ConfigurationErrorsException( "world_id" );
 			}
-			world_id = int.Parse(System.Configuration.ConfigurationSettings.AppSettings["world_id"]);
+			world_id = int.Parse(ConfigurationManager.AppSettings["world_id"]);
 
-			if ( ConfigurationSettings.AppSettings["port"] == null ) {
-				throw new ConfigurationException( "port" );
+			if ( ConfigurationManager.AppSettings["port"] == null ) {
+				throw new ConfigurationErrorsException( "port" );
 			}
-			port = int.Parse(ConfigurationSettings.AppSettings["port"]);
+			port = int.Parse(ConfigurationManager.AppSettings["port"]);
 
 			// optional fields
-			logfilename = ConfigurationSettings.AppSettings["logFileName"];
+			logfilename = ConfigurationManager.AppSettings["logFileName"];
 			if ( logfilename != null ) {
 				//Log.SetLogOutput( logfilename );
 			}
 
 			// one and one only of these two should be specified.
-			worldfilename = ConfigurationSettings.AppSettings["worldFileName"];
-			connectionstring = ConfigurationSettings.AppSettings["connectionString"];
+			worldfilename = ConfigurationManager.AppSettings["worldFileName"];
+			connectionstring = ConfigurationManager.AppSettings["connectionString"];
 		}
 	}
 }

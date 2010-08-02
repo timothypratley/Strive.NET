@@ -8,6 +8,7 @@ using System.IO;
 using Common.Logging;
 
 using Strive.Network.Messages;
+using ToClient = Strive.Network.Messages.ToClient;
 using ToServer = Strive.Network.Messages.ToServer;
 using Strive.Math3D;
 using Strive.Server.Model;
@@ -31,10 +32,9 @@ namespace Strive.Network.Client
         public delegate void OnConnectHandler();
         public delegate void OnConnectFailedHandler();
         public delegate void OnDisconnectHandler();
-        public delegate void OnPositionSentHandler(ToServer.Position Position);
+        public delegate void OnPositionSentHandler(ToClient.Position Position);
+
         public event OnPositionSentHandler OnPositionSent;
-        public delegate void OnEnterWorldAsMobileSentHandler(ToServer.EnterWorldAsMobile EnterWorldAsMobile);
-        public event OnEnterWorldAsMobileSentHandler OnEnterWorldAsMobileSent;
         public event OnConnectHandler OnConnect;
         public event OnConnectFailedHandler OnConnectFailed;
         public event OnDisconnectHandler OnDisconnect;
@@ -255,10 +255,6 @@ namespace Strive.Network.Client
                             } break;
                         }
                 }
-
-                if (message is ToServer.Position && OnPositionSent != null) OnPositionSent((ToServer.Position)message);
-                if (message is ToServer.EnterWorldAsMobile && OnEnterWorldAsMobileSent != null) OnEnterWorldAsMobileSent((ToServer.EnterWorldAsMobile)message);
-                //MessageReceived(message);
             }
             catch (Exception e)
             {
