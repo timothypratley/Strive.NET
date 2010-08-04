@@ -140,10 +140,6 @@
     <Compile Include="Readable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Schema.cs">
-      <DependentUpon>Schema.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Schema.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

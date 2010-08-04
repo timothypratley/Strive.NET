@@ -71,8 +71,13 @@ namespace Strive.Client.NeoAxisView
             this.Focus();
         }
 
+        Camera camera = null;
         void WorldViewControl_RenderUI(GuiRenderer renderer)
         {
+            if (camera != null)
+            {
+                Nameplates.RenderObjectsTips(renderer, camera);
+            }
             string text = "FPS: " + _perspective.FPS
                         + "    loc: " + CameraPosition.ToString(0)
                         + "    dir: " + CameraDirection.ToString(0);
@@ -83,6 +88,7 @@ namespace Strive.Client.NeoAxisView
 
         void renderTargetUserControl1_Render(Camera camera)
         {
+            this.camera = camera;
             RenderEntityOverCursor(camera);
             _perspective.Check();
             CameraPosition = new Vec3((float)_perspective.PositionX, (float)_perspective.PositionY, (float)_perspective.PositionZ);
