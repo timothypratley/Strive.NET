@@ -25,7 +25,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>0.0</OldToolsVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -138,6 +139,10 @@
     </Compile>
     <Compile Include="Readable.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Schema.cs">
+      <DependentUpon>Schema.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Schema.Designer.cs">
       <AutoGen>True</AutoGen>

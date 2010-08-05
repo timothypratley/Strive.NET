@@ -6,25 +6,48 @@ using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Forms;
 
+using Strive.Server.Model;
+
 
 namespace Strive.Client.ViewModel
 {
     public class Perspective
     {
+        private EnumSkill currentGameCommand = EnumSkill.None;
+        public EnumSkill CurrentGameCommand
+        {
+            get
+            {
+                return currentGameCommand;
+            }
+            set
+            {
+                currentGameCommand = value;
+                //ITexture texture = resources.GetCursor((int)currentGameCommand);
+                //CurrentWorld.RenderingScene.SetCursor(texture);
+            }
+        }
+
         double cameraHeading = 1.5;
         public double Heading { get { return cameraHeading; } }
 
         double cameraTilt = 0.95;
-        public double Tilt { get { return cameraTilt - Math.PI/2.0; } }
-        
+        public double Tilt { get { return cameraTilt - Math.PI / 2.0; } }
+
         double cameraX = 0.0;
         public double PositionX { get { return cameraX; } }
-        
+
         double cameraY = 0.0;
         public double PositionY { get { return cameraY; } }
-        
+
         double cameraZ = 23.0;
         public double PositionZ { get { return cameraZ; } }
+
+        private int lastTick = 0;
+        private int lastFrameRate = 0;
+        private int frameRate = 0;
+
+        public int FPS { get { return lastFrameRate; } }
 
         public Stopwatch movementTimer;
 
@@ -53,11 +76,19 @@ namespace Strive.Client.ViewModel
 
         public void Check()
         {
+            if (System.Environment.TickCount - lastTick >= 1000)
+            {
+                lastFrameRate = frameRate;
+                frameRate = 0;
+                lastTick = System.Environment.TickCount;
+            }
+            frameRate++;
+
             movementPerpendicular = 0;
             movementForward = 0;
             speedModifier = 1f;
             movementTimer.Stop();
-            delta = (double)movementTimer.Elapsed.TotalSeconds;
+            delta = movementTimer.Elapsed.TotalSeconds;
             movementTimer.Reset();
             movementTimer.Start();
 

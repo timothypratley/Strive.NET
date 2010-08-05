@@ -35,7 +35,7 @@ namespace Strive.Client.WinForms.Windows.ChildWindows
 			// TODO: Add any constructor code after InitializeComponent call
 			//
 
-			Game.CurrentServerConnection.OnPositionSent += new Strive.Network.Client.ServerConnection.OnPositionSentHandler(MiniMap_Update);
+			//Game.CurrentServerConnection.OnPositionSent += new Strive.Network.Client.ServerConnection.OnPositionSentHandler(MiniMap_Update);
 			
 		}
 

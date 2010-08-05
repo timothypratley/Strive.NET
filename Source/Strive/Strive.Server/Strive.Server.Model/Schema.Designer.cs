@@ -146,25 +146,25 @@ namespace Strive.Server.Model {
         
         private global::System.Data.DataRelation relationFK_Clan_Quote;
         
-        private global::System.Data.DataRelation relationFK_ClanRank_Quote;
+        private global::System.Data.DataRelation relationFK_ClanRank_Clan;
         
         private global::System.Data.DataRelation relationFK_ClanRank_EnumSkill;
         
-        private global::System.Data.DataRelation relationFK_ClanRank_Clan;
+        private global::System.Data.DataRelation relationFK_ClanRank_Quote;
         
         private global::System.Data.DataRelation relationFK_EnumDamageType_Quote;
         
         private global::System.Data.DataRelation relationFK_EnumLiquidType_Quote;
         
-        private global::System.Data.DataRelation relationFK_EnumRace_Quote;
-        
         private global::System.Data.DataRelation relationFK_EnumRace_EnumSize;
         
-        private global::System.Data.DataRelation relationFK_EnumSkill_Quote;
+        private global::System.Data.DataRelation relationFK_EnumRace_Quote;
+        
+        private global::System.Data.DataRelation relationFK_EnumSkill_EnumActivationType;
         
         private global::System.Data.DataRelation relationFK_EnumSkill_EnumTargetType;
         
-        private global::System.Data.DataRelation relationFK_EnumSkill_EnumActivationType;
+        private global::System.Data.DataRelation relationFK_EnumSkill_Quote;
         
         private global::System.Data.DataRelation relationFK_EnumSpecialisation_Quote;
         
@@ -172,19 +172,19 @@ namespace Strive.Server.Model {
         
         private global::System.Data.DataRelation relationFK_Inventory_ObjectInstance;
         
-        private global::System.Data.DataRelation relationFK_MobileHasClanRank_TemplateMobile;
-        
         private global::System.Data.DataRelation relationFK_MobileHasClanRank_ClanRank;
         
-        private global::System.Data.DataRelation relationFK_MobileHasSkill_TemplateMobile;
+        private global::System.Data.DataRelation relationFK_MobileHasClanRank_TemplateMobile;
         
         private global::System.Data.DataRelation relationFK_MobileHasSkill_EnumSkill;
         
+        private global::System.Data.DataRelation relationFK_MobileHasSkill_TemplateMobile;
+        
         private global::System.Data.DataRelation relationFK_MobileHasSpecialisation_TemplateMobile;
         
-        private global::System.Data.DataRelation relationFK_MobilePossesableByPlayer_Player;
-        
         private global::System.Data.DataRelation relationFK_MobilePossesableByPlayer_ObjectInstance;
+        
+        private global::System.Data.DataRelation relationFK_MobilePossesableByPlayer_Player;
         
         private global::System.Data.DataRelation relationFK_TemplateObject_ObjectInstance;
         
@@ -202,9 +202,9 @@ namespace Strive.Server.Model {
         
         private global::System.Data.DataRelation relationFK_Links_Modules;
         
-        private global::System.Data.DataRelation relationFK_Modules_Tabs;
-        
         private global::System.Data.DataRelation relationFK_Modules_ModuleDefinitions;
+        
+        private global::System.Data.DataRelation relationFK_Modules_Tabs;
         
         private global::System.Data.DataRelation relationFK_ModuleSettings_Modules;
         
@@ -214,63 +214,63 @@ namespace Strive.Server.Model {
         
         private global::System.Data.DataRelation relationFK_UserRoles_Roles;
         
-        private global::System.Data.DataRelation relationFK_RaceHasEmote_EnumRace;
-        
         private global::System.Data.DataRelation relationFK_RaceHasEmote_EnumEmote;
+        
+        private global::System.Data.DataRelation relationFK_RaceHasEmote_EnumRace;
         
         private global::System.Data.DataRelation relationFK_SkillEnablesSkill_EnumSkill;
         
-        private global::System.Data.DataRelation relationFK_SpecialisationEnablesSkill_EnumSpecialisation;
-        
         private global::System.Data.DataRelation relationFK_SpecialisationEnablesSkill_EnumSkill;
+        
+        private global::System.Data.DataRelation relationFK_SpecialisationEnablesSkill_EnumSpecialisation;
         
         private global::System.Data.DataRelation relationFK_SpecialisationEnablesSpecialisation_EnumSpecialisation;
         
-        private global::System.Data.DataRelation relationFK_TemplatetAffectedBySkill_TemplateObject;
-        
         private global::System.Data.DataRelation relationFK_TemplateAffectedBySkill_EnumSkill;
         
-        private global::System.Data.DataRelation relationFK_TemplateItem_TemplateObject;
+        private global::System.Data.DataRelation relationFK_TemplatetAffectedBySkill_TemplateObject;
         
         private global::System.Data.DataRelation relationFK_TemplateItem_EnumItemDurability;
         
-        private global::System.Data.DataRelation relationFK_TemplateItemEquipable_TemplateItem;
+        private global::System.Data.DataRelation relationFK_TemplateItem_TemplateObject;
         
         private global::System.Data.DataRelation relationFK_TemplateItemEquipable_EnumWearLocation;
         
-        private global::System.Data.DataRelation relationFK_TemplateItemJunk_TemplateItem;
+        private global::System.Data.DataRelation relationFK_TemplateItemEquipable_TemplateItem;
         
-        private global::System.Data.DataRelation relationFK_TemplateItemQuaffable_TemplateItem;
+        private global::System.Data.DataRelation relationFK_TemplateItemJunk_TemplateItem;
         
         private global::System.Data.DataRelation relationFK_TemplateItemQuaffable_EnumLiquidType;
         
+        private global::System.Data.DataRelation relationFK_TemplateItemQuaffable_TemplateItem;
+        
         private global::System.Data.DataRelation relationFK_TemplateItemReadable_TemplateItem;
-        
-        private global::System.Data.DataRelation relationFK_TemplateItemWieldable_TemplateItem;
-        
-        private global::System.Data.DataRelation relationFK_TemplateItemWieldable_EnumWeaponSize;
         
         private global::System.Data.DataRelation relationFK_TemplateItemWieldable_EnumDamageType;
         
-        private global::System.Data.DataRelation relationFK_TemplateMobile_TemplateObject;
+        private global::System.Data.DataRelation relationFK_TemplateItemWieldable_EnumWeaponSize;
         
-        private global::System.Data.DataRelation relationFK_TemplateMobile_Race;
-        
-        private global::System.Data.DataRelation relationFK_TemplateMobile_EnumSex;
-        
-        private global::System.Data.DataRelation relationFK_TemplateMobile_EnumMobileState;
+        private global::System.Data.DataRelation relationFK_TemplateItemWieldable_TemplateItem;
         
         private global::System.Data.DataRelation relationFK_TemplateMobile_EnumMobileSize;
         
-        private global::System.Data.DataRelation relationFK_TemplateObject_Player_Created;
+        private global::System.Data.DataRelation relationFK_TemplateMobile_EnumMobileState;
+        
+        private global::System.Data.DataRelation relationFK_TemplateMobile_EnumSex;
+        
+        private global::System.Data.DataRelation relationFK_TemplateMobile_Race;
+        
+        private global::System.Data.DataRelation relationFK_TemplateMobile_TemplateObject;
         
         private global::System.Data.DataRelation relationFK_TemplateObject_Model;
         
-        private global::System.Data.DataRelation relationFK_TemplateTerrain_TemplateObject;
+        private global::System.Data.DataRelation relationFK_TemplateObject_Player_Created;
+        
+        private global::System.Data.DataRelation relationFK_TemplateTerrain_Area;
         
         private global::System.Data.DataRelation relationFK_TemplateTerrain_EnumTerrainType;
         
-        private global::System.Data.DataRelation relationFK_TemplateTerrain_Area;
+        private global::System.Data.DataRelation relationFK_TemplateTerrain_TemplateObject;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -1718,26 +1718,26 @@ namespace Strive.Server.Model {
             }
             this.relationFK_Area_World = this.Relations["FK_Area_World"];
             this.relationFK_Clan_Quote = this.Relations["FK_Clan_Quote"];
-            this.relationFK_ClanRank_Quote = this.Relations["FK_ClanRank_Quote"];
-            this.relationFK_ClanRank_EnumSkill = this.Relations["FK_ClanRank_EnumSkill"];
             this.relationFK_ClanRank_Clan = this.Relations["FK_ClanRank_Clan"];
+            this.relationFK_ClanRank_EnumSkill = this.Relations["FK_ClanRank_EnumSkill"];
+            this.relationFK_ClanRank_Quote = this.Relations["FK_ClanRank_Quote"];
             this.relationFK_EnumDamageType_Quote = this.Relations["FK_EnumDamageType_Quote"];
             this.relationFK_EnumLiquidType_Quote = this.Relations["FK_EnumLiquidType_Quote"];
-            this.relationFK_EnumRace_Quote = this.Relations["FK_EnumRace_Quote"];
             this.relationFK_EnumRace_EnumSize = this.Relations["FK_EnumRace_EnumSize"];
-            this.relationFK_EnumSkill_Quote = this.Relations["FK_EnumSkill_Quote"];
-            this.relationFK_EnumSkill_EnumTargetType = this.Relations["FK_EnumSkill_EnumTargetType"];
+            this.relationFK_EnumRace_Quote = this.Relations["FK_EnumRace_Quote"];
             this.relationFK_EnumSkill_EnumActivationType = this.Relations["FK_EnumSkill_EnumActivationType"];
+            this.relationFK_EnumSkill_EnumTargetType = this.Relations["FK_EnumSkill_EnumTargetType"];
+            this.relationFK_EnumSkill_Quote = this.Relations["FK_EnumSkill_Quote"];
             this.relationFK_EnumSpecialisation_Quote = this.Relations["FK_EnumSpecialisation_Quote"];
             this.relationFK_EnumTerrainType_Quote = this.Relations["FK_EnumTerrainType_Quote"];
             this.relationFK_Inventory_ObjectInstance = this.Relations["FK_Inventory_ObjectInstance"];
-            this.relationFK_MobileHasClanRank_TemplateMobile = this.Relations["FK_MobileHasClanRank_TemplateMobile"];
             this.relationFK_MobileHasClanRank_ClanRank = this.Relations["FK_MobileHasClanRank_ClanRank"];
-            this.relationFK_MobileHasSkill_TemplateMobile = this.Relations["FK_MobileHasSkill_TemplateMobile"];
+            this.relationFK_MobileHasClanRank_TemplateMobile = this.Relations["FK_MobileHasClanRank_TemplateMobile"];
             this.relationFK_MobileHasSkill_EnumSkill = this.Relations["FK_MobileHasSkill_EnumSkill"];
+            this.relationFK_MobileHasSkill_TemplateMobile = this.Relations["FK_MobileHasSkill_TemplateMobile"];
             this.relationFK_MobileHasSpecialisation_TemplateMobile = this.Relations["FK_MobileHasSpecialisation_TemplateMobile"];
-            this.relationFK_MobilePossesableByPlayer_Player = this.Relations["FK_MobilePossesableByPlayer_Player"];
             this.relationFK_MobilePossesableByPlayer_ObjectInstance = this.Relations["FK_MobilePossesableByPlayer_ObjectInstance"];
+            this.relationFK_MobilePossesableByPlayer_Player = this.Relations["FK_MobilePossesableByPlayer_Player"];
             this.relationFK_TemplateObject_ObjectInstance = this.Relations["FK_TemplateObject_ObjectInstance"];
             this.relationFK_Announcements_Modules = this.Relations["FK_Announcements_Modules"];
             this.relationFK_Contacts_Modules = this.Relations["FK_Contacts_Modules"];
@@ -1746,41 +1746,41 @@ namespace Strive.Server.Model {
             this.relationFK_Events_Modules = this.Relations["FK_Events_Modules"];
             this.relationFK_HtmlText_Modules = this.Relations["FK_HtmlText_Modules"];
             this.relationFK_Links_Modules = this.Relations["FK_Links_Modules"];
-            this.relationFK_Modules_Tabs = this.Relations["FK_Modules_Tabs"];
             this.relationFK_Modules_ModuleDefinitions = this.Relations["FK_Modules_ModuleDefinitions"];
+            this.relationFK_Modules_Tabs = this.Relations["FK_Modules_Tabs"];
             this.relationFK_ModuleSettings_Modules = this.Relations["FK_ModuleSettings_Modules"];
             this.relationFK_Roles_Portals = this.Relations["FK_Roles_Portals"];
             this.relationFK_Tabs_Portals = this.Relations["FK_Tabs_Portals"];
             this.relationFK_UserRoles_Roles = this.Relations["FK_UserRoles_Roles"];
-            this.relationFK_RaceHasEmote_EnumRace = this.Relations["FK_RaceHasEmote_EnumRace"];
             this.relationFK_RaceHasEmote_EnumEmote = this.Relations["FK_RaceHasEmote_EnumEmote"];
+            this.relationFK_RaceHasEmote_EnumRace = this.Relations["FK_RaceHasEmote_EnumRace"];
             this.relationFK_SkillEnablesSkill_EnumSkill = this.Relations["FK_SkillEnablesSkill_EnumSkill"];
-            this.relationFK_SpecialisationEnablesSkill_EnumSpecialisation = this.Relations["FK_SpecialisationEnablesSkill_EnumSpecialisation"];
             this.relationFK_SpecialisationEnablesSkill_EnumSkill = this.Relations["FK_SpecialisationEnablesSkill_EnumSkill"];
+            this.relationFK_SpecialisationEnablesSkill_EnumSpecialisation = this.Relations["FK_SpecialisationEnablesSkill_EnumSpecialisation"];
             this.relationFK_SpecialisationEnablesSpecialisation_EnumSpecialisation = this.Relations["FK_SpecialisationEnablesSpecialisation_EnumSpecialisation"];
-            this.relationFK_TemplatetAffectedBySkill_TemplateObject = this.Relations["FK_TemplatetAffectedBySkill_TemplateObject"];
             this.relationFK_TemplateAffectedBySkill_EnumSkill = this.Relations["FK_TemplateAffectedBySkill_EnumSkill"];
-            this.relationFK_TemplateItem_TemplateObject = this.Relations["FK_TemplateItem_TemplateObject"];
+            this.relationFK_TemplatetAffectedBySkill_TemplateObject = this.Relations["FK_TemplatetAffectedBySkill_TemplateObject"];
             this.relationFK_TemplateItem_EnumItemDurability = this.Relations["FK_TemplateItem_EnumItemDurability"];
-            this.relationFK_TemplateItemEquipable_TemplateItem = this.Relations["FK_TemplateItemEquipable_TemplateItem"];
+            this.relationFK_TemplateItem_TemplateObject = this.Relations["FK_TemplateItem_TemplateObject"];
             this.relationFK_TemplateItemEquipable_EnumWearLocation = this.Relations["FK_TemplateItemEquipable_EnumWearLocation"];
+            this.relationFK_TemplateItemEquipable_TemplateItem = this.Relations["FK_TemplateItemEquipable_TemplateItem"];
             this.relationFK_TemplateItemJunk_TemplateItem = this.Relations["FK_TemplateItemJunk_TemplateItem"];
-            this.relationFK_TemplateItemQuaffable_TemplateItem = this.Relations["FK_TemplateItemQuaffable_TemplateItem"];
             this.relationFK_TemplateItemQuaffable_EnumLiquidType = this.Relations["FK_TemplateItemQuaffable_EnumLiquidType"];
+            this.relationFK_TemplateItemQuaffable_TemplateItem = this.Relations["FK_TemplateItemQuaffable_TemplateItem"];
             this.relationFK_TemplateItemReadable_TemplateItem = this.Relations["FK_TemplateItemReadable_TemplateItem"];
-            this.relationFK_TemplateItemWieldable_TemplateItem = this.Relations["FK_TemplateItemWieldable_TemplateItem"];
-            this.relationFK_TemplateItemWieldable_EnumWeaponSize = this.Relations["FK_TemplateItemWieldable_EnumWeaponSize"];
             this.relationFK_TemplateItemWieldable_EnumDamageType = this.Relations["FK_TemplateItemWieldable_EnumDamageType"];
-            this.relationFK_TemplateMobile_TemplateObject = this.Relations["FK_TemplateMobile_TemplateObject"];
-            this.relationFK_TemplateMobile_Race = this.Relations["FK_TemplateMobile_Race"];
-            this.relationFK_TemplateMobile_EnumSex = this.Relations["FK_TemplateMobile_EnumSex"];
-            this.relationFK_TemplateMobile_EnumMobileState = this.Relations["FK_TemplateMobile_EnumMobileState"];
+            this.relationFK_TemplateItemWieldable_EnumWeaponSize = this.Relations["FK_TemplateItemWieldable_EnumWeaponSize"];
+            this.relationFK_TemplateItemWieldable_TemplateItem = this.Relations["FK_TemplateItemWieldable_TemplateItem"];
             this.relationFK_TemplateMobile_EnumMobileSize = this.Relations["FK_TemplateMobile_EnumMobileSize"];
-            this.relationFK_TemplateObject_Player_Created = this.Relations["FK_TemplateObject_Player_Created"];
+            this.relationFK_TemplateMobile_EnumMobileState = this.Relations["FK_TemplateMobile_EnumMobileState"];
+            this.relationFK_TemplateMobile_EnumSex = this.Relations["FK_TemplateMobile_EnumSex"];
+            this.relationFK_TemplateMobile_Race = this.Relations["FK_TemplateMobile_Race"];
+            this.relationFK_TemplateMobile_TemplateObject = this.Relations["FK_TemplateMobile_TemplateObject"];
             this.relationFK_TemplateObject_Model = this.Relations["FK_TemplateObject_Model"];
-            this.relationFK_TemplateTerrain_TemplateObject = this.Relations["FK_TemplateTerrain_TemplateObject"];
-            this.relationFK_TemplateTerrain_EnumTerrainType = this.Relations["FK_TemplateTerrain_EnumTerrainType"];
+            this.relationFK_TemplateObject_Player_Created = this.Relations["FK_TemplateObject_Player_Created"];
             this.relationFK_TemplateTerrain_Area = this.Relations["FK_TemplateTerrain_Area"];
+            this.relationFK_TemplateTerrain_EnumTerrainType = this.Relations["FK_TemplateTerrain_EnumTerrainType"];
+            this.relationFK_TemplateTerrain_TemplateObject = this.Relations["FK_TemplateTerrain_TemplateObject"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1924,9 +1924,9 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_ClanRank_Quote", new global::System.Data.DataColumn[] {
-                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableClanRank.QuoteIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_ClanRank_Clan", new global::System.Data.DataColumn[] {
+                        this.tableClan.ClanIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableClanRank.ClanIDColumn});
             this.tableClanRank.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -1938,9 +1938,9 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_ClanRank_Clan", new global::System.Data.DataColumn[] {
-                        this.tableClan.ClanIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableClanRank.ClanIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_ClanRank_Quote", new global::System.Data.DataColumn[] {
+                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableClanRank.QuoteIDColumn});
             this.tableClanRank.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -1959,13 +1959,6 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_EnumRace_Quote", new global::System.Data.DataColumn[] {
-                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableEnumRace.QuoteIDColumn});
-            this.tableEnumRace.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_EnumRace_EnumSize", new global::System.Data.DataColumn[] {
                         this.tableEnumMobileSize.EnumMobileSizeIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableEnumRace.EnumMobileSizeIDColumn});
@@ -1973,9 +1966,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_EnumSkill_Quote", new global::System.Data.DataColumn[] {
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_EnumRace_Quote", new global::System.Data.DataColumn[] {
                         this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableEnumSkill.QuoteIDColumn});
+                        this.tableEnumRace.QuoteIDColumn});
+            this.tableEnumRace.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_EnumSkill_EnumActivationType", new global::System.Data.DataColumn[] {
+                        this.tableEnumActivationType.EnumActivationTypeIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableEnumSkill.EnumActivationTypeIDColumn});
             this.tableEnumSkill.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -1987,9 +1987,9 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_EnumSkill_EnumActivationType", new global::System.Data.DataColumn[] {
-                        this.tableEnumActivationType.EnumActivationTypeIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableEnumSkill.EnumActivationTypeIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_EnumSkill_Quote", new global::System.Data.DataColumn[] {
+                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableEnumSkill.QuoteIDColumn});
             this.tableEnumSkill.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2015,13 +2015,6 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobileHasClanRank_TemplateMobile", new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableMobileHasClanRank.TemplateObjectIDColumn});
-            this.tableMobileHasClanRank.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_MobileHasClanRank_ClanRank", new global::System.Data.DataColumn[] {
                         this.tableClanRank.ClanIDColumn,
                         this.tableClanRank.RankColumn}, new global::System.Data.DataColumn[] {
@@ -2031,16 +2024,23 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobileHasSkill_TemplateMobile", new global::System.Data.DataColumn[] {
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobileHasClanRank_TemplateMobile", new global::System.Data.DataColumn[] {
                         this.tableTemplateMobile.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableMobileHasSkill.TemplateObjectIDColumn});
-            this.tableMobileHasSkill.Constraints.Add(fkc);
+                        this.tableMobileHasClanRank.TemplateObjectIDColumn});
+            this.tableMobileHasClanRank.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_MobileHasSkill_EnumSkill", new global::System.Data.DataColumn[] {
                         this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableMobileHasSkill.EnumSkillIDColumn});
+            this.tableMobileHasSkill.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobileHasSkill_TemplateMobile", new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableMobileHasSkill.TemplateObjectIDColumn});
             this.tableMobileHasSkill.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2052,16 +2052,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobilePossesableByPlayer_Player", new global::System.Data.DataColumn[] {
-                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableMobilePossesableByPlayer.PlayerIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobilePossesableByPlayer_ObjectInstance", new global::System.Data.DataColumn[] {
+                        this.tableObjectInstance.ObjectInstanceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableMobilePossesableByPlayer.ObjectInstanceIDColumn});
             this.tableMobilePossesableByPlayer.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobilePossesableByPlayer_ObjectInstance", new global::System.Data.DataColumn[] {
-                        this.tableObjectInstance.ObjectInstanceIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableMobilePossesableByPlayer.ObjectInstanceIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_MobilePossesableByPlayer_Player", new global::System.Data.DataColumn[] {
+                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableMobilePossesableByPlayer.PlayerIDColumn});
             this.tableMobilePossesableByPlayer.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2122,16 +2122,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Modules_Tabs", new global::System.Data.DataColumn[] {
-                        this.tablePO_Tabs.TabIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePO_Modules.TabIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Modules_ModuleDefinitions", new global::System.Data.DataColumn[] {
+                        this.tablePO_ModuleDefinitions.ModuleDefIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePO_Modules.ModuleDefIDColumn});
             this.tablePO_Modules.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Modules_ModuleDefinitions", new global::System.Data.DataColumn[] {
-                        this.tablePO_ModuleDefinitions.ModuleDefIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePO_Modules.ModuleDefIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Modules_Tabs", new global::System.Data.DataColumn[] {
+                        this.tablePO_Tabs.TabIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePO_Modules.TabIDColumn});
             this.tablePO_Modules.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2164,16 +2164,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_RaceHasEmote_EnumRace", new global::System.Data.DataColumn[] {
-                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableRaceHasEmote.EnumRaceIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_RaceHasEmote_EnumEmote", new global::System.Data.DataColumn[] {
+                        this.tableEnumEmote.EnumEmoteIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableRaceHasEmote.EnumEmoteIDColumn});
             this.tableRaceHasEmote.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_RaceHasEmote_EnumEmote", new global::System.Data.DataColumn[] {
-                        this.tableEnumEmote.EnumEmoteIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableRaceHasEmote.EnumEmoteIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_RaceHasEmote_EnumRace", new global::System.Data.DataColumn[] {
+                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableRaceHasEmote.EnumRaceIDColumn});
             this.tableRaceHasEmote.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2185,16 +2185,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_SpecialisationEnablesSkill_EnumSpecialisation", new global::System.Data.DataColumn[] {
-                        this.tableEnumSpecialisation.EnumSpecialisationIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSpecialisationEnablesSkill.EnumSpecialisationIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_SpecialisationEnablesSkill_EnumSkill", new global::System.Data.DataColumn[] {
+                        this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSpecialisationEnablesSkill.EnumSkillIDColumn});
             this.tableSpecialisationEnablesSkill.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_SpecialisationEnablesSkill_EnumSkill", new global::System.Data.DataColumn[] {
-                        this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSpecialisationEnablesSkill.EnumSkillIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_SpecialisationEnablesSkill_EnumSpecialisation", new global::System.Data.DataColumn[] {
+                        this.tableEnumSpecialisation.EnumSpecialisationIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSpecialisationEnablesSkill.EnumSpecialisationIDColumn});
             this.tableSpecialisationEnablesSkill.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2206,13 +2206,6 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplatetAffectedBySkill_TemplateObject", new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateAffectedBySkill.TemplateObjectIDColumn});
-            this.tableTemplateAffectedBySkill.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateAffectedBySkill_EnumSkill", new global::System.Data.DataColumn[] {
                         this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateAffectedBySkill.EnumSkillIDColumn});
@@ -2220,10 +2213,10 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItem_TemplateObject", new global::System.Data.DataColumn[] {
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplatetAffectedBySkill_TemplateObject", new global::System.Data.DataColumn[] {
                         this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn});
-            this.tableTemplateItem.Constraints.Add(fkc);
+                        this.tableTemplateAffectedBySkill.TemplateObjectIDColumn});
+            this.tableTemplateAffectedBySkill.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
@@ -2234,16 +2227,23 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemEquipable_TemplateItem", new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemEquipable.TemplateObjectIDColumn});
-            this.tableTemplateItemEquipable.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItem_TemplateObject", new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn});
+            this.tableTemplateItem.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemEquipable_EnumWearLocation", new global::System.Data.DataColumn[] {
                         this.tableEnumWearLocation.EnumWearLocationIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateItemEquipable.EnumWearLocationIDColumn});
+            this.tableTemplateItemEquipable.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemEquipable_TemplateItem", new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemEquipable.TemplateObjectIDColumn});
             this.tableTemplateItemEquipable.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2255,16 +2255,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemQuaffable_TemplateItem", new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemQuaffable.TemplateObjectIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemQuaffable_EnumLiquidType", new global::System.Data.DataColumn[] {
+                        this.tableEnumLiquidType.EnumLiquidTypeIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemQuaffable.EnumLiquidTypeIDColumn});
             this.tableTemplateItemQuaffable.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemQuaffable_EnumLiquidType", new global::System.Data.DataColumn[] {
-                        this.tableEnumLiquidType.EnumLiquidTypeIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemQuaffable.EnumLiquidTypeIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemQuaffable_TemplateItem", new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemQuaffable.TemplateObjectIDColumn});
             this.tableTemplateItemQuaffable.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2276,9 +2276,9 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemWieldable_TemplateItem", new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemWieldable.TemplateObjectIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemWieldable_EnumDamageType", new global::System.Data.DataColumn[] {
+                        this.tableEnumDamageType.EnumDamageTypeIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemWieldable.EnumDamageTypeIDColumn});
             this.tableTemplateItemWieldable.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2290,30 +2290,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemWieldable_EnumDamageType", new global::System.Data.DataColumn[] {
-                        this.tableEnumDamageType.EnumDamageTypeIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemWieldable.EnumDamageTypeIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateItemWieldable_TemplateItem", new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemWieldable.TemplateObjectIDColumn});
             this.tableTemplateItemWieldable.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_TemplateObject", new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.TemplateObjectIDColumn});
-            this.tableTemplateMobile.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_Race", new global::System.Data.DataColumn[] {
-                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.EnumRaceIDColumn});
-            this.tableTemplateMobile.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_EnumSex", new global::System.Data.DataColumn[] {
-                        this.tableEnumSex.EnumSexIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.EnumSexIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_EnumMobileSize", new global::System.Data.DataColumn[] {
+                        this.tableEnumMobileSize.EnumMobileSizeIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.EnumMobileSizeIDColumn});
             this.tableTemplateMobile.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2325,17 +2311,24 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_EnumMobileSize", new global::System.Data.DataColumn[] {
-                        this.tableEnumMobileSize.EnumMobileSizeIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.EnumMobileSizeIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_EnumSex", new global::System.Data.DataColumn[] {
+                        this.tableEnumSex.EnumSexIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.EnumSexIDColumn});
             this.tableTemplateMobile.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateObject_Player_Created", new global::System.Data.DataColumn[] {
-                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.PlayerIDColumn});
-            this.tableTemplateObject.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_Race", new global::System.Data.DataColumn[] {
+                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.EnumRaceIDColumn});
+            this.tableTemplateMobile.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateMobile_TemplateObject", new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.TemplateObjectIDColumn});
+            this.tableTemplateMobile.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
@@ -2346,9 +2339,16 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateTerrain_TemplateObject", new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateTerrain.TemplateObjectIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateObject_Player_Created", new global::System.Data.DataColumn[] {
+                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.PlayerIDColumn});
+            this.tableTemplateObject.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateTerrain_Area", new global::System.Data.DataColumn[] {
+                        this.tableArea.AreaIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateTerrain.AreaIDColumn});
             this.tableTemplateTerrain.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2360,9 +2360,9 @@ namespace Strive.Server.Model {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateTerrain_Area", new global::System.Data.DataColumn[] {
-                        this.tableArea.AreaIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateTerrain.AreaIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_TemplateTerrain_TemplateObject", new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateTerrain.TemplateObjectIDColumn});
             this.tableTemplateTerrain.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2375,18 +2375,18 @@ namespace Strive.Server.Model {
                         this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableClan.QuoteIDColumn}, false);
             this.Relations.Add(this.relationFK_Clan_Quote);
-            this.relationFK_ClanRank_Quote = new global::System.Data.DataRelation("FK_ClanRank_Quote", new global::System.Data.DataColumn[] {
-                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableClanRank.QuoteIDColumn}, false);
-            this.Relations.Add(this.relationFK_ClanRank_Quote);
-            this.relationFK_ClanRank_EnumSkill = new global::System.Data.DataRelation("FK_ClanRank_EnumSkill", new global::System.Data.DataColumn[] {
-                        this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableClanRank.EnumSkillIDColumn}, false);
-            this.Relations.Add(this.relationFK_ClanRank_EnumSkill);
             this.relationFK_ClanRank_Clan = new global::System.Data.DataRelation("FK_ClanRank_Clan", new global::System.Data.DataColumn[] {
                         this.tableClan.ClanIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableClanRank.ClanIDColumn}, false);
             this.Relations.Add(this.relationFK_ClanRank_Clan);
+            this.relationFK_ClanRank_EnumSkill = new global::System.Data.DataRelation("FK_ClanRank_EnumSkill", new global::System.Data.DataColumn[] {
+                        this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableClanRank.EnumSkillIDColumn}, false);
+            this.Relations.Add(this.relationFK_ClanRank_EnumSkill);
+            this.relationFK_ClanRank_Quote = new global::System.Data.DataRelation("FK_ClanRank_Quote", new global::System.Data.DataColumn[] {
+                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableClanRank.QuoteIDColumn}, false);
+            this.Relations.Add(this.relationFK_ClanRank_Quote);
             this.relationFK_EnumDamageType_Quote = new global::System.Data.DataRelation("FK_EnumDamageType_Quote", new global::System.Data.DataColumn[] {
                         this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableEnumDamageType.QuoteIDColumn}, false);
@@ -2395,26 +2395,26 @@ namespace Strive.Server.Model {
                         this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableEnumLiquidType.QuoteIDColumn}, false);
             this.Relations.Add(this.relationFK_EnumLiquidType_Quote);
-            this.relationFK_EnumRace_Quote = new global::System.Data.DataRelation("FK_EnumRace_Quote", new global::System.Data.DataColumn[] {
-                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableEnumRace.QuoteIDColumn}, false);
-            this.Relations.Add(this.relationFK_EnumRace_Quote);
             this.relationFK_EnumRace_EnumSize = new global::System.Data.DataRelation("FK_EnumRace_EnumSize", new global::System.Data.DataColumn[] {
                         this.tableEnumMobileSize.EnumMobileSizeIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableEnumRace.EnumMobileSizeIDColumn}, false);
             this.Relations.Add(this.relationFK_EnumRace_EnumSize);
-            this.relationFK_EnumSkill_Quote = new global::System.Data.DataRelation("FK_EnumSkill_Quote", new global::System.Data.DataColumn[] {
+            this.relationFK_EnumRace_Quote = new global::System.Data.DataRelation("FK_EnumRace_Quote", new global::System.Data.DataColumn[] {
                         this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableEnumSkill.QuoteIDColumn}, false);
-            this.Relations.Add(this.relationFK_EnumSkill_Quote);
-            this.relationFK_EnumSkill_EnumTargetType = new global::System.Data.DataRelation("FK_EnumSkill_EnumTargetType", new global::System.Data.DataColumn[] {
-                        this.tableEnumTargetType.EnumTargetTypeIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableEnumSkill.EnumTargetTypeIDColumn}, false);
-            this.Relations.Add(this.relationFK_EnumSkill_EnumTargetType);
+                        this.tableEnumRace.QuoteIDColumn}, false);
+            this.Relations.Add(this.relationFK_EnumRace_Quote);
             this.relationFK_EnumSkill_EnumActivationType = new global::System.Data.DataRelation("FK_EnumSkill_EnumActivationType", new global::System.Data.DataColumn[] {
                         this.tableEnumActivationType.EnumActivationTypeIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableEnumSkill.EnumActivationTypeIDColumn}, false);
             this.Relations.Add(this.relationFK_EnumSkill_EnumActivationType);
+            this.relationFK_EnumSkill_EnumTargetType = new global::System.Data.DataRelation("FK_EnumSkill_EnumTargetType", new global::System.Data.DataColumn[] {
+                        this.tableEnumTargetType.EnumTargetTypeIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableEnumSkill.EnumTargetTypeIDColumn}, false);
+            this.Relations.Add(this.relationFK_EnumSkill_EnumTargetType);
+            this.relationFK_EnumSkill_Quote = new global::System.Data.DataRelation("FK_EnumSkill_Quote", new global::System.Data.DataColumn[] {
+                        this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableEnumSkill.QuoteIDColumn}, false);
+            this.Relations.Add(this.relationFK_EnumSkill_Quote);
             this.relationFK_EnumSpecialisation_Quote = new global::System.Data.DataRelation("FK_EnumSpecialisation_Quote", new global::System.Data.DataColumn[] {
                         this.tableQuote.QuoteIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableEnumSpecialisation.QuoteIDColumn}, false);
@@ -2427,36 +2427,36 @@ namespace Strive.Server.Model {
                         this.tableObjectInstance.ObjectInstanceIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableInventory.ObjectInstanceIDColumn}, false);
             this.Relations.Add(this.relationFK_Inventory_ObjectInstance);
-            this.relationFK_MobileHasClanRank_TemplateMobile = new global::System.Data.DataRelation("FK_MobileHasClanRank_TemplateMobile", new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableMobileHasClanRank.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_MobileHasClanRank_TemplateMobile);
             this.relationFK_MobileHasClanRank_ClanRank = new global::System.Data.DataRelation("FK_MobileHasClanRank_ClanRank", new global::System.Data.DataColumn[] {
                         this.tableClanRank.ClanIDColumn,
                         this.tableClanRank.RankColumn}, new global::System.Data.DataColumn[] {
                         this.tableMobileHasClanRank.ClanIDColumn,
                         this.tableMobileHasClanRank.RankColumn}, false);
             this.Relations.Add(this.relationFK_MobileHasClanRank_ClanRank);
-            this.relationFK_MobileHasSkill_TemplateMobile = new global::System.Data.DataRelation("FK_MobileHasSkill_TemplateMobile", new global::System.Data.DataColumn[] {
+            this.relationFK_MobileHasClanRank_TemplateMobile = new global::System.Data.DataRelation("FK_MobileHasClanRank_TemplateMobile", new global::System.Data.DataColumn[] {
                         this.tableTemplateMobile.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableMobileHasSkill.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_MobileHasSkill_TemplateMobile);
+                        this.tableMobileHasClanRank.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_MobileHasClanRank_TemplateMobile);
             this.relationFK_MobileHasSkill_EnumSkill = new global::System.Data.DataRelation("FK_MobileHasSkill_EnumSkill", new global::System.Data.DataColumn[] {
                         this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableMobileHasSkill.EnumSkillIDColumn}, false);
             this.Relations.Add(this.relationFK_MobileHasSkill_EnumSkill);
+            this.relationFK_MobileHasSkill_TemplateMobile = new global::System.Data.DataRelation("FK_MobileHasSkill_TemplateMobile", new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableMobileHasSkill.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_MobileHasSkill_TemplateMobile);
             this.relationFK_MobileHasSpecialisation_TemplateMobile = new global::System.Data.DataRelation("FK_MobileHasSpecialisation_TemplateMobile", new global::System.Data.DataColumn[] {
                         this.tableTemplateMobile.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableMobileHasSpecialisation.TemplateObjectIDColumn}, false);
             this.Relations.Add(this.relationFK_MobileHasSpecialisation_TemplateMobile);
-            this.relationFK_MobilePossesableByPlayer_Player = new global::System.Data.DataRelation("FK_MobilePossesableByPlayer_Player", new global::System.Data.DataColumn[] {
-                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableMobilePossesableByPlayer.PlayerIDColumn}, false);
-            this.Relations.Add(this.relationFK_MobilePossesableByPlayer_Player);
             this.relationFK_MobilePossesableByPlayer_ObjectInstance = new global::System.Data.DataRelation("FK_MobilePossesableByPlayer_ObjectInstance", new global::System.Data.DataColumn[] {
                         this.tableObjectInstance.ObjectInstanceIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableMobilePossesableByPlayer.ObjectInstanceIDColumn}, false);
             this.Relations.Add(this.relationFK_MobilePossesableByPlayer_ObjectInstance);
+            this.relationFK_MobilePossesableByPlayer_Player = new global::System.Data.DataRelation("FK_MobilePossesableByPlayer_Player", new global::System.Data.DataColumn[] {
+                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableMobilePossesableByPlayer.PlayerIDColumn}, false);
+            this.Relations.Add(this.relationFK_MobilePossesableByPlayer_Player);
             this.relationFK_TemplateObject_ObjectInstance = new global::System.Data.DataRelation("FK_TemplateObject_ObjectInstance", new global::System.Data.DataColumn[] {
                         this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableObjectInstance.TemplateObjectIDColumn}, false);
@@ -2489,14 +2489,14 @@ namespace Strive.Server.Model {
                         this.tablePO_Modules.ModuleIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePO_Links.ModuleIDColumn}, false);
             this.Relations.Add(this.relationFK_Links_Modules);
-            this.relationFK_Modules_Tabs = new global::System.Data.DataRelation("FK_Modules_Tabs", new global::System.Data.DataColumn[] {
-                        this.tablePO_Tabs.TabIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePO_Modules.TabIDColumn}, false);
-            this.Relations.Add(this.relationFK_Modules_Tabs);
             this.relationFK_Modules_ModuleDefinitions = new global::System.Data.DataRelation("FK_Modules_ModuleDefinitions", new global::System.Data.DataColumn[] {
                         this.tablePO_ModuleDefinitions.ModuleDefIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePO_Modules.ModuleDefIDColumn}, false);
             this.Relations.Add(this.relationFK_Modules_ModuleDefinitions);
+            this.relationFK_Modules_Tabs = new global::System.Data.DataRelation("FK_Modules_Tabs", new global::System.Data.DataColumn[] {
+                        this.tablePO_Tabs.TabIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePO_Modules.TabIDColumn}, false);
+            this.Relations.Add(this.relationFK_Modules_Tabs);
             this.relationFK_ModuleSettings_Modules = new global::System.Data.DataRelation("FK_ModuleSettings_Modules", new global::System.Data.DataColumn[] {
                         this.tablePO_Modules.ModuleIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePO_ModuleSettings.ModuleIDColumn}, false);
@@ -2513,122 +2513,122 @@ namespace Strive.Server.Model {
                         this.tablePO_Roles.RoleIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePO_UserRoles.RoleIDColumn}, false);
             this.Relations.Add(this.relationFK_UserRoles_Roles);
-            this.relationFK_RaceHasEmote_EnumRace = new global::System.Data.DataRelation("FK_RaceHasEmote_EnumRace", new global::System.Data.DataColumn[] {
-                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableRaceHasEmote.EnumRaceIDColumn}, false);
-            this.Relations.Add(this.relationFK_RaceHasEmote_EnumRace);
             this.relationFK_RaceHasEmote_EnumEmote = new global::System.Data.DataRelation("FK_RaceHasEmote_EnumEmote", new global::System.Data.DataColumn[] {
                         this.tableEnumEmote.EnumEmoteIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableRaceHasEmote.EnumEmoteIDColumn}, false);
             this.Relations.Add(this.relationFK_RaceHasEmote_EnumEmote);
+            this.relationFK_RaceHasEmote_EnumRace = new global::System.Data.DataRelation("FK_RaceHasEmote_EnumRace", new global::System.Data.DataColumn[] {
+                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableRaceHasEmote.EnumRaceIDColumn}, false);
+            this.Relations.Add(this.relationFK_RaceHasEmote_EnumRace);
             this.relationFK_SkillEnablesSkill_EnumSkill = new global::System.Data.DataRelation("FK_SkillEnablesSkill_EnumSkill", new global::System.Data.DataColumn[] {
                         this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSkillEnablesSkill.EnumSkillIDColumn}, false);
             this.Relations.Add(this.relationFK_SkillEnablesSkill_EnumSkill);
-            this.relationFK_SpecialisationEnablesSkill_EnumSpecialisation = new global::System.Data.DataRelation("FK_SpecialisationEnablesSkill_EnumSpecialisation", new global::System.Data.DataColumn[] {
-                        this.tableEnumSpecialisation.EnumSpecialisationIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSpecialisationEnablesSkill.EnumSpecialisationIDColumn}, false);
-            this.Relations.Add(this.relationFK_SpecialisationEnablesSkill_EnumSpecialisation);
             this.relationFK_SpecialisationEnablesSkill_EnumSkill = new global::System.Data.DataRelation("FK_SpecialisationEnablesSkill_EnumSkill", new global::System.Data.DataColumn[] {
                         this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSpecialisationEnablesSkill.EnumSkillIDColumn}, false);
             this.Relations.Add(this.relationFK_SpecialisationEnablesSkill_EnumSkill);
+            this.relationFK_SpecialisationEnablesSkill_EnumSpecialisation = new global::System.Data.DataRelation("FK_SpecialisationEnablesSkill_EnumSpecialisation", new global::System.Data.DataColumn[] {
+                        this.tableEnumSpecialisation.EnumSpecialisationIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSpecialisationEnablesSkill.EnumSpecialisationIDColumn}, false);
+            this.Relations.Add(this.relationFK_SpecialisationEnablesSkill_EnumSpecialisation);
             this.relationFK_SpecialisationEnablesSpecialisation_EnumSpecialisation = new global::System.Data.DataRelation("FK_SpecialisationEnablesSpecialisation_EnumSpecialisation", new global::System.Data.DataColumn[] {
                         this.tableEnumSpecialisation.EnumSpecialisationIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSpecialisationEnablesSpecialisation.EnumSpecialisationIDColumn}, false);
             this.Relations.Add(this.relationFK_SpecialisationEnablesSpecialisation_EnumSpecialisation);
-            this.relationFK_TemplatetAffectedBySkill_TemplateObject = new global::System.Data.DataRelation("FK_TemplatetAffectedBySkill_TemplateObject", new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateAffectedBySkill.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplatetAffectedBySkill_TemplateObject);
             this.relationFK_TemplateAffectedBySkill_EnumSkill = new global::System.Data.DataRelation("FK_TemplateAffectedBySkill_EnumSkill", new global::System.Data.DataColumn[] {
                         this.tableEnumSkill.EnumSkillIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateAffectedBySkill.EnumSkillIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateAffectedBySkill_EnumSkill);
-            this.relationFK_TemplateItem_TemplateObject = new global::System.Data.DataRelation("FK_TemplateItem_TemplateObject", new global::System.Data.DataColumn[] {
+            this.relationFK_TemplatetAffectedBySkill_TemplateObject = new global::System.Data.DataRelation("FK_TemplatetAffectedBySkill_TemplateObject", new global::System.Data.DataColumn[] {
                         this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateItem_TemplateObject);
+                        this.tableTemplateAffectedBySkill.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplatetAffectedBySkill_TemplateObject);
             this.relationFK_TemplateItem_EnumItemDurability = new global::System.Data.DataRelation("FK_TemplateItem_EnumItemDurability", new global::System.Data.DataColumn[] {
                         this.tableEnumItemDurability.EnumItemDurabilityIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateItem.EnumItemDurabilityIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateItem_EnumItemDurability);
-            this.relationFK_TemplateItemEquipable_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemEquipable_TemplateItem", new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemEquipable.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateItemEquipable_TemplateItem);
+            this.relationFK_TemplateItem_TemplateObject = new global::System.Data.DataRelation("FK_TemplateItem_TemplateObject", new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateItem_TemplateObject);
             this.relationFK_TemplateItemEquipable_EnumWearLocation = new global::System.Data.DataRelation("FK_TemplateItemEquipable_EnumWearLocation", new global::System.Data.DataColumn[] {
                         this.tableEnumWearLocation.EnumWearLocationIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateItemEquipable.EnumWearLocationIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateItemEquipable_EnumWearLocation);
+            this.relationFK_TemplateItemEquipable_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemEquipable_TemplateItem", new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemEquipable.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateItemEquipable_TemplateItem);
             this.relationFK_TemplateItemJunk_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemJunk_TemplateItem", new global::System.Data.DataColumn[] {
                         this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateItemJunk.TemplateObjectIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateItemJunk_TemplateItem);
-            this.relationFK_TemplateItemQuaffable_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemQuaffable_TemplateItem", new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemQuaffable.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateItemQuaffable_TemplateItem);
             this.relationFK_TemplateItemQuaffable_EnumLiquidType = new global::System.Data.DataRelation("FK_TemplateItemQuaffable_EnumLiquidType", new global::System.Data.DataColumn[] {
                         this.tableEnumLiquidType.EnumLiquidTypeIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateItemQuaffable.EnumLiquidTypeIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateItemQuaffable_EnumLiquidType);
+            this.relationFK_TemplateItemQuaffable_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemQuaffable_TemplateItem", new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemQuaffable.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateItemQuaffable_TemplateItem);
             this.relationFK_TemplateItemReadable_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemReadable_TemplateItem", new global::System.Data.DataColumn[] {
                         this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateItemReadable.TemplateObjectIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateItemReadable_TemplateItem);
-            this.relationFK_TemplateItemWieldable_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemWieldable_TemplateItem", new global::System.Data.DataColumn[] {
-                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemWieldable.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateItemWieldable_TemplateItem);
-            this.relationFK_TemplateItemWieldable_EnumWeaponSize = new global::System.Data.DataRelation("FK_TemplateItemWieldable_EnumWeaponSize", new global::System.Data.DataColumn[] {
-                        this.tableEnumWeaponSize.EnumWeaponSizeIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateItemWieldable.EnumWeaponSizeIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateItemWieldable_EnumWeaponSize);
             this.relationFK_TemplateItemWieldable_EnumDamageType = new global::System.Data.DataRelation("FK_TemplateItemWieldable_EnumDamageType", new global::System.Data.DataColumn[] {
                         this.tableEnumDamageType.EnumDamageTypeIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateItemWieldable.EnumDamageTypeIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateItemWieldable_EnumDamageType);
-            this.relationFK_TemplateMobile_TemplateObject = new global::System.Data.DataRelation("FK_TemplateMobile_TemplateObject", new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateMobile_TemplateObject);
-            this.relationFK_TemplateMobile_Race = new global::System.Data.DataRelation("FK_TemplateMobile_Race", new global::System.Data.DataColumn[] {
-                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.EnumRaceIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateMobile_Race);
-            this.relationFK_TemplateMobile_EnumSex = new global::System.Data.DataRelation("FK_TemplateMobile_EnumSex", new global::System.Data.DataColumn[] {
-                        this.tableEnumSex.EnumSexIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.EnumSexIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateMobile_EnumSex);
-            this.relationFK_TemplateMobile_EnumMobileState = new global::System.Data.DataRelation("FK_TemplateMobile_EnumMobileState", new global::System.Data.DataColumn[] {
-                        this.tableEnumMobileState.EnumMobileStateIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateMobile.EnumMobileStateIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateMobile_EnumMobileState);
+            this.relationFK_TemplateItemWieldable_EnumWeaponSize = new global::System.Data.DataRelation("FK_TemplateItemWieldable_EnumWeaponSize", new global::System.Data.DataColumn[] {
+                        this.tableEnumWeaponSize.EnumWeaponSizeIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemWieldable.EnumWeaponSizeIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateItemWieldable_EnumWeaponSize);
+            this.relationFK_TemplateItemWieldable_TemplateItem = new global::System.Data.DataRelation("FK_TemplateItemWieldable_TemplateItem", new global::System.Data.DataColumn[] {
+                        this.tableTemplateItem.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateItemWieldable.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateItemWieldable_TemplateItem);
             this.relationFK_TemplateMobile_EnumMobileSize = new global::System.Data.DataRelation("FK_TemplateMobile_EnumMobileSize", new global::System.Data.DataColumn[] {
                         this.tableEnumMobileSize.EnumMobileSizeIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateMobile.EnumMobileSizeIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateMobile_EnumMobileSize);
-            this.relationFK_TemplateObject_Player_Created = new global::System.Data.DataRelation("FK_TemplateObject_Player_Created", new global::System.Data.DataColumn[] {
-                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.PlayerIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateObject_Player_Created);
+            this.relationFK_TemplateMobile_EnumMobileState = new global::System.Data.DataRelation("FK_TemplateMobile_EnumMobileState", new global::System.Data.DataColumn[] {
+                        this.tableEnumMobileState.EnumMobileStateIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.EnumMobileStateIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateMobile_EnumMobileState);
+            this.relationFK_TemplateMobile_EnumSex = new global::System.Data.DataRelation("FK_TemplateMobile_EnumSex", new global::System.Data.DataColumn[] {
+                        this.tableEnumSex.EnumSexIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.EnumSexIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateMobile_EnumSex);
+            this.relationFK_TemplateMobile_Race = new global::System.Data.DataRelation("FK_TemplateMobile_Race", new global::System.Data.DataColumn[] {
+                        this.tableEnumRace.EnumRaceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.EnumRaceIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateMobile_Race);
+            this.relationFK_TemplateMobile_TemplateObject = new global::System.Data.DataRelation("FK_TemplateMobile_TemplateObject", new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateMobile.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateMobile_TemplateObject);
             this.relationFK_TemplateObject_Model = new global::System.Data.DataRelation("FK_TemplateObject_Model", new global::System.Data.DataColumn[] {
                         this.tableResource.ResourceIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateObject.ResourceIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateObject_Model);
-            this.relationFK_TemplateTerrain_TemplateObject = new global::System.Data.DataRelation("FK_TemplateTerrain_TemplateObject", new global::System.Data.DataColumn[] {
-                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateTerrain.TemplateObjectIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateTerrain_TemplateObject);
-            this.relationFK_TemplateTerrain_EnumTerrainType = new global::System.Data.DataRelation("FK_TemplateTerrain_EnumTerrainType", new global::System.Data.DataColumn[] {
-                        this.tableEnumTerrainType.EnumTerrainTypeIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTemplateTerrain.EnumTerrainTypeIDColumn}, false);
-            this.Relations.Add(this.relationFK_TemplateTerrain_EnumTerrainType);
+            this.relationFK_TemplateObject_Player_Created = new global::System.Data.DataRelation("FK_TemplateObject_Player_Created", new global::System.Data.DataColumn[] {
+                        this.tablePlayer.PlayerIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.PlayerIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateObject_Player_Created);
             this.relationFK_TemplateTerrain_Area = new global::System.Data.DataRelation("FK_TemplateTerrain_Area", new global::System.Data.DataColumn[] {
                         this.tableArea.AreaIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableTemplateTerrain.AreaIDColumn}, false);
             this.Relations.Add(this.relationFK_TemplateTerrain_Area);
+            this.relationFK_TemplateTerrain_EnumTerrainType = new global::System.Data.DataRelation("FK_TemplateTerrain_EnumTerrainType", new global::System.Data.DataColumn[] {
+                        this.tableEnumTerrainType.EnumTerrainTypeIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateTerrain.EnumTerrainTypeIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateTerrain_EnumTerrainType);
+            this.relationFK_TemplateTerrain_TemplateObject = new global::System.Data.DataRelation("FK_TemplateTerrain_TemplateObject", new global::System.Data.DataColumn[] {
+                        this.tableTemplateObject.TemplateObjectIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplateTerrain.TemplateObjectIDColumn}, false);
+            this.Relations.Add(this.relationFK_TemplateTerrain_TemplateObject);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -22775,12 +22775,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public QuoteRow QuoteRow {
+            public ClanRow ClanRow {
                 get {
-                    return ((QuoteRow)(this.GetParentRow(this.Table.ParentRelations["FK_ClanRank_Quote"])));
+                    return ((ClanRow)(this.GetParentRow(this.Table.ParentRelations["FK_ClanRank_Clan"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_ClanRank_Quote"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_ClanRank_Clan"]);
                 }
             }
             
@@ -22797,12 +22797,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ClanRow ClanRow {
+            public QuoteRow QuoteRow {
                 get {
-                    return ((ClanRow)(this.GetParentRow(this.Table.ParentRelations["FK_ClanRank_Clan"])));
+                    return ((QuoteRow)(this.GetParentRow(this.Table.ParentRelations["FK_ClanRank_Quote"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_ClanRank_Clan"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_ClanRank_Quote"]);
                 }
             }
             
@@ -23671,23 +23671,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public QuoteRow QuoteRow {
-                get {
-                    return ((QuoteRow)(this.GetParentRow(this.Table.ParentRelations["FK_EnumRace_Quote"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_EnumRace_Quote"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumMobileSizeRow EnumMobileSizeRow {
                 get {
                     return ((EnumMobileSizeRow)(this.GetParentRow(this.Table.ParentRelations["FK_EnumRace_EnumSize"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_EnumRace_EnumSize"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public QuoteRow QuoteRow {
+                get {
+                    return ((QuoteRow)(this.GetParentRow(this.Table.ParentRelations["FK_EnumRace_Quote"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_EnumRace_Quote"]);
                 }
             }
             
@@ -24151,12 +24151,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public QuoteRow QuoteRow {
+            public EnumActivationTypeRow EnumActivationTypeRow {
                 get {
-                    return ((QuoteRow)(this.GetParentRow(this.Table.ParentRelations["FK_EnumSkill_Quote"])));
+                    return ((EnumActivationTypeRow)(this.GetParentRow(this.Table.ParentRelations["FK_EnumSkill_EnumActivationType"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_EnumSkill_Quote"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_EnumSkill_EnumActivationType"]);
                 }
             }
             
@@ -24173,12 +24173,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumActivationTypeRow EnumActivationTypeRow {
+            public QuoteRow QuoteRow {
                 get {
-                    return ((EnumActivationTypeRow)(this.GetParentRow(this.Table.ParentRelations["FK_EnumSkill_EnumActivationType"])));
+                    return ((QuoteRow)(this.GetParentRow(this.Table.ParentRelations["FK_EnumSkill_Quote"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_EnumSkill_EnumActivationType"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_EnumSkill_Quote"]);
                 }
             }
             
@@ -24742,23 +24742,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateMobileRow TemplateMobileRow {
-                get {
-                    return ((TemplateMobileRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobileHasClanRank_TemplateMobile"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_MobileHasClanRank_TemplateMobile"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ClanRankRow ClanRankRowParent {
                 get {
                     return ((ClanRankRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobileHasClanRank_ClanRank"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_MobileHasClanRank_ClanRank"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public TemplateMobileRow TemplateMobileRow {
+                get {
+                    return ((TemplateMobileRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobileHasClanRank_TemplateMobile"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_MobileHasClanRank_TemplateMobile"]);
                 }
             }
         }
@@ -24812,23 +24812,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateMobileRow TemplateMobileRow {
-                get {
-                    return ((TemplateMobileRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobileHasSkill_TemplateMobile"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_MobileHasSkill_TemplateMobile"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumSkillRow EnumSkillRow {
                 get {
                     return ((EnumSkillRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobileHasSkill_EnumSkill"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_MobileHasSkill_EnumSkill"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public TemplateMobileRow TemplateMobileRow {
+                get {
+                    return ((TemplateMobileRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobileHasSkill_TemplateMobile"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_MobileHasSkill_TemplateMobile"]);
                 }
             }
         }
@@ -24919,23 +24919,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PlayerRow PlayerRow {
-                get {
-                    return ((PlayerRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobilePossesableByPlayer_Player"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_MobilePossesableByPlayer_Player"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ObjectInstanceRow ObjectInstanceRow {
                 get {
                     return ((ObjectInstanceRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobilePossesableByPlayer_ObjectInstance"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_MobilePossesableByPlayer_ObjectInstance"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PlayerRow PlayerRow {
+                get {
+                    return ((PlayerRow)(this.GetParentRow(this.Table.ParentRelations["FK_MobilePossesableByPlayer_Player"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_MobilePossesableByPlayer_Player"]);
                 }
             }
         }
@@ -27114,23 +27114,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PO_TabsRow PO_TabsRow {
-                get {
-                    return ((PO_TabsRow)(this.GetParentRow(this.Table.ParentRelations["FK_Modules_Tabs"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_Modules_Tabs"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PO_ModuleDefinitionsRow PO_ModuleDefinitionsRow {
                 get {
                     return ((PO_ModuleDefinitionsRow)(this.GetParentRow(this.Table.ParentRelations["FK_Modules_ModuleDefinitions"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Modules_ModuleDefinitions"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PO_TabsRow PO_TabsRow {
+                get {
+                    return ((PO_TabsRow)(this.GetParentRow(this.Table.ParentRelations["FK_Modules_Tabs"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Modules_Tabs"]);
                 }
             }
             
@@ -27926,23 +27926,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumRaceRow EnumRaceRow {
-                get {
-                    return ((EnumRaceRow)(this.GetParentRow(this.Table.ParentRelations["FK_RaceHasEmote_EnumRace"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_RaceHasEmote_EnumRace"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumEmoteRow EnumEmoteRow {
                 get {
                     return ((EnumEmoteRow)(this.GetParentRow(this.Table.ParentRelations["FK_RaceHasEmote_EnumEmote"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_RaceHasEmote_EnumEmote"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public EnumRaceRow EnumRaceRow {
+                get {
+                    return ((EnumRaceRow)(this.GetParentRow(this.Table.ParentRelations["FK_RaceHasEmote_EnumRace"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_RaceHasEmote_EnumRace"]);
                 }
             }
         }
@@ -28181,23 +28181,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumSpecialisationRow EnumSpecialisationRow {
-                get {
-                    return ((EnumSpecialisationRow)(this.GetParentRow(this.Table.ParentRelations["FK_SpecialisationEnablesSkill_EnumSpecialisation"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_SpecialisationEnablesSkill_EnumSpecialisation"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumSkillRow EnumSkillRow {
                 get {
                     return ((EnumSkillRow)(this.GetParentRow(this.Table.ParentRelations["FK_SpecialisationEnablesSkill_EnumSkill"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_SpecialisationEnablesSkill_EnumSkill"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public EnumSpecialisationRow EnumSpecialisationRow {
+                get {
+                    return ((EnumSpecialisationRow)(this.GetParentRow(this.Table.ParentRelations["FK_SpecialisationEnablesSkill_EnumSpecialisation"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_SpecialisationEnablesSkill_EnumSpecialisation"]);
                 }
             }
         }
@@ -28310,23 +28310,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateObjectRow TemplateObjectRow {
-                get {
-                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplatetAffectedBySkill_TemplateObject"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplatetAffectedBySkill_TemplateObject"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumSkillRow EnumSkillRow {
                 get {
                     return ((EnumSkillRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateAffectedBySkill_EnumSkill"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateAffectedBySkill_EnumSkill"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public TemplateObjectRow TemplateObjectRow {
+                get {
+                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplatetAffectedBySkill_TemplateObject"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplatetAffectedBySkill_TemplateObject"]);
                 }
             }
         }
@@ -28391,23 +28391,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateObjectRow TemplateObjectRow {
-                get {
-                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItem_TemplateObject"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItem_TemplateObject"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumItemDurabilityRow EnumItemDurabilityRow {
                 get {
                     return ((EnumItemDurabilityRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItem_EnumItemDurability"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItem_EnumItemDurability"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public TemplateObjectRow TemplateObjectRow {
+                get {
+                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItem_TemplateObject"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItem_TemplateObject"]);
                 }
             }
             
@@ -28516,23 +28516,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateItemRow TemplateItemRow {
-                get {
-                    return ((TemplateItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemEquipable_TemplateItem"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemEquipable_TemplateItem"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumWearLocationRow EnumWearLocationRow {
                 get {
                     return ((EnumWearLocationRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemEquipable_EnumWearLocation"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemEquipable_EnumWearLocation"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public TemplateItemRow TemplateItemRow {
+                get {
+                    return ((TemplateItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemEquipable_TemplateItem"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemEquipable_TemplateItem"]);
                 }
             }
         }
@@ -28634,23 +28634,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateItemRow TemplateItemRow {
-                get {
-                    return ((TemplateItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemQuaffable_TemplateItem"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemQuaffable_TemplateItem"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public EnumLiquidTypeRow EnumLiquidTypeRow {
                 get {
                     return ((EnumLiquidTypeRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemQuaffable_EnumLiquidType"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemQuaffable_EnumLiquidType"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public TemplateItemRow TemplateItemRow {
+                get {
+                    return ((TemplateItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemQuaffable_TemplateItem"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemQuaffable_TemplateItem"]);
                 }
             }
         }
@@ -28785,12 +28785,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateItemRow TemplateItemRow {
+            public EnumDamageTypeRow EnumDamageTypeRow {
                 get {
-                    return ((TemplateItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemWieldable_TemplateItem"])));
+                    return ((EnumDamageTypeRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemWieldable_EnumDamageType"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemWieldable_TemplateItem"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemWieldable_EnumDamageType"]);
                 }
             }
             
@@ -28807,12 +28807,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumDamageTypeRow EnumDamageTypeRow {
+            public TemplateItemRow TemplateItemRow {
                 get {
-                    return ((EnumDamageTypeRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemWieldable_EnumDamageType"])));
+                    return ((TemplateItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateItemWieldable_TemplateItem"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemWieldable_EnumDamageType"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateItemWieldable_TemplateItem"]);
                 }
             }
         }
@@ -28976,34 +28976,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateObjectRow TemplateObjectRow {
+            public EnumMobileSizeRow EnumMobileSizeRow {
                 get {
-                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_TemplateObject"])));
+                    return ((EnumMobileSizeRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_EnumMobileSize"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_TemplateObject"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumRaceRow EnumRaceRow {
-                get {
-                    return ((EnumRaceRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_Race"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_Race"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumSexRow EnumSexRow {
-                get {
-                    return ((EnumSexRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_EnumSex"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_EnumSex"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_EnumMobileSize"]);
                 }
             }
             
@@ -29020,12 +28998,34 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumMobileSizeRow EnumMobileSizeRow {
+            public EnumSexRow EnumSexRow {
                 get {
-                    return ((EnumMobileSizeRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_EnumMobileSize"])));
+                    return ((EnumSexRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_EnumSex"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_EnumMobileSize"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_EnumSex"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public EnumRaceRow EnumRaceRow {
+                get {
+                    return ((EnumRaceRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_Race"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_Race"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public TemplateObjectRow TemplateObjectRow {
+                get {
+                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateMobile_TemplateObject"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateMobile_TemplateObject"]);
                 }
             }
             
@@ -29167,23 +29167,23 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PlayerRow PlayerRow {
-                get {
-                    return ((PlayerRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateObject_Player_Created"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateObject_Player_Created"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ResourceRow ResourceRow {
                 get {
                     return ((ResourceRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateObject_Model"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateObject_Model"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PlayerRow PlayerRow {
+                get {
+                    return ((PlayerRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateObject_Player_Created"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateObject_Player_Created"]);
                 }
             }
             
@@ -29292,12 +29292,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateObjectRow TemplateObjectRow {
+            public AreaRow AreaRow {
                 get {
-                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateTerrain_TemplateObject"])));
+                    return ((AreaRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateTerrain_Area"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateTerrain_TemplateObject"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateTerrain_Area"]);
                 }
             }
             
@@ -29314,12 +29314,12 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AreaRow AreaRow {
+            public TemplateObjectRow TemplateObjectRow {
                 get {
-                    return ((AreaRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateTerrain_Area"])));
+                    return ((TemplateObjectRow)(this.GetParentRow(this.Table.ParentRelations["FK_TemplateTerrain_TemplateObject"])));
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateTerrain_Area"]);
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_TemplateTerrain_TemplateObject"]);
                 }
             }
         }

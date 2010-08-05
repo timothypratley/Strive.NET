@@ -25,8 +25,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -66,6 +66,12 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
+<<<<<<< HEAD
+=======
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+>>>>>>> b3671193cd9b8fe82fdf1838bef6a7b957b11785
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
@@ -74,6 +80,13 @@
     </Reference>
     <Reference Include="AvalonDock.Themes">
       <HintPath>..\..\..\ThirdParty\AvalonDock\AvalonDock.Themes.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="DDSFormat, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -227,12 +240,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+<<<<<<< HEAD
+=======
+    <None Include="App.config" />
+    <None Include="Properties\app.manifest" />
+>>>>>>> b3671193cd9b8fe82fdf1838bef6a7b957b11785
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Strive.Client.WPF_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj">
@@ -287,11 +304,7 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="@(DataFiles)"
-          DestinationFiles="@(DataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(NativeDllFiles)"
-          DestinationFiles="@(NativeDllFiles->'$(TargetDir)/NativeDlls/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DataFiles)" DestinationFiles="@(DataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(NativeDllFiles)" DestinationFiles="@(NativeDllFiles->'$(TargetDir)/NativeDlls/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>

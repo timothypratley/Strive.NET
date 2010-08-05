@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using Strive.Network.Client;
+using ToClient = Strive.Network.Messages.ToClient;
 
 namespace Strive.Client.ViewModel
 {
@@ -15,47 +16,30 @@ namespace Strive.Client.ViewModel
         public ServerConnection connection;
         public InputBindings bindings;
 
-        /*
-        private static EnumSkill currentGameCommand = EnumSkill.None;
-        public static EnumSkill CurrentGameCommand
-        {
-            get
-            {
-                return currentGameCommand;
-            }
-            set
-            {
-                currentGameCommand = value;
-                ITexture texture = resources.GetCursor((int)currentGameCommand);
-                CurrentWorld.RenderingScene.SetCursor(texture);
-            }
-        }
-         */
+        Dictionary<int, ViewEntity> ViewEntities = new Dictionary<int, ViewEntity>();
 
         public WorldViewModel(ServerConnection connection)
         {
             bindings = new InputBindings();
             this.connection = connection;
-            //connection.OnPositionSent += PhysicalObjects_CollectionChanged;
+            connection.OnPositionSent += new ServerConnection.OnPositionSentHandler(UpdatePositions);
         }
 
-        void PhysicalObjects_CollectionChanged(object sender, CollectionChangeEventArgs e)
+        public void OnCollectionChanged(object sender, CollectionChangeEventArgs e)
         {
-            /*
-            PhysicalObject po = (PhysicalObject)e.Element;
-            Vector loc = Helper.GetPointForYardSpot(equipment.BlockID, equipment.RowIndex, equipment.StackIndex);
-            OnCollectionChanged(
-                new CollectionChangeEventArgs(
-                    e.Action,
-                    new ViewEntity(po.ID,
-                        1,
-                        (float)loc.X,
-                        (float)loc.Y,
-                        0,
-                        (float)loc.X,
-                        (float)loc.Y,
-                        0)));
-             */
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(sender, e);
+            }
+        }
+
+        void UpdatePositions(ToClient.Position Position)
+        {
+            ViewEntity entity = ViewEntities[Position.instance_id];
+            entity.X = Position.position.X;
+            entity.Y = Position.position.Y;
+            entity.Z = Position.position.Z;
+            OnCollectionChanged(this, new CollectionChangeEventArgs(CollectionChangeAction.Refresh, entity));
         }
     }
 }
