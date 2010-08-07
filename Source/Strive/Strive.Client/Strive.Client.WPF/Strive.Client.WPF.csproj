@@ -66,12 +66,9 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-<<<<<<< HEAD
-=======
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
->>>>>>> b3671193cd9b8fe82fdf1838bef6a7b957b11785
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
@@ -240,11 +237,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-<<<<<<< HEAD
-=======
     <None Include="App.config" />
     <None Include="Properties\app.manifest" />
->>>>>>> b3671193cd9b8fe82fdf1838bef6a7b957b11785
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -294,6 +288,9 @@
     <NativeDllFiles Include="../../../ThirdParty/NeoAxis/NativeDlls/**">
       <InProject>false</InProject>
     </NativeDllFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

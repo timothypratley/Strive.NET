@@ -143,10 +143,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Content Include="App.ico" />
-    <Content Include="data.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
