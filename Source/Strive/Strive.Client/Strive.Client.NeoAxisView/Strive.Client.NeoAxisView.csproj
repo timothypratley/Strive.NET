@@ -143,6 +143,7 @@
     <Compile Include="Splash.Designer.cs">
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
+    <Compile Include="World.cs" />
     <Compile Include="WorldViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

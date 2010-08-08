@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InputBindings.cs" />
+    <Compile Include="ObservableDictionary.cs" />
+    <Compile Include="ObservableSortedDictionary.cs" />
+    <Compile Include="ObservableViewEntityDictionary.cs" />
     <Compile Include="Perspective.cs" />
     <Compile Include="WorldViewModel.cs" />
     <Compile Include="ViewEntity.cs" />

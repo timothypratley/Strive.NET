@@ -16,13 +16,15 @@ namespace Strive.Client.ViewModel
         public ServerConnection connection;
         public InputBindings bindings;
 
-        Dictionary<int, ViewEntity> ViewEntities = new Dictionary<int, ViewEntity>();
+        public ObservableViewEntityDictionary ViewEntities = new ObservableViewEntityDictionary();
 
         public WorldViewModel(ServerConnection connection)
         {
             bindings = new InputBindings();
             this.connection = connection;
             connection.OnPositionSent += new ServerConnection.OnPositionSentHandler(UpdatePositions);
+            ViewEntities.Add("StormSworder1", new ViewEntity("StormSworder1", 1, 0, 0, 0, 0, 0, 0));
+            ViewEntities.Add("Farmer1", new ViewEntity("Farmer1", 2, 0, 0, 0, 0, 0, 0));
         }
 
         public void OnCollectionChanged(object sender, CollectionChangeEventArgs e)
@@ -35,7 +37,7 @@ namespace Strive.Client.ViewModel
 
         void UpdatePositions(ToClient.Position Position)
         {
-            ViewEntity entity = ViewEntities[Position.instance_id];
+            ViewEntity entity = ViewEntities[Position.instance_id.ToString()];
             entity.X = Position.position.X;
             entity.Y = Position.position.Y;
             entity.Z = Position.position.Z;

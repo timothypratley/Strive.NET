@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
+using System.IO;
 
 using AvalonDock;
 using Strive.Client.NeoAxisView;
@@ -32,9 +33,22 @@ namespace Strive.Client.WPF
         {
             serverConnection = new ServerConnection();
             worldViewModel = new WorldViewModel(serverConnection);
-            WorldViewControl.Init(worldViewModel);
+            World.Init(worldViewModel);
             InitializeComponent();
             NewCmdExecuted(null, null);
+        }
+
+        const string LayoutFileName = "SampleLayout.xml";
+
+        private void SaveLayout(object sender, RoutedEventArgs e)
+        {
+            dockManager.SaveLayout(LayoutFileName);
+        }
+
+        private void RestoreLayout(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(LayoutFileName))
+                dockManager.RestoreLayout(LayoutFileName);
         }
 
         private void CloseCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -64,8 +78,11 @@ namespace Strive.Client.WPF
 
         private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new DockableContent();
-            view.Title = "World View";
+            var view = new DockableContent()
+            {
+                Name = "WorldView",
+                Title = "World View"
+            };
 
             var c = new WorldViewControl();
             var host = new WindowsFormsHost();
@@ -74,6 +91,28 @@ namespace Strive.Client.WPF
             view.Content = host;
             view.ShowAsDocument(dockManager);
             view.Focus();
+        }
+
+        private void SearchCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var resourceList = new ResourceList(worldViewModel);
+            resourceList.ShowAsDocument(dockManager);
+            resourceList.Focus();
+        }
+
+        private void BrowseHomeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void BrowseHomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            
         }
     }
 }

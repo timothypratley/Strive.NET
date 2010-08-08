@@ -25,33 +25,13 @@ namespace Strive.Client.NeoAxisView
 {
     public partial class WorldViewControl : RenderTargetUserControl
     {
-        static Form _splash = new Splash();
-        static WorldViewModel _worldViewModel;
-        public static bool Init(WorldViewModel worldViewModel)
-        {
-            _worldViewModel = worldViewModel;
-
-            //NeoAxis initialization
-            _splash.Show();
-            if (!WindowsAppWorld.Init(_splash, "user:Logs/WindowsAppExample.log"))
-            {
-                _splash.Close();
-                return false;
-            }
-            _splash.Hide();
-
-            //load map
-            WindowsAppWorld.MapLoad("Maps/RTSDemo/Map.map", true);
-            return true;
-        }
-
         Perspective _perspective;
         public WorldViewControl()
         {
             _perspective = new Perspective(
                 new Perspective.KeyPressedCheck(IsKeyPressed),
                 new Perspective.MouseButtonCheck(GetMouseButtons),
-                _worldViewModel.bindings);
+                World.ViewModel.bindings);
             CameraFixedUp = Vec3.ZAxis;
             CameraPosition = new Vec3(0, 10, 1);
             CameraDirection = new Vec3(0, 1, 0);
