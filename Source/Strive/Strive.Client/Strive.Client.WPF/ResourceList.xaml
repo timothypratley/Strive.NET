@@ -1,0 +1,8 @@
+﻿<ad:DockableContent x:Class="Strive.Client.WPF.ResourceList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:wvm="clr-namespace:Strive.Client.ViewModel;assembly=Strive.Client.ViewModel"
+        Title="Resource List" Height="300" Width="300" xmlns:my="clr-namespace:Strive.Client.WPF">
+    <ListView Name="listView1" />
+</ad:DockableContent>
