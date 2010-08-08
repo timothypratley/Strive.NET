@@ -31,7 +31,7 @@ namespace Strive.Client.NeoAxisView
             _perspective = new Perspective(
                 new Perspective.KeyPressedCheck(IsKeyPressed),
                 new Perspective.MouseButtonCheck(GetMouseButtons),
-                World.ViewModel.bindings);
+                new InputBindings());
             CameraFixedUp = Vec3.ZAxis;
             CameraPosition = new Vec3(0, 10, 1);
             CameraDirection = new Vec3(0, 1, 0);

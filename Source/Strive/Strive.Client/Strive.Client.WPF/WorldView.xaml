@@ -1,0 +1,10 @@
+﻿<ad:DockableContent x:Class="Strive.Client.WPF.WorldView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:nav="clr-namespace:Strive.Client.NeoAxisView;assembly=Strive.Client.NeoAxisView"
+        Title="World View" Height="300" Width="300">
+    <WindowsFormsHost Name="windowsFormsHost1">
+        <nav:WorldViewControl x:Name="worldViewControl1" />
+    </WindowsFormsHost>
+</ad:DockableContent>

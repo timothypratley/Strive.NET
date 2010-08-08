@@ -9,6 +9,11 @@ using System.Reflection;
 
 using Common.Logging;
 
+using Strive.Client.NeoAxisView;
+using Strive.Client.ViewModel;
+using Strive.Network.Client;
+
+
 namespace Strive.Client.WPF
 {
     /// <summary>
@@ -16,12 +21,18 @@ namespace Strive.Client.WPF
     /// </summary>
     public partial class App : Application
     {
-        ILog Log = LogManager.GetCurrentClassLogger();
+        static ILog Log = LogManager.GetCurrentClassLogger();
+        public static WorldViewModel worldViewModel;
+        public static ServerConnection serverConnection;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
+
+            serverConnection = new ServerConnection();
+            worldViewModel = new WorldViewModel(serverConnection);
+            World.Init(worldViewModel);
         }
 
         private bool ReportException(Exception ex)

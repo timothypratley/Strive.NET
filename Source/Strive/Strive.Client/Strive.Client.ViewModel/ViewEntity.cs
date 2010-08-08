@@ -10,7 +10,8 @@ namespace Strive.Client.ViewModel
     public class ViewEntity
     {
         public string Name;
-        public int ModelID;
+        public string ModelID;
+        public bool IsSelected;
         public double X;
         public double Y;
         public double Z;
@@ -18,9 +19,10 @@ namespace Strive.Client.ViewModel
         public double DirY;
         public double DirZ;
 
-        public ViewEntity(string name, int modelID, double x, double y, double z, double dirX, double dirY, double dirZ)
+        public ViewEntity(string name, string modelID, double x, double y, double z, double dirX, double dirY, double dirZ)
         {
             Name = name; ModelID = modelID; X = x; Y = y; Z = z; DirX = dirX; DirY = dirY; DirZ = dirZ;
+            IsSelected = false;
         }
     }
 }

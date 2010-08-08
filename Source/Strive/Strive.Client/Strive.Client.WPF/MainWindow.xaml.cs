@@ -15,9 +15,6 @@ using System.Windows.Forms.Integration;
 using System.IO;
 
 using AvalonDock;
-using Strive.Client.NeoAxisView;
-using Strive.Client.ViewModel;
-using Strive.Network.Client;
 
 namespace Strive.Client.WPF
 {
@@ -26,19 +23,13 @@ namespace Strive.Client.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        WorldViewModel worldViewModel;
-        ServerConnection serverConnection;
-        
         public MainWindow()
         {
-            serverConnection = new ServerConnection();
-            worldViewModel = new WorldViewModel(serverConnection);
-            World.Init(worldViewModel);
             InitializeComponent();
             NewCmdExecuted(null, null);
         }
 
-        const string LayoutFileName = "SampleLayout.xml";
+        const string LayoutFileName = "StriveLayout.xml";
 
         private void SaveLayout(object sender, RoutedEventArgs e)
         {
@@ -78,17 +69,7 @@ namespace Strive.Client.WPF
 
         private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new DockableContent()
-            {
-                Name = "WorldView",
-                Title = "World View"
-            };
-
-            var c = new WorldViewControl();
-            var host = new WindowsFormsHost();
-            host.Child = c;
-
-            view.Content = host;
+            var view = new WorldView();
             view.ShowAsDocument(dockManager);
             view.Focus();
         }
@@ -100,7 +81,7 @@ namespace Strive.Client.WPF
 
         private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var resourceList = new ResourceList(worldViewModel);
+            var resourceList = new ResourceList(App.worldViewModel);
             resourceList.ShowAsDocument(dockManager);
             resourceList.Focus();
         }

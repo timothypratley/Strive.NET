@@ -12,22 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using AvalonDock;
-using Strive.Client.ViewModel;
+using Strive.Client.NeoAxisView;
 
 namespace Strive.Client.WPF
 {
     /// <summary>
-    /// Interaction logic for ResourceList.xaml
+    /// Interaction logic for WorldView.xaml
     /// </summary>
-    public partial class ResourceList : DockableContent
+    public partial class WorldView : DockableContent
     {
-        public WorldViewModel ViewModel;
-
-        public ResourceList(WorldViewModel viewModel)
+        public WorldView()
         {
-            this.ViewModel = viewModel;
             InitializeComponent();
-            listView1.ItemsSource = ViewModel.EntitiesView;
         }
     }
 }

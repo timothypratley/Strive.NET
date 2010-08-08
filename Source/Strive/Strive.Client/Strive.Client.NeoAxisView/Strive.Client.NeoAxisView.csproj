@@ -125,6 +125,7 @@
     <Reference Include="WindowsAppFramework">
       <HintPath>..\..\..\ThirdParty\NeoAxis\WindowsAppFramework.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
     <Reference Include="ZipArchive">
       <HintPath>..\..\..\ThirdParty\NeoAxis\ZipArchive.dll</HintPath>
     </Reference>

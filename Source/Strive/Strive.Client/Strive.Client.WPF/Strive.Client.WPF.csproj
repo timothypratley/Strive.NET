@@ -209,6 +209,9 @@
     <Compile Include="ResourceList.xaml.cs">
       <DependentUpon>ResourceList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WorldView.xaml.cs">
+      <DependentUpon>WorldView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -222,6 +225,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ResourceList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorldView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
