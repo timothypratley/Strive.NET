@@ -3,5 +3,5 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         Title="Resource List" Height="300" Width="300" xmlns:my="clr-namespace:Strive.Client.WPF">
-    <ListView Name="listView1" />
+    <ListView Name="listView1" IsSynchronizedWithCurrentItem="True" />
 </ad:DockableContent>
