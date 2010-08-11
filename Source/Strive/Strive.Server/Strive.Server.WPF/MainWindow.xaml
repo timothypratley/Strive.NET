@@ -1,0 +1,14 @@
+﻿<Window x:Class="Strive.Server.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Strive.Server.WPF.ViewModel"
+        xmlns:vw="clr-namespace:Strive.Server.WPF.View"
+        Title="{Binding Path=DisplayName}"
+        Width="650" Height="420"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+    <Grid>
+        <vw:LogView x:Name="logView1" />
+        <Button Content="Widget" Height="23" Name="button1" Width="75" Margin="540,346,12,12" />
+    </Grid>
+</Window>

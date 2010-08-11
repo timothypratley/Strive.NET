@@ -24,5 +24,10 @@ namespace Strive.Client.ViewModel
             Name = name; ModelID = modelID; X = x; Y = y; Z = z; DirX = dirX; DirY = dirY; DirZ = dirZ;
             IsSelected = false;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

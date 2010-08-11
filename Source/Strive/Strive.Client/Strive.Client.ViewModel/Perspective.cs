@@ -28,20 +28,14 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        double cameraHeading = 1.5;
-        public double Heading { get { return cameraHeading; } }
+        public ViewEntity FollowEntity = null;
+        public bool FollowSelected = false;
 
-        double cameraTilt = 0.95;
-        public double Tilt { get { return cameraTilt - Math.PI / 2.0; } }
-
-        double cameraX = 0.0;
-        public double PositionX { get { return cameraX; } }
-
-        double cameraY = 0.0;
-        public double PositionY { get { return cameraY; } }
-
-        double cameraZ = 23.0;
-        public double PositionZ { get { return cameraZ; } }
+        public double Heading = 1.5;
+        public double Tilt = -0.15;
+        public double X = 0.0;
+        public double Y = 0.0;
+        public double Z = 23.0;
 
         private int lastTick = 0;
         private int lastFrameRate = 0;
@@ -84,6 +78,14 @@ namespace Strive.Client.ViewModel
             }
             frameRate++;
 
+            if (FollowEntity != null)
+            {
+                X = FollowEntity.X;
+                Y = FollowEntity.Y;
+                Z = FollowEntity.Z + 20.0;
+                Tilt = 0.001 - Math.PI / 2.0;
+            }
+
             movementPerpendicular = 0;
             movementForward = 0;
             speedModifier = 1f;
@@ -97,53 +99,33 @@ namespace Strive.Client.ViewModel
                 if (kb.KeyCombo.All(k => _keyPressed(k)))
                 {
                     if (kb.Action == InputBindings.KeyAction.Up)
-                    {
                         Up();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.Down)
-                    {
                         Down();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.Left)
-                    {
                         Left();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.Right)
-                    {
                         Right();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.TurnLeft)
-                    {
                         TurnLeft();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.TurnRight)
-                    {
                         TurnRight();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.TiltUp)
-                    {
                         TiltUp();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.TiltDown)
-                    {
                         TiltDown();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.Walk)
-                    {
                         Walk();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.Forward)
-                    {
                         Forward();
-                    }
                     else if (kb.Action == InputBindings.KeyAction.Back)
-                    {
                         Back();
-                    }
+                    else if (kb.Action == InputBindings.KeyAction.Home)
+                        Home();
+                    else if (kb.Action == InputBindings.KeyAction.FollowSelected)
+                        OnFollowSelected();
                     else
-                    {
                         throw new Exception("Unexpected keyboard binding " + kb.Action);
-                    }
                 }
             }
             SetCamera();
@@ -151,38 +133,38 @@ namespace Strive.Client.ViewModel
 
         double distanceRangeLow = 10.0;
         double distanceRangeHigh = 300.0;
-        double angleRangeLow = 0.001;
-        double angleRangeHigh = Math.PI / 2.0 - 0.001;
+        double angleRangeLow = 0.001 - Math.PI/2.0;
+        double angleRangeHigh = - 0.001;
 
         void Down()
         {
-            cameraZ -= delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
-            if (cameraZ < distanceRangeLow)
-                cameraZ = distanceRangeLow;
+            Z -= delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
+            if (Z < distanceRangeLow)
+                Z = distanceRangeLow;
         }
 
         void Up()
         {
-            cameraZ += delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
-            if (cameraZ > distanceRangeHigh)
-                cameraZ = distanceRangeHigh;
+            Z += delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
+            if (Z > distanceRangeHigh)
+                Z = distanceRangeHigh;
         }
 
         void TiltUp()
         {
-            cameraTilt += delta * (angleRangeHigh - angleRangeLow) / 2.0;
-            if (cameraTilt >= angleRangeHigh)
+            Tilt += delta * (angleRangeHigh - angleRangeLow) / 2.0;
+            if (Tilt >= angleRangeHigh)
             {
-                cameraTilt = angleRangeHigh;
+                Tilt = angleRangeHigh;
             }
         }
 
         void TiltDown()
         {
-            cameraTilt -= delta * (angleRangeHigh - angleRangeLow) / 2.0;
-            if (cameraTilt < angleRangeLow)
+            Tilt -= delta * (angleRangeHigh - angleRangeLow) / 2.0;
+            if (Tilt < angleRangeLow)
             {
-                cameraTilt = angleRangeLow;
+                Tilt = angleRangeLow;
             }
         }
 
@@ -208,19 +190,19 @@ namespace Strive.Client.ViewModel
 
         void TurnLeft()
         {
-            cameraHeading -= delta * 2.0;
-            if (cameraHeading >= Math.PI * 2.0)
+            Heading -= delta * 2.0;
+            if (Heading >= Math.PI * 2.0)
             {
-                cameraHeading -= Math.PI * 2.0;
+                Heading -= Math.PI * 2.0;
             }
         }
 
         void TurnRight()
         {
-            cameraHeading += delta * 2.0;
-            if (cameraHeading < 0)
+            Heading += delta * 2.0;
+            if (Heading < 0)
             {
-                cameraHeading += Math.PI * 2.0;
+                Heading += Math.PI * 2.0;
             }
         }
 
@@ -229,18 +211,30 @@ namespace Strive.Client.ViewModel
             speedModifier = 0.2;
         }
 
+        void Home()
+        {
+            X = 0;
+            Y = 0;
+            Z = 0;
+            Tilt = 0.001 - Math.PI / 2.0;
+        }
+
+        void OnFollowSelected()
+        {
+            FollowSelected = !FollowSelected;
+        }
 
         void SetCamera()
         {
             if (movementPerpendicular != 0 || movementForward != 0)
             {
-                double movementHeading = cameraHeading
+                double movementHeading = Heading
                                          + Math.Atan2(movementForward, -movementPerpendicular);
                 double movementX = Math.Sin(movementHeading);
                 double movementY = Math.Cos(movementHeading);
 
-                cameraX += movementX * delta * speed * speedModifier;
-                cameraY += movementY * delta * speed * speedModifier;
+                X += movementX * delta * speed * speedModifier;
+                Y += movementY * delta * speed * speedModifier;
             }
         }
     }

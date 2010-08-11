@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+
 
 using Engine.MathEx;
 using Engine.Renderer;
@@ -28,6 +30,11 @@ namespace Strive.Client.NeoAxisView
         Perspective _perspective;
         public WorldViewControl()
         {
+            if (World.ViewModel != null)
+            {
+                World.ViewModel.EntitiesView.CurrentChanged += new EventHandler(EntitiesView_CurrentChanged);
+                World.ViewModel.EntitiesView.CollectionChanged += new NotifyCollectionChangedEventHandler(EntitiesView_CollectionChanged);
+            }
             _perspective = new Perspective(
                 new Perspective.KeyPressedCheck(IsKeyPressed),
                 new Perspective.MouseButtonCheck(GetMouseButtons),
@@ -40,6 +47,48 @@ namespace Strive.Client.NeoAxisView
             RenderUI += new RenderUIDelegate(WorldViewControl_RenderUI);
             MouseClick += new MouseEventHandler(renderTargetUserControl1_MouseClick);
             MouseEnter += new EventHandler(WorldViewControl_MouseEnter);
+        }
+
+        void EntitiesView_CurrentChanged(object sender, EventArgs e)
+        {
+            if (_perspective.FollowSelected)
+            {
+                ViewEntity ve = World.ViewModel.EntitiesView.CurrentItem as ViewEntity;
+                if (ve != null)
+                    _perspective.FollowEntity = ve;
+            }
+        }
+
+        void EntitiesView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (ViewEntity ve in e.NewItems)
+                {
+                    // load it
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Move)
+            {
+
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (ViewEntity ve in e.OldItems)
+                {
+                    // remove them
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Replace)
+            {
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+            }
+            else
+            {
+                throw new NotImplementedException(e.Action.ToString());
+            }
         }
 
         public MouseButtons GetMouseButtons()
@@ -72,7 +121,7 @@ namespace Strive.Client.NeoAxisView
             this.camera = camera;
             RenderEntityOverCursor(camera);
             _perspective.Check();
-            CameraPosition = new Vec3((float)_perspective.PositionX, (float)_perspective.PositionY, (float)_perspective.PositionZ);
+            CameraPosition = new Vec3((float)_perspective.X, (float)_perspective.Y, (float)_perspective.Z);
             CameraDirection = new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
                 * new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
                 * Vec3.XAxis;
@@ -116,17 +165,20 @@ namespace Strive.Client.NeoAxisView
             }
         }
 
-        public void SetCamera(double x, double y, double z, double dirX, double dirY, double dirZ)
-        {
-            CameraPosition = new Vec3((float)x, (float)y, (float)z);
-            CameraDirection = new Vec3((float)dirX, (float)dirY, (float)dirZ);
-        }
-
         Random r = new Random();
         void renderTargetUserControl1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (mapObject != null)
+            ViewEntity ve = World.ViewModel.EntitiesView.CurrentItem as ViewEntity;
+            if (ve != null)
             {
+                // TODO: set the target
+            }
+            if (mapObject == null)
+            {
+                if (IsKeyPressed(Keys.ShiftKey))
+                    World.ViewModel.SelectAdd(mapObject.Name);
+                else
+                    World.ViewModel.Select(mapObject.Name);
                 var b = mapObject as GameEntities.RTSBuilding;
                 if (b != null)
                 {

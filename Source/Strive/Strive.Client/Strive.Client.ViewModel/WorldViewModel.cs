@@ -29,7 +29,7 @@ namespace Strive.Client.ViewModel
         }
         private ICollectionView _entitiesView;
 
-        private ObservableViewEntityDictionary Entities = new ObservableViewEntityDictionary();
+        private ObservableCollection<ViewEntity> Entities = new ObservableCollection<ViewEntity>();
 
         public WorldViewModel(ServerConnection connection)
         {
@@ -42,7 +42,29 @@ namespace Strive.Client.ViewModel
 
         public void AddOrReplace(string name, ViewEntity entity)
         {
-            Entities.Add(name, entity);
+            Entities.Add(entity);
+        }
+
+        public void SelectAdd(string name)
+        {
+            var entity = Entities.Where(e => e.Name == name).FirstOrDefault();
+            if (entity != null)
+            {
+                entity.IsSelected = true;
+                EntitiesView.MoveCurrentTo(entity);
+            }
+        }
+
+        public void Select(string name)
+        {
+            var entity = Entities.Where(e => e.Name == name).FirstOrDefault();
+            if (entity != null)
+            {
+                entity.IsSelected = true;
+                EntitiesView.MoveCurrentTo(entity);
+            }
+            Entities.Where(x => x.IsSelected && x != entity).Select(x => x.IsSelected = false);
+            EntitiesView.MoveCurrentTo(entity);
         }
 
         public IEnumerable<ViewEntity> SelectedEntities
@@ -52,10 +74,13 @@ namespace Strive.Client.ViewModel
 
         void UpdatePositions(ToClient.Position Position)
         {
-            ViewEntity entity = Entities[Position.instance_id.ToString()];
-            entity.X = Position.position.X;
-            entity.Y = Position.position.Y;
-            entity.Z = Position.position.Z;
+            ViewEntity entity = Entities.Where(e=>e.Name == Position.instance_id.ToString()).FirstOrDefault();
+            if (entity != null)
+            {
+                entity.X = Position.position.X;
+                entity.Y = Position.position.Y;
+                entity.Z = Position.position.Z;
+            }
         }
     }
 }
