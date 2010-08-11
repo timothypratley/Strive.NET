@@ -13,6 +13,18 @@ namespace Strive.Client.ViewModel
 {
     public class Perspective
     {
+        public string WindowTitle
+        {
+            get {
+                if (FollowSelected)
+                    return "Follow Selected (" + FollowEntity == null ? "None" : FollowEntity.Name + ")";
+                else if (FollowEntity != null)
+                    return FollowEntity.Name;
+                else
+                    return "Fly free view";
+            }
+        }
+
         private EnumSkill currentGameCommand = EnumSkill.None;
         public EnumSkill CurrentGameCommand
         {
