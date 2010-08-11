@@ -45,6 +45,11 @@ namespace Strive.Client.ViewModel
             Entities.Add(name, entity);
         }
 
+        public IEnumerable<ViewEntity> SelectedEntities
+        {
+            get { return Entities.Where(e => e.Value.IsSelected).Select(e => e.Value); }
+        }
+
         void UpdatePositions(ToClient.Position Position)
         {
             ViewEntity entity = Entities[Position.instance_id.ToString()];
