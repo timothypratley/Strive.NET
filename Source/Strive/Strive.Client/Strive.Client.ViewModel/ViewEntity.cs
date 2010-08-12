@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
+// TODO: this is actually a model and should implement notification via update controls
+
 namespace Strive.Client.ViewModel
 {
     public class ViewEntity

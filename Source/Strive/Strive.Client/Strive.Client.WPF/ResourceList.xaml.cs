@@ -27,7 +27,7 @@ namespace Strive.Client.WPF
         {
             this.ViewModel = viewModel;
             InitializeComponent();
-            listView1.ItemsSource = ViewModel.EntitiesView;
+            listView1.DataContext = ViewModel.EntitiesView;
         }
     }
 }

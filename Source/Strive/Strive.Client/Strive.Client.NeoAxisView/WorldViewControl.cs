@@ -173,9 +173,9 @@ namespace Strive.Client.NeoAxisView
             {
                 // TODO: set the target
             }
-            if (mapObject == null)
+            if (mapObject != null)
             {
-                if (IsKeyPressed(Keys.ShiftKey))
+                if (IsKeyPressed(Keys.ShiftKey) || IsKeyPressed(Keys.ControlKey))
                     World.ViewModel.SelectAdd(mapObject.Name);
                 else
                     World.ViewModel.Select(mapObject.Name);
@@ -201,6 +201,7 @@ namespace Strive.Client.NeoAxisView
                     unit.PostCreate();
                 }
             }
+
             if (mapObject != null && mapObject.PhysicsModel != null)
             {
                 foreach (Body b in mapObject.PhysicsModel.Bodies)

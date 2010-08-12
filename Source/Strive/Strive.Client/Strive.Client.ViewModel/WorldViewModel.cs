@@ -51,7 +51,7 @@ namespace Strive.Client.ViewModel
             if (entity != null)
             {
                 entity.IsSelected = true;
-                EntitiesView.MoveCurrentTo(entity);
+                //EntitiesView.MoveCurrentTo(entity);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Strive.Client.ViewModel
 
         public IEnumerable<ViewEntity> SelectedEntities
         {
-            get { return Entities.Where(e => e.Value.IsSelected).Select(e => e.Value); }
+            get { return Entities.Where(e => e.IsSelected); }
         }
 
         void UpdatePositions(ToClient.Position Position)
