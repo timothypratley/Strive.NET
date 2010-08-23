@@ -6,7 +6,8 @@ using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Forms;
 
-using Strive.Server.Model;
+using Strive.Client.Model;
+using Strive.Common;
 
 
 namespace Strive.Client.ViewModel
@@ -40,7 +41,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public ViewEntity FollowEntity = null;
+        public EntityModel FollowEntity = null;
         public bool FollowSelected = false;
 
         public double Heading = 1.5;

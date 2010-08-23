@@ -69,6 +69,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Strive.Common\Strive.Common.csproj">
+      <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
+      <Name>Strive.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Math3D\Strive.Math3D.csproj">
       <Name>Strive.Math3D</Name>
       <Project>{14818E27-DABB-4332-B572-21BA9983D886}</Project>
@@ -93,30 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumActivationType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumMobileSize.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumMobileState.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumRace.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumSkill.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumTargetType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumTerrainType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="EnumWearLocation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Equipable.cs">

@@ -25,7 +25,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>0.0</OldToolsVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -68,6 +69,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Strive.Common\Strive.Common.csproj">
+      <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
+      <Name>Strive.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Server\Strive.Server.Model\Strive.Server.Model.csproj">
       <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
       <Name>Strive.Server.Model</Name>

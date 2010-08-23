@@ -51,7 +51,7 @@ namespace Strive.Client.NeoAxisView
                 if (obj.Name.Length == 0)
                     return;
 
-                ViewModel.AddOrReplace(obj.Name, new ViewEntity(obj.Name, obj.Type.Name, obj.Position.X, obj.Position.Y, obj.Position.Z, 0, 0, 0));
+                ViewModel.AddOrReplace(obj.Name, obj.Type.Name, obj.Position.X, obj.Position.Y, obj.Position.Z);
             });
             return result;
         }

@@ -20,6 +20,8 @@ using GameCommon;
 using GameEntities;
 using WindowsAppFramework;
 
+using UpdateControls.XAML;
+using Strive.Client.Model;
 using Strive.Client.ViewModel;
 
 
@@ -32,8 +34,9 @@ namespace Strive.Client.NeoAxisView
         {
             if (World.ViewModel != null)
             {
-                World.ViewModel.EntitiesView.CurrentChanged += new EventHandler(EntitiesView_CurrentChanged);
-                World.ViewModel.EntitiesView.CollectionChanged += new NotifyCollectionChangedEventHandler(EntitiesView_CollectionChanged);
+                //ForView.Wrap(World.view);
+                //World.ViewModel.SelectedEntities.Changed += new EventHandler(EntitiesView_CurrentChanged);
+                //World.ViewModel.CollectionChanged += new NotifyCollectionChangedEventHandler(EntitiesView_CollectionChanged);
             }
             _perspective = new Perspective(
                 new Perspective.KeyPressedCheck(IsKeyPressed),
@@ -53,9 +56,9 @@ namespace Strive.Client.NeoAxisView
         {
             if (_perspective.FollowSelected)
             {
-                ViewEntity ve = World.ViewModel.EntitiesView.CurrentItem as ViewEntity;
-                if (ve != null)
-                    _perspective.FollowEntity = ve;
+                EntityModel em = World.ViewModel.SelectedEntities.FirstOrDefault();
+                if (em != null)
+                    _perspective.FollowEntity = em;
             }
         }
 
@@ -63,7 +66,7 @@ namespace Strive.Client.NeoAxisView
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (ViewEntity ve in e.NewItems)
+                foreach (EntityModel em in e.NewItems)
                 {
                     // load it
                 }
@@ -74,7 +77,7 @@ namespace Strive.Client.NeoAxisView
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (ViewEntity ve in e.OldItems)
+                foreach (EntityModel em in e.OldItems)
                 {
                     // remove them
                 }
@@ -168,8 +171,8 @@ namespace Strive.Client.NeoAxisView
         Random r = new Random();
         void renderTargetUserControl1_MouseClick(object sender, MouseEventArgs e)
         {
-            ViewEntity ve = World.ViewModel.EntitiesView.CurrentItem as ViewEntity;
-            if (ve != null)
+            var em = World.ViewModel.SelectedEntities.FirstOrDefault();
+            if (em != null)
             {
                 // TODO: set the target
             }

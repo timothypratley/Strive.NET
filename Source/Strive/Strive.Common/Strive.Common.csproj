@@ -96,6 +96,14 @@
     <Compile Include="Constants.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EnumActivationType.cs" />
+    <Compile Include="EnumMobileSize.cs" />
+    <Compile Include="EnumMobileState.cs" />
+    <Compile Include="EnumRace.cs" />
+    <Compile Include="EnumSkill.cs" />
+    <Compile Include="EnumTargetType.cs" />
+    <Compile Include="EnumTerrainType.cs" />
+    <Compile Include="EnumWearLocation.cs" />
     <Compile Include="Http.cs">
       <SubType>Code</SubType>
     </Compile>

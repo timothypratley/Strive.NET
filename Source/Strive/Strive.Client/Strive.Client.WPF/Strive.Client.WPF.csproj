@@ -186,6 +186,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\NeoAxis\UISystem.dll</HintPath>
     </Reference>
+    <Reference Include="UpdateControls.XAML, Version=2.1.1.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.XAML.dll</HintPath>
+    </Reference>
     <Reference Include="Utils, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\NeoAxis\Utils.dll</HintPath>
@@ -264,6 +268,14 @@
       <Project>{8C36C1BE-AB5F-47A5-869D-139A04B23C52}</Project>
       <Name>Strive.Network.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">
+      <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
+      <Name>Strive.Client.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Strive.Client.NavigationModel\Strive.Client.NavigationModel.csproj">
+      <Project>{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}</Project>
+      <Name>Strive.Client.NavigationModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Strive.Client.NeoAxisView\Strive.Client.NeoAxisView.csproj">
       <Project>{138A87E7-78B2-4BDF-BB5C-06D58414A976}</Project>
       <Name>Strive.Client.NeoAxisView</Name>
@@ -306,6 +318,7 @@
   <ItemGroup>
     <Resource Include="App.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

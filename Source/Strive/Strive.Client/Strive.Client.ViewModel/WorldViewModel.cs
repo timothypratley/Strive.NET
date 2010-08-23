@@ -6,81 +6,61 @@ using System.Windows.Data;
 using System.Linq;
 using System.Text;
 
+using Strive.Client.Model;
+using Strive.Client.NavigationModel;
 using Strive.Network.Client;
-using ToClient = Strive.Network.Messages.ToClient;
 
 namespace Strive.Client.ViewModel
 {
     public class WorldViewModel
     {
-        public ServerConnection connection;
         public InputBindings bindings;
 
-        public ICollectionView EntitiesView
+        private WorldModel _world;
+        private WorldNavigation _navigation;
+
+        public WorldViewModel(ServerConnection serverConnection)
+        {
+            bindings = new InputBindings();
+            _world = new WorldModel(serverConnection);
+            _navigation = new WorldNavigation();
+        }
+
+        public IEnumerable<EntityViewModel> Entities
         {
             get
             {
-                if (_entitiesView == null)
-                {
-                    _entitiesView = CollectionViewSource.GetDefaultView(Entities);
-                }
-                return _entitiesView;
+                return _world.Entities.Select(em => EntityViewModel.Wrap(em, _navigation));
             }
         }
-        private ICollectionView _entitiesView;
 
-        private ObservableCollection<ViewEntity> Entities = new ObservableCollection<ViewEntity>();
-
-        public WorldViewModel(ServerConnection connection)
+        public void AddOrReplace(string name, string modelId, double x, double y, double z)
         {
-            bindings = new InputBindings();
-            this.connection = connection;
-            connection.OnPositionSent += new ServerConnection.OnPositionSentHandler(UpdatePositions);
-            //Entities.Add("StormSworder1", new ViewEntity("StormSworder1", 1, 0, 0, 0, 0, 0, 0));
-            //Entities.Add("Farmer1", new ViewEntity("Farmer1", 2, 0, 0, 0, 0, 0, 0));
-        }
-
-        public void AddOrReplace(string name, ViewEntity entity)
-        {
-            Entities.Add(entity);
+            var entity = new EntityModel(name, modelId, x, y, z, 0, 0, 0);
+            _world.AddEntity(entity);
         }
 
         public void SelectAdd(string name)
         {
-            var entity = Entities.Where(e => e.Name == name).FirstOrDefault();
+            var entity = _world.Entities.Where(e => e.Name == name).FirstOrDefault();
             if (entity != null)
             {
-                entity.IsSelected = true;
-                //EntitiesView.MoveCurrentTo(entity);
+                _navigation.AddSelectedEntity(entity);
             }
         }
 
         public void Select(string name)
         {
-            var entity = Entities.Where(e => e.Name == name).FirstOrDefault();
+            var entity = _world.Entities.Where(e => e.Name == name).FirstOrDefault();
             if (entity != null)
             {
-                entity.IsSelected = true;
-                EntitiesView.MoveCurrentTo(entity);
+                _navigation.SetSelectedEntity(entity);
             }
-            Entities.Where(x => x.IsSelected && x != entity).Select(x => x.IsSelected = false);
-            EntitiesView.MoveCurrentTo(entity);
         }
 
-        public IEnumerable<ViewEntity> SelectedEntities
+        public IEnumerable<EntityModel> SelectedEntities
         {
-            get { return Entities.Where(e => e.IsSelected); }
-        }
-
-        void UpdatePositions(ToClient.Position Position)
-        {
-            ViewEntity entity = Entities.Where(e=>e.Name == Position.instance_id.ToString()).FirstOrDefault();
-            if (entity != null)
-            {
-                entity.X = Position.position.X;
-                entity.Y = Position.position.Y;
-                entity.Z = Position.position.Z;
-            }
+            get { return _navigation.SelectedEntities; }
         }
     }
 }

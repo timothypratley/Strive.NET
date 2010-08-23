@@ -2,6 +2,8 @@ using System;
 
 using Strive.Math3D;
 using Strive.Server.Model;
+using Strive.Common;
+
 
 namespace Strive.Network.Messages.ToClient
 {

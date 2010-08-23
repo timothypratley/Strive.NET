@@ -1,5 +1,7 @@
 using System;
 
+using Strive.Common;
+
 namespace Strive.Server.Model
 {
 	/// <summary>
