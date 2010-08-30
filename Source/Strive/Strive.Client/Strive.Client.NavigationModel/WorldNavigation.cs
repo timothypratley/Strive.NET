@@ -37,6 +37,12 @@ namespace Strive.Client.NavigationModel
             _selectedEntities.Remove(selectedEntity);
         }
 
+        public bool IsSelected(EntityModel entityModel)
+        {
+            _indSelectedEntities.OnGet();
+            return _selectedEntities.Contains(entityModel);
+        }
+
         public IEnumerable<EntityModel> SelectedEntities
         {
             get { _indSelectedEntities.OnGet(); return _selectedEntities; }

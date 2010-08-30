@@ -21,7 +21,7 @@ namespace Strive.Client.ViewModel
         public EntityModel Entity { get { return _entity; } }
 
         public bool IsSelected {
-            get { return _entityNavigation.SelectedEntities.Contains(_entity); }
+            get { return _entityNavigation.IsSelected(_entity); }
             set {
                 if (value)
                     _entityNavigation.AddSelectedEntity(_entity);

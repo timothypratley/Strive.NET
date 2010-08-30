@@ -32,13 +32,8 @@ namespace Strive.Client.NeoAxisView
         Perspective _perspective;
         public WorldViewControl()
         {
-            if (World.ViewModel != null)
-            {
-                //ForView.Wrap(World.view);
-                //World.ViewModel.SelectedEntities.Changed += new EventHandler(EntitiesView_CurrentChanged);
-                //World.ViewModel.CollectionChanged += new NotifyCollectionChangedEventHandler(EntitiesView_CollectionChanged);
-            }
             _perspective = new Perspective(
+                World.ViewModel,
                 new Perspective.KeyPressedCheck(IsKeyPressed),
                 new Perspective.MouseButtonCheck(GetMouseButtons),
                 new InputBindings());
@@ -52,16 +47,7 @@ namespace Strive.Client.NeoAxisView
             MouseEnter += new EventHandler(WorldViewControl_MouseEnter);
         }
 
-        void EntitiesView_CurrentChanged(object sender, EventArgs e)
-        {
-            if (_perspective.FollowSelected)
-            {
-                EntityModel em = World.ViewModel.SelectedEntities.FirstOrDefault();
-                if (em != null)
-                    _perspective.FollowEntity = em;
-            }
-        }
-
+        // TODO: use dependencies instead
         void EntitiesView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -165,6 +151,16 @@ namespace Strive.Client.NeoAxisView
             {
                 tt.ShowAlways = false;
                 tt.RemoveAll();
+            }
+
+            camera.DebugGeometry.Color = new ColorValue(0.5f, 0.5f, 1);
+            foreach (EntityViewModel evm in World.ViewModel.SelectedEntities)
+            {
+                var mo = Entities.Instance.GetByName(evm.Entity.Name) as MapObject;
+                if (mo != null && mo != mapObject)
+                {
+                    camera.DebugGeometry.AddBounds(mo.MapBounds);
+                }
             }
         }
 

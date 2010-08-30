@@ -26,11 +26,18 @@ namespace Strive.Client.ViewModel
             _navigation = new WorldNavigation();
         }
 
-        public IEnumerable<EntityViewModel> Entities
+        public int Test
+        {
+            get { return _world.Test; }
+            set { _world.Test = value; }
+        }
+
+        public List<EntityViewModel> Entities
         {
             get
             {
-                return _world.Entities.Select(em => EntityViewModel.Wrap(em, _navigation));
+                return _world.Entities.Select(
+                    em => EntityViewModel.Wrap(em, _navigation)).ToList();
             }
         }
 
@@ -58,9 +65,12 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public IEnumerable<EntityModel> SelectedEntities
+        public List<EntityViewModel> SelectedEntities
         {
-            get { return _navigation.SelectedEntities; }
+            get {
+                return _navigation.SelectedEntities.Select(
+                    em => EntityViewModel.Wrap(em, _navigation)).ToList();
+            }
         }
     }
 }
