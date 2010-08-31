@@ -88,6 +88,7 @@ namespace Strive.Client.NeoAxisView
         }
 
         Camera camera = null;
+        Vec3 MouseIntersection = Vec3.Zero;
         void WorldViewControl_RenderUI(GuiRenderer renderer)
         {
             if (camera != null)
@@ -96,7 +97,8 @@ namespace Strive.Client.NeoAxisView
             }
             string text = "FPS: " + _perspective.FPS
                         + "    loc: " + CameraPosition.ToString(0)
-                        + "    dir: " + CameraDirection.ToString(0);
+                        + "    dir: " + CameraDirection.ToString(0)
+                        + "    mouse: " + MouseIntersection.ToString(2);
 
             renderer.AddText(text, new Vec2(.01f, .01f), HorizontalAlign.Left,
                 VerticalAlign.Top, new ColorValue(1, 1, 1));
@@ -118,38 +120,50 @@ namespace Strive.Client.NeoAxisView
         void RenderEntityOverCursor(Camera camera)
         {
             Vec2 mouse = GetFloatMousePosition();
+            mapObject = null;
 
             if (mouse.X < 0 || mouse.X > 1 || mouse.Y < 0 || mouse.Y > 1)
             {
                 tt.ShowAlways = false;
                 tt.RemoveAll();
-                return;
-            }
-
-            Ray ray = camera.GetCameraToViewportRay(mouse);
-
-            mapObject = null;
-            Map.Instance.GetObjects(ray, delegate(MapObject obj, float scale)
-            {
-                if (obj is StaticMesh)
-                    return true;
-                mapObject = obj;
-                return false;
-            });
-
-            if (mapObject != null)
-            {
-                camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
-                camera.DebugGeometry.AddBounds(mapObject.MapBounds);
-                tt.SetToolTip(this, mapObject.Name);
-                tt.ShowAlways = true;
             }
             else
             {
-                tt.ShowAlways = false;
-                tt.RemoveAll();
+                // Find entity under cursor of mouse
+                Ray ray = camera.GetCameraToViewportRay(mouse);
+                Map.Instance.GetObjects(ray, delegate(MapObject obj, float scale)
+                {
+                    if (obj is StaticMesh)
+                        return true;
+                    mapObject = obj;
+                    return false;
+                });
+
+                if (mapObject != null)
+                {
+                    // Put a yellow box around it and a tooltip
+                    camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
+                    camera.DebugGeometry.AddBounds(mapObject.MapBounds);
+                    tt.SetToolTip(this, mapObject.Name);
+                    tt.ShowAlways = true;
+                }
+                else
+                {
+                    tt.ShowAlways = false;
+                    tt.RemoveAll();
+                }
+
+                RayCastResult result = PhysicsWorld.Instance.RayCast(
+                  ray, (int)ContactGroup.CastOnlyCollision);
+                MouseIntersection = result.Position;
+                if (result.Shape != null)
+                {
+                    camera.DebugGeometry.Color = new ColorValue(1, 0, 0);
+                    camera.DebugGeometry.AddSphere(new Sphere(result.Position, 0.2f));
+                }
             }
 
+            // Show all selected entities with a blue box around them
             camera.DebugGeometry.Color = new ColorValue(0.5f, 0.5f, 1);
             foreach (EntityViewModel evm in World.ViewModel.SelectedEntities)
             {
