@@ -87,25 +87,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccurateTimer.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constants.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="StoppableThread.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TracedException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Win32.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

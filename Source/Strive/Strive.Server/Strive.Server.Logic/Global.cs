@@ -2,6 +2,7 @@ using System;
 using System.Configuration;
 
 using Strive.Math3D;
+using Common.Logging;
 
 namespace Strive.Server.Logic {
 	/// <summary>
@@ -20,17 +21,29 @@ namespace Strive.Server.Logic {
 		public static string worldfilename;
 		public static string connectionstring;
 
+        static ILog Log = LogManager.GetCurrentClassLogger();
+
 		public static void ReadConfiguration() {
 			// manditory fields
-			if (ConfigurationManager.AppSettings["world_id"] == null ) {
-				throw new ConfigurationErrorsException( "world_id" );
-			}
-			world_id = int.Parse(ConfigurationManager.AppSettings["world_id"]);
+            if (ConfigurationManager.AppSettings["world_id"] == null)
+            {
+                Log.Error("world_id missing in configuration");
+                world_id = 0;
+            }
+            else
+            {
+                world_id = int.Parse(ConfigurationManager.AppSettings["world_id"]);
+            }
 
-			if ( ConfigurationManager.AppSettings["port"] == null ) {
-				throw new ConfigurationErrorsException( "port" );
-			}
-			port = int.Parse(ConfigurationManager.AppSettings["port"]);
+            if (ConfigurationManager.AppSettings["port"] == null)
+            {
+                Log.Error("port missing in configuration");
+                port = 1337;
+            }
+            else
+            {
+                port = int.Parse(ConfigurationManager.AppSettings["port"]);
+            }
 
 			// optional fields
 			logfilename = ConfigurationManager.AppSettings["logFileName"];

@@ -39,9 +39,6 @@ namespace Strive.Client.NeoAxisView
                 new Perspective.KeyPressedCheck(IsKeyPressed),
                 new Perspective.MouseButtonCheck(GetMouseButtons),
                 new InputBindings());
-            CameraFixedUp = Vec3.ZAxis;
-            CameraPosition = new Vec3(0, 10, 1);
-            CameraDirection = new Vec3(0, 1, 0);
             AutomaticUpdateFPS = 60;
             Render += renderTargetUserControl1_Render;
             RenderUI += new RenderUIDelegate(WorldViewControl_RenderUI);

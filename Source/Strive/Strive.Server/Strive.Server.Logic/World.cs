@@ -48,6 +48,7 @@ namespace Strive.Server.Logic
         public World(int world_id)
         {
             this.world_id = world_id;
+            Thread.Sleep(10000);
             Load();
         }
 
