@@ -1,6 +1,6 @@
 using System;
 
-namespace Strive.Server.Model
+namespace Strive.Common
 {
 	/// <summary>
 	/// Summary description for EnumRace.

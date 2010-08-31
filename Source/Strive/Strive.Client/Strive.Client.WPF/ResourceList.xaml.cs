@@ -12,6 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using AvalonDock;
+using UpdateControls.XAML;
+using Strive.Client.Model;
+using Strive.Client.NavigationModel;
 using Strive.Client.ViewModel;
 
 namespace Strive.Client.WPF
@@ -27,7 +30,7 @@ namespace Strive.Client.WPF
         {
             this.ViewModel = viewModel;
             InitializeComponent();
-            listView1.ItemsSource = ViewModel.EntitiesView;
+            listView1.DataContext = ForView.Wrap(viewModel);
         }
     }
 }

@@ -5,15 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5092DF71-BFDA-44A0-9C7B-F4C4A5CE7E2B}</ProjectGuid>
+    <ProjectGuid>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Strive.Client.ViewModel</RootNamespace>
-    <AssemblyName>Strive.Client.ViewModel</AssemblyName>
+    <RootNamespace>Strive.Client.Model</RootNamespace>
+    <AssemblyName>Strive.Client.Model</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,29 +31,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="UpdateControls, Version=2.1.1.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityViewModel.cs" />
-    <Compile Include="InputBindings.cs" />
-    <Compile Include="Perspective.cs" />
+    <Compile Include="EntityModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorldViewModel.cs" />
+    <Compile Include="WorldModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Strive.Common\Strive.Common.csproj">
-      <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
-      <Name>Strive.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Math3D\Strive.Math3D.csproj">
       <Project>{14818E27-DABB-4332-B572-21BA9983D886}</Project>
       <Name>Strive.Math3D</Name>
@@ -64,18 +56,13 @@
       <Project>{8C36C1BE-AB5F-47A5-869D-139A04B23C52}</Project>
       <Name>Strive.Network.Client</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Strive.Server\Strive.Server.Model\Strive.Server.Model.csproj">
-      <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
-      <Name>Strive.Server.Model</Name>
+    <ProjectReference Include="..\..\Strive.Network\Strive.Network.Messages\Strive.Network.Messages.csproj">
+      <Project>{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}</Project>
+      <Name>Strive.Network.Messages</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">
-      <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
-      <Name>Strive.Client.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Strive.Client.NavigationModel\Strive.Client.NavigationModel.csproj">
-      <Project>{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}</Project>
-      <Name>Strive.Client.NavigationModel</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

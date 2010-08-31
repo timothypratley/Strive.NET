@@ -20,6 +20,8 @@ using GameCommon;
 using GameEntities;
 using WindowsAppFramework;
 
+using UpdateControls.XAML;
+using Strive.Client.Model;
 using Strive.Client.ViewModel;
 
 
@@ -30,12 +32,8 @@ namespace Strive.Client.NeoAxisView
         Perspective _perspective;
         public WorldViewControl()
         {
-            if (World.ViewModel != null)
-            {
-                World.ViewModel.EntitiesView.CurrentChanged += new EventHandler(EntitiesView_CurrentChanged);
-                World.ViewModel.EntitiesView.CollectionChanged += new NotifyCollectionChangedEventHandler(EntitiesView_CollectionChanged);
-            }
             _perspective = new Perspective(
+                World.ViewModel,
                 new Perspective.KeyPressedCheck(IsKeyPressed),
                 new Perspective.MouseButtonCheck(GetMouseButtons),
                 new InputBindings());
@@ -46,21 +44,12 @@ namespace Strive.Client.NeoAxisView
             MouseEnter += new EventHandler(WorldViewControl_MouseEnter);
         }
 
-        void EntitiesView_CurrentChanged(object sender, EventArgs e)
-        {
-            if (_perspective.FollowSelected)
-            {
-                ViewEntity ve = World.ViewModel.EntitiesView.CurrentItem as ViewEntity;
-                if (ve != null)
-                    _perspective.FollowEntity = ve;
-            }
-        }
-
+        // TODO: use dependencies instead
         void EntitiesView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                foreach (ViewEntity ve in e.NewItems)
+                foreach (EntityModel em in e.NewItems)
                 {
                     // load it
                 }
@@ -71,7 +60,7 @@ namespace Strive.Client.NeoAxisView
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                foreach (ViewEntity ve in e.OldItems)
+                foreach (EntityModel em in e.OldItems)
                 {
                     // remove them
                 }
@@ -160,19 +149,29 @@ namespace Strive.Client.NeoAxisView
                 tt.ShowAlways = false;
                 tt.RemoveAll();
             }
+
+            camera.DebugGeometry.Color = new ColorValue(0.5f, 0.5f, 1);
+            foreach (EntityViewModel evm in World.ViewModel.SelectedEntities)
+            {
+                var mo = Entities.Instance.GetByName(evm.Entity.Name) as MapObject;
+                if (mo != null && mo != mapObject)
+                {
+                    camera.DebugGeometry.AddBounds(mo.MapBounds);
+                }
+            }
         }
 
         Random r = new Random();
         void renderTargetUserControl1_MouseClick(object sender, MouseEventArgs e)
         {
-            ViewEntity ve = World.ViewModel.EntitiesView.CurrentItem as ViewEntity;
-            if (ve != null)
+            var em = World.ViewModel.SelectedEntities.FirstOrDefault();
+            if (em != null)
             {
                 // TODO: set the target
             }
-            if (mapObject == null)
+            if (mapObject != null)
             {
-                if (IsKeyPressed(Keys.ShiftKey))
+                if (IsKeyPressed(Keys.ShiftKey) || IsKeyPressed(Keys.ControlKey))
                     World.ViewModel.SelectAdd(mapObject.Name);
                 else
                     World.ViewModel.Select(mapObject.Name);
@@ -198,6 +197,7 @@ namespace Strive.Client.NeoAxisView
                     unit.PostCreate();
                 }
             }
+
             if (mapObject != null && mapObject.PhysicsModel != null)
             {
                 foreach (Body b in mapObject.PhysicsModel.Bodies)

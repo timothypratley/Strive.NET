@@ -81,7 +81,7 @@ namespace Strive.Client.WPF
 
         private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var resourceList = new ResourceList(App.worldViewModel);
+            var resourceList = new ResourceList(App._worldViewModel);
             resourceList.ShowAsDocument(dockManager);
             resourceList.Focus();
         }

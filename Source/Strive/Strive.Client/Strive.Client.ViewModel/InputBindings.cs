@@ -64,7 +64,7 @@ namespace Strive.Client.ViewModel
             AddKeyBinding(new List<Keys> { Keys.E }, KeyAction.TurnRight);
             AddKeyBinding(new List<Keys> { Keys.Shift }, KeyAction.Walk);
             AddKeyBinding(new List<Keys> { Keys.Home }, KeyAction.Home);
-            AddKeyBinding(new List<Keys> { Keys.F8 }, KeyAction.FollowSelected);
+            AddKeyBinding(new List<Keys> { Keys.G }, KeyAction.FollowSelected);
         }
     }
 }

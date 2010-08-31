@@ -22,17 +22,17 @@ namespace Strive.Client.WPF
     public partial class App : Application
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
-        public static WorldViewModel worldViewModel;
-        public static ServerConnection serverConnection;
+        public static WorldViewModel _worldViewModel;
+        public static ServerConnection _serverConnection;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
-            serverConnection = new ServerConnection();
-            worldViewModel = new WorldViewModel(serverConnection);
-            World.Init(worldViewModel);
+            _serverConnection = new ServerConnection();
+            _worldViewModel = new WorldViewModel(_serverConnection);
+            World.Init(_worldViewModel);
         }
 
         private bool ReportException(Exception ex)

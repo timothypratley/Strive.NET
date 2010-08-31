@@ -6,13 +6,24 @@ using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Forms;
 
-using Strive.Server.Model;
+using Strive.Client.Model;
+using Strive.Common;
 
 
 namespace Strive.Client.ViewModel
 {
     public class Perspective
     {
+        public string WindowTitle
+        {
+            get {
+                if (FollowEntities.Count > 0)
+                    return "Following (" + FollowEntities.ToString() + ")";
+                else
+                    return "Fly free view";
+            }
+        }
+
         private EnumSkill currentGameCommand = EnumSkill.None;
         public EnumSkill CurrentGameCommand
         {
@@ -28,8 +39,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public ViewEntity FollowEntity = null;
-        public bool FollowSelected = false;
+        public List<EntityViewModel> FollowEntities = new List<EntityViewModel>();
 
         public double Heading = 1.5;
         public double Tilt = -0.15;
@@ -48,12 +58,14 @@ namespace Strive.Client.ViewModel
         public delegate bool KeyPressedCheck(Keys k);
         public delegate MouseButtons MouseButtonCheck();
 
+        WorldViewModel _worldViewModel;
         KeyPressedCheck _keyPressed;
         MouseButtonCheck _mouseButton;
         InputBindings _bindings;
 
-        public Perspective(KeyPressedCheck keyPressed, MouseButtonCheck mouseButton, InputBindings bindings)
+        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, MouseButtonCheck mouseButton, InputBindings bindings)
         {
+            _worldViewModel = worldViewModel;
             _keyPressed = keyPressed;
             _mouseButton = mouseButton;
             _bindings = bindings;
@@ -78,11 +90,13 @@ namespace Strive.Client.ViewModel
             }
             frameRate++;
 
-            if (FollowEntity != null)
+            var count = FollowEntities.Count;
+            if (count > 0)
             {
-                X = FollowEntity.X;
-                Y = FollowEntity.Y;
-                Z = FollowEntity.Z + 20.0;
+                Func<double,double,double> plus = (a, b) => a + b;
+                X = FollowEntities.Select(e => e.Entity.X).Aggregate(plus)/count;
+                Y = FollowEntities.Select(e => e.Entity.Y).Aggregate(plus)/count;
+                Z = FollowEntities.Select(e => e.Entity.Z).Aggregate(plus)/count + 20.0;
                 Tilt = 0.001 - Math.PI / 2.0;
             }
 
@@ -157,6 +171,7 @@ namespace Strive.Client.ViewModel
             {
                 Tilt = angleRangeHigh;
             }
+            FollowEntities.Clear();
         }
 
         void TiltDown()
@@ -166,26 +181,31 @@ namespace Strive.Client.ViewModel
             {
                 Tilt = angleRangeLow;
             }
+            FollowEntities.Clear();
         }
 
         void Forward()
         {
             movementForward++;
+            FollowEntities.Clear();
         }
 
         void Back()
         {
             movementForward--;
+            FollowEntities.Clear();
         }
 
         void Left()
         {
             movementPerpendicular--;
+            FollowEntities.Clear();
         }
 
         void Right()
         {
             movementPerpendicular++;
+            FollowEntities.Clear();
         }
 
         void TurnLeft()
@@ -195,6 +215,7 @@ namespace Strive.Client.ViewModel
             {
                 Heading -= Math.PI * 2.0;
             }
+            FollowEntities.Clear();
         }
 
         void TurnRight()
@@ -204,6 +225,7 @@ namespace Strive.Client.ViewModel
             {
                 Heading += Math.PI * 2.0;
             }
+            FollowEntities.Clear();
         }
 
         void Walk()
@@ -217,11 +239,12 @@ namespace Strive.Client.ViewModel
             Y = 0;
             Z = 0;
             Tilt = 0.001 - Math.PI / 2.0;
+            FollowEntities.Clear();
         }
 
         void OnFollowSelected()
         {
-            FollowSelected = !FollowSelected;
+            FollowEntities = _worldViewModel.SelectedEntities;
         }
 
         void SetCamera()
