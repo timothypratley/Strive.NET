@@ -8,130 +8,159 @@ using System.IO;
 using Strive.Network.Messages;
 using Common.Logging;
 
-namespace Strive.Network.Server {
-	/// <summary>
-	/// Summary description for Listener.
-	/// </summary>
-	public class Listener {
-		Hashtable clients = new Hashtable();
-		// TODO: refactor don't expose underlying queue
-		public Queue clientMessageQueue = new Queue();
-		public Socket udpsocket;
-		Socket tcpsocket;
-		IPEndPoint localEndPoint;
-		EndPoint remoteEndPoint = new IPEndPoint( IPAddress.Any, 0 );
-		byte[] udpbuffer = new byte[MessageTypeMap.BufferSize]; // Receive buffer.
+namespace Strive.Network.Server
+{
+    /// <summary>
+    /// Summary description for Listener.
+    /// </summary>
+    public class Listener
+    {
+        Hashtable clients = new Hashtable();
+        // TODO: refactor don't expose underlying queue
+        public Queue clientMessageQueue = new Queue();
+        public Socket _udpSocket;
+        Socket _tcpSocket;
+        IPEndPoint _localEndPoint;
+        EndPoint _remoteEndPoint;
+        byte[] _udpBuffer = new byte[MessageTypeMap.BufferSize]; // Receive buffer.
 
         ILog Log;
-		public Listener( IPEndPoint localEndPoint ) {
-			this.localEndPoint = localEndPoint;
+        public Listener(IPEndPoint localEndPoint)
+        {
+            _localEndPoint = localEndPoint;
+            _remoteEndPoint = new IPEndPoint(localEndPoint.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any, 0);
             Log = LogManager.GetCurrentClassLogger();
         }
 
-		public void Start() {
-			try {
-				tcpsocket = new Socket( localEndPoint.Address.AddressFamily,
-					SocketType.Stream, ProtocolType.Tcp );
-				tcpsocket.Bind( localEndPoint );
-				tcpsocket.Listen( 10 );
-				tcpsocket.BeginAccept(
-					new AsyncCallback(acceptCallback), 
-					this );
-				
-				udpsocket = new Socket(AddressFamily.InterNetwork,
-					SocketType.Dgram, ProtocolType.Udp);
-				udpsocket.Bind( localEndPoint );
+        public void Start()
+        {
+            try
+            {
+                _tcpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                _tcpSocket.Bind(_localEndPoint);
+                _tcpSocket.Listen(10);
+                _tcpSocket.BeginAccept(new AsyncCallback(acceptCallback), this);
 
-				// Begin reading udp packets
-				udpsocket.BeginReceiveFrom( udpbuffer, 0, MessageTypeMap.BufferSize, 0, ref remoteEndPoint,
-					new AsyncCallback(ReceiveFromUDPCallback), this );
-			} catch ( ObjectDisposedException ) {
-				// the underlying socket was closed
-			}
-		}
+                _udpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+                _udpSocket.Bind(_localEndPoint);
 
-		public static void ReceiveFromUDPCallback(IAsyncResult ar) {
-			try {
-				Listener handler = (Listener) ar.AsyncState;
-				int bytesRead = handler.udpsocket.EndReceiveFrom(ar, ref handler.remoteEndPoint );
-				Client client = handler.clients[handler.remoteEndPoint] as Client;
-				if ( client == null || !client.Authenticated ) {
-					// ignore the packet
-					return;
-				}
-				if ( bytesRead == MessageTypeMap.BufferSize ) {
-					throw new Exception( "Reached max buffer size, increase this limit." );
-				}
+                // Begin reading udp packets
+                _udpSocket.BeginReceiveFrom(_udpBuffer, 0, MessageTypeMap.BufferSize, 0, ref _remoteEndPoint,
+                    new AsyncCallback(ReceiveFromUDPCallback), this);
 
-				IMessage message;
-				try {
-					message = (IMessage)CustomFormatter.Deserialize( handler.udpbuffer, 0 );
-				} catch ( Exception e ) {
-					handler.Log.Error( "Invalid packet received", e );
-					return;
-				}
-				client.LastMessageTimestamp = DateTime.Now;
-				ClientMessage clientMessage = new ClientMessage( client, message );
-				// TODO: ensure threadsafe access to queue
-				handler.clientMessageQueue.Enqueue( clientMessage );
+                Log.Info("Started listening on" + _localEndPoint);
+            }
+            catch (ObjectDisposedException)
+            {
+                Log.Info("The underlying socket was closed");
+            }
+        }
 
-				handler.udpsocket.BeginReceiveFrom( handler.udpbuffer, 0, MessageTypeMap.BufferSize, 0, ref handler.remoteEndPoint,
-					new AsyncCallback(ReceiveFromUDPCallback), handler );
-			} catch ( Exception ) {
-				// the underlying socket was closed
-			}
-		}
+        public static void ReceiveFromUDPCallback(IAsyncResult ar)
+        {
+            try
+            {
+                Listener handler = (Listener)ar.AsyncState;
+                int bytesRead = handler._udpSocket.EndReceiveFrom(ar, ref handler._remoteEndPoint);
+                Client client = handler.clients[handler._remoteEndPoint] as Client;
+                if (client == null || !client.Authenticated)
+                {
+                    // ignore the packet
+                    return;
+                }
+                if (bytesRead == MessageTypeMap.BufferSize)
+                {
+                    throw new Exception("Reached max buffer size, increase this limit.");
+                }
 
-		public void Stop() {
-			if ( tcpsocket != null ) {
-				tcpsocket.Close();
-				tcpsocket = null;
-			}
-			if ( udpsocket != null ) {
-				udpsocket.Close();
-				udpsocket = null;
-			}		
-		}
+                IMessage message;
+                try
+                {
+                    message = (IMessage)CustomFormatter.Deserialize(handler._udpBuffer, 0);
+                }
+                catch (Exception e)
+                {
+                    handler.Log.Error("Invalid packet received", e);
+                    return;
+                }
+                client.LastMessageTimestamp = DateTime.Now;
+                ClientMessage clientMessage = new ClientMessage(client, message);
+                // TODO: ensure threadsafe access to queue
+                handler.clientMessageQueue.Enqueue(clientMessage);
 
-		public static void acceptCallback(IAsyncResult ar) {
-			try {
-				// Get the socket that handles the client request.
-				Listener handler = (Listener) ar.AsyncState;
-				Socket clientsocket = handler.tcpsocket.EndAccept(ar);
+                handler._udpSocket.BeginReceiveFrom(handler._udpBuffer, 0, MessageTypeMap.BufferSize, 0, ref handler._remoteEndPoint,
+                    new AsyncCallback(ReceiveFromUDPCallback), handler);
+            }
+            catch (Exception)
+            {
+                // the underlying socket was closed
+            }
+        }
 
-				// Create the state object.
-				Client client = new Client( clientsocket, handler );
-				handler.clients.Add( client.EndPoint, client );
-				handler.Log.Info( "New connection from " + client.EndPoint );
+        public void Stop()
+        {
+            if (_tcpSocket != null)
+            {
+                _tcpSocket.Close();
+                _tcpSocket = null;
+            }
+            if (_udpSocket != null)
+            {
+                _udpSocket.Close();
+                _udpSocket = null;
+            }
+            Log.Info("Stopped listening on" + _localEndPoint);
+        }
 
-				// The next connection
-				handler.tcpsocket.BeginAccept(
-					new AsyncCallback(acceptCallback), 
-					handler );
-			} catch ( ObjectDisposedException ) {
-				// the underlying socket was closed
-			}
-		}
+        public static void acceptCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Get the socket that handles the client request.
+                Listener handler = (Listener)ar.AsyncState;
+                Socket clientsocket = handler._tcpSocket.EndAccept(ar);
 
-		public int MessageCount {
-			get { return clientMessageQueue.Count; }
-		}
+                // Create the state object.
+                Client client = new Client(clientsocket, handler);
+                handler.clients.Add(client.EndPoint, client);
+                handler.Log.Info("New connection from " + client.EndPoint);
 
-		public ClientMessage PopNextMessage() {
-			return (ClientMessage)clientMessageQueue.Dequeue();
-		}
+                // The next connection
+                handler._tcpSocket.BeginAccept(
+                    new AsyncCallback(acceptCallback),
+                    handler);
+            }
+            catch (ObjectDisposedException)
+            {
+                // the underlying socket was closed
+            }
+        }
 
-		public Hashtable Clients {
-			get { return clients; }
-		}
+        public int MessageCount
+        {
+            get { return clientMessageQueue.Count; }
+        }
+
+        public ClientMessage PopNextMessage()
+        {
+            return (ClientMessage)clientMessageQueue.Dequeue();
+        }
+
+        public Hashtable Clients
+        {
+            get { return clients; }
+        }
 
 
-		public void SendToAll( IMessage message ) {
-			foreach ( Client c in clients.Values ) {
-				if ( c.Authenticated ) {
-					c.Send( message );
-				}
-			}
-		}
-	}
+        public void SendToAll(IMessage message)
+        {
+            foreach (Client c in clients.Values)
+            {
+                if (c.Authenticated)
+                {
+                    c.Send(message);
+                }
+            }
+        }
+    }
 }

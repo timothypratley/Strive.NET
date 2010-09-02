@@ -1,0 +1,420 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UpdateControls</name>
+    </assembly>
+    <members>
+        <member name="T:UpdateControls.Precedent">
+            <summary>
+            Base class for <see cref="!:Dynamic"/> and <see cref="T:UpdateControls.Dependent"/> sentries.
+            </summary>
+            <threadsafety static="true" instance="true"/>
+            <remarks>
+            This class is for internal use only.
+            </remarks>
+        </member>
+        <member name="M:UpdateControls.Precedent.#ctor">
+            <summary>
+            Creates a new precedent sentry.
+            </summary>
+        </member>
+        <member name="M:UpdateControls.Precedent.RecordDependent">
+            <summary>
+            Establishes a relationship between this precedent and the currently
+            updating dependent.
+            </summary>
+        </member>
+        <member name="M:UpdateControls.Precedent.MakeDependentsOutOfDate">
+            <summary>
+            Makes all direct and indirect dependents out of date.
+            </summary>
+        </member>
+        <member name="T:UpdateControls.RecycleBin`1">
+            <summary>
+            A collection that recycles objects during a dependent update.
+            </summary>
+            <remarks>
+            This class is for advanced use of the library. There is little need for
+            recycle bins in typical applications.
+            <para/>
+            Construct a recycle bin within a <see cref="T:UpdateControls.Dependent"/>'s update
+            function when that Dependent controls a collection. Fill the
+            recycle bin with the contents of the dependent collection,
+            then reconstruct the collection by extracting objects from the
+            recycle bin. This prevents the unnecessary destruction and
+            recreation of objects in the dependent collection.
+            <para/>
+            The recycle bin extracts objects based on a prototype. If
+            the recycle bin contains an object matching the prototype
+            according to <see cref="M:System.Object.GetHashCode"/> and
+            <see cref="M:System.Object.Equals(System.Object)"/>, then that matching object
+            is extracted. If not, the prototype itself is used. It is
+            imperitive that you properly implement GetHashCode and
+            Equals in your recycled classes.
+            <para/>
+            Your implementation of GetHashCode and Equals must only consider
+            fields that do not change. If a field can be changed, or is
+            itself dependent, then it must not be used either as part of the
+            hash code, or to determine equality. The best practice is to
+            implement GetHashCode and Equals in terms of fields that are
+            initialized by the constructor, and are thereafter immutable.
+            <para/>
+            The advantage of RecycleBin is not found in any time or memory savings.
+            In fact, using RecycleBin in most cases adds a small amount of overhead.
+            However, the advantage comes from preserving the dynamic and
+            dependent state of the recycled objects. If your depenent collection
+            contains only immutable objects (such as strings), there is no
+            advantage to using a RecycleBin.
+            </remarks>
+            <example>
+            The following code adds location to each device in a network
+            (the classes Device and Network are not shown). LocatedDevice
+            has a location that can be changed. LocatedNetwork constructs
+            a LocatedDevice for each Device in a Network. It uses a recycle
+            bin so that the locations of the devices are not lost between
+            updates.
+            <code language="C#">
+            // A class that adds location to a device.
+            public class LocatedDevice : DynamicObject
+            {
+            	private Device _device;
+            	private Point _location;
+            
+            	public LocatedDevice( Device device )
+            	{
+            		// Capture the reference to a device.
+            		_device = device;
+            	}
+            
+            	// Allow the location to change.
+            	public Point Location
+            	{
+            		get
+            		{
+            			OnGet( "_location" );
+            			return _location;
+            		}
+            		set
+            		{
+            			OnSet( "_location" );
+            			_location = value;
+            		}
+            	}
+            
+            	// The hash code depends only upon the
+            	// referenced device, not the location.
+            	public override int GetHashCode()
+            	{
+            		return _device.GetHashCode();
+            	}
+            
+            	// The objects are equal if they refer
+            	// to the same device. Location doesn't
+            	// count, because it can change.
+            	public override bool Equals(object obj)
+            	{
+            		if ( obj == null )
+            			return false;
+            		if ( this.GetType() != obj.GetType() )
+            			return false;
+            		LocatedDevice that = (LocatedDevice)obj;
+            		return this._device.Equals( that._device );
+            	}
+            
+            }
+            
+            // A class that adds location to all devices in a network.
+            public class LocatedNetwork
+            {
+            	private Network _network;
+            	private ArrayList _locatedDevices = new ArrayList();
+            	private Dependent _depLocatedDevices;
+            
+            	public LocatedNetwork( Network network )
+            	{
+            		// Capture a reference to a network.
+            		_network = network;
+            		// Create a dependent sentry to control the collection.
+            		_depLocatedDevices = new Dependent(
+            			UpdateLocatedDevices );
+            	}
+            
+            	// The collection is dependent, and therefore read-only.
+            	public ICollection LocatedDevices
+            	{
+            		get
+            		{
+            			_depLocatedDevices.OnGet();
+            			return _locatedDevices;
+            		}
+            	}
+            
+            	private void UpdateLocatedDevices()
+            	{
+            		// Create and fill a recycle bin.
+            		RecycleBin bin = new RecycleBin( _locatedDevices );
+            		_locatedDevices.Clear();
+            
+            		// Create a located device for every device in the network.
+            		foreach ( Device device in _network.Devices )
+            		{
+            			_locatedDevices.Add(
+            				bin.Extract( new LocatedDevice(device) ) );
+            		}
+            	}
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:UpdateControls.RecycleBin`1.#ctor">
+            <summary>
+            Creates an empty recycle bin.
+            </summary>
+            <remarks>
+            The recycle bin should be filled with objects from a dependent
+            collection, and the collection should be emptied. Then it can be
+            repopulaed by extraction from the bin.
+            </remarks>
+        </member>
+        <member name="M:UpdateControls.RecycleBin`1.AddObject(`0)">
+            <summary>
+            Add an object to the recycle bin.
+            </summary>
+            <param name="recyclableObject">The object to put in the recycle bin.</param>
+        </member>
+        <member name="M:UpdateControls.RecycleBin`1.Extract(`0)">
+            <summary>
+            If a matching object is in the recycle bin, remove and return it.
+            Otherwise, return the prototype.
+            </summary>
+            <param name="prototype">An object equal to the one to be extracted.</param>
+            <returns>The matching object that was added to the recycle bin, or
+            the prototype if no such object is found.</returns>
+        </member>
+        <member name="M:UpdateControls.RecycleBin`1.Dispose">
+            <summary>
+            Disposes all objects remaining in the recycle bin.
+            </summary>
+            <remarks>
+            Call this method at the end of the update function. Any objects
+            that have not been recycled will be disposed, thus removing any
+            dependencies they may have. This allows cached objects to be
+            unloaded and garbage collected.
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:UpdateControls.Dependent" -->
+        <member name="M:UpdateControls.Dependent.#ctor(System.Action)">
+            <summary>
+            Creates a new dependent sentry with a given update procedure.
+            <seealso cref="!:UpdateProcedure"/>
+            </summary>
+            <param name="update">The procedure that updates the value of the controled field.</param>
+        </member>
+        <member name="M:UpdateControls.Dependent.OnGet">
+            <summary>
+            Call this method before reading the value of a controlled field.
+            </summary>
+            <remarks>
+            If the controlled field is out-of-date, this function calls the
+            update procedure to bring it back up-to-date. If another dependent
+            is currently updating, that dependent depends upon this one; when this
+            dependent goes out-of-date again, that one does as well.
+            </remarks>
+        </member>
+        <member name="M:UpdateControls.Dependent.Dispose">
+            <summary>
+            Call this method to tear down dependencies prior to destroying
+            the dependent.
+            </summary>
+            <remarks>
+            While it is not absolutely necessary to call this method, doing
+            so can help the garbage collector to reclaim the object. While
+            the dependent is up-to-date, all of its precedents maintain
+            pointers. Calling this method destroys those pointers so that
+            the dependent can be removed from memory.
+            </remarks>
+        </member>
+        <member name="M:UpdateControls.Dependent.Touch">
+            <summary>
+            Bring the dependent up-to-date, but don't take a dependency on it. This is
+            useful for pre-loading properties of an object as it is created. It avoids
+            the appearance of a list populated with empty objects while properties
+            of that object are loaded.
+            </summary>
+        </member>
+        <member name="E:UpdateControls.Dependent.Invalidated">
+            <summary>
+            Event fired when the dependent becomes out-of-date.
+            <remarks>
+            This event should not call <see cref="M:UpdateControls.Dependent.OnGet"/>. However, it should
+            set up the conditions for OnGet to be called. For example, it could
+            invalidate a region of the window so that a Paint method later calls
+            OnGet, or it could signal a thread that will call OnGet.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:UpdateControls.Dependent.IsUpToDate">
+            <summary>
+            Read only property that is true when the dependent is up-to-date.
+            </summary>
+        </member>
+        <member name="P:UpdateControls.Dependent.IsNotUpdating">
+            <summary>
+            Read only property that is true when the dependent is not updating.
+            </summary>
+        </member>
+        <member name="M:UpdateControls.UpdateControlsExtensions.Recycle``1(System.Collections.Generic.ICollection{``0})">
+            <summary>
+            Moves all objects into a new recycle bin, from which they can be extracted.
+            </summary>
+            <param name="objects">A collection of objects to add to the bin.</param>
+            <remarks>
+            After the objects are added to the bin, the collection
+            is cleared. Then it can be repopulated by extraction from
+            the bin.
+            </remarks>
+        </member>
+        <member name="T:UpdateControls.Independent">
+             <summary>
+             A sentry that controls an independent field.
+             </summary>
+             <threadsafety static="true" instance="true"/>
+             <remarks>
+             An independent field is one whose value can be changed externally at
+             any time. Create one Independent sentry for each independent field in
+             your object.
+             </remarks>
+             <example>A class using Independent sentries.
+             <code language="C">
+            	public class Contact
+            	{
+            		private string _name = "";
+            		private string _emailAddress = "";
+            		
+            		private Independent _indName = new Independent();
+            		private Independent _indEmailAddress = new Independet();
+            
+            		public Contact()
+            		{
+            		}
+            
+            		public string Name
+            		{
+            			get
+            			{
+            				_indName.OnGet();
+            				return _name;
+            			}
+            			set
+            			{
+            				_indName.OnSet();
+            				_name = value;
+            			}
+            		}
+            
+            		public string EmailAddress
+            		{
+            			get
+            			{
+            				_indEmailAddress.OnGet();
+            				return _emailAddress;
+            			}
+            			set
+            			{
+            				_indEmailAddress.OnSet();
+            				_emailAddress = value;
+            			}
+            		}
+            	}
+             </code>
+             <code language="VB">
+            	Public Class Contact
+            		Private _name As String = ""
+            		Private _emailAddress As String = ""
+            
+            		Private _indName As New Independent()
+            		Private _indEmailAddress As New Independent()
+            
+            		Public Sub New()
+            		End Sub
+            
+            		Public Property Name() As String
+            			Get
+            				_indName.OnGet()
+            				Return _name
+            			End Get
+            			Set
+            				_indName.OnSet()
+            				_name = value
+            			End Set
+            		End Property
+            
+            		Public Property EmailAddress() As String
+            			Get
+            				_indEmailAddress.OnGet()
+            				Return _emailAddress
+            			End Get
+            			Set
+            				_indEmailAddress.OnSet()
+            				_emailAddress = value
+            			End Set
+            		End Property
+            	End Class
+             </code>
+             </example>
+        </member>
+        <member name="M:UpdateControls.Independent.OnGet">
+            <summary>
+            Call this function just before getting the field that this
+            sentry controls.
+            </summary>
+            <remarks>
+            Any dependent fields that are currently updating will depend upon
+            this field; when the field changes, the dependent becomes
+            out-of-date.
+            </remarks>
+        </member>
+        <member name="M:UpdateControls.Independent.OnSet">
+            <summary>
+            Call this function just before setting the field that this
+            sentry controls.
+            </summary>
+            <remarks>
+            Any dependent fields that depend upon this field will become
+            out-of-date.
+            </remarks>
+        </member>
+        <member name="P:UpdateControls.Independent.HasDependents">
+            <summary>
+            True if any other fields depend upon this one.
+            </summary>
+            <remarks>
+            If any dependent field has used this independent field while updating,
+            then HasDependents is true. When that dependent becomes out-of-date,
+            however, it no longer depends upon this field.
+            <para/>
+            This property is useful for caching. When all dependents are up-to-date,
+            check this property for cached fields. If it is false, then nothing
+            depends upon the field, and it can be unloaded. Be careful not to
+            unload the cache while dependents are still out-of-date, since
+            those dependents may in fact need the field when they update.
+            </remarks>
+        </member>
+        <member name="E:UpdateControls.Independent.GainDependent">
+            <summary>
+            Event fired when the first dependent references this field. This event only
+            fires when HasDependents goes from false to true. If the field already
+            has dependents, then this event does not fire.
+            </summary>
+        </member>
+        <member name="E:UpdateControls.Independent.LooseDependent">
+            <summary>
+            Event fired when the last dependent goes out-of-date. This event
+            only fires when HasDependents goes from true to false. If the field has
+            other dependents, then this event does not fire. If the dependent is
+            currently updating and it still depends upon this field, then the
+            GainDependent event will be fired immediately.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -212,7 +212,7 @@ namespace Strive.Network.Server
             // Begin sending the data to the remote device.
             try
             {
-                handler.udpsocket.BeginSendTo(EncodedMessage, 0, EncodedMessage.Length, 0,
+                handler._udpSocket.BeginSendTo(EncodedMessage, 0, EncodedMessage.Length, 0,
                     tcpsocket.RemoteEndPoint, new AsyncCallback(SendToUDPCallback), this);
             }
             catch (Exception)
@@ -229,7 +229,7 @@ namespace Strive.Network.Server
             try
             {
                 // Complete sending the data to the remote device.
-                int bytesSent = client.handler.udpsocket.EndSendTo(ar);
+                int bytesSent = client.handler._udpSocket.EndSendTo(ar);
             }
             catch (Exception)
             {

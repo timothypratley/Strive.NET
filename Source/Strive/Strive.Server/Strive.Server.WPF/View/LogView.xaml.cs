@@ -12,6 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Strive.Server.WPF.ViewModel;
+
+
 namespace Strive.Server.WPF.View
 {
     /// <summary>
@@ -22,6 +25,8 @@ namespace Strive.Server.WPF.View
         public LogView()
         {
             InitializeComponent();
+            if (App.LogViewModel != null)
+                DataContext = App.LogViewModel.LogModel;
         }
     }
 }

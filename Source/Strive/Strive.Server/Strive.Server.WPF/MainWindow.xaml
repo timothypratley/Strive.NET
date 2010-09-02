@@ -5,10 +5,8 @@
         xmlns:vw="clr-namespace:Strive.Server.WPF.View"
         Title="{Binding Path=DisplayName}"
         Width="650" Height="420"
-        WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
+        WindowStartupLocation="CenterScreen" Icon="/Strive.Server.WPF;component/App.ico">
     <Grid>
         <vw:LogView x:Name="logView1" />
-        <Button Content="Widget" Height="23" Name="button1" Width="75" Margin="540,346,12,12" />
     </Grid>
 </Window>

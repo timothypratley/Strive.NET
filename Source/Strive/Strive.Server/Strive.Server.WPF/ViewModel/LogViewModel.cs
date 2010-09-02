@@ -3,18 +3,32 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+
+using Strive.Server.WPF.Model;
 
 namespace Strive.Server.WPF.ViewModel
 {
-    class LogViewModel
+    public class LogViewModel : TraceListener
     {
-        public ObservableCollection<string> LogEntries { get; private set; }
+        public LogModel LogModel { get; set; }
 
         public LogViewModel()
         {
-            LogEntries = new ObservableCollection<string>();
-            LogEntries.Add("Test");
-            LogEntries.Add("FOo");
+            LogModel = new LogModel();
+            Trace.Listeners.Add(this);
+        }
+
+        private string messageSoFar = String.Empty;
+        public override void Write(string message)
+        {
+            messageSoFar += message;
+        }
+
+        public override void WriteLine(string message)
+        {
+            LogModel.NewLogEntry(messageSoFar + message);
+            messageSoFar = String.Empty;
         }
     }
 }
