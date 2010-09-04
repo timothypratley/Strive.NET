@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
 using System.IO;
 
-using AvalonDock;
 
 namespace Strive.Client.WPF
 {

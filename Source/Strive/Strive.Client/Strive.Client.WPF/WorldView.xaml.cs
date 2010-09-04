@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using AvalonDock;
-using Strive.Client.NeoAxisView;
+
 
 namespace Strive.Client.WPF
 {

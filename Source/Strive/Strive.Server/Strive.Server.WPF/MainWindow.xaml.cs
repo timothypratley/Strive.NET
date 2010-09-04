@@ -23,6 +23,9 @@ namespace Strive.Server.WPF
         public MainWindow()
         {
             InitializeComponent();
+            var view = new LogViewContent();
+            view.ShowAsDocument(dockManager);
+            view.Focus();
         }
     }
 }

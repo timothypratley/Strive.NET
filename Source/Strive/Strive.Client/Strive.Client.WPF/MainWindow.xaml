@@ -22,14 +22,14 @@
                         Executed="BrowseHomeCmdExecuted"
                         CanExecute="BrowseHomeCmdCanExecute"/>
     </Window.CommandBindings>
-    <DockPanel Background="Transparent">
+    <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Command="Open" Header="_Open" />
-                <MenuItem Command="Close" Header="_Close" />
+                <MenuItem Command="Open" Header="_Open"/>
+                <MenuItem Command="Close" Header="_Close"/>
             </MenuItem>
             <MenuItem Header="View">
-                <MenuItem Command="New" Header="_New" />
+                <MenuItem Command="New" Header="_New"/>
             </MenuItem>
         </Menu>
 
@@ -40,9 +40,9 @@
         </ToolBar>
 
         <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem Content="Strive is alive" />
+            <StatusBarItem Content="Strive is alive"/>
         </StatusBar>
 
-        <ad:DockingManager x:Name="dockManager" Grid.Row="1" Background="Transparent" />
+        <ad:DockingManager x:Name="dockManager" Grid.Row="1"/>
     </DockPanel>
 </Window>

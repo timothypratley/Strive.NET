@@ -55,6 +55,9 @@
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AvalonDock">
+      <HintPath>..\..\..\ThirdParty\AvalonDock\AvalonDock.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging">
       <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
     </Reference>
@@ -89,10 +92,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LogViewContent.xaml.cs">
+      <DependentUpon>LogViewContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\LogModel.cs" />
     <Compile Include="View\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
+    <Page Include="LogViewContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
