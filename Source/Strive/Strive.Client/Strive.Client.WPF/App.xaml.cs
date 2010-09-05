@@ -12,6 +12,7 @@ using Common.Logging;
 using Strive.Client.NeoAxisView;
 using Strive.Client.ViewModel;
 using Strive.Network.Client;
+using Strive.WPF.ViewModel;
 
 
 namespace Strive.Client.WPF
@@ -24,9 +25,11 @@ namespace Strive.Client.WPF
         static ILog Log = LogManager.GetCurrentClassLogger();
         public static WorldViewModel _worldViewModel;
         public static ServerConnection _serverConnection;
+        public static LogViewModel LogViewModel;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            LogViewModel = new LogViewModel();
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 

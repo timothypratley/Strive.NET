@@ -12,7 +12,7 @@ using System.Net;
 using Common.Logging;
 
 using Strive.Network.Server;
-using Strive.Server.WPF.ViewModel;
+using Strive.WPF.ViewModel;
 
 
 namespace Strive.Server.WPF

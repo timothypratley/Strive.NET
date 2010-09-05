@@ -106,12 +106,6 @@
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Monitor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Monitor.Designer.cs">
-      <DependentUpon>Monitor.cs</DependentUpon>
-    </Compile>
     <Content Include="App.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -143,11 +137,6 @@
       <Project>{4895086D-8485-46EF-8DED-9E4C16227D64}</Project>
       <Name>Strive.Server.Logic</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Monitor.resx">
-      <DependentUpon>Monitor.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

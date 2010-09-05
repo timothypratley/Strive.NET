@@ -92,17 +92,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="LogViewContent.xaml.cs">
-      <DependentUpon>LogViewContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LogModel.cs" />
-    <Compile Include="View\LogView.xaml.cs">
-      <DependentUpon>LogView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="LogViewContent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,15 +100,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\LogViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\LogView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -151,6 +135,10 @@
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Server\Strive.Network.Server.csproj">
       <Project>{757BF7D3-B811-48D7-AE27-0842B0522536}</Project>
       <Name>Strive.Network.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Strive.WPF\Strive.WPF.csproj">
+      <Project>{790D523A-8C3C-480F-885B-C476238FB438}</Project>
+      <Name>Strive.WPF</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

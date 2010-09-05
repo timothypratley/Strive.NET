@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using System.Windows.Forms.Integration;
 using System.IO;
 
+using Strive.WPF.View;
+
 
 namespace Strive.Client.WPF
 {
@@ -58,7 +60,9 @@ namespace Strive.Client.WPF
 
         private void OpenCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Opening");
+            var log = new LogView(App.LogViewModel);
+            log.ShowAsDocument(dockManager);
+            log.Focus();
         }
 
         private void NewCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)

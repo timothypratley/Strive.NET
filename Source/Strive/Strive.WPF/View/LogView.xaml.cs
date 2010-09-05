@@ -12,19 +12,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using AvalonDock;
+using Strive.WPF.ViewModel;
 
-namespace Strive.Server.WPF.View
+
+namespace Strive.WPF.View
 {
     /// <summary>
     /// Interaction logic for LogView.xaml
     /// </summary>
-    public partial class LogView : UserControl
+    public partial class LogView : DockableContent
     {
-        public LogView()
+        public LogView(LogViewModel logViewModel)
         {
             InitializeComponent();
-            if (App.LogViewModel != null)
-                DataContext = App.LogViewModel.LogModel;
+            DataContext = logViewModel;
         }
     }
 }

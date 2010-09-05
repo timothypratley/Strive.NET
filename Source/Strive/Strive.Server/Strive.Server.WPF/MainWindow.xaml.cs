@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Strive.WPF.View;
+
 
 namespace Strive.Server.WPF
 {
@@ -23,7 +25,7 @@ namespace Strive.Server.WPF
         public MainWindow()
         {
             InitializeComponent();
-            var view = new LogViewContent();
+            var view = new LogView(App.LogViewModel);
             view.ShowAsDocument(dockManager);
             view.Focus();
         }

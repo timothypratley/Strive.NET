@@ -273,6 +273,10 @@
       <Project>{8C36C1BE-AB5F-47A5-869D-139A04B23C52}</Project>
       <Name>Strive.Network.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Strive.WPF\Strive.WPF.csproj">
+      <Project>{790D523A-8C3C-480F-885B-C476238FB438}</Project>
+      <Name>Strive.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">
       <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
       <Name>Strive.Client.Model</Name>

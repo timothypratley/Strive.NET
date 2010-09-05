@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UpdateControls;
 
-namespace Strive.Server.WPF.Model
+namespace Strive.WPF.Model
 {
     public class LogModel
     {

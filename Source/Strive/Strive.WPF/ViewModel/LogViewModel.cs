@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-using Strive.Server.WPF.Model;
+using Strive.WPF.Model;
 
-namespace Strive.Server.WPF.ViewModel
+namespace Strive.WPF.ViewModel
 {
     public class LogViewModel : TraceListener
     {
