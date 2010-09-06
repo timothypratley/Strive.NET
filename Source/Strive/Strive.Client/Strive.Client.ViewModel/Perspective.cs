@@ -16,7 +16,8 @@ namespace Strive.Client.ViewModel
     {
         public string WindowTitle
         {
-            get {
+            get
+            {
                 if (FollowEntities.Count > 0)
                     return "Following (" + FollowEntities.ToString() + ")";
                 else
@@ -41,11 +42,52 @@ namespace Strive.Client.ViewModel
 
         public List<EntityViewModel> FollowEntities = new List<EntityViewModel>();
 
-        public double Heading = 1.5;
-        public double Tilt = -0.15;
-        public double X = 0.0;
-        public double Y = 0.0;
-        public double Z = 23.0;
+        private double _heading = 1.5;
+        public double Heading
+        {
+            get { return _heading; }
+            set
+            {
+                _heading = value;
+                while (_heading < 0)
+                    _heading += Math.PI * 2.0;
+                while (Heading >= Math.PI * 2.0)
+                    _heading -= Math.PI * 2.0;
+            }
+        }
+
+        private double _tilt = -0.15;
+        public double Tilt
+        {
+            get { return _tilt; }
+            set
+            {
+                if (value < angleRangeLow)
+                    _tilt = angleRangeLow;
+                else if (value >= angleRangeHigh)
+                    _tilt = angleRangeHigh;
+                else
+                    _tilt = value;
+            }
+        }
+
+        public double X = 0;
+        public double Y = 0;
+
+        private double _z = 23;
+        public double Z
+        {
+            get { return _z; }
+            set
+            {
+                if (value < distanceRangeLow)
+                    _z = distanceRangeLow;
+                else if (value > distanceRangeHigh)
+                    _z = distanceRangeHigh;
+                else
+                    _z = value;
+            }
+        }
 
         private int lastTick = 0;
         private int lastFrameRate = 0;
@@ -93,11 +135,33 @@ namespace Strive.Client.ViewModel
             var count = FollowEntities.Count;
             if (count > 0)
             {
-                Func<double,double,double> plus = (a, b) => a + b;
-                X = FollowEntities.Select(e => e.Entity.X).Aggregate(plus)/count;
-                Y = FollowEntities.Select(e => e.Entity.Y).Aggregate(plus)/count;
-                Z = FollowEntities.Select(e => e.Entity.Z).Aggregate(plus)/count + 20.0;
-                Tilt = 0.001 - Math.PI / 2.0;
+                var centerX = FollowEntities.Select(e => e.Entity.X).Sum() / count;
+                var centerY = FollowEntities.Select(e => e.Entity.Y).Sum() / count;
+                var centerZ = FollowEntities.Select(e => e.Entity.Z).Sum() / count;
+
+                var dX = (centerX - X);
+                var dY = (centerY - Y);
+                var dZ = (centerZ - Z);
+
+                var vectorDistance = Math.Sqrt(dX * dX + dY * dY + dZ * dZ);
+
+                var maxX = FollowEntities.Select(e => e.Entity.X).Max();
+                var maxY = FollowEntities.Select(e => e.Entity.Y).Max();
+                var maxZ = FollowEntities.Select(e => e.Entity.Z).Max();
+                var minX = FollowEntities.Select(e => e.Entity.X).Min();
+                var minY = FollowEntities.Select(e => e.Entity.Y).Min();
+                var minZ = FollowEntities.Select(e => e.Entity.Z).Min();
+
+                var viewDistance = new List<double>() { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
+
+                var targetX = centerX - (dX * viewDistance / vectorDistance);
+                var targetY = centerY - (dY * viewDistance / vectorDistance);
+                var targetZ = centerZ - (dZ * viewDistance / vectorDistance);
+
+                X += (targetX - X) * delta * 2;
+                Y += (targetY - Y) * delta * 2;
+                Z += (targetZ - Z) * delta * 2;
+                //Tilt = 0.001 - Math.PI / 2.0;
             }
 
             movementPerpendicular = 0;
@@ -147,40 +211,28 @@ namespace Strive.Client.ViewModel
 
         double distanceRangeLow = 10.0;
         double distanceRangeHigh = 300.0;
-        double angleRangeLow = 0.001 - Math.PI/2.0;
-        double angleRangeHigh = - 0.001;
+        double angleRangeLow = 0.01 - Math.PI / 2.0;
+        double angleRangeHigh = Math.PI / 2.0 - 0.01;
 
         void Down()
         {
             Z -= delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
-            if (Z < distanceRangeLow)
-                Z = distanceRangeLow;
         }
 
         void Up()
         {
             Z += delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
-            if (Z > distanceRangeHigh)
-                Z = distanceRangeHigh;
         }
 
         void TiltUp()
         {
             Tilt += delta * (angleRangeHigh - angleRangeLow) / 2.0;
-            if (Tilt >= angleRangeHigh)
-            {
-                Tilt = angleRangeHigh;
-            }
             FollowEntities.Clear();
         }
 
         void TiltDown()
         {
             Tilt -= delta * (angleRangeHigh - angleRangeLow) / 2.0;
-            if (Tilt < angleRangeLow)
-            {
-                Tilt = angleRangeLow;
-            }
             FollowEntities.Clear();
         }
 
@@ -211,20 +263,12 @@ namespace Strive.Client.ViewModel
         void TurnLeft()
         {
             Heading -= delta * 2.0;
-            if (Heading >= Math.PI * 2.0)
-            {
-                Heading -= Math.PI * 2.0;
-            }
             FollowEntities.Clear();
         }
 
         void TurnRight()
         {
             Heading += delta * 2.0;
-            if (Heading < 0)
-            {
-                Heading += Math.PI * 2.0;
-            }
             FollowEntities.Clear();
         }
 
@@ -244,15 +288,20 @@ namespace Strive.Client.ViewModel
 
         void OnFollowSelected()
         {
-            FollowEntities = _worldViewModel.SelectedEntities;
+            if (_worldViewModel.MouseOverEntity != null)
+            {
+                FollowEntities = new List<EntityViewModel>() { _worldViewModel.MouseOverEntity };
+                _worldViewModel.Select(_worldViewModel.MouseOverEntity.Entity.Name);
+            }
+            else
+                FollowEntities = _worldViewModel.SelectedEntities;
         }
 
         void SetCamera()
         {
             if (movementPerpendicular != 0 || movementForward != 0)
             {
-                double movementHeading = Heading
-                                         + Math.Atan2(movementForward, -movementPerpendicular);
+                double movementHeading = Heading + Math.Atan2(movementForward, -movementPerpendicular);
                 double movementX = Math.Sin(movementHeading);
                 double movementY = Math.Cos(movementHeading);
 

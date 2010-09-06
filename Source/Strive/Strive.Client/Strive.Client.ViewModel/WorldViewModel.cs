@@ -26,12 +26,6 @@ namespace Strive.Client.ViewModel
             _navigation = new WorldNavigation();
         }
 
-        public int Test
-        {
-            get { return _world.Test; }
-            set { _world.Test = value; }
-        }
-
         public List<EntityViewModel> Entities
         {
             get
@@ -45,6 +39,20 @@ namespace Strive.Client.ViewModel
         {
             var entity = new EntityModel(name, modelId, x, y, z, 0, 0, 0);
             _world.AddEntity(entity);
+        }
+
+        public void ClearMouseOverEntity()
+        {
+            _navigation.MouseOverEntity = null;
+        }
+
+        public void SetMouseOverEntity(string name)
+        {
+            var entity = _world.Entities.Where(e => e.Name == name).FirstOrDefault();
+            if (entity != null)
+            {
+                _navigation.MouseOverEntity = entity;
+            }
         }
 
         public void SelectAdd(string name)
@@ -67,9 +75,21 @@ namespace Strive.Client.ViewModel
 
         public List<EntityViewModel> SelectedEntities
         {
-            get {
+            get
+            {
                 return _navigation.SelectedEntities.Select(
                     em => EntityViewModel.Wrap(em, _navigation)).ToList();
+            }
+        }
+
+        public EntityViewModel MouseOverEntity
+        {
+            get
+            {
+                if (_navigation.MouseOverEntity == null)
+                    return null;
+                else
+                    return EntityViewModel.Wrap(_navigation.MouseOverEntity, _navigation);
             }
         }
     }

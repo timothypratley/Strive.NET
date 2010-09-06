@@ -20,7 +20,7 @@ namespace Strive.Client.NeoAxisView
     {
         static List<MapObject> _tempObjects = new List<MapObject>(128);
         static bool showObjectsTips = true;
-        static float visibleDistance = 200;
+        static float visibleDistance = 100;
 
         public static void RenderObjectsTips(GuiRenderer renderer, Camera camera)
         {

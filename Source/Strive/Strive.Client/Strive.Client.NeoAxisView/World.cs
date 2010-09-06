@@ -42,7 +42,15 @@ namespace Strive.Client.NeoAxisView
 
         public static bool LoadMap()
         {
-            bool result = WindowsAppWorld.MapLoad("Maps/RTSDemo/Map.map", true);
+            bool result = WindowsAppWorld.MapLoad("Maps/Gr1d/Map.map", true);
+            for (int x=0; x<10;x++)
+                for(int y=0; y<10;y++)
+                    for (int z = 0; z < 10; z++)
+                    {
+                        var mo = (MapObject)Entities.Instance.Create("StaticBox", Map.Instance);
+                        mo.Position = new Vec3(x*20, y*20, z*20);
+                        mo.PostCreate();
+                    }
             Map.Instance.GetObjects(new Sphere(Vec3.Zero, 100000), delegate(MapObject obj) {
                 if (!obj.Visible)
                     return;

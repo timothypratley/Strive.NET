@@ -60,6 +60,9 @@ namespace Strive.Client.WPF
 
         private void OpenCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            var wb = new WebBrowser();
+            wb.ShowAsDocument(dockManager);
+            wb.Focus();
             var log = new LogView(App.LogViewModel);
             log.ShowAsDocument(dockManager);
             log.Focus();

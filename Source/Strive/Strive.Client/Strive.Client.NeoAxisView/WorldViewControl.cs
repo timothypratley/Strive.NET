@@ -42,6 +42,9 @@ namespace Strive.Client.NeoAxisView
             RenderUI += new RenderUIDelegate(WorldViewControl_RenderUI);
             MouseClick += new MouseEventHandler(renderTargetUserControl1_MouseClick);
             MouseEnter += new EventHandler(WorldViewControl_MouseEnter);
+            MouseDown += new MouseEventHandler(WorldViewControl_MouseDown);
+            MouseUp += new MouseEventHandler(WorldViewControl_MouseUp);
+            MouseMove += new MouseEventHandler(WorldViewControl_MouseMove);
         }
 
         // TODO: use dependencies instead
@@ -86,6 +89,37 @@ namespace Strive.Client.NeoAxisView
         {
             this.Focus();
         }
+
+        int mouseX;
+        int mouseY;
+        void WorldViewControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                MouseRelativeMode = false;
+            }
+        }
+
+        void WorldViewControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                MouseRelativeMode = true;
+                mouseX = MousePosition.X;
+                mouseY = MousePosition.Y;
+            }
+        }
+
+        void WorldViewControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (MouseRelativeMode)
+            {
+                var o = GetMouseRelativeModeOffset();
+                _perspective.Heading += o.X / 200f;
+                _perspective.Tilt -= o.Y / 200f;
+            }
+        }
+
 
         Camera camera = null;
         Vec3 MouseIntersection = Vec3.Zero;
@@ -146,15 +180,16 @@ namespace Strive.Client.NeoAxisView
                     camera.DebugGeometry.AddBounds(mapObject.MapBounds);
                     tt.SetToolTip(this, mapObject.Name);
                     tt.ShowAlways = true;
+                    World.ViewModel.SetMouseOverEntity(mapObject.Name);
                 }
                 else
                 {
                     tt.ShowAlways = false;
                     tt.RemoveAll();
+                    World.ViewModel.ClearMouseOverEntity();
                 }
 
-                RayCastResult result = PhysicsWorld.Instance.RayCast(
-                  ray, (int)ContactGroup.CastOnlyCollision);
+                RayCastResult result = PhysicsWorld.Instance.RayCast(ray, (int)ContactGroup.CastOnlyCollision);
                 MouseIntersection = result.Position;
                 if (result.Shape != null)
                 {
@@ -192,7 +227,7 @@ namespace Strive.Client.NeoAxisView
                 var b = mapObject as GameEntities.RTSBuilding;
                 if (b != null)
                 {
-                    RTSUnit unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName( "RTSRobot" ), Map.Instance);
+                    RTSUnit unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
 
                     RTSCharacter character = unit as RTSCharacter;
                     if (character == null)
