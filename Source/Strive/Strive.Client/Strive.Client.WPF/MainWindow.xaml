@@ -37,6 +37,8 @@
             <Button Content="New View" Command="ApplicationCommands.New"></Button>
             <Button Content="Show Units" Command="NavigationCommands.Search"></Button>
             <Button Content="Home" Command="NavigationCommands.BrowseHome"></Button>
+            <Button Content="Connect" Click="Button_Click"></Button>
+            <Button Content="Browser" Click="Button_Click_1"></Button>
         </ToolBar>
 
         <StatusBar DockPanel.Dock="Bottom">

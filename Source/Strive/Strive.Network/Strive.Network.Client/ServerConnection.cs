@@ -58,24 +58,23 @@ namespace Strive.Network.Client
             tcpoffset = 0;
 
             // Connect to the remote endpoint.
-            tcpsocket = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream, ProtocolType.Tcp);
-            udpsocket = new Socket(AddressFamily.InterNetwork,
-                SocketType.Dgram, ProtocolType.Udp);
-            tcpsocket.BeginConnect(remoteEndPoint,
-                new AsyncCallback(ConnectTCPCallback), this);
+            tcpsocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            udpsocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+            tcpsocket.BeginConnect(remoteEndPoint, new AsyncCallback(ConnectTCPCallback), this);
         }
 
         public void Stop()
         {
             if (tcpsocket != null)
             {
-                tcpsocket.Shutdown(SocketShutdown.Both);
+                if (tcpsocket.Connected)
+                    tcpsocket.Shutdown(SocketShutdown.Both);
                 tcpsocket = null;
             }
             if (udpsocket != null)
             {
-                udpsocket.Shutdown(SocketShutdown.Both);
+                if (udpsocket.Connected)
+                    udpsocket.Shutdown(SocketShutdown.Both);
                 udpsocket.Close();
                 udpsocket = null;
             }
@@ -169,7 +168,7 @@ namespace Strive.Network.Client
                             return;
                         }
                         client.messageQueue.Enqueue(message);
-                        client.Log.Trace( "enqueued " + message.GetType() + " message" );
+                        client.Log.Trace("enqueued " + message.GetType() + " message");
 
                         // copy the remaining data to the front of the buffer
                         client.tcpoffset -= expected_length;

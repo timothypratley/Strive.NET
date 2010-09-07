@@ -23,8 +23,8 @@ namespace Strive.Client.WPF
     public partial class App : Application
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
-        public static WorldViewModel _worldViewModel;
-        public static ServerConnection _serverConnection;
+        public static WorldViewModel WorldViewModel;
+        public static ServerConnection ServerConnection;
         public static LogViewModel LogViewModel;
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -33,9 +33,9 @@ namespace Strive.Client.WPF
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
-            _serverConnection = new ServerConnection();
-            _worldViewModel = new WorldViewModel(_serverConnection);
-            World.Init(_worldViewModel);
+            ServerConnection = new ServerConnection();
+            WorldViewModel = new WorldViewModel(ServerConnection);
+            World.Init(WorldViewModel);
         }
 
         private bool ReportException(Exception ex)

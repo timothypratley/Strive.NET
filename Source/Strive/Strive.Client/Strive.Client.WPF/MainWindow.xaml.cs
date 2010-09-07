@@ -60,9 +60,6 @@ namespace Strive.Client.WPF
 
         private void OpenCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var wb = new WebBrowser();
-            wb.ShowAsDocument(dockManager);
-            wb.Focus();
             var log = new LogView(App.LogViewModel);
             log.ShowAsDocument(dockManager);
             log.Focus();
@@ -87,7 +84,7 @@ namespace Strive.Client.WPF
 
         private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var resourceList = new ResourceList(App._worldViewModel);
+            var resourceList = new ResourceList(App.WorldViewModel);
             resourceList.ShowAsDocument(dockManager);
             resourceList.Focus();
         }
@@ -100,6 +97,20 @@ namespace Strive.Client.WPF
         private void BrowseHomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var connect = new Connect();
+            connect.ShowAsDocument(dockManager);
+            connect.Focus();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var wb = new WebBrowser();
+            wb.ShowAsDocument(dockManager);
+            wb.Focus();
         }
     }
 }

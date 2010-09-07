@@ -215,6 +215,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connect.xaml.cs">
+      <DependentUpon>Connect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResourceList.xaml.cs">
       <DependentUpon>ResourceList.xaml</DependentUpon>
     </Compile>
@@ -224,6 +227,10 @@
     <Compile Include="WorldView.xaml.cs">
       <DependentUpon>WorldView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Connect.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
