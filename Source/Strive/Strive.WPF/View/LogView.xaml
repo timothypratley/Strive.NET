@@ -4,5 +4,5 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
              Title="Log View" Height="300" Width="300">
-    <ListView Name="listView1" AlternationCount="1" ItemsSource="{Binding Path=LogModel.LogEntries}" />
+        <ListView Name="listView1" AlternationCount="1" ItemsSource="{Binding Path=LogModel.LogEntries}" />
 </ad:DockableContent>
