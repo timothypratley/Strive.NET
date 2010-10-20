@@ -54,17 +54,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\LogModel.cs" />
+    <Compile Include="Model\ServerStatusModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\LogViewModel.cs" />
-    <Compile Include="View\ServerView.xaml.cs">
-      <DependentUpon>ServerView.xaml</DependentUpon>
+    <Compile Include="ViewModel\ServerStatusViewModel.cs" />
+    <Compile Include="View\ServerStatusView.xaml.cs">
+      <DependentUpon>ServerStatusView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\ServerView.xaml">
+    <Page Include="View\ServerStatusView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

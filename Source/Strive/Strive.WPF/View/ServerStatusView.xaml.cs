@@ -19,14 +19,14 @@ using Strive.WPF.ViewModel;
 namespace Strive.WPF.View
 {
     /// <summary>
-    /// Interaction logic for ServerView.xaml
+    /// Interaction logic for ServerStatusView.xaml
     /// </summary>
-    public partial class ServerView : DockableContent
+    public partial class ServerStatusView : DockableContent
     {
-        public ServerView(ServerViewModel serverViewModel)
+        public ServerStatusView(ServerStatusViewModel serverStatusViewModel)
         {
             InitializeComponent();
-            DataContext = serverViewModel;
+            DataContext = serverStatusViewModel;
         }
     }
 }
