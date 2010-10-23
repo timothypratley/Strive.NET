@@ -1,14 +1,16 @@
 type = GameMap
 uin = 2
 classPrompt = GameMap
+gameMusic = Sounds\Music\Game.ogg
 ambientLight = 0.2 0.2 0.2
 editorCameraPosition = 14.31858 -8.315933 17.09771
 editorCameraDirection = 2.582534 -0.342807
 shadowColor = 1 1 1
 shadowFarDistance = 100
-fov = 80
+shadowPSSMSplitFactors = 0.2 0.5
 logicSystemManager = 39
 name = GameMap_0
+shadowTechnique = ShadowmapMedium
 rootEditorLayer
 {
 	layer
@@ -167,7 +169,7 @@ entity
 {
 	type = Terminal
 	uin = 15
-	classPrompt = GameGuiObject
+	classPrompt = Terminal
 	relationships = 111
 	initialControl = Gui\SwitchesDemoTerminal.gui
 	position = 13.98495 4.590276 1.753296
@@ -182,17 +184,19 @@ entity
 	classPrompt = Light
 	lightType = Spot
 	diffuseColor = 1.098039 1.098039 1.294118
+	diffusePower = 1
 	specularColor = 1.372549 1.372549 1.392157
-	attenuationRangeAutomatic = True
-	attenuationRange = Infinity
-	attenuationConstant = 1
-	attenuationLinear = 0
-	attenuationQuadric = 0
+	specularPower = 1
+	attenuationNear = 48
+	attenuationFar = 50
+	attenuationPower = 1
 	spotlightInnerAngle = 80
 	spotlightOuterAngle = 120
 	spotlightFalloff = 1
 	castShadows = True
 	allowStaticLighting = False
+	allowDynamicLighting = True
+	customShaderParameter = 0 0 0 0
 	position = 0 0 22
 	rotation = 0 -0.7071068 0 -0.7071068
 	name = Light_0
@@ -1151,7 +1155,7 @@ entity
 	uin = 142
 	classPrompt = StaticMesh
 	position = 0 0 0
-	editorLayer = Root\StaticGeometry
+	editorLayer = Root Layer\StaticGeometry
 	meshName = Models\Rooms\Rooms.mesh
 	splitGeometry = True
 	splitGeometryPieceSize = 30 30 30

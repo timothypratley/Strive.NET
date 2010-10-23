@@ -14,6 +14,11 @@
             GaussianBlur scene post processing compositor instance.
             </summary>
         </member>
+        <member name="T:GameCommon.RadialBlurCompositorInstance">
+            <summary>
+            Represents work with the RadialBlur post effect.
+            </summary>
+        </member>
         <member name="T:GameCommon.GameEngineInitialization">
             <summary>
             Class for execute actions after initialization of the engine.

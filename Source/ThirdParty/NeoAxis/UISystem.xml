@@ -57,5 +57,10 @@
             Blit only from main thread
             </summary>
         </member>
+        <member name="P:Engine.UISystem.In3dControlManager._ScreenPixelSizeHeight">
+            <summary>
+            This value used by EControl.Position and Size EControl.properties when type = ScaleType.Pixel.
+            </summary>
+        </member>
     </members>
 </doc>

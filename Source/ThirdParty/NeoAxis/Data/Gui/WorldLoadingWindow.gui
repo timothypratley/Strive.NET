@@ -33,4 +33,12 @@ control Gui\Controls\DefaultWindowBorder.gui
 		copyTextFromParent = True
 		text = (WorldName)
 	}
+	control Control
+	{
+		position = Texture 346.3065 75.99997
+		size = Texture 20.00001 19.99997
+		name = Indicator
+		backTexture = Gui\Textures\Indicator.png
+		colorMultiplier = 0 0 1 0.6980392
+	}
 }

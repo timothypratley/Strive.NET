@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-
+using System.Windows.Controls;
+using System.Windows.Input;
 
 using Engine.MathEx;
 using Engine.Renderer;
@@ -15,10 +15,11 @@ using Engine.MapSystem;
 using Engine.EntitySystem;
 using Engine.PhysicsSystem;
 using Engine.Utils;
+using Engine.SoundSystem;
 using Engine;
 using GameCommon;
 using GameEntities;
-using WindowsAppFramework;
+using WPFAppFramework;
 
 using UpdateControls.XAML;
 using Strive.Client.Model;
@@ -87,7 +88,7 @@ namespace Strive.Client.NeoAxisView
 
         void WorldViewControl_MouseEnter(object sender, EventArgs e)
         {
-            this.Focus();
+            //this.Focus();
         }
 
         int mouseX;
@@ -141,12 +142,14 @@ namespace Strive.Client.NeoAxisView
         void renderTargetUserControl1_Render(Camera camera)
         {
             this.camera = camera;
-            RenderEntityOverCursor(camera);
             _perspective.Check();
             CameraPosition = new Vec3((float)_perspective.X, (float)_perspective.Y, (float)_perspective.Z);
             CameraDirection = new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
                 * new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
                 * Vec3.XAxis;
+            if (SoundWorld.Instance != null)
+                SoundWorld.Instance.SetListener(camera.Position, Vec3.Zero, camera.Direction, camera.Up);
+            RenderEntityOverCursor(camera);
         }
 
         ToolTip tt = new ToolTip();
@@ -158,8 +161,10 @@ namespace Strive.Client.NeoAxisView
 
             if (mouse.X < 0 || mouse.X > 1 || mouse.Y < 0 || mouse.Y > 1)
             {
-                tt.ShowAlways = false;
-                tt.RemoveAll();
+                // tt.ShowAlways = false;
+                // tt.RemoveAll();
+                tt.StaysOpen = false;
+                tt.Content = null;
             }
             else
             {
@@ -178,14 +183,17 @@ namespace Strive.Client.NeoAxisView
                     // Put a yellow box around it and a tooltip
                     camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
                     camera.DebugGeometry.AddBounds(mapObject.MapBounds);
-                    tt.SetToolTip(this, mapObject.Name);
-                    tt.ShowAlways = true;
+                    //tt.ShowAlways = true;
+                    tt.StaysOpen = true;
+                    tt.Content = mapObject.Name;
                     World.ViewModel.SetMouseOverEntity(mapObject.Name);
                 }
                 else
                 {
-                    tt.ShowAlways = false;
-                    tt.RemoveAll();
+                    //tt.ShowAlways = false;
+                    //tt.RemoveAll();
+                    tt.StaysOpen = false;
+                    tt.Content = null;
                     World.ViewModel.ClearMouseOverEntity();
                 }
 
@@ -210,7 +218,7 @@ namespace Strive.Client.NeoAxisView
             }
         }
 
-        Random r = new Random();
+        Random rand = new Random();
         void renderTargetUserControl1_MouseClick(object sender, MouseEventArgs e)
         {
             var em = World.ViewModel.SelectedEntities.FirstOrDefault();
@@ -220,10 +228,14 @@ namespace Strive.Client.NeoAxisView
             }
             if (mapObject != null)
             {
-                if (IsKeyPressed(Keys.ShiftKey) || IsKeyPressed(Keys.ControlKey))
+                if (IsKeyPressed(Key.LeftShift)
+                    || IsKeyPressed(Key.LeftCtrl)
+                    || IsKeyPressed(Key.RightShift)
+                    || IsKeyPressed(Key.RightCtrl))
                     World.ViewModel.SelectAdd(mapObject.Name);
                 else
                     World.ViewModel.Select(mapObject.Name);
+
                 var b = mapObject as GameEntities.RTSBuilding;
                 if (b != null)
                 {
@@ -231,7 +243,7 @@ namespace Strive.Client.NeoAxisView
 
                     RTSCharacter character = unit as RTSCharacter;
                     if (character == null)
-                        Log.Fatal("RTSBuilding: CreateProductedUnit: character == null");
+                        Log.Fatal("RTSBuilding: Create character == null");
 
                     Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(b.Position.ToVec2(),
                         character.Type.Radius * 2);
@@ -251,7 +263,7 @@ namespace Strive.Client.NeoAxisView
             {
                 foreach (Body b in mapObject.PhysicsModel.Bodies)
                 {
-                    b.AddForce(ForceType.Global, 0f, new Vec3(r.Next(500) - 250, r.Next(500) - 250, r.Next(1000) + 250), new Vec3(0, 0, 0));
+                    b.AddForce(ForceType.Global, 0f, new Vec3(rand.Next(500) - 250, rand.Next(500) - 250, rand.Next(1000) + 250), new Vec3(0, 0, 0));
                 }
             }
         }

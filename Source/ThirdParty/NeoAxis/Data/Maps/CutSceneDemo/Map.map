@@ -2,14 +2,15 @@ type = GameMap
 uin = 2
 classPrompt = GameMap
 gameMusic = Sounds\Music\Game.ogg
-ambientLight = 0.3 0.3 0.3
-editorCameraPosition = 14.21707 -15.67864 15.17738
-editorCameraDirection = 2.29099 -0.713191
+ambientLight = 0.2352941 0.2352941 0.2352941
+editorCameraPosition = 0.6784453 -29.48656 16.85641
+editorCameraDirection = 1.604538 -0.4793884
 shadowColor = 1 1 1
 shadowFarDistance = 100
-fov = 80
+shadowPSSMSplitFactors = 0.2 0.5
 logicSystemManager = 10
 name = GameMap_0
+shadowTechnique = ShadowmapMedium
 rootEditorLayer
 {
 	layer
@@ -34,19 +35,23 @@ entity
 	classPrompt = Light
 	relationships = 148
 	lightType = Spot
-	diffuseColor = 3.921569 3.921569 5.882353
-	specularColor = 3.921569 3.921569 5.882353
-	attenuationRangeAutomatic = True
-	attenuationRange = 120.8548
-	attenuationConstant = 1
-	attenuationLinear = 0
-	attenuationQuadric = 0.01
+	diffuseColor = 1 1 1
+	diffusePower = 1.5
+	specularColor = 1 1 1
+	specularPower = 3
+	attenuationNear = 0
+	attenuationFar = 50
+	attenuationPower = 1
+	ffpAttenuationConstant = 1
+	ffpAttenuationLinear = 0
+	ffpAttenuationQuadric = 0.01
 	spotlightInnerAngle = 60
 	spotlightOuterAngle = 70
 	spotlightFalloff = 1
 	castShadows = True
 	allowStaticLighting = False
 	allowDynamicLighting = True
+	customShaderParameter = 0 0 0 0
 	position = -1.998556 -1.507627 2.583075
 	name = Light_0
 	logicClass = 148
@@ -125,7 +130,7 @@ entity
 		{
 			type = LogicEntityClass
 			uin = 12
-			relationships = 156
+			relationships = 155
 			entityClassName = Region
 			className = Region_CutScene
 			customScriptCodeCreated = False
@@ -259,8 +264,8 @@ entity
 						{
 							type = LogicCallGetEntityMethodAction
 							uin = 28
-							relationships = 169
-							entity = 169
+							relationships = 168
+							entity = 168
 						}
 					}
 					entity
@@ -439,8 +444,8 @@ entity
 							{
 								type = LogicCallGetEntityMethodAction
 								uin = 46
-								relationships = 173
-								entity = 173
+								relationships = 172
+								entity = 172
 							}
 						}
 					}
@@ -580,8 +585,8 @@ entity
 					{
 						type = LogicCallGetEntityMethodAction
 						uin = 60
-						relationships = 174
-						entity = 174
+						relationships = 173
+						entity = 173
 					}
 				}
 				entity
@@ -933,8 +938,8 @@ entity
 					{
 						type = LogicCallGetEntityMethodAction
 						uin = 99
-						relationships = 175
-						entity = 175
+						relationships = 174
+						entity = 174
 					}
 				}
 				entity
@@ -1069,8 +1074,8 @@ entity
 							{
 								type = LogicCallGetEntityMethodAction
 								uin = 115
-								relationships = 202
-								entity = 202
+								relationships = 201
+								entity = 201
 								dotPathAction = 116
 								entity
 								{
@@ -1103,8 +1108,8 @@ entity
 							{
 								type = LogicCallGetEntityMethodAction
 								uin = 120
-								relationships = 202
-								entity = 202
+								relationships = 201
+								entity = 201
 								dotPathAction = 121
 								entity
 								{
@@ -1380,7 +1385,7 @@ entity
 		{
 			type = LogicEntityClass
 			uin = 148
-			relationships = 196 4
+			relationships = 195 4
 			entityClassName = MapObject
 			className = TestLamp_Move
 			customScriptCodeCreated = False
@@ -1416,16 +1421,8 @@ entity
 }
 entity
 {
-	type = Palm
-	uin = 152
-	classPrompt = MapObject
-	position = 0 0 0
-	name = Palm_0
-}
-entity
-{
 	type = Stone
-	uin = 153
+	uin = 152
 	classPrompt = MapObject
 	position = 0.08434868 -1.950536 -0.4065142
 	rotation = 0 0 0.8660254 0.5
@@ -1434,7 +1431,7 @@ entity
 entity
 {
 	type = Stone
-	uin = 154
+	uin = 153
 	classPrompt = MapObject
 	position = 1.339479 0.7166741 -0.04709435
 	rotation = 0 0 0.5 0.8660254
@@ -1444,7 +1441,7 @@ entity
 entity
 {
 	type = Stone
-	uin = 155
+	uin = 154
 	classPrompt = MapObject
 	position = -2.130114 0.4106321 -0.4900246
 	name = Stone_2
@@ -1452,7 +1449,7 @@ entity
 entity
 {
 	type = Region
-	uin = 156
+	uin = 155
 	classPrompt = Region
 	relationships = 12
 	shapeType = Box
@@ -1466,7 +1463,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 157
+	uin = 156
 	classPrompt = Dynamic
 	position = 10.05178 5.451957 0.08357678
 	name = TestLamp_0
@@ -1474,7 +1471,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 158
+	uin = 157
 	classPrompt = Dynamic
 	position = 17.32811 5.400274 0.113986
 	name = TestLamp_1
@@ -1482,7 +1479,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 159
+	uin = 158
 	classPrompt = Dynamic
 	position = 17.31069 12.73827 0.09177954
 	name = TestLamp_2
@@ -1490,7 +1487,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 160
+	uin = 159
 	classPrompt = Dynamic
 	position = 10.07478 12.69812 0.05908751
 	name = TestLamp_3
@@ -1498,7 +1495,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 161
+	uin = 160
 	classPrompt = Dynamic
 	position = 10.05178 5.451957 1.366402
 	name = TestLamp_4
@@ -1506,7 +1503,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 162
+	uin = 161
 	classPrompt = Dynamic
 	position = 10.07478 12.69812 1.341913
 	name = TestLamp_5
@@ -1514,7 +1511,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 163
+	uin = 162
 	classPrompt = Dynamic
 	position = 17.32811 5.400274 1.396812
 	name = TestLamp_6
@@ -1522,7 +1519,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 164
+	uin = 163
 	classPrompt = Dynamic
 	position = 17.31069 12.73827 1.374605
 	name = TestLamp_7
@@ -1530,7 +1527,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 165
+	uin = 164
 	classPrompt = Dynamic
 	position = 10.05178 5.451957 2.615921
 	name = TestLamp_8
@@ -1538,7 +1535,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 166
+	uin = 165
 	classPrompt = Dynamic
 	position = 10.07478 12.69812 2.591432
 	name = TestLamp_9
@@ -1546,7 +1543,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 167
+	uin = 166
 	classPrompt = Dynamic
 	position = 17.32811 5.400274 2.646331
 	name = TestLamp_10
@@ -1554,7 +1551,7 @@ entity
 entity
 {
 	type = TestLamp
-	uin = 168
+	uin = 167
 	classPrompt = Dynamic
 	position = 17.31069 12.73827 2.624124
 	name = TestLamp_11
@@ -1562,14 +1559,14 @@ entity
 entity
 {
 	type = MapCameraCurve
-	uin = 169
+	uin = 168
 	classPrompt = MapCameraCurve
-	relationships = 170 171 28
+	relationships = 169 170 28
 	fov = 0
 	curveType = UniformCubicSpline
-	points = 169 170 171
+	points = 168 169 170
 	automaticTimeStep = 3
-	owner = 169
+	owner = 168
 	time = 0
 	position = 11.42064 -0.5792019 4.238652
 	rotation = -0.2241439 0.1294095 0.4829629 0.8365163
@@ -1578,22 +1575,22 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 170
+	uin = 169
 	classPrompt = MapCameraCurvePoint
-	relationships = 169
+	relationships = 168
 	fov = 0
-	owner = 169
+	owner = 168
 	time = 3
 	position = 5.318023 9.291943 1.516843
 }
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 171
+	uin = 170
 	classPrompt = MapCameraCurvePoint
-	relationships = 169
+	relationships = 168
 	fov = 0
-	owner = 169
+	owner = 168
 	time = 6
 	position = 13.83067 16.07765 3.882755
 	rotation = 0.1830127 0.1830127 -0.6830127 0.6830127
@@ -1601,13 +1598,13 @@ entity
 entity
 {
 	type = CutSceneManager
-	uin = 172
+	uin = 171
 	classPrompt = CutSceneManager
 }
 entity
 {
 	type = HelperPoint
-	uin = 173
+	uin = 172
 	classPrompt = MapObject
 	relationships = 46
 	position = 14.78142 9.423115 13.02835
@@ -1616,7 +1613,7 @@ entity
 entity
 {
 	type = MapCamera
-	uin = 174
+	uin = 173
 	classPrompt = MapCamera
 	relationships = 60
 	fov = 0
@@ -1627,14 +1624,14 @@ entity
 entity
 {
 	type = MapCameraCurve
-	uin = 175
+	uin = 174
 	classPrompt = MapCameraCurve
-	relationships = 176 177 178 179 180 181 182 183 184 185 186 187 188 189 99
+	relationships = 175 176 177 178 179 180 181 182 183 184 185 186 187 188 99
 	fov = 0
 	curveType = UniformCubicSpline
-	points = 175 176 177 178 179 180 183 181 182 184 185 186 187 188 189
+	points = 174 175 176 177 178 179 182 180 181 183 184 185 186 187 188
 	automaticTimeStep = 2
-	owner = 175
+	owner = 174
 	time = 0
 	position = 9.409698 -4.540973 6.285407
 	rotation = 0.1426954 0.02559255 -0.9738962 -0.1746692
@@ -1643,11 +1640,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 176
+	uin = 175
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 2
 	position = 6.117253 -11.18712 7.417253
 	rotation = 0.03122875 -0.08501749 -0.8561724 -0.5086902
@@ -1655,11 +1652,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 177
+	uin = 176
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 4
 	position = -2.299708 -11.87127 7.417253
 	rotation = 0.1566061 -0.1294391 -0.6237949 -0.7547185
@@ -1667,11 +1664,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 178
+	uin = 177
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 6
 	position = -11.10411 -6.745015 7.417253
 	rotation = 0.06217813 -0.3122541 -0.3152745 -0.8939984
@@ -1679,11 +1676,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 179
+	uin = 178
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 8
 	position = -13.8653 1.037525 7.417253
 	rotation = 0.009454362 -0.2001037 0.04623798 -0.9786374
@@ -1691,11 +1688,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 180
+	uin = 179
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 30
-	owner = 175
+	owner = 174
 	time = 10
 	position = -14.1776 2.001716 8.539131
 	rotation = 0.02316237 -0.2893702 0.06091433 -0.9549962
@@ -1703,11 +1700,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 181
+	uin = 180
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 14
 	position = -14.24912 3.679096 8.539131
 	rotation = 0.02484099 -0.1954985 0.05297226 -0.9789571
@@ -1715,11 +1712,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 182
+	uin = 181
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 16
 	position = -13.50738 6.446301 8.539131
 	rotation = -0.01340764 -0.1966137 0.2411585 -0.9502661
@@ -1727,11 +1724,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 183
+	uin = 182
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 30
-	owner = 175
+	owner = 174
 	time = 12
 	position = -14.23203 2.856162 8.539131
 	rotation = -0.004977174 0.06338276 -0.07812627 0.9949141
@@ -1739,11 +1736,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 184
+	uin = 183
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 18
 	position = -12.14898 8.428384 8.539131
 	rotation = -0.863013 0.08205824 0.3336512 -0.37034
@@ -1751,11 +1748,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 185
+	uin = 184
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 20
 	position = -10.52717 10.11184 8.539131
 	rotation = -0.6613376 0.553039 0.054124 0.5038359
@@ -1763,11 +1760,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 186
+	uin = 185
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 22
 	position = -8.725861 11.19441 8.539131
 	rotation = 0.1660433 0.1819005 -0.4457897 0.8605886
@@ -1775,11 +1772,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 187
+	uin = 186
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 24
 	position = 1.089595 4.044249 3.992792
 	rotation = 0.2024463 0.1402627 -0.6265834 0.7394149
@@ -1787,11 +1784,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 188
+	uin = 187
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 0
-	owner = 175
+	owner = 174
 	time = 26
 	position = 5.300772 -1.919186 4.841693
 	rotation = -0.2140106 0.1218918 0.9376526 0.2452523
@@ -1799,11 +1796,11 @@ entity
 entity
 {
 	type = MapCameraCurvePoint
-	uin = 189
+	uin = 188
 	classPrompt = MapCameraCurvePoint
-	relationships = 175
+	relationships = 174
 	fov = 150
-	owner = 175
+	owner = 174
 	time = 28
 	position = 5.825912 -6.585307 5.515292
 	rotation = -0.1967317 0.1481715 0.8987522 0.3627476
@@ -1811,13 +1808,13 @@ entity
 entity
 {
 	type = MapCurve
-	uin = 190
+	uin = 189
 	classPrompt = MapCurve
-	relationships = 191 192 193 194 195 197 198 199 200 201
+	relationships = 190 191 192 193 194 196 197 198 199 200
 	curveType = UniformCubicSpline
-	points = 190 191 192 193 194 195 197 198 199 200 201
+	points = 189 190 191 192 193 194 196 197 198 199 200
 	automaticTimeStep = 4
-	owner = 190
+	owner = 189
 	time = 0
 	position = -6.59846 0.09030724 5.341268
 	name = MapCurve_MoveLamp
@@ -1825,57 +1822,57 @@ entity
 entity
 {
 	type = MapCurvePoint
-	uin = 191
+	uin = 190
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 4
 	position = -4.483302 5.06783 5.564692
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 192
+	uin = 191
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 8
 	position = 4.767766 4.339926 2.717014
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 193
+	uin = 192
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 12
 	position = 5.852493 -3.508834 7.969028
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 194
+	uin = 193
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 16
 	position = -0.003859282 -7.126559 5.989438
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 195
+	uin = 194
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 20
 	position = -4.994462 -6.109812 5.956701
 }
 entity
 {
 	type = TestLamp
-	uin = 196
+	uin = 195
 	classPrompt = Dynamic
 	relationships = 148
 	position = -2.832997 -0.181083 3.567934
@@ -1885,57 +1882,57 @@ entity
 entity
 {
 	type = MapCurvePoint
-	uin = 197
+	uin = 196
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 24
 	position = -4.994462 3.360353 6.120263
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 198
+	uin = 197
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 28
 	position = 5.294497 3.614664 8.120263
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 199
+	uin = 198
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 32
 	position = 6.248311 -4.859612 7.27086
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 200
+	uin = 199
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 36
 	position = -7.276081 -4.208964 8.469445
 }
 entity
 {
 	type = MapCurvePoint
-	uin = 201
+	uin = 200
 	classPrompt = MapCurvePoint
-	relationships = 190
-	owner = 190
+	relationships = 189
+	owner = 189
 	time = 40
 	position = -6.59846 0.09030724 5.341268
 }
 entity
 {
 	type = HelperPoint
-	uin = 202
+	uin = 201
 	classPrompt = MapObject
 	relationships = 115 120
 	position = -2.817864 -2.672381 1.231668
@@ -1945,7 +1942,7 @@ entity
 entity
 {
 	type = Ball
-	uin = 203
+	uin = 202
 	classPrompt = Dynamic
 	position = -0.06093121 3.960938 0.5204386
 	name = Ball_0
@@ -1953,7 +1950,7 @@ entity
 entity
 {
 	type = Ball
-	uin = 204
+	uin = 203
 	classPrompt = Dynamic
 	position = -1.367897 3.714912 0.5276194
 	name = Ball_1
@@ -1961,7 +1958,7 @@ entity
 entity
 {
 	type = StaticMesh
-	uin = 205
+	uin = 204
 	classPrompt = StaticMesh
 	position = 0 0 0
 	editorLayer = Root Layer\StaticGeometry
@@ -1969,5 +1966,15 @@ entity
 	splitGeometry = True
 	splitGeometryPieceSize = 30 30 30
 	allowDecals = All
+	castDynamicShadows = True
+}
+entity
+{
+	type = StaticMesh
+	uin = 205
+	classPrompt = StaticMesh
+	position = 0.006811857 0.02517396 0.9810631
+	scale = 0.2051357 0.2051357 0.2051357
+	meshName = Models\Tree\Tree.mesh
 	castDynamicShadows = True
 }

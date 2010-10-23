@@ -14,14 +14,32 @@
             <b>Don't modify</b>.
             </summary>
         </member>
-        <member name="M:Engine.MathEx.Frustum.IsIntersectsFast(Engine.MathEx.Vec3@)">
+        <member name="M:Engine.MathEx.ConvexPolygon.GetFromPoints(System.Collections.Generic.IList{Engine.MathEx.Vec2})">
             <summary>
-            Fast culling. Not cull everything outside the frustum.
+            Convex Hull Graham algorithm.
             </summary>
-            <param name="point"></param>
+            <param name="points"></param>
             <returns></returns>
         </member>
-        <member name="M:Engine.MathEx.Frustum.IsIntersectsFast(Engine.MathEx.Vec3)">
+        <member name="M:Engine.MathEx.Plane.GetSide(Engine.MathEx.Vec3@,Engine.MathEx.Vec3@)">
+            <summary>
+            Returns which side of the plane that the given box lies on.
+            The box is defined as centre/half-size pairs for effectively.
+            </summary>
+            <param name="boundsCenter"></param>
+            <param name="boundsHalfSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Engine.MathEx.Plane.GetSide(Engine.MathEx.Vec3,Engine.MathEx.Vec3)">
+            <summary>
+            Returns which side of the plane that the given box lies on.
+            The box is defined as centre/half-size pairs for effectively.
+            </summary>
+            <param name="boundsCenter"></param>
+            <param name="boundsHalfSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Engine.MathEx.Frustum.IsIntersects(Engine.MathEx.Vec3)">
             <summary>
             Fast culling. Not cull everything outside the frustum.
             </summary>
@@ -69,6 +87,11 @@
             </summary>
             <param name="bounds"></param>
             <returns></returns>
+        </member>
+        <member name="P:Engine.MathEx.Frustum._Axis">
+            <summary>
+            Bug here. Inverted Y axis. Better to use <see cref="P:Engine.MathEx.Frustum.Rotation"/> property.
+            </summary>
         </member>
     </members>
 </doc>

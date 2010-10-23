@@ -1,7 +1,7 @@
 type ExampleMagicBall
 {
 	class = ExampleMagicObject
-	blinkMaterialName = TransparentExample
+	blinkMaterialName = ExampleMagicBallBlinkMaterial
 	physicsModel = Types\Dynamic\ExampleMagicBall\ExampleMagicBall.physics
 	allowEditorCreate = True
 	networkType = Synchronized

@@ -1,14 +1,16 @@
 type = GameMap
 uin = 2
 classPrompt = GameMap
+gameMusic = Sounds\Music\Game.ogg
 ambientLight = 0.2 0.2 0.2
-editorCameraPosition = 12.91959 -6.53898 14.6999
-editorCameraDirection = 2.517189 -0.2632248
+editorCameraPosition = 12.91959 -6.53898 16.70063
+editorCameraDirection = 2.525293 -0.3187804
 shadowColor = 1 1 1
 shadowFarDistance = 100
-fov = 80
+shadowPSSMSplitFactors = 0.2 0.5
 logicSystemManager = 11
 name = GameMap_0
+shadowTechnique = ShadowmapMedium
 rootEditorLayer
 {
 	layer
@@ -60,7 +62,7 @@ entity
 {
 	type = Terminal
 	uin = 6
-	classPrompt = GameGuiObject
+	classPrompt = Terminal
 	relationships = 13
 	initialControl = Gui\RagdollDemoTerminal.gui
 	position = -4.26505 6.840276 1.753296
@@ -75,17 +77,19 @@ entity
 	classPrompt = Light
 	lightType = Spot
 	diffuseColor = 1.098039 1.098039 1.294118
+	diffusePower = 1
 	specularColor = 1.372549 1.372549 1.392157
-	attenuationRangeAutomatic = True
-	attenuationRange = Infinity
-	attenuationConstant = 1
-	attenuationLinear = 0
-	attenuationQuadric = 0
+	specularPower = 1
+	attenuationNear = 48
+	attenuationFar = 50
+	attenuationPower = 1
 	spotlightInnerAngle = 80
 	spotlightOuterAngle = 120
 	spotlightFalloff = 1
 	castShadows = True
 	allowStaticLighting = False
+	allowDynamicLighting = True
+	customShaderParameter = 0 0 0 0
 	position = 0 0 22
 	rotation = 0 -0.7071068 0 -0.7071068
 	name = Light_0
@@ -184,8 +188,9 @@ entity
 	type = Girl
 	uin = 19
 	classPrompt = GameCharacter
+	intellectShouldDeleteAfterDetach = False
 	position = 1.5 12.5 1.412185
-	rotation = 0 0 0.6962904 -0.7177602
+	rotation = 0 0 -0.6962904 0.7177602
 	name = Girl_1
 }
 entity
@@ -298,8 +303,9 @@ entity
 	type = Girl
 	uin = 32
 	classPrompt = GameCharacter
+	intellectShouldDeleteAfterDetach = False
 	position = 5.25 12.5 1.445609
-	rotation = 0 0 0.6962904 -0.7177602
+	rotation = 0 0 -0.6962904 0.7177602
 	name = Girl_2
 }
 entity
@@ -1280,7 +1286,7 @@ entity
 	uin = 141
 	classPrompt = StaticMesh
 	position = 0 0 0
-	editorLayer = Root\StaticGeometry
+	editorLayer = Root Layer\StaticGeometry
 	meshName = Models\Rooms\Rooms.mesh
 	splitGeometry = True
 	splitGeometryPieceSize = 30 30 30

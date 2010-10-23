@@ -1,5 +1,6 @@
 // Copyright (C) 2006-2010 NeoAxis Group Ltd.
 
+#include "Materials/Common/General.cg_hlsl"
 #include "Materials/Common/getFogValue.cg_hlsl"
 #include "Materials/Common/ShadowReceiverFunctions.cg_hlsl"
 
@@ -12,11 +13,6 @@
 #ifdef LAYER2_NORMAL_MAP
 #define ALLOW_NORMAL_MAPS
 #endif
-
-half3 expand(half3 v)
-{
-	return v * 2 - 1;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,6 +27,7 @@ void main_vp(
 	uniform float4 lightPositionArray[LIGHT_COUNT],
 	uniform float4 lightDirectionArray[LIGHT_COUNT],
 	uniform float4 spotLightParamsArray[LIGHT_COUNT],
+	uniform float4 lightCustomShaderParameterArray[LIGHT_COUNT],
 #endif
 
 	float4 position : POSITION,
@@ -175,6 +172,7 @@ void main_fp(
 	uniform half4 spotLightParamsArray[LIGHT_COUNT],
 #endif
 	uniform half lightCastShadowsArray[LIGHT_COUNT],
+	uniform float4 lightCustomShaderParameterArray[LIGHT_COUNT],
 #endif
 
 	//General
@@ -202,7 +200,13 @@ void main_fp(
 			float4 shadowUV2 : TEXCOORD6,
 			float pssmDistance : TEXCOORD7,
 		#endif
-		uniform sampler2D shadowMap0 : register(SHADOW_MAP0_REGISTER),
+		
+		#ifdef LIGHTTYPE_POINT
+			uniform samplerCUBE shadowMap0 : register(SHADOW_MAP0_REGISTER),
+		#else
+			uniform sampler2D shadowMap0 : register(SHADOW_MAP0_REGISTER),
+		#endif
+		
 		#ifdef SHADOW_PSSM
 			uniform sampler2D shadowMap1 : register(SHADOW_MAP1_REGISTER),
 			uniform sampler2D shadowMap2 : register(SHADOW_MAP2_REGISTER),
@@ -261,7 +265,7 @@ void main_fp(
 	uniform float4 clipPlane5,
 #endif
 
-	uniform half disableFetch4ForBrokenDrivers,
+	uniform half drawShadowDebugging,
 
 	out half4 oColor : COLOR )
 {
@@ -319,9 +323,8 @@ void main_fp(
 		float distance = length(lightVector);
 		lightDirection = lightVector / distance;
 
-		#ifndef LIGHTTYPE_DIRECTIONAL
-			lightMultiplier *= saturate(1 / (lightAttenuationArray[0].y + 
-				lightAttenuationArray[0].z * distance + lightAttenuationArray[0].w * distance * distance));
+		#if defined(LIGHTTYPE_SPOT) || defined(LIGHTTYPE_POINT)
+			lightMultiplier *= getLightAttenuation(lightAttenuationArray[0], (half)distance);
 		#endif
 
 		#ifdef LIGHTTYPE_SPOT
@@ -338,13 +341,14 @@ void main_fp(
 
 			#ifdef SHADOW_PSSM
 				shadowMultiplier = getShadowmapReceiveValue( shadowUV0, shadowUV1, shadowUV2,
-					shadowMap0, shadowMap1, shadowMap2, lightCastShadowsArray[0], 
-					lightShadowFarClipDistance, shadowTextureSizes, shadowColorIntensity, 
-					shadowDirectionalLightSplitDistances, pssmDistance);
+					shadowMap0, shadowMap1, shadowMap2, cameraDistance, lightCastShadowsArray[0], 
+					lightShadowFarClipDistance, shadowFarDistance, shadowTextureSizes, 
+					shadowColorIntensity, shadowDirectionalLightSplitDistances, pssmDistance, 
+					drawShadowDebugging);
 			#else
 				shadowMultiplier = getShadowmapReceiveValue( shadowUV0, shadowMap0, cameraDistance, 
 					lightCastShadowsArray[0], lightShadowFarClipDistance, shadowFarDistance,
-					shadowTextureSizes, shadowColorIntensity, disableFetch4ForBrokenDrivers);
+					shadowTextureSizes, shadowColorIntensity);
 			#endif
 
 		#endif

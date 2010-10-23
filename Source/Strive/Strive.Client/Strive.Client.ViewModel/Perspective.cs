@@ -97,7 +97,7 @@ namespace Strive.Client.ViewModel
 
         public Stopwatch movementTimer;
 
-        public delegate bool KeyPressedCheck(Keys k);
+        public delegate bool KeyPressedCheck(Key k);
         public delegate MouseButtons MouseButtonCheck();
 
         WorldViewModel _worldViewModel;

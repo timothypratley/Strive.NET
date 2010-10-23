@@ -1,5 +1,6 @@
 // Copyright (C) 2006-2010 NeoAxis Group Ltd.
 
+#include "Materials/Common/General.cg_hlsl"
 #include "Materials/Common/getFogValue.cg_hlsl"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7,6 +8,7 @@
 void main_vp(
 	uniform float4x4 worldMatrix,
 	uniform float4x4 worldViewProjMatrix,
+	uniform float3 cameraPosition,
 
 	float4 position : POSITION,
 	float3 normal : NORMAL,
@@ -14,16 +16,15 @@ void main_vp(
 
 	out float2 oTexCoord0 : TEXCOORD0,
 	out float3 oNormal : TEXCOORD1,
+	out float4 oWorldPositionAndCameraDistance : TEXCOORD2,
 
 #if LIGHT_COUNT >= 1
 	uniform float4 lightPositionArray[LIGHT_COUNT],
 	uniform float4 lightPositionObjectSpaceArray[LIGHT_COUNT],
-	uniform float4 lightAttenuationArray[LIGHT_COUNT],
-	uniform float4 spotLightParamsArray[LIGHT_COUNT],
 
-	out float4 oObjectLightDirectionAndAttenuation0 : TEXCOORD2,//direction - xyz, attenuation - w
+	out float3 oObjectLightDirection0 : TEXCOORD3,
 	#ifdef LIGHTTYPE_SPOT
-		out float3 oObjectWorldLightDirection0 : TEXCOORD3,
+		out float3 oObjectWorldLightDirection0 : TEXCOORD4,
 	#endif
 #endif
 
@@ -37,20 +38,17 @@ void main_vp(
 
 	float4 worldPosition = mul(worldMatrix, position);
 
+	float cameraDistance = length(cameraPosition - worldPosition.xyz);
+
+	oWorldPositionAndCameraDistance.xyz = worldPosition.xyz;
+	oWorldPositionAndCameraDistance.w = cameraDistance;
+
 	//Light direction and attenuation
 #if LIGHT_COUNT >= 1
 {
 	float3 direction = lightPositionObjectSpaceArray[0].xyz - 
 		position.xyz * lightPositionObjectSpaceArray[0].w;
-	oObjectLightDirectionAndAttenuation0.xyz = direction;
-
-	#ifndef LIGHTTYPE_DIRECTIONAL
-		float distance = length(lightPositionArray[0].xyz - worldPosition.xyz);
-		oObjectLightDirectionAndAttenuation0.w = saturate(1 / (lightAttenuationArray[0].y +
-			lightAttenuationArray[0].z * distance + lightAttenuationArray[0].w * distance * distance));
-	#else
-		oObjectLightDirectionAndAttenuation0.w = 1;
-	#endif
+	oObjectLightDirection0 = direction;
 
 	#ifdef LIGHTTYPE_SPOT
 		oObjectWorldLightDirection0 = lightPositionArray[0].xyz - worldPosition.xyz;
@@ -69,20 +67,20 @@ void main_fp(
 #endif
 
 #if LIGHT_COUNT >= 1
-	uniform half4 lightDiffuseColorPowerScaledArray[LIGHT_COUNT],
-#ifdef LIGHTTYPE_SPOT
+	uniform float4 lightPositionArray[LIGHT_COUNT],
 	uniform half4 lightDirectionArray[LIGHT_COUNT],
+	uniform half4 lightDiffuseColorPowerScaledArray[LIGHT_COUNT],
+	uniform half4 lightAttenuationArray[LIGHT_COUNT],
 	uniform half4 spotLightParamsArray[LIGHT_COUNT],
-#endif
 #endif
 
 	float2 texCoord0 : TEXCOORD0,
 	half3 normal : TEXCOORD1,
-
+	float4 worldPositionAndCameraDistance : TEXCOORD2,
 #if LIGHT_COUNT >= 1
-	half4 objectLightDirectionAndAttenuation0 : TEXCOORD2,//direction - xyz, attenuation - w
+	half3 objectLightDirection0 : TEXCOORD3,
 	#ifdef LIGHTTYPE_SPOT
-		half3 objectWorldLightDirection0 : TEXCOORD3,
+		half3 objectWorldLightDirection0 : TEXCOORD4,
 	#endif
 #endif
 
@@ -92,6 +90,7 @@ void main_fp(
 
 	out half4 oColor : COLOR )
 {
+	float3 worldPosition = worldPositionAndCameraDistance.xyz;
 	half3 n = (half3)normalize(normal);
 
 	half3 lightColor = half3(0,0,0);
@@ -107,8 +106,12 @@ void main_fp(
 
 	//Calculate light color for light pass
 #if LIGHT_COUNT >= 1
-	half3 objectLightDirection0 = normalize(objectLightDirectionAndAttenuation0.xyz);
-	half objectLightAttenuation0 = objectLightDirectionAndAttenuation0.w;
+
+	half objectLightAttenuation0 = 1;
+	#if defined(LIGHTTYPE_SPOT) || defined(LIGHTTYPE_POINT)
+		float lightDistance = length(lightPositionArray[0].xyz - worldPosition.xyz);
+		objectLightAttenuation0 = getLightAttenuation(lightAttenuationArray[0], (half)lightDistance);
+	#endif
 
 	#ifdef LIGHTTYPE_SPOT
 		// factor in spotlight angle

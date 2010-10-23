@@ -3,12 +3,14 @@ uin = 2
 classPrompt = GameMap
 gameMusic = Sounds\Music\Game.ogg
 ambientLight = 0.2 0.2 0.2
-editorCameraPosition = 16.3808 -15.95839 5.596044
-editorCameraDirection = 1.901111 -0.4900225
+editorCameraPosition = 16.3808 -15.95839 8.396338
+editorCameraDirection = 2.209862 -0.05462199
 shadowColor = 1 1 1
 shadowFarDistance = 100
+shadowPSSMSplitFactors = 0.2 0.5
 logicSystemManager = 11
 name = GameMap_0
+shadowTechnique = ShadowmapMedium
 rootEditorLayer
 {
 	layer
@@ -55,17 +57,16 @@ entity
 	diffusePower = 1
 	specularColor = 1.372549 1.372549 1.392157
 	specularPower = 1
-	attenuationRangeAutomatic = True
-	attenuationRange = Infinity
-	attenuationConstant = 1
-	attenuationLinear = 0
-	attenuationQuadric = 0
+	attenuationNear = 48
+	attenuationFar = 50
+	attenuationPower = 1
 	spotlightInnerAngle = 79.459
 	spotlightOuterAngle = 100.541
 	spotlightFalloff = 1
 	castShadows = True
 	allowStaticLighting = False
 	allowDynamicLighting = True
+	customShaderParameter = 0 0 0 0
 	position = 0 0 22
 	rotation = 0 -0.7071068 0 -0.7071068
 	name = Light_0
@@ -410,7 +411,7 @@ entity
 			{
 				type = LogicScriptMethod
 				uin = 45
-				code = "Vec2 start = rectangle.LeftTop;\r\nVec2 end = rectangle.RightBottom;\r\n\r\nVec2 size = new Vec2( .0015f, .0015f * 1.333f );\r\n\r\nrenderer.AddQuad( new Rect( start, new Vec2( start.X + size.X, end.Y ) ), color, clipRectangle );\r\nrenderer.AddQuad( new Rect( start, new Vec2( end.X, start.Y + size.Y ) ), color, clipRectangle );\r\nrenderer.AddQuad( new Rect( new Vec2( end.X - size.X, start.Y ), end ), color, clipRectangle );\r\nrenderer.AddQuad( new Rect( new Vec2( start.X, end.Y - size.Y ), end ), color, clipRectangle );\r\n"
+				code = "Vec2 start = rectangle.LeftTop;\r\nVec2 end = rectangle.RightBottom;\r\n\r\nVec2 size = new Vec2( .0015f, .0015f * 1.333f );\r\n\r\nrenderer.PushClipRectangle( clipRectangle );\r\nrenderer.AddQuad( new Rect( start, new Vec2( start.X + size.X, end.Y ) ), color );\r\nrenderer.AddQuad( new Rect( start, new Vec2( end.X, start.Y + size.Y ) ), color );\r\nrenderer.AddQuad( new Rect( new Vec2( end.X - size.X, start.Y ), end ), color );\r\nrenderer.AddQuad( new Rect( new Vec2( start.X, end.Y - size.Y ), end ), color );\r\nrenderer.PopClipRectangle();\r\n"
 				methodName = RenderRectangleBorder
 				returnType = System.Void
 				parameters = 46 47 48 49
@@ -486,7 +487,7 @@ entity
 			{
 				type = LogicScriptMethod
 				uin = 55
-				code = "if( camera == null )\r\n\treturn;\r\n\r\nRect clipRectangle = sender.GetScreenRectangle();\r\n\r\n//Cursor on unit\r\n{\r\n\tUnit unit = GetUnitByCursor();\r\n\tif( unit != null )\r\n\t\tRenderUnitBorder( renderer, unit, new ColorValue( .7f, .7f, .7f, .7f ), clipRectangle );\r\n}\r\n\r\n//Selected Units\r\nforeach( Unit unit in selectedUnits )\r\n{\r\n\t//Render select border\r\n\tRenderUnitBorder( renderer, unit, new ColorValue( 0, 1, 0 ), clipRectangle );\r\n\r\n\t//Draw tasks\r\n\tGameCharacterAI intellect = (GameCharacterAI)unit.Intellect;\r\n\tif( intellect != null )\r\n\t{\r\n\t\tif( intellect.TaskMove.IsInitialized || intellect.TaskAttack != null )\r\n\t\t{\r\n\t\t\tVec3 position;\r\n\t\t\tColorValue color;\r\n\r\n\t\t\tif( intellect.TaskAttack != null )\r\n\t\t\t{\r\n\t\t\t\tposition = intellect.TaskAttack.GetInterpolatedPosition();\r\n\t\t\t\tcolor = new ColorValue( 1, 0, 0 );\r\n\t\t\t}\r\n\t\t\telse\r\n\t\t\t{\r\n\t\t\t\tif( intellect.TaskMove.Dynamic != null )\r\n\t\t\t\t\tposition = intellect.TaskMove.Dynamic.GetInterpolatedPosition();\r\n\t\t\t\telse\r\n\t\t\t\t\tposition = intellect.TaskMove.Position;\r\n\t\t\t\tcolor = new ColorValue( 0, 1, 0 );\r\n\t\t\t}\r\n\r\n\t\t\tVec2 screenPos;\r\n\t\t\tif(camera.ProjectToScreenCoordinates( position, out screenPos))\r\n\t\t\t{\r\n\t\t\t\tVec2 p = cameraClientControl.LocalToScreen( screenPos );\r\n\r\n\t\t\t\tVec2 size = new Vec2( .01f, .01f * 1.333f );\r\n\t\t\t\trenderer.AddQuad( new Rect( p - size / 2, p + size / 2 ), color, clipRectangle );\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n\r\n//Selection rectangle\r\nif( selectionRectangle )\r\n{\r\n\tRect rectangle = new Rect( selectionRectangleStart );\r\n\trectangle.Add( cameraClientControl.MousePosition );\r\n\trectangle = cameraClientControl.LocalToScreen( rectangle );\r\n\r\n\trenderer.AddQuad( rectangle, new ColorValue( 0, 0, 0, .2f ) );\r\n\tRenderRectangleBorder( renderer, rectangle, new ColorValue( 0, 1, 0 ), clipRectangle );\r\n}"
+				code = "if( camera == null )\r\n\treturn;\r\n\r\nRect clipRectangle = sender.GetScreenRectangle();\r\n\r\n//Cursor on unit\r\n{\r\n\tUnit unit = GetUnitByCursor();\r\n\tif( unit != null )\r\n\t\tRenderUnitBorder( renderer, unit, new ColorValue( .7f, .7f, .7f, .7f ), clipRectangle );\r\n}\r\n\r\n//Selected Units\r\nforeach( Unit unit in selectedUnits )\r\n{\r\n\t//Render select border\r\n\tRenderUnitBorder( renderer, unit, new ColorValue( 0, 1, 0 ), clipRectangle );\r\n\r\n\t//Draw tasks\r\n\tGameCharacterAI intellect = (GameCharacterAI)unit.Intellect;\r\n\tif( intellect != null )\r\n\t{\r\n\t\tif( intellect.TaskMove.IsInitialized || intellect.TaskAttack != null )\r\n\t\t{\r\n\t\t\tVec3 position;\r\n\t\t\tColorValue color;\r\n\r\n\t\t\tif( intellect.TaskAttack != null )\r\n\t\t\t{\r\n\t\t\t\tposition = intellect.TaskAttack.GetInterpolatedPosition();\r\n\t\t\t\tcolor = new ColorValue( 1, 0, 0 );\r\n\t\t\t}\r\n\t\t\telse\r\n\t\t\t{\r\n\t\t\t\tif( intellect.TaskMove.Dynamic != null )\r\n\t\t\t\t\tposition = intellect.TaskMove.Dynamic.GetInterpolatedPosition();\r\n\t\t\t\telse\r\n\t\t\t\t\tposition = intellect.TaskMove.Position;\r\n\t\t\t\tcolor = new ColorValue( 0, 1, 0 );\r\n\t\t\t}\r\n\r\n\t\t\tVec2 screenPos;\r\n\t\t\tif(camera.ProjectToScreenCoordinates( position, out screenPos))\r\n\t\t\t{\r\n\t\t\t\tVec2 p = cameraClientControl.LocalToScreen( screenPos );\r\n\r\n\t\t\t\tVec2 size = new Vec2( .01f, .01f * 1.333f );\r\n\t\t\t\trenderer.PushClipRectangle( clipRectangle );\r\n\t\t\t\trenderer.AddQuad( new Rect( p - size / 2, p + size / 2 ), color );\r\n\t\t\t\trenderer.PopClipRectangle();\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n\r\n//Selection rectangle\r\nif( selectionRectangle )\r\n{\r\n\tRect rectangle = new Rect( selectionRectangleStart );\r\n\trectangle.Add( cameraClientControl.MousePosition );\r\n\trectangle = cameraClientControl.LocalToScreen( rectangle );\r\n\r\n\trenderer.AddQuad( rectangle, new ColorValue( 0, 0, 0, .2f ) );\r\n\tRenderRectangleBorder( renderer, rectangle, new ColorValue( 0, 1, 0 ), clipRectangle );\r\n}"
 				methodName = clientControl_RenderUI
 				returnType = System.Void
 				parameters = 56 57

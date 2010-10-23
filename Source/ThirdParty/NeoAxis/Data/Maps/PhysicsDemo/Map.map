@@ -3,12 +3,14 @@ uin = 2
 classPrompt = GameMap
 gameMusic = Sounds\Music\Game.ogg
 ambientLight = 0.2 0.2 0.2
-editorCameraPosition = 12.09087 -7.443931 18.26224
-editorCameraDirection = 2.55554 -0.3130994
+editorCameraPosition = 14.67643 -12.4154 17.53341
+editorCameraDirection = 2.466515 -0.4603864
 shadowColor = 1 1 1
 shadowFarDistance = 100
+shadowPSSMSplitFactors = 0.2 0.5
 logicSystemManager = 13
 name = GameMap_0
+shadowTechnique = ShadowmapMedium
 rootEditorLayer
 {
 	layer
@@ -350,17 +352,19 @@ entity
 	diffusePower = 1
 	specularColor = 1.372549 1.372549 1.392157
 	specularPower = 1
-	attenuationRangeAutomatic = False
-	attenuationRange = 60
-	attenuationConstant = 1
-	attenuationLinear = 0
-	attenuationQuadric = 0
+	attenuationNear = 48
+	attenuationFar = 50
+	attenuationPower = 1
+	ffpAttenuationConstant = 1
+	ffpAttenuationLinear = 0
+	ffpAttenuationQuadric = 0
 	spotlightInnerAngle = 80
 	spotlightOuterAngle = 120
 	spotlightFalloff = 1
 	castShadows = True
 	allowStaticLighting = False
 	allowDynamicLighting = True
+	customShaderParameter = 0 0 0 0
 	position = 0 0 22
 	rotation = 0 -0.7071068 0 -0.7071068
 	name = Light_1

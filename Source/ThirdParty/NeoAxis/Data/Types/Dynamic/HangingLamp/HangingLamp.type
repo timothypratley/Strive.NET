@@ -14,11 +14,9 @@ type HangingLamp
 		light
 		{
 			lightType = Spot
-			diffuseColor = 7.843138 7.843138 7.843138
-			specularColor = 5.882353 5.882353 5.882353
+			specularColor = 1 1 1
+			attenuationFar = 10
 			attenuationQuadric = 0.4
-			attenuationRangeAutomatic = False
-			attenuationRange = 12
 			spotlightInnerAngle = 105
 			spotlightOuterAngle = 125
 			position = 0 0 0.07813811

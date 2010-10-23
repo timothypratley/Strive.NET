@@ -1,6 +1,6 @@
 // Copyright (C) 2006-2010 NeoAxis Group Ltd.
 
-#ifdef VERTEX_BODY_END
+#if defined(VERTEX_BODY_END) || defined(VERTEX_BODY_SHADOW_CASTER_END)
 	//change zbuffer depth
 	oPosition.z /= 100;
 #endif

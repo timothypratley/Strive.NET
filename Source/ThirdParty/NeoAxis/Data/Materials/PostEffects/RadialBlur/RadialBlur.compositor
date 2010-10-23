@@ -14,6 +14,7 @@ compositor RadialBlur
 			pass render_quad
 			{
 				material Compositor/RadialBlur
+				identifier 123
 				input 0 rt0
 			}
 		}

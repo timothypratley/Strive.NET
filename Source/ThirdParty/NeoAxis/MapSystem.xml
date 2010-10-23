@@ -882,25 +882,53 @@
             Gets or sets the power of the specular light given off by this source.
             </summary>
         </member>
-        <member name="P:Engine.MapSystem.Light.AttenuationRange">
+        <member name="P:Engine.MapSystem.Light.AttenuationNear">
             <summary>
-            Gets or sets the attenuation range parameter of the light source ie how it diminishes with distance.
+            Gets or sets the distance in which gradual loss in intensity begins take effect.
             </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.Light.AttenuationConstant">
+        <member name="P:Engine.MapSystem.Light.AttenuationFar">
+            <summary>
+            Gets or sets the distance in which intensity is reduced to zero.
+            </summary>
+            <remarks>
+            This property applies in both the fixed function and the programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.Light.AttenuationPower">
+            <summary>
+            Gets or sets the curvature of the light attenuation.
+            </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.Light.FFPAttenuationConstant">
             <summary>
             Gets or sets the attenuation constant parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.Light.AttenuationLinear">
+        <member name="P:Engine.MapSystem.Light.FFPAttenuationLinear">
             <summary>
             Gets or sets the attenuation linear parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.Light.AttenuationQuadric">
+        <member name="P:Engine.MapSystem.Light.FFPAttenuationQuadric">
             <summary>
             Gets or sets the attenuation Quadric parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
         <member name="P:Engine.MapSystem.Light.SpotlightInnerAngle">
             <summary>
@@ -1380,44 +1408,62 @@
             Gets or set the shadow far distance.
             </summary>
         </member>
-        <member name="P:Engine.MapSystem.Map.Shadow2DTextureSize">
+        <member name="P:Engine.MapSystem.Map.ShadowDirectionalLightTextureSize">
             <summary>
-            Gets or set the shadow 2D texture size.
+            Gets or set the shadow texture size for directional lights.
             </summary>
             <remarks>
             The larger the shadow texture, the better the detail on 
             texture based shadows, but obviously this takes more memory.
-            The default size is 1024.
             </remarks>
         </member>
-        <member name="P:Engine.MapSystem.Map.ShadowCubicTextureSize">
+        <member name="P:Engine.MapSystem.Map.ShadowDirectionalLightMaxTextureCount">
             <summary>
-            Gets or set the shadow cubic texture size.
-            </summary>
-            <remarks>
-            The larger the shadow texture, the better the detail on 
-            texture based shadows, but obviously this takes more memory.
-            The default size is 512.
-            </remarks>
-        </member>
-        <member name="P:Engine.MapSystem.Map.Shadow2DTextureCount">
-            <summary>
-            Gets or set the shadow 2D texture count.
-            </summary>
-            <remarks>
-            The default number of textures assigned to deal with texture based
-            shadows is 2; however this means you can only have one light casting
-            shadows at the same time. You can increase this number in order to 
-            make this more flexible, but be aware of the texture memory it will use.
-            </remarks>
-        </member>
-        <member name="P:Engine.MapSystem.Map.ShadowCubicTextureCount">
-            <summary>
-            Gets or set the shadow cubic texture count.
+            Gets or set the shadow max texture count for directional lights.
             </summary>
             <remarks>
             The default number of textures assigned to deal with texture based
             shadows is 1; however this means you can only have one light casting
+            shadows at the same time. You can increase this number in order to 
+            make this more flexible, but be aware of the texture memory it will use.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.Map.ShadowSpotLightTextureSize">
+            <summary>
+            Gets or set the shadow texture size for spot lights.
+            </summary>
+            <remarks>
+            The larger the shadow texture, the better the detail on 
+            texture based shadows, but obviously this takes more memory.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.Map.ShadowSpotLightMaxTextureCount">
+            <summary>
+            Gets or set the shadow max texture count for spot lights.
+            </summary>
+            <remarks>
+            The default number of textures assigned to deal with texture based
+            shadows is 2; however this means you can only have two light casting
+            shadows at the same time. You can increase this number in order to 
+            make this more flexible, but be aware of the texture memory it will use.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.Map.ShadowPointLightTextureSize">
+            <summary>
+            Gets or set the shadow texture size for point lights.
+            </summary>
+            <remarks>
+            The larger the shadow texture, the better the detail on 
+            texture based shadows, but obviously this takes more memory.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.Map.ShadowPointLightMaxTextureCount">
+            <summary>
+            Gets or set the shadow max texture count for point lights.
+            </summary>
+            <remarks>
+            The default number of textures assigned to deal with texture based
+            shadows is 2; however this means you can only have two light casting
             shadows at the same time. You can increase this number in order to 
             make this more flexible, but be aware of the texture memory it will use.
             </remarks>
@@ -2617,25 +2663,53 @@
             Gets or sets the power of the specular light given off by this source.
             </summary>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.AttenuationRange">
+        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.AttenuationNear">
             <summary>
-            Gets or sets the attenuation range parameter of the light source ie how it diminishes with distance.
+            Gets or sets the distance in which gradual loss in intensity begins take effect.
             </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.AttenuationConstant">
+        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.AttenuationFar">
+            <summary>
+            Gets or sets the distance in which intensity is reduced to zero.
+            </summary>
+            <remarks>
+            This property applies in both the fixed function and the programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.AttenuationPower">
+            <summary>
+            Gets or sets the curvature of the light attenuation.
+            </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.FFPAttenuationConstant">
             <summary>
             Gets or sets the attenuation constant parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.AttenuationLinear">
+        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.FFPAttenuationLinear">
             <summary>
             Gets or sets the attenuation linear parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.AttenuationQuadric">
+        <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.FFPAttenuationQuadric">
             <summary>
             Gets or sets the attenuation Quadric parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
         <member name="P:Engine.MapSystem.MapObjectTypeAttachedLight.SpotlightInnerAngle">
             <summary>
@@ -2687,25 +2761,53 @@
             Gets or sets the power of the specular light given off by this source.
             </summary>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectAttachedLight.AttenuationRange">
+        <member name="P:Engine.MapSystem.MapObjectAttachedLight.AttenuationNear">
             <summary>
-            Gets or sets the attenuation range parameter of the light source ie how it diminishes with distance.
+            Gets or sets the distance in which gradual loss in intensity begins take effect.
             </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectAttachedLight.AttenuationConstant">
+        <member name="P:Engine.MapSystem.MapObjectAttachedLight.AttenuationFar">
+            <summary>
+            Gets or sets the distance in which intensity is reduced to zero.
+            </summary>
+            <remarks>
+            This property applies in both the fixed function and the programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.MapObjectAttachedLight.AttenuationPower">
+            <summary>
+            Gets or sets the curvature of the light attenuation.
+            </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.MapObjectAttachedLight.FFPAttenuationConstant">
             <summary>
             Gets or sets the attenuation constant parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectAttachedLight.AttenuationLinear">
+        <member name="P:Engine.MapSystem.MapObjectAttachedLight.FFPAttenuationLinear">
             <summary>
             Gets or sets the attenuation linear parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectAttachedLight.AttenuationQuadric">
+        <member name="P:Engine.MapSystem.MapObjectAttachedLight.FFPAttenuationQuadric">
             <summary>
             Gets or sets the attenuation Quadric parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
         <member name="P:Engine.MapSystem.MapObjectAttachedLight.SpotlightInnerAngle">
             <summary>
@@ -2826,25 +2928,53 @@
             Gets or sets the power of the specular light given off by this source.
             </summary>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectCreateLight.AttenuationRange">
+        <member name="P:Engine.MapSystem.MapObjectCreateLight.AttenuationNear">
             <summary>
-            Gets or sets the attenuation range parameter of the light source ie how it diminishes with distance.
+            Gets or sets the distance in which gradual loss in intensity begins take effect.
             </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectCreateLight.AttenuationConstant">
+        <member name="P:Engine.MapSystem.MapObjectCreateLight.AttenuationFar">
+            <summary>
+            Gets or sets the distance in which intensity is reduced to zero.
+            </summary>
+            <remarks>
+            This property applies in both the fixed function and the programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.MapObjectCreateLight.AttenuationPower">
+            <summary>
+            Gets or sets the curvature of the light attenuation.
+            </summary>
+            <remarks>
+            This property only applies in programmable pipeline.
+            </remarks>
+        </member>
+        <member name="P:Engine.MapSystem.MapObjectCreateLight.FFPAttenuationConstant">
             <summary>
             Gets or sets the attenuation constant parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectCreateLight.AttenuationLinear">
+        <member name="P:Engine.MapSystem.MapObjectCreateLight.FFPAttenuationLinear">
             <summary>
             Gets or sets the attenuation linear parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
-        <member name="P:Engine.MapSystem.MapObjectCreateLight.AttenuationQuadric">
+        <member name="P:Engine.MapSystem.MapObjectCreateLight.FFPAttenuationQuadric">
             <summary>
             Gets or sets the attenuation Quadric parameter of the light source ie how it diminishes with distance.
             </summary>
+            <remarks>
+            This property only applies in fixed function pipeline.
+            </remarks>
         </member>
         <member name="P:Engine.MapSystem.MapObjectCreateLight.SpotlightInnerAngle">
             <summary>

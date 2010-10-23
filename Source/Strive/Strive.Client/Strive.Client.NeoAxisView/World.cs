@@ -12,8 +12,7 @@ using Engine.Utils;
 using Engine;
 using GameCommon;
 using GameEntities;
-using WindowsAppFramework;
-using System.Windows.Forms;
+using WPFAppFramework;
 
 using Strive.Client.ViewModel;
 
@@ -22,15 +21,13 @@ namespace Strive.Client.NeoAxisView
 {
     public class World
     {
-        static Form _splash = new Splash();
         public static WorldViewModel ViewModel;
         public static bool Init(WorldViewModel worldViewModel)
         {
             ViewModel = worldViewModel;
 
             //NeoAxis initialization
-            _splash.Show();
-            if (!WindowsAppWorld.Init(_splash, "user:Logs/WindowsAppExample.log"))
+            if (!WPFAppWorld.Init(_splash, "user:Logs/WindowsAppExample.log"))
             {
                 _splash.Close();
                 return false;
@@ -42,7 +39,7 @@ namespace Strive.Client.NeoAxisView
 
         public static bool LoadMap()
         {
-            bool result = WindowsAppWorld.MapLoad("Maps/Gr1d/Map.map", true);
+            bool result = WPFAppWorld.MapLoad("Maps/Gr1d/Map.map", true);
             for (int x=0; x<10;x++)
                 for(int y=0; y<10;y++)
                     for (int z = 0; z < 10; z++)
@@ -62,6 +59,11 @@ namespace Strive.Client.NeoAxisView
                 ViewModel.AddOrReplace(obj.Name, obj.Type.Name, obj.Position.X, obj.Position.Y, obj.Position.Z);
             });
             return result;
+        }
+
+        public void Shutdown()
+        {
+            WPFAppWorld.Shutdown();
         }
     }
 }

@@ -21,6 +21,7 @@ type RobotGun
 			{
 				diffuseColor = 1 1 0.4
 				specularColor = 1 1 1
+				attenuationFar = 5
 				attenuationQuadric = 0.2
 				castShadows = False
 				position = 1 0 0

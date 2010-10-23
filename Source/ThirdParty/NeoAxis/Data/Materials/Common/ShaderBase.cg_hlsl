@@ -1,18 +1,9 @@
 // Copyright (C) 2006-2010 NeoAxis Group Ltd.
 
+#include "Materials/Common/General.cg_hlsl"
 #include "Materials/Common/getFogValue.cg_hlsl"
 #include "Materials/Common/blendFunctions.cg_hlsl"
 #include "Materials/Common/ShadowReceiverFunctions.cg_hlsl"
-
-//!!!!!
-#ifdef SHADOW_PSSM
-	error. not realized.
-#endif
-
-half3 expand(half3 v)
-{
-	return v * 2 - 1;
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,17 +69,16 @@ void main_vp(
 	uniform float4 lightDirectionArray[LIGHT_COUNT],
 	uniform float4 lightAttenuationArray[LIGHT_COUNT],
 	uniform float4 spotLightParamsArray[LIGHT_COUNT],
+	uniform float4 lightCustomShaderParameterArray[LIGHT_COUNT],
 
 	#ifndef CULLING
-		#if defined(SHADER_MODEL_2) || defined(OPENGL)
+		#if !defined(SHADER_MODEL_3) || defined(OPENGL)
 			out float3 oEyeDirectionObjectSpace : EYE_DIRECTION_OBJECT_SPACE_TEXCOORD,
 		#endif
 	#endif
 
 	out float4 oObjectLightDirectionAndAttenuation0 : OBJECT_LIGHT_DIRECTION_AND_ATTENUATION_0_TEXCOORD,//direction - xyz, attenuation - w
-	#ifdef LIGHTTYPE_SPOT
-		out float3 oObjectWorldLightDirection0 : OBJECT_WORLD_LIGHT_DIRECTION_0_TEXCOORD,
-	#endif
+
 	#ifdef SHADOW_MAP
 		uniform float3 shadowFarDistance,
 		uniform float3 shadowTextureSizes,
@@ -182,7 +172,7 @@ void main_vp(
 	float3 worldEyeDirection = worldPosition.xyz - cameraPosition;
 	float3 worldNormal = mul((float3x3)worldMatrix, normalizedNormal);
 	oReflectDirection = reflect(worldEyeDirection, worldNormal);
-	//temp. flipped cubemaps
+	//flipped cubemaps
 	oReflectDirection = half3(-oReflectDirection.y, oReflectDirection.z, oReflectDirection.x);
 #endif
 
@@ -200,7 +190,7 @@ void main_vp(
 		position.xyz * lightPositionObjectSpaceArray[0].w;
 
 	#ifndef CULLING
-		#if defined(SHADER_MODEL_2) || defined(OPENGL)
+		#if !defined(SHADER_MODEL_3) || defined(OPENGL)
 			oEyeDirectionObjectSpace = normalize(cameraPositionObjectSpace - position.xyz);
 		#endif
 	#endif
@@ -208,19 +198,21 @@ void main_vp(
 	#ifdef NORMAL_MAP
 		direction = mul(rotation, direction);
 	#endif
+
 	oObjectLightDirectionAndAttenuation0.xyz = direction;
 
-	#ifndef LIGHTTYPE_DIRECTIONAL
-		float distance = length(lightPositionArray[0].xyz - worldPosition.xyz);
-		oObjectLightDirectionAndAttenuation0.w = saturate(1 / (lightAttenuationArray[0].y +
-			lightAttenuationArray[0].z * distance + lightAttenuationArray[0].w * distance * distance));
+	//calculate light attenuation. for SM2 light attenuation calculated in the vertex shader.
+#ifndef SHADER_MODEL_3
+	#if defined(LIGHTTYPE_SPOT) || defined(LIGHTTYPE_POINT)
+		float lightDistance = length(lightPositionArray[0].xyz - worldPosition.xyz);
+		oObjectLightDirectionAndAttenuation0.w = getLightAttenuation(
+			lightAttenuationArray[0], lightDistance);
 	#else
 		oObjectLightDirectionAndAttenuation0.w = 1;
 	#endif
-
-	#ifdef LIGHTTYPE_SPOT
-		oObjectWorldLightDirection0 = lightPositionArray[0].xyz - worldPosition.xyz;
-	#endif
+#else
+	oObjectLightDirectionAndAttenuation0.w = 0;
+#endif
 
 	//Shadows
 	#ifdef SHADOW_MAP
@@ -230,8 +222,9 @@ void main_vp(
 
 			getShadowUV(textureViewProjMatrix0, textureViewProjMatrix1, textureViewProjMatrix2, 
 				lightPositionArray[0].xyz, lightDirectionArray[0].xyz, worldPosition.xyz, 
-				spotLightParamsArray[0], shadowTextureSizes, oShadowUV0, oShadowUV1, 
-				oShadowUV2, shadowDirectionalLightSplitDistances, oEyeDirectionAndPSSMDistance.w);
+				spotLightParamsArray[0], shadowTextureSizes, oShadowUV0, 
+				oShadowUV1, oShadowUV2, shadowDirectionalLightSplitDistances, 
+				oEyeDirectionAndPSSMDistance.w);
 		#else
 			getShadowUV(textureViewProjMatrix0, lightPositionArray[0].xyz, 
 				lightDirectionArray[0].xyz, worldPosition.xyz, spotLightParamsArray[0], 
@@ -260,19 +253,23 @@ void main_fp(
 #endif
 
 #if LIGHT_COUNT >= 1
+	uniform float4 lightPositionArray[LIGHT_COUNT],
+	uniform half4 lightAttenuationArray[LIGHT_COUNT],
 	uniform half4 lightDiffuseColorPowerScaledArray[LIGHT_COUNT],
 	uniform half4 lightSpecularColorPowerScaledArray[LIGHT_COUNT],
+
 #ifdef LIGHTTYPE_SPOT
 	uniform half4 lightDirectionArray[LIGHT_COUNT],
 	uniform half4 spotLightParamsArray[LIGHT_COUNT],
 #endif
 	uniform half lightCastShadowsArray[LIGHT_COUNT],
+	uniform float4 lightCustomShaderParameterArray[LIGHT_COUNT],
 #endif
 
 	float4 texCoord01 : TEXCOORD0, //texCoord0 - xy, texCoord1 - zw
 	half3 normal : TEXCOORD1,
 	float4 eyeDirectionAndPSSMDistance : TEXCOORD2,
-	half4 worldPositionAndCameraDistance : TEXCOORD3,
+	float4 worldPositionAndCameraDistance : TEXCOORD3,
 #ifdef TEXCOORD23
 	float4 texCoord23 : TEXCOORD23_TEXCOORD, //texCoord2 - xy, texCoord3 - zw
 #endif
@@ -305,15 +302,11 @@ void main_fp(
 	half4 objectLightDirectionAndAttenuation0 : OBJECT_LIGHT_DIRECTION_AND_ATTENUATION_0_TEXCOORD,//direction - xyz, attenuation - w
 	
 	#ifndef CULLING
-		#if defined(SHADER_MODEL_2) || defined(OPENGL)
+		#if !defined(SHADER_MODEL_3) || defined(OPENGL)
 			half3 eyeDirectionObjectSpace : EYE_DIRECTION_OBJECT_SPACE_TEXCOORD,
 		#endif
 	#endif
-	
-	#ifdef LIGHTTYPE_SPOT
-		half3 objectWorldLightDirection0 : OBJECT_WORLD_LIGHT_DIRECTION_0_TEXCOORD,
-	#endif
-	
+
 	#ifdef SHADOW_MAP
 
 		float4 shadowUV0 : SHADOW_UV0_TEXCOORD,
@@ -321,8 +314,13 @@ void main_fp(
 			float4 shadowUV1 : SHADOW_UV1_TEXCOORD,
 			float4 shadowUV2 : SHADOW_UV2_TEXCOORD,
 		#endif
-
-		uniform sampler2D shadowMap0 : register(SHADOW_MAP0_REGISTER),
+		
+		#ifdef LIGHTTYPE_POINT
+			uniform samplerCUBE shadowMap0 : register(SHADOW_MAP0_REGISTER),
+		#else
+			uniform sampler2D shadowMap0 : register(SHADOW_MAP0_REGISTER),
+		#endif
+		
 		#ifdef SHADOW_PSSM
 			uniform sampler2D shadowMap1 : register(SHADOW_MAP1_REGISTER),
 			uniform sampler2D shadowMap2 : register(SHADOW_MAP2_REGISTER),
@@ -419,7 +417,7 @@ void main_fp(
 	half vFace : VFACE,
 #endif
 
-	uniform half disableFetch4ForBrokenDrivers,
+	uniform half drawShadowDebugging,
 
 	//Extension additions
 	#define FRAGMENT_HEADER
@@ -443,15 +441,15 @@ void main_fp(
 	float2 texCoord2 = texCoord23.xy;
 	float2 texCoord3 = texCoord23.zw;
 #endif
-	half3 eye = normalize(eyeDirectionAndPSSMDistance.xyz);
+	half3 eye = (half3)normalize(eyeDirectionAndPSSMDistance.xyz);
 
-	half3 worldPosition = worldPositionAndCameraDistance.xyz;
-	half cameraDistance = worldPositionAndCameraDistance.w;
+	float3 worldPosition = worldPositionAndCameraDistance.xyz;
+	float cameraDistance = worldPositionAndCameraDistance.w;
 
 	half3 n;
 	half3 lightColor = half3(0,0,0);
 	
-	half3 normalizedNormal = normalize(normal);
+	half3 normalizedNormal = (half3)normalize(normal);
 	
 #ifdef HEIGHT_MAP
 	float height = tex2D(heightMap, HEIGHT_MAP_TEXCOORD).r;
@@ -481,7 +479,7 @@ void main_fp(
 
 	//Calculate normal
 #ifdef NORMAL_MAP
-	half3 normalMapValue = expand(tex2D(normalMap, NORMAL_MAP_TEXCOORD).rgb);
+	half3 normalMapValue = expand((half3)tex2D(normalMap, NORMAL_MAP_TEXCOORD).rgb);
 	normalMapValue.z = (half)sqrt(1.0h - dot(normalMapValue.xy, normalMapValue.xy));
 	n = (half3)normalize(normalMapValue);
 #else
@@ -503,7 +501,7 @@ void main_fp(
 #if LIGHT_COUNT >= 1
 	bool frontFace = true;
 	#ifndef CULLING
-		#if defined(SHADER_MODEL_2) || defined(OPENGL)
+		#if !defined(SHADER_MODEL_3) || defined(OPENGL)
 			frontFace = dot(normalize(eyeDirectionObjectSpace), normalizedNormal) > 0;
 		#else
 			frontFace = vFace < 0;
@@ -513,15 +511,28 @@ void main_fp(
 
 	//Calculate light color for light pass
 #if LIGHT_COUNT >= 1
-	half3 objectLightDirection0 = normalize(objectLightDirectionAndAttenuation0.xyz);
-	half objectLightAttenuation0 = objectLightDirectionAndAttenuation0.w;
+	half3 objectLightDirection0 = (half3)normalize(objectLightDirectionAndAttenuation0.xyz);
+
+	half objectLightAttenuation0 = 1;
+
+	//calculate light attenuation. for SM3 light attenuation calculated in the pixel shader.
+	#if defined(LIGHTTYPE_SPOT) || defined(LIGHTTYPE_POINT)
+		#ifdef SHADER_MODEL_3
+			float lightDistance = length(lightPositionArray[0].xyz - worldPosition.xyz);
+			objectLightAttenuation0 = getLightAttenuation(lightAttenuationArray[0], (half)lightDistance);
+		#else
+			objectLightAttenuation0 = objectLightDirectionAndAttenuation0.w;
+		#endif
+	#endif
+
 	half shadowMultiplier = 1;
 
 	#ifdef LIGHTTYPE_SPOT
+		float3 objectWorldLightDirection0 = normalize(lightPositionArray[0].xyz - worldPosition.xyz);
 		// factor in spotlight angle
-		half rho0 = saturate(dot(-lightDirectionArray[0].xyz, normalize(objectWorldLightDirection0)));
+		half rho0 = (half)saturate(dot(-lightDirectionArray[0].xyz, objectWorldLightDirection0));
 		// factor = (rho - cos(outer/2)) / (cos(inner/2) - cos(outer/2)) ^ falloff 
-		half spotFactor0 = saturate(pow(saturate(rho0 - spotLightParamsArray[0].y) / 
+		half spotFactor0 = (half)saturate(pow(saturate(rho0 - spotLightParamsArray[0].y) / 
 			(spotLightParamsArray[0].x - spotLightParamsArray[0].y), spotLightParamsArray[0].z));
 		objectLightAttenuation0 *= spotFactor0;
 	#endif
@@ -531,13 +542,14 @@ void main_fp(
 
 		#ifdef SHADOW_PSSM
 			shadowMultiplier = getShadowmapReceiveValue( shadowUV0, shadowUV1, shadowUV2,
-				shadowMap0, shadowMap1, shadowMap2, lightCastShadowsArray[0], 
-				lightShadowFarClipDistance, shadowTextureSizes, shadowColorIntensity, 
-				shadowDirectionalLightSplitDistances, eyeDirectionAndPSSMDistance.w);
+				shadowMap0, shadowMap1, shadowMap2, cameraDistance, lightCastShadowsArray[0], 
+				lightShadowFarClipDistance, shadowFarDistance, shadowTextureSizes, 
+				shadowColorIntensity, shadowDirectionalLightSplitDistances, 
+				eyeDirectionAndPSSMDistance.w, drawShadowDebugging);
 		#else
 			shadowMultiplier = getShadowmapReceiveValue( shadowUV0, shadowMap0, cameraDistance, 
 				lightCastShadowsArray[0], lightShadowFarClipDistance, shadowFarDistance,
-				shadowTextureSizes, shadowColorIntensity, disableFetch4ForBrokenDrivers);
+				shadowTextureSizes, shadowColorIntensity);
 		#endif
 
 	#endif
@@ -545,9 +557,9 @@ void main_fp(
 	half normalCoef0;
 	#ifdef USE_NORMALS
 		if(frontFace)
-			normalCoef0 = saturate(dot(n, objectLightDirection0));
+			normalCoef0 = (half)saturate(dot(n, objectLightDirection0));
 		else
-			normalCoef0 = saturate(dot(-n, objectLightDirection0));
+			normalCoef0 = (half)saturate(dot(-n, objectLightDirection0));
 	#else
 		normalCoef0 = 1;
 	#endif
@@ -603,7 +615,7 @@ void main_fp(
 	diffuse *= vertexColor;
 #endif
 
-	color += diffuse * float4(lightColor, 1);
+	color += diffuse * half4(lightColor, 1);
 
 	//Reflection
 #ifdef REFLECTION
@@ -655,16 +667,16 @@ void main_fp(
 		specular *= (half3)tex2D(specularMap, SPECULAR_MAP_TEXCOORD).rgb;
 	#endif
 
-	half3 halfAngle0 = normalize(objectLightDirection0 + eye);
+	half3 halfAngle0 = (half3)normalize(objectLightDirection0 + eye);
 	half normalSpecCoef0;
 	
 	if(frontFace)
-		normalSpecCoef0 = saturate(dot(n, halfAngle0));
+		normalSpecCoef0 = (half)saturate(dot(n, halfAngle0));
 	else
-		normalSpecCoef0 = saturate(dot(-n, halfAngle0));
+		normalSpecCoef0 = (half)saturate(dot(-n, halfAngle0));
 	
 	color.rgb += specular * lightSpecularColorPowerScaledArray[0].rgb * 
-		(pow(normalSpecCoef0, dynamicSpecularScaleAndShininess.a) * objectLightAttenuation0);
+		((half)pow(normalSpecCoef0, dynamicSpecularScaleAndShininess.a) * objectLightAttenuation0);
 #endif
 #endif
 #endif
@@ -672,7 +684,7 @@ void main_fp(
 	//Fog
 #ifdef FOG_ENABLED
 	half4 oldColor = color;
-	half fog = getFogValue(cameraDistance, fogParams);
+	half fog = getFogValue((half)cameraDistance, fogParams);
 	color.rgb *= fog;
 
 	#ifdef AMBIENT_PASS
@@ -690,7 +702,7 @@ void main_fp(
 #ifdef FADING_BY_DISTANCE
 	//fadingByDistanceRange.x: min
 	//fadingByDistanceRange.y: 1 / (max - min)
-	color.a *= 1.0h - saturate((cameraDistance - fadingByDistanceRange.x) * fadingByDistanceRange.y);
+	color.a *= 1.0h - saturate(((half)cameraDistance - fadingByDistanceRange.x) * fadingByDistanceRange.y);
 #endif
 
 	oColor = color;
@@ -743,6 +755,8 @@ void shadowCaster_vp(
 	float4 instancingWorldMatrix2 : TEXCOORD7,
 #endif
 
+	uniform float3 cameraPosition,
+
 	out float4 oTexCoord01 : TEXCOORD0, //texCoord0 - xy, texCoord1 - zw
 #ifdef TEXCOORD23
 	out float4 oTexCoord23 : TEXCOORD1/*TEXCOORD23_TEXCOORD*/, //texCoord2 - xy, texCoord3 - zw
@@ -755,16 +769,15 @@ void shadowCaster_vp(
 	uniform float time,
 
 	//Extension additions
-	#define VERTEX_HEADER
+	#define VERTEX_HEADER_SHADOW_CASTER
 	//This line it will be replaced at loading.
 	_INCLUDE_EXTENSION_FILE
-	#undef VERTEX_HEADER
+	#undef VERTEX_HEADER_SHADOW_CASTER
 
 	//shadow caster specific
 	uniform float4 texelOffsets,
-#ifndef NVIDIA_HARDWARE_SHADOWS
-	out float oDepth : TEXCOORD3,
-#endif
+
+	out float2 oDepth : TEXCOORD3,
 	out float4 oPosition : POSITION
  	)
 {
@@ -781,10 +794,10 @@ void shadowCaster_vp(
 
 	//Extension additions
 	{
-		#define VERTEX_BODY_BEGIN
+		#define VERTEX_BODY_SHADOW_CASTER_BEGIN
 		//This line it will be replaced at loading.
 		_INCLUDE_EXTENSION_FILE
-		#undef VERTEX_BODY_BEGIN
+		#undef VERTEX_BODY_SHADOW_CASTER_BEGIN
 	}
 
 	//calculate base parameters
@@ -803,17 +816,21 @@ void shadowCaster_vp(
 #endif
 
 	//shadow caster specific
-	oPosition.xy += texelOffsets.zw * oPosition.w;
-#ifndef NVIDIA_HARDWARE_SHADOWS
-	oDepth = oPosition.z;
-#endif
 
+	oPosition.xy += texelOffsets.zw * oPosition.w;
+
+	#ifdef LIGHTTYPE_POINT
+		oDepth = float2(length(worldPosition.xyz - cameraPosition), 0);
+	#else
+		oDepth = float2(oPosition.z, oPosition.w);
+	#endif
+	
 	//Extension additions
 	{
-		#define VERTEX_BODY_END
+		#define VERTEX_BODY_SHADOW_CASTER_END
 		//This line it will be replaced at loading.
 		_INCLUDE_EXTENSION_FILE
-		#undef VERTEX_BODY_END
+		#undef VERTEX_BODY_SHADOW_CASTER_END
 	}
 }
 
@@ -821,6 +838,9 @@ void shadowCaster_vp(
 
 void shadowCaster_fp( 
 	uniform float farClipDistance,
+	uniform float2 shadowDirectionalLightBias,
+	uniform float2 shadowSpotLightBias,
+	uniform float2 shadowPointLightBias,
 
 	float4 texCoord01 : TEXCOORD0, //texCoord0 - xy, texCoord1 - zw
 #ifdef TEXCOORD23
@@ -861,28 +881,26 @@ void shadowCaster_fp(
 	uniform half4 dynamicDiffuseScale,
 
 	//shadow caster specific
-#ifndef NVIDIA_HARDWARE_SHADOWS
-	float depth : TEXCOORD3,
-#endif
+	float2 depth : TEXCOORD3,
 	uniform half alphaRejectValue,
 
 	//Extension additions
-	#define FRAGMENT_HEADER
+	#define FRAGMENT_HEADER_SHADOW_CASTER
 	//This line it will be replaced at loading.
 	_INCLUDE_EXTENSION_FILE
-	#undef FRAGMENT_HEADER
+	#undef FRAGMENT_HEADER_SHADOW_CASTER
 
-#ifndef NVIDIA_HARDWARE_SHADOWS
+#if defined(ATI_HARDWARE_SHADOWS) || defined(NVIDIA_HARDWARE_SHADOWS)
 	out float oDepth : DEPTH,
 #endif
 	out float4 oColor : COLOR )
 {
 	//Extension additions
 	{
-		#define FRAGMENT_BODY_BEGIN
+		#define FRAGMENT_BODY_SHADOW_CASTER_BEGIN
 		//This line it will be replaced at loading.
 		_INCLUDE_EXTENSION_FILE
-		#undef FRAGMENT_BODY_BEGIN
+		#undef FRAGMENT_BODY_SHADOW_CASTER_BEGIN
 	}
 
 	float2 texCoord0 = texCoord01.xy;
@@ -936,20 +954,49 @@ void shadowCaster_fp(
 	clip(alpha - alphaRejectValue);
 #endif
 
+	//bias
+	float2 bias;
+	#ifdef LIGHTTYPE_DIRECTIONAL
+		bias = shadowDirectionalLightBias,
+	#endif
+	#ifdef LIGHTTYPE_SPOT
+		bias = shadowSpotLightBias,
+	#endif
+	#ifdef LIGHTTYPE_POINT
+		bias = shadowPointLightBias,
+	#endif
+
+	#ifdef NVIDIA_HARDWARE_SHADOWS
+		depth.x += bias.x + bias.y * fwidth(depth.x);
+	#elif ATI_HARDWARE_SHADOWS
+		depth.x += bias.x + bias.y * fwidth(depth.x);
+	#else
+		#if defined(SHADER_MODEL_3) && defined(DIRECT3D)
+			depth.x += bias.x + bias.y * fwidth(depth.x);
+		#else
+			depth.x += bias.x;
+		#endif
+	#endif
+
+	//oColor, oDepth
 #ifdef NVIDIA_HARDWARE_SHADOWS
 	oColor = float4(0, 0, 0, 1);
-#else
-	float normalizedDepth = depth / farClipDistance;
+	oDepth = depth.x / depth.y;
+#elif ATI_HARDWARE_SHADOWS
+	float normalizedDepth = depth.x / farClipDistance;
 	oColor = float4(normalizedDepth, 0, 0, 1);
 	oDepth = normalizedDepth;
+#else
+	float normalizedDepth = depth.x / farClipDistance;
+	oColor = float4(normalizedDepth, 0, 0, 1);
 #endif
 
 	//Extension additions
 	{
-		#define FRAGMENT_BODY_END
+		#define FRAGMENT_BODY_SHADOW_CASTER_END
 		//This line it will be replaced at loading.
 		_INCLUDE_EXTENSION_FILE
-		#undef FRAGMENT_BODY_END
+		#undef FRAGMENT_BODY_SHADOW_CASTER_END
 	}
 
 }

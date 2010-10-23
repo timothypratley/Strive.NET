@@ -582,7 +582,7 @@
             inclusive up to <see cref="M:Engine.EntitySystem.Entity.OnPostCreate2(System.Boolean)"/>.
             </para>
             <para>
-            Warning! You can't use the <see cref="M:Engine.EntitySystem.Entities.GetLoadingEntityBySerializedUIN(System.UInt32)"/> 
+            Warning! You cannot use the <see cref="M:Engine.EntitySystem.Entities.GetLoadingEntityBySerializedUIN(System.UInt32)"/> 
             for loading references for entities after <see cref="M:Engine.EntitySystem.Entity.OnLoad(Engine.Utils.TextBlock)"/>.
             </para>
             </remarks>
