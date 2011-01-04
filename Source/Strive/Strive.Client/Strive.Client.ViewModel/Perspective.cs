@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Windows.Input;
-using System.Windows.Forms;
 
 using Strive.Client.Model;
 using Strive.Common;
@@ -98,7 +97,7 @@ namespace Strive.Client.ViewModel
         public Stopwatch movementTimer;
 
         public delegate bool KeyPressedCheck(Key k);
-        public delegate MouseButtons MouseButtonCheck();
+        public delegate bool MouseButtonCheck();
 
         WorldViewModel _worldViewModel;
         KeyPressedCheck _keyPressed;

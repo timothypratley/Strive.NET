@@ -74,43 +74,8 @@
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
-<<<<<<< HEAD
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-=======
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisLogFile>..\..\..\build\Strive.Client.WPF.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\Strive.Client.WPF.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
->>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AvalonDock">
@@ -126,97 +91,8 @@
     <Reference Include="Common.Logging.Log4Net">
       <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-=======
-    <Reference Include="DDSFormat, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\DDSFormat.dll</HintPath>
-    </Reference>
-    <Reference Include="DecorativeObjectManager">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\DecorativeObjectManager.dll</HintPath>
-    </Reference>
-    <Reference Include="DirectXSoundSystem">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\DirectXSoundSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="EngineApp, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\EngineApp.dll</HintPath>
-    </Reference>
-    <Reference Include="EntitySystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\EntitySystem.dll</HintPath>
-    </Reference>
-    <Reference Include="FileSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\FileSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="GameCommon">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\GameCommon.dll</HintPath>
-    </Reference>
-    <Reference Include="GameEntities">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\GameEntities.dll</HintPath>
-    </Reference>
-    <Reference Include="GridPathFindSystem">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\GridPathFindSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="HeightmapTerrain">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\HeightmapTerrain.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Lidgren.Network">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\Lidgren.Network.dll</HintPath>
-    </Reference>
-    <Reference Include="Log">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\Log.dll</HintPath>
-    </Reference>
-    <Reference Include="MapSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\MapSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="MathEx, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\MathEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Networking">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="ODEPhysicsSystem">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\ODEPhysicsSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="OggVorbisTheora, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\OggVorbisTheora.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenALSoundSystem">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\OpenALSoundSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="PhysicsSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\PhysicsSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="PhysXPhysicsSystem">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\PhysXPhysicsSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Renderer, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\Renderer.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleStaticLightingSystem">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\SimpleStaticLightingSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="SoundSystem, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\SoundSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="StaticLightingCalculationSystem">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\StaticLightingCalculationSystem.dll</HintPath>
-    </Reference>
->>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -234,23 +110,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.XAML.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
     <Reference Include="WindowsBase" />
-=======
-    <Reference Include="Utils, Version=0.8.5.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ThirdParty\NeoAxis\Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WPFAppFramework">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\WPFAppFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="ZipArchive">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\ZipArchive.dll</HintPath>
-    </Reference>
->>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
