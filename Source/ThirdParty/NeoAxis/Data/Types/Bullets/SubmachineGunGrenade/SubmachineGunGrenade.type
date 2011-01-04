@@ -22,6 +22,7 @@ type SubmachineGunGrenade
 		{
 			diffuseColor = 1 1 0.4
 			specularColor = 1 1 1
+			attenuationFar = 7
 			attenuationConstant = 0
 			attenuationQuadric = 0.4
 			castShadows = False

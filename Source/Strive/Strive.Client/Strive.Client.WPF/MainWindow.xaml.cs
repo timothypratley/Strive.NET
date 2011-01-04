@@ -11,10 +11,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Forms.Integration;
 using System.IO;
 
 using Strive.WPF.View;
+using Strive.WPF.ViewModel;
+using Strive.Client.NeoAxisView;
 
 
 namespace Strive.Client.WPF
@@ -27,7 +28,6 @@ namespace Strive.Client.WPF
         public MainWindow()
         {
             InitializeComponent();
-            NewCmdExecuted(null, null);
         }
 
         const string LayoutFileName = "StriveLayout.xml";
@@ -111,6 +111,26 @@ namespace Strive.Client.WPF
             var wb = new WebBrowser();
             wb.ShowAsDocument(dockManager);
             wb.Focus();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            var factoryView = new FactoryView(new FactoryViewModel());
+            factoryView.ShowAsDocument(dockManager);
+            factoryView.Focus();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            var unitView = new UnitView(new UnitViewModel());
+            unitView.ShowAsDocument(dockManager);
+            unitView.Focus();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            World.Init(this, App.WorldViewModel);
+            NewCmdExecuted(null, null);
         }
     }
 }

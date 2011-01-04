@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 using Engine.MathEx;
 using Engine.Renderer;
@@ -12,8 +13,7 @@ using Engine.Utils;
 using Engine;
 using GameCommon;
 using GameEntities;
-using WindowsAppFramework;
-using System.Windows.Forms;
+using WPFAppFramework;
 
 using Strive.Client.ViewModel;
 
@@ -22,33 +22,23 @@ namespace Strive.Client.NeoAxisView
 {
     public class World
     {
-        static Form _splash = new Splash();
         public static WorldViewModel ViewModel;
-        public static bool Init(WorldViewModel worldViewModel)
+        public static bool Init(Window mainWindow, WorldViewModel worldViewModel)
         {
             ViewModel = worldViewModel;
-
-            //NeoAxis initialization
-            _splash.Show();
-            if (!WindowsAppWorld.Init(_splash, "user:Logs/WindowsAppExample.log"))
-            {
-                _splash.Close();
-                return false;
-            }
-            bool result = LoadMap();
-            _splash.Hide();
-            return result;
+            return WPFAppWorld.Init(mainWindow, "user:Logs/Strive.log")
+                && LoadMap();
         }
 
         public static bool LoadMap()
         {
-            bool result = WindowsAppWorld.MapLoad("Maps/Gr1d/Map.map", true);
-            for (int x=0; x<10;x++)
+            bool result = WPFAppWorld.MapLoad("Maps/Gr1d/Map.map", true);
+            for (int x = 0; x < 10; x++)
                 for(int y=0; y<10;y++)
                     for (int z = 0; z < 10; z++)
                     {
                         var mo = (MapObject)Entities.Instance.Create("StaticBox", Map.Instance);
-                        mo.Position = new Vec3(x*20, y*20, z*20);
+                        mo.Position = new Vec3(x * 20, y * 20, z * 20);
                         mo.PostCreate();
                     }
             Map.Instance.GetObjects(new Sphere(Vec3.Zero, 100000), delegate(MapObject obj) {

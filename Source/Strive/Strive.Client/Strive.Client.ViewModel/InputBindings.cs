@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace Strive.Client.ViewModel
 {
@@ -27,9 +27,9 @@ namespace Strive.Client.ViewModel
 
         public class KeyBinding
         {
-            public List<Keys> KeyCombo { get; set; }
+            public List<Key> KeyCombo { get; set; }
             public KeyAction Action { get; set; }
-            public KeyBinding(List<Keys> keys, KeyAction action)
+            public KeyBinding(List<Key> keys, KeyAction action)
             {
                 KeyCombo = keys;
                 Action = action;
@@ -43,7 +43,7 @@ namespace Strive.Client.ViewModel
             Default();
         }
 
-        public void AddKeyBinding(List<Keys> keys, KeyAction action)
+        public void AddKeyBinding(List<Key> keys, KeyAction action)
         {
             KeyBindings.Add(new KeyBinding(keys, action));
         }
@@ -52,19 +52,20 @@ namespace Strive.Client.ViewModel
         {
             KeyBindings = new List<KeyBinding>();
 
-            AddKeyBinding(new List<Keys> { Keys.PageUp }, KeyAction.Up);
-            AddKeyBinding(new List<Keys> { Keys.PageDown }, KeyAction.Down);
-            AddKeyBinding(new List<Keys> { Keys.R }, KeyAction.TiltUp);
-            AddKeyBinding(new List<Keys> { Keys.F }, KeyAction.TiltDown);
-            AddKeyBinding(new List<Keys> { Keys.W }, KeyAction.Forward);
-            AddKeyBinding(new List<Keys> { Keys.S }, KeyAction.Back);
-            AddKeyBinding(new List<Keys> { Keys.A }, KeyAction.Left);
-            AddKeyBinding(new List<Keys> { Keys.D }, KeyAction.Right);
-            AddKeyBinding(new List<Keys> { Keys.Q }, KeyAction.TurnLeft);
-            AddKeyBinding(new List<Keys> { Keys.E }, KeyAction.TurnRight);
-            AddKeyBinding(new List<Keys> { Keys.Shift }, KeyAction.Walk);
-            AddKeyBinding(new List<Keys> { Keys.Home }, KeyAction.Home);
-            AddKeyBinding(new List<Keys> { Keys.G }, KeyAction.FollowSelected);
+            AddKeyBinding(new List<Key> { Key.PageUp }, KeyAction.Up);
+            AddKeyBinding(new List<Key> { Key.PageDown }, KeyAction.Down);
+            AddKeyBinding(new List<Key> { Key.R }, KeyAction.TiltUp);
+            AddKeyBinding(new List<Key> { Key.F }, KeyAction.TiltDown);
+            AddKeyBinding(new List<Key> { Key.W }, KeyAction.Forward);
+            AddKeyBinding(new List<Key> { Key.S }, KeyAction.Back);
+            AddKeyBinding(new List<Key> { Key.A }, KeyAction.Left);
+            AddKeyBinding(new List<Key> { Key.D }, KeyAction.Right);
+            AddKeyBinding(new List<Key> { Key.Q }, KeyAction.TurnLeft);
+            AddKeyBinding(new List<Key> { Key.E }, KeyAction.TurnRight);
+            AddKeyBinding(new List<Key> { Key.LeftShift }, KeyAction.Walk);
+            AddKeyBinding(new List<Key> { Key.RightShift }, KeyAction.Walk);
+            AddKeyBinding(new List<Key> { Key.Home }, KeyAction.Home);
+            AddKeyBinding(new List<Key> { Key.G }, KeyAction.FollowSelected);
         }
     }
 }

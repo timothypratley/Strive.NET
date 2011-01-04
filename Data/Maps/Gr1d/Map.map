@@ -1,0 +1,83 @@
+type = GameMap
+uin = 2
+classPrompt = GameMap
+gameType = RTS
+gameMusic = Sounds\Music\Game.ogg
+ambientLight = 0.2 0.2 0.2
+editorCameraPosition = 5.90409 -1.32506 2.303818
+editorCameraDirection = 2.980992 -0.2855675
+shadowColor = 1 1 1
+logicSystemManager = 3
+sceneGraphType = Octree
+shadowTechnique = ShadowmapMedium
+rootEditorLayer
+{
+	layer
+	{
+		name = Static
+	}
+}
+entity
+{
+	type = LogicSystemManager
+	uin = 3
+	mapClassManager = 4
+	entity
+	{
+		type = LogicClassManager
+		uin = 4
+	}
+}
+entity
+{
+	type = CubemapZone
+	uin = 5
+	classPrompt = CubemapZone
+	textureSize = Size256x256
+	globalZone = True
+	nearFarClipDistance = 1 1000
+	position = 0 0 0
+	name = CubemapZone_0
+	editorLayer = Root Layer\Static
+}
+entity
+{
+	type = Light
+	uin = 6
+	classPrompt = Light
+	lightType = Directional
+	diffuseColor = 1 1 1
+	diffusePower = 1
+	specularColor = 0 0 0
+	specularPower = 1
+	attenuationRangeAutomatic = True
+	attenuationRange = Infinity
+	attenuationConstant = 1
+	attenuationLinear = 0
+	attenuationQuadric = 0
+	spotlightInnerAngle = 30
+	spotlightOuterAngle = 40
+	spotlightFalloff = 1
+	castShadows = True
+	allowStaticLighting = False
+	allowDynamicLighting = True
+	position = 0 0 0
+	name = Light_0
+	editorLayer = Root Layer\Static
+}
+entity
+{
+	type = SkyBox
+	uin = 7
+	classPrompt = SkyBox
+	textureName = Types\Base\SkyBox\DefaultSkyBox.jpg
+	color = 1 1 1
+	power = 1
+}
+entity
+{
+	type = Fog
+	uin = 8
+	classPrompt = Fog
+	color = 0.4980392 0.4980392 0.4980392
+}

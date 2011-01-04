@@ -12,7 +12,7 @@ using Engine.Utils;
 using Engine;
 using GameCommon;
 using GameEntities;
-using WindowsAppFramework;
+using WPFAppFramework;
 
 namespace Strive.Client.NeoAxisView
 {

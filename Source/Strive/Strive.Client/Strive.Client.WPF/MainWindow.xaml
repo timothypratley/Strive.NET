@@ -4,7 +4,7 @@
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         Title="Strive Client" Height="600" Width="800" WindowState="Maximized"
         Icon="/Strive.Client.WPF;component/App.ico"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.CommandBindings>
         <CommandBinding Command="Close"
                         Executed="CloseCmdExecuted"
@@ -39,6 +39,8 @@
             <Button Content="Home" Command="NavigationCommands.BrowseHome"></Button>
             <Button Content="Connect" Click="Button_Click"></Button>
             <Button Content="Browser" Click="Button_Click_1"></Button>
+            <Button Content="FactoryView" Click="Button_Click_2"></Button>
+            <Button Content="UnitView" Click="Button_Click_3"></Button>
         </ToolBar>
 
         <StatusBar DockPanel.Dock="Bottom">

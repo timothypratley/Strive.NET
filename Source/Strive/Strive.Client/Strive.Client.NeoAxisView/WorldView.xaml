@@ -1,0 +1,8 @@
+﻿<ad:DockableContent x:Class="Strive.Client.NeoAxisView.WorldView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:WPFAppFramework="clr-namespace:WPFAppFramework;assembly=WPFAppFramework"
+        Title="World View" Height="300" Width="300">
+    <WPFAppFramework:RenderTargetUserControl Name="renderTargetUserControl1"/>
+</ad:DockableContent>

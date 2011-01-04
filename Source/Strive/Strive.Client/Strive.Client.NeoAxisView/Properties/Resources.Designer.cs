@@ -59,12 +59,5 @@ namespace Strive.Client.NeoAxisView.Properties {
                 resourceCulture = value;
             }
         }
-        
-        internal static System.Drawing.Bitmap WorldMap {
-            get {
-                object obj = ResourceManager.GetObject("WorldMap", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

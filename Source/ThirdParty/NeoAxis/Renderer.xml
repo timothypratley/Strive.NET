@@ -1214,7 +1214,7 @@
             name The basic name of the texture e.g. brickwall.jpg, stonefloor.png. There must be 6 versions
             of this texture with the suffixes _fr, _bk, _up, _dn, _lf, and _rt (before the extension) which
             make up the 6 sides of the box. The textures must all be the same size and be powers of 2 in width and height.
-            If you can't make your texture names conform to this, use the alternative method of the same name which takes
+            If you cannot make your texture names conform to this, use the alternative method of the same name which takes
             an array of texture names instead.
             </param>
             <param name="forUVW">
@@ -1286,7 +1286,7 @@
             gives you the most common blending types, and automatically sets up 2 blending methods: one for
             if single-pass multitexturing hardware is available, and another for if it is not and the blending must
             be achieved through multiple rendering passes. It is, however, quite limited and does not expose
-            the more flexible multitexturing operations, simply because these can't be automatically supported in
+            the more flexible multitexturing operations, simply because these cannot be automatically supported in
             multipass fallback mode.
             </para>
             <para>
@@ -2078,14 +2078,14 @@
             </summary>
             <param name="position">The position of the new billboard realtive to the certer of the set.</param>
             <param name="color">Base colour of the billboard.</param>
-            <returns>On failiure (i.e. no more space and can't autoextend), <b>null</b> is returned.</returns>
+            <returns>On failiure (i.e. no more space and cannot autoextend), <b>null</b> is returned.</returns>
         </member>
         <member name="M:Engine.Renderer.BillboardSet.CreateBillboard(Engine.MathEx.Vec3)">
             <summary>
             Creates a new billboard and adds it to this set.
             </summary>
             <param name="position">The position of the new billboard realtive to the certer of the set.</param>
-            <returns>On failiure (i.e. no more space and can't autoextend), <b>null</b> is returned.</returns>
+            <returns>On failiure (i.e. no more space and cannot autoextend), <b>null</b> is returned.</returns>
         </member>
         <member name="P:Engine.Renderer.BillboardSet.Sorting">
             <summary>
@@ -2288,6 +2288,35 @@
             </summary>
             <returns><see cref="T:Engine.Renderer.Camera"/> if the camera has been created; otherwise, <b>null</b>.</returns>
         </member>
+        <member name="M:Engine.Renderer.SceneManager.SetShadowTextureDefaultCasterMaterialName(Engine.Renderer.RenderLightType,System.String)">
+            <summary>
+            Gets or sets the default material to use for rendering shadow casters.
+            </summary>
+            <remarks>
+            <para>
+            By default shadow casters are rendered into the shadow texture using
+            an automatically generated fixed-function pass. This allows basic
+            projective texture shadows, but it's possible to use more advanced
+            shadow techniques by overriding the caster and receiver materials, for
+            example providing vertex and fragment programs to implement shadow
+            maps.
+            </para>
+            <para>
+            You can rely on the ambient light in the scene being set to the 
+            requested texture shadow colour, if that's useful. 
+            </para>
+            <para>
+            Individual objects may also override the vertex program in
+            your default material if their materials include 
+            shadow_caster_vertex_program_ref shadow_receiver_vertex_program_ref
+            entries, so if you use both make sure they are compatible.
+            </para>
+            <para>
+            Only a single pass is allowed in your material, although multiple
+            techniques may be used for hardware fallback.
+            </para>
+            </remarks>
+        </member>
         <member name="M:Engine.Renderer.SceneManager.GetFogMode">
             <summary>
             Returns the fog mode for the scene.
@@ -2464,6 +2493,15 @@
             </para>
             </remarks>
         </member>
+        <member name="P:Engine.Renderer.SceneManager.ShadowTextureFadeStart">
+            <summary>
+            Gets or sets the proportional distance at which texture shadows begin to fade out.
+            </summary>
+            <remarks>
+            This value is a proportional distance of the entire shadow visibility distance 
+            at which the shadow begins to fade out. The default is 0.9.
+            </remarks>
+        </member>
         <member name="P:Engine.Renderer.SceneManager.ShadowTechnique">
             <summary>
             Gets or sets the general shadow technique to be used in this scene.
@@ -2496,71 +2534,6 @@
             there is a possibility you may be able to support 
             self-shadowing (e.g by implementing a shader-based shadow map). In 
             this case you might want to enable this option.
-            </remarks>
-        </member>
-        <member name="P:Engine.Renderer.SceneManager.ShadowDirLightTextureOffset">
-            <summary>
-            Gets or sets the proportional distance which a texture shadow which is generated from a
-            directional light will be offset into the camera view to make best use of texture space.
-            </summary>
-            <remarks>
-            When generating a shadow texture from a directional light, an approximation is used
-            since it is not possible to render the entire scene to one texture. 
-            The texture is projected onto an area centred on the camera, and is
-            the shadow far distance * 2 in length (it is square). This wastes
-            a lot of texture space outside the frustum though, so this offset allows
-            you to move the texture in front of the camera more. However, be aware
-            that this can cause a little shadow 'jittering' during rotation, and
-            that if you move it too far then you'll start to get artefacts close 
-            to the camera. The value is represented as a proportion of the shadow
-            far distance, and the default is 0.6.
-            </remarks>
-        </member>
-        <member name="P:Engine.Renderer.SceneManager.ShadowDirectionalLightExtrusionDistance">
-            <summary>
-            Gets or sets the distance a shadow volume is extruded for a directional light.
-            </summary>
-            <remarks>
-            <para>
-            Although directional lights are essentially infinite, there are many
-            reasons to limit the shadow extrusion distance to a finite number, 
-            not least of which is compatibility with older cards (which do not
-            support infinite positions), and shadow caster elimination.
-            </para>
-            <para>
-            The default value is 1,000 world units. This does not apply to
-            point lights or spotlights, since they extrude up to their 
-            attenuation range.
-            </para>
-            </remarks>
-        </member>
-        <member name="P:Engine.Renderer.SceneManager.ShadowTextureDefaultCasterMaterialName">
-            <summary>
-            Gets or sets the default material to use for rendering shadow casters.
-            </summary>
-            <remarks>
-            <para>
-            By default shadow casters are rendered into the shadow texture using
-            an automatically generated fixed-function pass. This allows basic
-            projective texture shadows, but it's possible to use more advanced
-            shadow techniques by overriding the caster and receiver materials, for
-            example providing vertex and fragment programs to implement shadow
-            maps.
-            </para>
-            <para>
-            You can rely on the ambient light in the scene being set to the 
-            requested texture shadow colour, if that's useful. 
-            </para>
-            <para>
-            Individual objects may also override the vertex program in
-            your default material if their materials include 
-            shadow_caster_vertex_program_ref shadow_receiver_vertex_program_ref
-            entries, so if you use both make sure they are compatible.
-            </para>
-            <para>
-            Only a single pass is allowed in your material, although multiple
-            techniques may be used for hardware fallback.
-            </para>
             </remarks>
         </member>
         <member name="P:Engine.Renderer.SceneManager.SceneNodes">
@@ -3816,6 +3789,13 @@
             </summary>
             <returns>The syntaxes that this manager supports.</returns>
         </member>
+        <member name="M:Engine.Renderer.HighLevelMaterial.OnGetEditorShowInformation(System.String[]@,Engine.MathEx.ColorValue@)">
+            <summary>
+            To receive the line information which will be shown in Resource Editor when entity it is selected.
+            </summary>
+            <param name="lines">The text.</param>
+            <param name="color">The text color.</param>
+        </member>
         <member name="M:Engine.Renderer.Pose.AddVertex(System.Int32,Engine.MathEx.Vec3)">
             <summary>
             Adds an offset to a vertex for this pose. 
@@ -4063,58 +4043,6 @@
         <member name="M:Engine.Renderer.RenderFrustum.GetReflectionPlane">
             <summary>Returns the reflection plane of the frustum if appropriate.</summary>
             <returns>The reflection plane.</returns>
-        </member>
-        <member name="M:Engine.Renderer.RenderFrustum.EnableCustomNearClipPlane(Engine.MathEx.Plane)">
-            <summary>
-            Links the frustum to a custom near clip plane, which can be used
-            to clip geometry in a custom manner without using user clip planes.
-            </summary>
-            <param name="plane">
-            The plane to link to to perform the clipping. This plane
-            must continue to exist while the camera is linked to it; do not
-            destroy it before the frustum.
-            </param>
-            <remarks>
-            <para>
-            There are several applications for clipping a scene arbitrarily by
-            a single plane; the most common is when rendering a reflection to 
-            a texture, and you only want to render geometry that is above the 
-            water plane (to do otherwise results in artefacts). Whilst it is
-            possible to use user clip planes, they are not supported on all
-            cards, and sometimes are not hardware accelerated when they are
-            available. Instead, where a single clip plane is involved, this
-            technique uses a 'fudging' of the near clip plane, which is 
-            available and fast on all hardware, to perform as the arbitrary
-            clip plane. This does change the shape of the frustum, leading 
-            to some depth buffer loss of precision, but for many of the uses of
-            this technique that is not an issue.
-            </para>
-            <para>
-            This version of the method links to a plane, rather than requiring
-            a by-value plane definition, and therefore you can 
-            make changes to the plane (e.g. by moving / rotating the node it is
-            attached to) and they will automatically affect this object.
-            </para>
-            <para>
-            This technique only works for perspective projection.
-            </para>
-            </remarks>
-        </member>
-        <member name="M:Engine.Renderer.RenderFrustum.DisableCustomNearClipPlane">
-            <summary>
-            Disables any custom near clip plane.
-            </summary>
-        </member>
-        <member name="M:Engine.Renderer.RenderFrustum.GetWorldSpaceCorners">
-            <summary>
-            Gets the world space corners of the frustum.
-            </summary>
-            <returns>The world space corners of the frustum.</returns>
-            <remarks>
-            The corners are ordered as follows: top-right near, 
-            top-left near, bottom-left near, bottom-right near, 
-            top-right far, top-left far, bottom-left far, bottom-right far.
-            </remarks>
         </member>
         <member name="M:Engine.Renderer.RenderFrustum.GetProjectionMatrixRS">
             <summary>
@@ -4378,11 +4306,6 @@
             </para>
             </remarks>
         </member>
-        <member name="P:Engine.Renderer.Material.ShadowTextureCasterMaterial">
-            <summary>
-            Gets or sets the material to use for rendering shadow casters.
-            </summary>
-        </member>
         <member name="T:Engine.Renderer.Bone">
             <summary>
             A bone in a skeleton.
@@ -4606,7 +4529,7 @@
             </para>
             <para>
             Note that whilst you can change the ordering of rendering solids, you 
-            can't change the ordering on transparent objects, since to do this would
+            cannot change the ordering on transparent objects, since to do this would
             cause them to render incorrectly.
             </para>
             <para>
@@ -4644,7 +4567,7 @@
             by it when it is cleared / destroyed.
             </remarks>
         </member>
-        <member name="M:Engine.Renderer.RenderQueueInvocationSequence.Add(Engine.Renderer.RenderQueueGroupID,System.String)">
+        <member name="M:Engine.Renderer.RenderQueueInvocationSequence.Add(Engine.Renderer.InternalRenderQueueGroupID,System.String)">
             <summary>
             Add a standard invocation to the sequence.
             </summary>
@@ -5234,7 +5157,7 @@
             <param name="reloadableOnly">
             If <b>true</b>, only unload the resource that
             is reloadable. Because some resources isn't reloadable, they will be
-            unloaded but can't load them later. Thus, you might not want to them
+            unloaded but cannot load them later. Thus, you might not want to them
             unloaded. Or, you might unload all of them, and then populate them
             manually later.
             </param>
@@ -5465,34 +5388,8 @@
             It can be configurated so that to draw elements oriented in 3D.
             </summary>
         </member>
-        <member name="M:Engine.Renderer.GuiRenderer.#ctor(System.Boolean,Engine.Renderer.Viewport)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Engine.Renderer.GuiRenderer"/> class.
-            </summary>
-            <param name="isScreen">The screen renderer flag.</param>
-            <param name="viewportForScreenGuiRenderer"></param>
-        </member>
         <member name="M:Engine.Renderer.GuiRenderer.Dispose">
             <summary>Releases the resources that are used by the object.</summary>
-        </member>
-        <member name="M:Engine.Renderer.GuiRenderer.SetTransform(Engine.MathEx.Vec3,Engine.MathEx.Quat,Engine.MathEx.Vec3)">
-            <summary>
-            Sets the 3D gui transformation.
-            </summary>
-            <param name="position">The position.</param>
-            <param name="rotation">The rotation.</param>
-            <param name="scale">The scale.</param>
-        </member>
-        <member name="M:Engine.Renderer.GuiRenderer.AddQuad(Engine.MathEx.Rect,Engine.MathEx.Rect,Engine.Renderer.Texture,Engine.MathEx.ColorValue,System.Boolean,Engine.MathEx.Rect)">
-            <summary>
-            Add quad to rendering queue.
-            </summary>
-            <param name="rectangle">The quad rectangle.</param>
-            <param name="textureCoordRectangle">The texture coordinates.</param>
-            <param name="texture">The quad texture or <b>null</b>.</param>
-            <param name="color">The quad color.</param>
-            <param name="clamp">The texture clamp.</param>
-            <param name="clipRectangle">The clip rectangle.</param>
         </member>
         <member name="M:Engine.Renderer.GuiRenderer.AddQuad(Engine.MathEx.Rect,Engine.MathEx.Rect,Engine.Renderer.Texture,Engine.MathEx.ColorValue,System.Boolean)">
             <summary>
@@ -5528,26 +5425,6 @@
             <param name="rectangle">The quad rectangle.</param>
             <param name="color">The quad color.</param>
         </member>
-        <member name="M:Engine.Renderer.GuiRenderer.AddQuad(Engine.MathEx.Rect,Engine.MathEx.ColorValue,Engine.MathEx.Rect)">
-            <summary>
-            Add quad to rendering queue.
-            </summary>
-            <param name="rectangle">The quad rectangle.</param>
-            <param name="color">The quad color.</param>
-            <param name="clipRectangle">The clip rectangle.</param>
-        </member>
-        <member name="M:Engine.Renderer.GuiRenderer.AddText(Engine.Renderer.Font,System.String,Engine.MathEx.Vec2,Engine.Renderer.HorizontalAlign,Engine.Renderer.VerticalAlign,Engine.MathEx.ColorValue,Engine.MathEx.Rect)">
-            <summary>
-            Add text to rendering queue.
-            </summary>
-            <param name="font">The text font.</param>
-            <param name="text">The text.</param>
-            <param name="position">The text position.</param>
-            <param name="horizontalAlign">The text horizontal align.</param>
-            <param name="verticalAlign">The text vertical align.</param>
-            <param name="color">The text color.</param>
-            <param name="clipRectangle">The text clip rectangle.</param>
-        </member>
         <member name="M:Engine.Renderer.GuiRenderer.AddText(Engine.Renderer.Font,System.String,Engine.MathEx.Vec2,Engine.Renderer.HorizontalAlign,Engine.Renderer.VerticalAlign,Engine.MathEx.ColorValue)">
             <summary>
             Add text to rendering queue.
@@ -5558,17 +5435,6 @@
             <param name="horizontalAlign">The text horizontal align.</param>
             <param name="verticalAlign">The text vertical align.</param>
             <param name="color">The text color.</param>
-        </member>
-        <member name="M:Engine.Renderer.GuiRenderer.AddText(System.String,Engine.MathEx.Vec2,Engine.Renderer.HorizontalAlign,Engine.Renderer.VerticalAlign,Engine.MathEx.ColorValue,Engine.MathEx.Rect)">
-            <summary>
-            Add text to rendering queue.
-            </summary>
-            <param name="text">The text.</param>
-            <param name="position">The text position.</param>
-            <param name="horizontalAlign">The text horizontal align.</param>
-            <param name="verticalAlign">The text vertical align.</param>
-            <param name="color">The text color.</param>
-            <param name="clipRectangle">The text clip rectangle.</param>
         </member>
         <member name="M:Engine.Renderer.GuiRenderer.AddText(System.String,Engine.MathEx.Vec2,Engine.Renderer.HorizontalAlign,Engine.Renderer.VerticalAlign,Engine.MathEx.ColorValue)">
             <summary>
@@ -5596,7 +5462,7 @@
             <param name="text">The text.</param>
             <param name="position">The text position.</param>
         </member>
-        <member name="M:Engine.Renderer.GuiRenderer.AddTextLines(System.String[],Engine.MathEx.Vec2,Engine.MathEx.Vec2,Engine.Renderer.HorizontalAlign,Engine.Renderer.VerticalAlign,Engine.MathEx.ColorValue)">
+        <member name="M:Engine.Renderer.GuiRenderer.AddTextLines(System.Collections.Generic.IList{System.String},Engine.MathEx.Vec2,Engine.MathEx.Vec2,Engine.Renderer.HorizontalAlign,Engine.Renderer.VerticalAlign,Engine.MathEx.ColorValue)">
             <summary>
             Add text lines to rendering queue.
             </summary>
@@ -5607,15 +5473,6 @@
             <param name="verticalAlign">The text vertical align.</param>
             <param name="color">The text color.</param>
         </member>
-        <member name="M:Engine.Renderer.GuiRenderer.AddLine(Engine.MathEx.Vec2,Engine.MathEx.Vec2,Engine.MathEx.ColorValue,Engine.MathEx.Rect)">
-            <summary>
-            Add line to rendering queue.
-            </summary>
-            <param name="start">The line start position.</param>
-            <param name="end">The line end position.</param>
-            <param name="color">The text color.</param>
-            <param name="clipRectangle">The text clip rectangle.</param>
-        </member>
         <member name="M:Engine.Renderer.GuiRenderer.AddLine(Engine.MathEx.Vec2,Engine.MathEx.Vec2,Engine.MathEx.ColorValue)">
             <summary>
             Add line to rendering queue.
@@ -5623,14 +5480,6 @@
             <param name="start">The line start position.</param>
             <param name="end">The line end position.</param>
             <param name="color">The text color.</param>
-        </member>
-        <member name="M:Engine.Renderer.GuiRenderer.AddRectangle(Engine.MathEx.Rect,Engine.MathEx.ColorValue,Engine.MathEx.Rect)">
-            <summary>
-            Add rectangle to rendering queue.
-            </summary>
-            <param name="rectangle">The rectangle.</param>
-            <param name="color">The text color.</param>
-            <param name="clipRectangle">The text clip rectangle.</param>
         </member>
         <member name="M:Engine.Renderer.GuiRenderer.AddRectangle(Engine.MathEx.Rect,Engine.MathEx.ColorValue)">
             <summary>
@@ -5678,7 +5527,7 @@
         <member name="M:Engine.Renderer.RenderQueueListener.Dispose">
             <summary>Releases the resources that are used by the object.</summary>
         </member>
-        <member name="M:Engine.Renderer.RenderQueueListener.OnRenderQueueStarted(Engine.Renderer.RenderQueueGroupID,System.String,System.Boolean@)">
+        <member name="M:Engine.Renderer.RenderQueueListener.OnRenderQueueStarted(Engine.Renderer.InternalRenderQueueGroupID,System.String,System.Boolean@)">
             <summary>
             Event raised before a queue group is rendered.
             </summary>
@@ -5694,7 +5543,7 @@
             each queue group is rendered. 
             </remarks>
         </member>
-        <member name="M:Engine.Renderer.RenderQueueListener.OnRenderQueueEnded(Engine.Renderer.RenderQueueGroupID,System.String,System.Boolean@)">
+        <member name="M:Engine.Renderer.RenderQueueListener.OnRenderQueueEnded(Engine.Renderer.InternalRenderQueueGroupID,System.String,System.Boolean@)">
             <summary>
             Event raised after a queue group is rendered.
             </summary>
@@ -5920,13 +5769,6 @@
         <member name="F:Engine.Renderer.Billboard.Type.PerpendicularSelf">
             <summary>Billboards are perpendicular to their own direction vector (their own Z axis, the facing direction) and X, Y axis are determined by a shared up-vertor.</summary>
         </member>
-        <member name="M:Engine.Renderer.HighLevelMaterial.OnGetEditorShowInformation(System.String[]@,Engine.MathEx.ColorValue@)">
-            <summary>
-            To receive the line information which will be shown in Resource Editor when entity it is selected.
-            </summary>
-            <param name="lines">The text.</param>
-            <param name="color">The text color.</param>
-        </member>
         <member name="T:Engine.Renderer.StaticMeshObject">
             <summary>
             Defines the class for rendering the static geometry.
@@ -5940,7 +5782,7 @@
             Gets the object world bounds.
             </summary>
         </member>
-        <member name="T:Engine.Renderer.RenderQueueGroupID">
+        <member name="T:Engine.Renderer.InternalRenderQueueGroupID">
             <summary>
             Enumeration of queue groups, by which the application may group queued renderables
             so that they are rendered together with events in between
@@ -5950,50 +5792,95 @@
             to use values in between if you want to.
             </remarks>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Background">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Background">
             <summary>Background queue</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.SkiesEarly">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.SkiesEarly">
             <summary>Skies early queue.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue1">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue1">
             <summary>Queue 1.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue2">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue2">
             <summary>Queue 2.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.WorldGeometry1">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.WorldGeometry1">
             <summary>World geometry queue.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue3">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue3">
             <summary>Queue 3.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue4">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue4">
             <summary>Queue 4.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Main">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Main">
             <summary>Main queue.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue6">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue6">
             <summary>Queue 6.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue7">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue7">
             <summary>Queue 7.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.WorldGeometry2">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.WorldGeometry2">
             <summary>World geometry 2 queue.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue8">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue8">
             <summary>Queue 8.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Queue9">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Queue9">
             <summary>Queue 9.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.SkiesLate">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.SkiesLate">
             <summary>Skies late queue.</summary>
         </member>
-        <member name="F:Engine.Renderer.RenderQueueGroupID.Overlay">
+        <member name="F:Engine.Renderer.InternalRenderQueueGroupID.Overlay">
             <summary>Overlay queue.</summary>
+        </member>
+        <member name="T:Engine.Renderer.RenderQueueGroups">
+            <summary>
+            Enumeration of queue groups, by which the application may group queued renderables
+            so that they are rendered together with events in between
+            </summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.SkiesEarly">
+            <summary>Skies early queue.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue1">
+            <summary>Queue 1.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue2">
+            <summary>Queue 2.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.WorldGeometry1">
+            <summary>World geometry queue.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue3">
+            <summary>Queue 3.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue4">
+            <summary>Queue 4.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Main">
+            <summary>Main queue.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue6">
+            <summary>Queue 6.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue7">
+            <summary>Queue 7.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.WorldGeometry2">
+            <summary>World geometry 2 queue.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue8">
+            <summary>Queue 8.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.Queue9">
+            <summary>Queue 9.</summary>
+        </member>
+        <member name="F:Engine.Renderer.RenderQueueGroups.SkiesLate">
+            <summary>Skies late queue.</summary>
         </member>
         <member name="T:Engine.Renderer.RenderLightType">
             <summary>Defines the type of light.</summary>
@@ -6099,26 +5986,22 @@
             </para>
             </remarks>
         </member>
-        <member name="P:Engine.Renderer.RenderLight.AttenuationRange">
+        <member name="P:Engine.Renderer.RenderLight.AttenuationNear">
             <summary>
-            Gets or sets the attenuation range parameter of the light source ie how it diminishes with distance.
+            Gets or sets the distance in which gradual loss in intensity begins take effect.
             </summary>
-            <remarks>
-            <para>
-            Lights normally get fainter the further they are away. Also, each light is given a maximum range
-            beyond which it cannot affect any objects.
-            </para>
-            <para>
-            Light attentuation is not applicable to directional lights since they have an infinite range and
-            constant intensity.
-            </para>
-            <para>
-            This follows a standard attenuation approach - see any good 3D text for the details of what they mean
-            since i don't have room here!
-            </para>
-            </remarks>
         </member>
-        <member name="P:Engine.Renderer.RenderLight.AttenuationConstant">
+        <member name="P:Engine.Renderer.RenderLight.AttenuationFar">
+            <summary>
+            Gets or sets the distance in which intensity is reduced to zero.
+            </summary>
+        </member>
+        <member name="P:Engine.Renderer.RenderLight.AttenuationPower">
+            <summary>
+            Gets or sets the curvature of the light attenuation.
+            </summary>
+        </member>
+        <member name="P:Engine.Renderer.RenderLight.FFPAttenuationConstant">
             <summary>
             Gets or sets the attenuation constant parameter of the light source ie how it diminishes with distance.
             </summary>
@@ -6131,13 +6014,9 @@
             Light attentuation is not applicable to directional lights since they have an infinite range and
             constant intensity.
             </para>
-            <para>
-            This follows a standard attenuation approach - see any good 3D text for the details of what they mean
-            since i don't have room here!
-            </para>
             </remarks>
         </member>
-        <member name="P:Engine.Renderer.RenderLight.AttenuationLinear">
+        <member name="P:Engine.Renderer.RenderLight.FFPAttenuationLinear">
             <summary>
             Gets or sets the attenuation linear parameter of the light source ie how it diminishes with distance.
             </summary>
@@ -6150,13 +6029,9 @@
             Light attentuation is not applicable to directional lights since they have an infinite range and
             constant intensity.
             </para>
-            <para>
-            This follows a standard attenuation approach - see any good 3D text for the details of what they mean
-            since i don't have room here!
-            </para>
             </remarks>
         </member>
-        <member name="P:Engine.Renderer.RenderLight.AttenuationQuadric">
+        <member name="P:Engine.Renderer.RenderLight.FFPAttenuationQuadric">
             <summary>
             Gets or sets the attenuation Quadric parameter of the light source ie how it diminishes with distance.
             </summary>
@@ -6168,10 +6043,6 @@
             <para>
             Light attentuation is not applicable to directional lights since they have an infinite range and
             constant intensity.
-            </para>
-            <para>
-            This follows a standard attenuation approach - see any good 3D text for the details of what they mean
-            since i don't have room here!
             </para>
             </remarks>
         </member>
@@ -6188,6 +6059,11 @@
         <member name="P:Engine.Renderer.RenderLight.SpotlightFalloff">
             <summary>
             Gets or sets the falloff between the inner and outer cones of the spotlight.
+            </summary>
+        </member>
+        <member name="P:Engine.Renderer.RenderLight.SpotLightClipPlanes">
+            <summary>
+            Returns 10 planes. Order: backward plane (0), far distance plane (1) and 8 side planes (2-9).
             </summary>
         </member>
         <member name="T:Engine.Renderer.MeshManager">
@@ -7480,10 +7356,6 @@
         <member name="T:Engine.Renderer.RendererWorld">
             <summary>The root class of the Renderer system.</summary>
         </member>
-        <member name="M:Engine.Renderer.RendererWorld.SetVerticalSync(System.Boolean)">
-            <summary>Gets or sets the vertical sync flag.</summary>
-            <param name="value">The vertical sync flag.</param>
-        </member>
         <member name="M:Engine.Renderer.RendererWorld.DisableAllCompositors">
             <summary>Disposes all compositors.</summary>
         </member>
@@ -7494,15 +7366,6 @@
             </summary>
             <param name="name">The sequence name.</param>
             <returns>The new RenderQueueInvocationSequence object.</returns>
-        </member>
-        <member name="P:Engine.Renderer.RendererWorld.ColorDepth">
-            <summary>Gets or sets the color depth.</summary>
-        </member>
-        <member name="P:Engine.Renderer.RendererWorld.ExternalWindowHandle">
-            <summary>Gets or sets the external window handle.</summary>
-        </member>
-        <member name="P:Engine.Renderer.RendererWorld.FullSceneAntialiasing">
-            <summary>Gets or sets the full-scene antialiasing flag.</summary>
         </member>
         <member name="P:Engine.Renderer.RendererWorld.Instance">
             <summary>
@@ -9505,7 +9368,7 @@
             common direction.
             </para>
             <para>
-            <b>PerpendicularSelf</b> and <b>PerpendicularCommon</b> can't guarantee 
+            <b>PerpendicularSelf</b> and <b>PerpendicularCommon</b> cannot guarantee 
             counterclockwise, you might use double-side material 
             (<b>cull_hardware node</b>) to ensure no billboard are culled.
             </para>

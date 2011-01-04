@@ -66,5 +66,12 @@ namespace Strive.Client.WPF.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap WorldMap {
+            get {
+                object obj = ResourceManager.GetObject("WorldMap", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

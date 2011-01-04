@@ -1,0 +1,17 @@
+highLevelMaterial Tree_Bark
+{
+	template = VegetationMaterial
+	specularScale = 0.6470588 0.6470588 0.6470588
+	diffuse1Map
+	{
+		texture = Models\Tree\Tree_Bark.dds
+	}
+	specularMap
+	{
+		texture = Models\Tree\Tree_Bark_SPEC.dds
+	}
+	normalMap
+	{
+		texture = Models\Tree\Tree_Bark_NRM.dds
+	}
+}

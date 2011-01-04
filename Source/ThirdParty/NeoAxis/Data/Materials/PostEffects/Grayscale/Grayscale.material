@@ -2,7 +2,7 @@ fragment_program Compositor/Grayscale_fp_hlsl hlsl
 {
 	source Materials\PostEffects\Grayscale\Grayscale.cg_hlsl
 	entry_point main_fp
-	target ps_2_0
+	target ps_2_0	
 }
 
 fragment_program Compositor/Grayscale_fp_cg cg

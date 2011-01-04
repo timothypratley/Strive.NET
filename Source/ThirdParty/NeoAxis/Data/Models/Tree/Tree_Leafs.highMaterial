@@ -1,0 +1,19 @@
+highLevelMaterial Tree_Leafs
+{
+	template = VegetationMaterial
+	culling = False
+	useNormals = False
+	receiveShadows = False
+	alphaRejectFunction = GreaterEqual
+	diffuseVertexColor = True
+	specularScale = 1 1 1
+	specularShininess = 38.1
+	diffuse1Map
+	{
+		texture = Models\Tree\Tree_Leafs.dds
+	}
+	specularMap
+	{
+		texture = Models\Tree\Tree_Leafs_SPEC.dds
+	}
+}

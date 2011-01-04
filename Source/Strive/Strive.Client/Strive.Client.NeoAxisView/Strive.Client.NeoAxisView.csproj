@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Strive.Client.NeoAxisView</RootNamespace>
     <AssemblyName>Strive.Client.NeoAxisView</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AvalonDock">
+      <HintPath>..\..\..\ThirdParty\AvalonDock\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="AvalonDock.Themes">
+      <HintPath>..\..\..\ThirdParty\AvalonDock\AvalonDock.Themes.dll</HintPath>
+    </Reference>
     <Reference Include="DDSFormat">
       <HintPath>..\..\..\ThirdParty\NeoAxis\DDSFormat.dll</HintPath>
     </Reference>
@@ -81,7 +87,8 @@
     <Reference Include="Networking">
       <HintPath>..\..\..\ThirdParty\NeoAxis\Networking.dll</HintPath>
     </Reference>
-    <Reference Include="ODEPhysicsSystem">
+    <Reference Include="ODEPhysicsSystem, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\NeoAxis\ODEPhysicsSystem.dll</HintPath>
     </Reference>
     <Reference Include="OggVorbisTheora">
@@ -96,6 +103,8 @@
     <Reference Include="PhysXPhysicsSystem">
       <HintPath>..\..\..\ThirdParty\NeoAxis\PhysXPhysicsSystem.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="Renderer">
       <HintPath>..\..\..\ThirdParty\NeoAxis\Renderer.dll</HintPath>
     </Reference>
@@ -112,6 +121,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -126,10 +136,10 @@
     <Reference Include="Utils">
       <HintPath>..\..\..\ThirdParty\NeoAxis\Utils.dll</HintPath>
     </Reference>
-    <Reference Include="WindowsAppFramework">
-      <HintPath>..\..\..\ThirdParty\NeoAxis\WindowsAppFramework.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="WPFAppFramework">
+      <HintPath>..\..\..\ThirdParty\NeoAxis\WPFAppFramework.dll</HintPath>
+    </Reference>
     <Reference Include="ZipArchive">
       <HintPath>..\..\..\ThirdParty\NeoAxis\ZipArchive.dll</HintPath>
     </Reference>
@@ -142,19 +152,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Splash.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Splash.Designer.cs">
-      <DependentUpon>Splash.cs</DependentUpon>
-    </Compile>
     <Compile Include="World.cs" />
-    <Compile Include="WorldViewControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="WorldView.xaml.cs">
+      <DependentUpon>WorldView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WorldViewControl.Designer.cs">
-      <DependentUpon>WorldViewControl.cs</DependentUpon>
-    </Compile>
+    <Compile Include="WorldViewControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -162,13 +164,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Splash.resx">
-      <DependentUpon>Splash.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\WorldMap.gif" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">
@@ -179,6 +174,12 @@
       <Project>{5092DF71-BFDA-44A0-9C7B-F4C4A5CE7E2B}</Project>
       <Name>Strive.Client.ViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="WorldView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -34,16 +34,16 @@ half getFogValue(half eyeDistance, half4 fogParams)
 
 #ifdef FOG_EXP
 	half fogDensity = fogParams.x;
-	fog = 1.0h / exp( ( eyeDistance * fogDensity ) * log( 2.718281828h ) );
+	fog = 1.0h / (half)exp( ( eyeDistance * fogDensity ) * (half)log( 2.718281828h ) );
 #endif
 
 #ifdef FOG_EXP2
 	half fogDensity = fogParams.x;
 	half m = eyeDistance * fogDensity;
-	fog = 1.0h / exp( ( m * m ) * log( 2.718281828h ) );
+	fog = 1.0h / (half)exp( ( m * m ) * (half)log( 2.718281828h ) );
 #endif
 
-	return /*1 - */saturate(fog);
+	return /*1 - */(half)saturate(fog);
 }
 
 #endif

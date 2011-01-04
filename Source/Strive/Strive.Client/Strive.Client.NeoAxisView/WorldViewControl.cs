@@ -6,8 +6,7 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-
+using System.Windows.Input;
 
 using Engine.MathEx;
 using Engine.Renderer;
@@ -18,7 +17,7 @@ using Engine.Utils;
 using Engine;
 using GameCommon;
 using GameEntities;
-using WindowsAppFramework;
+using WPFAppFramework;
 
 using UpdateControls.XAML;
 using Strive.Client.Model;
@@ -40,10 +39,9 @@ namespace Strive.Client.NeoAxisView
             AutomaticUpdateFPS = 60;
             Render += renderTargetUserControl1_Render;
             RenderUI += new RenderUIDelegate(WorldViewControl_RenderUI);
-            MouseClick += new MouseEventHandler(renderTargetUserControl1_MouseClick);
-            MouseEnter += new EventHandler(WorldViewControl_MouseEnter);
-            MouseDown += new MouseEventHandler(WorldViewControl_MouseDown);
-            MouseUp += new MouseEventHandler(WorldViewControl_MouseUp);
+            MouseEnter += new MouseEventHandler(WorldViewControl_MouseEnter);
+            MouseDown += new MouseButtonEventHandler(WorldViewControl_MouseDown);
+            MouseUp += new MouseButtonEventHandler(WorldViewControl_MouseUp);
             MouseMove += new MouseEventHandler(WorldViewControl_MouseMove);
         }
 
@@ -80,9 +78,9 @@ namespace Strive.Client.NeoAxisView
             }
         }
 
-        public MouseButtons GetMouseButtons()
+        public System.Windows.Forms.MouseButtons GetMouseButtons()
         {
-            return MouseButtons;
+            return this.GetMouseButtons();
         }
 
         void WorldViewControl_MouseEnter(object sender, EventArgs e)
@@ -90,23 +88,11 @@ namespace Strive.Client.NeoAxisView
             this.Focus();
         }
 
-        int mouseX;
-        int mouseY;
         void WorldViewControl_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.RightButton == MouseButtonState.Released)
             {
                 MouseRelativeMode = false;
-            }
-        }
-
-        void WorldViewControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
-            {
-                MouseRelativeMode = true;
-                mouseX = MousePosition.X;
-                mouseY = MousePosition.Y;
             }
         }
 
@@ -119,7 +105,6 @@ namespace Strive.Client.NeoAxisView
                 _perspective.Tilt -= o.Y / 200f;
             }
         }
-
 
         Camera camera = null;
         Vec3 MouseIntersection = Vec3.Zero;
@@ -149,7 +134,7 @@ namespace Strive.Client.NeoAxisView
                 * Vec3.XAxis;
         }
 
-        ToolTip tt = new ToolTip();
+        System.Windows.Forms.ToolTip tt = new System.Windows.Forms.ToolTip();
         MapObject mapObject = null;
         void RenderEntityOverCursor(Camera camera)
         {
@@ -178,7 +163,7 @@ namespace Strive.Client.NeoAxisView
                     // Put a yellow box around it and a tooltip
                     camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
                     camera.DebugGeometry.AddBounds(mapObject.MapBounds);
-                    tt.SetToolTip(this, mapObject.Name);
+                    tt.SetToolTip(null, mapObject.Name);
                     tt.ShowAlways = true;
                     World.ViewModel.SetMouseOverEntity(mapObject.Name);
                 }
@@ -211,8 +196,13 @@ namespace Strive.Client.NeoAxisView
         }
 
         Random r = new Random();
-        void renderTargetUserControl1_MouseClick(object sender, MouseEventArgs e)
+        void WorldViewControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                MouseRelativeMode = true;
+            }
+
             var em = World.ViewModel.SelectedEntities.FirstOrDefault();
             if (em != null)
             {
@@ -220,7 +210,7 @@ namespace Strive.Client.NeoAxisView
             }
             if (mapObject != null)
             {
-                if (IsKeyPressed(Keys.ShiftKey) || IsKeyPressed(Keys.ControlKey))
+                if (IsKeyPressed(Key.LeftShift) || IsKeyPressed(Key.LeftCtrl))
                     World.ViewModel.SelectAdd(mapObject.Name);
                 else
                     World.ViewModel.Select(mapObject.Name);

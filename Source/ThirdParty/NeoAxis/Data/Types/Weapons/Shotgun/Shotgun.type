@@ -29,7 +29,7 @@ type Shotgun
 			{
 				diffuseColor = 1 1 0.3921569 0
 				specularColor = 1 1 1
-				attenuationConstant = 0
+				attenuationFar = 5
 				attenuationLinear = 0.2
 				attenuationQuadric = 0.5
 				castShadows = False

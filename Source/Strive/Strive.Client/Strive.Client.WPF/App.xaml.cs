@@ -35,7 +35,6 @@ namespace Strive.Client.WPF
 
             ServerConnection = new ServerConnection();
             WorldViewModel = new WorldViewModel(ServerConnection);
-            World.Init(WorldViewModel);
         }
 
         private bool ReportException(Exception ex)

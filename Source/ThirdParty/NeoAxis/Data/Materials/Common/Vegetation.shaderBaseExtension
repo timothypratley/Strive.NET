@@ -1,6 +1,6 @@
 // Copyright (C) 2006-2010 NeoAxis Group Ltd.
 
-#ifdef VERTEX_HEADER
+#if defined(VERTEX_HEADER) || defined(VERTEX_HEADER_SHADOW_CASTER)
 
 	#ifdef RECEIVE_OBJECTS_POSITIONS_FROM_VERTICES
 		float3 texCoord4 : TEXCOORD4,
@@ -9,7 +9,7 @@
 #endif
 
 
-#ifdef VERTEX_BODY_BEGIN
+#if defined(VERTEX_BODY_BEGIN) || defined(VERTEX_BODY_SHADOW_CASTER_BEGIN)
 
 	float3 objectWorldPosition;
 	float3 localPosition;

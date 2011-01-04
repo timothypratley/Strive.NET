@@ -1,0 +1,26 @@
+// Copyright (C) 2006-2010 NeoAxis Group Ltd.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//lightAttenuation: x = near; y = far; z = power; w = far - near.
+float getLightAttenuation(float4 lightAttenuation, float distance)
+{
+	return saturate(pow(1 - min( (distance - lightAttenuation.x) / lightAttenuation.w, 1), 
+		lightAttenuation.z));
+}
+
+//lightAttenuation: x = near; y = far; z = power; w = far - near.
+half getLightAttenuation(half4 lightAttenuation, half distance)
+{
+	return (half)saturate(pow(1.0h - (half)min( (distance - lightAttenuation.x) / lightAttenuation.w, 1), 
+		lightAttenuation.z));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+half3 expand(half3 v)
+{
+	return v * 2 - 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////

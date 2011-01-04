@@ -4,12 +4,12 @@ classPrompt = GameMap
 gameType = None
 gameMusic = Sounds\Music\Game.ogg
 ambientLight = 0.2 0.2 0.2
-editorCameraPosition = 5.488183 12.66991 4.622484
-editorCameraDirection = 2.128305 -0.6269597
+editorCameraPosition = 7.448306 5.839306 7.479118
+editorCameraDirection = 2.131833 -0.5248924
 shadowColor = 0.6 0.6 0.6 0.6
-shadow2DTextureSize = 512
+shadowPSSMSplitFactors = 0.2 0.5
 logicSystemManager = 3
-shadowTechnique = Stencil
+shadowTechnique = ShadowmapMedium
 rootEditorLayer
 {
 	layer
@@ -39,17 +39,19 @@ entity
 	diffusePower = 1
 	specularColor = 1 1 1
 	specularPower = 1
-	attenuationRangeAutomatic = True
-	attenuationRange = Infinity
-	attenuationConstant = 1
-	attenuationLinear = 0
-	attenuationQuadric = 0
+	attenuationNear = 0
+	attenuationFar = 40
+	attenuationPower = 1
+	ffpAttenuationConstant = 1
+	ffpAttenuationLinear = 0
+	ffpAttenuationQuadric = 0
 	spotlightInnerAngle = 55.135
 	spotlightOuterAngle = 63.243
 	spotlightFalloff = 1
 	castShadows = True
 	allowStaticLighting = False
 	allowDynamicLighting = True
+	customShaderParameter = 0 0 0 0
 	position = -0.715307 9.870626 4.827685
 	rotation = -0.2075989 0.1116171 0.6416377 0.7298942
 	name = Light_0
@@ -114,4 +116,14 @@ entity
 	splitGeometry = True
 	splitGeometryPieceSize = 30 30 30
 	allowDecals = All
+}
+entity
+{
+	type = MapCamera
+	uin = 12
+	classPrompt = MapCamera
+	fov = 70
+	position = 6.231355 9.206767 4.488352
+	rotation = -0.1294028 0.1478379 0.8514375 0.4862649
+	name = MapCamera_1
 }
