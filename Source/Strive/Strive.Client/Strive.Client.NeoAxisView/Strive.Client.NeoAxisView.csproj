@@ -12,8 +12,7 @@
     <AssemblyName>Strive.Client.NeoAxisView</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -120,8 +119,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+<<<<<<< HEAD
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
+=======
+>>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -153,8 +155,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="World.cs" />
+<<<<<<< HEAD
     <Compile Include="WorldView.xaml.cs">
       <DependentUpon>WorldView.xaml</DependentUpon>
+=======
+    <Compile Include="WorldViewControl.cs" />
+    <Compile Include="WorldViewControl.Designer.cs">
+      <DependentUpon>WorldViewControl.cs</DependentUpon>
+>>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
     </Compile>
     <Compile Include="WorldViewControl.cs" />
   </ItemGroup>
@@ -164,6 +172,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+<<<<<<< HEAD
+=======
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WorldMap.gif" />
+>>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">

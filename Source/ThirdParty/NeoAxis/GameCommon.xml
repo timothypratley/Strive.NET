@@ -37,7 +37,16 @@
             GaussianBlur scene post processing compositor instance.
             </summary>
         </member>
+<<<<<<< HEAD
         <member name="T:GameCommon.HeatVisionCompositorInstance">
+=======
+        <member name="T:GameCommon.RadialBlurCompositorInstance">
+            <summary>
+            Represents work with the RadialBlur post effect.
+            </summary>
+        </member>
+        <member name="T:GameCommon.GameEngineInitialization">
+>>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
             <summary>
             Represents work with the HeatVision post effect.
             </summary>

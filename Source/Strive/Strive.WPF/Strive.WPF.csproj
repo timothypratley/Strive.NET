@@ -12,7 +12,11 @@
     <AssemblyName>Strive.WPF</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+<<<<<<< HEAD
     <TargetFrameworkProfile />
+=======
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+>>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

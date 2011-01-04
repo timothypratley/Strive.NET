@@ -40,8 +40,12 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+<<<<<<< HEAD
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+=======
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+>>>>>>> fc795f72f92ab1ec15439fa6883c964154ef424e
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
