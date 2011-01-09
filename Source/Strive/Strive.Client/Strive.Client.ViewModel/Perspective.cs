@@ -97,18 +97,15 @@ namespace Strive.Client.ViewModel
         public Stopwatch movementTimer;
 
         public delegate bool KeyPressedCheck(Key k);
-        public delegate bool MouseButtonCheck();
 
         WorldViewModel _worldViewModel;
         KeyPressedCheck _keyPressed;
-        MouseButtonCheck _mouseButton;
         InputBindings _bindings;
 
-        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, MouseButtonCheck mouseButton, InputBindings bindings)
+        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings)
         {
             _worldViewModel = worldViewModel;
             _keyPressed = keyPressed;
-            _mouseButton = mouseButton;
             _bindings = bindings;
             movementTimer = new Stopwatch();
             movementTimer.Start();
