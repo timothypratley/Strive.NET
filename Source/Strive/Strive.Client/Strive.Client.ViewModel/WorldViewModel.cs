@@ -82,6 +82,15 @@ namespace Strive.Client.ViewModel
             }
         }
 
+        // TODO: can xaml just use the MouseOverEntity instead?
+        public bool IsMouseOverEntity
+        {
+            get
+            {
+                return _navigation.MouseOverEntity != null;
+            }
+        }
+
         public EntityViewModel MouseOverEntity
         {
             get

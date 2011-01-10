@@ -47,6 +47,6 @@
             <StatusBarItem Content="Strive is alive"/>
         </StatusBar>
 
-        <ad:DockingManager x:Name="dockManager" Grid.Row="1"/>
+        <ad:DockingManager x:Name="dockManager"/>
     </DockPanel>
 </Window>
