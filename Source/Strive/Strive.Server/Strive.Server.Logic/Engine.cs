@@ -12,7 +12,7 @@ namespace Strive.Server.Logic {
 	/// <summary>
 	/// </summary>
 	public class Engine {
-		int port = 1337;
+		int port = 8888;
 		Queue packetQueue = new Queue();
 		Listener networkhandler;
 		World world;

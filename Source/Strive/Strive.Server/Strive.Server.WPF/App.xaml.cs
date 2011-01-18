@@ -13,7 +13,7 @@ using Common.Logging;
 
 using Strive.Network.Server;
 using Strive.WPF.ViewModel;
-
+using Strive.Server.Logic;
 
 namespace Strive.Server.WPF
 {
@@ -22,14 +22,13 @@ namespace Strive.Server.WPF
         static ILog Log = LogManager.GetCurrentClassLogger();
         public static Listener Listener;
         public static LogViewModel LogViewModel;
+        Engine striveEngine = new Engine();
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             LogViewModel = new LogViewModel();
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-            Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
-            Listener = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], 8888));
-            Listener.Start();
+            striveEngine.Start();
         }
 
         private bool ReportException(Exception ex)

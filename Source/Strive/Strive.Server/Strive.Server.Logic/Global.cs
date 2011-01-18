@@ -18,7 +18,7 @@ namespace Strive.Server.Logic {
 		public static int world_id;
 		public static int port;
 		public static string logfilename;
-		public static string worldfilename;
+		public static string worldFilename;
 		public static string connectionstring;
 
         static ILog Log = LogManager.GetCurrentClassLogger();
@@ -52,7 +52,7 @@ namespace Strive.Server.Logic {
 			}
 
 			// one and one only of these two should be specified.
-			worldfilename = ConfigurationManager.AppSettings["worldFileName"];
+			worldFilename = ConfigurationManager.AppSettings["worldFileName"];
 			connectionstring = ConfigurationManager.AppSettings["connectionString"];
 		}
 	}

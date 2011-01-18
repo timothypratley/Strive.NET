@@ -59,21 +59,23 @@ namespace Strive.Server.Logic
 
             // todo: would be nice to be able to load only the
             // world in question... but for now load them all
-            Log.Info("Loading Global.modelSchema...");
-            if (Global.worldfilename != null)
+            if (Global.worldFilename != null)
             {
+                Log.Info("Loading Global.modelSchema from file:" + Global.worldFilename);
                 Global.modelSchema = new Schema();
-                Global.modelSchema.ReadXml(Global.worldfilename);
+                Global.modelSchema.ReadXml(Global.worldFilename);
             }
-            else if (Global.connectionstring != null)
-            {
+            //else if (Global.connectionstring != null)
+            //{
                 //Global.modelSchema = Strive.Data.MultiverseFactory.getMultiverseFromDatabase(Global.connectionstring);
-            }
+            //}
             else
             {
-                throw new Exception("must specify a world file or connection string");
+                Log.Info("Creating an empty Global.modelSchema");
+                Global.modelSchema = new Schema();
+                Global.modelSchema.World.AddWorldRow(world_id, "Empty", "An empty world" );
             }
-            Log.Info("Global.modelSchema loaded.");
+            Log.Info("Global.modelSchema loaded");
 
             // find highX and lowX for our world dimensions
             // refactored in an attempt to increase performance:
