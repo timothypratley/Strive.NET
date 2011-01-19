@@ -5,9 +5,9 @@
         Title="Connect" Height="300" Width="300" xmlns:my="clr-namespace:Strive.Client.WPF">
     <StackPanel>
         <Label Content="Host"/>
-        <TextBox x:Name="hostTextBox" Text="localhost"/>
+        <TextBox x:Name="hostTextBox"/>
         <Label Content="Port"/>
-        <TextBox x:Name="portTextBox" Text="8888"/>
+        <TextBox x:Name="portTextBox"/>
         <Button Content="Connect" Click="Button_Click"/>
     </StackPanel>
 </ad:DockableContent>

@@ -41,7 +41,7 @@ namespace Strive.Server.Logic
         const int DEFAULT_NIGHT = 148;
         const int DEFAULT_CUSP = 5;
         const int DEFAULT_SUN = 146;
-        public ToClient.TimeAndWeather weather = new ToClient.TimeAndWeather(Global.now, 0, DEFAULT_DAY, DEFAULT_NIGHT, DEFAULT_CUSP, DEFAULT_SUN, 0, 0);
+        public ToClient.TimeAndWeather weather = new ToClient.TimeAndWeather(Global.Now, 0, DEFAULT_DAY, DEFAULT_NIGHT, DEFAULT_CUSP, DEFAULT_SUN, 0, 0);
 
         ILog Log = LogManager.GetCurrentClassLogger();
 
@@ -59,11 +59,11 @@ namespace Strive.Server.Logic
 
             // todo: would be nice to be able to load only the
             // world in question... but for now load them all
-            if (Global.worldFilename != null)
+            if (Global.WorldFilename != null)
             {
-                Log.Info("Loading Global.modelSchema from file:" + Global.worldFilename);
-                Global.modelSchema = new Schema();
-                Global.modelSchema.ReadXml(Global.worldFilename);
+                Log.Info("Loading Global.modelSchema from file:" + Global.WorldFilename);
+                Global.ModelSchema = new Schema();
+                Global.ModelSchema.ReadXml(Global.WorldFilename);
             }
             //else if (Global.connectionstring != null)
             //{
@@ -72,8 +72,7 @@ namespace Strive.Server.Logic
             else
             {
                 Log.Info("Creating an empty Global.modelSchema");
-                Global.modelSchema = new Schema();
-                Global.modelSchema.World.AddWorldRow(world_id, "Empty", "An empty world" );
+                CreateDefaultWorld();
             }
             Log.Info("Global.modelSchema loaded");
 
@@ -83,7 +82,7 @@ namespace Strive.Server.Logic
             lowX = 0;
             highZ = 0;
             lowZ = 0;
-            foreach (Schema.ObjectInstanceRow r in Global.modelSchema.ObjectInstance.Rows)
+            foreach (Schema.ObjectInstanceRow r in Global.ModelSchema.ObjectInstance.Rows)
             {
                 if (highX == 0)
                 {
@@ -138,7 +137,7 @@ namespace Strive.Server.Logic
             square = new Square[squaresInX, squaresInZ];
             terrain = new Terrain[squaresInX * Square.squareSize / Constants.terrainPieceSize, squaresInZ * Square.squareSize / Constants.terrainPieceSize];
 
-            Schema.WorldRow wr = Global.modelSchema.World.FindByWorldID(world_id);
+            Schema.WorldRow wr = Global.ModelSchema.World.FindByWorldID(world_id);
             if (wr == null)
             {
                 throw new Exception("ERROR: World ID not valid!");
@@ -146,7 +145,7 @@ namespace Strive.Server.Logic
 
             Log.Info("Loading world \"" + wr.WorldName + "\"...");
             Log.Info("Loading terrain...");
-            foreach (Schema.TemplateTerrainRow ttr in Global.modelSchema.TemplateTerrain.Rows)
+            foreach (Schema.TemplateTerrainRow ttr in Global.ModelSchema.TemplateTerrain.Rows)
             {
                 foreach (Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows())
                 {
@@ -155,7 +154,7 @@ namespace Strive.Server.Logic
                 }
             }
             Log.Info("Loading physical objects...");
-            foreach (Schema.TemplateObjectRow otr in Global.modelSchema.TemplateObject.Rows)
+            foreach (Schema.TemplateObjectRow otr in Global.ModelSchema.TemplateObject.Rows)
             {
                 foreach (Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows())
                 {
@@ -231,19 +230,19 @@ namespace Strive.Server.Logic
 
         void WeatherUpdate()
         {
-            weather.ServerNow = Global.now.Ticks;
-            if ((Global.now.Ticks - weather.ServerNow) < 1)
+            weather.ServerNow = Global.Now.Ticks;
+            if ((Global.Now.Ticks - weather.ServerNow) < 1)
             {
                 return;
             }
 
             bool weatherChanged = false;
-            if (Global.random.NextDouble() > 0.995)
+            if (Global.Rand.NextDouble() > 0.995)
             {
                 weather.Fog++;
                 weatherChanged = true;
             }
-            if (Global.random.NextDouble() > 0.995)
+            if (Global.Rand.NextDouble() > 0.995)
             {
                 // TODO: only change textures on new days
                 //weather.DaySkyTextureID = (weather.SkyTextureID + 1) % 9 + 1;
@@ -576,11 +575,11 @@ namespace Strive.Server.Logic
 
         public MobileAvatar LoadMobile(int instanceID)
         {
-            Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)Global.modelSchema.ObjectInstance.FindByObjectInstanceID(instanceID);
+            Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceID);
             if (rpr == null) return null;
-            Schema.TemplateObjectRow por = Global.modelSchema.TemplateObject.FindByTemplateObjectID(rpr.TemplateObjectID);
+            Schema.TemplateObjectRow por = Global.ModelSchema.TemplateObject.FindByTemplateObjectID(rpr.TemplateObjectID);
             if (por == null) return null;
-            Schema.TemplateMobileRow mr = Global.modelSchema.TemplateMobile.FindByTemplateObjectID(rpr.TemplateObjectID);
+            Schema.TemplateMobileRow mr = Global.ModelSchema.TemplateMobile.FindByTemplateObjectID(rpr.TemplateObjectID);
             if (mr == null) return null;
             return new MobileAvatar(this, mr, por, rpr);
         }
@@ -588,7 +587,7 @@ namespace Strive.Server.Logic
         public bool UserLookup(string email, string password, ref int playerID)
         {
             //Strive.Data.MultiverseFactory.refreshPlayerList(Global.modelSchema);
-            DataRow[] dr = Global.modelSchema.Player.Select("Email = '" + email + "'");
+            DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + email + "'");
             if (dr.Length != 1)
             {
                 Log.Error(dr.Length + " players found with email '" + email + "'.");
@@ -732,8 +731,8 @@ namespace Strive.Server.Logic
 
         public ToClient.CanPossess.id_name_tuple[] getPossessable(string username)
         {
-            DataRow[] dr = Global.modelSchema.Player.Select("Email = '" + username + "'");
-            Schema.PlayerRow pr = Global.modelSchema.Player.FindByPlayerID((int)dr[0][0]);
+            DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + username + "'");
+            Schema.PlayerRow pr = Global.ModelSchema.Player.FindByPlayerID((int)dr[0][0]);
             Schema.MobilePossesableByPlayerRow[] mpbpr = pr.GetMobilePossesableByPlayerRows();
             ArrayList list = new ArrayList();
             foreach (Schema.MobilePossesableByPlayerRow mpr in mpbpr)
@@ -785,6 +784,13 @@ namespace Strive.Server.Logic
             }
             // no terrain here
             throw new InvalidLocationException();
+        }
+
+        public void CreateDefaultWorld()
+        {
+            Global.ModelSchema = new Schema();
+            Global.ModelSchema.World.AddWorldRow(world_id, "Empty", "An empty world");
+            Global.ModelSchema.Player.AddPlayerRow("Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob", 100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
         }
     }
 }

@@ -1,60 +1,64 @@
 using System;
 using System.Configuration;
 
-using Strive.Math3D;
 using Common.Logging;
 
-namespace Strive.Server.Logic {
-	/// <summary>
-	/// Summary description for Global.
-	/// </summary>
-	public class Global {
-		public static Random random = new Random();
-		public static DateTime now = DateTime.Now;
-		public static Vector3D up = new Vector3D( 0, 1, 0 );
-		public static Server.Model.Schema modelSchema;
-		public static World world;
+using Strive.Math3D;
+using Strive.Common;
 
-		public static int world_id;
-		public static int port;
-		public static string logfilename;
-		public static string worldFilename;
-		public static string connectionstring;
+namespace Strive.Server.Logic
+{
+    /// <summary>
+    /// Summary description for Global.
+    /// </summary>
+    public class Global
+    {
+        public static Random Rand = new Random();
+        public static DateTime Now = DateTime.Now;
+        public static Vector3D Up = new Vector3D(0, 1, 0);
+        public static Server.Model.Schema ModelSchema;
+        public static World World;
+
+        public static int WorldID;
+        public static int Port;
+        public static string LogFilename;
+        public static string WorldFilename;
+        public static string ConnectionString;
 
         static ILog Log = LogManager.GetCurrentClassLogger();
 
-		public static void ReadConfiguration() {
-			// manditory fields
-            if (ConfigurationManager.AppSettings["world_id"] == null)
+        public static void ReadConfiguration()
+        {
+            // manditory fields
+            string s = ConfigurationManager.AppSettings["WorldID"];
+            if (s == null)
             {
                 Log.Error("world_id missing in configuration");
-                world_id = 0;
+                WorldID = 1;
             }
             else
             {
-                world_id = int.Parse(ConfigurationManager.AppSettings["world_id"]);
+                WorldID = int.Parse(s);
             }
 
-            if (ConfigurationManager.AppSettings["port"] == null)
+            s = ConfigurationManager.AppSettings["Port"];
+            if (s == null)
             {
-                Log.Error("port missing in configuration");
-                port = 1337;
+                Log.Error("Port missing in configuration");
+                Port = Constants.DefaultPort;
             }
             else
             {
-                port = int.Parse(ConfigurationManager.AppSettings["port"]);
+                Port = int.Parse(s);
             }
 
-			// optional fields
-			logfilename = ConfigurationManager.AppSettings["logFileName"];
-			if ( logfilename != null ) {
-				//Log.SetLogOutput( logfilename );
-			}
+            // optional fields
+            LogFilename = ConfigurationManager.AppSettings["LogFileName"];
 
-			// one and one only of these two should be specified.
-			worldFilename = ConfigurationManager.AppSettings["worldFileName"];
-			connectionstring = ConfigurationManager.AppSettings["connectionString"];
-		}
-	}
+            // one and one only of these two should be specified.
+            WorldFilename = ConfigurationManager.AppSettings["WorldFileName"];
+            ConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+        }
+    }
 }
 

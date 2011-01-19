@@ -27,10 +27,10 @@ namespace Strive.Server.Logic
     {
         public Client client = null;
         public World world = null;
-        public DateTime lastAttackUpdate = Global.now;
-        public DateTime lastHealUpdate = Global.now;
-        public DateTime lastBehaviourUpdate = Global.now;
-        public DateTime lastMoveUpdate = Global.now;
+        public DateTime lastAttackUpdate = Global.Now;
+        public DateTime lastHealUpdate = Global.Now;
+        public DateTime lastBehaviourUpdate = Global.Now;
+        public DateTime lastMoveUpdate = Global.Now;
 
         // if fighting someone or something
         public PhysicalObject target = null;
@@ -41,7 +41,7 @@ namespace Strive.Server.Logic
 
         // currently invoking a skill
         public ToServer.UseSkill activatingSkill = null;
-        public DateTime activatingSkillTimestamp = Global.now;
+        public DateTime activatingSkillTimestamp = Global.Now;
         public TimeSpan activatingSkillLeadTime = TimeSpan.FromSeconds(0);
 
         // any queued up skills to be executed after the current one
@@ -104,7 +104,7 @@ namespace Strive.Server.Logic
             // check for activating skills
             if (activatingSkill != null)
             {
-                if (activatingSkillTimestamp + activatingSkillLeadTime <= Global.now)
+                if (activatingSkillTimestamp + activatingSkillLeadTime <= Global.Now)
                 {
                     SkillCommandProcessor.UseSkillNow(this, activatingSkill);
                     activatingSkill = null;
@@ -130,7 +130,7 @@ namespace Strive.Server.Logic
             else
             {
                 if (
-                    Global.now - lastMoveUpdate > TimeSpan.FromSeconds(1)
+                    Global.Now - lastMoveUpdate > TimeSpan.FromSeconds(1)
                     && (MobileState == EnumMobileState.Running
                     || MobileState == EnumMobileState.Walking)
                 )
@@ -143,10 +143,10 @@ namespace Strive.Server.Logic
 
         public void CombatUpdate()
         {
-            if (Global.now - lastAttackUpdate > TimeSpan.FromSeconds(3))
+            if (Global.Now - lastAttackUpdate > TimeSpan.FromSeconds(3))
             {
                 // combat
-                lastAttackUpdate = Global.now;
+                lastAttackUpdate = Global.Now;
                 PhysicalAttack(target);
             }
         }
@@ -154,11 +154,11 @@ namespace Strive.Server.Logic
         public void BehaviourUpdate()
         {
             // continue doing whatever you were doing
-            if (Global.now - lastMoveUpdate > TimeSpan.FromSeconds(1))
+            if (Global.Now - lastMoveUpdate > TimeSpan.FromSeconds(1))
             {
                 if (MobileState >= EnumMobileState.Standing)
                 {
-                    Rotation.Y += (float)(Global.random.NextDouble() * 40 - 20);
+                    Rotation.Y += (float)(Global.Rand.NextDouble() * 40 - 20);
                     while (Rotation.Y < 0) Rotation.Y += 360;
                     while (Rotation.Y >= 360) Rotation.Y -= 360;
                 }
@@ -177,13 +177,13 @@ namespace Strive.Server.Logic
                         break;
                 }
             }
-            if (Global.now - lastBehaviourUpdate > TimeSpan.FromSeconds(3))
+            if (Global.Now - lastBehaviourUpdate > TimeSpan.FromSeconds(3))
             {
                 // change behaviour?
-                lastBehaviourUpdate = Global.now;
+                lastBehaviourUpdate = Global.Now;
                 if (MobileState > EnumMobileState.Incapacitated)
                 {
-                    int rand = Global.random.Next(5) - 2;
+                    int rand = Global.Rand.Next(5) - 2;
                     if (rand > 1 && MobileState > EnumMobileState.Sleeping)
                     {
                         SetMobileState(MobileState - 1);
@@ -200,9 +200,9 @@ namespace Strive.Server.Logic
 
         public void HealUpdate()
         {
-            if (Global.now - lastHealUpdate > TimeSpan.FromSeconds(1))
+            if (Global.Now - lastHealUpdate > TimeSpan.FromSeconds(1))
             {
-                lastHealUpdate = Global.now;
+                lastHealUpdate = Global.Now;
                 if (MobileState == EnumMobileState.Incapacitated)
                 {
                     HitPoints -= 0.5F;
@@ -293,7 +293,7 @@ namespace Strive.Server.Logic
                 }
 
                 // avoidance phase: ratio of Dexterity
-                if (Dexterity == 0 || Global.random.Next(100) <= opponent.Dexterity / Dexterity * 20)
+                if (Dexterity == 0 || Global.Rand.Next(100) <= opponent.Dexterity / Dexterity * 20)
                 {
                     // 20% chance for equal dex player to avoid
                     world.InformNearby(
@@ -306,7 +306,7 @@ namespace Strive.Server.Logic
 
                 // hit phase: hitroll determines if you miss, hit armour, or bypass armour
                 int hitroll = 80;
-                int attackroll = Global.random.Next(hitroll);
+                int attackroll = Global.Rand.Next(hitroll);
 
                 if (attackroll < 20)
                 {
@@ -374,7 +374,7 @@ namespace Strive.Server.Logic
                 }
 
                 // avoidance phase: Dexterity
-                if (Global.random.Next(100) <= opponent.Dexterity)
+                if (Global.Rand.Next(100) <= opponent.Dexterity)
                 {
                     world.InformNearby(
                         this,
@@ -482,7 +482,7 @@ namespace Strive.Server.Logic
 
         public float GetCompetancy(EnumSkill skill)
         {
-            Schema.MobileHasSkillRow mhs = Global.modelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(TemplateObjectID, (int)skill);
+            Schema.MobileHasSkillRow mhs = Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(TemplateObjectID, (int)skill);
             if (mhs != null)
             {
                 return (float)mhs.Rating;

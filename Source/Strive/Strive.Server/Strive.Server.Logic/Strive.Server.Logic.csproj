@@ -7,7 +7,8 @@
     <ProjectGuid>{4895086D-8485-46EF-8DED-9E4C16227D64}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>App.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <AssemblyKeyContainerName />
     <AssemblyName>Strive.Server.Logic</AssemblyName>
     <AssemblyOriginatorKeyFile />
@@ -141,7 +142,6 @@
     <Compile Include="World.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include="App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

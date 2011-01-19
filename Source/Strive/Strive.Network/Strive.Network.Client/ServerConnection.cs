@@ -94,10 +94,10 @@ namespace Strive.Network.Client
             ServerConnection client = (ServerConnection)ar.AsyncState;
             try
             {
-
                 // Complete the connection.
                 client.tcpsocket.EndConnect(ar);
                 client.connected = true;
+                client.Log.Info("Connected to " + client.tcpsocket.RemoteEndPoint);
                 if (client.OnConnect != null)
                 {
                     client.OnConnect();

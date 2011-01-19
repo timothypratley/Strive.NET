@@ -48,7 +48,7 @@ namespace Strive.Network.Server
                 _udpSocket.BeginReceiveFrom(_udpBuffer, 0, MessageTypeMap.BufferSize, 0, ref _remoteEndPoint,
                     new AsyncCallback(ReceiveFromUDPCallback), this);
 
-                Log.Info("Started listening on" + _localEndPoint);
+                Log.Info("Started listening on " + _localEndPoint);
             }
             catch (ObjectDisposedException)
             {

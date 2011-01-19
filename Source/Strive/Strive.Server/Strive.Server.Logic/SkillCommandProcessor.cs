@@ -24,7 +24,7 @@ namespace Strive.Server.Logic
                 client.SendLog("Requested a skill, but doesn't have an avatar.");
                 return;
             }
-            Schema.EnumSkillRow esr = Global.modelSchema.EnumSkill.FindByEnumSkillID((int)message.SkillID);
+            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID((int)message.SkillID);
             if (esr == null)
             {
                 client.SendLog("Requested an invalid skill " + message.SkillID);
@@ -49,7 +49,7 @@ namespace Strive.Server.Logic
                 // process it later, after leadtime is elapsed
                 MobileAvatar ma = client.Avatar as MobileAvatar;
                 ma.activatingSkill = message;
-                ma.activatingSkillTimestamp = Global.now;
+                ma.activatingSkillTimestamp = Global.Now;
                 ma.activatingSkillLeadTime = TimeSpan.FromSeconds(esr.LeadTime);
             }
         }
@@ -101,7 +101,7 @@ namespace Strive.Server.Logic
 
         public static void UseSkillNow(MobileAvatar caster, Strive.Network.Messages.ToServer.UseSkill message)
         {
-            Schema.EnumSkillRow esr = Global.modelSchema.EnumSkill.FindByEnumSkillID((int)message.SkillID);
+            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID((int)message.SkillID);
             if (esr == null)
             {
                 caster.SendLog("Requested an invalid skill " + message.SkillID);
@@ -133,7 +133,7 @@ namespace Strive.Server.Logic
                         caster.SendLog("No target specified, this skill may only be used on Mobiles.");
                         return;
                     }
-                    target = (MobileAvatar)Global.world.physicalObjects[message.TargetPhysicalObjectIDs[0]];
+                    target = (MobileAvatar)Global.World.physicalObjects[message.TargetPhysicalObjectIDs[0]];
                     if (target == null)
                     {
                         caster.SendLog("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
@@ -177,7 +177,7 @@ namespace Strive.Server.Logic
         {
             // test adeptness
             float competancy = caster.GetCompetancy((EnumSkill)esr.EnumSkillID);
-            double roll = Global.random.NextDouble();
+            double roll = Global.Rand.NextDouble();
             if (competancy < roll * 100)
             {
                 // failed

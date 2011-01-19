@@ -14,6 +14,7 @@ using System.Net;
 
 using AvalonDock;
 using Strive.Network.Client;
+using Strive.Common;
 
 
 namespace Strive.Client.WPF
@@ -27,11 +28,28 @@ namespace Strive.Client.WPF
         {
             InitializeComponent();
             hostTextBox.Text = Dns.GetHostName();
+            portTextBox.Text = Constants.DefaultPort.ToString();
+        }
+
+        // validation not hooked up
+        string _port;
+        public string Port
+        {
+            get { return _port; }
+            set
+            {
+                _port = value;
+                int result;
+                if (!int.TryParse(_port, out result) || result < 1024 || result > 65535)
+                {
+                    throw new ApplicationException("Must be between 1024 and 65535");
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int port=8888;
+            int port = Constants.DefaultPort;
             int.TryParse(portTextBox.Text, out port);
             App.ServerConnection.Start(new IPEndPoint(Dns.GetHostEntry(hostTextBox.Text).AddressList[0], port));
         }

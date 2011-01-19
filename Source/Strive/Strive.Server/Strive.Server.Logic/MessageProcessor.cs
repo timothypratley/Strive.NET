@@ -260,7 +260,7 @@ namespace Strive.Server.Logic
             // don't go to running for pure heading changes
             if (message.position != client.Avatar.Position)
             {
-                ma.lastMoveUpdate = Global.now;
+                ma.lastMoveUpdate = Global.Now;
                 if (ma.MobileState != EnumMobileState.Running)
                 {
                     ma.SetMobileState(EnumMobileState.Running);
@@ -340,7 +340,7 @@ namespace Strive.Server.Logic
         )
         {
             MobileAvatar ma = (MobileAvatar)client.Avatar;
-            MobileAvatar target = (MobileAvatar)Global.world.physicalObjects[message.ObjectInstanceID];
+            MobileAvatar target = (MobileAvatar)Global.World.physicalObjects[message.ObjectInstanceID];
             if (ma.party != target.party)
             {
                 ma.SendLog("You are not in the same party as " + target.TemplateObjectName);
@@ -400,7 +400,7 @@ namespace Strive.Server.Logic
                 client.SendLog("You are not the party leader.");
                 return;
             }
-            MobileAvatar target = (MobileAvatar)Global.world.physicalObjects[message.ObjectInstanceID];
+            MobileAvatar target = (MobileAvatar)Global.World.physicalObjects[message.ObjectInstanceID];
             target.invitedToParty = p;
             // TODO: probabbly want a graphical thing or something for invites
             target.SendLog("You have been invited to party '" + p.Name + "'.");
@@ -411,9 +411,9 @@ namespace Strive.Server.Logic
             // TODO: umg this seems a bit primitive, but I guess it works so :/
             ArrayList skillIDs = new ArrayList();
             ArrayList competancy = new ArrayList();
-            for (int i = 1; i < Global.modelSchema.EnumSkill.Count; i++)
+            for (int i = 1; i < Global.ModelSchema.EnumSkill.Count; i++)
             {
-                Schema.MobileHasSkillRow mhs = Global.modelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(client.Avatar.TemplateObjectID, i);
+                Schema.MobileHasSkillRow mhs = Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(client.Avatar.TemplateObjectID, i);
                 if (mhs != null)
                 {
                     skillIDs.Add(mhs.EnumSkillID);

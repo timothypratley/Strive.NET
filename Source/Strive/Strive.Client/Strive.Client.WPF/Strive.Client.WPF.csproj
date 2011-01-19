@@ -16,6 +16,7 @@
     <WarningLevel>4</WarningLevel>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <PublishUrl>../../../publish/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,7 +32,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -178,6 +178,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Strive.Common\Strive.Common.csproj">
+      <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
+      <Name>Strive.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj">
       <Project>{8C36C1BE-AB5F-47A5-869D-139A04B23C52}</Project>
       <Name>Strive.Network.Client</Name>
@@ -350,16 +354,9 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="@(DataFiles)"
-          DestinationFiles="@(DataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(MyDataFiles)"
-          DestinationFiles="@(MyDataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(NativeDllFiles)"
-          DestinationFiles="@(NativeDllFiles->'$(TargetDir)/NativeDlls/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(DllFiles)"
-          DestinationFiles="@(DllFiles->'$(TargetDir)/%(RecursiveDir)/%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />  </Target>
+    <Copy SourceFiles="@(DataFiles)" DestinationFiles="@(DataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(MyDataFiles)" DestinationFiles="@(MyDataFiles->'$(TargetDir)/Data/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(NativeDllFiles)" DestinationFiles="@(NativeDllFiles->'$(TargetDir)/NativeDlls/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DllFiles)" DestinationFiles="@(DllFiles->'$(TargetDir)/%(RecursiveDir)/%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

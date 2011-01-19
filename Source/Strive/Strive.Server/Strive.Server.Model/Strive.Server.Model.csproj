@@ -130,6 +130,9 @@
     <Compile Include="Wieldable.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Content Include="DefaultWorld.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Schema.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Schema.Designer.cs</LastGenOutput>

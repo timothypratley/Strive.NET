@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Schema>
+  <Player>
+    <PlayerID>1</PlayerID>
+    <PlayerName>Foo</PlayerName>
+    <Age>35</Age>
+    <FirstName>Foo</FirstName>
+    <Surname>Bar</Surname>
+    <Email>foo@bar.com</Email>
+    <EnumSexID>1</EnumSexID>
+    <Password>bar</Password>
+    <TrustLevel>100</TrustLevel>
+    <Comment>none</Comment>
+    <QuoteID>all your base</QuoteID>
+    <PlayerKey>1</PlayerKey>
+    <PingedOn></PingedOn>
+    <PongedAt></PongedAt>
+  </Player>
+  <Area>
+    <AreaID>1</AreaID>
+    <WorldID>1</WorldID>
+    <AreaName>AreaName1</AreaName>
+    <LowX>1</LowX>
+    <LowY>1</LowY>
+    <LowZ>1</LowZ>
+    <HighX>1</HighX>
+    <HighY>1</HighY>
+    <HighZ>1</HighZ>
+    <ControllingClan>1</ControllingClan>
+    <Description>Description1</Description>
+  </Area>
+  <Clan>
+    <ClanID>1</ClanID>
+    <ClanName>ClanName1</ClanName>
+    <Gold>1</Gold>
+    <QuoteID>1</QuoteID>
+    <Description>Description1</Description>
+  </Clan>
+  <ClanRank>
+    <ClanID>1</ClanID>
+    <Rank>1</Rank>
+    <RankName>RankName1</RankName>
+    <EnumSkillID>1</EnumSkillID>
+    <QuoteID>1</QuoteID>
+    <Description>Description1</Description>
+  </ClanRank>
+</Schema>
