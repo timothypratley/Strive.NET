@@ -1,0 +1,12 @@
+﻿<ad:DockableContent x:Class="Strive.WPF.ServerStatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+             Title="Server Status View" Height="300" Width="300">
+    <DockPanel>
+        <Label Content="Status:" Height="28"/>
+        <Label Content="{Binding ServerStatusModel.Status}" Height="28" Name="labelStatus"/>
+        <Button Content="Restart" Height="23" Name="buttonRestart" Width="75"/>
+    </DockPanel>
+</ad:DockableContent>
