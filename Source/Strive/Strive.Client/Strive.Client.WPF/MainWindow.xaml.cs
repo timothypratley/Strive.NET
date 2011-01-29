@@ -13,8 +13,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 
-using Strive.WPF.View;
-using Strive.WPF.ViewModel;
+using UpdateControls.XAML;
+using AvalonDock;
+
+using Strive.WPF;
 using Strive.Client.NeoAxisView;
 
 
@@ -60,9 +62,7 @@ namespace Strive.Client.WPF
 
         private void OpenCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var log = new LogView(App.LogViewModel);
-            log.ShowAsDocument(dockManager);
-            log.Focus();
+            BindAndShow(new LogView(), App.LogModel);
         }
 
         private void NewCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -84,9 +84,7 @@ namespace Strive.Client.WPF
 
         private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var resourceList = new ResourceList(App.WorldViewModel);
-            resourceList.ShowAsDocument(dockManager);
-            resourceList.Focus();
+            BindAndShow(new ResourceList(), App.WorldViewModel);
         }
 
         private void BrowseHomeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -115,22 +113,25 @@ namespace Strive.Client.WPF
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            var factoryView = new FactoryView(new FactoryViewModel());
-            factoryView.ShowAsDocument(dockManager);
-            factoryView.Focus();
+            BindAndShow(new FactoryView(), new FactoryViewModel());
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            var unitView = new UnitView(new UnitViewModel());
-            unitView.ShowAsDocument(dockManager);
-            unitView.Focus();
+            BindAndShow(new UnitView(), new UnitViewModel());
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             World.Init(this, App.WorldViewModel);
             //NewCmdExecuted(null, null);
+        }
+
+        private void BindAndShow(DockableContent view, object viewModel)
+        {
+            view.DataContext = ForView.Wrap(viewModel);
+            view.ShowAsDocument(dockManager);
+            view.Focus();
         }
     }
 }

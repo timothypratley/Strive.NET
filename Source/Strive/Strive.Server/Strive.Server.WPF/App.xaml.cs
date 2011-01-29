@@ -12,7 +12,7 @@ using System.Net;
 using Common.Logging;
 
 using Strive.Network.Server;
-using Strive.WPF.ViewModel;
+using Strive.WPF;
 using Strive.Server.Logic;
 
 namespace Strive.Server.WPF
@@ -20,13 +20,14 @@ namespace Strive.Server.WPF
     public partial class App : Application
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
-        public static Listener Listener;
-        public static LogViewModel LogViewModel;
+        public static LogModel LogModel;
+        public static ServerStatusModel ServerStatusModel;
         Engine striveEngine = new Engine();
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            LogViewModel = new LogViewModel();
+            LogModel = new LogModel();
+            ServerStatusModel = new ServerStatusModel();
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             striveEngine.Start();
         }

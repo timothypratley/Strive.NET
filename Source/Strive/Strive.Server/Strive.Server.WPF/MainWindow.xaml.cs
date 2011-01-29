@@ -12,8 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using Strive.WPF.View;
+using UpdateControls.XAML;
 
+using Strive.WPF;
 
 namespace Strive.Server.WPF
 {
@@ -25,7 +26,8 @@ namespace Strive.Server.WPF
         public MainWindow()
         {
             InitializeComponent();
-            var view = new LogView(App.LogViewModel);
+            var view = new LogView();
+            view.DataContext = ForView.Wrap(new LogViewModel(App.LogModel));
             view.ShowAsDocument(dockManager);
             view.Focus();
         }

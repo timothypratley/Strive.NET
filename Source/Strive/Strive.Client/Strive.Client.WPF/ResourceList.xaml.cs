@@ -25,14 +25,9 @@ namespace Strive.Client.WPF
     /// </summary>
     public partial class ResourceList : DockableContent
     {
-        public WorldViewModel ViewModel;
-
-        public ResourceList(WorldViewModel viewModel)
+        public ResourceList()
         {
-            this.ViewModel = viewModel;
             InitializeComponent();
-            // TODO: hmmm do this how it works in strive.wpf instead!
-            listView1.DataContext = ForView.Wrap(viewModel);
         }
     }
 }
