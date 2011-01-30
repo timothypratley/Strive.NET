@@ -7,6 +7,7 @@ using System.Reflection;
 using Common.Logging;
 using Strive.Common;
 using Strive.Network.Server;
+using Strive.Server.Model;
 
 namespace Strive.Server.Logic
 {
@@ -21,32 +22,41 @@ namespace Strive.Server.Logic
         MessageProcessor mp;
         StoppableThread engine_thread;
         ILog Log = LogManager.GetCurrentClassLogger();
+        
+        public ServerStatusModel ServerStatusModel { get; private set; }
 
         public Engine()
         {
-            Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
+            Log.Info("Creating " + Assembly.GetExecutingAssembly().GetName().FullName);
             Global.ReadConfiguration();
             //Global.worldFilename = "DefaultWorld.xml";
             engine_thread = new StoppableThread(new StoppableThread.WhileRunning(UpdateLoop));
             networkhandler = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
             Log = LogManager.GetCurrentClassLogger();
+            ServerStatusModel = new ServerStatusModel();
+            ServerStatusModel.Status = "Created";
         }
 
         public void Start()
         {
+            ServerStatusModel.Status = "Starting"; 
             world = new World(Global.WorldID);
             mp = new MessageProcessor(world, networkhandler);
             Global.World = world;
+            ServerStatusModel.Started = Global.Now;
             engine_thread.Start();
             Log.Info("Listening for new connections...");
             networkhandler.Start();
+            ServerStatusModel.Status = "Running";
         }
 
         public void Stop()
         {
+            ServerStatusModel.Status = "Stopping";
             networkhandler.Stop();
             engine_thread.Stop();
-            Log.Info("Server terminated.");
+            Log.Info("Server stopped.");
+            ServerStatusModel.Status = "Stopped";
         }
 
         public void UpdateLoop()
@@ -79,9 +89,11 @@ namespace Strive.Server.Logic
             }
             catch (Exception e)
             {
+                ServerStatusModel.Status = "Crashing";
                 // Just log exceptions and stop all threads
                 Log.Error("Update loop exception caught", e);
                 Stop();
+                ServerStatusModel.Status = "Crashed";
             }
         }
 

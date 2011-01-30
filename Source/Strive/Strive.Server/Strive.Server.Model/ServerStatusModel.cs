@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using UpdateControls;
 
-namespace Strive.WPF
+
+namespace Strive.Server.Model
 {
     public class ServerStatusModel
     {

@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Server.Model", "Stri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Server.Logic", "Strive\Strive.Server\Strive.Server.Logic\Strive.Server.Logic.csproj", "{4895086D-8485-46EF-8DED-9E4C16227D64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Server.WPF", "Strive\Strive.Server\Strive.Server.WPF\Strive.Server.WPF.csproj", "{6240BB71-4632-4F52-8EF7-F3A693DA8492}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.NeoAxisView", "Strive\Strive.Client\Strive.Client.NeoAxisView\Strive.Client.NeoAxisView.csproj", "{138A87E7-78B2-4BDF-BB5C-06D58414A976}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.WPF", "Strive\Strive.Client\Strive.Client.WPF\Strive.Client.WPF.csproj", "{D6FD917E-F96C-43FB-8211-3CA467DAF6FB}"
@@ -166,21 +164,6 @@ Global
 		{4895086D-8485-46EF-8DED-9E4C16227D64}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4895086D-8485-46EF-8DED-9E4C16227D64}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{4895086D-8485-46EF-8DED-9E4C16227D64}.StrongMagic|x86.ActiveCfg = Release|Any CPU
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Debug|x86.ActiveCfg = Debug|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Debug|x86.Build.0 = Debug|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Release|Any CPU.ActiveCfg = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Release|Mixed Platforms.Build.0 = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Release|x86.ActiveCfg = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.Release|x86.Build.0 = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.StrongMagic|Any CPU.ActiveCfg = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.StrongMagic|Mixed Platforms.ActiveCfg = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.StrongMagic|Mixed Platforms.Build.0 = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.StrongMagic|x86.ActiveCfg = Release|x86
-		{6240BB71-4632-4F52-8EF7-F3A693DA8492}.StrongMagic|x86.Build.0 = Release|x86
 		{138A87E7-78B2-4BDF-BB5C-06D58414A976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{138A87E7-78B2-4BDF-BB5C-06D58414A976}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{138A87E7-78B2-4BDF-BB5C-06D58414A976}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

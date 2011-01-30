@@ -62,7 +62,7 @@ namespace Strive.Client.WPF
 
         private void OpenCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            BindAndShow(new LogView(), App.LogModel);
+            BindAndShow(new LogView(), new LogViewModel(App.LogModel));
         }
 
         private void NewCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -114,6 +114,12 @@ namespace Strive.Client.WPF
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             BindAndShow(new FactoryView(), new FactoryViewModel());
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            BindAndShow(new ServerStatusView(), new ServerStatusViewModel(App.ServerEngine.ServerStatusModel));
+            App.ServerEngine.Start();
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)

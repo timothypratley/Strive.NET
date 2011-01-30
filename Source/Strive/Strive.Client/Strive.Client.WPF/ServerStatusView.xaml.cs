@@ -9,23 +9,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using AvalonDock;
-using UpdateControls.XAML;
 
-using Strive.Client.Model;
-using Strive.Client.NavigationModel;
-using Strive.Client.ViewModel;
 
 namespace Strive.Client.WPF
 {
     /// <summary>
-    /// Interaction logic for ResourceList.xaml
+    /// Interaction logic for ServerStatusView.xaml
     /// </summary>
-    public partial class ResourceList : DockableContent
+    public partial class ServerStatusView : DockableContent
     {
-        public ResourceList()
+        public ServerStatusView()
         {
             InitializeComponent();
         }

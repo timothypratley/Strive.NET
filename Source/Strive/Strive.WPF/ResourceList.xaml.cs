@@ -13,19 +13,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using AvalonDock;
+using UpdateControls.XAML;
 
 
 namespace Strive.WPF
 {
     /// <summary>
-    /// Interaction logic for ServerStatusView.xaml
+    /// Interaction logic for ResourceList.xaml
     /// </summary>
-    public partial class ServerStatusView : DockableContent
+    public partial class ResourceList : DockableContent
     {
-        public ServerStatusView(ServerStatusViewModel serverStatusViewModel)
+        public ResourceList()
         {
             InitializeComponent();
-            DataContext = serverStatusViewModel;
         }
     }
 }

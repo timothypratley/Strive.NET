@@ -13,6 +13,7 @@ using Strive.Client.NeoAxisView;
 using Strive.Client.ViewModel;
 using Strive.Network.Client;
 using Strive.WPF;
+using Strive.Server.Logic;
 
 
 namespace Strive.Client.WPF
@@ -26,11 +27,12 @@ namespace Strive.Client.WPF
         public static WorldViewModel WorldViewModel;
         public static ServerConnection ServerConnection;
         public static LogModel LogModel;
+        public static Engine ServerEngine = new Engine();
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            LogModel = new LogModel();
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            LogModel = new LogModel();
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
             ServerConnection = new ServerConnection();
