@@ -790,7 +790,7 @@ namespace Strive.Server.Logic
         {
             Global.ModelSchema = new Schema();
             Global.ModelSchema.World.AddWorldRow(world_id, "Empty", "An empty world");
-            Global.ModelSchema.Player.AddPlayerRow("Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob", 100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
+            var p = Global.ModelSchema.Player.AddPlayerRow("Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob", 100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
         }
     }
 }

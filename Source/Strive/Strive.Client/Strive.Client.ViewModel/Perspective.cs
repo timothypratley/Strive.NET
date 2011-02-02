@@ -101,12 +101,14 @@ namespace Strive.Client.ViewModel
         WorldViewModel _worldViewModel;
         KeyPressedCheck _keyPressed;
         InputBindings _bindings;
+        ConnectionHandler _connectionHandler;
 
-        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings)
+        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings, ConnectionHandler connectionHandler)
         {
             _worldViewModel = worldViewModel;
             _keyPressed = keyPressed;
             _bindings = bindings;
+            _connectionHandler = connectionHandler;
             movementTimer = new Stopwatch();
             movementTimer.Start();
         }
@@ -120,6 +122,7 @@ namespace Strive.Client.ViewModel
 
         public void Check()
         {
+            double x = X, y = Y, z = Z, tilt = Tilt, heading = Heading;
             if (System.Environment.TickCount - lastTick >= 1000)
             {
                 lastFrameRate = frameRate;
@@ -203,6 +206,13 @@ namespace Strive.Client.ViewModel
                 }
             }
             SetCamera();
+
+            if (x != X || y != Y || z != Z || tilt != Tilt || heading != Heading)
+            {
+                _connectionHandler.SendPosition(
+                    new Math3D.Vector3D((float)X, (float)Y, (float)Z),
+                    new Math3D.Vector3D((float)Tilt, (float)Heading, 0));
+            }
         }
 
         double distanceRangeLow = 10.0;

@@ -11,6 +11,7 @@ using Common.Logging;
 
 using Strive.Client.NeoAxisView;
 using Strive.Client.ViewModel;
+using Strive.Client.Model;
 using Strive.Network.Client;
 using Strive.WPF;
 using Strive.Server.Logic;
@@ -26,6 +27,8 @@ namespace Strive.Client.WPF
         static ILog Log = LogManager.GetCurrentClassLogger();
         public static WorldViewModel WorldViewModel;
         public static ServerConnection ServerConnection;
+        public static WorldModel WorldModel;
+        public static ConnectionHandler ConnectionHandler;
         public static LogModel LogModel;
         public static Engine ServerEngine = new Engine();
 
@@ -36,7 +39,9 @@ namespace Strive.Client.WPF
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
             ServerConnection = new ServerConnection();
-            WorldViewModel = new WorldViewModel(ServerConnection);
+            WorldModel = new WorldModel(); 
+            WorldViewModel = new WorldViewModel(WorldModel);
+            ConnectionHandler = new ConnectionHandler(ServerConnection, WorldModel);
         }
 
         private bool ReportException(Exception ex)

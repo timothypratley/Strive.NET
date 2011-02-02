@@ -9,6 +9,7 @@ using System.Text;
 using Strive.Client.Model;
 using Strive.Client.NavigationModel;
 using Strive.Network.Client;
+using Strive.Math3D;
 
 namespace Strive.Client.ViewModel
 {
@@ -17,12 +18,13 @@ namespace Strive.Client.ViewModel
         public InputBindings bindings;
 
         private WorldModel _world;
+        public WorldModel World { get { return _world; } }
         private WorldNavigation _navigation;
 
-        public WorldViewModel(ServerConnection serverConnection)
+        public WorldViewModel(WorldModel worldModel)
         {
             bindings = new InputBindings();
-            _world = new WorldModel(serverConnection);
+            _world = worldModel;
             _navigation = new WorldNavigation();
         }
 
@@ -38,7 +40,7 @@ namespace Strive.Client.ViewModel
         public void AddOrReplace(string name, string modelId, double x, double y, double z)
         {
             var entity = new EntityModel(name, modelId, x, y, z, 0, 0, 0);
-            _world.AddEntity(entity);
+            _world.AddEntity(name, entity);
         }
 
         public void ClearMouseOverEntity()

@@ -72,7 +72,7 @@ namespace Strive.Client.WPF
 
         private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new WorldView(World.ViewModel);
+            var view = new WorldView(World.ViewModel, App.ConnectionHandler);
             view.ShowAsDocument(dockManager);
             view.Focus();
         }

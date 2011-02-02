@@ -31,15 +31,9 @@ namespace Strive.Network.Client
         public Strive.Network.Messages.NetworkProtocolType protocol;
         public bool isRunning = false;
 
-        public delegate void OnConnectHandler();
-        public delegate void OnConnectFailedHandler();
-        public delegate void OnDisconnectHandler();
-        public delegate void OnPositionSentHandler(ToClient.Position Position);
-
-        public event OnPositionSentHandler OnPositionSent;
-        public event OnConnectHandler OnConnect;
-        public event OnConnectFailedHandler OnConnectFailed;
-        public event OnDisconnectHandler OnDisconnect;
+        public event EventHandler Connect;
+        public event EventHandler ConnectFailed;
+        public event EventHandler Disconnect;
         public event EventHandler MessageRecieved;
 
         ILog Log;
@@ -81,10 +75,7 @@ namespace Strive.Network.Client
             if (connected)
             {
                 connected = false;
-                if (OnDisconnect != null)
-                {
-                    OnDisconnect();
-                }
+                if (Disconnect != null) Disconnect(this, null);
             }
             isRunning = false;
         }
@@ -98,10 +89,7 @@ namespace Strive.Network.Client
                 client.tcpsocket.EndConnect(ar);
                 client.connected = true;
                 client.Log.Info("Connected to " + client.tcpsocket.RemoteEndPoint);
-                if (client.OnConnect != null)
-                {
-                    client.OnConnect();
-                }
+                if (client.Connect != null) client.Connect(client, null);
 
                 // Begin reading.
                 client.tcpsocket.BeginReceive(client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
@@ -115,7 +103,7 @@ namespace Strive.Network.Client
             {
                 client.Log.Error("Error connecting, closing connection.", e);
                 client.Stop();
-                if (client.OnConnectFailed != null) client.OnConnectFailed();
+                if (client.ConnectFailed != null) client.ConnectFailed(client, null);
             }
         }
 
@@ -169,6 +157,7 @@ namespace Strive.Network.Client
                         }
                         client.messageQueue.Enqueue(message);
                         client.Log.Trace("enqueued " + message.GetType() + " message");
+                        if (client.MessageRecieved != null) client.MessageRecieved(client, (EventArgs)message);
 
                         // copy the remaining data to the front of the buffer
                         client.tcpoffset -= expected_length;
@@ -349,6 +338,10 @@ namespace Strive.Network.Client
             Send(new ToServer.EnterWorldAsMobile(mobileId));
         }
 
+        public void Login(string username, string password)
+        {
+            Login(username, password, NetworkProtocolType.TcpOnly);
+        }
         public void Login(string username, string password, Strive.Network.Messages.NetworkProtocolType protocol)
         {
             Send(new ToServer.Login(username, password, protocol));

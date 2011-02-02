@@ -52,6 +52,11 @@ namespace Strive.Client.WPF
             int port = Constants.DefaultPort;
             int.TryParse(portTextBox.Text, out port);
             App.ServerConnection.Start(new IPEndPoint(Dns.GetHostEntry(hostTextBox.Text).AddressList[0], port));
+            App.ServerConnection.Connect += (object s, EventArgs ev) =>
+            {
+                App.ServerConnection.Login("bob@smith.com", "bob");
+                App.ServerConnection.PossessMobile(1);
+            };
         }
     }
 }
