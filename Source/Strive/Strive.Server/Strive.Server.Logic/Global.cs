@@ -1,9 +1,9 @@
 using System;
 using System.Configuration;
+using System.Windows.Media.Media3D;
 
 using Common.Logging;
 
-using Strive.Math3D;
 using Strive.Common;
 
 namespace Strive.Server.Logic

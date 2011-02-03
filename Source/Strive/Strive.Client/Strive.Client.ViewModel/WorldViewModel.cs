@@ -5,10 +5,14 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Media3D;
+using System.Windows.Input;
 
 using Strive.Client.Model;
 using Strive.Client.NavigationModel;
 using Strive.Network.Client;
+using UpdateControls.XAML;
+
 
 namespace Strive.Client.ViewModel
 {
@@ -35,9 +39,20 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public void AddOrReplace(string name, string modelId, double x, double y, double z)
+        // TODO: make useful
+        public ICommand CreateEntity
         {
-            var entity = new EntityModel(name, modelId, x, y, z, 0, 0, 0);
+            get
+            {
+                return MakeCommand
+                    .When(() => true)
+                    .Do(() => AddOrReplace("foo", "bar", new Vector3D(0,0,0), Quaternion.Identity));
+            }
+        }
+
+        public void AddOrReplace(string name, string modelId, Vector3D position, Quaternion rotation)
+        {
+            var entity = new EntityModel(name, modelId, position, rotation);
             _world.AddEntity(entity);
         }
 

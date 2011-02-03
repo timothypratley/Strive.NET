@@ -4,13 +4,13 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Windows.Media.Media3D;
 
 using Common.Logging;
 
 using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
 using ToServer = Strive.Network.Messages.ToServer;
-using Strive.Math3D;
 using Strive.Server.Model;
 using Strive.Common;
 
@@ -389,7 +389,7 @@ namespace Strive.Network.Client
             this.UseSkill((EnumSkill)SkillID, InvokationID, Targets);
         }
 
-        public void Position(Vector3D position, Vector3D rotation)
+        public void Position(Vector3D position, Quaternion rotation)
         {
             Send(new ToServer.Position(position, rotation));
         }

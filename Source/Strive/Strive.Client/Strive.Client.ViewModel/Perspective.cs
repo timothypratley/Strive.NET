@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
+
+using UpdateControls.XAML;
 
 using Strive.Client.Model;
 using Strive.Common;
@@ -55,38 +58,26 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        private double _tilt = -0.15;
-        public double Tilt
+        /**
+        public void Limit()
         {
-            get { return _tilt; }
-            set
-            {
                 if (value < angleRangeLow)
                     _tilt = angleRangeLow;
                 else if (value >= angleRangeHigh)
                     _tilt = angleRangeHigh;
                 else
                     _tilt = value;
-            }
-        }
-
-        public double X = 0;
-        public double Y = 0;
-
-        private double _z = 23;
-        public double Z
-        {
-            get { return _z; }
-            set
-            {
                 if (value < distanceRangeLow)
                     _z = distanceRangeLow;
                 else if (value > distanceRangeHigh)
                     _z = distanceRangeHigh;
                 else
                     _z = value;
-            }
         }
+        */
+
+        public Vector3D Position = new Vector3D(0, 0, 23);
+        public Quaternion Rotation = Quaternion.Identity;
 
         private int lastTick = 0;
         private int lastFrameRate = 0;
@@ -94,7 +85,7 @@ namespace Strive.Client.ViewModel
 
         public int FPS { get { return lastFrameRate; } }
 
-        public Stopwatch movementTimer;
+        private Stopwatch _movementTimer;
 
         public delegate bool KeyPressedCheck(Key k);
 
@@ -107,16 +98,16 @@ namespace Strive.Client.ViewModel
             _worldViewModel = worldViewModel;
             _keyPressed = keyPressed;
             _bindings = bindings;
-            movementTimer = new Stopwatch();
-            movementTimer.Start();
+            _movementTimer = new Stopwatch();
+            _movementTimer.Start();
         }
 
-        double speed = 50.0;
+        double _speed = 50.0;
 
-        int movementPerpendicular;
-        int movementForward;
-        double speedModifier;
-        double delta;
+        int _movementPerpendicular;
+        int _movementForward;
+        double _speedModifier;
+        double _deltaT;
 
         public void Check()
         {
@@ -131,42 +122,32 @@ namespace Strive.Client.ViewModel
             var count = FollowEntities.Count;
             if (count > 0)
             {
-                var centerX = FollowEntities.Select(e => e.Entity.X).Sum() / count;
-                var centerY = FollowEntities.Select(e => e.Entity.Y).Sum() / count;
-                var centerZ = FollowEntities.Select(e => e.Entity.Z).Sum() / count;
+                Vector3D center = FollowEntities.Select(e => e.Entity.Position)
+                    .Aggregate((a, b) => a + b)
+                    / FollowEntities.Count;
+                Vector3D diff = center - Position;
+                double vectorDistance = diff.Length;
 
-                var dX = (centerX - X);
-                var dY = (centerY - Y);
-                var dZ = (centerZ - Z);
-
-                var vectorDistance = Math.Sqrt(dX * dX + dY * dY + dZ * dZ);
-
-                var maxX = FollowEntities.Select(e => e.Entity.X).Max();
-                var maxY = FollowEntities.Select(e => e.Entity.Y).Max();
-                var maxZ = FollowEntities.Select(e => e.Entity.Z).Max();
-                var minX = FollowEntities.Select(e => e.Entity.X).Min();
-                var minY = FollowEntities.Select(e => e.Entity.Y).Min();
-                var minZ = FollowEntities.Select(e => e.Entity.Z).Min();
-
+                // TODO: replace with a proper bounds and fulstrum calculation
+                var maxX = FollowEntities.Max(e => e.Entity.Position.X);
+                var maxY = FollowEntities.Max(e => e.Entity.Position.Y);
+                var maxZ = FollowEntities.Max(e => e.Entity.Position.Z);
+                var minX = FollowEntities.Min(e => e.Entity.Position.X);
+                var minY = FollowEntities.Min(e => e.Entity.Position.Y);
+                var minZ = FollowEntities.Min(e => e.Entity.Position.Z);
                 var viewDistance = new List<double>() { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
 
-                var targetX = centerX - (dX * viewDistance / vectorDistance);
-                var targetY = centerY - (dY * viewDistance / vectorDistance);
-                var targetZ = centerZ - (dZ * viewDistance / vectorDistance);
-
-                X += (targetX - X) * delta * 2;
-                Y += (targetY - Y) * delta * 2;
-                Z += (targetZ - Z) * delta * 2;
-                //Tilt = 0.001 - Math.PI / 2.0;
+                Vector3D target = center - (diff * viewDistance / vectorDistance);
+                Position += (target - Position) * _deltaT * 2;
             }
 
-            movementPerpendicular = 0;
-            movementForward = 0;
-            speedModifier = 1f;
-            movementTimer.Stop();
-            delta = movementTimer.Elapsed.TotalSeconds;
-            movementTimer.Reset();
-            movementTimer.Start();
+            _movementPerpendicular = 0;
+            _movementForward = 0;
+            _speedModifier = 1f;
+            _movementTimer.Stop();
+            _deltaT = _movementTimer.Elapsed.TotalSeconds;
+            _movementTimer.Reset();
+            _movementTimer.Start();
 
             foreach (InputBindings.KeyBinding kb in _bindings.KeyBindings)
             {
@@ -212,72 +193,70 @@ namespace Strive.Client.ViewModel
 
         void Down()
         {
-            Z -= delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
+            Z -= _deltaT * (distanceRangeHigh - distanceRangeLow) / 10.0;
         }
 
         void Up()
         {
-            Z += delta * (distanceRangeHigh - distanceRangeLow) / 10.0;
+            Z += _deltaT * (distanceRangeHigh - distanceRangeLow) / 10.0;
         }
 
         void TiltUp()
         {
-            Tilt += delta * (angleRangeHigh - angleRangeLow) / 2.0;
+            Tilt += _deltaT * (angleRangeHigh - angleRangeLow) / 2.0;
             FollowEntities.Clear();
         }
 
         void TiltDown()
         {
-            Tilt -= delta * (angleRangeHigh - angleRangeLow) / 2.0;
+            Tilt -= _deltaT * (angleRangeHigh - angleRangeLow) / 2.0;
             FollowEntities.Clear();
         }
 
         void Forward()
         {
-            movementForward++;
+            _movementForward++;
             FollowEntities.Clear();
         }
 
         void Back()
         {
-            movementForward--;
+            _movementForward--;
             FollowEntities.Clear();
         }
 
         void Left()
         {
-            movementPerpendicular--;
+            _movementPerpendicular--;
             FollowEntities.Clear();
         }
 
         void Right()
         {
-            movementPerpendicular++;
+            _movementPerpendicular++;
             FollowEntities.Clear();
         }
 
         void TurnLeft()
         {
-            Heading -= delta * 2.0;
+            Heading -= _deltaT * 2.0;
             FollowEntities.Clear();
         }
 
         void TurnRight()
         {
-            Heading += delta * 2.0;
+            Heading += _deltaT * 2.0;
             FollowEntities.Clear();
         }
 
         void Walk()
         {
-            speedModifier = 0.2;
+            _speedModifier = 0.2;
         }
 
         void Home()
         {
-            X = 0;
-            Y = 0;
-            Z = 0;
+            Position = new Vector3D(0, 0, 0);
             Tilt = 0.001 - Math.PI / 2.0;
             FollowEntities.Clear();
         }
@@ -295,14 +274,14 @@ namespace Strive.Client.ViewModel
 
         void SetCamera()
         {
-            if (movementPerpendicular != 0 || movementForward != 0)
+            if (_movementPerpendicular != 0 || _movementForward != 0)
             {
-                double movementHeading = Heading + Math.Atan2(movementForward, -movementPerpendicular);
+                double movementHeading = Heading + Math.Atan2(_movementForward, -_movementPerpendicular);
                 double movementX = Math.Sin(movementHeading);
                 double movementY = Math.Cos(movementHeading);
 
-                X += movementX * delta * speed * speedModifier;
-                Y += movementY * delta * speed * speedModifier;
+                X += movementX * _deltaT * _speed * _speedModifier;
+                Y += movementY * _deltaT * _speed * _speedModifier;
             }
         }
     }

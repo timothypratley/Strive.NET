@@ -8,7 +8,6 @@ using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
 using ToServer = Strive.Network.Messages.ToServer;
 using Strive.Network.Server;
-using Strive.Math3D;
 using Strive.Server.Model;
 using Strive.Common;
 

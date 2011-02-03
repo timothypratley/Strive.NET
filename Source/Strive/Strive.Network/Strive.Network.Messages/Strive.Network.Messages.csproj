@@ -72,15 +72,11 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Strive.Math3D\Strive.Math3D.csproj">
-      <Name>Strive.Math3D</Name>
-      <Project>{14818E27-DABB-4332-B572-21BA9983D886}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Server\Strive.Server.Model\Strive.Server.Model.csproj">
       <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
       <Name>Strive.Server.Model</Name>
     </ProjectReference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System">
       <Name>System</Name>
     </Reference>

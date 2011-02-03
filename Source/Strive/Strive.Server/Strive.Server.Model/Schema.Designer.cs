@@ -11186,6 +11186,8 @@ namespace Strive.Server.Model {
             
             private global::System.Data.DataColumn columnRotationZ;
             
+            private global::System.Data.DataColumn columnRotationW;
+            
             private global::System.Data.DataColumn columnEnergyCurrent;
             
             private global::System.Data.DataColumn columnHitpointsCurrent;
@@ -11289,6 +11291,14 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RotationWColumn {
+                get {
+                    return this.columnRotationW;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn EnergyCurrentColumn {
                 get {
                     return this.columnEnergyCurrent;
@@ -11340,7 +11350,7 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectInstanceRow AddObjectInstanceRow(TemplateObjectRow parentTemplateObjectRowByFK_TemplateObject_ObjectInstance, double X, double Y, double Z, double RotationX, double RotationY, double RotationZ, double EnergyCurrent, double HitpointsCurrent) {
+            public ObjectInstanceRow AddObjectInstanceRow(TemplateObjectRow parentTemplateObjectRowByFK_TemplateObject_ObjectInstance, double X, double Y, double Z, double RotationX, double RotationY, double RotationZ, double RotationW, double EnergyCurrent, double HitpointsCurrent) {
                 ObjectInstanceRow rowObjectInstanceRow = ((ObjectInstanceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -11351,6 +11361,7 @@ namespace Strive.Server.Model {
                         RotationX,
                         RotationY,
                         RotationZ,
+                        RotationW,
                         EnergyCurrent,
                         HitpointsCurrent};
                 if ((parentTemplateObjectRowByFK_TemplateObject_ObjectInstance != null)) {
@@ -11393,6 +11404,7 @@ namespace Strive.Server.Model {
                 this.columnRotationX = base.Columns["RotationX"];
                 this.columnRotationY = base.Columns["RotationY"];
                 this.columnRotationZ = base.Columns["RotationZ"];
+                this.columnRotationW = base.Columns["RotationW"];
                 this.columnEnergyCurrent = base.Columns["EnergyCurrent"];
                 this.columnHitpointsCurrent = base.Columns["HitpointsCurrent"];
             }
@@ -11416,6 +11428,8 @@ namespace Strive.Server.Model {
                 base.Columns.Add(this.columnRotationY);
                 this.columnRotationZ = new global::System.Data.DataColumn("RotationZ", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRotationZ);
+                this.columnRotationW = new global::System.Data.DataColumn("RotationW", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRotationW);
                 this.columnEnergyCurrent = new global::System.Data.DataColumn("EnergyCurrent", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEnergyCurrent);
                 this.columnHitpointsCurrent = new global::System.Data.DataColumn("HitpointsCurrent", typeof(double), null, global::System.Data.MappingType.Element);
@@ -11433,6 +11447,7 @@ namespace Strive.Server.Model {
                 this.columnRotationX.AllowDBNull = false;
                 this.columnRotationY.AllowDBNull = false;
                 this.columnRotationZ.AllowDBNull = false;
+                this.columnRotationW.AllowDBNull = false;
                 this.columnEnergyCurrent.AllowDBNull = false;
                 this.columnHitpointsCurrent.AllowDBNull = false;
             }
@@ -21602,7 +21617,7 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public TemplateObjectRow AddTemplateObjectRow(string TemplateObjectName, ResourceRow parentResourceRowByFK_TemplateObject_Model, double Height, PlayerRow parentPlayerRowByFK_TemplateObject_Player_Created, int LastUpdatedBy, System.DateTime CreationTime, System.DateTime LastUpdated) {
+            public TemplateObjectRow AddTemplateObjectRow(string TemplateObjectName, ResourceRow parentResourceRowByFK_TemplateObject_Model, float Height, PlayerRow parentPlayerRowByFK_TemplateObject_Player_Created, int LastUpdatedBy, System.DateTime CreationTime, System.DateTime LastUpdated) {
                 TemplateObjectRow rowTemplateObjectRow = ((TemplateObjectRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -21667,7 +21682,7 @@ namespace Strive.Server.Model {
                 base.Columns.Add(this.columnTemplateObjectName);
                 this.columnResourceID = new global::System.Data.DataColumn("ResourceID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnResourceID);
-                this.columnHeight = new global::System.Data.DataColumn("Height", typeof(double), null, global::System.Data.MappingType.Element);
+                this.columnHeight = new global::System.Data.DataColumn("Height", typeof(float), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHeight);
                 this.columnPlayerID = new global::System.Data.DataColumn("PlayerID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPlayerID);
@@ -25039,6 +25054,17 @@ namespace Strive.Server.Model {
                 }
                 set {
                     this[this.tableObjectInstance.RotationZColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double RotationW {
+                get {
+                    return ((double)(this[this.tableObjectInstance.RotationWColumn]));
+                }
+                set {
+                    this[this.tableObjectInstance.RotationWColumn] = value;
                 }
             }
             
@@ -29112,9 +29138,9 @@ namespace Strive.Server.Model {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double Height {
+            public float Height {
                 get {
-                    return ((double)(this[this.tableTemplateObject.HeightColumn]));
+                    return ((float)(this[this.tableTemplateObject.HeightColumn]));
                 }
                 set {
                     this[this.tableTemplateObject.HeightColumn] = value;

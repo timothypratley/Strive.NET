@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Math3D", "Strive\Strive.Math3D\Strive.Math3D.csproj", "{14818E27-DABB-4332-B572-21BA9983D886}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Client", "Strive\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj", "{8C36C1BE-AB5F-47A5-869D-139A04B23C52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Server", "Strive\Strive.Network\Strive.Network.Server\Strive.Network.Server.csproj", "{757BF7D3-B811-48D7-AE27-0842B0522536}"
@@ -44,21 +42,6 @@ Global
 		StrongMagic|x86 = StrongMagic|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{14818E27-DABB-4332-B572-21BA9983D886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.Release|x86.ActiveCfg = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
-		{14818E27-DABB-4332-B572-21BA9983D886}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

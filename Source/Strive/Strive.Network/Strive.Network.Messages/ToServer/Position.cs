@@ -1,7 +1,8 @@
 using System;
+using System.Windows.Media.Media3D;
 
 using Strive.Server.Model;
-using Strive.Math3D;
+
 
 namespace Strive.Network.Messages.ToServer
 {
@@ -12,7 +13,7 @@ namespace Strive.Network.Messages.ToServer
 	public class Position : IMessage
 	{
 		public Position(){}
-		public Position( Vector3D position, Vector3D rotation ) {
+		public Position( Vector3D position, Quaternion rotation ) {
 			this.position = position;
 			this.rotation = rotation;
 		}
@@ -28,6 +29,6 @@ namespace Strive.Network.Messages.ToServer
 		}
 		
 		public Vector3D position;
-		public Vector3D rotation;
+		public Quaternion rotation;
 	}
 }

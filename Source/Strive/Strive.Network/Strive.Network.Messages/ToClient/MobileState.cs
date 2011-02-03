@@ -1,6 +1,6 @@
 using System;
+using System.Windows.Media.Media3D;
 
-using Strive.Math3D;
 using Strive.Server.Model;
 using Strive.Common;
 

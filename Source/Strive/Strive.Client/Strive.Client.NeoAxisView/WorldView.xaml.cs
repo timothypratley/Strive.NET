@@ -78,10 +78,12 @@ namespace Strive.Client.NeoAxisView
         {
             this.camera = camera;
             _perspective.Check();
-            r.CameraPosition = new Vec3((float)_perspective.X, (float)_perspective.Y, (float)_perspective.Z);
-            r.CameraDirection = new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
-                * new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
-                * Vec3.XAxis;
+            r.CameraPosition = _perspective.Position.ToVec3();
+            r.CameraDirection = _perspective.Rotation.ToQuat() * Vec3.XAxis;
+                // TODO: what does it all mean?
+                //new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
+                //* new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
+                //* Vec3.XAxis;
             if (SoundWorld.Instance != null)
                 SoundWorld.Instance.SetListener(camera.Position, Vec3.Zero, camera.Direction, camera.Up);
             RenderEntityOverCursor(camera);

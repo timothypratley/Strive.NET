@@ -4,18 +4,18 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Collections;
 using System.Threading;
+using System.Windows.Media.Media3D;
 
 using Strive.Network.Server;
 using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
 using ToServer = Strive.Network.Messages.ToServer;
 using Strive.Server.Model;
-using Strive.Math3D;
 using Strive.Common;
 using Common.Logging;
 
-// todo: this object needs to be made threadsafe
 
+// todo: this object needs to be made threadsafe... why?
 namespace Strive.Server.Logic
 {
     public class World
@@ -279,8 +279,8 @@ namespace Strive.Server.Logic
             if (po is Terrain)
             {
                 // keep terrain seperate
-                int terrainX = Helper.DivTruncate((int)(po.Position.X - lowX), Constants.terrainPieceSize);
-                int terrainZ = Helper.DivTruncate((int)(po.Position.Z - lowZ), Constants.terrainPieceSize);
+                int terrainX = DivTruncate((int)(po.Position.X - lowX), Constants.terrainPieceSize);
+                int terrainZ = DivTruncate((int)(po.Position.Z - lowZ), Constants.terrainPieceSize);
                 terrain[terrainX, terrainZ] = (Terrain)po;
             }
             else
@@ -288,7 +288,7 @@ namespace Strive.Server.Logic
                 // keep everything at ground level
                 try
                 {
-                    float altitude = AltitudeAt(po.Position.X, po.Position.Z);
+                    double altitude = AltitudeAt(po.Position.X, po.Position.Z);
                     po.Position.Y = altitude + po.Height / 2F;
                 }
                 catch (InvalidLocationException)
@@ -329,7 +329,7 @@ namespace Strive.Server.Logic
             Log.Info("Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world.");
         }
 
-        public void Relocate(PhysicalObject po, Vector3D newPosition, Vector3D newRotation)
+        public void Relocate(PhysicalObject po, Vector3D newPosition, Quaternion newRotation)
         {
             // keep everything inside world bounds
             if (newPosition.X >= highX)
@@ -359,7 +359,7 @@ namespace Strive.Server.Logic
             // TODO: refactor below ma and overload Height
             try
             {
-                float altitude = AltitudeAt(newPosition.X, newPosition.Z);
+                double altitude = AltitudeAt(newPosition.X, newPosition.Z);
                 if (po is MobileAvatar)
                 {
                     altitude += ((MobileAvatar)po).CurrentHeight / 2;
@@ -430,16 +430,16 @@ namespace Strive.Server.Logic
             //public void server_foo(float x1, float z1, float x, float z) {
             if (ma != null && ma.client != null && po.Position != newPosition)
             {
-                int tx1 = Helper.DivTruncate((int)po.Position.X, Constants.terrainPieceSize);
-                int tz1 = Helper.DivTruncate((int)po.Position.Z, Constants.terrainPieceSize);
+                int tx1 = DivTruncate((int)po.Position.X, Constants.terrainPieceSize);
+                int tz1 = DivTruncate((int)po.Position.Z, Constants.terrainPieceSize);
                 for (int k = 0; k < Constants.terrainZoomOrder; k++)
                 {
-                    int tbx = Helper.DivTruncate((int)newPosition.X, Constants.terrainPieceSize) - Constants.xRadius[k];
-                    int tbz = Helper.DivTruncate((int)newPosition.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
+                    int tbx = DivTruncate((int)newPosition.X, Constants.terrainPieceSize) - Constants.xRadius[k];
+                    int tbz = DivTruncate((int)newPosition.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
 
                     // Normalise to a 'grid' point
-                    tbx = Helper.DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
-                    tbz = Helper.DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
+                    tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
+                    tbz = DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
 
                     for (i = 0; i <= Constants.xRadius[k] * 2; i += Constants.scale[k])
                     {
@@ -692,12 +692,12 @@ namespace Strive.Server.Logic
 
                 for (int k = 0; k < Constants.terrainZoomOrder; k++)
                 {
-                    int tbx = Helper.DivTruncate((int)mob.Position.X, Constants.terrainPieceSize) - Constants.xRadius[k];
-                    int tbz = Helper.DivTruncate((int)mob.Position.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
+                    int tbx = DivTruncate((int)mob.Position.X, Constants.terrainPieceSize) - Constants.xRadius[k];
+                    int tbz = DivTruncate((int)mob.Position.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
 
                     // Normalise to a 'grid' point
-                    tbx = Helper.DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
-                    tbz = Helper.DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
+                    tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
+                    tbz = DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
 
                     for (i = 0; i <= Constants.xRadius[k] * 2; i += Constants.scale[k])
                     {
@@ -746,10 +746,10 @@ namespace Strive.Server.Logic
         }
 
         public class InvalidLocationException : Exception { }
-        public float AltitudeAt(float x, float z)
+        public double AltitudeAt(double x, double z)
         {
-            int terrainX = Helper.DivTruncate((int)(x - lowX), Constants.terrainPieceSize);
-            int terrainZ = Helper.DivTruncate((int)(z - lowZ), Constants.terrainPieceSize);
+            int terrainX = DivTruncate((int)(x - lowX), Constants.terrainPieceSize);
+            int terrainZ = DivTruncate((int)(z - lowZ), Constants.terrainPieceSize);
 
             // if terrain piece exists, keep everything on the ground
             if (terrain[terrainX, terrainZ] != null
@@ -758,16 +758,16 @@ namespace Strive.Server.Logic
                 && terrain[terrainX + 1, terrainZ + 1] != null
                 )
             {
-                float dx = x - terrain[terrainX, terrainZ].Position.X;
-                float dz = z - terrain[terrainX, terrainZ].Position.Z;
+                double dx = x - terrain[terrainX, terrainZ].Position.X;
+                double dz = z - terrain[terrainX, terrainZ].Position.Z;
 
                 // terrain is a diagonally split square, forming two triangles
                 // which touch the altitude points of 4 neighbouring terrain
                 // points, the current terrain and its xplus, zplus, xpluszplus.
                 // so for either triangle, just apply the slope in x and z
                 // to find the altitude at that point
-                float xslope;
-                float zslope;
+                double xslope;
+                double zslope;
                 if (dz < dx)
                 {
                     // lower triangle
@@ -791,6 +791,11 @@ namespace Strive.Server.Logic
             Global.ModelSchema = new Schema();
             Global.ModelSchema.World.AddWorldRow(world_id, "Empty", "An empty world");
             Global.ModelSchema.Player.AddPlayerRow("Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob", 100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
+        }
+
+        static public int DivTruncate(int x, int y)
+        {
+            return (x / y - ((x < 0 && (x % y != 0)) ? 1 : 0));
         }
     }
 }

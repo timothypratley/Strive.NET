@@ -1,7 +1,8 @@
 using System;
+using System.Windows.Media.Media3D;
 
 using Strive.Server.Model;
-using Strive.Math3D;
+
 
 namespace Strive.Network.Messages.ToClient
 {
@@ -27,6 +28,6 @@ namespace Strive.Network.Messages.ToClient
 
 		public int instance_id;
 		public Vector3D position;
-		public Vector3D rotation;
+		public Quaternion rotation;
 	}
 }

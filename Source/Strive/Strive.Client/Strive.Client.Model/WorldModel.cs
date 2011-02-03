@@ -23,14 +23,13 @@ namespace Strive.Client.Model
             _connection.OnPositionSent += new ServerConnection.OnPositionSentHandler(UpdatePositions);
         }
 
-        void UpdatePositions(ToClient.Position Position)
+        void UpdatePositions(ToClient.Position message)
         {
-            EntityModel entity = _entities.Where(e => e.Name == Position.instance_id.ToString()).FirstOrDefault();
+            EntityModel entity = _entities.Where(e => e.Name == message.instance_id.ToString()).FirstOrDefault();
             if (entity != null)
             {
-                entity.X = Position.position.X;
-                entity.Y = Position.position.Y;
-                entity.Z = Position.position.Z;
+                entity.Position = message.position;
+                entity.Rotation = message.rotation;
             }
         }
 

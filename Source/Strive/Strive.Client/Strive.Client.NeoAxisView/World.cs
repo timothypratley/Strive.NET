@@ -49,7 +49,7 @@ namespace Strive.Client.NeoAxisView
                 if (obj.Name.Length == 0)
                     return;
 
-                ViewModel.AddOrReplace(obj.Name, obj.Type.Name, obj.Position.X, obj.Position.Y, obj.Position.Z);
+                ViewModel.AddOrReplace(obj.Name, obj.Type.Name, obj.Position.ToVector3D(), obj.Rotation.ToQuaternion());
             });
             return result;
         }

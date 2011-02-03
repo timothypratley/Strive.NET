@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,10 +50,6 @@
     <Compile Include="WorldModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Strive.Math3D\Strive.Math3D.csproj">
-      <Project>{14818E27-DABB-4332-B572-21BA9983D886}</Project>
-      <Name>Strive.Math3D</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj">
       <Project>{8C36C1BE-AB5F-47A5-869D-139A04B23C52}</Project>
       <Name>Strive.Network.Client</Name>

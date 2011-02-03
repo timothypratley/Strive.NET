@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Windows.Media.Media3D;
 
 using Common.Logging;
 
@@ -9,7 +10,6 @@ using Strive.Network.Server;
 using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
 using ToServer = Strive.Network.Messages.ToServer;
-using Strive.Math3D;
 using Strive.Common;
 
 
@@ -73,7 +73,7 @@ namespace Strive.Server.Logic
             // TODO: this will prolly change if we use anything more
             // advance than stick to ground.
             // changing state may have moved the mobile.
-            float altitude = world.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
+            double altitude = world.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
             Position.Y = altitude;
 
             // NB: MobileState message has position info
@@ -162,7 +162,7 @@ namespace Strive.Server.Logic
                     while (Rotation.Y < 0) Rotation.Y += 360;
                     while (Rotation.Y >= 360) Rotation.Y -= 360;
                 }
-                Vector3D velocity = Helper.GetHeadingFromRotation(Rotation);
+                Vector3D velocity = Rotation * new Vector3D(1, 0, 0);
                 switch (MobileState)
                 {
                     case EnumMobileState.Running:
@@ -275,7 +275,7 @@ namespace Strive.Server.Logic
         public void PhysicalAttack(PhysicalObject po)
         {
             // TODO use the real range of kill
-            if ((Position - po.Position).GetMagnitude() > 100)
+            if ((Position - po.Position).Length > 100)
             {
                 // target is out of range
                 SendLog(target.TemplateObjectName + " is out of range.");
@@ -450,9 +450,7 @@ namespace Strive.Server.Logic
                 HitPoints = MaxHitPoints;
 
                 // TODO: where should we respawn?
-                Position.Set(0, 0, 0);
-                Rotation.Set(0, 0, 0);
-                world.Relocate(this, Position, Rotation);
+                world.Relocate(this, new Vector3D(0,0,0), Quaternion.Identity);
 
                 // set resting in new location to let everyone know
                 SetMobileState(EnumMobileState.Resting);
