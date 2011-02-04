@@ -162,7 +162,9 @@ namespace Strive.Server.Logic
                     while (Rotation.Y < 0) Rotation.Y += 360;
                     while (Rotation.Y >= 360) Rotation.Y -= 360;
                 }
-                Vector3D velocity = Rotation * new Vector3D(1, 0, 0);
+                Matrix3D m = Matrix3D.Identity;
+                m.RotatePrepend(Rotation);
+                Vector3D velocity = new Vector3D(1, 0, 0) * m;
                 switch (MobileState)
                 {
                     case EnumMobileState.Running:

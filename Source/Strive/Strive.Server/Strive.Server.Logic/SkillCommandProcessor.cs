@@ -139,7 +139,7 @@ namespace Strive.Server.Logic
                         caster.SendLog("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
                         return;
                     }
-                    if ((caster.Position - target.Position).GetMagnitude() > esr.Range)
+                    if ((caster.Position - target.Position).Length > esr.Range)
                     {
                         // target is out of range
                         caster.SendLog(target.TemplateObjectName + " is out of range");

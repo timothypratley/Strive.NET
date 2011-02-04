@@ -8,10 +8,11 @@ using System.Text;
 using System.Windows.Media.Media3D;
 using System.Windows.Input;
 
+using UpdateControls.XAML;
+
 using Strive.Client.Model;
 using Strive.Client.NavigationModel;
 using Strive.Network.Client;
-using UpdateControls.XAML;
 
 
 namespace Strive.Client.ViewModel
@@ -21,12 +22,13 @@ namespace Strive.Client.ViewModel
         public InputBindings bindings;
 
         private WorldModel _world;
+        public WorldModel World { get { return _world; } }
         private WorldNavigation _navigation;
 
-        public WorldViewModel(ServerConnection serverConnection)
+        public WorldViewModel(WorldModel worldModel)
         {
             bindings = new InputBindings();
-            _world = new WorldModel(serverConnection);
+            _world = worldModel;
             _navigation = new WorldNavigation();
         }
 
@@ -53,7 +55,7 @@ namespace Strive.Client.ViewModel
         public void AddOrReplace(string name, string modelId, Vector3D position, Quaternion rotation)
         {
             var entity = new EntityModel(name, modelId, position, rotation);
-            _world.AddEntity(entity);
+            _world.AddEntity(name, entity);
         }
 
         public void ClearMouseOverEntity()

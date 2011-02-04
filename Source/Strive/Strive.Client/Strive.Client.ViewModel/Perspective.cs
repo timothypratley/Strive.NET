@@ -58,24 +58,27 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        /**
-        public void Limit()
+        double _distanceRangeLow = 10.0;
+        double _distanceRangeHigh = 300.0;
+        double _angleRangeLow = 0.01 - Math.PI / 2.0;
+        double _angleRangeHigh = Math.PI / 2.0 - 0.01;
+
+        double _tilt = 0;
+        public double Tilt
         {
-                if (value < angleRangeLow)
-                    _tilt = angleRangeLow;
-                else if (value >= angleRangeHigh)
-                    _tilt = angleRangeHigh;
+            get { return _tilt; }
+            set
+            {
+                if (value < _angleRangeLow)
+                    _tilt = _angleRangeLow;
+                else if (value >= _angleRangeHigh)
+                    _tilt = _angleRangeHigh;
                 else
                     _tilt = value;
-                if (value < distanceRangeLow)
-                    _z = distanceRangeLow;
-                else if (value > distanceRangeHigh)
-                    _z = distanceRangeHigh;
-                else
-                    _z = value;
-        }
-        */
 
+            }
+        }
+         
         public Vector3D Position = new Vector3D(0, 0, 23);
         public Quaternion Rotation = Quaternion.Identity;
 
@@ -92,25 +95,32 @@ namespace Strive.Client.ViewModel
         WorldViewModel _worldViewModel;
         KeyPressedCheck _keyPressed;
         InputBindings _bindings;
+        ConnectionHandler _connectionHandler;
 
-        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings)
+        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings, ConnectionHandler connectionHandler)
         {
             _worldViewModel = worldViewModel;
             _keyPressed = keyPressed;
             _bindings = bindings;
+            _connectionHandler = connectionHandler;
+            Home();
             _movementTimer = new Stopwatch();
             _movementTimer.Start();
         }
 
-        double _speed = 50.0;
+        double _landSpeed = 50.0;
 
         int _movementPerpendicular;
         int _movementForward;
+        int _movementUp;
         double _speedModifier;
         double _deltaT;
 
         public void Check()
         {
+            Vector3D initialPosition = Position;
+            Quaternion initialRotation = Rotation;
+
             if (System.Environment.TickCount - lastTick >= 1000)
             {
                 lastFrameRate = frameRate;
@@ -143,6 +153,7 @@ namespace Strive.Client.ViewModel
 
             _movementPerpendicular = 0;
             _movementForward = 0;
+            _movementUp = 0;
             _speedModifier = 1f;
             _movementTimer.Stop();
             _deltaT = _movementTimer.Elapsed.TotalSeconds;
@@ -153,28 +164,30 @@ namespace Strive.Client.ViewModel
             {
                 if (kb.KeyCombo.All(k => _keyPressed(k)))
                 {
+                    FollowEntities.Clear();
+
                     if (kb.Action == InputBindings.KeyAction.Up)
-                        Up();
+                        _movementUp++;
                     else if (kb.Action == InputBindings.KeyAction.Down)
-                        Down();
+                        _movementUp--;
                     else if (kb.Action == InputBindings.KeyAction.Left)
-                        Left();
+                        _movementPerpendicular--;
                     else if (kb.Action == InputBindings.KeyAction.Right)
-                        Right();
+                        _movementPerpendicular++;
                     else if (kb.Action == InputBindings.KeyAction.TurnLeft)
-                        TurnLeft();
+                        Heading -= _deltaT * 2.0;
                     else if (kb.Action == InputBindings.KeyAction.TurnRight)
-                        TurnRight();
+                        Heading += _deltaT * 2.0;
                     else if (kb.Action == InputBindings.KeyAction.TiltUp)
-                        TiltUp();
+                        Tilt += _deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
                     else if (kb.Action == InputBindings.KeyAction.TiltDown)
-                        TiltDown();
+                        Tilt -= _deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
                     else if (kb.Action == InputBindings.KeyAction.Walk)
-                        Walk();
+                        _speedModifier = 0.2;
                     else if (kb.Action == InputBindings.KeyAction.Forward)
-                        Forward();
+                        _movementForward++;
                     else if (kb.Action == InputBindings.KeyAction.Back)
-                        Back();
+                        _movementForward--;
                     else if (kb.Action == InputBindings.KeyAction.Home)
                         Home();
                     else if (kb.Action == InputBindings.KeyAction.FollowSelected)
@@ -183,81 +196,38 @@ namespace Strive.Client.ViewModel
                         throw new Exception("Unexpected keyboard binding " + kb.Action);
                 }
             }
-            SetCamera();
-        }
 
-        double distanceRangeLow = 10.0;
-        double distanceRangeHigh = 300.0;
-        double angleRangeLow = 0.01 - Math.PI / 2.0;
-        double angleRangeHigh = Math.PI / 2.0 - 0.01;
+            // Set Position
+            if (_movementPerpendicular != 0 || _movementForward != 0 || _movementUp != 0)
+            {
+                double movementHeading = Heading + Math.Atan2(_movementForward, -_movementPerpendicular);
+                Vector3D positionChange = new Vector3D(
+                    Math.Sin(movementHeading) * _landSpeed,
+                    Math.Cos(movementHeading) * _landSpeed,
+                    _movementUp * (_distanceRangeHigh - _distanceRangeLow) / 10.0);
 
-        void Down()
-        {
-            Z -= _deltaT * (distanceRangeHigh - distanceRangeLow) / 10.0;
-        }
+                Position += positionChange * _deltaT * _speedModifier;
 
-        void Up()
-        {
-            Z += _deltaT * (distanceRangeHigh - distanceRangeLow) / 10.0;
-        }
+                if (Position.Z < _distanceRangeLow)
+                    Position.Z = _distanceRangeLow;
+                else if (Position.Z > _distanceRangeHigh)
+                    Position.Z = _distanceRangeHigh;
+            }
 
-        void TiltUp()
-        {
-            Tilt += _deltaT * (angleRangeHigh - angleRangeLow) / 2.0;
-            FollowEntities.Clear();
-        }
+            Rotation = new Quaternion(0, 0, 1, Heading) * new Quaternion(0, 1, 0, Tilt);
 
-        void TiltDown()
-        {
-            Tilt -= _deltaT * (angleRangeHigh - angleRangeLow) / 2.0;
-            FollowEntities.Clear();
-        }
-
-        void Forward()
-        {
-            _movementForward++;
-            FollowEntities.Clear();
-        }
-
-        void Back()
-        {
-            _movementForward--;
-            FollowEntities.Clear();
-        }
-
-        void Left()
-        {
-            _movementPerpendicular--;
-            FollowEntities.Clear();
-        }
-
-        void Right()
-        {
-            _movementPerpendicular++;
-            FollowEntities.Clear();
-        }
-
-        void TurnLeft()
-        {
-            Heading -= _deltaT * 2.0;
-            FollowEntities.Clear();
-        }
-
-        void TurnRight()
-        {
-            Heading += _deltaT * 2.0;
-            FollowEntities.Clear();
-        }
-
-        void Walk()
-        {
-            _speedModifier = 0.2;
+            // Send update if required
+            if (Position != initialPosition || Rotation != initialRotation)
+            {
+                _connectionHandler.SendPosition(Position, Rotation);
+            }
         }
 
         void Home()
         {
             Position = new Vector3D(0, 0, 0);
             Tilt = 0.001 - Math.PI / 2.0;
+            Heading = 0;
             FollowEntities.Clear();
         }
 
@@ -270,19 +240,6 @@ namespace Strive.Client.ViewModel
             }
             else
                 FollowEntities = _worldViewModel.SelectedEntities;
-        }
-
-        void SetCamera()
-        {
-            if (_movementPerpendicular != 0 || _movementForward != 0)
-            {
-                double movementHeading = Heading + Math.Atan2(_movementForward, -_movementPerpendicular);
-                double movementX = Math.Sin(movementHeading);
-                double movementY = Math.Cos(movementHeading);
-
-                X += movementX * _deltaT * _speed * _speedModifier;
-                Y += movementY * _deltaT * _speed * _speedModifier;
-            }
         }
     }
 }
