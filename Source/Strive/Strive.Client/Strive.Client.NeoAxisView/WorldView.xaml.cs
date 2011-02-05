@@ -37,13 +37,13 @@ namespace Strive.Client.NeoAxisView
     /// </summary>
     public partial class WorldView : DockableContent
     {
-        Perspective _perspective;
+        PerspectiveViewModel _perspective;
         WorldViewModel _worldViewModel;
         public WorldView(WorldViewModel worldViewModel, ConnectionHandler connectionHandler)
         {
             InitializeComponent();
             _worldViewModel = worldViewModel;
-            _perspective = new Perspective(
+            _perspective = new PerspectiveViewModel(
                 worldViewModel,
                 r.IsKeyPressed,
                 new InputBindings(),

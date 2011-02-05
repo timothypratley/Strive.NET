@@ -11,7 +11,6 @@ using System.Windows.Input;
 using UpdateControls.XAML;
 
 using Strive.Client.Model;
-using Strive.Client.NavigationModel;
 using Strive.Network.Client;
 
 
@@ -21,41 +20,30 @@ namespace Strive.Client.ViewModel
     {
         public InputBindings bindings;
 
-        private WorldModel _world;
-        public WorldModel World { get { return _world; } }
+        private DictionaryModel<string, EntityModel> _world;
+        public DictionaryModel<string, EntityModel> World { get { return _world; } }
         private WorldNavigation _navigation;
+        public WorldNavigation Navigation { get { return _navigation; } }
 
-        public WorldViewModel(WorldModel worldModel)
+        public WorldViewModel(DictionaryModel<string, EntityModel> worldModel)
         {
             bindings = new InputBindings();
             _world = worldModel;
             _navigation = new WorldNavigation();
         }
 
-        public List<EntityViewModel> Entities
+        public IEnumerable<EntityViewModel> Entities
         {
             get
             {
-                return _world.Entities.Select(
-                    em => EntityViewModel.Wrap(em, _navigation)).ToList();
-            }
-        }
-
-        // TODO: make useful
-        public ICommand CreateEntity
-        {
-            get
-            {
-                return MakeCommand
-                    .When(() => true)
-                    .Do(() => AddOrReplace("foo", "bar", new Vector3D(0,0,0), Quaternion.Identity));
+                return _world.Entities
+                    .Select(em => new EntityViewModel(em, _navigation));
             }
         }
 
         public void AddOrReplace(string name, string modelId, Vector3D position, Quaternion rotation)
         {
-            var entity = new EntityModel(name, modelId, position, rotation);
-            _world.AddEntity(name, entity);
+            _world.AddEntity(name, new EntityModel(name, modelId, position, rotation));
         }
 
         public void ClearMouseOverEntity()
@@ -65,16 +53,12 @@ namespace Strive.Client.ViewModel
 
         public void SetMouseOverEntity(string name)
         {
-            var entity = _world.Entities.Where(e => e.Name == name).FirstOrDefault();
-            if (entity != null)
-            {
-                _navigation.MouseOverEntity = entity;
-            }
+            _navigation.MouseOverEntity = _world.GetEntity(name);
         }
 
         public void SelectAdd(string name)
         {
-            var entity = _world.Entities.Where(e => e.Name == name).FirstOrDefault();
+            var entity = _world.GetEntity(name);
             if (entity != null)
             {
                 _navigation.AddSelectedEntity(entity);
@@ -83,7 +67,7 @@ namespace Strive.Client.ViewModel
 
         public void Select(string name)
         {
-            var entity = _world.Entities.Where(e => e.Name == name).FirstOrDefault();
+            var entity = _world.GetEntity(name);
             if (entity != null)
             {
                 _navigation.SetSelectedEntity(entity);
@@ -94,8 +78,9 @@ namespace Strive.Client.ViewModel
         {
             get
             {
-                return _navigation.SelectedEntities.Select(
-                    em => EntityViewModel.Wrap(em, _navigation)).ToList();
+                return _navigation.SelectedEntities
+                    .Select(em => new EntityViewModel(em, _navigation))
+                    .ToList();
             }
         }
 
@@ -112,10 +97,8 @@ namespace Strive.Client.ViewModel
         {
             get
             {
-                if (_navigation.MouseOverEntity == null)
-                    return null;
-                else
-                    return EntityViewModel.Wrap(_navigation.MouseOverEntity, _navigation);
+                return _navigation.MouseOverEntity == null ? null
+                    : new EntityViewModel(_navigation.MouseOverEntity, _navigation);
             }
         }
     }

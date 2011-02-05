@@ -14,14 +14,14 @@ using Strive.Common;
 
 namespace Strive.Client.ViewModel
 {
-    public class Perspective
+    public class PerspectiveViewModel
     {
         public string WindowTitle
         {
             get
             {
-                if (FollowEntities.Count > 0)
-                    return "Following (" + FollowEntities.ToString() + ")";
+                if (_followEntities.Count > 0)
+                    return "Following (" + _followEntities.ToString() + ")";
                 else
                     return "Fly free view";
             }
@@ -42,9 +42,26 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public List<EntityViewModel> FollowEntities = new List<EntityViewModel>();
+        DictionaryModel<string, EntityModel> _followEntities = new DictionaryModel<string, EntityModel>();
+        public IEnumerable<EntityViewModel> FollowEntities
+        {
+            get
+            {
+                return _followEntities.Entities
+                    .Select(em => new EntityViewModel(em, WorldViewModel.Navigation));
+            }
+        }
 
-        private double _heading = 1.5;
+        public ICommand CreateEntity
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(() => WorldViewModel.AddOrReplace("foo", "bar", Position, Rotation));
+            }
+        }
+
+        private double _heading = 0;
         public double Heading
         {
             get { return _heading; }
@@ -92,14 +109,15 @@ namespace Strive.Client.ViewModel
 
         public delegate bool KeyPressedCheck(Key k);
 
-        WorldViewModel _worldViewModel;
+        public WorldViewModel WorldViewModel { get; private set; }
+
         KeyPressedCheck _keyPressed;
         InputBindings _bindings;
         ConnectionHandler _connectionHandler;
 
-        public Perspective(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings, ConnectionHandler connectionHandler)
+        public PerspectiveViewModel(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings, ConnectionHandler connectionHandler)
         {
-            _worldViewModel = worldViewModel;
+            WorldViewModel = worldViewModel;
             _keyPressed = keyPressed;
             _bindings = bindings;
             _connectionHandler = connectionHandler;
@@ -109,12 +127,6 @@ namespace Strive.Client.ViewModel
         }
 
         double _landSpeed = 50.0;
-
-        int _movementPerpendicular;
-        int _movementForward;
-        int _movementUp;
-        double _speedModifier;
-        double _deltaT;
 
         public void Check()
         {
@@ -129,65 +141,69 @@ namespace Strive.Client.ViewModel
             }
             frameRate++;
 
-            var count = FollowEntities.Count;
+            _movementTimer.Stop();
+            double deltaT = _movementTimer.Elapsed.TotalSeconds;
+            _movementTimer.Reset();
+            _movementTimer.Start();
+
+            // Move toward or follow one or more entities
+            var count = _followEntities.Count;
             if (count > 0)
             {
-                Vector3D center = FollowEntities.Select(e => e.Entity.Position)
+                Vector3D center = _followEntities.Entities
+                    .Where(e => WorldViewModel.World.ContainsKey(e.Name))
+                    .Select(e => e.Position)
                     .Aggregate((a, b) => a + b)
-                    / FollowEntities.Count;
+                    / _followEntities.Count;
                 Vector3D diff = center - Position;
                 double vectorDistance = diff.Length;
 
                 // TODO: replace with a proper bounds and fulstrum calculation
-                var maxX = FollowEntities.Max(e => e.Entity.Position.X);
-                var maxY = FollowEntities.Max(e => e.Entity.Position.Y);
-                var maxZ = FollowEntities.Max(e => e.Entity.Position.Z);
-                var minX = FollowEntities.Min(e => e.Entity.Position.X);
-                var minY = FollowEntities.Min(e => e.Entity.Position.Y);
-                var minZ = FollowEntities.Min(e => e.Entity.Position.Z);
+                var maxX = _followEntities.Entities.Max(e => e.Position.X);
+                var maxY = _followEntities.Entities.Max(e => e.Position.Y);
+                var maxZ = _followEntities.Entities.Max(e => e.Position.Z);
+                var minX = _followEntities.Entities.Min(e => e.Position.X);
+                var minY = _followEntities.Entities.Min(e => e.Position.Y);
+                var minZ = _followEntities.Entities.Min(e => e.Position.Z);
                 var viewDistance = new List<double>() { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
 
                 Vector3D target = center - (diff * viewDistance / vectorDistance);
-                Position += (target - Position) * _deltaT * 2;
+                Position += (target - Position) * deltaT * 2;
             }
 
-            _movementPerpendicular = 0;
-            _movementForward = 0;
-            _movementUp = 0;
-            _speedModifier = 1f;
-            _movementTimer.Stop();
-            _deltaT = _movementTimer.Elapsed.TotalSeconds;
-            _movementTimer.Reset();
-            _movementTimer.Start();
-
+            // Apply movement based upon inputs
+            int movementPerpendicular = 0;
+            int movementForward = 0;
+            int movementUp = 0;
+            double speedModifier = 1;
             foreach (InputBindings.KeyBinding kb in _bindings.KeyBindings)
             {
                 if (kb.KeyCombo.All(k => _keyPressed(k)))
                 {
-                    FollowEntities.Clear();
+                    _followEntities.Clear();
 
                     if (kb.Action == InputBindings.KeyAction.Up)
-                        _movementUp++;
+                        movementUp++;
                     else if (kb.Action == InputBindings.KeyAction.Down)
-                        _movementUp--;
+                        movementUp--;
                     else if (kb.Action == InputBindings.KeyAction.Left)
-                        _movementPerpendicular--;
+                        movementPerpendicular--;
                     else if (kb.Action == InputBindings.KeyAction.Right)
-                        _movementPerpendicular++;
+                        movementPerpendicular++;
                     else if (kb.Action == InputBindings.KeyAction.TurnLeft)
-                        Heading -= _deltaT * 2.0;
+                        Heading -= deltaT * 2.0;
                     else if (kb.Action == InputBindings.KeyAction.TurnRight)
-                        Heading += _deltaT * 2.0;
+                        Heading += deltaT * 2.0;
                     else if (kb.Action == InputBindings.KeyAction.TiltUp)
-                        Tilt += _deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
+                        Tilt += deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
                     else if (kb.Action == InputBindings.KeyAction.TiltDown)
-                        Tilt -= _deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
+                        Tilt -= deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
                     else if (kb.Action == InputBindings.KeyAction.Walk)
-                        _speedModifier = 0.2;
+                        speedModifier = 0.2;
                     else if (kb.Action == InputBindings.KeyAction.Forward)
-                        _movementForward++;
+                        movementForward++;
                     else if (kb.Action == InputBindings.KeyAction.Back)
-                        _movementForward--;
+                        movementForward--;
                     else if (kb.Action == InputBindings.KeyAction.Home)
                         Home();
                     else if (kb.Action == InputBindings.KeyAction.FollowSelected)
@@ -197,24 +213,23 @@ namespace Strive.Client.ViewModel
                 }
             }
 
-            // Set Position
-            if (_movementPerpendicular != 0 || _movementForward != 0 || _movementUp != 0)
+            // Set Position and Rotation
+            Rotation = new Quaternion(0, 0, 1, Heading) * new Quaternion(0, 1, 0, Tilt);
+            if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
             {
-                double movementHeading = Heading + Math.Atan2(_movementForward, -_movementPerpendicular);
+                double movementHeading = Heading + Math.Atan2(movementForward, -movementPerpendicular);
                 Vector3D positionChange = new Vector3D(
                     Math.Sin(movementHeading) * _landSpeed,
                     Math.Cos(movementHeading) * _landSpeed,
-                    _movementUp * (_distanceRangeHigh - _distanceRangeLow) / 10.0);
+                    movementUp * (_distanceRangeHigh - _distanceRangeLow) / 10.0);
 
-                Position += positionChange * _deltaT * _speedModifier;
+                Position += positionChange * deltaT * speedModifier;
 
                 if (Position.Z < _distanceRangeLow)
                     Position.Z = _distanceRangeLow;
                 else if (Position.Z > _distanceRangeHigh)
                     Position.Z = _distanceRangeHigh;
             }
-
-            Rotation = new Quaternion(0, 0, 1, Heading) * new Quaternion(0, 1, 0, Tilt);
 
             // Send update if required
             if (Position != initialPosition || Rotation != initialRotation)
@@ -227,19 +242,23 @@ namespace Strive.Client.ViewModel
         {
             Position = new Vector3D(0, 0, 0);
             Tilt = 0.001 - Math.PI / 2.0;
-            Heading = 0;
-            FollowEntities.Clear();
+            Heading = 1.5;
+            _followEntities.Clear();
         }
 
         void OnFollowSelected()
         {
-            if (_worldViewModel.MouseOverEntity != null)
+            var target = WorldViewModel.Navigation.MouseOverEntity;
+            if ( target != null)
             {
-                FollowEntities = new List<EntityViewModel>() { _worldViewModel.MouseOverEntity };
-                _worldViewModel.Select(_worldViewModel.MouseOverEntity.Entity.Name);
+                _followEntities.Clear();
+                _followEntities.AddEntity(target.Name, target);
+                WorldViewModel.Select(target.Name);
             }
             else
-                FollowEntities = _worldViewModel.SelectedEntities;
+                _followEntities = new DictionaryModel<string, EntityModel>(
+                    WorldViewModel.Navigation.SelectedEntities
+                    .Select(e => new KeyValuePair<string, EntityModel>(e.Name, e)));
         }
     }
 }

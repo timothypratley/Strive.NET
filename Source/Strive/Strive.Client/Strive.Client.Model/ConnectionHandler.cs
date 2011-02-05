@@ -17,9 +17,9 @@ namespace Strive.Client.Model
     {
         ServerConnection _connection;
         static ILog Log = LogManager.GetCurrentClassLogger();
-        WorldModel _world;
+        DictionaryModel<string, EntityModel> _world;
 
-        public ConnectionHandler(ServerConnection connection, WorldModel world)
+        public ConnectionHandler(ServerConnection connection, DictionaryModel<string, EntityModel> world)
         {
             _connection = connection;
             _world = world;

@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.Model", "Stri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.ViewModel", "Strive\Strive.Client\Strive.Client.ViewModel\Strive.Client.ViewModel.csproj", "{5092DF71-BFDA-44A0-9C7B-F4C4A5CE7E2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.NavigationModel", "Strive\Strive.Client\Strive.Client.NavigationModel\Strive.Client.NavigationModel.csproj", "{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Common", "Strive\Strive.Common\Strive.Common.csproj", "{FCB073C1-253E-46D8-BCE4-79B1C1616058}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.WPF", "Strive\Strive.WPF\Strive.WPF.csproj", "{790D523A-8C3C-480F-885B-C476238FB438}"
@@ -207,21 +205,6 @@ Global
 		{5092DF71-BFDA-44A0-9C7B-F4C4A5CE7E2B}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5092DF71-BFDA-44A0-9C7B-F4C4A5CE7E2B}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{5092DF71-BFDA-44A0-9C7B-F4C4A5CE7E2B}.StrongMagic|x86.ActiveCfg = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.Release|x86.ActiveCfg = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
-		{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 		{FCB073C1-253E-46D8-BCE4-79B1C1616058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCB073C1-253E-46D8-BCE4-79B1C1616058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCB073C1-253E-46D8-BCE4-79B1C1616058}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

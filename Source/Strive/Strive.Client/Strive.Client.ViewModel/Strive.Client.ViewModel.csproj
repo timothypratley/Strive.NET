@@ -54,8 +54,9 @@
   <ItemGroup>
     <Compile Include="EntityViewModel.cs" />
     <Compile Include="InputBindings.cs" />
-    <Compile Include="Perspective.cs" />
+    <Compile Include="PerspectiveViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="NavigationModel.cs" />
     <Compile Include="WorldViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,10 +75,6 @@
     <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">
       <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
       <Name>Strive.Client.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Strive.Client.NavigationModel\Strive.Client.NavigationModel.csproj">
-      <Project>{AE84FA6A-0A67-41B1-A899-BBA21ED39E1A}</Project>
-      <Name>Strive.Client.NavigationModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

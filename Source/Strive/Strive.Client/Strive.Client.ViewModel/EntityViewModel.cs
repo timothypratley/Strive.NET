@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 
 using Strive.Client.Model;
-using Strive.Client.NavigationModel;
 
 
 namespace Strive.Client.ViewModel
@@ -16,7 +15,10 @@ namespace Strive.Client.ViewModel
         private EntityModel _entity;
         private WorldNavigation _entityNavigation;
 
-        public EntityViewModel(EntityModel entity, WorldNavigation navigation) { _entity = entity; _entityNavigation = navigation; }
+        public EntityViewModel(EntityModel entity, WorldNavigation navigation)
+        {
+            _entity = entity; _entityNavigation = navigation;
+        }
 
         public EntityModel Entity { get { return _entity; } }
 
@@ -35,17 +37,19 @@ namespace Strive.Client.ViewModel
             return _entity.Name;
         }
 
-        public static EntityViewModel Wrap(EntityModel entity, WorldNavigation navigation)
+        public override bool Equals(object obj)
         {
-            return new EntityViewModel(entity, navigation);
+            if (obj == this)
+                return true;
+            EntityViewModel that = obj as EntityViewModel;
+            if (that == null)
+                return false;
+            return object.Equals(this.Entity, that.Entity);
         }
 
-        public static EntityModel UnWrap(EntityViewModel viewModel)
+        public override int GetHashCode()
         {
-            if (viewModel == null)
-                return null;
-            else
-                return viewModel._entity;
+            return Entity.GetHashCode();
         }
     }
 }

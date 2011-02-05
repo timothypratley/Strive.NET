@@ -27,7 +27,7 @@ namespace Strive.Client.WPF
         static ILog Log = LogManager.GetCurrentClassLogger();
         public static WorldViewModel WorldViewModel;
         public static ServerConnection ServerConnection;
-        public static WorldModel WorldModel;
+        public static DictionaryModel<string, EntityModel> WorldModel;
         public static ConnectionHandler ConnectionHandler;
         public static LogModel LogModel;
         public static Engine ServerEngine = new Engine();
@@ -39,7 +39,7 @@ namespace Strive.Client.WPF
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
             ServerConnection = new ServerConnection();
-            WorldModel = new WorldModel(); 
+            WorldModel = new DictionaryModel<string, EntityModel>(); 
             WorldViewModel = new WorldViewModel(WorldModel);
             ConnectionHandler = new ConnectionHandler(ServerConnection, WorldModel);
         }
