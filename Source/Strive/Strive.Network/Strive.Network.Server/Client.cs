@@ -35,30 +35,39 @@ namespace Strive.Network.Server
 
         public Client(Socket tcpsocket, Listener handler)
         {
-            this.tcpsocket = tcpsocket;
-            this.handler = handler;
-            this.remoteEndPoint = tcpsocket.RemoteEndPoint;
-            Log = LogManager.GetCurrentClassLogger();
-
-            // Begin Reading.
-            try
+            lock (tcpsocket)
             {
+                this.tcpsocket = tcpsocket;
+                this.handler = handler;
+                this.remoteEndPoint = tcpsocket.RemoteEndPoint;
+                Log = LogManager.GetCurrentClassLogger();
+
+                // Begin Reading.
                 tcpsocket.BeginReceive(tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
                     new AsyncCallback(ReadTCPCallback), this);
-            }
-            catch (Exception)
-            {
-                Close();
             }
         }
 
         public static void ReadTCPCallback(IAsyncResult ar)
         {
             Client client = (Client)ar.AsyncState;
-            try
+
+            lock (client.tcpsocket)
             {
-                int bytesRead = client.tcpsocket.EndReceive(ar);
-                client.tcpoffset += bytesRead;
+                if (client.tcpsocket == null)
+                    return;
+
+                try
+                {
+                    int bytesRead = client.tcpsocket.EndReceive(ar);
+                    client.tcpoffset += bytesRead;
+                }
+                catch (Exception)
+                {
+                    // the underlying socket was closed
+                    client.Close();
+                    return;
+                }
 
                 if (client.tcpoffset > MessageTypeMap.MessageLengthLength)
                 {
@@ -103,11 +112,6 @@ namespace Strive.Network.Server
 
                 client.tcpsocket.BeginReceive(client.tcpbuffer, client.tcpoffset, MessageTypeMap.BufferSize - client.tcpoffset, 0,
                     new AsyncCallback(ReadTCPCallback), client);
-            }
-            catch (Exception)
-            {
-                // the underlying socket was closed
-                client.Close();
             }
         }
 
@@ -175,16 +179,21 @@ namespace Strive.Network.Server
             // Custom serialization
             byte[] EncodedMessage = CustomFormatter.Serialize(message);
 
-            // Begin sending the data to the remote device.
-            try
+            lock (tcpsocket)
             {
-                tcpsocket.BeginSend(EncodedMessage, 0, EncodedMessage.Length, 0,
-                    new AsyncCallback(SendTCPCallback), this);
-            }
-            catch (Exception)
-            {
-                // the underlying socket was closed
-                Close();
+                if (tcpsocket == null) return;
+
+                // Begin sending the data to the remote device.
+                try
+                {
+                    tcpsocket.BeginSend(EncodedMessage, 0, EncodedMessage.Length, 0,
+                        new AsyncCallback(SendTCPCallback), this);
+                }
+                catch (Exception)
+                {
+                    // the underlying socket was closed
+                    Close();
+                }
             }
         }
 
@@ -192,15 +201,20 @@ namespace Strive.Network.Server
         {
             // Retrieve the socket from the state object.
             Client client = (Client)ar.AsyncState;
-            try
+            lock (client.tcpsocket)
             {
-                // Complete sending the data to the remote device.
-                int bytesSent = client.tcpsocket.EndSend(ar);
-            }
-            catch (Exception)
-            {
-                // the underlying socket was closed
-                client.Close();
+                if (client.tcpsocket == null) return;
+
+                try
+                {
+                    // Complete sending the data to the remote device.
+                    int bytesSent = client.tcpsocket.EndSend(ar);
+                }
+                catch (Exception)
+                {
+                    // the underlying socket was closed
+                    client.Close();
+                }
             }
         }
 
@@ -240,15 +254,18 @@ namespace Strive.Network.Server
 
         public void Close()
         {
-            if (tcpsocket != null)
+            lock (tcpsocket)
             {
-                Log.Info("Closing connection to " + EndPoint + ".");
-                tcpsocket.Shutdown(SocketShutdown.Both);
-                tcpsocket.Close();
-                tcpsocket = null;
+                if (tcpsocket != null)
+                {
+                    Log.Info("Closing connection to " + EndPoint + ".");
+                    tcpsocket.Shutdown(SocketShutdown.Both);
+                    tcpsocket.Close();
+                    tcpsocket = null;
+                }
+                authenticatedUsername = null;
+                handler.Clients.Remove(this);
             }
-            authenticatedUsername = null;
-            handler.Clients.Remove(this);
         }
 
         public bool Active

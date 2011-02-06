@@ -45,65 +45,75 @@ namespace Strive.Network.Client
         public class AlreadyRunningException : Exception { }
         public void Start(IPEndPoint remoteEndPoint)
         {
-            if (isRunning) throw new AlreadyRunningException();
+            if (isRunning) Stop();
+            //throw new AlreadyRunningException();
             isRunning = true;
             this.remoteEndPoint = remoteEndPoint;
             messageQueue.Clear();
             tcpoffset = 0;
 
             // Connect to the remote endpoint.
-            tcpsocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            udpsocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-            tcpsocket.BeginConnect(remoteEndPoint, new AsyncCallback(ConnectTCPCallback), this);
+            lock (tcpsocket)
+            {
+                tcpsocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                udpsocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+                tcpsocket.BeginConnect(remoteEndPoint, new AsyncCallback(ConnectTCPCallback), this);
+            }
         }
 
         public void Stop()
         {
-            if (tcpsocket != null)
+            lock (tcpsocket)
             {
-                if (tcpsocket.Connected)
-                    tcpsocket.Shutdown(SocketShutdown.Both);
-                tcpsocket = null;
+                if (tcpsocket != null)
+                {
+                    if (tcpsocket.Connected)
+                        tcpsocket.Shutdown(SocketShutdown.Both);
+                    tcpsocket = null;
+                }
+                if (udpsocket != null)
+                {
+                    if (udpsocket.Connected)
+                        udpsocket.Shutdown(SocketShutdown.Both);
+                    udpsocket.Close();
+                    udpsocket = null;
+                }
+                if (connected)
+                {
+                    connected = false;
+                    if (Disconnect != null) Disconnect(this, null);
+                }
+                isRunning = false;
             }
-            if (udpsocket != null)
-            {
-                if (udpsocket.Connected)
-                    udpsocket.Shutdown(SocketShutdown.Both);
-                udpsocket.Close();
-                udpsocket = null;
-            }
-            if (connected)
-            {
-                connected = false;
-                if (Disconnect != null) Disconnect(this, null);
-            }
-            isRunning = false;
         }
 
         private static void ConnectTCPCallback(IAsyncResult ar)
         {
             ServerConnection client = (ServerConnection)ar.AsyncState;
-            try
+            lock (client.tcpsocket)
             {
-                // Complete the connection.
-                client.tcpsocket.EndConnect(ar);
-                client.connected = true;
-                client.Log.Info("Connected to " + client.tcpsocket.RemoteEndPoint);
-                if (client.Connect != null) client.Connect(client, null);
+                try
+                {
+                    // Complete the connection.
+                    client.tcpsocket.EndConnect(ar);
+                    client.connected = true;
+                    client.Log.Info("Connected to " + client.tcpsocket.RemoteEndPoint);
+                    if (client.Connect != null) client.Connect(client, null);
 
-                // Begin reading.
-                client.tcpsocket.BeginReceive(client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
-                    new AsyncCallback(ReceiveTCPCallback), client);
+                    // Begin reading.
+                    client.tcpsocket.BeginReceive(client.tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
+                        new AsyncCallback(ReceiveTCPCallback), client);
 
-                client.udpsocket.Bind(client.tcpsocket.LocalEndPoint);
-                client.udpsocket.BeginConnect(client.tcpsocket.RemoteEndPoint,
-                    new AsyncCallback(ConnectUDPCallback), client);
-            }
-            catch (Exception e)
-            {
-                client.Log.Error("Error connecting, closing connection.", e);
-                client.Stop();
-                if (client.ConnectFailed != null) client.ConnectFailed(client, null);
+                    client.udpsocket.Bind(client.tcpsocket.LocalEndPoint);
+                    client.udpsocket.BeginConnect(client.tcpsocket.RemoteEndPoint,
+                        new AsyncCallback(ConnectUDPCallback), client);
+                }
+                catch (Exception e)
+                {
+                    client.Log.Error("Error connecting, closing connection.", e);
+                    client.Stop();
+                    if (client.ConnectFailed != null) client.ConnectFailed(client, null);
+                }
             }
         }
 
@@ -132,11 +142,23 @@ namespace Strive.Network.Client
             // Retrieve the state object and the client socket 
             // from the async state object.
             ServerConnection client = (ServerConnection)ar.AsyncState;
-            try
+            lock (client.tcpsocket)
             {
-                // Read data from the remote device.
-                int bytesRead = client.tcpsocket.EndReceive(ar);
-                client.tcpoffset += bytesRead;
+                if (client.tcpsocket == null)
+                    return;
+
+                try
+                {
+                    // Read data from the remote device.
+                    int bytesRead = client.tcpsocket.EndReceive(ar);
+                    client.tcpoffset += bytesRead;
+                }
+                catch (Exception e)
+                {
+                    client.Log.Error("Error reading, closing connection.", e);
+                    client.Stop();
+                    return;
+                }
 
                 if (client.tcpoffset > MessageTypeMap.MessageLengthLength)
                 {
@@ -179,11 +201,6 @@ namespace Strive.Network.Client
                 // listen for the next message
                 client.tcpsocket.BeginReceive(client.tcpbuffer, client.tcpoffset, MessageTypeMap.BufferSize - client.tcpoffset, 0,
                     new AsyncCallback(ReceiveTCPCallback), client);
-            }
-            catch (Exception e)
-            {
-                client.Log.Error("Error reading, closing connection.", e);
-                client.Stop();
             }
         }
 
@@ -257,29 +274,39 @@ namespace Strive.Network.Client
         {
             // Custom serialization
             byte[] buffer = CustomFormatter.Serialize(message);
-            try
+
+            lock (tcpsocket)
             {
-                tcpsocket.BeginSend(buffer, 0, buffer.Length, 0,
-                    new AsyncCallback(SendTCPCallback), this);
-            }
-            catch (Exception e)
-            {
-                Log.Error("Error sending, closing connection", e);
-                Stop();
+                if (tcpsocket == null) return;
+
+                try
+                {
+                    tcpsocket.BeginSend(buffer, 0, buffer.Length, 0,
+                        new AsyncCallback(SendTCPCallback), this);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Error sending, closing connection", e);
+                    Stop();
+                }
             }
         }
 
         private static void SendTCPCallback(IAsyncResult ar)
         {
             ServerConnection client = (ServerConnection)ar.AsyncState;
-            try
+            lock (client.tcpsocket)
             {
-                // Complete sending the data to the remote device.
-                int bytesSent = client.tcpsocket.EndSend(ar);
-            }
-            catch (Exception)
-            {
-                client.Stop();
+                if (client.tcpsocket == null) return;
+                try
+                {
+                    // Complete sending the data to the remote device.
+                    int bytesSent = client.tcpsocket.EndSend(ar);
+                }
+                catch (Exception)
+                {
+                    client.Stop();
+                }
             }
         }
 
