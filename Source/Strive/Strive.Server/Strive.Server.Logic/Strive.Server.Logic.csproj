@@ -93,6 +93,7 @@
     <Reference Include="Common.Logging.Log4Net">
       <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.Log4Net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="System">
       <Name>System</Name>

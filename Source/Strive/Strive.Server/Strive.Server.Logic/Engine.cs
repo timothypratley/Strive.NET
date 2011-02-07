@@ -1,6 +1,6 @@
 using System;
 using System.Net;
-using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Reflection;
 
@@ -8,6 +8,7 @@ using Common.Logging;
 using Strive.Common;
 using Strive.Network.Server;
 using Strive.Server.Model;
+using Strive.Network.Messages;
 
 namespace Strive.Server.Logic
 {
@@ -16,11 +17,10 @@ namespace Strive.Server.Logic
     public class Engine
     {
         int port = Constants.DefaultPort;
-        Queue packetQueue = new Queue();
-        Listener networkhandler;
+        Listener networkHandler;
         World world;
-        MessageProcessor mp;
-        StoppableThread engine_thread;
+        MessageProcessor messageProcessor;
+        StoppableThread engineThread;
         ILog Log = LogManager.GetCurrentClassLogger();
         
         public ServerStatusModel ServerStatusModel { get; private set; }
@@ -30,8 +30,8 @@ namespace Strive.Server.Logic
             Log.Info("Creating " + Assembly.GetExecutingAssembly().GetName().FullName);
             Global.ReadConfiguration();
             //Global.worldFilename = "DefaultWorld.xml";
-            engine_thread = new StoppableThread(new StoppableThread.WhileRunning(UpdateLoop));
-            networkhandler = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
+            engineThread = new StoppableThread(new StoppableThread.WhileRunning(UpdateLoop));
+            networkHandler = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
             Log = LogManager.GetCurrentClassLogger();
             ServerStatusModel = new ServerStatusModel();
             ServerStatusModel.Status = "Created";
@@ -41,20 +41,20 @@ namespace Strive.Server.Logic
         {
             ServerStatusModel.Status = "Starting"; 
             world = new World(Global.WorldID);
-            mp = new MessageProcessor(world, networkhandler);
+            messageProcessor = new MessageProcessor(world, networkHandler);
             Global.World = world;
             ServerStatusModel.Started = Global.Now;
-            engine_thread.Start();
+            engineThread.Start();
             Log.Info("Listening for new connections...");
-            networkhandler.Start();
+            networkHandler.Start();
             ServerStatusModel.Status = "Running";
         }
 
         public void Stop()
         {
             ServerStatusModel.Status = "Stopping";
-            networkhandler.Stop();
-            engine_thread.Stop();
+            networkHandler.Stop();
+            engineThread.Stop();
             Log.Info("Server stopped.");
             ServerStatusModel.Status = "Stopped";
         }
@@ -71,9 +71,9 @@ namespace Strive.Server.Logic
                 // handle incomming messages
 
                 // TODO: where should the message queue live?
-                while (networkhandler.MessageCount > 0)
+                while (networkHandler.MessageCount > 0)
                 {
-                    mp.ProcessNextMessage();
+                    messageProcessor.ProcessNextMessage();
                 }
 
                 CleanupLinkdead();
@@ -99,18 +99,27 @@ namespace Strive.Server.Logic
 
         void CleanupLinkdead()
         {
-            // TODO: instead of looping through the entire world,
-            // we should keep a list of players
-            foreach (MobileAvatar ma in (ArrayList)world.mobilesArrayList.Clone())
+            List<Client> remove = new List<Client>();
+            foreach (Client client in networkHandler.Clients)
             {
-                if (ma.IsPlayer)
+                if (client.Status != ConnectionStatus.Connected
+                    && (Global.Now - client.LastMessageTimestamp) > TimeSpan.FromSeconds(60))
                 {
-                    if (ma.client == null || (!ma.client.Active && (Global.Now - ma.client.LastMessageTimestamp) > TimeSpan.FromSeconds(60)))
-                    {
-                        ma.client = null;
-                        world.Remove(ma);
-                    }
+                    remove.Add(client);
                 }
+            }
+            foreach (Client client in remove)
+            {
+                if (client.Avatar != null)
+                {
+                    ((MobileAvatar)client.Avatar).client = null;
+                    world.Remove(client.Avatar);
+                }
+                else
+                {
+                    client.Avatar = null;
+                }
+                networkHandler.Clients.Remove(client);
             }
         }
     }

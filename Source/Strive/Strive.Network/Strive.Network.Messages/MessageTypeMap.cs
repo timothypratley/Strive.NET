@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using Strive.Network.Messages;
 
@@ -10,8 +10,8 @@ namespace Strive.Network.Messages {
 	public class MessageTypeMap	{
 		public const int BufferSize = 16384;	// max message size
 		public const int MessageLengthLength = 4;
-		public Hashtable messageTypeFromID = new Hashtable();
-		public Hashtable idFromMessageType = new Hashtable();
+        public Dictionary<EnumMessageID, Type> messageTypeFromID = new Dictionary<EnumMessageID, Type>();
+        public Dictionary<Type, EnumMessageID> idFromMessageType = new Dictionary<Type, EnumMessageID>();
 		public enum EnumMessageID {
 			ToClientAcknowledge = 1,
 			ToClientAddReadable,

@@ -76,6 +76,10 @@
       <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
       <Name>Strive.Server.Model</Name>
     </ProjectReference>
+    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System">
       <Name>System</Name>
@@ -86,6 +90,10 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <Reference Include="UpdateControls, Version=2.1.1.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -94,6 +102,7 @@
     <Compile Include="CommunicationType.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Connection.cs" />
     <Compile Include="CustomFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -104,9 +113,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageTypeMap.cs" />
-    <Compile Include="NetworkProtocolType.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ToClient\Acknowledge.cs" />
     <Compile Include="ToClient\AddEquipable.cs" />
     <Compile Include="ToClient\AddJunk.cs" />

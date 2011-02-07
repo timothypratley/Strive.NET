@@ -7,7 +7,7 @@ using System.Windows.Media.Media3D;
 using Common.Logging;
 
 using Strive.Network.Client;
-using ToClient = Strive.Network.Messages.ToClient;
+using Strive.Network.Messages.ToClient;
 using Strive.Network.Messages;
 
 
@@ -35,11 +35,11 @@ namespace Strive.Client.Model
             Log.Trace("x " + x);
         }
 
-        void Process(ToClient.AddTerrain m)
+        void Process(AddTerrain m)
         {
             Log.Trace("foo");
         }
-        void Process(ToClient.Position m)
+        void Process(Position m)
         {
             Log.Trace("bar");
             EntityModel e = _world._entities[m.instance_id.ToString()];

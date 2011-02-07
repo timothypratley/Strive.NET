@@ -4,12 +4,11 @@ using Strive.Server.Model;
 namespace Strive.Network.Messages.ToClient
 {
 	public class WhoList : IMessage {
-		public int [] MobileID;
-		public string [] MobileName;
+        public Tuple<int, string>[] Mobiles;
 		public WhoList(){}
-		public WhoList( int [] MobileID, string [] MobileName ) {
-			this.MobileID = MobileID;
-			this.MobileName = MobileName;
-		}
+        public WhoList(Tuple<int, string>[] mobiles)
+        {
+            Mobiles = mobiles;
+        }
 	}
 }

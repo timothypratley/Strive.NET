@@ -29,6 +29,9 @@ namespace Strive.Client.WPF
             InitializeComponent();
             hostTextBox.Text = Dns.GetHostName();
             portTextBox.Text = Constants.DefaultPort.ToString();
+
+            // TODO: make a viewmodel and expose connected status
+            DataContext = App.ServerConnection;
         }
 
         // validation not hooked up

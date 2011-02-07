@@ -7,12 +7,11 @@ namespace Strive.Network.Messages.ToClient
 	/// Summary description for CurrentHitpoints.
 	/// </summary>
 	public class SkillList : IMessage {
-		public int [] skills;
-		public float [] competancy;
+        public Tuple<int, double>[] SkillCompetancy;
 		public SkillList(){}
-		public SkillList( int [] skills, float [] competancy ) {
-			this.skills = skills;
-			this.competancy = competancy;
+        public SkillList(Tuple<int, double>[] skillCompetancy)
+        {
+			SkillCompetancy = skillCompetancy;
 		}
 	}
 }

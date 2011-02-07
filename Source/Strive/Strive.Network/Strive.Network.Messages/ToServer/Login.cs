@@ -9,15 +9,13 @@ namespace Strive.Network.Messages.ToServer
 	public class Login : IMessage
 	{
 		public Login(){}
-		public Login( string username, string password, NetworkProtocolType protocol = NetworkProtocolType.TcpOnly)
+		public Login( string username, string password)
 		{
 			this.username = username;
 			this.password = password;
-			this.protocol = protocol;
 		}
 
 		public string username;
 		public string password;
-		public NetworkProtocolType protocol;
 	}
 }

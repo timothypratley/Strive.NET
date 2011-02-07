@@ -2,9 +2,10 @@ using System;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Media.Media3D;
+using System.Linq;
 
 using Strive.Network.Server;
 using Strive.Network.Messages;
@@ -33,8 +34,8 @@ namespace Strive.Server.Logic
         Terrain[,] terrain;
 
         // all physical objects are indexed in a hashtable
-        public Hashtable physicalObjects;
-        public ArrayList mobilesArrayList;
+        public Dictionary<int, PhysicalObject> PhysicalObjects { get; private set; }
+        public List<MobileAvatar> Mobiles { get; private set; }
 
         // TODO: do we know the sun texture etc here?
         const int DEFAULT_DAY = 147;
@@ -48,14 +49,13 @@ namespace Strive.Server.Logic
         public World(int world_id)
         {
             this.world_id = world_id;
-            Thread.Sleep(10000);
             Load();
         }
 
         public void Load()
         {
-            physicalObjects = new Hashtable();
-            mobilesArrayList = new ArrayList();
+            PhysicalObjects = new Dictionary<int, PhysicalObject>();
+            Mobiles = new List<MobileAvatar>();
 
             // todo: would be nice to be able to load only the
             // world in question... but for now load them all
@@ -67,7 +67,7 @@ namespace Strive.Server.Logic
             }
             //else if (Global.connectionstring != null)
             //{
-                //Global.modelSchema = Strive.Data.MultiverseFactory.getMultiverseFromDatabase(Global.connectionstring);
+            //Global.modelSchema = Strive.Data.MultiverseFactory.getMultiverseFromDatabase(Global.connectionstring);
             //}
             else
             {
@@ -218,7 +218,7 @@ namespace Strive.Server.Logic
 
         public void Update()
         {
-            foreach (PhysicalObject po in physicalObjects.Values)
+            foreach (PhysicalObject po in PhysicalObjects.Values)
             {
                 if (po is MobileAvatar)
                 {
@@ -256,7 +256,7 @@ namespace Strive.Server.Logic
 
         public void NotifyMobiles(IMessage message)
         {
-            foreach (MobileAvatar ma in mobilesArrayList)
+            foreach (MobileAvatar ma in Mobiles)
             {
                 if (ma.client != null)
                 {
@@ -296,10 +296,10 @@ namespace Strive.Server.Logic
                     Log.Warn("Physical object " + po.ObjectInstanceID + " is not on terrain.");
                 }
                 // add the object to the world
-                physicalObjects.Add(po.ObjectInstanceID, po);
-                if (po is Mobile)
+                PhysicalObjects.Add(po.ObjectInstanceID, po);
+                if (po is MobileAvatar)
                 {
-                    mobilesArrayList.Add(po);
+                    Mobiles.Add((MobileAvatar)po);
                 }
                 int squareX = (int)(po.Position.X - lowX) / Square.squareSize;
                 int squareZ = (int)(po.Position.Z - lowZ) / Square.squareSize;
@@ -321,10 +321,10 @@ namespace Strive.Server.Logic
             int squareZ = (int)(po.Position.Z - lowZ) / Square.squareSize;
             InformNearby(po, new ToClient.DropPhysicalObject(po));
             square[squareX, squareZ].Remove(po);
-            physicalObjects.Remove(po.ObjectInstanceID);
+            PhysicalObjects.Remove(po.ObjectInstanceID);
             if (po is MobileAvatar)
             {
-                mobilesArrayList.Remove(po);
+                Mobiles.Remove((MobileAvatar)po);
             }
             Log.Info("Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world.");
         }
@@ -640,14 +640,14 @@ namespace Strive.Server.Logic
             // notify them about surrounding physical objects
             // NB: this routine will send the client mobile's
             // position as one of the 'nearby' mobiles.
-            Mobile mob = client.Avatar;
+            MobileAvatar mob = (MobileAvatar)client.Avatar;
             client.Send(weather);
             int squareX = (int)(mob.Position.X - lowX) / Square.squareSize;
             int squareZ = (int)(mob.Position.Z - lowZ) / Square.squareSize;
             int i, j;
             if (client != null)
             {
-                ArrayList nearbyPhysicalObjects = new ArrayList();
+                List<PhysicalObject> nearbyPhysicalObjects = new List<PhysicalObject>();
                 // TODO: use xorder, zorder to descide the resolution?
                 for (i = -1; i <= 1; i++)
                 {
@@ -729,20 +729,14 @@ namespace Strive.Server.Logic
             }
         }
 
-        public ToClient.CanPossess.id_name_tuple[] getPossessable(string username)
+        public Tuple<int, string>[] getPossessable(string username)
         {
             DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + username + "'");
             Schema.PlayerRow pr = Global.ModelSchema.Player.FindByPlayerID((int)dr[0][0]);
             Schema.MobilePossesableByPlayerRow[] mpbpr = pr.GetMobilePossesableByPlayerRows();
-            ArrayList list = new ArrayList();
-            foreach (Schema.MobilePossesableByPlayerRow mpr in mpbpr)
-            {
-                ToClient.CanPossess.id_name_tuple tuple = new ToClient.CanPossess.id_name_tuple(
-                    mpr.ObjectInstanceID, mpr.ObjectInstanceRow.TemplateObjectRow.TemplateObjectName
-                );
-                list.Add(tuple);
-            }
-            return (ToClient.CanPossess.id_name_tuple[])list.ToArray(typeof(ToClient.CanPossess.id_name_tuple));
+            List<Tuple<int, string>> list = new List<Tuple<int, string>>();
+            return mpbpr.Select(mpr => new Tuple<int, string>(
+                mpr.ObjectInstanceID, mpr.ObjectInstanceRow.TemplateObjectRow.TemplateObjectName)).ToArray();
         }
 
         public class InvalidLocationException : Exception { }
@@ -755,8 +749,7 @@ namespace Strive.Server.Logic
             if (terrain[terrainX, terrainZ] != null
                 && terrain[terrainX + 1, terrainZ] != null
                 && terrain[terrainX, terrainZ + 1] != null
-                && terrain[terrainX + 1, terrainZ + 1] != null
-                )
+                && terrain[terrainX + 1, terrainZ + 1] != null)
             {
                 double dx = x - terrain[terrainX, terrainZ].Position.X;
                 double dz = z - terrain[terrainX, terrainZ].Position.Z;
@@ -790,9 +783,12 @@ namespace Strive.Server.Logic
         {
             Global.ModelSchema = new Schema();
             Global.ModelSchema.World.AddWorldRow(world_id, "Empty", "An empty world");
-            var p = Global.ModelSchema.Player.AddPlayerRow("Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob", 100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
+            var p = Global.ModelSchema.Player.AddPlayerRow(
+                "Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob",
+                100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
         }
 
+        // handle negative numbers
         static public int DivTruncate(int x, int y)
         {
             return (x / y - ((x < 0 && (x % y != 0)) ? 1 : 0));

@@ -1,12 +1,12 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Net;
+using System.Linq;
 
 using Common.Logging;
 using Strive.Network.Messages;
-using ToClient = Strive.Network.Messages.ToClient;
-using ToServer = Strive.Network.Messages.ToServer;
+using Strive.Network.Messages.ToServer;
 using Strive.Network.Server;
 using Strive.Server.Model;
 using Strive.Common;
@@ -31,7 +31,7 @@ namespace Strive.Server.Logic
             ClientMessage clientMessage = (ClientMessage)listener.PopNextMessage();
             try
             {
-                ProcessMessage(clientMessage.Client, clientMessage.Message);
+                CheckAndProcessMessage(clientMessage.Client, clientMessage.Message);
             }
             catch (Exception e)
             {
@@ -39,127 +39,53 @@ namespace Strive.Server.Logic
             }
         }
 
-        public void ProcessMessage(Client client, IMessage message)
+        public void CheckAndProcessMessage(Client client, dynamic message)
         {
             if (!client.Authenticated)
             {
                 // new connection... only allow login
-                if (message is ToServer.Login)
+                if (!(message is Login))
                 {
-                    ProcessLoginMessage(client, (ToServer.Login)message);
+                    Log.Warn("Non-login message " + message.GetType() + " from " + client.RemoteEndPoint);
                 }
-                else
-                {
-                    Log.Warn("Non-login message " + message.GetType() + " from " + client.EndPoint);
-                }
-                return;
-            }
-
-            if (message is ToServer.RequestPossessable)
-            {
-                ProcessRequestPossessable(client, message as ToServer.RequestPossessable);
                 return;
             }
 
             if (client.Avatar == null)
             {
-                // no character selected yet... only allow posses
-                // and logout
-                if (message is ToServer.EnterWorldAsMobile)
+                // no character selected yet... only allow posses, request and logout
+                if (!(message is EnterWorldAsMobile
+                    || message is RequestPossessable
+                    || message is Logout))
                 {
-                    ProcessEnterWorldAsMobile(client, (ToServer.EnterWorldAsMobile)message);
-                }
-                else if (message is ToServer.Logout)
-                {
-
-                }
-                else
-                {
-
-                    Log.Warn("ERROR: Non-posses message " + message.GetType() + " from " + client.EndPoint);
+                    Log.Warn("ERROR: Non-posses message " + message.GetType() + " from " + client.RemoteEndPoint);
                 }
                 return;
             }
 
-            // normal message for logged in user
-            if (message is ToServer.Position)
+            try
             {
-                ProcessPositionMessage(client, message as ToServer.Position);
+                ProcessMessage(client, message);
             }
-            else if (message is ToServer.Communication)
+            catch (Exception)
             {
-                ProcessChatMessage(client, message as ToServer.Communication);
-            }
-            else if (message is ToServer.UseSkill)
-            {
-                SkillCommandProcessor.ProcessUseSkill(client, message as ToServer.UseSkill);
-            }
-            else if (message is ToServer.CancelSkill)
-            {
-                SkillCommandProcessor.ProcessCancelSkill(client, message as ToServer.CancelSkill);
-            }
-            else if (message is ToServer.ReloadWorld)
-            {
-                ProcessReloadWorldMessage(client, message as ToServer.ReloadWorld);
-            }
-            else if (message is ToServer.Logout)
-            {
-                ProcessLogout(client);
-            }
-            else if (message is ToServer.SkillList)
-            {
-                ProcessSkillList(client, message as ToServer.SkillList);
-            }
-            else if (message is ToServer.WhoList)
-            {
-                ProcessWhoList(client, message as ToServer.WhoList);
-            }
-            else if (message is ToServer.CreateParty)
-            {
-                ProcessCreateParty(client, message as ToServer.CreateParty);
-            }
-            else if (message is ToServer.CreateParty)
-            {
-                ProcessLeaveParty(client, message as ToServer.LeaveParty);
-            }
-            else if (message is ToServer.JoinParty)
-            {
-                ProcessJoinParty(client, message as ToServer.JoinParty);
-            }
-            else if (message is ToServer.InviteToParty)
-            {
-                ProcessInviteToParty(client, message as ToServer.InviteToParty);
-            }
-            else if (message is ToServer.TransferPartyLeadership)
-            {
-                ProcessTransferPartyLeadership(client, message as ToServer.TransferPartyLeadership);
-            }
-            else if (message is ToServer.Pong)
-            {
-                ProcessPong(client, message as ToServer.Pong);
-            }
-            else
-            {
-                Log.Warn("ERROR: Unknown message " + message.GetType());
+                Log.Warn("ERROR: Unable to process message " + message);
             }
         }
 
-        void ProcessLoginMessage(Client client, ToServer.Login loginMessage)
+        void ProcessMessage(Client client, Login loginMessage)
         {
-            if (
-                world.UserLookup(loginMessage.username, loginMessage.password, ref client.PlayerID)
-            )
+            if (world.UserLookup(loginMessage.username, loginMessage.password, ref client.PlayerID))
             {
-                // login succeeded, check there isnt an existing connection for this
-                // player
-                Client old = (Client)listener.Clients[loginMessage.username];
-                if (old != null)
+                // login succeeded, check there isnt an existing connection for this player
+                foreach (Client c in listener.Clients)
                 {
-                    old.Close();
+                    if (c.AuthenticatedUsername == loginMessage.username)
+                        c.Close();
                 }
+
                 Log.Info("User " + loginMessage.username + " logged in");
                 client.AuthenticatedUsername = loginMessage.username;
-                client.Protocol = loginMessage.protocol;
             }
             else
             {
@@ -168,15 +94,14 @@ namespace Strive.Server.Logic
             }
         }
 
-        void ProcessRequestPossessable(Client client, ToServer.RequestPossessable message)
+        void ProcessMessage(Client client, RequestPossessable message)
         {
             //Strive.Data.MultiverseFactory.refreshMultiverseForPlayer(Global.modelSchema, client.PlayerID);
-            ToClient.CanPossess canPossess = new ToClient.CanPossess(
+            client.CanPossess(
                 world.getPossessable(client.AuthenticatedUsername));
-            client.Send(canPossess);
         }
 
-        void ProcessLogout(Client client)
+        void ProcessMessage(Client client, Logout message)
         {
             if (client.Avatar != null)
             {
@@ -189,15 +114,15 @@ namespace Strive.Server.Logic
 
 
 
-        void ProcessEnterWorldAsMobile(Client client, ToServer.EnterWorldAsMobile message)
+        void ProcessMessage(Client client, EnterWorldAsMobile message)
         {
             MobileAvatar a;
-            if (world.physicalObjects.ContainsKey(message.InstanceID))
+            if (world.PhysicalObjects.ContainsKey(message.InstanceID))
             {
                 // reconnected
                 // simply replace existing connection with the new
                 // todo: the old 'connection' should timeout or die or be killed
-                Object o = world.physicalObjects[message.InstanceID];
+                Object o = world.PhysicalObjects[message.InstanceID];
                 if (o is MobileAvatar)
                 {
                     a = (MobileAvatar)o;
@@ -216,7 +141,6 @@ namespace Strive.Server.Logic
                     Log.Info("Mobile " + a.ObjectInstanceID + " has been taken over by a new connection.");
                     a.client.Avatar = null;
                     a.client.Close();
-                    listener.Clients.Remove(a.client.EndPoint);
                     a.client = client;
                     client.Avatar = a;
                 }
@@ -245,13 +169,11 @@ namespace Strive.Server.Logic
             world.SendInitialWorldView(client);
         }
 
-        void ProcessPositionMessage(
-            Client client, ToServer.Position message
-        )
+        void ProcessMessage(Client client, Position message)
         {
             if (client.Avatar == null)
             {
-                Log.Warn("Position message from client " + client.EndPoint + " who has no avatar.");
+                Log.Warn("Position message from client " + client.RemoteEndPoint + " who has no avatar.");
                 return;
             }
             MobileAvatar ma = (MobileAvatar)client.Avatar;
@@ -268,13 +190,13 @@ namespace Strive.Server.Logic
             world.Relocate(client.Avatar, message.position, message.rotation);
         }
 
-        void ProcessChatMessage(
-            Client client, ToServer.Communication message
-        )
+        void ProcessMessage(Client client, Communication message)
         {
             if (message.communicationType == CommunicationType.Chat)
             {
-                world.NotifyMobiles(new ToClient.Communication(client.Avatar.TemplateObjectName, message.message, (Strive.Network.Messages.CommunicationType)message.communicationType));
+                world.NotifyMobiles(new Strive.Network.Messages.ToClient.Communication(
+                    client.Avatar.TemplateObjectName, message.message,
+                    (Strive.Network.Messages.CommunicationType)message.communicationType));
             }
             else if (message.communicationType == CommunicationType.PartyTalk)
             {
@@ -288,42 +210,34 @@ namespace Strive.Server.Logic
             //Log.Info( "Sent communication message" );
         }
 
-        void ProcessReloadWorldMessage(
-            Client client, ToServer.ReloadWorld message
-        )
+        void ProcessMessage(Client client, ReloadWorld message)
         {
             Log.Info("ReloadWorld received.");
             world.Load();
-            foreach (Client c in listener.Clients.Values)
+            foreach (Client c in listener.Clients)
             {
                 if (c.Avatar != null)
                 {
                     // respawn their mobile, old instance will be given over
                     // to Garbage Collector
-                    c.Send(new ToClient.DropAll());
-                    ProcessEnterWorldAsMobile(c, new ToServer.EnterWorldAsMobile(c.Avatar.ObjectInstanceID));
+                    c.DropAll();
+                    ProcessMessage(c, new EnterWorldAsMobile(c.Avatar.ObjectInstanceID));
                 }
             }
         }
 
-        void ProcessWhoList(
-            Client client, ToServer.WhoList message
-        )
+        void ProcessMessage(Client client, WhoList message)
         {
-            ArrayList MobileIDs = new ArrayList();
-            ArrayList Names = new ArrayList();
-            foreach (Client c in listener.Clients.Values)
-            {
-                if (c.Avatar != null)
-                {
-                    MobileIDs.Add(c.Avatar.ObjectInstanceID);
-                    Names.Add(c.Avatar.TemplateObjectName);
-                }
-            }
-            client.Send(new ToClient.WhoList((int[])MobileIDs.ToArray(typeof(int)), (string[])Names.ToArray(typeof(string))));
+            List<int> MobileIDs = new List<int>();
+            List<string> Names = new List<string>();
+            client.WhoList(
+                listener.Clients
+                .Where(c => c.Avatar != null)
+                .Select(c => new Tuple<int, string>(c.Avatar.ObjectInstanceID, c.Avatar.TemplateObjectName))
+                .ToArray());
         }
 
-        void ProcessCreateParty(Client client, ToServer.CreateParty message)
+        void ProcessMessage(Client client, CreateParty message)
         {
             MobileAvatar ma = (MobileAvatar)client.Avatar;
             if (ma.party != null)
@@ -334,12 +248,10 @@ namespace Strive.Server.Logic
             ma.party = new Party(message.name, ma);
         }
 
-        void ProcessTransferPartyLeadership(
-            Client client, ToServer.TransferPartyLeadership message
-        )
+        void ProcessMessage(Client client, TransferPartyLeadership message)
         {
             MobileAvatar ma = (MobileAvatar)client.Avatar;
-            MobileAvatar target = (MobileAvatar)Global.World.physicalObjects[message.ObjectInstanceID];
+            MobileAvatar target = (MobileAvatar)Global.World.PhysicalObjects[message.ObjectInstanceID];
             if (ma.party != target.party)
             {
                 ma.SendLog("You are not in the same party as " + target.TemplateObjectName);
@@ -349,16 +261,14 @@ namespace Strive.Server.Logic
             ma.SendPartyTalk("Party leadership has been transfered to " + target.TemplateObjectName);
         }
 
-        void ProcessPong(Client client, ToServer.Pong message)
+        void ProcessMessage(Client client, Pong message)
         {
             client.latency = (DateTime.Now - client.pingedAt).Milliseconds;
             world.weather.Latency = client.latency;
             client.Send(world.weather);
         }
 
-        void ProcessLeaveParty(
-            Client client, ToServer.LeaveParty message
-        )
+        void ProcessMessage(Client client, LeaveParty message)
         {
             MobileAvatar ma = (MobileAvatar)client.Avatar;
             Party p = ma.party;
@@ -368,7 +278,7 @@ namespace Strive.Server.Logic
             p.SendPartyTalk(ma.TemplateObjectName + " has left your ");
         }
 
-        void ProcessJoinParty(Client client, ToServer.JoinParty message)
+        void ProcessMessage(Client client, JoinParty message)
         {
             MobileAvatar ma = (MobileAvatar)client.Avatar;
 
@@ -386,40 +296,34 @@ namespace Strive.Server.Logic
             ma.invitedToParty = null;
         }
 
-        void ProcessInviteToParty(Client client, ToServer.InviteToParty message)
+        void ProcessMessage(Client client, InviteToParty message)
         {
             Party p = ((MobileAvatar)client.Avatar).party;
             if (p == null)
             {
-                client.SendLog("You are not in a ");
+                client.Log("You are not in a ");
                 return;
             }
             if (p.Leader != client.Avatar)
             {
-                client.SendLog("You are not the party leader.");
+                client.Log("You are not the party leader.");
                 return;
             }
-            MobileAvatar target = (MobileAvatar)Global.World.physicalObjects[message.ObjectInstanceID];
+            MobileAvatar target = (MobileAvatar)Global.World.PhysicalObjects[message.ObjectInstanceID];
             target.invitedToParty = p;
             // TODO: probabbly want a graphical thing or something for invites
             target.SendLog("You have been invited to party '" + p.Name + "'.");
         }
 
-        void ProcessSkillList(Client client, ToServer.SkillList message)
+        void ProcessMessage(Client client, SkillList message)
         {
-            // TODO: umg this seems a bit primitive, but I guess it works so :/
-            ArrayList skillIDs = new ArrayList();
-            ArrayList competancy = new ArrayList();
-            for (int i = 1; i < Global.ModelSchema.EnumSkill.Count; i++)
-            {
-                Schema.MobileHasSkillRow mhs = Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(client.Avatar.TemplateObjectID, i);
-                if (mhs != null)
-                {
-                    skillIDs.Add(mhs.EnumSkillID);
-                    competancy.Add(mhs.Rating);
-                }
-            }
-            client.Send(new ToClient.SkillList((int[])skillIDs.ToArray(typeof(int)), (float[])competancy.ToArray(typeof(float))));
+            client.SkillList(
+                Global.ModelSchema.EnumSkill
+                .Select(
+                    e => Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
+                        client.Avatar.TemplateObjectID, e.EnumSkillID))
+                .Where(mhs => mhs != null)
+                .Select(mhs => new Tuple<int, double>(mhs.EnumSkillID, mhs.Rating)).ToArray());
         }
     }
 }

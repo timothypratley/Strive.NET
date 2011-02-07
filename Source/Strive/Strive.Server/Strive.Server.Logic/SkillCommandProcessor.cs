@@ -21,13 +21,13 @@ namespace Strive.Server.Logic
             MobileAvatar avatar = client.Avatar as MobileAvatar;
             if (avatar == null)
             {
-                client.SendLog("Requested a skill, but doesn't have an avatar.");
+                client.Log("Requested a skill, but doesn't have an avatar.");
                 return;
             }
             Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID((int)message.SkillID);
             if (esr == null)
             {
-                client.SendLog("Requested an invalid skill " + message.SkillID);
+                client.Log("Requested an invalid skill " + message.SkillID);
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace Strive.Server.Logic
             MobileAvatar avatar = client.Avatar as MobileAvatar;
             if (avatar == null)
             {
-                client.SendLog("Canceled a skill invokation, but don't have an avatar.");
+                client.Log("Canceled a skill invokation, but don't have an avatar.");
                 return;
             }
 
@@ -91,11 +91,11 @@ namespace Strive.Server.Logic
             }
             if (found)
             {
-                client.SendLog("Successfully canceled invokation " + message.InvokationID);
+                client.Log("Successfully canceled invokation " + message.InvokationID);
             }
             else
             {
-                client.SendLog("Failed to cancel invokation " + message.InvokationID);
+                client.Log("Failed to cancel invokation " + message.InvokationID);
             }
         }
 
@@ -133,7 +133,7 @@ namespace Strive.Server.Logic
                         caster.SendLog("No target specified, this skill may only be used on Mobiles.");
                         return;
                     }
-                    target = (MobileAvatar)Global.World.physicalObjects[message.TargetPhysicalObjectIDs[0]];
+                    target = (MobileAvatar)Global.World.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
                     if (target == null)
                     {
                         caster.SendLog("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
