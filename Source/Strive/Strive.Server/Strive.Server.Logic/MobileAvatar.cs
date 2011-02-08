@@ -267,6 +267,7 @@ namespace Strive.Server.Logic
             ((MobileAvatar)target).UpdateState();
         }
 
+        // TODO: use dynamic instead
         public void PhysicalAttack(PhysicalObject po)
         {
             // TODO use the real range of kill
@@ -278,7 +279,7 @@ namespace Strive.Server.Logic
             }
             if (po is MobileAvatar)
             {
-                MobileAvatar opponent = po as MobileAvatar;
+                var opponent = (MobileAvatar)po;
 
                 // if not already in a fight, your opponent automatically
                 // fights back
@@ -347,11 +348,12 @@ namespace Strive.Server.Logic
             }
         }
 
+        // TODO: use dynamic instead
         public void MagicalAttack(PhysicalObject po, float damage)
         {
             if (po is MobileAvatar)
             {
-                MobileAvatar opponent = po as MobileAvatar;
+                var opponent = (MobileAvatar)po;
 
                 // if not already in a fight, your opponent automatically
                 // fights back

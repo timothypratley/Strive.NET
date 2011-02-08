@@ -71,21 +71,21 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(Client client, Login loginMessage)
         {
-            if (_world.UserLookup(loginMessage.username, loginMessage.password, ref client.PlayerId))
+            if (_world.UserLookup(loginMessage.Username, loginMessage.Password, ref client.PlayerId))
             {
                 // login succeeded, check there isnt an existing connection for this player
                 foreach (Client c in _listener.Clients)
                 {
-                    if (c.AuthenticatedUsername == loginMessage.username)
+                    if (c.AuthenticatedUsername == loginMessage.Username)
                         c.Close();
                 }
 
-                _log.Info("User " + loginMessage.username + " logged in");
-                client.AuthenticatedUsername = loginMessage.username;
+                _log.Info("User " + loginMessage.Username + " logged in");
+                client.AuthenticatedUsername = loginMessage.Username;
             }
             else
             {
-                _log.Info("Login failed for username " + loginMessage.username + " " + loginMessage.password);
+                _log.Info("Login failed for username " + loginMessage.Username + " " + loginMessage.Password);
                 client.Close();
             }
         }

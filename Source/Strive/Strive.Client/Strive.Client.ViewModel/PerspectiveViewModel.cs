@@ -74,21 +74,21 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        double _distanceRangeLow = 10.0;
-        double _distanceRangeHigh = 300.0;
-        double _angleRangeLow = 0.01 - Math.PI / 2.0;
-        double _angleRangeHigh = Math.PI / 2.0 - 0.01;
+        const double DistanceRangeLow = 10.0;
+        const double DistanceRangeHigh = 300.0;
+        const double AngleRangeLow = 0.01 - Math.PI / 2.0;
+        const double AngleRangeHigh = Math.PI / 2.0 - 0.01;
 
-        double _tilt = 0;
+        double _tilt;
         public double Tilt
         {
             get { return _tilt; }
             set
             {
-                if (value < _angleRangeLow)
-                    _tilt = _angleRangeLow;
-                else if (value >= _angleRangeHigh)
-                    _tilt = _angleRangeHigh;
+                if (value < AngleRangeLow)
+                    _tilt = AngleRangeLow;
+                else if (value >= AngleRangeHigh)
+                    _tilt = AngleRangeHigh;
                 else
                     _tilt = value;
 
@@ -132,11 +132,11 @@ namespace Strive.Client.ViewModel
             Vector3D initialPosition = Position;
             Quaternion initialRotation = Rotation;
 
-            if (System.Environment.TickCount - lastTick >= 1000)
+            if (Environment.TickCount - lastTick >= 1000)
             {
                 lastFrameRate = frameRate;
                 frameRate = 0;
-                lastTick = System.Environment.TickCount;
+                lastTick = Environment.TickCount;
             }
             frameRate++;
 
@@ -175,41 +175,39 @@ namespace Strive.Client.ViewModel
             int movementForward = 0;
             int movementUp = 0;
             double speedModifier = 1;
-            foreach (InputBindings.KeyBinding kb in _bindings.KeyBindings)
+            foreach (InputBindings.KeyBinding kb in _bindings.KeyBindings
+                .Where(kb => kb.KeyCombo.All(k => _keyPressed(k))))
             {
-                if (kb.KeyCombo.All(k => _keyPressed(k)))
-                {
-                    _followEntities.Clear();
+                _followEntities.Clear();
 
-                    if (kb.Action == InputBindings.KeyAction.Up)
-                        movementUp++;
-                    else if (kb.Action == InputBindings.KeyAction.Down)
-                        movementUp--;
-                    else if (kb.Action == InputBindings.KeyAction.Left)
-                        movementPerpendicular--;
-                    else if (kb.Action == InputBindings.KeyAction.Right)
-                        movementPerpendicular++;
-                    else if (kb.Action == InputBindings.KeyAction.TurnLeft)
-                        Heading -= deltaT * 2.0;
-                    else if (kb.Action == InputBindings.KeyAction.TurnRight)
-                        Heading += deltaT * 2.0;
-                    else if (kb.Action == InputBindings.KeyAction.TiltUp)
-                        Tilt += deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
-                    else if (kb.Action == InputBindings.KeyAction.TiltDown)
-                        Tilt -= deltaT * (_angleRangeHigh - _angleRangeLow) / 2.0;
-                    else if (kb.Action == InputBindings.KeyAction.Walk)
-                        speedModifier = 0.2;
-                    else if (kb.Action == InputBindings.KeyAction.Forward)
-                        movementForward++;
-                    else if (kb.Action == InputBindings.KeyAction.Back)
-                        movementForward--;
-                    else if (kb.Action == InputBindings.KeyAction.Home)
-                        Home();
-                    else if (kb.Action == InputBindings.KeyAction.FollowSelected)
-                        OnFollowSelected();
-                    else
-                        throw new Exception("Unexpected keyboard binding " + kb.Action);
-                }
+                if (kb.Action == InputBindings.KeyAction.Up)
+                    movementUp++;
+                else if (kb.Action == InputBindings.KeyAction.Down)
+                    movementUp--;
+                else if (kb.Action == InputBindings.KeyAction.Left)
+                    movementPerpendicular--;
+                else if (kb.Action == InputBindings.KeyAction.Right)
+                    movementPerpendicular++;
+                else if (kb.Action == InputBindings.KeyAction.TurnLeft)
+                    Heading -= deltaT * 2.0;
+                else if (kb.Action == InputBindings.KeyAction.TurnRight)
+                    Heading += deltaT * 2.0;
+                else if (kb.Action == InputBindings.KeyAction.TiltUp)
+                    Tilt += deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
+                else if (kb.Action == InputBindings.KeyAction.TiltDown)
+                    Tilt -= deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
+                else if (kb.Action == InputBindings.KeyAction.Walk)
+                    speedModifier = 0.2;
+                else if (kb.Action == InputBindings.KeyAction.Forward)
+                    movementForward++;
+                else if (kb.Action == InputBindings.KeyAction.Back)
+                    movementForward--;
+                else if (kb.Action == InputBindings.KeyAction.Home)
+                    Home();
+                else if (kb.Action == InputBindings.KeyAction.FollowSelected)
+                    OnFollowSelected();
+                else
+                    throw new Exception("Unexpected keyboard binding " + kb.Action);
             }
 
             // Set Position and Rotation
@@ -220,14 +218,14 @@ namespace Strive.Client.ViewModel
                 Vector3D positionChange = new Vector3D(
                     Math.Sin(movementHeading) * _landSpeed,
                     Math.Cos(movementHeading) * _landSpeed,
-                    movementUp * (_distanceRangeHigh - _distanceRangeLow) / 10.0);
+                    movementUp * (DistanceRangeHigh - DistanceRangeLow) / 10.0);
 
                 Position += positionChange * deltaT * speedModifier;
 
-                if (Position.Z < _distanceRangeLow)
-                    Position.Z = _distanceRangeLow;
-                else if (Position.Z > _distanceRangeHigh)
-                    Position.Z = _distanceRangeHigh;
+                if (Position.Z < DistanceRangeLow)
+                    Position.Z = DistanceRangeLow;
+                else if (Position.Z > DistanceRangeHigh)
+                    Position.Z = DistanceRangeHigh;
             }
 
             // Send update if required

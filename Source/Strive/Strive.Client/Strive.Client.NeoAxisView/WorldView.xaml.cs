@@ -22,8 +22,8 @@ namespace Strive.Client.NeoAxisView
     /// </summary>
     public partial class WorldView : DockableContent
     {
-        PerspectiveViewModel _perspective;
-        WorldViewModel _worldViewModel;
+        readonly PerspectiveViewModel _perspective;
+        readonly WorldViewModel _worldViewModel;
         public WorldView(WorldViewModel worldViewModel, ConnectionHandler connectionHandler)
         {
             InitializeComponent();
@@ -178,7 +178,7 @@ namespace Strive.Client.NeoAxisView
             }
         }
 
-        Random _rand = new Random();
+        readonly Random _rand = new Random();
         void WorldViewControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)

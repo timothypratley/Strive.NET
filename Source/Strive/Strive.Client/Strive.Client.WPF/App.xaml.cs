@@ -18,7 +18,7 @@ namespace Strive.Client.WPF
     /// </summary>
     public partial class App : Application
     {
-        static ILog Log = LogManager.GetCurrentClassLogger();
+        static readonly ILog Log = LogManager.GetCurrentClassLogger();
         public static WorldViewModel WorldViewModel;
         public static ServerConnection ServerConnection;
         public static DictionaryModel<string, EntityModel> WorldModel;
@@ -28,7 +28,7 @@ namespace Strive.Client.WPF
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             LogModel = new LogModel();
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
@@ -38,7 +38,7 @@ namespace Strive.Client.WPF
             ConnectionHandler = new ConnectionHandler(ServerConnection, WorldModel);
         }
 
-        private bool ReportException(Exception ex)
+        private static bool ReportException(Exception ex)
         {
             Log.Fatal("Uncaught Exception", ex);
             using (var d = new System.Windows.Forms.ThreadExceptionDialog(ex))
@@ -49,17 +49,10 @@ namespace Strive.Client.WPF
 
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            if (ReportException(e.Exception))
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                e.Handled = true;
-            }
+            e.Handled = ReportException(e.Exception);
         }
 
-        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             ReportException(e.ExceptionObject as Exception);
         }

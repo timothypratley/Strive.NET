@@ -7,9 +7,6 @@ using Common.Logging;
 
 namespace Strive.Network.Server
 {
-    /// <summary>
-    /// Summary description for Listener.
-    /// </summary>
     public class Listener
     {
         public List<Client> Clients { get; private set; }

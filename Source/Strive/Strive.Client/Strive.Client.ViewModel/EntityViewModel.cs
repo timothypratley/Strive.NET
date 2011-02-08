@@ -5,8 +5,8 @@ namespace Strive.Client.ViewModel
 {
     public class EntityViewModel
     {
-        private EntityModel _entity;
-        private WorldNavigation _entityNavigation;
+        private readonly EntityModel _entity;
+        private readonly WorldNavigation _entityNavigation;
 
         public EntityViewModel(EntityModel entity, WorldNavigation navigation)
         {

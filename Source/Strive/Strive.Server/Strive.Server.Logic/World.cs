@@ -34,20 +34,21 @@ namespace Strive.Server.Logic
         public List<MobileAvatar> Mobiles { get; private set; }
 
         // TODO: do we know the sun texture etc here?
-        const int DEFAULT_DAY = 147;
-        const int DEFAULT_NIGHT = 148;
-        const int DEFAULT_CUSP = 5;
-        const int DEFAULT_SUN = 146;
-        public ToClient.TimeAndWeather Weather = new ToClient.TimeAndWeather(Global.Now, 0, DEFAULT_DAY, DEFAULT_NIGHT, DEFAULT_CUSP, DEFAULT_SUN, 0, 0);
+        const int DefaultDay = 147;
+        const int DefaultNight = 148;
+        const int DefaultCusp = 5;
+        const int DefaultSun = 146;
+        public ToClient.TimeAndWeather Weather = new ToClient.TimeAndWeather(Global.Now, 0, DefaultDay, DefaultNight, DefaultCusp, DefaultSun, 0, 0);
 
         ILog Log = LogManager.GetCurrentClassLogger();
 
         public World(int worldId)
         {
-            this._worldId = worldId;
+            _worldId = worldId;
             Load();
         }
 
+        public class InvalidWorld : Exception { }
         public void Load()
         {
             PhysicalObjects = new Dictionary<int, PhysicalObject>();
@@ -136,7 +137,7 @@ namespace Strive.Server.Logic
             Schema.WorldRow wr = Global.ModelSchema.World.FindByWorldID(_worldId);
             if (wr == null)
             {
-                throw new Exception("ERROR: World ID not valid!");
+                throw new InvalidWorld();
             }
 
             Log.Info("Loading world \"" + wr.WorldName + "\"...");
@@ -145,8 +146,7 @@ namespace Strive.Server.Logic
             {
                 foreach (Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows())
                 {
-                    var t = new Terrain(ttr, ttr.TemplateObjectRow, oir);
-                    Add(t);
+                    Add(new Terrain(ttr, ttr.TemplateObjectRow, oir));
                 }
             }
             Log.Info("Loading physical objects...");
@@ -154,14 +154,11 @@ namespace Strive.Server.Logic
             {
                 foreach (Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows())
                 {
-                    foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
+                    foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows()
+                        .Where(oir => oir.GetMobilePossesableByPlayerRows().Length <= 0))
                     {
-                        // NB: don't add players yet
-                        if (oir.GetMobilePossesableByPlayerRows().Length > 0) continue;
-
                         // NB: we only add avatars to our world, not mobiles
-                        var a = new MobileAvatar(this, tmr, otr, oir);
-                        Add(a);
+                        Add(new MobileAvatar(this, tmr, otr, oir));
                     }
                 }
                 foreach (Schema.TemplateItemRow tir in otr.GetTemplateItemRows())

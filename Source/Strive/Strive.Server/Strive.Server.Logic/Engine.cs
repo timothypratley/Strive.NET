@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,50 +12,47 @@ using Strive.Network.Messages;
 
 namespace Strive.Server.Logic
 {
-    /// <summary>
-    /// </summary>
     public class Engine
     {
         int port = Constants.DefaultPort;
-        Listener networkHandler;
-        World world;
-        MessageProcessor messageProcessor;
-        StoppableThread engineThread;
-        ILog Log = LogManager.GetCurrentClassLogger();
+        readonly Listener _networkHandler;
+        World _world;
+        MessageProcessor _messageProcessor;
+        readonly StoppableThread _engineThread;
+        readonly ILog _log = LogManager.GetCurrentClassLogger();
         
         public ServerStatusModel ServerStatusModel { get; private set; }
 
         public Engine()
         {
-            Log.Info("Creating " + Assembly.GetExecutingAssembly().GetName().FullName);
+            _log.Info("Creating " + Assembly.GetExecutingAssembly().GetName().FullName);
             Global.ReadConfiguration();
             //Global.worldFilename = "DefaultWorld.xml";
-            engineThread = new StoppableThread(new StoppableThread.WhileRunning(UpdateLoop));
-            networkHandler = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
-            Log = LogManager.GetCurrentClassLogger();
-            ServerStatusModel = new ServerStatusModel();
-            ServerStatusModel.Status = "Created";
+            _engineThread = new StoppableThread(UpdateLoop);
+            _networkHandler = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
+            _log = LogManager.GetCurrentClassLogger();
+            ServerStatusModel = new ServerStatusModel {Status = "Created"};
         }
 
         public void Start()
         {
             ServerStatusModel.Status = "Starting"; 
-            world = new World(Global.WorldId);
-            messageProcessor = new MessageProcessor(world, networkHandler);
-            Global.World = world;
+            _world = new World(Global.WorldId);
+            _messageProcessor = new MessageProcessor(_world, _networkHandler);
+            Global.World = _world;
             ServerStatusModel.Started = Global.Now;
-            engineThread.Start();
-            Log.Info("Listening for new connections...");
-            networkHandler.Start();
+            _engineThread.Start();
+            _log.Info("Listening for new connections...");
+            _networkHandler.Start();
             ServerStatusModel.Status = "Running";
         }
 
         public void Stop()
         {
             ServerStatusModel.Status = "Stopping";
-            networkHandler.Stop();
-            engineThread.Stop();
-            Log.Info("Server stopped.");
+            _networkHandler.Stop();
+            _engineThread.Stop();
+            _log.Info("Server stopped.");
             ServerStatusModel.Status = "Stopped";
         }
 
@@ -65,21 +63,21 @@ namespace Strive.Server.Logic
             {
                 // handle world changes
                 Global.Now = DateTime.Now;
-                world.Update();
+                _world.Update();
 
                 // handle incomming messages
 
                 // TODO: where should the message queue live?
-                while (networkHandler.MessageCount > 0)
+                while (_networkHandler.MessageCount > 0)
                 {
-                    messageProcessor.ProcessNextMessage();
+                    _messageProcessor.ProcessNextMessage();
                 }
 
                 CleanupLinkdead();
 
                 if ((DateTime.Now - Global.Now) > TimeSpan.FromSeconds(1))
                 {
-                    Log.Warn("An update cycle took longer than one second.");
+                    _log.Warn("An update cycle took longer than one second.");
                 }
                 else
                 {
@@ -90,7 +88,7 @@ namespace Strive.Server.Logic
             {
                 ServerStatusModel.Status = "Crashing";
                 // Just log exceptions and stop all threads
-                Log.Error("Update loop exception caught", e);
+                _log.Error("Update loop exception caught", e);
                 Stop();
                 ServerStatusModel.Status = "Crashed";
             }
@@ -98,27 +96,22 @@ namespace Strive.Server.Logic
 
         void CleanupLinkdead()
         {
-            List<Client> remove = new List<Client>();
-            foreach (Client client in networkHandler.Clients)
-            {
-                if (client.Status != ConnectionStatus.Connected
+            var remove = _networkHandler.Clients
+                .Where(client => client.Status != ConnectionStatus.Connected
                     && (Global.Now - client.LastMessageTimestamp) > TimeSpan.FromSeconds(60))
-                {
-                    remove.Add(client);
-                }
-            }
+                .ToList();
             foreach (Client client in remove)
             {
                 if (client.Avatar != null)
                 {
                     ((MobileAvatar)client.Avatar).Client = null;
-                    world.Remove(client.Avatar);
+                    _world.Remove(client.Avatar);
                 }
                 else
                 {
                     client.Avatar = null;
                 }
-                networkHandler.Clients.Remove(client);
+                _networkHandler.Clients.Remove(client);
             }
         }
     }

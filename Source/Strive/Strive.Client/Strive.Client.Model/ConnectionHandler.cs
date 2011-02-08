@@ -12,9 +12,9 @@ namespace Strive.Client.Model
 {
     public class ConnectionHandler
     {
-        ServerConnection _connection;
-        static ILog Log = LogManager.GetCurrentClassLogger();
-        DictionaryModel<string, EntityModel> _world;
+        readonly ServerConnection _connection;
+        static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        readonly DictionaryModel<string, EntityModel> _world;
 
         public ConnectionHandler(ServerConnection connection, DictionaryModel<string, EntityModel> world)
         {

@@ -4,6 +4,7 @@ using System.Net;
 
 using AvalonDock;
 using Strive.Common;
+using Strive.Network.Client;
 
 
 namespace Strive.Client.WPF
@@ -19,7 +20,7 @@ namespace Strive.Client.WPF
             hostTextBox.Text = Dns.GetHostName();
             portTextBox.Text = Constants.DefaultPort.ToString();
 
-            // TODO: make a viewmodel and expose connected status
+            // TODO: make a viewmodel and expose connected status; holding a serverconnection instead of global
             DataContext = App.ServerConnection;
         }
 
@@ -41,13 +42,18 @@ namespace Strive.Client.WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int port = Constants.DefaultPort;
-            int.TryParse(portTextBox.Text, out port);
-            App.ServerConnection.Start(new IPEndPoint(Dns.GetHostEntry(hostTextBox.Text).AddressList[0], port));
-            App.ServerConnection.Connect += (object s, EventArgs ev) =>
+            int port;
+            if (!int.TryParse(portTextBox.Text, out port))
             {
-                App.ServerConnection.Login("bob@smith.com", "bob");
-                App.ServerConnection.PossessMobile(1);
+                // TODO: use input validation instead
+                port = Constants.DefaultPort;
+            }
+            App.ServerConnection.Start(new IPEndPoint(Dns.GetHostEntry(hostTextBox.Text).AddressList[0], port));
+            App.ServerConnection.Connect += (s, ev) =>
+                                                {
+                var sc = ((ServerConnection) s);
+                sc.Login("bob@smith.com", "bob");
+                sc.PossessMobile(1);
             };
         }
     }
