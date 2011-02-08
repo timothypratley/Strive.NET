@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-
-using Strive.Client.Model;
+﻿using Strive.Client.Model;
 
 
 namespace Strive.Client.ViewModel

@@ -1,17 +1,14 @@
-using System;
-
 using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-	/// <summary>
-	/// Summary description for AddWieldable.
-	/// </summary>
 	public class AddWieldable : AddPhysicalObject {
-		public Wieldable weildable;
+		public Wieldable Weildable;
+
 		public AddWieldable(){}
-		public AddWieldable( Wieldable w ) {
-			this.weildable = w;
-		}
+        public AddWieldable(Wieldable w)
+        {
+            Weildable = w;
+        }
 	}
 }

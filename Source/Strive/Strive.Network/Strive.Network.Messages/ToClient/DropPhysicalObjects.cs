@@ -1,26 +1,18 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-	/// <summary>
-	/// Summary description for DropPhysicalObject.
-	/// </summary>
 	[Serializable]
 	public class DropPhysicalObjects : IMessage {
-		public DropPhysicalObjects(){}
-        public DropPhysicalObjects(List<PhysicalObject> physicalObjects)
+        public int[] InstanceIDs;
+        
+        public DropPhysicalObjects(){}
+        public DropPhysicalObjects(IEnumerable<PhysicalObject> physicalObjects)
         {
-            instanceIDs = new int[physicalObjects.Count];
-            int i = 0;
-            foreach (PhysicalObject po in physicalObjects)
-            {
-                instanceIDs[i] = po.ObjectInstanceID;
-                i++;
-            }
+            InstanceIDs = physicalObjects.Select(po => po.ObjectInstanceID).ToArray();
         }
-
-		public int [] instanceIDs;
 	}
 }

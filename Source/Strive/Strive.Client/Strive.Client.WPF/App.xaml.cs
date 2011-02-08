@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 using System.Reflection;
 
 using Common.Logging;
-
-using Strive.Client.NeoAxisView;
 using Strive.Client.ViewModel;
 using Strive.Client.Model;
 using Strive.Network.Client;

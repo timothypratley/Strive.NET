@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Strive.Server.Model;
+﻿using Strive.Server.Model;
 
 namespace Strive.Client.WPF
 {

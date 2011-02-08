@@ -1,5 +1,3 @@
-using System;
-
 using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
@@ -8,10 +6,12 @@ namespace Strive.Network.Messages.ToClient
 	/// Summary description for AddEquipable.
 	/// </summary>
 	public class AddEquipable : AddPhysicalObject {
-		public Equipable equipable;
+		public Equipable Equipable;
+
 		public AddEquipable(){}
-		public AddEquipable( Equipable e ) {
-			this.equipable = e;
-		}
+        public AddEquipable(Equipable e)
+        {
+            Equipable = e;
+        }
 	}
 }

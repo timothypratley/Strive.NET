@@ -1,29 +1,25 @@
 using System;
-
-using Strive.Server.Model;
 using Strive.Common;
 
 
 namespace Strive.Network.Messages.ToServer
 {
-	/// <summary>
-	/// Summary description for TargetAny.
-	/// </summary>
 	[Serializable]
 	public class UseSkill : IMessage	{
-		public int SkillID;
-		public int InvokationID;	// this is so the client can cancel specific invokations
+		public int SkillId;
+		public int InvokationId;	// this is so the client can cancel specific invokations
 		public int [] TargetPhysicalObjectIDs;
+
 		public UseSkill(){}
-		public UseSkill( EnumSkill SkillID, int InvokationID ) {
-			this.SkillID = (int)SkillID;
-			this.InvokationID = InvokationID;
-			this.TargetPhysicalObjectIDs = new int[0];
+		public UseSkill( EnumSkill skillId, int invokationId ) {
+			SkillId = (int)skillId;
+			InvokationId = invokationId;
+			TargetPhysicalObjectIDs = new int[0];
 		}
-		public UseSkill( EnumSkill SkillID, int InvokationID, int [] TargetPhysicalObjectIDs )	{
-			this.SkillID = (int)SkillID;
-			this.InvokationID = InvokationID;
-			this.TargetPhysicalObjectIDs = TargetPhysicalObjectIDs;
+		public UseSkill( EnumSkill skillId, int invokationId, int [] targetPhysicalObjectIDs )	{
+			SkillId = (int)skillId;
+			InvokationId = invokationId;
+			TargetPhysicalObjectIDs = targetPhysicalObjectIDs;
 		}
 	}
 }

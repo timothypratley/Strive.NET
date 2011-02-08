@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
-
+using System.Collections.Generic;
 using Common.Logging;
+using Strive.Network.Messages.ToServer;
 using Strive.Network.Server;
 using Strive.Server.Model;
 using Strive.Common;
@@ -16,26 +16,26 @@ namespace Strive.Server.Logic
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
 
-        public static void ProcessUseSkill(Client client, Strive.Network.Messages.ToServer.UseSkill message)
+        public static void ProcessUseSkill(Client client, UseSkill message)
         {
-            MobileAvatar avatar = client.Avatar as MobileAvatar;
+            var avatar = client.Avatar as MobileAvatar;
             if (avatar == null)
             {
-                client.Log("Requested a skill, but doesn't have an avatar.");
+                client.LogMessage("Requested a skill, but doesn't have an avatar.");
                 return;
             }
-            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID((int)message.SkillID);
+            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID(message.SkillId);
             if (esr == null)
             {
-                client.Log("Requested an invalid skill " + message.SkillID);
+                client.LogMessage("Requested an invalid skill " + message.SkillId);
                 return;
             }
 
             // If already performing a skill invokation, just queue the request
             // for later.
-            if (avatar.activatingSkill != null)
+            if (avatar.ActivatingSkill != null)
             {
-                avatar.skillQueue.Enqueue(message);
+                avatar.SkillQueue.Enqueue(message);
                 return;
             }
 
@@ -47,64 +47,57 @@ namespace Strive.Server.Logic
             else
             {
                 // process it later, after leadtime is elapsed
-                MobileAvatar ma = client.Avatar as MobileAvatar;
-                ma.activatingSkill = message;
-                ma.activatingSkillTimestamp = Global.Now;
-                ma.activatingSkillLeadTime = TimeSpan.FromSeconds(esr.LeadTime);
+                avatar.ActivatingSkill = message;
+                avatar.ActivatingSkillTimestamp = Global.Now;
+                avatar.ActivatingSkillLeadTime = TimeSpan.FromSeconds(esr.LeadTime);
             }
         }
 
-        public static void ProcessCancelSkill(Client client, Strive.Network.Messages.ToServer.CancelSkill message)
+        public static void ProcessCancelSkill(Client client, CancelSkill message)
         {
-            MobileAvatar avatar = client.Avatar as MobileAvatar;
+            var avatar = client.Avatar as MobileAvatar;
             if (avatar == null)
             {
-                client.Log("Canceled a skill invokation, but don't have an avatar.");
+                client.LogMessage("Canceled a skill invokation, but don't have an avatar.");
                 return;
             }
 
             // If already performing invokation, just cancel it
             bool found = false;
-            if (avatar.activatingSkill != null && avatar.activatingSkill.InvokationID == message.InvokationID)
+            if (avatar.ActivatingSkill != null && avatar.ActivatingSkill.InvokationId == message.InvokationId)
             {
-                avatar.activatingSkill = null;
+                avatar.ActivatingSkill = null;
                 found = true;
             }
             else
             {
                 // search for it in queued skill invokations
-                // just generate a new new with the invokation missing
-                Queue newQueue = new Queue();
-                foreach (Strive.Network.Messages.ToServer.UseSkill m in avatar.skillQueue)
+                // just generate a new queue with the invokation missing
+                var newQueue = new Queue<UseSkill>();
+                foreach (UseSkill m in avatar.SkillQueue)
                 {
-                    if (m.InvokationID == message.InvokationID)
+                    if (m.InvokationId == message.InvokationId)
                     {
                         // don't add it
                         found = true;
                     }
                     else
-                    {
                         newQueue.Enqueue(m);
-                    }
                 }
-                avatar.skillQueue = newQueue;
+                avatar.SkillQueue = newQueue;
             }
             if (found)
-            {
-                client.Log("Successfully canceled invokation " + message.InvokationID);
-            }
+                client.LogMessage("Successfully canceled invokation " + message.InvokationId);
             else
-            {
-                client.Log("Failed to cancel invokation " + message.InvokationID);
-            }
+                client.LogMessage("Failed to cancel invokation " + message.InvokationId);
         }
 
-        public static void UseSkillNow(MobileAvatar caster, Strive.Network.Messages.ToServer.UseSkill message)
+        public static void UseSkillNow(MobileAvatar caster, UseSkill message)
         {
-            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID((int)message.SkillID);
+            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID(message.SkillId);
             if (esr == null)
             {
-                caster.SendLog("Requested an invalid skill " + message.SkillID);
+                caster.SendLog("Requested an invalid skill " + message.SkillId);
                 return;
             }
 
@@ -121,7 +114,7 @@ namespace Strive.Server.Logic
             }
             */
 
-            MobileAvatar target = null;
+            MobileAvatar target;
             switch ((EnumTargetType)esr.EnumTargetTypeID)
             {
                 case EnumTargetType.TargetSelf:
@@ -155,11 +148,11 @@ namespace Strive.Server.Logic
             if (TargetSkill(caster, target, esr))
             {
                 // successful casting affects affinity with the elements
-                caster.AffinityAir += esr.AirAffinity / 1000;
-                caster.AffinityEarth += esr.EarthAffinity / 1000;
-                caster.AffinityFire += esr.FireAffinity / 1000;
-                caster.AffinityLife += esr.LifeAffinity / 1000;
-                caster.AffinityWater += esr.WaterAffinity / 1000;
+                caster.AffinityAir += esr.AirAffinity / 1000f;
+                caster.AffinityEarth += esr.EarthAffinity / 1000f;
+                caster.AffinityFire += esr.FireAffinity / 1000f;
+                caster.AffinityLife += esr.LifeAffinity / 1000f;
+                caster.AffinityWater += esr.WaterAffinity / 1000f;
             }
 
             // deduct energy regardless

@@ -32,19 +32,19 @@ namespace Strive.Network.Messages.ToClient
 
 		public static PhysicalObject GetPhysicalObject( IMessage message ) {
 			if ( message is AddEquipable ) {
-				return ((AddEquipable)message).equipable;
+				return ((AddEquipable)message).Equipable;
 			} else if ( message is AddJunk ) {
-				return ((AddJunk)message).junk;
+				return ((AddJunk)message).Junk;
 			} else if ( message is AddMobile ) {
-				return ((AddMobile)message).mobile;
+				return ((AddMobile)message).Mobile;
 			} else if ( message is AddQuaffable ) {
-				return ((AddQuaffable)message).quaffable;
+				return ((AddQuaffable)message).Quaffable;
 			} else if ( message is AddReadable ) {
-				return ((AddReadable)message).readable;
+				return ((AddReadable)message).Readable;
 			} else if ( message is AddTerrain ) {
-				return ((AddTerrain)message).terrain;
+				return ((AddTerrain)message).Terrain;
 			} else if ( message is AddWieldable ) {
-				return ((AddWieldable)message).weildable;
+				return ((AddWieldable)message).Weildable;
 			} else {
 				throw new Exception( "Unknown AddPhysicalObject message type " + message.GetType() );
 			}

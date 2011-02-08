@@ -62,7 +62,7 @@ namespace Strive.Server.Logic {
 
 		public void SendPartyTalk( string sender, string message ) {
 			foreach( MobileAvatar ma in _members.Values ) {
-				ma.client.Send( new	Network.Messages.ToClient.Communication( sender, message, Strive.Network.Messages.CommunicationType.PartyTalk ) );
+				ma.Client.Send( new	Network.Messages.ToClient.Communication( sender, message, Strive.Network.Messages.CommunicationType.PartyTalk ) );
 			}
 		}
 	}

@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Media.Media3D;
-using System.Windows.Input;
-
-using UpdateControls.XAML;
-
 using Strive.Client.Model;
-using Strive.Network.Client;
 
 
 namespace Strive.Client.ViewModel
 {
     public class WorldViewModel
     {
-        public InputBindings bindings;
+        public InputBindings Bindings;
 
         private DictionaryModel<string, EntityModel> _world;
         public DictionaryModel<string, EntityModel> World { get { return _world; } }
@@ -27,7 +17,7 @@ namespace Strive.Client.ViewModel
 
         public WorldViewModel(DictionaryModel<string, EntityModel> worldModel)
         {
-            bindings = new InputBindings();
+            Bindings = new InputBindings();
             _world = worldModel;
             _navigation = new WorldNavigation();
         }

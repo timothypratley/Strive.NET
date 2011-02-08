@@ -1,27 +1,21 @@
-using System;
-
 using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-	/// <summary>
-	/// Summary description for AddTerrain.
-	/// </summary>
-
 	public class AddTerrainCollection : IMessage {
-		public int startX, startZ;
-		public int gap_size;
-		public int width, height;
-		public Terrain [,] map;
+		public int StartX, StartZ;
+		public int GapSize;
+		public int Width, Height;
+		public Terrain [,] Map;
 
 
 		public AddTerrainCollection(){}
 
-		public AddTerrainCollection(int gap_size, int width, int height ) {
-			this.gap_size = gap_size;
-			this.width = width;
-			this.height = height;
-			this.map = new Terrain[width,height];
+		public AddTerrainCollection(int gapSize, int width, int height ) {
+			this.GapSize = gapSize;
+			this.Width = width;
+			this.Height = height;
+			this.Map = new Terrain[width,height];
 		}
 	}
 }

@@ -1,9 +1,10 @@
 using System;
+using System.Linq;
 using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Collections.Generic;
 using System.Collections;
 
 namespace Strive.Network.Messages
@@ -13,18 +14,18 @@ namespace Strive.Network.Messages
     /// </summary>
     public class CustomFormatter
     {
-        public static MessageTypeMap messageTypeMap = new MessageTypeMap();
+        public static MessageTypeMap MessageTypeMap = new MessageTypeMap();
 
         public static byte[] Serialize(Object obj)
         {
-            MemoryStream Buffer = new MemoryStream();
+            var buffer = new MemoryStream();
 
             // unique type identifier
             Type t = obj.GetType();
-            byte[] EncodedInt;
+            byte[] encodedInt;
             try
             {
-                EncodedInt = BitConverter.GetBytes((int)messageTypeMap.idFromMessageType[t]
+                encodedInt = BitConverter.GetBytes((int)MessageTypeMap.IdFromMessageType[t]
                 );
             }
             catch (Exception)
@@ -33,98 +34,80 @@ namespace Strive.Network.Messages
             }
             // reserve space for the message length field, we will fill it later,
             // and fill out the unique type identifier
-            Buffer.Write(EncodedInt, 0, EncodedInt.Length);
-            Buffer.Write(EncodedInt, 0, EncodedInt.Length);
+            buffer.Write(encodedInt, 0, encodedInt.Length);
+            buffer.Write(encodedInt, 0, encodedInt.Length);
 
             // encode the object
-            Encode(obj, Buffer, t);
+            Encode(obj, buffer, t);
 
             // now fill in the length field, the first field in the message.
-            EncodedInt = BitConverter.GetBytes((int)Buffer.Length);
-            Buffer.Position = 0;
-            Buffer.Write(EncodedInt, 0, EncodedInt.Length);
-            return Buffer.ToArray();
+            encodedInt = BitConverter.GetBytes((int)buffer.Length);
+            buffer.Position = 0;
+            buffer.Write(encodedInt, 0, encodedInt.Length);
+            return buffer.ToArray();
         }
 
-        public static void Encode(Object obj, MemoryStream Buffer, Type t)
+        public static void Encode(Object obj, MemoryStream buffer, Type t)
         {
             // if the object is a basic type, encode and return
-            if (EncodeBasicType(obj, Buffer)) return;
+            if (EncodeBasicType(obj, buffer)) return;
 
-            FieldInfo[] fi = t.GetFields();
-            foreach (FieldInfo i in fi)
+            FieldInfo[] fis = t.GetFields();
+            foreach (FieldInfo fi in fis)
             {
-                if (i.IsStatic) continue;
-                Object field = i.GetValue(obj);
+                if (fi.IsStatic) continue;
+                Object field = fi.GetValue(obj);
                 if (field == null)
-                {
                     throw new Exception("Cannot serialise object with null fields");
-                }
+
                 // NB: we encode to a specific type,
                 // this prevents encoding derived types,
                 // which would break the message protocol.
                 // derived types will be encoded as messages of the
                 // type they were assigned in the message_id lookup.
-                Encode(field, Buffer, i.FieldType);
+                Encode(field, buffer, fi.FieldType);
             }
         }
 
-        public static bool EncodeBasicType(Object obj, MemoryStream Buffer)
+        public static bool EncodeBasicType(dynamic obj, MemoryStream buffer)
         {
             Type t = obj.GetType();
-            if (t.IsEnum)
+            if (t == typeof(string))
             {
-                byte[] EncodedInt = BitConverter.GetBytes((int)obj);
-                Buffer.Write(
-                    EncodedInt,
-                    0, EncodedInt.Length);
-            }
-            else if (t == typeof(int))
-            {
-                byte[] EncodedInt = BitConverter.GetBytes((int)obj);
-                Buffer.Write(
-                    EncodedInt,
-                    0, EncodedInt.Length);
-            }
-            else if (t == typeof(long))
-            {
-                byte[] EncodedInt = BitConverter.GetBytes((long)obj);
-                Buffer.Write(
-                    EncodedInt,
-                    0, EncodedInt.Length);
-            }
-            else if (t == typeof(float))
-            {
-                byte[] EncodedFloat = BitConverter.GetBytes((float)obj);
-                Buffer.Write(
-                    EncodedFloat,
-                    0, EncodedFloat.Length);
-            }
-            else if (t == typeof(bool))
-            {
-                byte[] EncodedBool = BitConverter.GetBytes((bool)obj);
-                Buffer.Write(
-                    EncodedBool,
-                    0, EncodedBool.Length);
-            }
-            else if (t == typeof(string))
-            {
-                byte[] EncodedString = Encoding.Unicode.GetBytes((string)obj);
-                byte[] EncodedInt = BitConverter.GetBytes(EncodedString.Length);
-                Buffer.Write(EncodedInt, 0, EncodedInt.Length);
-                Buffer.Write(EncodedString, 0, EncodedString.Length);
+                byte[] encodedString = Encoding.Unicode.GetBytes(obj);
+                byte[] encodedInt = BitConverter.GetBytes(encodedString.Length);
+                buffer.Write(encodedInt, 0, encodedInt.Length);
+                buffer.Write(encodedString, 0, encodedString.Length);
             }
             else if (t.IsArray)
             {
-                Array a = (Array)obj;
-                byte[] EncodedLength = BitConverter.GetBytes(a.Length);
-                Buffer.Write(EncodedLength, 0, EncodedLength.Length);
-                for (int j = 0; j < a.Length; j++)
+                byte[] encodedLength = BitConverter.GetBytes(obj.Length);
+                buffer.Write(encodedLength, 0, encodedLength.Length);
+                for (int j = 0; j < obj.Length; j++)
                 {
                     // recursively encode the objects of the array
-                    object o = a.GetValue(j);
-                    Encode(o, Buffer, o.GetType());
+                    object o = obj.GetValue(j);
+                    Encode(o, buffer, o.GetType());
                 }
+            }
+            else if (t.IsEnum)
+            {
+                byte[] encodedInt = BitConverter.GetBytes((int)obj);
+                buffer.Write(encodedInt, 0, encodedInt.Length);
+            }
+            else if (t == typeof(decimal))
+            {
+                byte[] encodedDecimal = GetBytes(obj);
+                buffer.Write(encodedDecimal, 0, encodedDecimal.Length);
+            }
+            else if (t == typeof(object))
+            {
+                return false;
+            }
+            else if (t.IsPrimitive)
+            {
+                byte[] encoded = BitConverter.GetBytes(obj);
+                buffer.Write(encoded,0, encoded.Length);
             }
             else
             {
@@ -133,87 +116,121 @@ namespace Strive.Network.Messages
             return true;
         }
 
-        public static Object Deserialize(byte[] buffer, int Offset)
+        public static Object Deserialize(byte[] buffer, int offset)
         {
-            MessageTypeMap.EnumMessageID message_id = (MessageTypeMap.EnumMessageID)BitConverter.ToInt32(buffer, Offset);
-            Type t = (Type)messageTypeMap.messageTypeFromID[message_id];
-            Offset += 4;
-            //Log.Info( t );
+            Type t = MessageTypeMap.MessageTypeFromId[
+                (MessageTypeMap.EnumMessageId)BitConverter.ToInt32(buffer, offset)];
+            offset += sizeof(Int32);
 
-            return Decode(t, buffer, ref Offset);
+            return Decode(t, buffer, ref offset);
         }
 
-        public static Object Decode(Type t, byte[] buffer, ref int Offset)
+        public static Object Decode(Type t, byte[] buffer, ref int offset)
         {
             // if its a basic type, return it
-            Object obj = DecodeBasicType(t, buffer, ref Offset);
+            Object obj = DecodeBasicType(t, buffer, ref offset);
             if (obj != null) return obj;
 
             // otherwise create the complex object, and decode its fields
-            ConstructorInfo ci = t.GetConstructor(new System.Type[0]);
+            ConstructorInfo ci = t.GetConstructor(new Type[0]);
             if (ci == null)
             {
                 throw new Exception("Cannot construct a " + t);
             }
             obj = ci.Invoke(null);
-            FieldInfo[] fi = t.GetFields();
-            foreach (FieldInfo i in fi)
+            FieldInfo[] fis = t.GetFields();
+            foreach (FieldInfo fi in fis)
             {
-                if (i.IsStatic) continue;
-                i.SetValue(obj, Decode(i.FieldType, buffer, ref Offset));
+                if (fi.IsStatic) continue;
+                fi.SetValue(obj, Decode(fi.FieldType, buffer, ref offset));
             }
             return obj;
         }
 
-        public static Object DecodeBasicType(Type t, byte[] buffer, ref int Offset)
+        public static Object DecodeBasicType(Type t, byte[] buffer, ref int offset)
         {
             Object result = null;
-            if (t == typeof(int))
+            if (t == typeof(string))
             {
-                result = BitConverter.ToInt32(buffer, Offset);
-                Offset += 4;
-            }
-            else if (t == typeof(long))
-            {
-                result = BitConverter.ToInt64(buffer, Offset);
-                Offset += 8;
-            }
-            else if (t.IsEnum)
-            {
-                result = Enum.ToObject(t, BitConverter.ToInt32(buffer, Offset));
-                Offset += 4;
-            }
-            else if (t == typeof(float))
-            {
-                result = BitConverter.ToSingle(buffer, Offset);
-                Offset += 4;
-            }
-            else if (t == typeof(bool))
-            {
-                result = BitConverter.ToBoolean(buffer, Offset);
-                Offset += 1;
-            }
-            else if (t == typeof(string))
-            {
-                int StringLength = BitConverter.ToInt32(buffer, Offset);
-                Offset += 4;
-                result = Encoding.Unicode.GetString(buffer, Offset, StringLength);
-                Offset += StringLength;
+                Int32 stringLength = BitConverter.ToInt32(buffer, offset);
+                offset += sizeof(Int32);
+                result = Encoding.Unicode.GetString(buffer, offset, stringLength);
+                offset += stringLength;
             }
             else if (t.IsArray)
             {
-                int length = BitConverter.ToInt32(buffer, Offset);
-                Offset += 4;
-                ArrayList DecodedArray = new ArrayList();
+                Int32 length = BitConverter.ToInt32(buffer, offset);
+                offset += sizeof(Int32);
+                var decodedArray = new ArrayList();
                 for (int j = 0; j < length; j++)
                 {
-                    DecodedArray.Add(
-                        Decode(t.GetElementType(), buffer, ref Offset)
-                    );
+                    decodedArray.Add(Decode(t.GetElementType(), buffer, ref offset));
                 }
-                result = DecodedArray.ToArray(t.GetElementType());
+                result = decodedArray.ToArray(t.GetElementType());
             }
+            else if (t.IsEnum)
+            {
+                result = Enum.ToObject(t, BitConverter.ToInt32(buffer, offset));
+                offset += sizeof(Int32);
+            }
+            else if (t.IsPrimitive)
+            {
+                if (t==typeof(byte)||t==typeof(sbyte)||t==typeof(char))
+                    result = BitConverter.ToChar(buffer, offset);
+                else if (t == typeof(short))
+                    result = BitConverter.ToInt16(buffer, offset);
+                else if (t == typeof(ushort))
+                    result = BitConverter.ToUInt16(buffer, offset);
+                else if (t == typeof(int))
+                    result = BitConverter.ToInt32(buffer, offset);
+                else if (t == typeof(uint))
+                    result = BitConverter.ToUInt32(buffer, offset);
+                else if (t == typeof(long))
+                    result = BitConverter.ToInt64(buffer, offset);
+                else if (t == typeof(ulong))
+                    result = BitConverter.ToUInt64(buffer, offset);
+                else if (t == typeof(float))
+                    result = BitConverter.ToSingle(buffer, offset);
+                else if (t == typeof(double))
+                    result = BitConverter.ToDouble(buffer, offset);
+                else if (t == typeof(decimal))
+                    result = ToDecimal(buffer, offset);
+                else if (t == typeof(bool))
+                    result = BitConverter.ToBoolean(buffer, offset);
+
+                offset += Marshal.SizeOf(t);
+            }
+
             return result;
+        }
+
+        public static decimal ToDecimal(byte[] bytes, int offset)
+        {
+            byte[] bys = bytes.Skip(offset).Take(16).ToArray();
+            var bits = new int[4];
+            bits[0] = ((bys[0] | (bys[1] << 8)) | (bys[2] << 0x10)) | (bys[3] << 0x18); //lo
+            bits[1] = ((bys[4] | (bys[5] << 8)) | (bys[6] << 0x10)) | (bys[7] << 0x18); //mid
+            bits[2] = ((bys[8] | (bys[9] << 8)) | (bys[10] << 0x10)) | (bys[11] << 0x18); //hi
+            bits[3] = ((bys[12] | (bys[13] << 8)) | (bys[14] << 0x10)) | (bys[15] << 0x18); //flags
+
+
+            // If you're concerned about endianness, you can use IPAddress.HostToNetworkOrder()
+            // on each of the ints.  These lines can be removed if you're not.
+            bits[0] = IPAddress.HostToNetworkOrder(bits[0]);
+            bits[1] = IPAddress.HostToNetworkOrder(bits[1]);
+            bits[2] = IPAddress.HostToNetworkOrder(bits[2]);
+            bits[3] = IPAddress.HostToNetworkOrder(bits[3]);
+
+            Buffer.BlockCopy(bys, 0, bits, 0, 16);
+            return new Decimal(bits);
+        }
+
+        public static byte[] GetBytes(decimal d)
+        {
+            int[] bits = decimal.GetBits(d).Select(IPAddress.NetworkToHostOrder).ToArray();
+            var bytes = new byte[16];
+            Buffer.BlockCopy(bits, 0, bytes, 0, 16);
+            return bytes;
         }
     }
 }

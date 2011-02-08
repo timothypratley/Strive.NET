@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Strive.Network.Client")]
 [assembly: AssemblyDescription("Strive Clientside Network Library")]

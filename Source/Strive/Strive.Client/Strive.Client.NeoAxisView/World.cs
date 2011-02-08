@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 
 using Engine.MathEx;
-using Engine.Renderer;
 using Engine.MapSystem;
 using Engine.EntitySystem;
-using Engine.PhysicsSystem;
-using Engine.Utils;
-using Engine;
-using GameCommon;
-using GameEntities;
 using WPFAppFramework;
 
 using Strive.Client.ViewModel;

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Media.Media3D;
 
 using Common.Logging;
@@ -23,10 +20,10 @@ namespace Strive.Client.Model
         {
             _connection = connection;
             _world = world;
-            _connection.MessageRecieved += new EventHandler(_connection_MessageRecieved);
+            _connection.MessageRecieved += ConnectionMessageRecieved;
         }
 
-        void _connection_MessageRecieved(object sender, EventArgs e)
+        void ConnectionMessageRecieved(object sender, EventArgs e)
         {
             dynamic m = _connection.PopNextMessage();
             Log.Trace("Received " + m.GetType() + " message: " + m);
@@ -42,7 +39,7 @@ namespace Strive.Client.Model
         void Process(Position m)
         {
             Log.Trace("bar");
-            EntityModel e = _world._entities[m.instance_id.ToString()];
+            EntityModel e = _world.EntityDictionary[m.instance_id.ToString()];
             e.Position = m.position;
             e.Rotation = m.rotation;
         }

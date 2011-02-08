@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Concurrent;
@@ -43,52 +40,51 @@ namespace Strive.Network.Messages
         // End generated code --------------------------------
         #endregion
 
-        BlockingCollection<IMessage> messageInQueue;
-        BlockingCollection<IMessage> messageOutQueue;
+        BlockingCollection<IMessage> _messageInQueue;
+        BlockingCollection<IMessage> _messageOutQueue;
 
-        protected Socket tcpSocket;
-        byte[] udpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
-        byte[] tcpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
-        int tcpOffset = 0;
+        protected Socket TcpSocket;
+        readonly byte[] _tcpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
+        int _tcpOffset;
 
         public event EventHandler Connect;
         public event EventHandler ConnectFailed;
         public event EventHandler Disconnect;
         public event EventHandler MessageRecieved;
 
-        protected ILog log;
+        protected ILog Log;
         public Connection()
         {
             Status = ConnectionStatus.Disconnected;
-            log = LogManager.GetCurrentClassLogger();
+            Log = LogManager.GetCurrentClassLogger();
         }
 
         public void Start(Socket socket)
         {
-            tcpSocket = socket;
-            tcpOffset = 0;
+            TcpSocket = socket;
+            _tcpOffset = 0;
             Status = ConnectionStatus.Connected;
-            messageInQueue = new BlockingCollection<IMessage>();
-            messageOutQueue = new BlockingCollection<IMessage>();
+            _messageInQueue = new BlockingCollection<IMessage>();
+            _messageOutQueue = new BlockingCollection<IMessage>();
             BeginReading();
             BeginSending();
         }
 
         public void Start(IPEndPoint remoteEndPoint)
         {
-            lock (tcpSocket)
+            lock (this)
             {
-                if (tcpSocket != null) Stop();
+                if (TcpSocket != null) Stop();
 
                 // Connect to the remote endpoint.
-                tcpSocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                TcpSocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 try
                 {
-                    tcpSocket.BeginConnect(remoteEndPoint, new AsyncCallback(ConnectTCPCallback), this);
+                    TcpSocket.BeginConnect(remoteEndPoint, ConnectTcpCallback, this);
                 }
                 catch (SocketException se)
                 {
-                    log.Error("Error connecting, closing connection.", se);
+                    Log.Error("Error connecting, closing connection.", se);
                     Stop();
                     if (ConnectFailed != null) ConnectFailed(this, null);
                     return;
@@ -100,50 +96,52 @@ namespace Strive.Network.Messages
 
         public void Stop()
         {
-            messageInQueue.CompleteAdding();
-            messageOutQueue.CompleteAdding();
-            lock (tcpSocket)
+            _messageInQueue.CompleteAdding();
+            _messageOutQueue.CompleteAdding();
+            lock (this)
             {
-                if (tcpSocket != null)
+                if (TcpSocket != null)
                 {
                     if (Status == ConnectionStatus.Connected && Disconnect != null)
                         Disconnect(this, null);
 
                     try
                     {
-                        tcpSocket.Shutdown(SocketShutdown.Both);
+                        TcpSocket.Shutdown(SocketShutdown.Both);
                     }
                     catch (SocketException se)
                     {
-                        log.Error("Error shutting down", se);
+                        Log.Error("Error shutting down", se);
                     }
 
-                    tcpSocket = null;
+                    TcpSocket = null;
                 }
                 Status = ConnectionStatus.Disconnected;
             }
+            _messageInQueue = null;
+            _messageOutQueue = null;
         }
 
-        private static void ConnectTCPCallback(IAsyncResult ar)
+        private static void ConnectTcpCallback(IAsyncResult ar)
         {
-            Connection client = (Connection)ar.AsyncState;
-            lock (client.tcpSocket)
+            var client = (Connection)ar.AsyncState;
+            lock (client)
             {
                 try
                 {
                     // Complete the connection.
-                    client.tcpSocket.EndConnect(ar);
+                    client.TcpSocket.EndConnect(ar);
                 }
                 catch (SocketException se)
                 {
-                    client.log.Error("Error connecting, closing connection.", se);
+                    client.Log.Error("Error connecting, closing connection.", se);
                     client.Stop();
                     if (client.ConnectFailed != null) client.ConnectFailed(client, null);
                     return;
                 }
-                client.log.Info("Connected to " + client.tcpSocket.RemoteEndPoint);
+                client.Start(client.TcpSocket);
+                client.Log.Info("Connected to " + client.TcpSocket.RemoteEndPoint);
                 if (client.Connect != null) client.Connect(client, null);
-                client.Start(client.tcpSocket);
             }
         }
 
@@ -152,102 +150,102 @@ namespace Strive.Network.Messages
             // Begin reading
             try
             {
-                tcpSocket.BeginReceive(tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
-                    new AsyncCallback(ReceiveTCPCallback), this);
+                TcpSocket.BeginReceive(_tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
+                    new AsyncCallback(ReceiveTcpCallback), this);
             }
             catch (SocketException se)
             {
-                log.Error("Error receiving, closing connection.", se);
+                Log.Error("Error receiving, closing connection.", se);
                 Stop();
                 return;
             }
         }
 
-        private static void ReceiveTCPCallback(IAsyncResult ar)
+        private static void ReceiveTcpCallback(IAsyncResult ar)
         {
             // Retrieve the state object and the client socket 
             // from the async state object.
-            Connection client = (Connection)ar.AsyncState;
-            lock (client.tcpSocket)
+            var client = (Connection)ar.AsyncState;
+            lock (client)
             {
-                if (client.tcpSocket == null)
+                if (client.TcpSocket == null)
                     return;
 
                 int bytesRead;
                 try
                 {
                     // Read data from the remote device.
-                    bytesRead = client.tcpSocket.EndReceive(ar);
+                    bytesRead = client.TcpSocket.EndReceive(ar);
                 }
                 catch (SocketException se)
                 {
-                    client.log.Error("Error reading, closing connection.", se);
+                    client.Log.Error("Error reading, closing connection.", se);
                     client.Stop();
                     return;
                 }
-                client.tcpOffset += bytesRead;
+                client._tcpOffset += bytesRead;
 
-                while (client.tcpOffset > MessageTypeMap.MessageLengthLength)
+                while (client._tcpOffset > MessageTypeMap.MessageLengthLength)
                 {
-                    int expected_length = BitConverter.ToInt32(client.tcpbuffer, 0);
+                    int expectedLength = BitConverter.ToInt32(client._tcpbuffer, 0);
 
-                    if (client.tcpOffset >= expected_length)
+                    if (client._tcpOffset >= expectedLength)
                     {
                         IMessage message;
                         try
                         {
-                            message = (IMessage)CustomFormatter.Deserialize(client.tcpbuffer, MessageTypeMap.MessageLengthLength);
+                            message = (IMessage)CustomFormatter.Deserialize(client._tcpbuffer, MessageTypeMap.MessageLengthLength);
                         }
                         catch (Exception e)
                         {
-                            client.log.Error("Invalid packet received, closing connection.", e);
+                            client.Log.Error("Invalid packet received, closing connection.", e);
                             client.Stop();
                             return;
                         }
-                        if (client.messageInQueue.TryAdd(message))
+                        if (client._messageInQueue.TryAdd(message))
                         {
-                            client.log.Trace("enqueued " + message.GetType() + " message");
+                            client.Log.Trace("enqueued " + message.GetType() + " message");
                             if (client.MessageRecieved != null) client.MessageRecieved(client, new MessageEventArgs(message));
                         }
                         else
                         {
-                            client.log.Error("Failed to enqueue " + message.GetType() + " message");
+                            client.Log.Error("Failed to enqueue " + message.GetType() + " message");
                         }
 
                         // copy the remaining data to the front of the buffer
-                        client.tcpOffset -= expected_length;
-                        if (client.tcpOffset > 0)
-                            Array.Copy(client.tcpbuffer, expected_length, client.tcpbuffer, 0, client.tcpOffset);
+                        client._tcpOffset -= expectedLength;
+                        if (client._tcpOffset > 0)
+                            Array.Copy(client._tcpbuffer, expectedLength, client._tcpbuffer, 0, client._tcpOffset);
                     }
                 }
 
                 // listen for the next message
                 try
                 {
-                    client.tcpSocket.BeginReceive(client.tcpbuffer, client.tcpOffset, MessageTypeMap.BufferSize - client.tcpOffset, 0,
-                        new AsyncCallback(ReceiveTCPCallback), client);
+                    client.TcpSocket.BeginReceive(client._tcpbuffer, client._tcpOffset, MessageTypeMap.BufferSize - client._tcpOffset, 0,
+                        new AsyncCallback(ReceiveTcpCallback), client);
                 }
                 catch (SocketException se)
                 {
-                    client.log.Error("Error receiving, closing connection.", se);
+                    client.Log.Error("Error receiving, closing connection.", se);
                     client.Stop();
                     return;
                 }
             }
         }
 
-        public void Send(IMessage message)
+        public virtual void Send(IMessage message)
         {
-            if (!messageOutQueue.TryAdd(message))
+            if (!_messageOutQueue.TryAdd(message))
             {
-                log.Error("Failed to enqueue " + message.GetType() + " message");
+                Log.Error("Failed to enqueue " + message.GetType() + " message");
             }
         }
 
         private void BeginSending()
         {
             IMessage message;
-            if (!messageOutQueue.TryTake(out message))
+            if (!_messageOutQueue.TryTake(out message))
                 return;
 
             byte[] buffer;
@@ -258,52 +256,52 @@ namespace Strive.Network.Messages
             }
             catch (Exception e)
             {
-                log.Error("Invalid message to serialize, closing connection.", e);
+                Log.Error("Invalid message to serialize, closing connection.", e);
                 Stop();
                 return;
             }
 
-            lock (tcpSocket)
+            lock (this)
             {
-                if (tcpSocket == null || !tcpSocket.Connected)
+                if (TcpSocket == null || !TcpSocket.Connected)
                 {
-                    log.Error("Tried to send message " + message + " while not connected.");
+                    Log.Error("Tried to send message " + message + " while not connected.");
                     return;
                 }
 
                 try
                 {
-                    tcpSocket.BeginSend(buffer, 0, buffer.Length, 0,
-                        new AsyncCallback(SendTCPCallback), this);
+                    TcpSocket.BeginSend(buffer, 0, buffer.Length, 0,
+                        new AsyncCallback(SendTcpCallback), this);
                 }
                 catch (SocketException se)
                 {
-                    log.Error("Error sending, closing connection", se);
+                    Log.Error("Error sending, closing connection", se);
                     Stop();
                     return;
                 }
             }
         }
 
-        private static void SendTCPCallback(IAsyncResult ar)
+        private static void SendTcpCallback(IAsyncResult ar)
         {
-            Connection client = (Connection)ar.AsyncState;
-            lock (client.tcpSocket)
+            var client = (Connection)ar.AsyncState;
+            lock (client)
             {
-                if (client.tcpSocket == null)
+                if (client.TcpSocket == null)
                 {
-                    client.log.Error("Socket closed while sending");
+                    client.Log.Error("Socket closed while sending");
                     return;
                 }
 
                 try
                 {
                     // Complete sending the data to the remote device.
-                    client.tcpSocket.EndSend(ar);
+                    client.TcpSocket.EndSend(ar);
                 }
                 catch (SocketException se)
                 {
-                    client.log.Error("Error while sending, closing connection", se);
+                    client.Log.Error("Error while sending, closing connection", se);
                     client.Stop();
                 }
             }
@@ -313,8 +311,8 @@ namespace Strive.Network.Messages
         public IMessage PopNextMessage()
         {
             IMessage message;
-            if (!messageInQueue.TryTake(out message))
-                log.Info("In queue of messages exhausted");
+            if (!_messageInQueue.TryTake(out message))
+                Log.Info("In queue of messages exhausted");
             return message;
         }
     }

@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 using Common.Logging;
@@ -9,8 +8,8 @@ using Strive.Server.Model;
 using Strive.Network.Server;
 using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
-using ToServer = Strive.Network.Messages.ToServer;
 using Strive.Common;
+using Strive.Network.Messages.ToServer;
 
 
 namespace Strive.Server.Logic
@@ -25,34 +24,34 @@ namespace Strive.Server.Logic
     /// </summary>
     public class MobileAvatar : Mobile
     {
-        public Client client = null;
-        public World world = null;
-        public DateTime lastAttackUpdate = Global.Now;
-        public DateTime lastHealUpdate = Global.Now;
-        public DateTime lastBehaviourUpdate = Global.Now;
-        public DateTime lastMoveUpdate = Global.Now;
+        public Client Client;
+        public World World;
+        public DateTime LastAttackUpdate;
+        public DateTime LastHealUpdate;
+        public DateTime LastBehaviourUpdate;
+        public DateTime LastMoveUpdate;
 
         // if fighting someone or something
-        public PhysicalObject target = null;
+        public PhysicalObject Target;
 
         // if in a party
-        public Party party = null;
-        public Party invitedToParty = null;
+        public Party Party;
+        public Party InvitedToParty;
 
         // currently invoking a skill
-        public ToServer.UseSkill activatingSkill = null;
-        public DateTime activatingSkillTimestamp = Global.Now;
-        public TimeSpan activatingSkillLeadTime = TimeSpan.FromSeconds(0);
+        public UseSkill ActivatingSkill;
+        public DateTime ActivatingSkillTimestamp;
+        public TimeSpan ActivatingSkillLeadTime;
 
         // any queued up skills to be executed after the current one
-        public Queue skillQueue = new Queue();
+        public Queue<UseSkill> SkillQueue = new Queue<UseSkill>();
 
         // todo: put these in the database schema
-        public float AffinityAir = 0;
-        public float AffinityEarth = 0;
-        public float AffinityFire = 0;
-        public float AffinityLife = 0;
-        public float AffinityWater = 0;
+        public float AffinityAir;
+        public float AffinityEarth;
+        public float AffinityFire;
+        public float AffinityLife;
+        public float AffinityWater;
 
         ILog Log = LogManager.GetCurrentClassLogger();
 
@@ -61,10 +60,10 @@ namespace Strive.Server.Logic
             Schema.TemplateMobileRow mobile,
             Schema.TemplateObjectRow template,
             Schema.ObjectInstanceRow instance
-            )
+        )
             : base(mobile, template, instance)
         {
-            this.world = world;
+            World = world;
         }
 
         public void SetMobileState(EnumMobileState ms)
@@ -73,53 +72,53 @@ namespace Strive.Server.Logic
             // TODO: this will prolly change if we use anything more
             // advance than stick to ground.
             // changing state may have moved the mobile.
-            double altitude = world.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
+            double altitude = World.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
             Position.Y = altitude;
 
             // NB: MobileState message has position info
             // as it is likely that this will have changed
-            world.InformNearby(this, new ToClient.MobileState(this));
+            World.InformNearby(this, new ToClient.MobileState(this));
         }
 
 
         public void SendLog(string message)
         {
-            if (client == null)
+            if (Client == null)
             {
                 Log.Warn(ObjectInstanceID + ", no client: " + message);
             }
             else
             {
-                client.Send(new ToClient.LogMessage(message));
+                Client.LogMessage(message);
             }
         }
 
         public void SendPartyTalk(string message)
         {
-            party.SendPartyTalk(TemplateObjectName, message);
+            Party.SendPartyTalk(TemplateObjectName, message);
         }
 
         public void Update()
         {
             // check for activating skills
-            if (activatingSkill != null)
+            if (ActivatingSkill != null)
             {
-                if (activatingSkillTimestamp + activatingSkillLeadTime <= Global.Now)
+                if (ActivatingSkillTimestamp + ActivatingSkillLeadTime <= Global.Now)
                 {
-                    SkillCommandProcessor.UseSkillNow(this, activatingSkill);
-                    activatingSkill = null;
+                    SkillCommandProcessor.UseSkillNow(this, ActivatingSkill);
+                    ActivatingSkill = null;
                 }
             }
             else
             {
                 // check for queued skills
-                if (skillQueue.Count > 0)
+                if (SkillQueue.Count > 0)
                 {
-                    activatingSkill = (ToServer.UseSkill)skillQueue.Dequeue();
+                    ActivatingSkill = SkillQueue.Dequeue();
                 }
             }
 
-            if (target != null)
+            if (Target != null)
             {
                 CombatUpdate();
             }
@@ -130,7 +129,7 @@ namespace Strive.Server.Logic
             else
             {
                 if (
-                    Global.Now - lastMoveUpdate > TimeSpan.FromSeconds(1)
+                    Global.Now - LastMoveUpdate > TimeSpan.FromSeconds(1)
                     && (MobileState == EnumMobileState.Running
                     || MobileState == EnumMobileState.Walking)
                 )
@@ -143,18 +142,18 @@ namespace Strive.Server.Logic
 
         public void CombatUpdate()
         {
-            if (Global.Now - lastAttackUpdate > TimeSpan.FromSeconds(3))
+            if (Global.Now - LastAttackUpdate > TimeSpan.FromSeconds(3))
             {
                 // combat
-                lastAttackUpdate = Global.Now;
-                PhysicalAttack(target);
+                LastAttackUpdate = Global.Now;
+                PhysicalAttack(Target);
             }
         }
 
         public void BehaviourUpdate()
         {
             // continue doing whatever you were doing
-            if (Global.Now - lastMoveUpdate > TimeSpan.FromSeconds(1))
+            if (Global.Now - LastMoveUpdate > TimeSpan.FromSeconds(1))
             {
                 if (MobileState >= EnumMobileState.Standing)
                 {
@@ -169,20 +168,20 @@ namespace Strive.Server.Logic
                 {
                     case EnumMobileState.Running:
                         // TODO: using timing, not constant values
-                        world.Relocate(this, (Position + 3 * velocity / 10), Rotation);
+                        World.Relocate(this, (Position + 3 * velocity / 10), Rotation);
                         break;
                     case EnumMobileState.Walking:
-                        world.Relocate(this, (Position + velocity / 10), Rotation);
+                        World.Relocate(this, (Position + velocity / 10), Rotation);
                         break;
                     default:
                         // do nothing
                         break;
                 }
             }
-            if (Global.Now - lastBehaviourUpdate > TimeSpan.FromSeconds(3))
+            if (Global.Now - LastBehaviourUpdate > TimeSpan.FromSeconds(3))
             {
                 // change behaviour?
-                lastBehaviourUpdate = Global.Now;
+                LastBehaviourUpdate = Global.Now;
                 if (MobileState > EnumMobileState.Incapacitated)
                 {
                     int rand = Global.Rand.Next(5) - 2;
@@ -202,9 +201,9 @@ namespace Strive.Server.Logic
 
         public void HealUpdate()
         {
-            if (Global.Now - lastHealUpdate > TimeSpan.FromSeconds(1))
+            if (Global.Now - LastHealUpdate > TimeSpan.FromSeconds(1))
             {
-                lastHealUpdate = Global.Now;
+                LastHealUpdate = Global.Now;
                 if (MobileState == EnumMobileState.Incapacitated)
                 {
                     HitPoints -= 0.5F;
@@ -250,14 +249,11 @@ namespace Strive.Server.Logic
 
         public void Attack(PhysicalObject target)
         {
-            this.target = target;
+            Target = target;
             MobileState = EnumMobileState.Fighting;
-            world.InformNearby(
+            World.InformNearby(
                 this,
-                new ToClient.CombatReport(
-                    this, target, EnumCombatEvent.Attacks, 0
-                )
-            );
+                new ToClient.CombatReport(this, target, EnumCombatEvent.Attacks, 0));
         }
 
         public void Kick(PhysicalObject target)
@@ -265,12 +261,9 @@ namespace Strive.Server.Logic
             // TODO: would be nice to have a baseclass physical object with damage function,
             // but needs multiple inheritance
             target.HitPoints -= 20;
-            world.InformNearby(
+            World.InformNearby(
                 this,
-                new ToClient.CombatReport(
-                    this, target, EnumCombatEvent.Hits, 20
-                )
-            );
+                new ToClient.CombatReport(this, target, EnumCombatEvent.Hits, 20));
             ((MobileAvatar)target).UpdateState();
         }
 
@@ -280,7 +273,7 @@ namespace Strive.Server.Logic
             if ((Position - po.Position).Length > 100)
             {
                 // target is out of range
-                SendLog(target.TemplateObjectName + " is out of range.");
+                SendLog(Target.TemplateObjectName + " is out of range.");
                 return;
             }
             if (po is MobileAvatar)
@@ -289,20 +282,18 @@ namespace Strive.Server.Logic
 
                 // if not already in a fight, your opponent automatically
                 // fights back
-                if (opponent.target == null)
+                if (opponent.Target == null)
                 {
-                    opponent.target = this;
+                    opponent.Target = this;
                 }
 
                 // avoidance phase: ratio of Dexterity
                 if (Dexterity == 0 || Global.Rand.Next(100) <= opponent.Dexterity / Dexterity * 20)
                 {
                     // 20% chance for equal dex player to avoid
-                    world.InformNearby(
+                    World.InformNearby(
                         this,
-                        new ToClient.CombatReport(
-                            this, target, EnumCombatEvent.Avoids, 0)
-                    );
+                        new ToClient.CombatReport(this, Target, EnumCombatEvent.Avoids, 0));
                     return;
                 }
 
@@ -313,11 +304,9 @@ namespace Strive.Server.Logic
                 if (attackroll < 20)
                 {
                     // ~ %20 chance to miss for weapon with 100 hitroll
-                    world.InformNearby(
+                    World.InformNearby(
                         this,
-                        new ToClient.CombatReport(
-                            this, target, EnumCombatEvent.Misses, 0)
-                    );
+                        new ToClient.CombatReport(this, Target, EnumCombatEvent.Misses, 0));
                 }
 
                 // damage phase: weapon damage + bonuses
@@ -332,33 +321,29 @@ namespace Strive.Server.Logic
                 opponent.HitPoints -= damage;
                 opponent.MobileState = EnumMobileState.Fighting;
                 opponent.UpdateState();
-                world.InformNearby(
+                World.InformNearby(
                     this,
-                    new ToClient.CombatReport(
-                        this, target, EnumCombatEvent.Hits, damage)
-                );
+                    new ToClient.CombatReport(this, Target, EnumCombatEvent.Hits, damage));
             }
             else if (po is Item)
             {
                 // attacking object
-                Item item = target as Item;
+                var item = Target as Item;
                 int damage = 10;
                 item.HitPoints -= damage;
-                world.InformNearby(
+                World.InformNearby(
                     this,
-                    new ToClient.CombatReport(
-                        this, target, EnumCombatEvent.Hits, damage)
-                );
+                    new ToClient.CombatReport(this, Target, EnumCombatEvent.Hits, damage));
 
                 if (item.HitPoints <= 0)
                 {
                     // omg j00 destoryed teh item!
-                    world.Remove(item);
+                    World.Remove(item);
                 }
             }
             else
             {
-                throw new Exception("ERROR: attacking a " + po.GetType().ToString() + " " + po);
+                throw new Exception("ERROR: attacking a " + po.GetType() + " " + po);
             }
         }
 
@@ -370,51 +355,45 @@ namespace Strive.Server.Logic
 
                 // if not already in a fight, your opponent automatically
                 // fights back
-                if (opponent.target == null)
+                if (opponent.Target == null)
                 {
-                    opponent.target = this;
+                    opponent.Target = this;
                 }
 
                 // avoidance phase: Dexterity
                 if (Global.Rand.Next(100) <= opponent.Dexterity)
                 {
-                    world.InformNearby(
+                    World.InformNearby(
                         this,
-                        new ToClient.CombatReport(
-                        this, target, EnumCombatEvent.Avoids, 0)
-                    );
+                        new ToClient.CombatReport(this, Target, EnumCombatEvent.Avoids, 0));
                     return;
                 }
 
                 // damage phase
                 opponent.HitPoints -= damage * Cognition / opponent.Willpower;
                 opponent.UpdateState();
-                world.InformNearby(
+                World.InformNearby(
                     this,
-                    new ToClient.CombatReport(
-                    this, target, EnumCombatEvent.Hits, damage)
-                );
+                    new ToClient.CombatReport(this, Target, EnumCombatEvent.Hits, damage));
             }
             else if (po is Item)
             {
                 // attacking object
-                Item item = target as Item;
+                var item = (Item)Target;
                 item.HitPoints -= damage;
-                world.InformNearby(
+                World.InformNearby(
                     this,
-                    new ToClient.CombatReport(
-                    this, target, EnumCombatEvent.Hits, damage)
-                    );
+                    new ToClient.CombatReport(this, Target, EnumCombatEvent.Hits, damage));
 
                 if (item.HitPoints <= 0)
                 {
                     // omg j00 destoryed teh item!
-                    world.Remove(item);
+                    World.Remove(item);
                 }
             }
             else
             {
-                throw new Exception("ERROR: attacking a " + po.GetType().ToString() + " " + po);
+                throw new Exception("ERROR: attacking a " + po.GetType() + " " + po);
             }
         }
 
@@ -452,7 +431,7 @@ namespace Strive.Server.Logic
                 HitPoints = MaxHitPoints;
 
                 // TODO: where should we respawn?
-                world.Relocate(this, new Vector3D(0,0,0), Quaternion.Identity);
+                World.Relocate(this, new Vector3D(0,0,0), Quaternion.Identity);
 
                 // set resting in new location to let everyone know
                 SetMobileState(EnumMobileState.Resting);
@@ -467,30 +446,20 @@ namespace Strive.Server.Logic
 
         public float CurrentHeight
         {
-            get
-            {
-                if (MobileState <= EnumMobileState.Resting)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Height;
-                }
+            get {
+                return MobileState <= EnumMobileState.Resting ? 0 : Height;
             }
         }
 
         public float GetCompetancy(EnumSkill skill)
         {
-            Schema.MobileHasSkillRow mhs = Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(TemplateObjectID, (int)skill);
+            Schema.MobileHasSkillRow mhs = Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
+                TemplateObjectID, (int)skill);
             if (mhs != null)
             {
                 return (float)mhs.Rating;
             }
-            else
-            {
-                return 0;
-            }
+            return 0;
         }
     }
 }

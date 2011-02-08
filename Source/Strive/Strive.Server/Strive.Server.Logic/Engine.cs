@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Reflection;
 
 using Common.Logging;
@@ -40,7 +39,7 @@ namespace Strive.Server.Logic
         public void Start()
         {
             ServerStatusModel.Status = "Starting"; 
-            world = new World(Global.WorldID);
+            world = new World(Global.WorldId);
             messageProcessor = new MessageProcessor(world, networkHandler);
             Global.World = world;
             ServerStatusModel.Started = Global.Now;
@@ -84,7 +83,7 @@ namespace Strive.Server.Logic
                 }
                 else
                 {
-                    System.Threading.Thread.Sleep(100);
+                    System.Threading.Thread.Sleep(10000);
                 }
             }
             catch (Exception e)
@@ -112,7 +111,7 @@ namespace Strive.Server.Logic
             {
                 if (client.Avatar != null)
                 {
-                    ((MobileAvatar)client.Avatar).client = null;
+                    ((MobileAvatar)client.Avatar).Client = null;
                     world.Remove(client.Avatar);
                 }
                 else

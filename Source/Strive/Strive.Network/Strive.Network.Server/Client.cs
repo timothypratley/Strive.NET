@@ -1,12 +1,5 @@
 using System;
 using System.Net;
-using System.Net.Sockets;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Collections.Generic;
-
-using Common.Logging;
-
 using Strive.Server.Model;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToClient;
@@ -16,22 +9,22 @@ namespace Strive.Network.Server
 {
     public class Client : Connection
     {
-        Mobile avatar = null;
-        public int PlayerID = 0;
+        Mobile _avatar;
+        public int PlayerId;
 
-        DateTime lastMessageTimestamp;
-        public int latency = 0;
-        public DateTime pingedAt = DateTime.MinValue;
-        public int pingSequence = -1;
+        DateTime _lastMessageTimestamp;
+        public int Latency;
+        public DateTime PingedAt;
+        public int PingSequence = -1;
 
         public string AuthenticatedUsername { get; set; }
         public bool Authenticated { get { return AuthenticatedUsername != null; } }
 
-        public void Send(IMessage message)
+        public override void Send(IMessage message)
         {
             if (!Authenticated)
             {
-                log.Error("Trying to send message " + message + " without authenticated connection.");
+                Log.Error("Trying to send message " + message + " without authenticated connection.");
                 return;
             }
             base.Send(message);
@@ -39,38 +32,38 @@ namespace Strive.Network.Server
 
         public void Close()
         {
-            base.Stop();
+            Stop();
             AuthenticatedUsername = null;
         }
 
         public Mobile Avatar
         {
-            get { return avatar; }
-            set { avatar = value; }
+            get { return _avatar; }
+            set { _avatar = value; }
         }
 
         public DateTime LastMessageTimestamp
         {
-            get { return lastMessageTimestamp; }
-            set { lastMessageTimestamp = value; }
+            get { return _lastMessageTimestamp; }
+            set { _lastMessageTimestamp = value; }
         }
 
         public EndPoint RemoteEndPoint
         {
-            get { return tcpSocket == null ? null : tcpSocket.RemoteEndPoint; }
+            get { return TcpSocket == null ? null : TcpSocket.RemoteEndPoint; }
         }
 
         #region MessageSending
-        public void Log(string message)
+        public void LogMessage(string message)
         {
             Send(new LogMessage(message));
         }
 
         public void Ping()
         {
-            pingSequence++;
-            Send(new Ping(pingSequence));
-            pingedAt = DateTime.Now;
+            PingSequence++;
+            Send(new Ping(PingSequence));
+            PingedAt = DateTime.Now;
         }
 
         public void CanPossess(Tuple<int, string>[] possessable)

@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Strive.Server.Shared.Shared")]
 [assembly: AssemblyDescription("Strive Server Shared")]

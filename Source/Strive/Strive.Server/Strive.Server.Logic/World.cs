@@ -1,16 +1,12 @@
 using System;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Media.Media3D;
 using System.Linq;
 
 using Strive.Network.Server;
 using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
-using ToServer = Strive.Network.Messages.ToServer;
 using Strive.Server.Model;
 using Strive.Common;
 using Common.Logging;
@@ -21,17 +17,17 @@ namespace Strive.Server.Logic
 {
     public class World
     {
-        double highX = 0.0;
-        double highZ = 0.0;
-        double lowX = 0.0;
-        double lowZ = 0.0;
-        int squaresInX;		// see squareSize in Square
-        int squaresInZ;
-        int world_id;
+        double _highX;
+        double _highZ;
+        double _lowX;
+        double _lowZ;
+        int _squaresInX;		// see squareSize in Square
+        int _squaresInZ;
+        readonly int _worldId;
 
         // squares are used to group physical objects
-        Square[,] square;
-        Terrain[,] terrain;
+        Square[,] _square;
+        Terrain[,] _terrain;
 
         // all physical objects are indexed in a hashtable
         public Dictionary<int, PhysicalObject> PhysicalObjects { get; private set; }
@@ -42,13 +38,13 @@ namespace Strive.Server.Logic
         const int DEFAULT_NIGHT = 148;
         const int DEFAULT_CUSP = 5;
         const int DEFAULT_SUN = 146;
-        public ToClient.TimeAndWeather weather = new ToClient.TimeAndWeather(Global.Now, 0, DEFAULT_DAY, DEFAULT_NIGHT, DEFAULT_CUSP, DEFAULT_SUN, 0, 0);
+        public ToClient.TimeAndWeather Weather = new ToClient.TimeAndWeather(Global.Now, 0, DEFAULT_DAY, DEFAULT_NIGHT, DEFAULT_CUSP, DEFAULT_SUN, 0, 0);
 
         ILog Log = LogManager.GetCurrentClassLogger();
 
-        public World(int world_id)
+        public World(int worldId)
         {
-            this.world_id = world_id;
+            this._worldId = worldId;
             Load();
         }
 
@@ -78,55 +74,55 @@ namespace Strive.Server.Logic
 
             // find highX and lowX for our world dimensions
             // refactored in an attempt to increase performance:
-            highX = 0;
-            lowX = 0;
-            highZ = 0;
-            lowZ = 0;
+            _highX = 0;
+            _lowX = 0;
+            _highZ = 0;
+            _lowZ = 0;
             foreach (Schema.ObjectInstanceRow r in Global.ModelSchema.ObjectInstance.Rows)
             {
-                if (highX == 0)
+                if (_highX == 0)
                 {
-                    highX = r.X;
+                    _highX = r.X;
                 }
-                if (lowX == 0)
+                if (_lowX == 0)
                 {
-                    lowX = r.X;
+                    _lowX = r.X;
                 }
-                if (highZ == 0)
+                if (_highZ == 0)
                 {
-                    highZ = r.Z;
+                    _highZ = r.Z;
                 }
-                if (lowZ == 0)
+                if (_lowZ == 0)
                 {
-                    lowZ = 0;
+                    _lowZ = 0;
                 }
 
-                if (r.X > highX)
+                if (r.X > _highX)
                 {
-                    highX = r.X;
+                    _highX = r.X;
                 }
-                if (r.X < lowX)
+                if (r.X < _lowX)
                 {
-                    lowX = r.X;
+                    _lowX = r.X;
                 }
-                if (r.Z > highZ)
+                if (r.Z > _highZ)
                 {
-                    highZ = r.Z;
+                    _highZ = r.Z;
                 }
-                if (r.Z < lowZ)
+                if (r.Z < _lowZ)
                 {
-                    lowZ = r.Z;
+                    _lowZ = r.Z;
                 }
             }
             //highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
             //lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
             //highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
             //lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
-            Log.Info("Global.multiverse bounds are " + lowX + "," + lowZ + " " + highX + "," + highZ);
+            Log.Info("Global.multiverse bounds are " + _lowX + "," + _lowZ + " " + _highX + "," + _highZ);
 
             // figure out how many squares we need
-            squaresInX = (int)(highX - lowX) / Square.squareSize + 1;
-            squaresInZ = (int)(highZ - lowZ) / Square.squareSize + 1;
+            _squaresInX = (int)(_highX - _lowX) / Square.SquareSize + 1;
+            _squaresInZ = (int)(_highZ - _lowZ) / Square.SquareSize + 1;
 
             //			if ( squaresInX * squaresInZ > 10000 ) {
             //				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize + ". Please fix the database." );
@@ -134,10 +130,10 @@ namespace Strive.Server.Logic
 
             // allocate the grid of squares used for grouping
             // physical objects that are close to each other
-            square = new Square[squaresInX, squaresInZ];
-            terrain = new Terrain[squaresInX * Square.squareSize / Constants.terrainPieceSize, squaresInZ * Square.squareSize / Constants.terrainPieceSize];
+            _square = new Square[_squaresInX, _squaresInZ];
+            _terrain = new Terrain[_squaresInX * Square.SquareSize / Constants.terrainPieceSize, _squaresInZ * Square.SquareSize / Constants.terrainPieceSize];
 
-            Schema.WorldRow wr = Global.ModelSchema.World.FindByWorldID(world_id);
+            Schema.WorldRow wr = Global.ModelSchema.World.FindByWorldID(_worldId);
             if (wr == null)
             {
                 throw new Exception("ERROR: World ID not valid!");
@@ -149,7 +145,7 @@ namespace Strive.Server.Logic
             {
                 foreach (Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows())
                 {
-                    Terrain t = new Terrain(ttr, ttr.TemplateObjectRow, oir);
+                    var t = new Terrain(ttr, ttr.TemplateObjectRow, oir);
                     Add(t);
                 }
             }
@@ -164,7 +160,7 @@ namespace Strive.Server.Logic
                         if (oir.GetMobilePossesableByPlayerRows().Length > 0) continue;
 
                         // NB: we only add avatars to our world, not mobiles
-                        MobileAvatar a = new MobileAvatar(this, tmr, otr, oir);
+                        var a = new MobileAvatar(this, tmr, otr, oir);
                         Add(a);
                     }
                 }
@@ -174,40 +170,35 @@ namespace Strive.Server.Logic
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
                         {
-                            Equipable e = new Equipable(ier, tir, otr, oir);
-                            Add(e);
+                            Add(new Equipable(ier, tir, otr, oir));
                         }
                     }
                     foreach (Schema.TemplateItemJunkRow ijr in tir.GetTemplateItemJunkRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
                         {
-                            Junk j = new Junk(ijr, tir, otr, oir);
-                            Add(j);
+                            Add(new Junk(ijr, tir, otr, oir));
                         }
                     }
                     foreach (Schema.TemplateItemQuaffableRow iqr in tir.GetTemplateItemQuaffableRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
                         {
-                            Quaffable q = new Quaffable(iqr, tir, otr, oir);
-                            Add(q);
+                            Add(new Quaffable(iqr, tir, otr, oir));
                         }
                     }
                     foreach (Schema.TemplateItemReadableRow irr in tir.GetTemplateItemReadableRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
                         {
-                            Readable r = new Readable(irr, tir, otr, oir);
-                            Add(r);
+                            Add(new Readable(irr, tir, otr, oir));
                         }
                     }
                     foreach (Schema.TemplateItemWieldableRow iwr in tir.GetTemplateItemWieldableRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
                         {
-                            Wieldable w = new Wieldable(iwr, tir, otr, oir);
-                            Add(w);
+                            Add(new Wieldable(iwr, tir, otr, oir));
                         }
 
                     }
@@ -230,8 +221,8 @@ namespace Strive.Server.Logic
 
         void WeatherUpdate()
         {
-            weather.ServerNow = Global.Now.Ticks;
-            if ((Global.Now.Ticks - weather.ServerNow) < 1)
+            Weather.ServerNow = Global.Now.Ticks;
+            if ((Global.Now.Ticks - Weather.ServerNow) < 1)
             {
                 return;
             }
@@ -239,7 +230,7 @@ namespace Strive.Server.Logic
             bool weatherChanged = false;
             if (Global.Rand.NextDouble() > 0.995)
             {
-                weather.Fog++;
+                Weather.Fog++;
                 weatherChanged = true;
             }
             if (Global.Rand.NextDouble() > 0.995)
@@ -250,7 +241,7 @@ namespace Strive.Server.Logic
             }
             if (weatherChanged)
             {
-                NotifyMobiles(weather);
+                NotifyMobiles(Weather);
             }
         }
 
@@ -258,9 +249,9 @@ namespace Strive.Server.Logic
         {
             foreach (MobileAvatar ma in Mobiles)
             {
-                if (ma.client != null)
+                if (ma.Client != null)
                 {
-                    ma.client.Send(message);
+                    ma.Client.Send(message);
                 }
             }
         }
@@ -268,8 +259,8 @@ namespace Strive.Server.Logic
         public void Add(PhysicalObject po)
         {
             if (
-                po.Position.X > highX || po.Position.Z > highZ
-                || po.Position.X < lowX || po.Position.Z < lowZ
+                po.Position.X > _highX || po.Position.Z > _highZ
+                || po.Position.X < _lowX || po.Position.Z < _lowZ
             )
             {
                 Log.Error("Tried to add physical object " + po.ObjectInstanceID + " outside the world.");
@@ -279,9 +270,9 @@ namespace Strive.Server.Logic
             if (po is Terrain)
             {
                 // keep terrain seperate
-                int terrainX = DivTruncate((int)(po.Position.X - lowX), Constants.terrainPieceSize);
-                int terrainZ = DivTruncate((int)(po.Position.Z - lowZ), Constants.terrainPieceSize);
-                terrain[terrainX, terrainZ] = (Terrain)po;
+                int terrainX = DivTruncate((int)(po.Position.X - _lowX), Constants.terrainPieceSize);
+                int terrainZ = DivTruncate((int)(po.Position.Z - _lowZ), Constants.terrainPieceSize);
+                _terrain[terrainX, terrainZ] = (Terrain)po;
             }
             else
             {
@@ -301,13 +292,13 @@ namespace Strive.Server.Logic
                 {
                     Mobiles.Add((MobileAvatar)po);
                 }
-                int squareX = (int)(po.Position.X - lowX) / Square.squareSize;
-                int squareZ = (int)(po.Position.Z - lowZ) / Square.squareSize;
-                if (square[squareX, squareZ] == null)
+                int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
+                int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
+                if (_square[squareX, squareZ] == null)
                 {
-                    square[squareX, squareZ] = new Square();
+                    _square[squareX, squareZ] = new Square();
                 }
-                square[squareX, squareZ].Add(po);
+                _square[squareX, squareZ].Add(po);
             }
             // notify all nearby clients that a new
             // physical object has entered the world
@@ -317,10 +308,10 @@ namespace Strive.Server.Logic
 
         public void Remove(PhysicalObject po)
         {
-            int squareX = (int)(po.Position.X - lowX) / Square.squareSize;
-            int squareZ = (int)(po.Position.Z - lowZ) / Square.squareSize;
+            int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
+            int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
             InformNearby(po, new ToClient.DropPhysicalObject(po));
-            square[squareX, squareZ].Remove(po);
+            _square[squareX, squareZ].Remove(po);
             PhysicalObjects.Remove(po.ObjectInstanceID);
             if (po is MobileAvatar)
             {
@@ -332,27 +323,27 @@ namespace Strive.Server.Logic
         public void Relocate(PhysicalObject po, Vector3D newPosition, Quaternion newRotation)
         {
             // keep everything inside world bounds
-            if (newPosition.X >= highX)
+            if (newPosition.X >= _highX)
             {
-                newPosition.X = (float)highX - 1;
+                newPosition.X = (float)_highX - 1;
             }
-            if (newPosition.Z >= highZ)
+            if (newPosition.Z >= _highZ)
             {
-                newPosition.Z = (float)highZ - 1;
+                newPosition.Z = (float)_highZ - 1;
             }
-            if (newPosition.X <= lowX)
+            if (newPosition.X <= _lowX)
             {
-                newPosition.X = (float)lowX + 1;
+                newPosition.X = (float)_lowX + 1;
             }
-            if (newPosition.Z <= lowZ)
+            if (newPosition.Z <= _lowZ)
             {
-                newPosition.Z = (float)lowZ + 1;
+                newPosition.Z = (float)_lowZ + 1;
             }
 
-            int fromSquareX = (int)(po.Position.X - lowX) / Square.squareSize;
-            int fromSquareZ = (int)(po.Position.Z - lowZ) / Square.squareSize;
-            int toSquareX = (int)(newPosition.X - lowX) / Square.squareSize;
-            int toSquareZ = (int)(newPosition.Z - lowZ) / Square.squareSize;
+            int fromSquareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
+            int fromSquareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
+            int toSquareX = (int)(newPosition.X - _lowX) / Square.SquareSize;
+            int toSquareZ = (int)(newPosition.Z - _lowZ) / Square.SquareSize;
             int i, j;
 
             // keep everything on the ground
@@ -428,7 +419,7 @@ namespace Strive.Server.Logic
 
             // send everything nearby
             //public void server_foo(float x1, float z1, float x, float z) {
-            if (ma != null && ma.client != null && po.Position != newPosition)
+            if (ma != null && ma.Client != null && po.Position != newPosition)
             {
                 int tx1 = DivTruncate((int)po.Position.X, Constants.terrainPieceSize);
                 int tz1 = DivTruncate((int)po.Position.Z, Constants.terrainPieceSize);
@@ -449,11 +440,11 @@ namespace Strive.Server.Logic
                             int tz = tbz + j;
                             if ((Math.Abs(tx - tx1) > Constants.xRadius[k]) || (Math.Abs(tz - tz1) > Constants.zRadius[k]))
                             {
-                                int terrainX = tx - (int)lowX / Constants.terrainPieceSize;
-                                int terrainZ = tz - (int)lowZ / Constants.terrainPieceSize;
-                                if (terrainX >= 0 && terrainX < squaresInX * Square.squareSize / Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < squaresInZ * Square.squareSize / Constants.terrainPieceSize)
+                                int terrainX = tx - (int)_lowX / Constants.terrainPieceSize;
+                                int terrainZ = tz - (int)_lowZ / Constants.terrainPieceSize;
+                                if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.terrainPieceSize)
                                 {
-                                    Terrain t = terrain[terrainX, terrainZ];
+                                    Terrain t = _terrain[terrainX, terrainZ];
                                     if (t != null)
                                     {
                                         if (
@@ -463,7 +454,7 @@ namespace Strive.Server.Logic
                                             || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0
                                         )
                                         {
-                                            ma.client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
+                                            ma.Client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
                                         }
                                     }
                                 }
@@ -516,19 +507,19 @@ namespace Strive.Server.Logic
                         // add to
                         if (
                             // check the square exists
-                            toSquareX - i >= 0 && toSquareX - i < squaresInX
-                            && toSquareZ - j >= 0 && toSquareZ - j < squaresInZ
-                            && square[toSquareX - i, toSquareZ - j] != null
+                            toSquareX - i >= 0 && toSquareX - i < _squaresInX
+                            && toSquareZ - j >= 0 && toSquareZ - j < _squaresInZ
+                            && _square[toSquareX - i, toSquareZ - j] != null
                         )
                         {
-                            square[toSquareX - i, toSquareZ - j].NotifyClients(ToClient.AddPhysicalObject.CreateMessage(po));
+                            _square[toSquareX - i, toSquareZ - j].NotifyClients(ToClient.AddPhysicalObject.CreateMessage(po));
                             // if the object is a player, it needs to be made aware
                             // of its new world view
-                            if (ma != null && ma.client != null)
+                            if (ma != null && ma.Client != null)
                             {
-                                foreach (PhysicalObject toAdd in square[toSquareX - i, toSquareZ - j].physicalObjects)
+                                foreach (PhysicalObject toAdd in _square[toSquareX - i, toSquareZ - j].PhysicalObjects)
                                 {
-                                    ma.client.Send(ToClient.AddPhysicalObject.CreateMessage(toAdd));
+                                    ma.Client.Send(ToClient.AddPhysicalObject.CreateMessage(toAdd));
                                     //Log.Info( "Told client to add " + toAdd.ObjectInstanceID + "." );
                                 }
                             }
@@ -540,20 +531,20 @@ namespace Strive.Server.Logic
                         // told its new position
                         if (
                             // check the square exists
-                            toSquareX + i >= 0 && toSquareX + i < squaresInX
-                            && toSquareZ + j >= 0 && toSquareZ + j < squaresInZ
-                            && square[toSquareX + i, toSquareZ + j] != null
+                            toSquareX + i >= 0 && toSquareX + i < _squaresInX
+                            && toSquareZ + j >= 0 && toSquareZ + j < _squaresInZ
+                            && _square[toSquareX + i, toSquareZ + j] != null
                         )
                         {
-                            if (ma != null && ma.client != null)
+                            if (ma != null && ma.Client != null)
                             {
-                                square[toSquareX + i, toSquareZ + j].NotifyClientsExcept(
+                                _square[toSquareX + i, toSquareZ + j].NotifyClientsExcept(
                                     new ToClient.Position(po),
-                                    ma.client);
+                                    ma.Client);
                             }
                             else
                             {
-                                square[toSquareX + i, toSquareZ + j].NotifyClients(
+                                _square[toSquareX + i, toSquareZ + j].NotifyClients(
                                     new ToClient.Position(po));
                             }
                         }
@@ -564,18 +555,18 @@ namespace Strive.Server.Logic
             // transition the object to its new square if it changed squares
             if (fromSquareX != toSquareX || fromSquareZ != toSquareZ)
             {
-                square[fromSquareX, fromSquareZ].Remove(po);
-                if (square[toSquareX, toSquareZ] == null)
+                _square[fromSquareX, fromSquareZ].Remove(po);
+                if (_square[toSquareX, toSquareZ] == null)
                 {
-                    square[toSquareX, toSquareZ] = new Square();
+                    _square[toSquareX, toSquareZ] = new Square();
                 }
-                square[toSquareX, toSquareZ].Add(po);
+                _square[toSquareX, toSquareZ].Add(po);
             }
         }
 
-        public MobileAvatar LoadMobile(int instanceID)
+        public MobileAvatar LoadMobile(int instanceId)
         {
-            Schema.ObjectInstanceRow rpr = (Schema.ObjectInstanceRow)Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceID);
+            Schema.ObjectInstanceRow rpr = Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceId);
             if (rpr == null) return null;
             Schema.TemplateObjectRow por = Global.ModelSchema.TemplateObject.FindByTemplateObjectID(rpr.TemplateObjectID);
             if (por == null) return null;
@@ -584,7 +575,7 @@ namespace Strive.Server.Logic
             return new MobileAvatar(this, mr, por, rpr);
         }
 
-        public bool UserLookup(string email, string password, ref int playerID)
+        public bool UserLookup(string email, string password, ref int playerId)
         {
             //Strive.Data.MultiverseFactory.refreshPlayerList(Global.modelSchema);
             DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + email + "'");
@@ -593,43 +584,38 @@ namespace Strive.Server.Logic
                 Log.Error(dr.Length + " players found with email '" + email + "'.");
                 return false;
             }
-            else
+            if (String.Compare((string)dr[0]["Password"], password) == 0)
             {
-                if (String.Compare((string)dr[0]["Password"], password) == 0)
-                {
-                    playerID = (int)dr[0]["PlayerID"];
-                    return true;
-                }
-                else
-                {
-                    Log.Info("Incorrect password for player with email '" + email + "'.");
-                    return false;
-                }
+                playerId = (int)dr[0]["PlayerID"];
+                return true;
             }
+            Log.Info("Incorrect password for player with email '" + email + "'.");
+            return false;
         }
 
         public void InformNearby(PhysicalObject po, IMessage message)
         {
             // notify all nearby clients
-            int squareX = (int)(po.Position.X - lowX) / Square.squareSize;
-            int squareZ = (int)(po.Position.Z - lowZ) / Square.squareSize;
-            int i, j;
+            int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
+            int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
+            int i;
             for (i = -1; i <= 1; i++)
             {
+                int j;
                 for (j = -1; j <= 1; j++)
                 {
                     // check that neigbour exists
                     if (
-                        squareX + i < 0 || squareX + i >= squaresInX
-                        || squareZ + j < 0 || squareZ + j >= squaresInZ
-                        || square[squareX + i, squareZ + j] == null
+                        squareX + i < 0 || squareX + i >= _squaresInX
+                        || squareZ + j < 0 || squareZ + j >= _squaresInZ
+                        || _square[squareX + i, squareZ + j] == null
                     )
                     {
                         continue;
                     }
                     // need to send a message to all nearby clients
                     // so long as the square isn't empty
-                    square[squareX + i, squareZ + j].NotifyClients(message);
+                    _square[squareX + i, squareZ + j].NotifyClients(message);
                 }
             }
         }
@@ -640,87 +626,86 @@ namespace Strive.Server.Logic
             // notify them about surrounding physical objects
             // NB: this routine will send the client mobile's
             // position as one of the 'nearby' mobiles.
-            MobileAvatar mob = (MobileAvatar)client.Avatar;
-            client.Send(weather);
-            int squareX = (int)(mob.Position.X - lowX) / Square.squareSize;
-            int squareZ = (int)(mob.Position.Z - lowZ) / Square.squareSize;
+            var mob = (MobileAvatar)client.Avatar;
+            client.Send(Weather);
+
+            // TODO: zomg I don't know if this divtruncate is right
+            int squareX = DivTruncate((int)(mob.Position.X - _lowX), Square.SquareSize);
+            int squareZ = DivTruncate((int)(mob.Position.Z - _lowZ), Square.SquareSize);
             int i, j;
-            if (client != null)
+            var nearbyPhysicalObjects = new List<PhysicalObject>();
+            // TODO: use xorder, zorder to descide the resolution?
+            for (i = -1; i <= 1; i++)
             {
-                List<PhysicalObject> nearbyPhysicalObjects = new List<PhysicalObject>();
-                // TODO: use xorder, zorder to descide the resolution?
-                for (i = -1; i <= 1; i++)
+                for (j = -1; j <= 1; j++)
                 {
-                    for (j = -1; j <= 1; j++)
-                    {
-                        // check that neigbour exists
-                        if (
-                            squareX + i < 0 || squareX + i >= squaresInX
-                            || squareZ + j < 0 || squareZ + j >= squaresInZ
-                            || square[squareX + i, squareZ + j] == null
+                    // check that neigbour exists
+                    if (
+                        squareX + i < 0 || squareX + i >= _squaresInX
+                        || squareZ + j < 0 || squareZ + j >= _squaresInZ
+                        || _square[squareX + i, squareZ + j] == null
                         )
-                        {
-                            continue;
-                        }
-                        // add all neighbouring physical objects
-                        // to the clients world view
-                        // that are in scope
-                        foreach (PhysicalObject p in square[squareX + i, squareZ + j].physicalObjects)
-                        {
-                            /** TODO:
-                             * could only send based upon a radius, but this makes
-                             * relocations harder... maybe be better to just use squares
-                            // NB: using Manhattan distance not Cartesian
-                            float distx = Math.Abs(p.Position.X - mob.Position.X);
-                            float distz = Math.Abs(p.Position.Z - mob.Position.Z);
-                            if ( distx <= Constants.objectScopeRadius && distz <= Constants.objectScopeRadius )
-                            */
-                            nearbyPhysicalObjects.Add(p);
-                        }
+                    {
+                        continue;
                     }
+                    // add all neighbouring physical objects
+                    // to the clients world view
+                    // that are in scope
+
+                    /** TODO:
+     * could only send based upon a radius, but this makes
+     * relocations harder... maybe be better to just use squares
+    // NB: using Manhattan distance not Cartesian
+    float distx = Math.Abs(p.Position.X - mob.Position.X);
+    float distz = Math.Abs(p.Position.Z - mob.Position.Z);
+    if ( distx <= Constants.objectScopeRadius && distz <= Constants.objectScopeRadius )
+    */
+
+                    nearbyPhysicalObjects.AddRange(
+                        _square[squareX + i, squareZ + j].PhysicalObjects.Cast<PhysicalObject>());
                 }
-                /*
+            }
+            /*
                 ToClient.AddPhysicalObjects message = new ToClient.AddPhysicalObjects(
                     nearbyPhysicalObjects
                 );
                 client.Send( message );
                 */
-                foreach (PhysicalObject p in nearbyPhysicalObjects)
+            foreach (PhysicalObject p in nearbyPhysicalObjects)
+            {
+                client.Send(ToClient.AddPhysicalObject.CreateMessage(p));
+            }
+
+            for (int k = 0; k < Constants.terrainZoomOrder; k++)
+            {
+                int tbx = DivTruncate((int)mob.Position.X, Constants.terrainPieceSize) - Constants.xRadius[k];
+                int tbz = DivTruncate((int)mob.Position.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
+
+                // Normalise to a 'grid' point
+                tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
+                tbz = DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
+
+                for (i = 0; i <= Constants.xRadius[k] * 2; i += Constants.scale[k])
                 {
-                    client.Send(ToClient.AddPhysicalObject.CreateMessage(p));
-                }
-
-                for (int k = 0; k < Constants.terrainZoomOrder; k++)
-                {
-                    int tbx = DivTruncate((int)mob.Position.X, Constants.terrainPieceSize) - Constants.xRadius[k];
-                    int tbz = DivTruncate((int)mob.Position.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
-
-                    // Normalise to a 'grid' point
-                    tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
-                    tbz = DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
-
-                    for (i = 0; i <= Constants.xRadius[k] * 2; i += Constants.scale[k])
+                    for (j = 0; j <= Constants.zRadius[k] * 2; j += Constants.scale[k])
                     {
-                        for (j = 0; j <= Constants.zRadius[k] * 2; j += Constants.scale[k])
+                        int tx = tbx + i;
+                        int tz = tbz + j;
+                        int terrainX = tx - (int)_lowX / Constants.terrainPieceSize;
+                        int terrainZ = tz - (int)_lowZ / Constants.terrainPieceSize;
+                        if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.terrainPieceSize)
                         {
-                            int tx = tbx + i;
-                            int tz = tbz + j;
-                            int terrainX = tx - (int)lowX / Constants.terrainPieceSize;
-                            int terrainZ = tz - (int)lowZ / Constants.terrainPieceSize;
-                            if (terrainX >= 0 && terrainX < squaresInX * Square.squareSize / Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < squaresInZ * Square.squareSize / Constants.terrainPieceSize)
+                            Terrain t = _terrain[terrainX, terrainZ];
+                            if (t != null)
                             {
-                                Terrain t = terrain[terrainX, terrainZ];
-                                if (t != null)
-                                {
-                                    if (
-                                        // there is no higher zoom order
-                                        k == (Constants.terrainZoomOrder - 1)
-                                        // this is not a higher order point
-                                        || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0
+                                if (
+                                    // there is no higher zoom order
+                                    k == (Constants.terrainZoomOrder - 1)
+                                    // this is not a higher order point
+                                    || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0
                                     )
-                                    {
-                                        client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
-                                    }
+                                {
+                                    client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
                                 }
                             }
                         }
@@ -729,12 +714,11 @@ namespace Strive.Server.Logic
             }
         }
 
-        public Tuple<int, string>[] getPossessable(string username)
+        public Tuple<int, string>[] GetPossessable(string username)
         {
             DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + username + "'");
             Schema.PlayerRow pr = Global.ModelSchema.Player.FindByPlayerID((int)dr[0][0]);
             Schema.MobilePossesableByPlayerRow[] mpbpr = pr.GetMobilePossesableByPlayerRows();
-            List<Tuple<int, string>> list = new List<Tuple<int, string>>();
             return mpbpr.Select(mpr => new Tuple<int, string>(
                 mpr.ObjectInstanceID, mpr.ObjectInstanceRow.TemplateObjectRow.TemplateObjectName)).ToArray();
         }
@@ -742,17 +726,17 @@ namespace Strive.Server.Logic
         public class InvalidLocationException : Exception { }
         public double AltitudeAt(double x, double z)
         {
-            int terrainX = DivTruncate((int)(x - lowX), Constants.terrainPieceSize);
-            int terrainZ = DivTruncate((int)(z - lowZ), Constants.terrainPieceSize);
+            int terrainX = DivTruncate((int)(x - _lowX), Constants.terrainPieceSize);
+            int terrainZ = DivTruncate((int)(z - _lowZ), Constants.terrainPieceSize);
 
             // if terrain piece exists, keep everything on the ground
-            if (terrain[terrainX, terrainZ] != null
-                && terrain[terrainX + 1, terrainZ] != null
-                && terrain[terrainX, terrainZ + 1] != null
-                && terrain[terrainX + 1, terrainZ + 1] != null)
+            if (_terrain[terrainX, terrainZ] != null
+                && _terrain[terrainX + 1, terrainZ] != null
+                && _terrain[terrainX, terrainZ + 1] != null
+                && _terrain[terrainX + 1, terrainZ + 1] != null)
             {
-                double dx = x - terrain[terrainX, terrainZ].Position.X;
-                double dz = z - terrain[terrainX, terrainZ].Position.Z;
+                double dx = x - _terrain[terrainX, terrainZ].Position.X;
+                double dz = z - _terrain[terrainX, terrainZ].Position.Z;
 
                 // terrain is a diagonally split square, forming two triangles
                 // which touch the altitude points of 4 neighbouring terrain
@@ -764,16 +748,16 @@ namespace Strive.Server.Logic
                 if (dz < dx)
                 {
                     // lower triangle
-                    xslope = (terrain[terrainX + 1, terrainZ].Position.Y - terrain[terrainX, terrainZ].Position.Y) / Constants.terrainPieceSize;
-                    zslope = (terrain[terrainX + 1, terrainZ + 1].Position.Y - terrain[terrainX + 1, terrainZ].Position.Y) / Constants.terrainPieceSize;
+                    xslope = (_terrain[terrainX + 1, terrainZ].Position.Y - _terrain[terrainX, terrainZ].Position.Y) / Constants.terrainPieceSize;
+                    zslope = (_terrain[terrainX + 1, terrainZ + 1].Position.Y - _terrain[terrainX + 1, terrainZ].Position.Y) / Constants.terrainPieceSize;
                 }
                 else
                 {
                     // upper triangle
-                    xslope = (terrain[terrainX + 1, terrainZ + 1].Position.Y - terrain[terrainX, terrainZ + 1].Position.Y) / Constants.terrainPieceSize;
-                    zslope = (terrain[terrainX, terrainZ + 1].Position.Y - terrain[terrainX, terrainZ].Position.Y) / Constants.terrainPieceSize;
+                    xslope = (_terrain[terrainX + 1, terrainZ + 1].Position.Y - _terrain[terrainX, terrainZ + 1].Position.Y) / Constants.terrainPieceSize;
+                    zslope = (_terrain[terrainX, terrainZ + 1].Position.Y - _terrain[terrainX, terrainZ].Position.Y) / Constants.terrainPieceSize;
                 }
-                return terrain[terrainX, terrainZ].Position.Y + xslope * dx + zslope * dz;
+                return _terrain[terrainX, terrainZ].Position.Y + xslope * dx + zslope * dz;
             }
             // no terrain here
             throw new InvalidLocationException();
@@ -782,7 +766,7 @@ namespace Strive.Server.Logic
         public void CreateDefaultWorld()
         {
             Global.ModelSchema = new Schema();
-            Global.ModelSchema.World.AddWorldRow(world_id, "Empty", "An empty world");
+            Global.ModelSchema.World.AddWorldRow(_worldId, "Empty", "An empty world");
             var p = Global.ModelSchema.Player.AddPlayerRow(
                 "Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob",
                 100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);

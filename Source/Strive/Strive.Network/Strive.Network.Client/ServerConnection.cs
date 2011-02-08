@@ -1,16 +1,6 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 using System.Windows.Media.Media3D;
-
-using Common.Logging;
-
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
-using Strive.Server.Model;
 using Strive.Common;
 
 
@@ -48,24 +38,24 @@ namespace Strive.Network.Client
             Send(new WhoList());
         }
 
-        public void UseSkill(EnumSkill Skill, int InvokationID)
+        public void UseSkill(EnumSkill skill, int invokationId)
         {
-            Send(new UseSkill(Skill, InvokationID));
+            Send(new UseSkill(skill, invokationId));
         }
 
-        public void UseSkill(EnumSkill Skill, int InvokationID, int[] Targets)
+        public void UseSkill(EnumSkill skill, int invokationId, int[] targets)
         {
-            Send(new UseSkill(Skill, InvokationID, Targets));
+            Send(new UseSkill(skill, invokationId, targets));
         }
 
-        public void UseSkill(int SkillID, int InvokationID)
+        public void UseSkill(int skillId, int invokationId)
         {
-            this.UseSkill((EnumSkill)SkillID, InvokationID);
+            UseSkill((EnumSkill)skillId, invokationId);
         }
 
-        public void UseSkill(int SkillID, int InvokationID, int[] Targets)
+        public void UseSkill(int skillId, int invokationId, int[] targets)
         {
-            this.UseSkill((EnumSkill)SkillID, InvokationID, Targets);
+            UseSkill((EnumSkill)skillId, invokationId, targets);
         }
 
         public void Position(Vector3D position, Quaternion rotation)
@@ -78,9 +68,9 @@ namespace Strive.Network.Client
             Send(new RequestPossessable());
         }
 
-        public void Pong(int SequenceNumber)
+        public void Pong(int sequenceNumber)
         {
-            Send(new Pong(SequenceNumber));
+            Send(new Pong(sequenceNumber));
         }
 
         public void ReloadWorld()

@@ -3,14 +3,14 @@ using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-	/// <summary>
-	/// Summary description for CurrentHitpoints.
-	/// </summary>
+    [Serializable]
 	public class CurrentHitpoints : IMessage {
-		public int HitPoints;
+		public float HitPoints;
+
 		public CurrentHitpoints(){}
-		public CurrentHitpoints( PhysicalObject po ) {
-			HitPoints = (int)po.HitPoints;
-		}
+        public CurrentHitpoints(PhysicalObject po)
+        {
+            HitPoints = po.HitPoints;
+        }
 	}
 }

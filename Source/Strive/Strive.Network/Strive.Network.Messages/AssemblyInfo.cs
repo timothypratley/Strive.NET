@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Strive.Network.Messages")]
 [assembly: AssemblyDescription("Strive Network API Message Definitions")]

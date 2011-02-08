@@ -10,19 +10,19 @@ namespace Strive.Server.Console
 		/// The main entry point for the application.
 		/// </summary>
 
-		static Engine serverEngine = new Engine();
+		static readonly Engine ServerEngine = new Engine();
 
 		[STAThread]
-		static void Main(string[] args)
+		static void Main()
 		{
-            System.Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
-			serverEngine.Start();
+            System.Console.CancelKeyPress += Console_CancelKeyPress;
+			ServerEngine.Start();
 		}
 
         static void Console_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
         {
 			System.Console.WriteLine("Cancel requested...");
-			serverEngine.Stop();
+			ServerEngine.Stop();
             System.Console.WriteLine("Ready to terminate");
             System.Threading.Thread.Sleep(10000);
 		}

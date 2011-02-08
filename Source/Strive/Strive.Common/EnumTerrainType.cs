@@ -1,5 +1,3 @@
-using System;
-
 namespace Strive.Common
 {
 	/// <summary>

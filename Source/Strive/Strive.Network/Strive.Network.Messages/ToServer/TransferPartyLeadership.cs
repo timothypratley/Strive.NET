@@ -1,14 +1,15 @@
 using System;
-using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToServer
 {
 	[Serializable]
 	public class TransferPartyLeadership : IMessage	{
-		public int ObjectInstanceID;	// this is so the client can cancel specific invokations
+		public int ObjectInstanceId;
+
 		public TransferPartyLeadership(){}
-		public TransferPartyLeadership( int ObjectInstanceID ) {
-			this.ObjectInstanceID = ObjectInstanceID;
-		}
+        public TransferPartyLeadership(int objectInstanceId)
+        {
+            ObjectInstanceId = objectInstanceId;
+        }
 	}
 }

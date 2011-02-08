@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 using AvalonDock;
 using Engine;
 using Engine.EntitySystem;
@@ -18,14 +9,8 @@ using Engine.MapSystem;
 using Engine.Renderer;
 using Engine.MathEx;
 using Engine.SoundSystem;
-using Engine.UISystem;
 using Engine.PhysicsSystem;
-using Engine.Utils;
-using GameCommon;
 using GameEntities;
-using WPFAppFramework;
-
-using UpdateControls.XAML;
 using Strive.Client.Model;
 using Strive.Client.ViewModel;
 
@@ -50,25 +35,25 @@ namespace Strive.Client.NeoAxisView
                 connectionHandler);
             r.AutomaticUpdateFPS = 60;
             r.Render += renderTargetUserControl1_Render;
-            r.RenderUI += new RenderTargetUserControl.RenderUIDelegate(WorldViewControl_RenderUI);
-            r.MouseEnter += new MouseEventHandler(WorldViewControl_MouseEnter);
-            r.MouseDown += new MouseButtonEventHandler(WorldViewControl_MouseDown);
-            r.MouseUp += new MouseButtonEventHandler(WorldViewControl_MouseUp);
-            r.MouseMove += new MouseEventHandler(WorldViewControl_MouseMove);
+            r.RenderUI += WorldViewControl_RenderUI;
+            r.MouseEnter += WorldViewControl_MouseEnter;
+            r.MouseDown += WorldViewControl_MouseDown;
+            r.MouseUp += WorldViewControl_MouseUp;
+            r.MouseMove += WorldViewControl_MouseMove;
         }
 
-        Camera camera = null;
-        Vec3 MouseIntersection = Vec3.Zero;
+        Camera _camera;
+        Vec3 _mouseIntersection = Vec3.Zero;
         void WorldViewControl_RenderUI(GuiRenderer renderer)
         {
-            if (camera != null)
+            if (_camera != null)
             {
-                Nameplates.RenderObjectsTips(renderer, camera);
+                Nameplates.RenderObjectsTips(renderer, _camera);
             }
             string text = "FPS: " + _perspective.FPS
                         + "    loc: " + r.CameraPosition.ToString(0)
                         + "    dir: " + r.CameraDirection.ToString(0)
-                        + "    mouse: " + MouseIntersection.ToString(2)
+                        + "    mouse: " + _mouseIntersection.ToString(2)
                         + "    over: " + _worldViewModel.MouseOverEntity;
 
             renderer.AddText(text, new Vec2(.01f, .01f), HorizontalAlign.Left,
@@ -77,7 +62,7 @@ namespace Strive.Client.NeoAxisView
 
         void renderTargetUserControl1_Render(Camera camera)
         {
-            this.camera = camera;
+            _camera = camera;
             _perspective.Check();
             r.CameraPosition = _perspective.Position.ToVec3();
             r.CameraDirection = _perspective.Rotation.ToQuat() * Vec3.XAxis;
@@ -91,14 +76,14 @@ namespace Strive.Client.NeoAxisView
         }
 
         // Would like to do this in XAML - it must be possible but not sure how 
-        string toolTipString = null;
+        string _toolTipString;
         public void SetToolTipString()
         {
             var e = _worldViewModel.MouseOverEntity;
             string newTip =  e == null ? null : e.Entity.Name;
-            if (newTip != toolTipString)
+            if (newTip != _toolTipString)
             {
-                toolTipString = newTip;
+                _toolTipString = newTip;
                 if (newTip == null)
                 {
                     if (ToolTip != null)
@@ -109,16 +94,16 @@ namespace Strive.Client.NeoAxisView
                 }
                 else
                 {
-                    ToolTip = new ToolTip { Content = toolTipString, IsOpen = true, StaysOpen = true };
+                    ToolTip = new ToolTip { Content = _toolTipString, IsOpen = true, StaysOpen = true };
                 }
             }
         }
 
-        MapObject mapObject = null;
+        MapObject _mapObject;
         void RenderEntityOverCursor(Camera camera)
         {
             Vec2 mouse = r.GetFloatMousePosition();
-            mapObject = null;
+            _mapObject = null;
 
             if (mouse.X < 0 || mouse.X > 1 || mouse.Y < 0 || mouse.Y > 1)
             {
@@ -132,16 +117,16 @@ namespace Strive.Client.NeoAxisView
                 {
                     if (obj is StaticMesh)
                         return true;
-                    mapObject = obj;
+                    _mapObject = obj;
                     return false;
                 });
 
-                if (mapObject != null)
+                if (_mapObject != null)
                 {
                     // Put a yellow box around it and a tooltip
                     camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
-                    camera.DebugGeometry.AddBounds(mapObject.MapBounds);
-                    _worldViewModel.SetMouseOverEntity(mapObject.Name);
+                    camera.DebugGeometry.AddBounds(_mapObject.MapBounds);
+                    _worldViewModel.SetMouseOverEntity(_mapObject.Name);
                 }
                 else
                 {
@@ -149,7 +134,7 @@ namespace Strive.Client.NeoAxisView
                 }
 
                 RayCastResult result = PhysicsWorld.Instance.RayCast(ray, (int)ContactGroup.CastOnlyCollision);
-                MouseIntersection = result.Position;
+                _mouseIntersection = result.Position;
                 if (result.Shape != null)
                 {
                     camera.DebugGeometry.Color = new ColorValue(1, 0, 0);
@@ -163,7 +148,7 @@ namespace Strive.Client.NeoAxisView
             foreach (EntityViewModel evm in _worldViewModel.SelectedEntities)
             {
                 var mo = Entities.Instance.GetByName(evm.Entity.Name) as MapObject;
-                if (mo != null && mo != mapObject)
+                if (mo != null && mo != _mapObject)
                 {
                     camera.DebugGeometry.AddBounds(mo.MapBounds);
                 }
@@ -193,7 +178,7 @@ namespace Strive.Client.NeoAxisView
             }
         }
 
-        Random rand = new Random();
+        Random _rand = new Random();
         void WorldViewControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
@@ -206,29 +191,32 @@ namespace Strive.Client.NeoAxisView
             {
                 // TODO: set the target
             }
-            if (mapObject != null)
+            if (_mapObject != null)
             {
                 if (r.IsKeyPressed(Key.LeftShift)
                     || r.IsKeyPressed(Key.LeftCtrl)
                     || r.IsKeyPressed(Key.RightShift)
                     || r.IsKeyPressed(Key.RightCtrl))
-                    _worldViewModel.SelectAdd(mapObject.Name);
+                    _worldViewModel.SelectAdd(_mapObject.Name);
                 else
-                    _worldViewModel.Select(mapObject.Name);
+                    _worldViewModel.Select(_mapObject.Name);
 
-                var b = mapObject as GameEntities.RTSBuilding;
+                var b = _mapObject as RTSBuilding;
                 if (b != null)
                 {
-                    RTSUnit unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
+                    var unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
 
-                    RTSCharacter character = unit as RTSCharacter;
+                    var character = unit as RTSCharacter;
                     if (character == null)
                         Log.Fatal("RTSBuilding: Create character == null");
-
-                    Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(b.Position.ToVec2(),
-                        character.Type.Radius * 2);
-                    unit.Position = new Vec3(p.X, p.Y, GridPathFindSystem.Instance.GetMotionMapHeight(p) +
-                        character.Type.Height * .5f);
+                    else
+                    {
+                        Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(
+                            b.Position.ToVec2(), character.Type.Radius*2);
+                        unit.Position = new Vec3(p.X, p.Y,
+                                                 GridPathFindSystem.Instance.GetMotionMapHeight(p) +
+                                                 character.Type.Height*.5f);
+                    }
 
                     if (b.Intellect != null)
                         unit.InitialFaction = b.Intellect.Faction;
@@ -239,11 +227,11 @@ namespace Strive.Client.NeoAxisView
                 }
             }
 
-            if (mapObject != null && mapObject.PhysicsModel != null)
+            if (_mapObject != null && _mapObject.PhysicsModel != null)
             {
-                foreach (Body b in mapObject.PhysicsModel.Bodies)
+                foreach (Body b in _mapObject.PhysicsModel.Bodies)
                 {
-                    b.AddForce(ForceType.Global, 0f, new Vec3(rand.Next(500) - 250, rand.Next(500) - 250, rand.Next(1000) + 250), new Vec3(0, 0, 0));
+                    b.AddForce(ForceType.Global, 0f, new Vec3(_rand.Next(500) - 250, _rand.Next(500) - 250, _rand.Next(1000) + 250), new Vec3(0, 0, 0));
                 }
             }
         }

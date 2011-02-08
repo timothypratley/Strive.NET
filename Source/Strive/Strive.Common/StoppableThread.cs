@@ -10,10 +10,10 @@ namespace Strive.Common
     /// </summary>
     public class StoppableThread
     {
-        Thread thisThread;
-        System.Threading.ThreadPriority priority = System.Threading.ThreadPriority.Normal;
+        Thread _thisThread;
+        System.Threading.ThreadPriority _priority = System.Threading.ThreadPriority.Normal;
         AutoResetEvent iHaveStopped = new AutoResetEvent(false);
-        bool isRunning = false;
+        bool _isRunning = false;
 
         public delegate void WhileRunning();
         WhileRunning whileRunning;
@@ -25,20 +25,19 @@ namespace Strive.Common
 
         public void Start()
         {
-            if (isRunning) return;
-            thisThread = new Thread(new ThreadStart(ThreadLoop));
-            thisThread.Priority = priority;
-            isRunning = true;
-            thisThread.Start();
+            if (_isRunning) return;
+            _thisThread = new Thread(new ThreadStart(ThreadLoop)) {Priority = _priority};
+            _isRunning = true;
+            _thisThread.Start();
         }
 
         public void Stop()
         {
-            if (!isRunning)
+            if (!_isRunning)
             {
                 return;
             }
-            isRunning = false;
+            _isRunning = false;
             WaitHandle.WaitAny(new AutoResetEvent[] { iHaveStopped });
         }
 
@@ -46,26 +45,26 @@ namespace Strive.Common
         {
             get
             {
-                if (thisThread != null)
+                if (_thisThread != null)
                 {
-                    priority = thisThread.Priority;
+                    _priority = _thisThread.Priority;
                 }
-                return priority;
+                return _priority;
             }
             set
             {
-                priority = value;
-                if (thisThread != null)
+                _priority = value;
+                if (_thisThread != null)
                 {
-                    thisThread.Priority = priority;
+                    _thisThread.Priority = _priority;
                 }
             }
         }
 
         void ThreadLoop()
         {
-            ILog Log = LogManager.GetCurrentClassLogger();
-            while (isRunning)
+            ILog log = LogManager.GetCurrentClassLogger();
+            while (_isRunning)
             {
                 try
                 {
@@ -73,8 +72,8 @@ namespace Strive.Common
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Thread caused exception", e);
-                    isRunning = false;
+                    log.Error("Thread caused exception", e);
+                    _isRunning = false;
                 }
             }
             iHaveStopped.Set();

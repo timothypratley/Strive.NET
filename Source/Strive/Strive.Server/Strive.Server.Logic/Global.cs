@@ -16,16 +16,16 @@ namespace Strive.Server.Logic
         public static Random Rand = new Random();
         public static DateTime Now = DateTime.Now;
         public static Vector3D Up = new Vector3D(0, 1, 0);
-        public static Server.Model.Schema ModelSchema;
+        public static Model.Schema ModelSchema;
         public static World World;
 
-        public static int WorldID;
+        public static int WorldId;
         public static int Port;
         public static string LogFilename;
         public static string WorldFilename;
         public static string ConnectionString;
 
-        static ILog Log = LogManager.GetCurrentClassLogger();
+        static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         public static void ReadConfiguration()
         {
@@ -34,11 +34,11 @@ namespace Strive.Server.Logic
             if (s == null)
             {
                 Log.Error("world_id missing in configuration");
-                WorldID = 1;
+                WorldId = 1;
             }
             else
             {
-                WorldID = int.Parse(s);
+                WorldId = int.Parse(s);
             }
 
             s = ConfigurationManager.AppSettings["Port"];

@@ -1,5 +1,3 @@
-using System;
-
 using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
@@ -8,10 +6,12 @@ namespace Strive.Network.Messages.ToClient
 	/// Summary description for AddTerrain.
 	/// </summary>
 	public class AddTerrain : AddPhysicalObject {
-		public Terrain terrain;
+		public Terrain Terrain;
+
 		public AddTerrain(){}
-		public AddTerrain( Terrain t ) {
-			this.terrain = t;
-		}
+        public AddTerrain(Terrain t)
+        {
+            Terrain = t;
+        }
 	}
 }

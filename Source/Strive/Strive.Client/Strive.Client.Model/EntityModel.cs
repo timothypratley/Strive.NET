@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Media.Media3D;
 
 using UpdateControls;
 
@@ -16,13 +10,13 @@ namespace Strive.Client.Model
         public EntityModel(string name, string modelId, Vector3D position, Quaternion rotation)
         {
             _name = name;
-            _modelID = modelId;
+            _modelId = modelId;
             _position = position;
             _rotation = rotation;
         }
 
         private string _name;
-        private string _modelID;
+        private string _modelId;
         private Vector3D _position;
         private Quaternion _rotation;
 
@@ -39,10 +33,10 @@ namespace Strive.Client.Model
             set { _indName.OnSet(); _name = value; }
         }
 
-        public string ModelID
+        public string ModelId
         {
-            get { _indModelID.OnGet(); return _modelID; }
-            set { _indModelID.OnSet(); _modelID = value; }
+            get { _indModelID.OnGet(); return _modelId; }
+            set { _indModelID.OnSet(); _modelId = value; }
         }
 
         public Vector3D Position

@@ -80,6 +80,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="System">
       <Name>System</Name>

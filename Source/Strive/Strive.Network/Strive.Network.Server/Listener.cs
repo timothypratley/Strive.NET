@@ -2,9 +2,6 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
-using System.Threading;
-using System.IO;
-
 using Strive.Network.Messages;
 using Common.Logging;
 
@@ -16,17 +13,15 @@ namespace Strive.Network.Server
     public class Listener
     {
         public List<Client> Clients { get; private set; }
-        public Queue<IMessage> _clientMessageQueue = new Queue<IMessage>();
+        // TODO: hook up to the right queues!
+        public Queue<IMessage> ClientMessageQueue = new Queue<IMessage>();
         Socket _tcpSocket;
-        IPEndPoint _localEndPoint;
-        EndPoint _remoteEndPoint;
-        byte[] _udpBuffer = new byte[MessageTypeMap.BufferSize]; // Receive buffer.
-        ILog _log;
+        readonly IPEndPoint _localEndPoint;
+        readonly ILog _log;
 
         public Listener(IPEndPoint localEndPoint)
         {
             _localEndPoint = localEndPoint;
-            _remoteEndPoint = new IPEndPoint(localEndPoint.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any, 0);
             _log = LogManager.GetCurrentClassLogger();
         }
 
@@ -47,7 +42,7 @@ namespace Strive.Network.Server
 
             try
             {
-                _tcpSocket.BeginAccept(new AsyncCallback(acceptCallback), this);
+                _tcpSocket.BeginAccept(new AsyncCallback(AcceptCallback), this);
                 _log.Info("Started listening on " + _localEndPoint);
             }
             catch (ObjectDisposedException)
@@ -67,23 +62,23 @@ namespace Strive.Network.Server
             _log.Info("Stopped listening on" + _localEndPoint);
         }
 
-        public static void acceptCallback(IAsyncResult ar)
+        public static void AcceptCallback(IAsyncResult ar)
         {
             try
             {
                 // Get the socket that handles the client request.
-                Listener handler = (Listener)ar.AsyncState;
+                var handler = (Listener)ar.AsyncState;
                 Socket clientSocket = handler._tcpSocket.EndAccept(ar);
 
                 // Create the state object.
-                Client client = new Client();
+                var client = new Client();
                 handler.Clients.Add(client);
                 handler._log.Info("New connection from " + client.RemoteEndPoint);
                 client.Start(clientSocket);
 
                 // The next connection
                 handler._tcpSocket.BeginAccept(
-                    new AsyncCallback(acceptCallback),
+                    new AsyncCallback(AcceptCallback),
                     handler);
             }
             catch (ObjectDisposedException)
@@ -94,12 +89,12 @@ namespace Strive.Network.Server
 
         public int MessageCount
         {
-            get { return _clientMessageQueue.Count; }
+            get { return ClientMessageQueue.Count; }
         }
 
         public ClientMessage PopNextMessage()
         {
-            return (ClientMessage)_clientMessageQueue.Dequeue();
+            return (ClientMessage)ClientMessageQueue.Dequeue();
         }
 
         public void SendToAll(IMessage message)

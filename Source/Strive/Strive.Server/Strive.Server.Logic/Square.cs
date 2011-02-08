@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using Strive.Server.Model;
 using Strive.Network.Server;
 using Strive.Network.Messages;
-//using Strive.Rendering;
-//using Strive.Rendering.Models;
-//using Strive.Resources;
 using Strive.Common;
 
 
@@ -21,41 +17,38 @@ namespace Strive.Server.Logic
 	/// </summary>
 	public class Square
 	{
-		public static int squareSize = Constants.objectScopeRadius;
-		public ArrayList physicalObjects = new ArrayList();
-		public ArrayList clients = new ArrayList();
+		public static int SquareSize = Constants.objectScopeRadius;
+        public List<PhysicalObject> PhysicalObjects = new List<PhysicalObject>();
+        public List<Client> Clients = new List<Client>();
 
-		public Square() {
-		}
-
-		public void Add( PhysicalObject po ) {
-			physicalObjects.Add( po );
+	    public void Add( PhysicalObject po ) {
+			PhysicalObjects.Add( po );
 			if ( po is MobileAvatar ) {
-				MobileAvatar a = (MobileAvatar)po;
-				if ( a.client != null ) {
-					clients.Add( a.client );
+				var a = (MobileAvatar)po;
+				if ( a.Client != null ) {
+					Clients.Add( a.Client );
 				}
 			}
 		}
 
 		public void Remove( PhysicalObject po ) {
-			physicalObjects.Remove( po );
+			PhysicalObjects.Remove( po );
 			if ( po is MobileAvatar ) {
-				MobileAvatar a = (MobileAvatar)po;
-				if ( a.client != null ) {
-					clients.Remove( a.client );
+				var a = (MobileAvatar)po;
+				if ( a.Client != null ) {
+					Clients.Remove( a.Client );
 				}
 			}
 		}
 
 		public void NotifyClients( IMessage message ) {
-			foreach ( Client c in clients ) {
+			foreach ( Client c in Clients ) {
 				c.Send( message );
 			}
 		}
 
 		public void NotifyClientsExcept( IMessage message, Client client ) {
-			foreach ( Client c in clients ) {
+			foreach ( Client c in Clients ) {
 				if ( c == client ) continue;
 				c.Send( message );
 			}

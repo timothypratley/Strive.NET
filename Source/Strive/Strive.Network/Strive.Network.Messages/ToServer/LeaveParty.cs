@@ -1,5 +1,4 @@
 using System;
-using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToServer
 {
