@@ -20,22 +20,18 @@ namespace Strive.Client.ViewModel
             get
             {
                 if (_followEntities.Count > 0)
-                    return "Following (" + _followEntities.ToString() + ")";
-                else
-                    return "Fly free view";
+                    return "Following (" + _followEntities + ")";
+                return "Fly free view";
             }
         }
 
-        private EnumSkill currentGameCommand = EnumSkill.None;
+        private EnumSkill _currentGameCommand = EnumSkill.None;
         public EnumSkill CurrentGameCommand
         {
-            get
-            {
-                return currentGameCommand;
-            }
+            get { return _currentGameCommand; }
             set
             {
-                currentGameCommand = value;
+                _currentGameCommand = value;
                 //ITexture texture = resources.GetCursor((int)currentGameCommand);
                 //CurrentWorld.RenderingScene.SetCursor(texture);
             }
@@ -60,7 +56,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        private double _heading = 0;
+        private double _heading;
         public double Heading
         {
             get { return _heading; }
@@ -98,21 +94,20 @@ namespace Strive.Client.ViewModel
         public Vector3D Position = new Vector3D(0, 0, 23);
         public Quaternion Rotation = Quaternion.Identity;
 
-        private int lastTick = 0;
-        private int lastFrameRate = 0;
-        private int frameRate = 0;
+        private int _lastTick;
+        private int _frameRate;
 
-        public int FPS { get { return lastFrameRate; } }
+        public int Fps { get; private set; }
 
-        private Stopwatch _movementTimer;
+        private readonly Stopwatch _movementTimer;
 
         public delegate bool KeyPressedCheck(Key k);
 
         public WorldViewModel WorldViewModel { get; private set; }
 
-        KeyPressedCheck _keyPressed;
-        InputBindings _bindings;
-        ConnectionHandler _connectionHandler;
+        readonly KeyPressedCheck _keyPressed;
+        readonly InputBindings _bindings;
+        readonly ConnectionHandler _connectionHandler;
 
         public PerspectiveViewModel(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings, ConnectionHandler connectionHandler)
         {
@@ -132,13 +127,13 @@ namespace Strive.Client.ViewModel
             Vector3D initialPosition = Position;
             Quaternion initialRotation = Rotation;
 
-            if (Environment.TickCount - lastTick >= 1000)
+            if (Environment.TickCount - _lastTick >= 1000)
             {
-                lastFrameRate = frameRate;
-                frameRate = 0;
-                lastTick = Environment.TickCount;
+                Fps = _frameRate;
+                _frameRate = 0;
+                _lastTick = Environment.TickCount;
             }
-            frameRate++;
+            _frameRate++;
 
             _movementTimer.Stop();
             double deltaT = _movementTimer.Elapsed.TotalSeconds;
@@ -151,9 +146,7 @@ namespace Strive.Client.ViewModel
             {
                 Vector3D center = _followEntities.Entities
                     .Where(e => WorldViewModel.World.ContainsKey(e.Name))
-                    .Select(e => e.Position)
-                    .Aggregate((a, b) => a + b)
-                    / _followEntities.Count;
+                    .Average(e => e.Position);
                 Vector3D diff = center - Position;
                 double vectorDistance = diff.Length;
 
@@ -164,7 +157,7 @@ namespace Strive.Client.ViewModel
                 var minX = _followEntities.Entities.Min(e => e.Position.X);
                 var minY = _followEntities.Entities.Min(e => e.Position.Y);
                 var minZ = _followEntities.Entities.Min(e => e.Position.Z);
-                var viewDistance = new List<double>() { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
+                var viewDistance = new List<double> { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
 
                 Vector3D target = center - (diff * viewDistance / vectorDistance);
                 Position += (target - Position) * deltaT * 2;
@@ -215,7 +208,7 @@ namespace Strive.Client.ViewModel
             if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
             {
                 double movementHeading = Heading + Math.Atan2(movementForward, -movementPerpendicular);
-                Vector3D positionChange = new Vector3D(
+                var positionChange = new Vector3D(
                     Math.Sin(movementHeading) * _landSpeed,
                     Math.Cos(movementHeading) * _landSpeed,
                     movementUp * (DistanceRangeHigh - DistanceRangeLow) / 10.0);

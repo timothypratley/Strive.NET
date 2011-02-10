@@ -50,7 +50,7 @@ namespace Strive.Client.NeoAxisView
             {
                 Nameplates.RenderObjectsTips(renderer, _camera);
             }
-            string text = "FPS: " + _perspective.FPS
+            string text = "FPS: " + _perspective.Fps
                         + "    loc: " + r.CameraPosition.ToString(0)
                         + "    dir: " + r.CameraDirection.ToString(0)
                         + "    mouse: " + _mouseIntersection.ToString(2)

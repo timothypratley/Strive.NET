@@ -15,7 +15,7 @@ namespace Strive.Server.Logic
     public class Engine
     {
         int port = Constants.DefaultPort;
-        readonly Listener _networkHandler;
+        readonly Listener _listener;
         World _world;
         MessageProcessor _messageProcessor;
         readonly StoppableThread _engineThread;
@@ -29,7 +29,7 @@ namespace Strive.Server.Logic
             Global.ReadConfiguration();
             //Global.worldFilename = "DefaultWorld.xml";
             _engineThread = new StoppableThread(UpdateLoop);
-            _networkHandler = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
+            _listener = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
             _log = LogManager.GetCurrentClassLogger();
             ServerStatusModel = new ServerStatusModel {Status = "Created"};
         }
@@ -38,19 +38,19 @@ namespace Strive.Server.Logic
         {
             ServerStatusModel.Status = "Starting"; 
             _world = new World(Global.WorldId);
-            _messageProcessor = new MessageProcessor(_world, _networkHandler);
+            _messageProcessor = new MessageProcessor(_world, _listener);
             Global.World = _world;
             ServerStatusModel.Started = Global.Now;
             _engineThread.Start();
             _log.Info("Listening for new connections...");
-            _networkHandler.Start();
+            _listener.Start();
             ServerStatusModel.Status = "Running";
         }
 
         public void Stop()
         {
             ServerStatusModel.Status = "Stopping";
-            _networkHandler.Stop();
+            _listener.Stop();
             _engineThread.Stop();
             _log.Info("Server stopped.");
             ServerStatusModel.Status = "Stopped";
@@ -67,11 +67,7 @@ namespace Strive.Server.Logic
 
                 // handle incomming messages
 
-                // TODO: where should the message queue live?
-                while (_networkHandler.MessageCount > 0)
-                {
-                    _messageProcessor.ProcessNextMessage();
-                }
+                _messageProcessor.ProcessMessages();
 
                 CleanupLinkdead();
 
@@ -81,7 +77,7 @@ namespace Strive.Server.Logic
                 }
                 else
                 {
-                    System.Threading.Thread.Sleep(10000);
+                    System.Threading.Thread.Sleep(100);
                 }
             }
             catch (Exception e)
@@ -96,7 +92,7 @@ namespace Strive.Server.Logic
 
         void CleanupLinkdead()
         {
-            var remove = _networkHandler.Clients
+            var remove = _listener.Clients
                 .Where(client => client.Status != ConnectionStatus.Connected
                     && (Global.Now - client.LastMessageTimestamp) > TimeSpan.FromSeconds(60))
                 .ToList();
@@ -111,7 +107,7 @@ namespace Strive.Server.Logic
                 {
                     client.Avatar = null;
                 }
-                _networkHandler.Clients.Remove(client);
+                _listener.Clients.Remove(client);
             }
         }
     }

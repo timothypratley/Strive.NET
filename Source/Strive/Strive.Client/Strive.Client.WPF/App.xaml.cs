@@ -56,5 +56,10 @@ namespace Strive.Client.WPF
         {
             ReportException(e.ExceptionObject as Exception);
         }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            ServerEngine.Stop();
+        }
     }
 }

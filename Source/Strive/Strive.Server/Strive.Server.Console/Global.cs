@@ -24,7 +24,7 @@ namespace Strive.Server.Console
 			System.Console.WriteLine("Cancel requested...");
 			ServerEngine.Stop();
             System.Console.WriteLine("Ready to terminate");
-            System.Threading.Thread.Sleep(10000);
+            System.Threading.Thread.Sleep(100);
 		}
 	}
 }

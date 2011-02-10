@@ -22,46 +22,47 @@ namespace Strive.Server.Logic
             _listener = listener;
         }
 
-        public void ProcessNextMessage()
+        public void ProcessMessages()
         {
-            ClientMessage clientMessage = _listener.PopNextMessage();
-            try
+            lock (_listener.Clients)
             {
-                CheckAndProcessMessage(clientMessage.Client, clientMessage.Message);
-            }
-            catch (Exception e)
-            {
-                _log.Error("Message was not processed correctly, resuming.", e);
+                foreach (Client client in _listener.Clients.Where(c => c.MessageCount > 0))
+                {
+                    try
+                    {
+                        CheckAndProcessMessage(client, client.PopNextMessage());
+                    }
+                    catch (Exception e)
+                    {
+                        _log.Error("Message was not processed correctly, resuming.", e);
+                    }
+                }
             }
         }
 
         public void CheckAndProcessMessage(Client client, dynamic message)
         {
-            if (!client.Authenticated)
+            // new connection... only allow login
+            if (!client.Authenticated && !(message is Login))
             {
-                // new connection... only allow login
-                if (!(message is Login))
-                {
-                    _log.Warn("Non-login message " + message.GetType() + " from " + client.RemoteEndPoint);
-                }
+                _log.Warn("Non-login message " + message.GetType() + " from " + client.RemoteEndPoint);
                 return;
             }
 
-            if (client.Avatar == null)
+            if (client.Avatar == null
+                && !(message is EnterWorldAsMobile
+                     || message is RequestPossessable
+                     || message is Logout
+                     || message is Login))
             {
-                // no character selected yet... only allow posses, request and logout
-                if (!(message is EnterWorldAsMobile
-                    || message is RequestPossessable
-                    || message is Logout))
-                {
-                    _log.Warn("ERROR: Non-posses message " + message.GetType() + " from " + client.RemoteEndPoint);
-                }
+                _log.Warn("ERROR: Non-posses message " + message.GetType() + " from " + client.RemoteEndPoint);
                 return;
             }
 
             try
             {
                 ProcessMessage(client, message);
+                _log.Info("Processed message " + message);
             }
             catch (Exception)
             {
@@ -112,12 +113,12 @@ namespace Strive.Server.Logic
         void ProcessMessage(Client client, EnterWorldAsMobile message)
         {
             MobileAvatar a;
-            if (_world.PhysicalObjects.ContainsKey(message.InstanceID))
+            if (_world.PhysicalObjects.ContainsKey(message.InstanceId))
             {
                 // reconnected
                 // simply replace existing connection with the new
                 // todo: the old 'connection' should timeout or die or be killed
-                Object o = _world.PhysicalObjects[message.InstanceID];
+                Object o = _world.PhysicalObjects[message.InstanceId];
                 if (o is MobileAvatar)
                 {
                     a = (MobileAvatar)o;
@@ -148,10 +149,10 @@ namespace Strive.Server.Logic
             else
             {
                 // try to load the character
-                a = _world.LoadMobile(message.InstanceID);
+                a = _world.LoadMobile(message.InstanceId);
                 if (a == null)
                 {
-                    _log.Warn("Character " + message.InstanceID + " not found.");
+                    _log.Warn("Character " + message.InstanceId + " not found.");
                     client.Close();
                     return;
                 }
@@ -209,7 +210,9 @@ namespace Strive.Server.Logic
         {
             _log.Info("ReloadWorld received.");
             _world.Load();
-            foreach (Client c in _listener.Clients.Where(c => c.Avatar != null))
+            foreach (Client c in _listener.Clients
+                .Where(c => c.Avatar != null
+                    && c.Status == ConnectionStatus.Connected))
             {
                 // respawn their mobile, old instance will be given over
                 // to Garbage Collector
@@ -323,11 +326,11 @@ namespace Strive.Server.Logic
         {
             client.SkillList(
                 Global.ModelSchema.EnumSkill
-                .Select(
-                    e => Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
+                    .Select(e => Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
                         client.Avatar.TemplateObjectID, e.EnumSkillID))
-                .Where(mhs => mhs != null)
-                .Select(mhs => new Tuple<int, double>(mhs.EnumSkillID, mhs.Rating)).ToArray());
+                    .Where(mhs => mhs != null)
+                    .Select(mhs => new Tuple<int, double>(mhs.EnumSkillID, mhs.Rating))
+                    .ToArray());
         }
     }
 }

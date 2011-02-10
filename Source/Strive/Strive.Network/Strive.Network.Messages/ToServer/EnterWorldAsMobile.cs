@@ -2,17 +2,15 @@ using System;
 
 namespace Strive.Network.Messages.ToServer
 {
-	/// <summary>
-	/// Summary description for EnterWorldAsMobile.
-	/// </summary>
 	[Serializable]
 	public class EnterWorldAsMobile : IMessage
 	{
-		public EnterWorldAsMobile(){}
-		public EnterWorldAsMobile( int InstanceID )
-		{
-			this.InstanceID = InstanceID;
-		}
-		public int InstanceID;
+        public int InstanceId;
+        
+        public EnterWorldAsMobile() { }
+        public EnterWorldAsMobile(int instanceId)
+        {
+            InstanceId = instanceId;
+        }
 	}
 }

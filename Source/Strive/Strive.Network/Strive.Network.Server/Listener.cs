@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
@@ -10,8 +11,6 @@ namespace Strive.Network.Server
     public class Listener
     {
         public List<Client> Clients { get; private set; }
-        // TODO: hook up to the right queues!
-        public Queue<IMessage> ClientMessageQueue = new Queue<IMessage>();
         Socket _tcpSocket;
         readonly IPEndPoint _localEndPoint;
         readonly ILog _log;
@@ -27,9 +26,12 @@ namespace Strive.Network.Server
             Clients = new List<Client>();
             try
             {
-                _tcpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                _tcpSocket.Bind(_localEndPoint);
-                _tcpSocket.Listen(10);
+                lock (this)
+                {
+                    _tcpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    _tcpSocket.Bind(_localEndPoint);
+                    _tcpSocket.Listen(10);
+                }
             }
             catch (Exception e)
             {
@@ -39,8 +41,11 @@ namespace Strive.Network.Server
 
             try
             {
-                _tcpSocket.BeginAccept(new AsyncCallback(AcceptCallback), this);
-                _log.Info("Started listening on " + _localEndPoint);
+                lock (this)
+                {
+                    _tcpSocket.BeginAccept(new AsyncCallback(AcceptCallback), this);
+                    _log.Info("Started listening on " + _localEndPoint);
+                }
             }
             catch (ObjectDisposedException)
             {
@@ -51,12 +56,15 @@ namespace Strive.Network.Server
 
         public void Stop()
         {
-            if (_tcpSocket != null)
+            lock (this)
             {
-                _tcpSocket.Close();
-                _tcpSocket = null;
+                if (_tcpSocket != null)
+                {
+                    _tcpSocket.Close();
+                    _tcpSocket = null;
+                }
+                _log.Info("Stopped listening on" + _localEndPoint);
             }
-            _log.Info("Stopped listening on" + _localEndPoint);
         }
 
         public static void AcceptCallback(IAsyncResult ar)
@@ -64,19 +72,25 @@ namespace Strive.Network.Server
             try
             {
                 // Get the socket that handles the client request.
-                var handler = (Listener)ar.AsyncState;
-                Socket clientSocket = handler._tcpSocket.EndAccept(ar);
+                var listener = (Listener) ar.AsyncState;
+                lock (listener)
+                {
+                    if (listener._tcpSocket == null) return;
 
-                // Create the state object.
-                var client = new Client();
-                handler.Clients.Add(client);
-                handler._log.Info("New connection from " + client.RemoteEndPoint);
-                client.Start(clientSocket);
+                    // Create the state object.
+                    var client = new Client();
+                    client.Start(listener._tcpSocket.EndAccept(ar));
+                    lock (listener.Clients)
+                    {
+                        listener.Clients.Add(client);
+                    }
+                    listener._log.Info("New connection from " + client.RemoteEndPoint);
 
-                // The next connection
-                handler._tcpSocket.BeginAccept(
-                    new AsyncCallback(AcceptCallback),
-                    handler);
+                    // The next connection
+                    listener._tcpSocket.BeginAccept(
+                        new AsyncCallback(AcceptCallback),
+                        listener);
+                }
             }
             catch (ObjectDisposedException)
             {
@@ -84,21 +98,11 @@ namespace Strive.Network.Server
             }
         }
 
-        public int MessageCount
-        {
-            get { return ClientMessageQueue.Count; }
-        }
-
-        public ClientMessage PopNextMessage()
-        {
-            return (ClientMessage)ClientMessageQueue.Dequeue();
-        }
-
         public void SendToAll(IMessage message)
         {
-            foreach (Client c in Clients)
+            lock (Clients)
             {
-                if (c.Authenticated)
+                foreach (Client c in Clients.Where(c => c.Authenticated))
                 {
                     c.Send(message);
                 }

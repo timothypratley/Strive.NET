@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityViewModel.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="InputBindings.cs" />
     <Compile Include="PerspectiveViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
