@@ -24,7 +24,7 @@ namespace Strive.Server.Logic
     /// </summary>
     public class MobileAvatar : Mobile
     {
-        public Client Client;
+        public ClientConnection Client;
         public World World;
         public DateTime LastAttackUpdate;
         public DateTime LastHealUpdate;

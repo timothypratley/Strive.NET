@@ -617,7 +617,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        public void SendInitialWorldView(Client client)
+        public void SendInitialWorldView(ClientConnection client)
         {
             // if a new client has entered the world,
             // notify them about surrounding physical objects

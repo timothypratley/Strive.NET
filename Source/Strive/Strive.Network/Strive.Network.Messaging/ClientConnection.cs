@@ -7,7 +7,7 @@ using Strive.Network.Messages.ToClient;
 
 namespace Strive.Network.Messaging
 {
-    public class Client : Connection
+    public class ClientConnection : Connection
     {
         public int PlayerId;
 

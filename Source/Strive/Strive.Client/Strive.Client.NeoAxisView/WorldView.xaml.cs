@@ -29,8 +29,7 @@ namespace Strive.Client.NeoAxisView
             _worldViewModel = worldViewModel;
             _perspective = new PerspectiveViewModel(
                 worldViewModel,
-                r.IsKeyPressed,
-                new InputBindings());
+                r.IsKeyPressed);
             r.AutomaticUpdateFPS = 60;
             r.Render += renderTargetUserControl1_Render;
             r.RenderUI += WorldViewControl_RenderUI;

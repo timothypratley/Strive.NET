@@ -46,7 +46,7 @@ namespace Strive.Network.Messages
             ToServerCommunication,
             ToServerEmote,
             ToServerFlee,
-            ToServerSkillList,
+            ToServerRequestSkillList,
             ToServerUseSkill,
             ToServerCancelSkill,
             ToServerCreateParty,
@@ -55,14 +55,14 @@ namespace Strive.Network.Messages
             ToServerQueryParty,
             ToServerTransferPartyLeadership,
             ToServerInviteToParty,
-            ToServerWhoList,
+            ToServerRequestWhoList,
             ToServerEnterWorldAsMobile,
             ToServerLogin,
             ToServerLogout,
             ToServerReloadWorld,
             ToServerRequestPossessable,
             ToServerRequestServerInfo,
-            ToServerPosition,
+            ToServerMyPosition,
             ToServerPong
         }
 
@@ -96,9 +96,9 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToClientPing, typeof(ToClient.Ping));
 
             MessageTypeFromId.Add(EnumMessageId.ToServerChangeStance, typeof(ToServer.ChangeStance));
-            MessageTypeFromId.Add(EnumMessageId.ToServerCommunication, typeof(ToServer.Communication));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCommunication, typeof(ToServer.Communicate));
             MessageTypeFromId.Add(EnumMessageId.ToServerEmote, typeof(ToServer.Emote));
-            MessageTypeFromId.Add(EnumMessageId.ToServerSkillList, typeof(ToServer.SkillList));
+            MessageTypeFromId.Add(EnumMessageId.ToServerRequestSkillList, typeof(ToServer.RequestSkillList));
             MessageTypeFromId.Add(EnumMessageId.ToServerUseSkill, typeof(ToServer.UseSkill));
             MessageTypeFromId.Add(EnumMessageId.ToServerCancelSkill, typeof(ToServer.CancelSkill));
             MessageTypeFromId.Add(EnumMessageId.ToServerCreateParty, typeof(ToServer.CreateParty));
@@ -107,14 +107,14 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerTransferPartyLeadership, typeof(ToServer.TransferPartyLeadership));
             MessageTypeFromId.Add(EnumMessageId.ToServerInviteToParty, typeof(ToServer.InviteToParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerQueryParty, typeof(ToServer.QueryParty));
-            MessageTypeFromId.Add(EnumMessageId.ToServerWhoList, typeof(ToServer.WhoList));
+            MessageTypeFromId.Add(EnumMessageId.ToServerRequestWhoList, typeof(ToServer.RequestWhoList));
             MessageTypeFromId.Add(EnumMessageId.ToServerEnterWorldAsMobile, typeof(ToServer.EnterWorldAsMobile));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogin, typeof(ToServer.Login));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogout, typeof(ToServer.Logout));
             MessageTypeFromId.Add(EnumMessageId.ToServerReloadWorld, typeof(ToServer.ReloadWorld));
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestPossessable, typeof(ToServer.RequestPossessable));
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestServerInfo, typeof(ToServer.RequestServerInfo));
-            MessageTypeFromId.Add(EnumMessageId.ToServerPosition, typeof(ToServer.Position));
+            MessageTypeFromId.Add(EnumMessageId.ToServerMyPosition, typeof(ToServer.MyPosition));
             MessageTypeFromId.Add(EnumMessageId.ToServerPong, typeof(ToServer.Pong));
 
             // build the reverse lookup

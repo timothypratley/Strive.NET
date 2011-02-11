@@ -268,12 +268,20 @@ namespace Strive.Network.Messages
 
         public virtual bool Send(IMessage message)
         {
-            if (!_messageOutQueue.TryAdd(message))
+            lock (this)
             {
-                Log.Error("Failed to enqueue " + message.GetType() + " message");
-                return false;
+                if (Status != ConnectionStatus.Connected)
+                {
+                    Log.Trace("Not connected, cannot send " + message.GetType() + " message");
+                    return false;
+                }
+                if (!_messageOutQueue.TryAdd(message))
+                {
+                    Log.Error("Failed to enqueue " + message.GetType() + " message");
+                    return false;
+                }
+                return true;
             }
-            return true;
         }
 
         private void BeginSending()

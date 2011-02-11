@@ -1,16 +1,52 @@
+using System;
 using System.Windows.Media.Media3D;
+using Strive.Client.Model;
 using Strive.Network.Messages;
-using Strive.Network.Messages.ToServer;
 using Strive.Common;
-
+using Strive.Network.Messages.ToServer;
+using Strive.Network.Messages.ToClient;
 
 namespace Strive.Network.Messaging
 {
-    public class ServerConnection : Connection {
+    public class ServerConnection : Connection
+    {
+        public DictionaryModel<string, EntityModel> WorldModel { get; private set; }
 
-        public void Chat(string message)
+        public ServerConnection()
         {
-            Send(new Communication(CommunicationType.Chat, message));
+            WorldModel = new DictionaryModel<string, EntityModel>(); 
+            MessageRecieved += ConnectionMessageRecieved;
+        }
+
+        #region message handling
+
+        void ConnectionMessageRecieved(object sender, EventArgs e)
+        {
+            dynamic m = PopNextMessage();
+            Log.Trace("Processing " + m.GetType() + " message: " + m);
+            Process(m);
+        }
+
+        void Process(AddTerrain m)
+        {
+            Log.Trace("foo");
+        }
+
+        void Process(Position m)
+        {
+            Log.Trace("bar");
+            EntityModel e = WorldModel.EntityDictionary[m.instance_id.ToString()];
+            e.Position = m.position;
+            e.Rotation = m.rotation;
+        }
+
+        #endregion
+
+        #region message sending
+
+        public void Chat(string channel, string message)
+        {
+            Send(new Communicate(channel, CommunicationType.Chat, message));
         }
 
         public void PossessMobile(int mobileId)
@@ -35,7 +71,7 @@ namespace Strive.Network.Messaging
 
         public void WhoList()
         {
-            Send(new WhoList());
+            Send(new RequestWhoList());
         }
 
         public void UseSkill(EnumSkill skill, int invokationId)
@@ -58,9 +94,9 @@ namespace Strive.Network.Messaging
             UseSkill((EnumSkill)skillId, invokationId, targets);
         }
 
-        public void Position(Vector3D position, Quaternion rotation)
+        public void MyPosition(Vector3D position, Quaternion rotation)
         {
-            Send(new Position(position, rotation));
+            Send(new MyPosition(position, rotation));
         }
 
         public void RequestPossessable()
@@ -77,5 +113,7 @@ namespace Strive.Network.Messaging
         {
             Send(new ReloadWorld());
         }
+
+        #endregion
     }
 }

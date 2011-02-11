@@ -22,7 +22,6 @@ namespace Strive.Client.WPF
         public static WorldViewModel WorldViewModel;
         public static ServerConnection ServerConnection;
         public static DictionaryModel<string, EntityModel> WorldModel;
-        public static ConnectionHandler ConnectionHandler;
         public static LogModel LogModel;
         public static Engine ServerEngine = new Engine();
 
@@ -33,11 +32,7 @@ namespace Strive.Client.WPF
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
             ServerConnection = new ServerConnection();
-            WorldModel = new DictionaryModel<string, EntityModel>(); 
-
-            // TODO: combine connectionhandler and serverconnection; they are ying and yang
-            ConnectionHandler = new ConnectionHandler(ServerConnection, WorldModel);
-            WorldViewModel = new WorldViewModel(WorldModel, ConnectionHandler);
+            WorldViewModel = new WorldViewModel(ServerConnection);
         }
 
         private static bool ReportException(Exception ex)

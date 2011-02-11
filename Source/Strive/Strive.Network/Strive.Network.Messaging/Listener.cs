@@ -10,7 +10,7 @@ namespace Strive.Network.Messaging
 {
     public class Listener
     {
-        public List<Client> Clients { get; private set; }
+        public List<ClientConnection> Clients { get; private set; }
         Socket _tcpSocket;
         readonly IPEndPoint _localEndPoint;
         readonly ILog _log;
@@ -23,7 +23,7 @@ namespace Strive.Network.Messaging
 
         public void Start()
         {
-            Clients = new List<Client>();
+            Clients = new List<ClientConnection>();
             try
             {
                 lock (this)
@@ -78,7 +78,7 @@ namespace Strive.Network.Messaging
                     if (listener._tcpSocket == null) return;
 
                     // Create the state object.
-                    var client = new Client();
+                    var client = new ClientConnection();
                     client.Start(listener._tcpSocket.EndAccept(ar));
                     lock (listener.Clients)
                     {
@@ -102,7 +102,7 @@ namespace Strive.Network.Messaging
         {
             lock (Clients)
             {
-                foreach (Client c in Clients.Where(c => c.Authenticated))
+                foreach (ClientConnection c in Clients.Where(c => c.Authenticated))
                 {
                     c.Send(message);
                 }

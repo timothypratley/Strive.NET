@@ -19,7 +19,7 @@ namespace Strive.Server.Logic
 	{
 		public static int SquareSize = Constants.objectScopeRadius;
         public List<PhysicalObject> PhysicalObjects = new List<PhysicalObject>();
-        public List<Client> Clients = new List<Client>();
+        public List<ClientConnection> Clients = new List<ClientConnection>();
 
 	    public void Add( PhysicalObject po ) {
 			PhysicalObjects.Add( po );
@@ -42,13 +42,13 @@ namespace Strive.Server.Logic
 		}
 
 		public void NotifyClients( IMessage message ) {
-			foreach ( Client c in Clients ) {
+			foreach ( ClientConnection c in Clients ) {
 				c.Send( message );
 			}
 		}
 
-		public void NotifyClientsExcept( IMessage message, Client client ) {
-			foreach ( Client c in Clients ) {
+		public void NotifyClientsExcept( IMessage message, ClientConnection client ) {
+			foreach ( ClientConnection c in Clients ) {
 				if ( c == client ) continue;
 				c.Send( message );
 			}

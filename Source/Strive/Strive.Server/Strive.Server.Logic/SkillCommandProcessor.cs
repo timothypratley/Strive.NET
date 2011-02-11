@@ -16,7 +16,7 @@ namespace Strive.Server.Logic
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
 
-        public static void ProcessUseSkill(Client client, UseSkill message)
+        public static void ProcessUseSkill(ClientConnection client, UseSkill message)
         {
             var avatar = client.Avatar as MobileAvatar;
             if (avatar == null)
@@ -53,7 +53,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        public static void ProcessCancelSkill(Client client, CancelSkill message)
+        public static void ProcessCancelSkill(ClientConnection client, CancelSkill message)
         {
             var avatar = client.Avatar as MobileAvatar;
             if (avatar == null)

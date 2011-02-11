@@ -111,14 +111,10 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Client.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ClientMessage.cs">
+    <Compile Include="ClientConnection.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Connection.cs" />
-    <Compile Include="ConnectionHandler.cs" />
     <Compile Include="Listener.cs">
       <SubType>Code</SubType>
     </Compile>

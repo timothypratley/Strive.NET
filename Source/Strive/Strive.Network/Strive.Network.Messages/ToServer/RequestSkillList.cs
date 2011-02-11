@@ -6,7 +6,7 @@ namespace Strive.Network.Messages.ToServer
 	/// Summary description for Flee.
 	/// </summary>
 	[Serializable]
-	public class WhoList : IMessage {
-		public WhoList(){}
+	public class RequestSkillList : IMessage {
+		public RequestSkillList(){}
 	}
 }

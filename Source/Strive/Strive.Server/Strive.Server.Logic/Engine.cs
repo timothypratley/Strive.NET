@@ -96,7 +96,7 @@ namespace Strive.Server.Logic
                 .Where(client => client.Status != ConnectionStatus.Connected
                     && (Global.Now - client.LastMessageTimestamp) > TimeSpan.FromSeconds(60))
                 .ToList();
-            foreach (Client client in remove)
+            foreach (ClientConnection client in remove)
             {
                 if (client.Avatar != null)
                 {

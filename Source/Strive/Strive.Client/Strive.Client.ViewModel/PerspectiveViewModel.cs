@@ -106,13 +106,11 @@ namespace Strive.Client.ViewModel
         public WorldViewModel WorldViewModel { get; private set; }
 
         readonly KeyPressedCheck _keyPressed;
-        readonly InputBindings _bindings;
 
-        public PerspectiveViewModel(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings)
+        public PerspectiveViewModel(WorldViewModel worldViewModel, KeyPressedCheck keyPressed)
         {
             WorldViewModel = worldViewModel;
             _keyPressed = keyPressed;
-            _bindings = bindings;
             Home();
             _movementTimer = new Stopwatch();
             _movementTimer.Start();
@@ -143,7 +141,7 @@ namespace Strive.Client.ViewModel
             if (count > 0)
             {
                 Vector3D center = _followEntities.Entities
-                    .Where(e => WorldViewModel.World.ContainsKey(e.Name))
+                    .Where(e => WorldViewModel.WorldModel.ContainsKey(e.Name))
                     .Average(e => e.Position);
                 Vector3D diff = center - Position;
                 double vectorDistance = diff.Length;
@@ -166,7 +164,7 @@ namespace Strive.Client.ViewModel
             int movementForward = 0;
             int movementUp = 0;
             double speedModifier = 1;
-            foreach (InputBindings.KeyBinding kb in _bindings.KeyBindings
+            foreach (InputBindings.KeyBinding kb in WorldViewModel.Bindings.KeyBindings
                 .Where(kb => kb.KeyCombo.All(k => _keyPressed(k))))
             {
                 _followEntities.Clear();
@@ -202,7 +200,7 @@ namespace Strive.Client.ViewModel
             }
 
             // Set Position and Rotation
-            Rotation = new Quaternion(0, 0, 1, Heading) * new Quaternion(0, 1, 0, Tilt);
+            Rotation = new Quaternion(new Vector3D(0, 0, 1), Heading * 180 / Math.PI) * new Quaternion(new Vector3D(0, 1, 0), Tilt * 180 / Math.PI);
             if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
             {
                 double movementHeading = Heading + Math.Atan2(movementForward, -movementPerpendicular);
@@ -222,8 +220,7 @@ namespace Strive.Client.ViewModel
             // Send update if required
             if (Position != initialPosition || Rotation != initialRotation)
             {
-                // TODO: replace this direct call with a command
-                WorldViewModel.ConnectionHandler.SendPosition(Position, Rotation);
+                WorldViewModel.ServerConnection.MyPosition(Position, Rotation);
             }
         }
 

@@ -26,7 +26,7 @@ namespace Strive.Server.Logic
         {
             lock (_listener.Clients)
             {
-                foreach (Client client in _listener.Clients.Where(c => c.MessageCount > 0))
+                foreach (ClientConnection client in _listener.Clients.Where(c => c.MessageCount > 0))
                 {
                     try
                     {
@@ -40,7 +40,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        public void CheckAndProcessMessage(Client client, dynamic message)
+        public void CheckAndProcessMessage(ClientConnection client, dynamic message)
         {
             // new connection... only allow login
             if (!client.Authenticated && !(message is Login))
@@ -70,12 +70,12 @@ namespace Strive.Server.Logic
             }
         }
 
-        void ProcessMessage(Client client, Login loginMessage)
+        void ProcessMessage(ClientConnection client, Login loginMessage)
         {
             if (_world.UserLookup(loginMessage.Username, loginMessage.Password, ref client.PlayerId))
             {
                 // login succeeded, check there isnt an existing connection for this player
-                foreach (Client c in _listener.Clients)
+                foreach (ClientConnection c in _listener.Clients)
                 {
                     if (c.AuthenticatedUsername == loginMessage.Username)
                         c.Close();
@@ -91,13 +91,13 @@ namespace Strive.Server.Logic
             }
         }
 
-        void ProcessMessage(Client client, RequestPossessable message)
+        void ProcessMessage(ClientConnection client, RequestPossessable message)
         {
             //Strive.Data.MultiverseFactory.refreshMultiverseForPlayer(Global.modelSchema, client.PlayerID);
             client.CanPossess(_world.GetPossessable(client.AuthenticatedUsername));
         }
 
-        void ProcessMessage(Client client, Logout message)
+        void ProcessMessage(ClientConnection client, Logout message)
         {
             if (client.Avatar != null)
             {
@@ -110,7 +110,7 @@ namespace Strive.Server.Logic
 
 
 
-        void ProcessMessage(Client client, EnterWorldAsMobile message)
+        void ProcessMessage(ClientConnection client, EnterWorldAsMobile message)
         {
             MobileAvatar a;
             if (_world.PhysicalObjects.ContainsKey(message.InstanceId))
@@ -165,7 +165,7 @@ namespace Strive.Server.Logic
             _world.SendInitialWorldView(client);
         }
 
-        void ProcessMessage(Client client, Position message)
+        void ProcessMessage(ClientConnection client, MyPosition message)
         {
             if (client.Avatar == null)
             {
@@ -186,7 +186,7 @@ namespace Strive.Server.Logic
             _world.Relocate(client.Avatar, message.position, message.rotation);
         }
 
-        void ProcessMessage(Client client, Communication message)
+        void ProcessMessage(ClientConnection client, Communicate message)
         {
             if (message.CommunicationType == CommunicationType.Chat)
             {
@@ -206,11 +206,11 @@ namespace Strive.Server.Logic
             //Log.Info( "Sent communication message" );
         }
 
-        void ProcessMessage(Client client, ReloadWorld message)
+        void ProcessMessage(ClientConnection client, ReloadWorld message)
         {
             _log.Info("ReloadWorld received.");
             _world.Load();
-            foreach (Client c in _listener.Clients
+            foreach (ClientConnection c in _listener.Clients
                 .Where(c => c.Avatar != null
                     && c.Status == ConnectionStatus.Connected))
             {
@@ -221,7 +221,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        void ProcessMessage(Client client, WhoList message)
+        void ProcessMessage(ClientConnection client, RequestWhoList message)
         {
             client.WhoList(
                 _listener.Clients
@@ -230,7 +230,7 @@ namespace Strive.Server.Logic
                 .ToArray());
         }
 
-        void ProcessMessage(Client client, CreateParty message)
+        void ProcessMessage(ClientConnection client, CreateParty message)
         {
             var ma = (MobileAvatar)client.Avatar;
             if (ma.Party != null)
@@ -241,7 +241,7 @@ namespace Strive.Server.Logic
             ma.Party = new Party(message.Name, ma);
         }
 
-        void ProcessMessage(Client client, TransferPartyLeadership message)
+        void ProcessMessage(ClientConnection client, TransferPartyLeadership message)
         {
             var ma = (MobileAvatar) client.Avatar;
             var target = Global.World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
@@ -261,14 +261,14 @@ namespace Strive.Server.Logic
         }
     
 
-        void ProcessMessage(Client client, Pong message)
+        void ProcessMessage(ClientConnection client, Pong message)
         {
             client.Latency = (DateTime.Now - client.PingedAt).Milliseconds;
             _world.Weather.Latency = client.Latency;
             client.Send(_world.Weather);
         }
 
-        void ProcessMessage(Client client, LeaveParty message)
+        void ProcessMessage(ClientConnection client, LeaveParty message)
         {
             var ma = (MobileAvatar)client.Avatar;
             Party p = ma.Party;
@@ -278,7 +278,7 @@ namespace Strive.Server.Logic
             p.SendPartyTalk(ma.TemplateObjectName + " has left your ");
         }
 
-        void ProcessMessage(Client client, JoinParty message)
+        void ProcessMessage(ClientConnection client, JoinParty message)
         {
             var ma = (MobileAvatar)client.Avatar;
 
@@ -296,7 +296,7 @@ namespace Strive.Server.Logic
             ma.InvitedToParty = null;
         }
 
-        void ProcessMessage(Client client, InviteToParty message)
+        void ProcessMessage(ClientConnection client, InviteToParty message)
         {
             Party p = ((MobileAvatar) client.Avatar).Party;
             if (p == null)
@@ -322,7 +322,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        void ProcessMessage(Client client, SkillList message)
+        void ProcessMessage(ClientConnection client, RequestSkillList message)
         {
             client.SkillList(
                 Global.ModelSchema.EnumSkill

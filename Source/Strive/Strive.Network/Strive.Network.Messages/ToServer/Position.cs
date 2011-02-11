@@ -10,15 +10,15 @@ namespace Strive.Network.Messages.ToServer
 	/// Summary description for Position.
 	/// </summary>
 	[Serializable]
-	public class Position : IMessage
+	public class MyPosition : IMessage
 	{
-		public Position(){}
-		public Position( Vector3D position, Quaternion rotation ) {
+		public MyPosition(){}
+		public MyPosition( Vector3D position, Quaternion rotation ) {
 			this.position = position;
 			this.rotation = rotation;
 		}
 
-		public Position( PhysicalObject po ) {
+		public MyPosition( PhysicalObject po ) {
 			position = po.Position;
 			rotation = po.Rotation;
 		}

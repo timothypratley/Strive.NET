@@ -145,7 +145,7 @@
     <Compile Include="ToClient\WhoList.cs" />
     <Compile Include="ToServer\CancelSkill.cs" />
     <Compile Include="ToServer\ChangeStance.cs" />
-    <Compile Include="ToServer\Communication.cs" />
+    <Compile Include="ToServer\Communicate.cs" />
     <Compile Include="ToServer\CreateParty.cs" />
     <Compile Include="ToServer\Emote.cs" />
     <Compile Include="ToServer\EnterWorldAsMobile.cs" />
@@ -161,14 +161,14 @@
     <Compile Include="ToServer\ReloadWorld.cs" />
     <Compile Include="ToServer\RequestPossessable.cs" />
     <Compile Include="ToServer\RequestServerInfo.cs" />
-    <Compile Include="ToServer\SkillList.cs" />
+    <Compile Include="ToServer\RequestSkillList.cs" />
     <Compile Include="ToServer\TargetAny.cs" />
     <Compile Include="ToServer\TargetItem.cs" />
     <Compile Include="ToServer\TargetMobile.cs" />
     <Compile Include="ToServer\TargetNone.cs" />
     <Compile Include="ToServer\TransferPartyLeadership.cs" />
     <Compile Include="ToServer\UseSkill.cs" />
-    <Compile Include="ToServer\WhoList.cs" />
+    <Compile Include="ToServer\RequestWhoList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
