@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 using Common.Logging;
 
 using Strive.Server.Model;
-using Strive.Network.Server;
+using Strive.Network.Messaging;
 using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
 using Strive.Common;

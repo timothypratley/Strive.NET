@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Strive.Network.Messages;
 using Common.Logging;
 
-namespace Strive.Network.Server
+namespace Strive.Network.Messaging
 {
     public class Listener
     {

@@ -11,7 +11,6 @@ using Engine.MathEx;
 using Engine.SoundSystem;
 using Engine.PhysicsSystem;
 using GameEntities;
-using Strive.Client.Model;
 using Strive.Client.ViewModel;
 
 
@@ -24,15 +23,14 @@ namespace Strive.Client.NeoAxisView
     {
         readonly PerspectiveViewModel _perspective;
         readonly WorldViewModel _worldViewModel;
-        public WorldView(WorldViewModel worldViewModel, ConnectionHandler connectionHandler)
+        public WorldView(WorldViewModel worldViewModel)
         {
             InitializeComponent();
             _worldViewModel = worldViewModel;
             _perspective = new PerspectiveViewModel(
                 worldViewModel,
                 r.IsKeyPressed,
-                new InputBindings(),
-                connectionHandler);
+                new InputBindings());
             r.AutomaticUpdateFPS = 60;
             r.Render += renderTargetUserControl1_Render;
             r.RenderUI += WorldViewControl_RenderUI;
@@ -157,6 +155,7 @@ namespace Strive.Client.NeoAxisView
 
         void WorldViewControl_MouseEnter(object sender, EventArgs e)
         {
+            // TODO: remove this event?
             //this.Focus();
         }
 

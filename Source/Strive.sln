@@ -1,10 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Client", "Strive\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj", "{8C36C1BE-AB5F-47A5-869D-139A04B23C52}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Server", "Strive\Strive.Network\Strive.Network.Server\Strive.Network.Server.csproj", "{757BF7D3-B811-48D7-AE27-0842B0522536}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messages", "Strive\Strive.Network\Strive.Network.Messages\Strive.Network.Messages.csproj", "{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Server.Console", "Strive\Strive.Server\Strive.Server.Console\Strive.Server.Console.csproj", "{2A3C1FEE-40E3-47F4-818B-B7019D89FCAF}"
@@ -31,6 +27,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tests", "Strive\Tests\Tests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31CEEF19-BBA2-40B5-8BA7-557A30BAADB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messaging", "Strive\Strive.Network\Strive.Network.Messaging\Strive.Network.Messaging.csproj", "{757BF7D3-B811-48D7-AE27-0842B0522536}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,36 +42,6 @@ Global
 		StrongMagic|x86 = StrongMagic|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.Release|x86.ActiveCfg = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
-		{8C36C1BE-AB5F-47A5-869D-139A04B23C52}.StrongMagic|x86.ActiveCfg = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Any CPU.Build.0 = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|x86.ActiveCfg = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
-		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 		{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -254,6 +222,21 @@ Global
 		{648059BF-BAF1-49E3-8FE4-4BB29898B8DC}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{648059BF-BAF1-49E3-8FE4-4BB29898B8DC}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{648059BF-BAF1-49E3-8FE4-4BB29898B8DC}.StrongMagic|x86.ActiveCfg = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.Release|x86.ActiveCfg = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
+		{757BF7D3-B811-48D7-AE27-0842B0522536}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

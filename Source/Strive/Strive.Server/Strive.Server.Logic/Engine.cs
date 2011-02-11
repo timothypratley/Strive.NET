@@ -6,7 +6,7 @@ using System.Reflection;
 
 using Common.Logging;
 using Strive.Common;
-using Strive.Network.Server;
+using Strive.Network.Messaging;
 using Strive.Server.Model;
 using Strive.Network.Messages;
 

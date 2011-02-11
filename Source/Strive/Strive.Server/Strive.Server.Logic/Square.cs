@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Strive.Server.Model;
-using Strive.Network.Server;
+using Strive.Network.Messaging;
 using Strive.Network.Messages;
 using Strive.Common;
 

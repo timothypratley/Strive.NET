@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
-
 using Common.Logging;
-
-using Strive.Network.Client;
+using Strive.Client.Model;
 using Strive.Network.Messages.ToClient;
 using Strive.Network.Messages;
 
 
-namespace Strive.Client.Model
+namespace Strive.Network.Messaging
 {
     public class ConnectionHandler
     {

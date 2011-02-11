@@ -4,7 +4,7 @@ using Strive.Network.Messages.ToServer;
 using Strive.Common;
 
 
-namespace Strive.Network.Client
+namespace Strive.Network.Messaging
 {
     public class ServerConnection : Connection {
 

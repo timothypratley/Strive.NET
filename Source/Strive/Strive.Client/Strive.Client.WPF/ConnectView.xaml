@@ -1,8 +1,8 @@
-﻿<ad:DockableContent x:Class="Strive.Client.WPF.Connect"
+﻿<ad:DockableContent x:Class="Strive.Client.WPF.ConnectView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
-        Title="Connect" Height="300" Width="300" xmlns:my="clr-namespace:Strive.Client.WPF">
+        Title="Connect" Height="300" Width="300">
     <StackPanel>
         <Label Content="Host"/>
         <TextBox x:Name="hostTextBox"/>

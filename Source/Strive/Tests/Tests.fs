@@ -6,8 +6,8 @@ open System.Net.Sockets
 open NUnit.Framework
 open FsUnit
 open Strive.Network.Messages
-open Strive.Network.Client
-open Strive.Network.Server
+open Strive.Network.Messaging
+
 
 [<TestFixture>]
 type ``my top level text``() = class

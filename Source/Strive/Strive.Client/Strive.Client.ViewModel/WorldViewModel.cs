@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Media.Media3D;
 using Strive.Client.Model;
+using Strive.Network.Messaging;
 
 
 namespace Strive.Client.ViewModel
@@ -14,12 +15,14 @@ namespace Strive.Client.ViewModel
         public DictionaryModel<string, EntityModel> World { get { return _world; } }
         private WorldNavigation _navigation;
         public WorldNavigation Navigation { get { return _navigation; } }
+        public ConnectionHandler ConnectionHandler { get; private set; }
 
-        public WorldViewModel(DictionaryModel<string, EntityModel> worldModel)
+        public WorldViewModel(DictionaryModel<string, EntityModel> worldModel, ConnectionHandler connectionHandler)
         {
             Bindings = new InputBindings();
             _world = worldModel;
             _navigation = new WorldNavigation();
+            ConnectionHandler = connectionHandler;
         }
 
         public IEnumerable<EntityViewModel> Entities

@@ -103,7 +103,6 @@
     <Compile Include="CommunicationType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Connection.cs" />
     <Compile Include="CustomFormatter.cs">
       <SubType>Code</SubType>
     </Compile>

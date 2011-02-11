@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Net;
-
 using AvalonDock;
 using Strive.Common;
-using Strive.Network.Client;
+using Strive.Network.Messaging;
 
 
 namespace Strive.Client.WPF
@@ -12,9 +11,9 @@ namespace Strive.Client.WPF
     /// <summary>
     /// Interaction logic for ResourceList.xaml
     /// </summary>
-    public partial class Connect : DockableContent
+    public partial class ConnectView : DockableContent
     {
-        public Connect()
+        public ConnectView()
         {
             InitializeComponent();
             hostTextBox.Text = Dns.GetHostName();

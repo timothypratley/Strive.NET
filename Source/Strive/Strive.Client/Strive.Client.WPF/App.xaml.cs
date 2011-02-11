@@ -6,9 +6,9 @@ using System.Reflection;
 using Common.Logging;
 using Strive.Client.ViewModel;
 using Strive.Client.Model;
-using Strive.Network.Client;
 using Strive.WPF;
 using Strive.Server.Logic;
+using Strive.Network.Messaging;
 
 
 namespace Strive.Client.WPF
@@ -34,8 +34,10 @@ namespace Strive.Client.WPF
 
             ServerConnection = new ServerConnection();
             WorldModel = new DictionaryModel<string, EntityModel>(); 
-            WorldViewModel = new WorldViewModel(WorldModel);
+
+            // TODO: combine connectionhandler and serverconnection; they are ying and yang
             ConnectionHandler = new ConnectionHandler(ServerConnection, WorldModel);
+            WorldViewModel = new WorldViewModel(WorldModel, ConnectionHandler);
         }
 
         private static bool ReportException(Exception ex)

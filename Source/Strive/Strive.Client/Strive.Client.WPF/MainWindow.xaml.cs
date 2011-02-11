@@ -61,7 +61,7 @@ namespace Strive.Client.WPF
 
         private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new WorldView(World.ViewModel, App.ConnectionHandler);
+            var view = new WorldView(World.ViewModel);
             view.ShowAsDocument(dockManager);
             view.Focus();
         }
@@ -88,7 +88,7 @@ namespace Strive.Client.WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var connect = new Connect();
+            var connect = new ConnectView();
             connect.ShowAsDocument(dockManager);
             connect.Focus();
         }

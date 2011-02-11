@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using System.Linq;
 
-using Strive.Network.Server;
+using Strive.Network.Messaging;
 using Strive.Network.Messages;
 using ToClient = Strive.Network.Messages.ToClient;
 using Strive.Server.Model;

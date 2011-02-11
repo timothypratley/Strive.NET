@@ -1,6 +1,6 @@
 using Strive.Network.Messages;
 
-namespace Strive.Network.Server {
+namespace Strive.Network.Messaging {
 	public class ClientMessage {
 		public ClientMessage( Client client, IMessage message ) {
 			_client = client;

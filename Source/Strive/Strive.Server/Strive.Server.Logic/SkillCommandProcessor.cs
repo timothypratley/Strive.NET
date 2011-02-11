@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Logging;
 using Strive.Network.Messages.ToServer;
-using Strive.Network.Server;
+using Strive.Network.Messaging;
 using Strive.Server.Model;
 using Strive.Common;
 

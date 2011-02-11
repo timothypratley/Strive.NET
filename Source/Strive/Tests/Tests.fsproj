@@ -47,18 +47,13 @@
     <None Include="Script.fsx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj">
-      <Name>Strive.Network.Client</Name>
-      <Project>{8c36c1be-ab5f-47a5-869d-139a04b23c52}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\Strive.Network\Strive.Network.Messages\Strive.Network.Messages.csproj">
       <Name>Strive.Network.Messages</Name>
       <Project>{eeec18d5-063d-4ddd-8328-5182f1ba7f26}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Strive.Network\Strive.Network.Server\Strive.Network.Server.csproj">
-      <Name>Strive.Network.Server</Name>
+    <ProjectReference Include="..\Strive.Network\Strive.Network.Messaging\Strive.Network.Messaging.csproj">
+      <Name>Strive.Network.Messaging</Name>
       <Project>{757bf7d3-b811-48d7-ae27-0842b0522536}</Project>
       <Private>True</Private>
     </ProjectReference>

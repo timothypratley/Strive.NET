@@ -117,9 +117,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Connect.xaml.cs">
-      <DependentUpon>Connect.xaml</DependentUpon>
+    <Compile Include="ConnectView.xaml.cs">
+      <DependentUpon>ConnectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConnectModel.cs" />
+    <Compile Include="ConnectViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -130,7 +132,7 @@
     <Compile Include="WebBrowser.xaml.cs">
       <DependentUpon>WebBrowser.xaml</DependentUpon>
     </Compile>
-    <Page Include="Connect.xaml">
+    <Page Include="ConnectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -182,13 +184,13 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Strive.Network\Strive.Network.Client\Strive.Network.Client.csproj">
-      <Project>{8C36C1BE-AB5F-47A5-869D-139A04B23C52}</Project>
-      <Name>Strive.Network.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Messages\Strive.Network.Messages.csproj">
       <Project>{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}</Project>
       <Name>Strive.Network.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Strive.Network\Strive.Network.Messaging\Strive.Network.Messaging.csproj">
+      <Project>{757BF7D3-B811-48D7-AE27-0842B0522536}</Project>
+      <Name>Strive.Network.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Strive.Server\Strive.Server.Logic\Strive.Server.Logic.csproj">
       <Project>{4895086D-8485-46EF-8DED-9E4C16227D64}</Project>

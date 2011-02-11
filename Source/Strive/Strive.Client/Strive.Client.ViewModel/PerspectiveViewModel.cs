@@ -107,14 +107,12 @@ namespace Strive.Client.ViewModel
 
         readonly KeyPressedCheck _keyPressed;
         readonly InputBindings _bindings;
-        readonly ConnectionHandler _connectionHandler;
 
-        public PerspectiveViewModel(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings, ConnectionHandler connectionHandler)
+        public PerspectiveViewModel(WorldViewModel worldViewModel, KeyPressedCheck keyPressed, InputBindings bindings)
         {
             WorldViewModel = worldViewModel;
             _keyPressed = keyPressed;
             _bindings = bindings;
-            _connectionHandler = connectionHandler;
             Home();
             _movementTimer = new Stopwatch();
             _movementTimer.Start();
@@ -224,7 +222,8 @@ namespace Strive.Client.ViewModel
             // Send update if required
             if (Position != initialPosition || Rotation != initialRotation)
             {
-                _connectionHandler.SendPosition(Position, Rotation);
+                // TODO: replace this direct call with a command
+                WorldViewModel.ConnectionHandler.SendPosition(Position, Rotation);
             }
         }
 
