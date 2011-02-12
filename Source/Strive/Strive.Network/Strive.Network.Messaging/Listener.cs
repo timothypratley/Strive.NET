@@ -23,35 +23,33 @@ namespace Strive.Network.Messaging
 
         public void Start()
         {
-            Clients = new List<ClientConnection>();
-            try
+            lock (this)
             {
-                lock (this)
+                Clients = new List<ClientConnection>();
+                try
                 {
-                    _tcpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    _tcpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Stream,
+                                            ProtocolType.Tcp);
                     _tcpSocket.Bind(_localEndPoint);
                     _tcpSocket.Listen(10);
                 }
-            }
-            catch (Exception e)
-            {
-                _log.Error("Unable to start listening", e);
-                return;
-            }
+                catch (Exception e)
+                {
+                    _log.Error("Unable to start listening", e);
+                    return;
+                }
 
-            try
-            {
-                lock (this)
+                try
                 {
                     _tcpSocket.BeginAccept(new AsyncCallback(AcceptCallback), this);
                     _log.Info("Started listening on " + _localEndPoint);
                 }
-            }
-            catch (ObjectDisposedException)
-            {
-                // the underlying socket was closed
-            }
+                catch (ObjectDisposedException)
+                {
+                    // the underlying socket was closed
+                }
 
+            }
         }
 
         public void Stop()
@@ -80,10 +78,7 @@ namespace Strive.Network.Messaging
                     // Create the state object.
                     var client = new ClientConnection();
                     client.Start(listener._tcpSocket.EndAccept(ar));
-                    lock (listener.Clients)
-                    {
-                        listener.Clients.Add(client);
-                    }
+                    listener.Clients.Add(client);
                     listener._log.Info("New connection from " + client.RemoteEndPoint);
 
                     // The next connection
@@ -100,7 +95,7 @@ namespace Strive.Network.Messaging
 
         public void SendToAll(IMessage message)
         {
-            lock (Clients)
+            lock (this)
             {
                 foreach (ClientConnection c in Clients.Where(c => c.Authenticated))
                 {

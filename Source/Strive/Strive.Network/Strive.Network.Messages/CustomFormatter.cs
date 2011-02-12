@@ -52,10 +52,10 @@ namespace Strive.Network.Messages
             // if the object is a basic type, encode and return
             if (EncodeBasicType(obj, buffer)) return;
 
-            FieldInfo[] fis = t.GetFields();
-            foreach (FieldInfo fi in fis)
+            foreach (FieldInfo fi in t.GetFields())
             {
-                if (fi.IsStatic) continue;
+                if (fi.IsStatic)
+                    continue;
                 Object field = fi.GetValue(obj);
                 if (field == null)
                     throw new Exception("Cannot serialise object with null fields");
@@ -131,15 +131,9 @@ namespace Strive.Network.Messages
             Object obj = DecodeBasicType(t, buffer, ref offset);
             if (obj != null) return obj;
 
-            // otherwise create the complex object, and decode its fields
-            ConstructorInfo ci = t.GetConstructor(new Type[0]);
-            if (ci == null)
-            {
-                throw new Exception("Cannot construct a " + t);
-            }
-            obj = ci.Invoke(null);
-            FieldInfo[] fis = t.GetFields();
-            foreach (FieldInfo fi in fis)
+
+            obj = Activator.CreateInstance(t);
+            foreach (FieldInfo fi in t.GetFields())
             {
                 if (fi.IsStatic) continue;
                 fi.SetValue(obj, Decode(fi.FieldType, buffer, ref offset));

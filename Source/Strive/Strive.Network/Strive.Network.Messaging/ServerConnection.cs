@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Media.Media3D;
+using Microsoft.CSharp.RuntimeBinder;
 using Strive.Client.Model;
 using Strive.Network.Messages;
 using Strive.Common;
@@ -24,12 +25,33 @@ namespace Strive.Network.Messaging
         {
             dynamic m = PopNextMessage();
             Log.Trace("Processing " + m.GetType() + " message: " + m);
-            Process(m);
+            try
+            {
+                Process(m);
+            }
+            catch (RuntimeBinderException)
+            {
+                Log.Error("Received unknown message type " + m);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Failed to process message " + m, ex);
+            }
+        }
+
+        void Process(TimeAndWeather m)
+        {
+            Log.Info("Recieved Time and Weather " + m.ServerNow);
+        }
+
+        void Process(AddMobile m)
+        {
+            Log.Info("Recieved message" + m);
         }
 
         void Process(AddTerrain m)
         {
-            Log.Trace("foo");
+            Log.Trace("Terrain " + m);
         }
 
         void Process(Position m)

@@ -5,9 +5,10 @@ using System.Collections.Concurrent;
 using System.Threading;
 using UpdateControls;
 using Common.Logging;
+using Strive.Network.Messages;
 
 
-namespace Strive.Network.Messages
+namespace Strive.Network.Messaging
 {
     public enum ConnectionStatus
     {
@@ -77,7 +78,6 @@ namespace Strive.Network.Messages
 
         public void Start(IPEndPoint remoteEndPoint)
         {
-            // TODO: can deadlock here!!!
             lock (this)
             {
                 if (TcpSocket != null)
@@ -166,21 +166,24 @@ namespace Strive.Network.Messages
             }
         }
 
+        private IAsyncResult _expectingReadResult;
         private void BeginReading()
         {
-            // Begin reading
-            try
+            lock (this)
             {
-                TcpSocket.BeginReceive(_tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
-                    new AsyncCallback(ReceiveTcpCallback), this);
-            }
-            // TODO: reading after socket was changed
-            //            catch (SocketException se)
-            catch (SocketException e)
-            {
-                Log.Error("Error receiving, closing connection.", e);
-                Stop();
-                return;
+                // Begin reading
+                try
+                {
+                    _expectingReadResult = TcpSocket.BeginReceive(
+                        _tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
+                        new AsyncCallback(ReceiveTcpCallback), this);
+                }
+                catch (SocketException e)
+                {
+                    Log.Error("Error receiving, closing connection.", e);
+                    Stop();
+                    return;
+                }
             }
         }
 
@@ -194,15 +197,19 @@ namespace Strive.Network.Messages
                 if (client.TcpSocket == null)
                     return;
 
+                if (ar != client._expectingReadResult)
+                {
+                    // this is the result of a previous connection, we discard it
+                    return;
+                }
+
                 int bytesRead;
                 try
                 {
                     // Read data from the remote device.
                     bytesRead = client.TcpSocket.EndReceive(ar);
                 }
-                // TODO: this is because TcpSocket was changed before the callback, should wait for it to close or something?
-                //catch (SocketException se)
-                catch (Exception e)
+                catch (SocketException e)
                 {
                     client.Log.Error("Error reading, closing connection.", e);
                     client.Stop();
@@ -252,17 +259,7 @@ namespace Strive.Network.Messages
                 }
 
                 // listen for the next message
-                try
-                {
-                    client.TcpSocket.BeginReceive(client._tcpbuffer, client._tcpOffset, MessageTypeMap.BufferSize - client._tcpOffset, 0,
-                        new AsyncCallback(ReceiveTcpCallback), client);
-                }
-                catch (SocketException se)
-                {
-                    client.Log.Error("Error receiving, closing connection.", se);
-                    client.Stop();
-                    return;
-                }
+                client.BeginReading();
             }
         }
 
@@ -284,6 +281,7 @@ namespace Strive.Network.Messages
             }
         }
 
+        private IAsyncResult _expectingSendResult;
         private void BeginSending()
         {
             IMessage message;
@@ -305,6 +303,7 @@ namespace Strive.Network.Messages
 
             lock (this)
             {
+
                 if (TcpSocket == null || !TcpSocket.Connected)
                 {
                     Log.Error("Tried to send message " + message + " while not connected.");
@@ -313,7 +312,8 @@ namespace Strive.Network.Messages
 
                 try
                 {
-                    TcpSocket.BeginSend(buffer, 0, buffer.Length, 0,
+                    _expectingSendResult = TcpSocket.BeginSend(
+                        buffer, 0, buffer.Length, 0,
                         new AsyncCallback(SendTcpCallback), this);
                 }
                 catch (SocketException se)
@@ -332,7 +332,12 @@ namespace Strive.Network.Messages
             {
                 if (client.TcpSocket == null)
                 {
-                    client.Log.Error("Socket closed while sending");
+                    return;
+                }
+
+                if (ar != client._expectingSendResult)
+                {
+                    // this is the result of a previous connection, we discard it
                     return;
                 }
 
@@ -347,17 +352,31 @@ namespace Strive.Network.Messages
                     client.Stop();
                 }
             }
+
+            // Send the next message
             client.BeginSending();
         }
 
         public IMessage PopNextMessage()
         {
-            IMessage message;
-            if (!_messageInQueue.TryTake(out message))
-                Log.Info("In queue of messages exhausted");
-            return message;
+            lock (this)
+            {
+                IMessage message;
+                if (!_messageInQueue.TryTake(out message))
+                    Log.Info("In queue of messages exhausted");
+                return message;
+            }
         }
 
-        public int MessageCount { get { return _messageInQueue.Count; } }
+        public int MessageCount
+        {
+            get
+            {
+                lock (this)
+                {
+                    return _messageInQueue == null ? 0 : _messageInQueue.Count;
+                }
+            }
+        }
     }
 }

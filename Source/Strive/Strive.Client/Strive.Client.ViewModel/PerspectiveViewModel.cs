@@ -203,7 +203,7 @@ namespace Strive.Client.ViewModel
             Rotation = new Quaternion(new Vector3D(0, 0, 1), Heading * 180 / Math.PI) * new Quaternion(new Vector3D(0, 1, 0), Tilt * 180 / Math.PI);
             if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
             {
-                double movementHeading = Heading + Math.Atan2(movementForward, -movementPerpendicular);
+                double movementHeading = Heading + Math.Atan2(movementPerpendicular, movementForward);
                 var positionChange = new Vector3D(
                     Math.Sin(movementHeading) * _landSpeed,
                     Math.Cos(movementHeading) * _landSpeed,

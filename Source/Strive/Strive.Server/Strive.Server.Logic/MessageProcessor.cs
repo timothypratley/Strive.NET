@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-
 using Common.Logging;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
@@ -24,7 +23,7 @@ namespace Strive.Server.Logic
 
         public void ProcessMessages()
         {
-            lock (_listener.Clients)
+            lock (_listener)
             {
                 foreach (ClientConnection client in _listener.Clients.Where(c => c.MessageCount > 0))
                 {
@@ -112,55 +111,50 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, EnterWorldAsMobile message)
         {
-            MobileAvatar a;
             if (_world.PhysicalObjects.ContainsKey(message.InstanceId))
             {
                 // reconnected
                 // simply replace existing connection with the new
                 // todo: the old 'connection' should timeout or die or be killed
-                Object o = _world.PhysicalObjects[message.InstanceId];
-                if (o is MobileAvatar)
+                var avatar = _world.PhysicalObjects[message.InstanceId] as MobileAvatar;
+                if (avatar == null)
                 {
-                    a = (MobileAvatar)o;
-                }
-                else
-                {
-                    _log.Warn("Can only possess mobiles.");
+                    client.LogMessage("Can only possess mobiles.");
                     return;
                 }
-                if (a.Client == client)
+                if (avatar.Client == client)
                 {
-                    _log.Warn("A client " + client.ToString() + " attempted to take control of the same mobile " + a.ObjectInstanceID + " twice... ignoring request.");
+                    client.LogMessage("You already possess mobile " + avatar.ObjectInstanceID);
+                    return;
                 }
-                else if (a.Client != null)
+
+                if (avatar.Client != null)
                 {
-                    _log.Info("Mobile " + a.ObjectInstanceID + " has been taken over by a new connection.");
-                    a.Client.Avatar = null;
-                    a.Client.Close();
-                    a.Client = client;
-                    client.Avatar = a;
+                    _log.Info("Mobile " + avatar.ObjectInstanceID + " has been taken over by a new connection.");
+                    avatar.Client.Avatar = null;
+                    avatar.Client.Close();
                 }
-                else
-                {
-                    a.Client = client;
-                    client.Avatar = a;
-                }
+                avatar.Client = client;
+                client.Avatar = avatar;
             }
             else
             {
                 // try to load the character
-                a = _world.LoadMobile(message.InstanceId);
-                if (a == null)
+                var avatar = _world.LoadMobile(message.InstanceId);
+                if (avatar == null)
                 {
                     _log.Warn("Character " + message.InstanceId + " not found.");
-                    client.Close();
-                    return;
+                    //TODO: rely on world loading
+                    //client.Close();
+                    //return;
+                    avatar = new MobileAvatar(_world);
                 }
-                a.Client = client;
-                client.Avatar = a;
+
+                avatar.Client = client;
+                client.Avatar = avatar;
 
                 // try to add the character to the world
-                _world.Add(client.Avatar);
+                _world.Add(avatar);
             }
             _world.SendInitialWorldView(client);
         }

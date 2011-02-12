@@ -53,7 +53,7 @@ namespace Strive.Server.Logic
         public float AffinityLife;
         public float AffinityWater;
 
-        ILog Log = LogManager.GetCurrentClassLogger();
+        readonly ILog _log = LogManager.GetCurrentClassLogger();
 
         public MobileAvatar(
             World world,
@@ -62,6 +62,11 @@ namespace Strive.Server.Logic
             Schema.ObjectInstanceRow instance
         )
             : base(mobile, template, instance)
+        {
+            World = world;
+        }
+
+        public MobileAvatar(World world)
         {
             World = world;
         }
@@ -85,7 +90,7 @@ namespace Strive.Server.Logic
         {
             if (Client == null)
             {
-                Log.Warn(ObjectInstanceID + ", no client: " + message);
+                _log.Warn(ObjectInstanceID + ", no client: " + message);
             }
             else
             {
