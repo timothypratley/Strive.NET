@@ -29,14 +29,14 @@ namespace Strive.Client.NeoAxisView
             _worldViewModel = worldViewModel;
             _perspective = new PerspectiveViewModel(
                 worldViewModel,
-                r.IsKeyPressed);
-            r.AutomaticUpdateFPS = 60;
-            r.Render += renderTargetUserControl1_Render;
-            r.RenderUI += WorldViewControl_RenderUI;
-            r.MouseEnter += WorldViewControl_MouseEnter;
-            r.MouseDown += WorldViewControl_MouseDown;
-            r.MouseUp += WorldViewControl_MouseUp;
-            r.MouseMove += WorldViewControl_MouseMove;
+                renderTarget.IsKeyPressed);
+            renderTarget.AutomaticUpdateFPS = 60;
+            renderTarget.Render += renderTargetUserControl1_Render;
+            renderTarget.RenderUI += WorldViewControl_RenderUI;
+            renderTarget.MouseEnter += WorldViewControl_MouseEnter;
+            renderTarget.MouseDown += WorldViewControl_MouseDown;
+            renderTarget.MouseUp += WorldViewControl_MouseUp;
+            renderTarget.MouseMove += WorldViewControl_MouseMove;
         }
 
         Camera _camera;
@@ -48,8 +48,8 @@ namespace Strive.Client.NeoAxisView
                 Nameplates.RenderObjectsTips(renderer, _camera);
             }
             string text = "FPS: " + _perspective.Fps
-                        + "    loc: " + r.CameraPosition.ToString(0)
-                        + "    dir: " + r.CameraDirection.ToString(0)
+                        + "    loc: " + renderTarget.CameraPosition.ToString(0)
+                        + "    dir: " + renderTarget.CameraDirection.ToString(0)
                         + "    mouse: " + _mouseIntersection.ToString(2)
                         + "    over: " + _worldViewModel.MouseOverEntity;
 
@@ -61,8 +61,8 @@ namespace Strive.Client.NeoAxisView
         {
             _camera = camera;
             _perspective.Check();
-            r.CameraPosition = _perspective.Position.ToVec3();
-            r.CameraDirection = _perspective.Rotation.ToQuat() * Vec3.XAxis;
+            renderTarget.CameraPosition = _perspective.Position.ToVec3();
+            renderTarget.CameraDirection = _perspective.Rotation.ToQuat() * Vec3.XAxis;
                 // TODO: what does it all mean?
                 //new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
                 //* new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
@@ -99,7 +99,7 @@ namespace Strive.Client.NeoAxisView
         MapObject _mapObject;
         void RenderEntityOverCursor(Camera camera)
         {
-            Vec2 mouse = r.GetFloatMousePosition();
+            Vec2 mouse = renderTarget.GetFloatMousePosition();
             _mapObject = null;
 
             if (mouse.X < 0 || mouse.X > 1 || mouse.Y < 0 || mouse.Y > 1)
@@ -162,17 +162,23 @@ namespace Strive.Client.NeoAxisView
         {
             if (e.RightButton == MouseButtonState.Released)
             {
-                r.MouseRelativeMode = false;
+                renderTarget.MouseRelativeMode = false;
             }
         }
 
+        bool ignoreFirst;   // first relative is screwy, workaround
         void WorldViewControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (r.MouseRelativeMode)
+            if (renderTarget.MouseRelativeMode)
             {
-                var o = r.GetMouseRelativeModeOffset();
-                _perspective.Heading += o.X / 200f;
-                _perspective.Tilt -= o.Y / 200f;
+                var o = renderTarget.GetMouseRelativeModeOffset();
+                if (ignoreFirst)
+                    ignoreFirst = false;
+                else
+                {
+                    _perspective.Heading -= o.X / 2.0;
+                    _perspective.Tilt += o.Y / 2.0;
+                }
             }
         }
 
@@ -181,7 +187,9 @@ namespace Strive.Client.NeoAxisView
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                r.MouseRelativeMode = true;
+                renderTarget.MouseRelativeMode = true;
+                var o = renderTarget.GetMouseRelativeModeOffset();
+                ignoreFirst = true;
             }
 
             var em = _worldViewModel.SelectedEntities.FirstOrDefault();
@@ -191,10 +199,10 @@ namespace Strive.Client.NeoAxisView
             }
             if (_mapObject != null)
             {
-                if (r.IsKeyPressed(Key.LeftShift)
-                    || r.IsKeyPressed(Key.LeftCtrl)
-                    || r.IsKeyPressed(Key.RightShift)
-                    || r.IsKeyPressed(Key.RightCtrl))
+                if (renderTarget.IsKeyPressed(Key.LeftShift)
+                    || renderTarget.IsKeyPressed(Key.LeftCtrl)
+                    || renderTarget.IsKeyPressed(Key.RightShift)
+                    || renderTarget.IsKeyPressed(Key.RightCtrl))
                     _worldViewModel.SelectAdd(_mapObject.Name);
                 else
                     _worldViewModel.Select(_mapObject.Name);

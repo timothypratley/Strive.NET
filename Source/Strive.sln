@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messaging", 
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Strive.Client.ViewModel.Tests", "Strive\Strive.Client\Strive.Client.ViewModel.Tests\Strive.Client.ViewModel.Tests.fsproj", "{664F52EF-3370-4B6C-87C0-5ED8CF8342F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.ViewModel.TestsCSharp", "Strive\Strive.Client\Strive.Client.ViewModel.TestsCSharp\Strive.Client.ViewModel.TestsCSharp.csproj", "{E627B7FF-234F-472B-8866-2FBCDB632B31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -254,6 +256,21 @@ Global
 		{664F52EF-3370-4B6C-87C0-5ED8CF8342F4}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{664F52EF-3370-4B6C-87C0-5ED8CF8342F4}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{664F52EF-3370-4B6C-87C0-5ED8CF8342F4}.StrongMagic|x86.ActiveCfg = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.Release|x86.ActiveCfg = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
+		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

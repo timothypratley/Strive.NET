@@ -62,6 +62,11 @@ namespace Strive.Network.Messaging
                     _tcpSocket = null;
                 }
                 _log.Info("Stopped listening on" + _localEndPoint);
+
+                foreach (var c in Clients)
+                {
+                    c.Close();
+                }
             }
         }
 

@@ -15,6 +15,10 @@ namespace Strive.Client.ViewModel
 {
     public class PerspectiveViewModel
     {
+        static readonly Vector3D XAxis = new Vector3D(1, 0, 0);
+        static readonly Vector3D YAxis = new Vector3D(0, 1, 0);
+        static readonly Vector3D ZAxis = new Vector3D(0, 0, 1);
+
         public string WindowTitle
         {
             get
@@ -64,16 +68,16 @@ namespace Strive.Client.ViewModel
             {
                 _heading = value;
                 while (_heading < 0)
-                    _heading += Math.PI * 2.0;
-                while (Heading >= Math.PI * 2.0)
-                    _heading -= Math.PI * 2.0;
+                    _heading += 360;
+                while (Heading >= 360)
+                    _heading -= 360;
             }
         }
 
-        const double DistanceRangeLow = 10.0;
-        const double DistanceRangeHigh = 300.0;
-        const double AngleRangeLow = 0.01 - Math.PI / 2.0;
-        const double AngleRangeHigh = Math.PI / 2.0 - 0.01;
+        const double DistanceRangeLow = 10;
+        const double DistanceRangeHigh = 300;
+        const double AngleRangeLow = -89;
+        const double AngleRangeHigh = 89;
 
         double _tilt;
         public double Tilt
@@ -91,8 +95,8 @@ namespace Strive.Client.ViewModel
             }
         }
          
-        public Vector3D Position = new Vector3D(0, 0, 23);
-        public Quaternion Rotation = Quaternion.Identity;
+        public Vector3D Position;
+        public Quaternion Rotation;
 
         private int _lastTick;
         private int _frameRate;
@@ -120,25 +124,88 @@ namespace Strive.Client.ViewModel
 
         public void Check()
         {
+            double deltaT = NextFrameDuration();
+
             Vector3D initialPosition = Position;
             Quaternion initialRotation = Rotation;
 
-            if (Environment.TickCount - _lastTick >= 1000)
+            Follow(deltaT);
+            ApplyKeyBindings(deltaT);
+
+            // Send update if required
+            if (Position != initialPosition || Rotation != initialRotation)
             {
-                Fps = _frameRate;
-                _frameRate = 0;
-                _lastTick = Environment.TickCount;
+                WorldViewModel.ServerConnection.MyPosition(Position, Rotation);
             }
-            _frameRate++;
+        }
 
-            _movementTimer.Stop();
-            double deltaT = _movementTimer.Elapsed.TotalSeconds;
-            _movementTimer.Reset();
-            _movementTimer.Start();
+        private void ApplyKeyBindings(double deltaT)
+        {
+            int movementPerpendicular = 0;
+            int movementForward = 0;
+            int movementUp = 0;
+            double speedModifier = 1;
+            foreach (InputBindings.KeyBinding kb in WorldViewModel.Bindings.KeyBindings
+                .Where(kb => kb.KeyCombo.All(k => _keyPressed(k))))
+            {
+                _followEntities.Clear();
 
-            // Move toward or follow one or more entities
-            var count = _followEntities.Count;
-            if (count > 0)
+                if (kb.Action == InputBindings.KeyAction.Up)
+                    movementUp++;
+                else if (kb.Action == InputBindings.KeyAction.Down)
+                    movementUp--;
+                else if (kb.Action == InputBindings.KeyAction.Left)
+                    movementPerpendicular++;
+                else if (kb.Action == InputBindings.KeyAction.Right)
+                    movementPerpendicular--;
+                else if (kb.Action == InputBindings.KeyAction.TurnLeft)
+                    Heading += deltaT * 200;
+                else if (kb.Action == InputBindings.KeyAction.TurnRight)
+                    Heading -= deltaT * 200;
+                else if (kb.Action == InputBindings.KeyAction.TiltUp)
+                    Tilt -= deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
+                else if (kb.Action == InputBindings.KeyAction.TiltDown)
+                    Tilt += deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
+                else if (kb.Action == InputBindings.KeyAction.Walk)
+                    speedModifier = 0.2;
+                else if (kb.Action == InputBindings.KeyAction.Forward)
+                    movementForward++;
+                else if (kb.Action == InputBindings.KeyAction.Back)
+                    movementForward--;
+                else if (kb.Action == InputBindings.KeyAction.Home)
+                    Home();
+                else if (kb.Action == InputBindings.KeyAction.FollowSelected)
+                    OnFollowSelected();
+                else
+                    throw new Exception("Unexpected keyboard binding " + kb.Action);
+            }
+
+            // Set Position and Rotation
+            Rotation = new Quaternion(ZAxis, Heading) * new Quaternion(YAxis, Tilt);
+
+            if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
+            {
+                var transformHeading = new Matrix3D();
+                transformHeading.Rotate(new Quaternion(ZAxis, Heading));
+
+                var changeInPosition = new Vector3D(
+                    movementForward * _landSpeed,
+                    movementPerpendicular * _landSpeed,
+                    movementUp * (DistanceRangeHigh - DistanceRangeLow) / 10.0);
+
+                Position += changeInPosition * transformHeading * deltaT * speedModifier;
+
+                if (Position.Z < DistanceRangeLow)
+                    Position.Z = DistanceRangeLow;
+                else if (Position.Z > DistanceRangeHigh)
+                    Position.Z = DistanceRangeHigh;
+            }
+        }
+
+        /// <summary> Move toward or follow one or more entities </summary>
+        private void Follow(double deltaT)
+        {
+            if (_followEntities.Count > 0)
             {
                 Vector3D center = _followEntities.Entities
                     .Where(e => WorldViewModel.WorldModel.ContainsKey(e.Name))
@@ -158,77 +225,30 @@ namespace Strive.Client.ViewModel
                 Vector3D target = center - (diff * viewDistance / vectorDistance);
                 Position += (target - Position) * deltaT * 2;
             }
+        }
 
-            // Apply movement based upon inputs
-            int movementPerpendicular = 0;
-            int movementForward = 0;
-            int movementUp = 0;
-            double speedModifier = 1;
-            foreach (InputBindings.KeyBinding kb in WorldViewModel.Bindings.KeyBindings
-                .Where(kb => kb.KeyCombo.All(k => _keyPressed(k))))
+        private double NextFrameDuration()
+        {
+            if (Environment.TickCount - _lastTick >= 1000)
             {
-                _followEntities.Clear();
-
-                if (kb.Action == InputBindings.KeyAction.Up)
-                    movementUp++;
-                else if (kb.Action == InputBindings.KeyAction.Down)
-                    movementUp--;
-                else if (kb.Action == InputBindings.KeyAction.Left)
-                    movementPerpendicular--;
-                else if (kb.Action == InputBindings.KeyAction.Right)
-                    movementPerpendicular++;
-                else if (kb.Action == InputBindings.KeyAction.TurnLeft)
-                    Heading -= deltaT * 2.0;
-                else if (kb.Action == InputBindings.KeyAction.TurnRight)
-                    Heading += deltaT * 2.0;
-                else if (kb.Action == InputBindings.KeyAction.TiltUp)
-                    Tilt += deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
-                else if (kb.Action == InputBindings.KeyAction.TiltDown)
-                    Tilt -= deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
-                else if (kb.Action == InputBindings.KeyAction.Walk)
-                    speedModifier = 0.2;
-                else if (kb.Action == InputBindings.KeyAction.Forward)
-                    movementForward++;
-                else if (kb.Action == InputBindings.KeyAction.Back)
-                    movementForward--;
-                else if (kb.Action == InputBindings.KeyAction.Home)
-                    Home();
-                else if (kb.Action == InputBindings.KeyAction.FollowSelected)
-                    OnFollowSelected();
-                else
-                    throw new Exception("Unexpected keyboard binding " + kb.Action);
+                Fps = _frameRate;
+                _frameRate = 0;
+                _lastTick = Environment.TickCount;
             }
+            _frameRate++;
 
-            // Set Position and Rotation
-            Rotation = new Quaternion(new Vector3D(0, 0, 1), Heading * 180 / Math.PI) * new Quaternion(new Vector3D(0, 1, 0), Tilt * 180 / Math.PI);
-            if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
-            {
-                double movementHeading = Heading + Math.Atan2(movementPerpendicular, movementForward);
-                var positionChange = new Vector3D(
-                    Math.Sin(movementHeading) * _landSpeed,
-                    Math.Cos(movementHeading) * _landSpeed,
-                    movementUp * (DistanceRangeHigh - DistanceRangeLow) / 10.0);
-
-                Position += positionChange * deltaT * speedModifier;
-
-                if (Position.Z < DistanceRangeLow)
-                    Position.Z = DistanceRangeLow;
-                else if (Position.Z > DistanceRangeHigh)
-                    Position.Z = DistanceRangeHigh;
-            }
-
-            // Send update if required
-            if (Position != initialPosition || Rotation != initialRotation)
-            {
-                WorldViewModel.ServerConnection.MyPosition(Position, Rotation);
-            }
+            _movementTimer.Stop();
+            double deltaT = _movementTimer.Elapsed.TotalSeconds;
+            _movementTimer.Reset();
+            _movementTimer.Start();
+            return deltaT;
         }
 
         void Home()
         {
-            Position = new Vector3D(0, 0, 0);
-            Tilt = 0.001 - Math.PI / 2.0;
-            Heading = 1.5;
+            Position = new Vector3D(0, 0, 23);
+            Tilt = 0;
+            Heading = 45;
             _followEntities.Clear();
         }
 

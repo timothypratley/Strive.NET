@@ -41,17 +41,17 @@ namespace Strive.Server.Logic
             _messageProcessor = new MessageProcessor(_world, _listener);
             Global.World = _world;
             ServerStatusModel.Started = Global.Now;
-            _engineThread.Start();
             _log.Info("Listening for new connections...");
             _listener.Start();
+            _engineThread.Start();
             ServerStatusModel.Status = "Running";
         }
 
         public void Stop()
         {
             ServerStatusModel.Status = "Stopping";
-            _listener.Stop();
             _engineThread.Stop();
+            _listener.Stop();
             _log.Info("Server stopped.");
             ServerStatusModel.Status = "Stopped";
         }

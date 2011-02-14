@@ -4,5 +4,5 @@
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         xmlns:neo="clr-namespace:WPFAppFramework;assembly=WPFAppFramework"
         Title="World View" Height="300" Width="300">
-    <neo:RenderTargetUserControl Name="r"/>
+    <neo:RenderTargetUserControl Name="renderTarget"/>
 </ad:DockableContent>
