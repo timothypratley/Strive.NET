@@ -49,7 +49,7 @@ namespace Strive.Server.Logic
             }
 
             if (client.Avatar == null
-                && !(message is EnterWorldAsMobile
+                && !(message is PossessMobile
                      || message is RequestPossessable
                      || message is Logout
                      || message is Login))
@@ -109,7 +109,7 @@ namespace Strive.Server.Logic
 
 
 
-        void ProcessMessage(ClientConnection client, EnterWorldAsMobile message)
+        void ProcessMessage(ClientConnection client, PossessMobile message)
         {
             if (_world.PhysicalObjects.ContainsKey(message.InstanceId))
             {
@@ -169,7 +169,7 @@ namespace Strive.Server.Logic
             var ma = (MobileAvatar)client.Avatar;
 
             // don't go to running for pure heading changes
-            if (message.position != client.Avatar.Position)
+            if (message.Position != client.Avatar.Position)
             {
                 ma.LastMoveUpdate = Global.Now;
                 if (ma.MobileState != EnumMobileState.Running)
@@ -177,7 +177,7 @@ namespace Strive.Server.Logic
                     ma.SetMobileState(EnumMobileState.Running);
                 }
             }
-            _world.Relocate(client.Avatar, message.position, message.rotation);
+            _world.Relocate(client.Avatar, message.Position, message.Rotation);
         }
 
         void ProcessMessage(ClientConnection client, Communicate message)
@@ -211,7 +211,7 @@ namespace Strive.Server.Logic
                 // respawn their mobile, old instance will be given over
                 // to Garbage Collector
                 c.DropAll();
-                ProcessMessage(c, new EnterWorldAsMobile(c.Avatar.ObjectInstanceID));
+                ProcessMessage(c, new PossessMobile(c.Avatar.ObjectInstanceID));
             }
         }
 

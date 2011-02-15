@@ -92,10 +92,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EnumActivationType.cs" />
+    <Compile Include="EnumEmote.cs" />
     <Compile Include="EnumMobileSize.cs" />
     <Compile Include="EnumMobileState.cs" />
     <Compile Include="EnumRace.cs" />
     <Compile Include="EnumSkill.cs" />
+    <Compile Include="EnumStance.cs" />
     <Compile Include="EnumTargetType.cs" />
     <Compile Include="EnumTerrainType.cs" />
     <Compile Include="EnumWearLocation.cs" />

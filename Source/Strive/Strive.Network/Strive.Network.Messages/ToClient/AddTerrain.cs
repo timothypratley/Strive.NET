@@ -2,16 +2,16 @@ using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-	/// <summary>
-	/// Summary description for AddTerrain.
-	/// </summary>
-	public class AddTerrain : AddPhysicalObject {
-		public Terrain Terrain;
+    /// <summary>
+    /// Summary description for AddTerrain.
+    /// </summary>
+    public class AddTerrain : AddPhysicalObject
+    {
+        public Terrain Terrain;
 
-		public AddTerrain(){}
         public AddTerrain(Terrain t)
         {
             Terrain = t;
         }
-	}
+    }
 }

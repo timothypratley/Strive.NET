@@ -56,7 +56,8 @@ namespace Strive.Network.Messages
             ToServerTransferPartyLeadership,
             ToServerInviteToParty,
             ToServerRequestWhoList,
-            ToServerEnterWorldAsMobile,
+            ToServerCreateMobile,
+            ToServerPossessMobile,
             ToServerLogin,
             ToServerLogout,
             ToServerReloadWorld,
@@ -86,7 +87,7 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObjects, typeof(ToClient.DropPhysicalObjects));
             MessageTypeFromId.Add(EnumMessageId.ToClientLogMessage, typeof(ToClient.LogMessage));
             MessageTypeFromId.Add(EnumMessageId.ToClientNegativeAcknowledge, typeof(ToClient.NegativeAcknowledge));
-            MessageTypeFromId.Add(EnumMessageId.ToClientPosition, typeof(ToClient.Position));
+            MessageTypeFromId.Add(EnumMessageId.ToClientPosition, typeof(ToClient.PositionUpdate));
             MessageTypeFromId.Add(EnumMessageId.ToClientMobileState, typeof(ToClient.MobileState));
             MessageTypeFromId.Add(EnumMessageId.ToClientServerInfo, typeof(ToClient.ServerInfo));
             MessageTypeFromId.Add(EnumMessageId.ToClientSkillList, typeof(ToClient.SkillList));
@@ -108,7 +109,8 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerInviteToParty, typeof(ToServer.InviteToParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerQueryParty, typeof(ToServer.QueryParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestWhoList, typeof(ToServer.RequestWhoList));
-            MessageTypeFromId.Add(EnumMessageId.ToServerEnterWorldAsMobile, typeof(ToServer.EnterWorldAsMobile));
+            MessageTypeFromId.Add(EnumMessageId.ToServerPossessMobile, typeof(ToServer.PossessMobile));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCreateMobile, typeof(ToServer.CreateMobile));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogin, typeof(ToServer.Login));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogout, typeof(ToServer.Logout));
             MessageTypeFromId.Add(EnumMessageId.ToServerReloadWorld, typeof(ToServer.ReloadWorld));

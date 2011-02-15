@@ -7,22 +7,19 @@ using Strive.Common;
 
 namespace Strive.Network.Messages.ToClient
 {
-	/// <summary>
-	/// Summary description for MobileStatus.
-	/// </summary>
-	[Serializable]
-	public class MobileState : IMessage {
-		public int ObjectInstanceID;
-		public EnumMobileState State;
-		public Vector3D position;
+    public class MobileState : IMessage
+    {
+        public int ObjectInstanceId;
+        public EnumMobileState State;
+        public Vector3D Position;
 
-		public MobileState(){}
-		public MobileState( Mobile mob ) {
-			this.ObjectInstanceID = mob.ObjectInstanceID;
-			this.State = mob.MobileState;
+        public MobileState(Mobile mob)
+        {
+            ObjectInstanceId = mob.ObjectInstanceID;
+            State = mob.MobileState;
 
-			// TODO: evaluate if this should FARKING be here
-			this.position = mob.Position;
-		}
-	}
+            // TODO: evaluate if this should FARKING be here
+            Position = mob.Position;
+        }
+    }
 }

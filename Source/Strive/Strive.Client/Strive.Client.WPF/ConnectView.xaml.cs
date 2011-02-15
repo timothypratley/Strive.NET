@@ -52,7 +52,7 @@ namespace Strive.Client.WPF
                                                 {
                 var sc = ((ServerConnection) s);
                 sc.Login("bob@smith.com", "bob");
-                sc.PossessMobile((new Random()).Next());
+                sc.PossessMobile(App.Rand.Next());
             };
         }
     }

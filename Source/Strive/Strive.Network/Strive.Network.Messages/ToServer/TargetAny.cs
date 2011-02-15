@@ -1,22 +1,20 @@
-using System;
-
 namespace Strive.Network.Messages.ToServer
 {
-	/// <summary>
-	/// Summary description for TargetAny.
-	/// </summary>
-	[Serializable]
-	public class TargetAny : IMessage	{
-		public TargetAny( CommandType CommandID, int PhysicalObjectID )	{
-			this.CommandID = CommandID;
-			this.PhysicalObjectID = PhysicalObjectID;
-		}
-		public CommandType CommandID;
-		public int PhysicalObjectID;
+    public class TargetAny : IMessage
+    {
+        public CommandType CommandId;
+        public int PhysicalObjectId;
 
-		public enum CommandType {
-			Attack,
-			FairyFire
-		}
-	}
+        public TargetAny(CommandType commandId, int physicalObjectId)
+        {
+            CommandId = commandId;
+            PhysicalObjectId = physicalObjectId;
+        }
+
+        public enum CommandType
+        {
+            Attack,
+            FairyFire
+        }
+    }
 }

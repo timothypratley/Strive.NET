@@ -1,9 +1,14 @@
-using System;
+using Strive.Server.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-	[Serializable]
-	public class DropAll : IMessage {
-		public DropAll(){}
-	}
+    public class DropPhysicalObject : IMessage
+    {
+        public int InstanceId;
+
+        public DropPhysicalObject(PhysicalObject po)
+        {
+            InstanceId = po.ObjectInstanceID;
+        }
+    }
 }

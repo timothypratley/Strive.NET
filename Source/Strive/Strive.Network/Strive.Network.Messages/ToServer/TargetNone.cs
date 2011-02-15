@@ -1,23 +1,20 @@
-using System;
-
 namespace Strive.Network.Messages.ToServer
 {
-	/// <summary>
-	/// Summary description for TargetNone.
-	/// </summary>
-	[Serializable]
-	public class TargetNone : IMessage	{
-		public TargetNone( CommandType CommandID )	{
-			this.CommandID = CommandID;
-		}
+    public class TargetNone : IMessage
+    {
+        public CommandType CommandId;
 
-		public CommandType CommandID;
+        public TargetNone(CommandType commandId)
+        {
+            CommandId = commandId;
+        }
 
-		public enum CommandType {
-			Depossess,
-			MassHeal,
-			Lava,
-			Warcry
-		}
-	}
+        public enum CommandType
+        {
+            Depossess,
+            MassHeal,
+            Lava,
+            Warcry
+        }
+    }
 }

@@ -536,13 +536,13 @@ namespace Strive.Server.Logic
                             if (ma != null && ma.Client != null)
                             {
                                 _square[toSquareX + i, toSquareZ + j].NotifyClientsExcept(
-                                    new ToClient.Position(po),
+                                    new ToClient.PositionUpdate(po),
                                     ma.Client);
                             }
                             else
                             {
                                 _square[toSquareX + i, toSquareZ + j].NotifyClients(
-                                    new ToClient.Position(po));
+                                    new ToClient.PositionUpdate(po));
                             }
                         }
                     }

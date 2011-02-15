@@ -1,26 +1,24 @@
-using System;
-
 namespace Strive.Network.Messages.ToServer
 {
-	/// <summary>
-	/// Summary description for TargetItem.
-	/// </summary>
-	[Serializable]
-	public class TargetItem : IMessage	{
-		public TargetItem( CommandType CommandID, int ItemID )	{
-			this.CommandID = CommandID;
-			this.ItemID = ItemID;
-		}
-		public CommandType CommandID;
-		public int ItemID;
+    public class TargetItem : IMessage
+    {
+        public CommandType CommandId;
+        public int ItemId;
 
-		public enum CommandType {
-			Curse,
-			Enchant,
-			Sharpen,
-			Drop,
-			Get,
-			Wear
-		}
-	}
+        public TargetItem(CommandType commandId, int itemId)
+        {
+            CommandId = commandId;
+            ItemId = itemId;
+        }
+
+        public enum CommandType
+        {
+            Curse,
+            Enchant,
+            Sharpen,
+            Drop,
+            Get,
+            Wear
+        }
+    }
 }

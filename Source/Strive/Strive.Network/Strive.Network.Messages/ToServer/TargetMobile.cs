@@ -1,24 +1,22 @@
-using System;
-
 namespace Strive.Network.Messages.ToServer
 {
-	/// <summary>
-	/// Summary description for TargetMobile.
-	/// </summary>
-	[Serializable]
-	public class TargetMobile : IMessage	{
-		public TargetMobile( CommandType CommandID, int MobileID )	{
-			this.CommandID = CommandID;
-			this.MobileID = MobileID;
-		}
-		public CommandType CommandID;
-		public int MobileID;
+    public class TargetMobile : IMessage
+    {
+        public CommandType CommandId;
+        public int MobileId;
 
-		public enum CommandType {
-			Possess,
-			Summon,
-			GiantStrength,
-			Backstab
-		}
-	}
+        public TargetMobile(CommandType commandId, int mobileId)
+        {
+            CommandId = commandId;
+            MobileId = mobileId;
+        }
+
+        public enum CommandType
+        {
+            Possess,
+            Summon,
+            GiantStrength,
+            Backstab
+        }
+    }
 }

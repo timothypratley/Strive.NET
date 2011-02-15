@@ -4,14 +4,13 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Collections;
+using Strive.Network.Messages;
 
-namespace Strive.Network.Messages
+namespace Strive.Network.Messaging
 {
-    /// <summary>
-    /// Summary description for CustomFormatter.
-    /// </summary>
     public class CustomFormatter
     {
         public static MessageTypeMap MessageTypeMap = new MessageTypeMap();
@@ -25,8 +24,7 @@ namespace Strive.Network.Messages
             byte[] encodedInt;
             try
             {
-                encodedInt = BitConverter.GetBytes((int)MessageTypeMap.IdFromMessageType[t]
-                );
+                encodedInt = BitConverter.GetBytes((int)MessageTypeMap.IdFromMessageType[t]);
             }
             catch (Exception)
             {
@@ -131,13 +129,14 @@ namespace Strive.Network.Messages
             Object obj = DecodeBasicType(t, buffer, ref offset);
             if (obj != null) return obj;
 
+            obj = FormatterServices.GetUninitializedObject(t);
 
-            obj = Activator.CreateInstance(t);
-            foreach (FieldInfo fi in t.GetFields())
+            foreach (FieldInfo fi in t.GetFields()
+                .Where(x => !x.IsStatic))
             {
-                if (fi.IsStatic) continue;
                 fi.SetValue(obj, Decode(fi.FieldType, buffer, ref offset));
             }
+
             return obj;
         }
 

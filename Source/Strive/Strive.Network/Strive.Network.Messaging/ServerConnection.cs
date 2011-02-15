@@ -54,15 +54,16 @@ namespace Strive.Network.Messaging
             Log.Trace("Terrain " + m);
         }
 
-        void Process(Position m)
+        void Process(PositionUpdate m)
         {
             Log.Trace("bar");
-            EntityModel e = WorldModel.EntityDictionary[m.instance_id.ToString()];
-            e.Position = m.position;
-            e.Rotation = m.rotation;
+            EntityModel e = WorldModel.EntityDictionary[m.InstanceId.ToString()];
+            e.Position = m.Position;
+            e.Rotation = m.Rotation;
         }
 
         #endregion
+
 
         #region message sending
 
@@ -73,7 +74,12 @@ namespace Strive.Network.Messaging
 
         public void PossessMobile(int mobileId)
         {
-            Send(new EnterWorldAsMobile(mobileId));
+            Send(new PossessMobile(mobileId));
+        }
+
+        public void CreateMobile(int templateId, Vector3D position, Quaternion rotation)
+        {
+            Send(new CreateMobile(templateId, position, rotation));
         }
 
         public void Login(string username, string password)
@@ -88,7 +94,7 @@ namespace Strive.Network.Messaging
 
         public void SkillList()
         {
-            Send(new SkillList());
+            Send(new RequestSkillList());
         }
 
         public void WhoList()
@@ -116,9 +122,9 @@ namespace Strive.Network.Messaging
             UseSkill((EnumSkill)skillId, invokationId, targets);
         }
 
-        public void MyPosition(Vector3D position, Quaternion rotation)
+        public void MyPosition(int possessingId, Vector3D position, Quaternion rotation)
         {
-            Send(new MyPosition(position, rotation));
+            Send(new MyPosition(possessingId, position, rotation));
         }
 
         public void RequestPossessable()

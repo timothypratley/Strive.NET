@@ -103,9 +103,6 @@
     <Compile Include="CommunicationType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CustomFormatter.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="EnumCombatEvent.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,16 +125,15 @@
     <Compile Include="ToClient\CombatReport.cs" />
     <Compile Include="ToClient\Communication.cs" />
     <Compile Include="ToClient\CurrentHitpoints.cs" />
-    <Compile Include="ToClient\DropAll.cs" />
     <Compile Include="ToClient\DropPhysicalObject.cs" />
+    <Compile Include="ToClient\DropAll.cs" />
     <Compile Include="ToClient\DropPhysicalObjects.cs" />
     <Compile Include="ToClient\LogMessage.cs" />
-    <Compile Include="ToClient\Message.cs" />
     <Compile Include="ToClient\MobileState.cs" />
     <Compile Include="ToClient\NegativeAcknowledge.cs" />
     <Compile Include="ToClient\PartyInfo.cs" />
     <Compile Include="ToClient\Ping.cs" />
-    <Compile Include="ToClient\Position.cs" />
+    <Compile Include="ToClient\PositionUpdate.cs" />
     <Compile Include="ToClient\ServerInfo.cs" />
     <Compile Include="ToClient\SkillList.cs" />
     <Compile Include="ToClient\TimeAndWeather.cs" />
@@ -146,9 +142,10 @@
     <Compile Include="ToServer\CancelSkill.cs" />
     <Compile Include="ToServer\ChangeStance.cs" />
     <Compile Include="ToServer\Communicate.cs" />
+    <Compile Include="ToServer\CreateMobile.cs" />
     <Compile Include="ToServer\CreateParty.cs" />
     <Compile Include="ToServer\Emote.cs" />
-    <Compile Include="ToServer\EnterWorldAsMobile.cs" />
+    <Compile Include="ToServer\PossessMobile.cs" />
     <Compile Include="ToServer\InviteToParty.cs" />
     <Compile Include="ToServer\JoinParty.cs" />
     <Compile Include="ToServer\LeaveParty.cs" />
@@ -156,7 +153,6 @@
     <Compile Include="ToServer\Logout.cs" />
     <Compile Include="ToServer\Pong.cs" />
     <Compile Include="ToServer\Position.cs" />
-    <Compile Include="ToServer\Possess.cs" />
     <Compile Include="ToServer\QueryParty.cs" />
     <Compile Include="ToServer\ReloadWorld.cs" />
     <Compile Include="ToServer\RequestPossessable.cs" />

@@ -18,6 +18,7 @@ namespace Strive.Client.WPF
     /// </summary>
     public partial class App : Application
     {
+        public static readonly Random Rand = new Random();
         static readonly ILog Log = LogManager.GetCurrentClassLogger();
         public static WorldViewModel WorldViewModel;
         public static ServerConnection ServerConnection;

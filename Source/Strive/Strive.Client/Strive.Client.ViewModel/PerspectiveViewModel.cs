@@ -56,9 +56,28 @@ namespace Strive.Client.ViewModel
             get
             {
                 return MakeCommand
-                    .Do(() => WorldViewModel.AddOrReplace("foo", "bar", Position, Rotation));
+                    .Do(() => WorldViewModel.ServerConnection
+                        .CreateMobile(1, Position, Rotation));
             }
         }
+
+        public ICommand PossessEntity
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => WorldViewModel.MouseOverEntity != null)
+                    .Do(() =>
+                            {
+                                var id = int.Parse(WorldViewModel.MouseOverEntity.Entity.Name);
+                                WorldViewModel.ServerConnection
+                                    .PossessMobile(id);
+                                PossessingId = id;
+                            });
+            }
+        }
+
+        public int PossessingId { get; private set; }
 
         private double _heading;
         public double Heading
@@ -135,7 +154,7 @@ namespace Strive.Client.ViewModel
             // Send update if required
             if (Position != initialPosition || Rotation != initialRotation)
             {
-                WorldViewModel.ServerConnection.MyPosition(Position, Rotation);
+                WorldViewModel.ServerConnection.MyPosition(PossessingId, Position, Rotation);
             }
         }
 
