@@ -8,7 +8,7 @@ namespace Strive.Network.Messages.ToClient
     /// A helper class to construct add messages,
     /// do not create instances of this class!
     /// </summary>
-    public class AddPhysicalObject : IMessage
+    public abstract class AddPhysicalObject : IMessage
     {
         public static IMessage CreateMessage(PhysicalObject po)
         {

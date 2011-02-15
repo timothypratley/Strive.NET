@@ -40,7 +40,7 @@ namespace Strive.Server.Logic
         const int DefaultSun = 146;
         public ToClient.TimeAndWeather Weather = new ToClient.TimeAndWeather(Global.Now, 0, DefaultDay, DefaultNight, DefaultCusp, DefaultSun, 0, 0);
 
-        ILog Log = LogManager.GetCurrentClassLogger();
+        readonly ILog _log = LogManager.GetCurrentClassLogger();
 
         public World(int worldId)
         {
@@ -58,7 +58,7 @@ namespace Strive.Server.Logic
             // world in question... but for now load them all
             if (Global.WorldFilename != null)
             {
-                Log.Info("Loading Global.modelSchema from file:" + Global.WorldFilename);
+                _log.Info("Loading Global.modelSchema from file:" + Global.WorldFilename);
                 Global.ModelSchema = new Schema();
                 Global.ModelSchema.ReadXml(Global.WorldFilename);
             }
@@ -68,10 +68,10 @@ namespace Strive.Server.Logic
             //}
             else
             {
-                Log.Info("Creating an empty Global.modelSchema");
+                _log.Info("Creating an empty Global.modelSchema");
                 CreateDefaultWorld();
             }
-            Log.Info("Global.modelSchema loaded");
+            _log.Info("Global.modelSchema loaded");
 
             // find highX and lowX for our world dimensions
             // refactored in an attempt to increase performance:
@@ -82,44 +82,28 @@ namespace Strive.Server.Logic
             foreach (Schema.ObjectInstanceRow r in Global.ModelSchema.ObjectInstance.Rows)
             {
                 if (_highX == 0)
-                {
                     _highX = r.X;
-                }
                 if (_lowX == 0)
-                {
                     _lowX = r.X;
-                }
                 if (_highZ == 0)
-                {
                     _highZ = r.Z;
-                }
                 if (_lowZ == 0)
-                {
                     _lowZ = 0;
-                }
 
                 if (r.X > _highX)
-                {
                     _highX = r.X;
-                }
                 if (r.X < _lowX)
-                {
                     _lowX = r.X;
-                }
                 if (r.Z > _highZ)
-                {
                     _highZ = r.Z;
-                }
                 if (r.Z < _lowZ)
-                {
                     _lowZ = r.Z;
-                }
             }
             //highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
             //lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
             //highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
             //lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
-            Log.Info("Global.multiverse bounds are " + _lowX + "," + _lowZ + " " + _highX + "," + _highZ);
+            _log.Info("Global.multiverse bounds are " + _lowX + "," + _lowZ + " " + _highX + "," + _highZ);
 
             // figure out how many squares we need
             _squaresInX = (int)(_highX - _lowX) / Square.SquareSize + 1;
@@ -140,16 +124,14 @@ namespace Strive.Server.Logic
                 throw new InvalidWorld();
             }
 
-            Log.Info("Loading world \"" + wr.WorldName + "\"...");
-            Log.Info("Loading terrain...");
+            _log.Info("Loading world \"" + wr.WorldName + "\"...");
+            _log.Info("Loading terrain...");
             foreach (Schema.TemplateTerrainRow ttr in Global.ModelSchema.TemplateTerrain.Rows)
             {
                 foreach (Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows())
-                {
                     Add(new Terrain(ttr, ttr.TemplateObjectRow, oir));
-                }
             }
-            Log.Info("Loading physical objects...");
+            _log.Info("Loading physical objects...");
             foreach (Schema.TemplateObjectRow otr in Global.ModelSchema.TemplateObject.Rows)
             {
                 foreach (Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows())
@@ -166,53 +148,37 @@ namespace Strive.Server.Logic
                     foreach (Schema.TemplateItemEquipableRow ier in tir.GetTemplateItemEquipableRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                        {
                             Add(new Equipable(ier, tir, otr, oir));
-                        }
                     }
                     foreach (Schema.TemplateItemJunkRow ijr in tir.GetTemplateItemJunkRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                        {
                             Add(new Junk(ijr, tir, otr, oir));
-                        }
                     }
                     foreach (Schema.TemplateItemQuaffableRow iqr in tir.GetTemplateItemQuaffableRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                        {
                             Add(new Quaffable(iqr, tir, otr, oir));
-                        }
                     }
                     foreach (Schema.TemplateItemReadableRow irr in tir.GetTemplateItemReadableRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                        {
                             Add(new Readable(irr, tir, otr, oir));
-                        }
                     }
                     foreach (Schema.TemplateItemWieldableRow iwr in tir.GetTemplateItemWieldableRows())
                     {
                         foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                        {
                             Add(new Wieldable(iwr, tir, otr, oir));
-                        }
-
                     }
                 }
             }
-            Log.Info("Loaded world.");
+            _log.Info("Loaded world.");
         }
 
         public void Update()
         {
-            foreach (PhysicalObject po in PhysicalObjects.Values)
-            {
-                if (po is MobileAvatar)
-                {
-                    (po as MobileAvatar).Update();
-                }
-            }
+            foreach (MobileAvatar ma in PhysicalObjects.Values.OfType<MobileAvatar>())
+                ma.Update();
             WeatherUpdate();
         }
 
@@ -220,9 +186,7 @@ namespace Strive.Server.Logic
         {
             Weather.ServerNow = Global.Now.Ticks;
             if ((Global.Now.Ticks - Weather.ServerNow) < 1)
-            {
                 return;
-            }
 
             bool weatherChanged = false;
             if (Global.Rand.NextDouble() > 0.995)
@@ -237,30 +201,21 @@ namespace Strive.Server.Logic
                 //weatherChanged = true;
             }
             if (weatherChanged)
-            {
                 NotifyMobiles(Weather);
-            }
         }
 
         public void NotifyMobiles(IMessage message)
         {
-            foreach (MobileAvatar ma in Mobiles)
-            {
-                if (ma.Client != null)
-                {
-                    ma.Client.Send(message);
-                }
-            }
+            foreach (MobileAvatar ma in Mobiles.Where(ma => ma.Client != null))
+                ma.Client.Send(message);
         }
 
         public void Add(PhysicalObject po)
         {
-            if (
-                po.Position.X > _highX || po.Position.Z > _highZ
-                || po.Position.X < _lowX || po.Position.Z < _lowZ
-            )
+            if (po.Position.X > _highX || po.Position.Z > _highZ
+                || po.Position.X < _lowX || po.Position.Z < _lowZ)
             {
-                Log.Error("Tried to add physical object " + po.ObjectInstanceId + " outside the world.");
+                _log.Error("Tried to add physical object " + po.ObjectInstanceId + " outside the world.");
                 return;
             }
 
@@ -281,20 +236,16 @@ namespace Strive.Server.Logic
                 }
                 catch (InvalidLocationException)
                 {
-                    Log.Warn("Physical object " + po.ObjectInstanceId + " is not on terrain.");
+                    _log.Warn("Physical object " + po.ObjectInstanceId + " is not on terrain.");
                 }
                 // add the object to the world
                 PhysicalObjects.Add(po.ObjectInstanceId, po);
                 if (po is MobileAvatar)
-                {
                     Mobiles.Add((MobileAvatar)po);
-                }
                 int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
                 int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
                 if (_square[squareX, squareZ] == null)
-                {
                     _square[squareX, squareZ] = new Square();
-                }
                 _square[squareX, squareZ].Add(po);
             }
             // notify all nearby clients that a new
@@ -311,31 +262,21 @@ namespace Strive.Server.Logic
             _square[squareX, squareZ].Remove(po);
             PhysicalObjects.Remove(po.ObjectInstanceId);
             if (po is MobileAvatar)
-            {
                 Mobiles.Remove((MobileAvatar)po);
-            }
-            Log.Info("Removed " + po.GetType() + " " + po.ObjectInstanceId + " from the world.");
+            _log.Info("Removed " + po.GetType() + " " + po.ObjectInstanceId + " from the world.");
         }
 
         public void Relocate(PhysicalObject po, Vector3D newPosition, Quaternion newRotation)
         {
             // keep everything inside world bounds
             if (newPosition.X >= _highX)
-            {
                 newPosition.X = (float)_highX - 1;
-            }
             if (newPosition.Z >= _highZ)
-            {
                 newPosition.Z = (float)_highZ - 1;
-            }
             if (newPosition.X <= _lowX)
-            {
                 newPosition.X = (float)_lowX + 1;
-            }
             if (newPosition.Z <= _lowZ)
-            {
                 newPosition.Z = (float)_lowZ + 1;
-            }
 
             int fromSquareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
             int fromSquareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
@@ -349,13 +290,9 @@ namespace Strive.Server.Logic
             {
                 double altitude = AltitudeAt(newPosition.X, newPosition.Z);
                 if (po is MobileAvatar)
-                {
                     altitude += ((MobileAvatar)po).CurrentHeight / 2;
-                }
                 else
-                {
                     altitude += po.Height / 2;
-                }
                 newPosition.Y = altitude;
             }
             catch (InvalidLocationException)
@@ -364,15 +301,7 @@ namespace Strive.Server.Logic
                 return;
             }
 
-            MobileAvatar ma;
-            if (po is MobileAvatar)
-            {
-                ma = (MobileAvatar)po;
-            }
-            else
-            {
-                ma = null;
-            }
+            var ma = po as MobileAvatar;
 
             // check that the object can fit there
             // TODO: revisit
@@ -444,15 +373,11 @@ namespace Strive.Server.Logic
                                     Terrain t = _terrain[terrainX, terrainZ];
                                     if (t != null)
                                     {
-                                        if (
-                                            // there is no higher zoom order
+                                        if (// there is no higher zoom order
                                             k == (Constants.terrainZoomOrder - 1)
                                             // this is not a higher order point
-                                            || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0
-                                        )
-                                        {
+                                            || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0)
                                             ma.Client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
-                                        }
                                     }
                                 }
                             }
@@ -469,10 +394,8 @@ namespace Strive.Server.Logic
             {
                 for (j = -1; j <= 1; j++)
                 {
-                    if (
-                        Math.Abs(fromSquareX + i - toSquareX) > 1
-                        || Math.Abs(fromSquareZ + j - toSquareZ) > 1
-                    )
+                    if (Math.Abs(fromSquareX + i - toSquareX) > 1
+                        || Math.Abs(fromSquareZ + j - toSquareZ) > 1)
                     {
                         // squares which need to have their clients
                         // add or remove the object
@@ -502,12 +425,10 @@ namespace Strive.Server.Logic
                                                 ***/
 
                         // add to
-                        if (
-                            // check the square exists
+                        if (// check the square exists
                             toSquareX - i >= 0 && toSquareX - i < _squaresInX
                             && toSquareZ - j >= 0 && toSquareZ - j < _squaresInZ
-                            && _square[toSquareX - i, toSquareZ - j] != null
-                        )
+                            && _square[toSquareX - i, toSquareZ - j] != null)
                         {
                             _square[toSquareX - i, toSquareZ - j].NotifyClients(ToClient.AddPhysicalObject.CreateMessage(po));
                             // if the object is a player, it needs to be made aware
@@ -526,24 +447,18 @@ namespace Strive.Server.Logic
                     {
                         // clients that have the object already in scope need to be
                         // told its new position
-                        if (
-                            // check the square exists
+                        if (// check the square exists
                             toSquareX + i >= 0 && toSquareX + i < _squaresInX
                             && toSquareZ + j >= 0 && toSquareZ + j < _squaresInZ
-                            && _square[toSquareX + i, toSquareZ + j] != null
-                        )
+                            && _square[toSquareX + i, toSquareZ + j] != null)
                         {
                             if (ma != null && ma.Client != null)
-                            {
                                 _square[toSquareX + i, toSquareZ + j].NotifyClientsExcept(
                                     new ToClient.PositionUpdate(po),
                                     ma.Client);
-                            }
                             else
-                            {
                                 _square[toSquareX + i, toSquareZ + j].NotifyClients(
                                     new ToClient.PositionUpdate(po));
-                            }
                         }
                     }
                 }
@@ -554,9 +469,7 @@ namespace Strive.Server.Logic
             {
                 _square[fromSquareX, fromSquareZ].Remove(po);
                 if (_square[toSquareX, toSquareZ] == null)
-                {
                     _square[toSquareX, toSquareZ] = new Square();
-                }
                 _square[toSquareX, toSquareZ].Add(po);
             }
         }
@@ -564,11 +477,14 @@ namespace Strive.Server.Logic
         public MobileAvatar LoadMobile(int instanceId)
         {
             Schema.ObjectInstanceRow rpr = Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceId);
-            if (rpr == null) return null;
+            if (rpr == null)
+                return null;
             Schema.TemplateObjectRow por = Global.ModelSchema.TemplateObject.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (por == null) return null;
+            if (por == null)
+                return null;
             Schema.TemplateMobileRow mr = Global.ModelSchema.TemplateMobile.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (mr == null) return null;
+            if (mr == null)
+                return null;
             return new MobileAvatar(this, mr, por, rpr);
         }
 
@@ -578,7 +494,7 @@ namespace Strive.Server.Logic
             DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + email + "'");
             if (dr.Length != 1)
             {
-                Log.Error(dr.Length + " players found with email '" + email + "'.");
+                _log.Error(dr.Length + " players found with email '" + email + "'.");
                 return false;
             }
             if (String.Compare((string)dr[0]["Password"], password) == 0)
@@ -586,7 +502,7 @@ namespace Strive.Server.Logic
                 playerId = (int)dr[0]["PlayerID"];
                 return true;
             }
-            Log.Info("Incorrect password for player with email '" + email + "'.");
+            _log.Info("Incorrect password for player with email '" + email + "'.");
             return false;
         }
 
@@ -602,14 +518,11 @@ namespace Strive.Server.Logic
                 for (j = -1; j <= 1; j++)
                 {
                     // check that neigbour exists
-                    if (
-                        squareX + i < 0 || squareX + i >= _squaresInX
+                    if (squareX + i < 0 || squareX + i >= _squaresInX
                         || squareZ + j < 0 || squareZ + j >= _squaresInZ
-                        || _square[squareX + i, squareZ + j] == null
-                    )
-                    {
+                        || _square[squareX + i, squareZ + j] == null)
                         continue;
-                    }
+
                     // need to send a message to all nearby clients
                     // so long as the square isn't empty
                     _square[squareX + i, squareZ + j].NotifyClients(message);
@@ -623,6 +536,8 @@ namespace Strive.Server.Logic
             // notify them about surrounding physical objects
             // NB: this routine will send the client mobile's
             // position as one of the 'nearby' mobiles.
+
+            // TODO: figure out how to make client.Avatar the right type
             var mob = (MobileAvatar)client.Avatar;
             client.Send(Weather);
 
@@ -637,14 +552,11 @@ namespace Strive.Server.Logic
                 for (j = -1; j <= 1; j++)
                 {
                     // check that neigbour exists
-                    if (
-                        squareX + i < 0 || squareX + i >= _squaresInX
+                    if (squareX + i < 0 || squareX + i >= _squaresInX
                         || squareZ + j < 0 || squareZ + j >= _squaresInZ
-                        || _square[squareX + i, squareZ + j] == null
-                        )
-                    {
+                        || _square[squareX + i, squareZ + j] == null)
                         continue;
-                    }
+
                     // add all neighbouring physical objects
                     // to the clients world view
                     // that are in scope
@@ -659,7 +571,7 @@ namespace Strive.Server.Logic
     */
 
                     nearbyPhysicalObjects.AddRange(
-                        _square[squareX + i, squareZ + j].PhysicalObjects.Cast<PhysicalObject>());
+                        _square[squareX + i, squareZ + j].PhysicalObjects);
                 }
             }
             /*
@@ -669,9 +581,7 @@ namespace Strive.Server.Logic
                 client.Send( message );
                 */
             foreach (PhysicalObject p in nearbyPhysicalObjects)
-            {
                 client.Send(ToClient.AddPhysicalObject.CreateMessage(p));
-            }
 
             for (int k = 0; k < Constants.terrainZoomOrder; k++)
             {
@@ -695,15 +605,11 @@ namespace Strive.Server.Logic
                             Terrain t = _terrain[terrainX, terrainZ];
                             if (t != null)
                             {
-                                if (
-                                    // there is no higher zoom order
+                                if (// there is no higher zoom order
                                     k == (Constants.terrainZoomOrder - 1)
                                     // this is not a higher order point
-                                    || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0
-                                    )
-                                {
+                                    || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0)
                                     client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
-                                }
                             }
                         }
                     }
