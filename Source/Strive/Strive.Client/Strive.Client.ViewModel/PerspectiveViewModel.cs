@@ -56,8 +56,7 @@ namespace Strive.Client.ViewModel
             get
             {
                 return MakeCommand
-                    .Do(() => WorldViewModel.ServerConnection
-                        .CreateMobile(1, Position, Rotation));
+                    .Do(() => WorldViewModel.ServerConnection.CreateMobile(1, Position, Rotation));
             }
         }
 
@@ -70,10 +69,46 @@ namespace Strive.Client.ViewModel
                     .Do(() =>
                             {
                                 var id = int.Parse(WorldViewModel.MouseOverEntity.Entity.Name);
-                                WorldViewModel.ServerConnection
-                                    .PossessMobile(id);
+                                WorldViewModel.ServerConnection.PossessMobile(id);
                                 PossessingId = id;
                             });
+            }
+        }
+
+        ICommand Home
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(() =>
+                    {
+                        Position = new Vector3D(0, 0, 23);
+                        Tilt = 0;
+                        Heading = 45;
+                        _followEntities.Clear();
+                    });
+            }
+        }
+
+        ICommand FollowSelected
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(() =>
+                    {
+                        var target = WorldViewModel.Navigation.MouseOverEntity;
+                        if (target == null)
+                            _followEntities = new DictionaryModel<string, EntityModel>(
+                                WorldViewModel.Navigation.SelectedEntities
+                                    .Select(e => new KeyValuePair<string, EntityModel>(e.Name, e)));
+                        else
+                        {
+                            _followEntities.Clear();
+                            _followEntities.AddEntity(target.Name, target);
+                            WorldViewModel.Select(target.Name);
+                        }
+                    });
             }
         }
 
@@ -134,7 +169,7 @@ namespace Strive.Client.ViewModel
         {
             WorldViewModel = worldViewModel;
             _keyPressed = keyPressed;
-            Home();
+            Home.Execute(null);
             _movementTimer = new Stopwatch();
             _movementTimer.Start();
         }
@@ -149,17 +184,28 @@ namespace Strive.Client.ViewModel
             Quaternion initialRotation = Rotation;
 
             Follow(deltaT);
-            ApplyKeyBindings(deltaT);
 
-            // Send update if required
-            if (Position != initialPosition || Rotation != initialRotation)
+            if (_actionState == InputBindings.ActionState.CreateAction)
             {
-                WorldViewModel.ServerConnection.MyPosition(PossessingId, Position, Rotation);
+                ApplyCreationActions();
+                _actionState = InputBindings.ActionState.KeyAction;
+            }
+            else
+            {
+                ApplyKeyBindings(deltaT);
+
+                // Send update if required
+                if (Position != initialPosition || Rotation != initialRotation)
+                {
+                    WorldViewModel.ServerConnection.MyPosition(PossessingId, Position, Rotation);
+                }
             }
         }
 
+        private InputBindings.ActionState _actionState = InputBindings.ActionState.KeyAction;
+
         private void ApplyKeyBindings(double deltaT)
-        {
+        {            
             int movementPerpendicular = 0;
             int movementForward = 0;
             int movementUp = 0;
@@ -192,9 +238,15 @@ namespace Strive.Client.ViewModel
                 else if (kb.Action == InputBindings.KeyAction.Back)
                     movementForward--;
                 else if (kb.Action == InputBindings.KeyAction.Home)
-                    Home();
+                    Home.Execute(null);
                 else if (kb.Action == InputBindings.KeyAction.FollowSelected)
-                    OnFollowSelected();
+                    FollowSelected.Execute(null);
+
+                else if (kb.Action == InputBindings.KeyAction.Possess)
+                    PossessEntity.Execute(null);
+                else if (kb.Action == InputBindings.KeyAction.Create)
+                    CreateEntity.Execute(null);
+
                 else
                     throw new Exception("Unexpected keyboard binding " + kb.Action);
             }
@@ -218,6 +270,23 @@ namespace Strive.Client.ViewModel
                     Position.Z = DistanceRangeLow;
                 else if (Position.Z > DistanceRangeHigh)
                     Position.Z = DistanceRangeHigh;
+            }
+        }
+
+        private void ApplyCreationActions()
+        {
+            foreach (InputBindings.CreationBinding ca in WorldViewModel.Bindings.CreationBindings
+                .Where(ca => ca.KeyCombo.All(k => _keyPressed(k))))
+            {
+                if (ca.Action == InputBindings.CreationAction.Item)
+                    CreateEntity.Execute(null);
+                else if(ca.Action == InputBindings.CreationAction.Mobile)
+                    CreateEntity.Execute(null);
+                else if (ca.Action == InputBindings.CreationAction.Factory)
+                    CreateEntity.Execute(null);
+
+                else
+                    throw new Exception("Unexpected creation binding " + ca.Action);
             }
         }
 
@@ -261,29 +330,6 @@ namespace Strive.Client.ViewModel
             _movementTimer.Reset();
             _movementTimer.Start();
             return deltaT;
-        }
-
-        void Home()
-        {
-            Position = new Vector3D(0, 0, 23);
-            Tilt = 0;
-            Heading = 45;
-            _followEntities.Clear();
-        }
-
-        void OnFollowSelected()
-        {
-            var target = WorldViewModel.Navigation.MouseOverEntity;
-            if ( target != null)
-            {
-                _followEntities.Clear();
-                _followEntities.AddEntity(target.Name, target);
-                WorldViewModel.Select(target.Name);
-            }
-            else
-                _followEntities = new DictionaryModel<string, EntityModel>(
-                    WorldViewModel.Navigation.SelectedEntities
-                    .Select(e => new KeyValuePair<string, EntityModel>(e.Name, e)));
         }
     }
 }

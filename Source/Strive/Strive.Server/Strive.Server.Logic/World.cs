@@ -260,7 +260,7 @@ namespace Strive.Server.Logic
                 || po.Position.X < _lowX || po.Position.Z < _lowZ
             )
             {
-                Log.Error("Tried to add physical object " + po.ObjectInstanceID + " outside the world.");
+                Log.Error("Tried to add physical object " + po.ObjectInstanceId + " outside the world.");
                 return;
             }
 
@@ -281,10 +281,10 @@ namespace Strive.Server.Logic
                 }
                 catch (InvalidLocationException)
                 {
-                    Log.Warn("Physical object " + po.ObjectInstanceID + " is not on terrain.");
+                    Log.Warn("Physical object " + po.ObjectInstanceId + " is not on terrain.");
                 }
                 // add the object to the world
-                PhysicalObjects.Add(po.ObjectInstanceID, po);
+                PhysicalObjects.Add(po.ObjectInstanceId, po);
                 if (po is MobileAvatar)
                 {
                     Mobiles.Add((MobileAvatar)po);
@@ -309,12 +309,12 @@ namespace Strive.Server.Logic
             int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
             InformNearby(po, new ToClient.DropPhysicalObject(po));
             _square[squareX, squareZ].Remove(po);
-            PhysicalObjects.Remove(po.ObjectInstanceID);
+            PhysicalObjects.Remove(po.ObjectInstanceId);
             if (po is MobileAvatar)
             {
                 Mobiles.Remove((MobileAvatar)po);
             }
-            Log.Info("Removed " + po.GetType() + " " + po.ObjectInstanceID + " from the world.");
+            Log.Info("Removed " + po.GetType() + " " + po.ObjectInstanceId + " from the world.");
         }
 
         public void Relocate(PhysicalObject po, Vector3D newPosition, Quaternion newRotation)

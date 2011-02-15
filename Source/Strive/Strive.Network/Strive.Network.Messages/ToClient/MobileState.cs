@@ -15,7 +15,7 @@ namespace Strive.Network.Messages.ToClient
 
         public MobileState(Mobile mob)
         {
-            ObjectInstanceId = mob.ObjectInstanceID;
+            ObjectInstanceId = mob.ObjectInstanceId;
             State = mob.MobileState;
 
             // TODO: evaluate if this should FARKING be here

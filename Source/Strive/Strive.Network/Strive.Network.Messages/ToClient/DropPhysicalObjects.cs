@@ -10,7 +10,7 @@ namespace Strive.Network.Messages.ToClient
 
         public DropPhysicalObjects(IEnumerable<PhysicalObject> physicalObjects)
         {
-            InstanceIDs = physicalObjects.Select(po => po.ObjectInstanceID).ToArray();
+            InstanceIDs = physicalObjects.Select(po => po.ObjectInstanceId).ToArray();
         }
     }
 }

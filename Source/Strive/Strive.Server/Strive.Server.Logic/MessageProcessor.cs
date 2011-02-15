@@ -124,13 +124,13 @@ namespace Strive.Server.Logic
                 }
                 if (avatar.Client == client)
                 {
-                    client.LogMessage("You already possess mobile " + avatar.ObjectInstanceID);
+                    client.LogMessage("You already possess mobile " + avatar.ObjectInstanceId);
                     return;
                 }
 
                 if (avatar.Client != null)
                 {
-                    _log.Info("Mobile " + avatar.ObjectInstanceID + " has been taken over by a new connection.");
+                    _log.Info("Mobile " + avatar.ObjectInstanceId + " has been taken over by a new connection.");
                     avatar.Client.Avatar = null;
                     avatar.Client.Close();
                 }
@@ -211,7 +211,7 @@ namespace Strive.Server.Logic
                 // respawn their mobile, old instance will be given over
                 // to Garbage Collector
                 c.DropAll();
-                ProcessMessage(c, new PossessMobile(c.Avatar.ObjectInstanceID));
+                ProcessMessage(c, new PossessMobile(c.Avatar.ObjectInstanceId));
             }
         }
 
@@ -220,7 +220,7 @@ namespace Strive.Server.Logic
             client.WhoList(
                 _listener.Clients
                 .Where(c => c.Avatar != null)
-                .Select(c => new Tuple<int, string>(c.Avatar.ObjectInstanceID, c.Avatar.TemplateObjectName))
+                .Select(c => new Tuple<int, string>(c.Avatar.ObjectInstanceId, c.Avatar.TemplateObjectName))
                 .ToArray());
         }
 
@@ -237,8 +237,8 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, TransferPartyLeadership message)
         {
-            var ma = (MobileAvatar) client.Avatar;
-            var target = Global.World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
+            var ma = (MobileAvatar)client.Avatar;
+            var target = _world.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
             if (target == null)
             {
                 ma.SendLog("Invalid target");
@@ -253,7 +253,7 @@ namespace Strive.Server.Logic
                 ma.SendPartyTalk("Party leadership has been transfered to " + target.TemplateObjectName);
             }
         }
-    
+
 
         void ProcessMessage(ClientConnection client, Pong message)
         {
@@ -266,7 +266,7 @@ namespace Strive.Server.Logic
         {
             var ma = (MobileAvatar)client.Avatar;
             Party p = ma.Party;
-            p.Remove(ma.ObjectInstanceID);
+            p.Remove(ma.ObjectInstanceId);
             ma.SendLog("You have left party '" + p.Name + "'.");
             ma.Party = null;
             p.SendPartyTalk(ma.TemplateObjectName + " has left your ");
@@ -277,7 +277,7 @@ namespace Strive.Server.Logic
             var ma = (MobileAvatar)client.Avatar;
 
             // make sure they are trying to join the party they were invited to
-            if (message.ObjectInstanceId != ma.InvitedToParty.Leader.ObjectInstanceID)
+            if (message.ObjectInstanceId != ma.InvitedToParty.Leader.ObjectInstanceId)
             {
                 ma.SendLog("Join party failed, get a new invitation.");
                 return;
@@ -292,7 +292,7 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, InviteToParty message)
         {
-            Party p = ((MobileAvatar) client.Avatar).Party;
+            Party p = ((MobileAvatar)client.Avatar).Party;
             if (p == null)
             {
                 client.LogMessage("You are not in a ");
@@ -321,10 +321,23 @@ namespace Strive.Server.Logic
             client.SkillList(
                 Global.ModelSchema.EnumSkill
                     .Select(e => Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
-                        client.Avatar.TemplateObjectID, e.EnumSkillID))
+                        client.Avatar.TemplateObjectId, e.EnumSkillID))
                     .Where(mhs => mhs != null)
                     .Select(mhs => new Tuple<int, double>(mhs.EnumSkillID, mhs.Rating))
                     .ToArray());
+        }
+
+        void ProcessMessage(ClientConnection client, CreateMobile message)
+        {
+            var m = new MobileAvatar(_world)
+                        {
+                            Position = message.Position,
+                            Rotation = message.Rotation,
+                            TemplateObjectId = message.TemplateId,
+                            ObjectInstanceId = Global.Rand.Next(),
+                            TemplateObjectName = "foo"
+                        };
+            _world.Add(m);
         }
     }
 }

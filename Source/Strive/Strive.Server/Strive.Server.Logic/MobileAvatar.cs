@@ -90,7 +90,7 @@ namespace Strive.Server.Logic
         {
             if (Client == null)
             {
-                _log.Warn(ObjectInstanceID + ", no client: " + message);
+                _log.Warn(ObjectInstanceId + ", no client: " + message);
             }
             else
             {
@@ -461,7 +461,7 @@ namespace Strive.Server.Logic
         public float GetCompetancy(EnumSkill skill)
         {
             Schema.MobileHasSkillRow mhs = Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
-                TemplateObjectID, (int)skill);
+                TemplateObjectId, (int)skill);
             if (mhs != null)
             {
                 return (float)mhs.Rating;

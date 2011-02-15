@@ -8,7 +8,7 @@ namespace Strive.Network.Messages.ToClient
 
         public DropPhysicalObject(PhysicalObject po)
         {
-            InstanceId = po.ObjectInstanceID;
+            InstanceId = po.ObjectInstanceId;
         }
     }
 }

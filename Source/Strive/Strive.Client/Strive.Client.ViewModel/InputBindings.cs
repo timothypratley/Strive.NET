@@ -5,6 +5,12 @@ namespace Strive.Client.ViewModel
 {
     public class InputBindings
     {
+        public enum ActionState
+        {
+            KeyAction,
+            CreateAction
+        }
+
         public enum KeyAction
         {
             Up,
@@ -19,7 +25,16 @@ namespace Strive.Client.ViewModel
             TurnRight,
             Walk,
             Home,
-            FollowSelected
+            FollowSelected,
+            Possess,
+            Create
+        };
+
+        public enum CreationAction
+        {
+            Item,
+            Mobile,
+            Factory
         };
 
         public class KeyBinding
@@ -33,7 +48,19 @@ namespace Strive.Client.ViewModel
             }
         };
 
+        public class CreationBinding
+        {
+            public List<Key> KeyCombo { get; set; }
+            public CreationAction Action { get; set; }
+            public CreationBinding(List<Key> keys, CreationAction action)
+            {
+                KeyCombo = keys;
+                Action = action;
+            }
+        };
+
         public List<KeyBinding> KeyBindings = new List<KeyBinding>();
+        public List<CreationBinding> CreationBindings = new List<CreationBinding>();
 
         public InputBindings()
         {
@@ -63,6 +90,7 @@ namespace Strive.Client.ViewModel
             AddKeyBinding(new List<Key> { Key.RightShift }, KeyAction.Walk);
             AddKeyBinding(new List<Key> { Key.Home }, KeyAction.Home);
             AddKeyBinding(new List<Key> { Key.G }, KeyAction.FollowSelected);
+            AddKeyBinding(new List<Key> { Key.P }, KeyAction.Possess);
         }
     }
 }
