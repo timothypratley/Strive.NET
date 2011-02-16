@@ -33,6 +33,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Strive.Client.ViewModel.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.ViewModel.TestsCSharp", "Strive\Strive.Client\Strive.Client.ViewModel.TestsCSharp\Strive.Client.ViewModel.TestsCSharp.csproj", "{E627B7FF-234F-472B-8866-2FBCDB632B31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.DataModel", "Strive\Strive.DataModel\Strive.DataModel.csproj", "{D0376168-4019-4358-BBE1-C9A2B33051BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -271,6 +273,21 @@ Global
 		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{E627B7FF-234F-472B-8866-2FBCDB632B31}.StrongMagic|x86.ActiveCfg = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
+		{D0376168-4019-4358-BBE1-C9A2B33051BD}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

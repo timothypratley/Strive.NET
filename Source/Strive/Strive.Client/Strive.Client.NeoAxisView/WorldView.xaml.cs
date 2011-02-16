@@ -74,7 +74,8 @@ namespace Strive.Client.NeoAxisView
 
         // Would like to do this in XAML - it must be possible but not sure how 
         string _toolTipString;
-        public void SetToolTipString()
+
+        private void SetToolTipString()
         {
             var e = _worldViewModel.MouseOverEntity;
             string newTip =  e == null ? null : e.Entity.Name;
@@ -96,16 +97,14 @@ namespace Strive.Client.NeoAxisView
             }
         }
 
-        MapObject _mapObject;
+        MapObject _mouseOver;
         void RenderEntityOverCursor(Camera camera)
         {
             Vec2 mouse = renderTarget.GetFloatMousePosition();
-            _mapObject = null;
+            _mouseOver = null;
 
             if (mouse.X < 0 || mouse.X > 1 || mouse.Y < 0 || mouse.Y > 1)
-            {
                 _worldViewModel.ClearMouseOverEntity();
-            }
             else
             {
                 // Find entity under cursor of mouse
@@ -114,21 +113,19 @@ namespace Strive.Client.NeoAxisView
                 {
                     if (obj is StaticMesh)
                         return true;
-                    _mapObject = obj;
+                    _mouseOver = obj;
                     return false;
                 });
 
-                if (_mapObject != null)
+                if (_mouseOver != null)
                 {
                     // Put a yellow box around it and a tooltip
                     camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
-                    camera.DebugGeometry.AddBounds(_mapObject.MapBounds);
-                    _worldViewModel.SetMouseOverEntity(_mapObject.Name);
+                    camera.DebugGeometry.AddBounds(_mouseOver.MapBounds);
+                    _worldViewModel.SetMouseOverEntity(_mouseOver.Name);
                 }
                 else
-                {
                     _worldViewModel.ClearMouseOverEntity();
-                }
 
                 RayCastResult result = PhysicsWorld.Instance.RayCast(ray, (int)ContactGroup.CastOnlyCollision);
                 _mouseIntersection = result.Position;
@@ -141,14 +138,14 @@ namespace Strive.Client.NeoAxisView
             SetToolTipString();
 
             // Show all selected entities with a blue box around them
+            // except MouseOver as it will be yellow
             camera.DebugGeometry.Color = new ColorValue(0.5f, 0.5f, 1);
-            foreach (EntityViewModel evm in _worldViewModel.SelectedEntities)
+            foreach (MapObject mo in _worldViewModel.SelectedEntities
+                .Select(evm => Entities.Instance.GetByName(evm.Entity.Name))
+                .OfType<MapObject>()
+                .Where(mo => mo != _mouseOver))
             {
-                var mo = Entities.Instance.GetByName(evm.Entity.Name) as MapObject;
-                if (mo != null && mo != _mapObject)
-                {
-                    camera.DebugGeometry.AddBounds(mo.MapBounds);
-                }
+                camera.DebugGeometry.AddBounds(mo.MapBounds);
             }
         }
 
@@ -161,19 +158,17 @@ namespace Strive.Client.NeoAxisView
         void WorldViewControl_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Released)
-            {
                 renderTarget.MouseRelativeMode = false;
-            }
         }
 
-        bool ignoreFirst;   // first relative is screwy, workaround
+        bool _ignoreFirst;   // first relative is screwy, workaround
         void WorldViewControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (renderTarget.MouseRelativeMode)
             {
                 var o = renderTarget.GetMouseRelativeModeOffset();
-                if (ignoreFirst)
-                    ignoreFirst = false;
+                if (_ignoreFirst)
+                    _ignoreFirst = false;
                 else
                 {
                     _perspective.Heading -= o.X / 2.0;
@@ -188,26 +183,25 @@ namespace Strive.Client.NeoAxisView
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 renderTarget.MouseRelativeMode = true;
-                var o = renderTarget.GetMouseRelativeModeOffset();
-                ignoreFirst = true;
+                _ignoreFirst = true;
             }
 
-            var em = _worldViewModel.SelectedEntities.FirstOrDefault();
-            if (em != null)
+            EntityViewModel evm = _worldViewModel.SelectedEntities.FirstOrDefault();
+            if (evm != null)
             {
                 // TODO: set the target
             }
-            if (_mapObject != null)
+            if (_mouseOver != null)
             {
                 if (renderTarget.IsKeyPressed(Key.LeftShift)
                     || renderTarget.IsKeyPressed(Key.LeftCtrl)
                     || renderTarget.IsKeyPressed(Key.RightShift)
                     || renderTarget.IsKeyPressed(Key.RightCtrl))
-                    _worldViewModel.SelectAdd(_mapObject.Name);
+                    _worldViewModel.SelectAdd(_mouseOver.Name);
                 else
-                    _worldViewModel.Select(_mapObject.Name);
+                    _worldViewModel.Select(_mouseOver.Name);
 
-                var b = _mapObject as RTSBuilding;
+                var b = _mouseOver as RTSBuilding;
                 if (b != null)
                 {
                     var unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
@@ -233,11 +227,11 @@ namespace Strive.Client.NeoAxisView
                 }
             }
 
-            if (_mapObject != null && _mapObject.PhysicsModel != null)
+            if (_mouseOver != null && _mouseOver.PhysicsModel != null)
             {
-                foreach (Body b in _mapObject.PhysicsModel.Bodies)
+                foreach (Body b in _mouseOver.PhysicsModel.Bodies)
                 {
-                    b.AddForce(ForceType.Global, 0f, new Vec3(_rand.Next(500) - 250, _rand.Next(500) - 250, _rand.Next(1000) + 250), new Vec3(0, 0, 0));
+                    b.AddForce(ForceType.Global, 0f, new Vec3(_rand.Next(500) - 250, _rand.Next(500) - 250, _rand.Next(1000) + 250), Vec3.Zero);
                 }
             }
         }
