@@ -38,7 +38,8 @@ namespace Strive.Server.Logic
         const int DefaultNight = 148;
         const int DefaultCusp = 5;
         const int DefaultSun = 146;
-        public ToClient.TimeAndWeather Weather = new ToClient.TimeAndWeather(Global.Now, 0, DefaultDay, DefaultNight, DefaultCusp, DefaultSun, 0, 0);
+        public ToClient.TimeAndWeather Weather = new ToClient.TimeAndWeather(
+            Global.Now, 0, DefaultDay, DefaultNight, DefaultCusp, DefaultSun, 0, 0);
 
         readonly ILog _log = LogManager.GetCurrentClassLogger();
 
@@ -116,7 +117,7 @@ namespace Strive.Server.Logic
             // allocate the grid of squares used for grouping
             // physical objects that are close to each other
             _square = new Square[_squaresInX, _squaresInZ];
-            _terrain = new Terrain[_squaresInX * Square.SquareSize / Constants.terrainPieceSize, _squaresInZ * Square.SquareSize / Constants.terrainPieceSize];
+            _terrain = new Terrain[_squaresInX * Square.SquareSize / Constants.TerrainPieceSize, _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize];
 
             Schema.WorldRow wr = Global.ModelSchema.World.FindByWorldID(_worldId);
             if (wr == null)
@@ -222,8 +223,8 @@ namespace Strive.Server.Logic
             if (po is Terrain)
             {
                 // keep terrain seperate
-                int terrainX = DivTruncate((int)(po.Position.X - _lowX), Constants.terrainPieceSize);
-                int terrainZ = DivTruncate((int)(po.Position.Z - _lowZ), Constants.terrainPieceSize);
+                int terrainX = DivTruncate((int)(po.Position.X - _lowX), Constants.TerrainPieceSize);
+                int terrainZ = DivTruncate((int)(po.Position.Z - _lowZ), Constants.TerrainPieceSize);
                 _terrain[terrainX, terrainZ] = (Terrain)po;
             }
             else
@@ -347,12 +348,12 @@ namespace Strive.Server.Logic
             //public void server_foo(float x1, float z1, float x, float z) {
             if (ma != null && ma.Client != null && po.Position != newPosition)
             {
-                int tx1 = DivTruncate((int)po.Position.X, Constants.terrainPieceSize);
-                int tz1 = DivTruncate((int)po.Position.Z, Constants.terrainPieceSize);
-                for (int k = 0; k < Constants.terrainZoomOrder; k++)
+                int tx1 = DivTruncate((int)po.Position.X, Constants.TerrainPieceSize);
+                int tz1 = DivTruncate((int)po.Position.Z, Constants.TerrainPieceSize);
+                for (int k = 0; k < Constants.TerrainZoomOrder; k++)
                 {
-                    int tbx = DivTruncate((int)newPosition.X, Constants.terrainPieceSize) - Constants.xRadius[k];
-                    int tbz = DivTruncate((int)newPosition.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
+                    int tbx = DivTruncate((int)newPosition.X, Constants.TerrainPieceSize) - Constants.xRadius[k];
+                    int tbz = DivTruncate((int)newPosition.Z, Constants.TerrainPieceSize) - Constants.zRadius[k];
 
                     // Normalise to a 'grid' point
                     tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
@@ -366,15 +367,15 @@ namespace Strive.Server.Logic
                             int tz = tbz + j;
                             if ((Math.Abs(tx - tx1) > Constants.xRadius[k]) || (Math.Abs(tz - tz1) > Constants.zRadius[k]))
                             {
-                                int terrainX = tx - (int)_lowX / Constants.terrainPieceSize;
-                                int terrainZ = tz - (int)_lowZ / Constants.terrainPieceSize;
-                                if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.terrainPieceSize)
+                                int terrainX = tx - (int)_lowX / Constants.TerrainPieceSize;
+                                int terrainZ = tz - (int)_lowZ / Constants.TerrainPieceSize;
+                                if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.TerrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize)
                                 {
                                     Terrain t = _terrain[terrainX, terrainZ];
                                     if (t != null)
                                     {
                                         if (// there is no higher zoom order
-                                            k == (Constants.terrainZoomOrder - 1)
+                                            k == (Constants.TerrainZoomOrder - 1)
                                             // this is not a higher order point
                                             || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0)
                                             ma.Client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
@@ -583,10 +584,10 @@ namespace Strive.Server.Logic
             foreach (PhysicalObject p in nearbyPhysicalObjects)
                 client.Send(ToClient.AddPhysicalObject.CreateMessage(p));
 
-            for (int k = 0; k < Constants.terrainZoomOrder; k++)
+            for (int k = 0; k < Constants.TerrainZoomOrder; k++)
             {
-                int tbx = DivTruncate((int)mob.Position.X, Constants.terrainPieceSize) - Constants.xRadius[k];
-                int tbz = DivTruncate((int)mob.Position.Z, Constants.terrainPieceSize) - Constants.zRadius[k];
+                int tbx = DivTruncate((int)mob.Position.X, Constants.TerrainPieceSize) - Constants.xRadius[k];
+                int tbz = DivTruncate((int)mob.Position.Z, Constants.TerrainPieceSize) - Constants.zRadius[k];
 
                 // Normalise to a 'grid' point
                 tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
@@ -598,15 +599,15 @@ namespace Strive.Server.Logic
                     {
                         int tx = tbx + i;
                         int tz = tbz + j;
-                        int terrainX = tx - (int)_lowX / Constants.terrainPieceSize;
-                        int terrainZ = tz - (int)_lowZ / Constants.terrainPieceSize;
-                        if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.terrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.terrainPieceSize)
+                        int terrainX = tx - (int)_lowX / Constants.TerrainPieceSize;
+                        int terrainZ = tz - (int)_lowZ / Constants.TerrainPieceSize;
+                        if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.TerrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize)
                         {
                             Terrain t = _terrain[terrainX, terrainZ];
                             if (t != null)
                             {
                                 if (// there is no higher zoom order
-                                    k == (Constants.terrainZoomOrder - 1)
+                                    k == (Constants.TerrainZoomOrder - 1)
                                     // this is not a higher order point
                                     || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0)
                                     client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
@@ -629,8 +630,8 @@ namespace Strive.Server.Logic
         public class InvalidLocationException : Exception { }
         public double AltitudeAt(double x, double z)
         {
-            int terrainX = DivTruncate((int)(x - _lowX), Constants.terrainPieceSize);
-            int terrainZ = DivTruncate((int)(z - _lowZ), Constants.terrainPieceSize);
+            int terrainX = DivTruncate((int)(x - _lowX), Constants.TerrainPieceSize);
+            int terrainZ = DivTruncate((int)(z - _lowZ), Constants.TerrainPieceSize);
 
             // if terrain piece exists, keep everything on the ground
             if (_terrain[terrainX, terrainZ] != null
@@ -651,14 +652,14 @@ namespace Strive.Server.Logic
                 if (dz < dx)
                 {
                     // lower triangle
-                    xslope = (_terrain[terrainX + 1, terrainZ].Position.Y - _terrain[terrainX, terrainZ].Position.Y) / Constants.terrainPieceSize;
-                    zslope = (_terrain[terrainX + 1, terrainZ + 1].Position.Y - _terrain[terrainX + 1, terrainZ].Position.Y) / Constants.terrainPieceSize;
+                    xslope = (_terrain[terrainX + 1, terrainZ].Position.Y - _terrain[terrainX, terrainZ].Position.Y) / Constants.TerrainPieceSize;
+                    zslope = (_terrain[terrainX + 1, terrainZ + 1].Position.Y - _terrain[terrainX + 1, terrainZ].Position.Y) / Constants.TerrainPieceSize;
                 }
                 else
                 {
                     // upper triangle
-                    xslope = (_terrain[terrainX + 1, terrainZ + 1].Position.Y - _terrain[terrainX, terrainZ + 1].Position.Y) / Constants.terrainPieceSize;
-                    zslope = (_terrain[terrainX, terrainZ + 1].Position.Y - _terrain[terrainX, terrainZ].Position.Y) / Constants.terrainPieceSize;
+                    xslope = (_terrain[terrainX + 1, terrainZ + 1].Position.Y - _terrain[terrainX, terrainZ + 1].Position.Y) / Constants.TerrainPieceSize;
+                    zslope = (_terrain[terrainX, terrainZ + 1].Position.Y - _terrain[terrainX, terrainZ].Position.Y) / Constants.TerrainPieceSize;
                 }
                 return _terrain[terrainX, terrainZ].Position.Y + xslope * dx + zslope * dz;
             }

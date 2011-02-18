@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Collections;
+using System.Diagnostics.Contracts;
 using Strive.Network.Messages;
 
 namespace Strive.Network.Messaging
@@ -199,6 +200,7 @@ namespace Strive.Network.Messaging
 
         public static decimal ToDecimal(byte[] bytes, int offset)
         {
+            Contract.Requires<ArgumentException>(bytes.Length == 16 + offset);
             byte[] bys = bytes.Skip(offset).Take(16).ToArray();
             var bits = new int[4];
             bits[0] = ((bys[0] | (bys[1] << 8)) | (bys[2] << 0x10)) | (bys[3] << 0x18); //lo

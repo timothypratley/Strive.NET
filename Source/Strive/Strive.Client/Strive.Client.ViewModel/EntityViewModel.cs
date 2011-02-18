@@ -1,4 +1,6 @@
-﻿using Strive.Client.Model;
+﻿using System.Diagnostics.Contracts;
+using Strive.Client.Model;
+using System;
 
 
 namespace Strive.Client.ViewModel
@@ -10,7 +12,10 @@ namespace Strive.Client.ViewModel
 
         public EntityViewModel(EntityModel entity, WorldNavigation navigation)
         {
-            _entity = entity; _entityNavigation = navigation;
+            Contract.Requires<ArgumentNullException>(entity != null);
+            Contract.Requires<ArgumentNullException>(navigation != null);
+            _entity = entity;
+            _entityNavigation = navigation;
         }
 
         public EntityModel Entity { get { return _entity; } }
@@ -34,10 +39,10 @@ namespace Strive.Client.ViewModel
         {
             if (obj == this)
                 return true;
-            EntityViewModel that = obj as EntityViewModel;
+            var that = obj as EntityViewModel;
             if (that == null)
                 return false;
-            return object.Equals(this.Entity, that.Entity);
+            return Equals(Entity, that.Entity);
         }
 
         public override int GetHashCode()

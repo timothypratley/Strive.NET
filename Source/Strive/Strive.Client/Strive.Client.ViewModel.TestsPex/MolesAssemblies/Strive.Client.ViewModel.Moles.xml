@@ -1,0 +1,966 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Strive.Client.ViewModel.Moles</name>
+    </assembly>
+    <members>
+        <member name="T:Strive.Client.ViewModel.Moles.MEntityViewModel">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.EntityViewModel"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MEntityViewModel.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MEntityViewModel.#ctor(Strive.Client.ViewModel.EntityViewModel)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MEntityViewModel.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MEntityViewModel.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.ConstructorEntityModelWorldNavigation">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.EntityViewModel.#ctor(Strive.Client.Model.EntityModel,Strive.Client.ViewModel.WorldNavigation)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.EntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.EntityViewModel.Entity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.EqualsObject">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.EntityViewModel.Equals(System.Object)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.GetHashCode">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.EntityViewModel.GetHashCode"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.IsSelectedGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.EntityViewModel.IsSelected"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.IsSelectedSetBoolean">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.EntityViewModel.IsSelected"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.ToString">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.EntityViewModel.ToString"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MEntityViewModel.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.AllInstances.EntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.EntityViewModel.Entity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.AllInstances.EqualsObject">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.EntityViewModel.Equals(System.Object)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.AllInstances.GetHashCode01">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.EntityViewModel.GetHashCode"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.AllInstances.IsSelectedGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.EntityViewModel.IsSelected"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.AllInstances.IsSelectedSetBoolean">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.EntityViewModel.IsSelected"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MEntityViewModel.AllInstances.ToString01">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.EntityViewModel.ToString"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MExtensions">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.Extensions"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MExtensions.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MExtensions.AverageIEnumerableOfTFuncOfTVector3D``1(Microsoft.Moles.Framework.MolesDelegates.Func{System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Windows.Media.Media3D.Vector3D},System.Windows.Media.Media3D.Vector3D})">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.Extensions.Average``1(System.Collections.Generic.IEnumerable`1{``0},System.Func`2{``0,System.Windows.Media.Media3D.Vector3D})"/>
+            </summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MExtensions.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MExtensions.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MExtensions.AverageIEnumerableOfVector3D">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.Extensions.Average(System.Collections.Generic.IEnumerable`1{System.Windows.Media.Media3D.Vector3D})"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MExtensions.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MExtensions.SumIEnumerableOfVector3D">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.Extensions.Sum(System.Collections.Generic.IEnumerable`1{System.Windows.Media.Media3D.Vector3D})"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MExtensions._Sumb__0Vector3DVector3D">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.Extensions.&lt;Sum&gt;b__0(System.Windows.Media.Media3D.Vector3D,System.Windows.Media.Media3D.Vector3D)"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MInputBindings">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.InputBindings"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.#ctor(Strive.Client.ViewModel.InputBindings)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.AddCreationBindingListOfKeyInputBindingsCreationAction">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.AddCreationBinding(System.Collections.Generic.List`1{System.Windows.Input.Key},Strive.Client.ViewModel.InputBindings.CreationAction)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.AddKeyBindingListOfKeyInputBindingsKeyAction">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.AddKeyBinding(System.Collections.Generic.List`1{System.Windows.Input.Key},Strive.Client.ViewModel.InputBindings.KeyAction)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.Constructor">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.Default">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.Default"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MInputBindings.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.AllInstances.AddCreationBindingListOfKeyInputBindingsCreationAction">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.AddCreationBinding(System.Collections.Generic.List`1{System.Windows.Input.Key},Strive.Client.ViewModel.InputBindings.CreationAction)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.AllInstances.AddKeyBindingListOfKeyInputBindingsKeyAction">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.AddKeyBinding(System.Collections.Generic.List`1{System.Windows.Input.Key},Strive.Client.ViewModel.InputBindings.KeyAction)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.AllInstances.Default">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.Default"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.InputBindings.CreationBinding"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.#ctor(Strive.Client.ViewModel.InputBindings.CreationBinding)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.ActionGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.ActionSetInputBindingsCreationAction">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.ConstructorListOfKeyInputBindingsCreationAction">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.CreationBinding.#ctor(System.Collections.Generic.List`1{System.Windows.Input.Key},Strive.Client.ViewModel.InputBindings.CreationAction)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.KeyComboGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.KeyComboSetListOfKey">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.AllInstances.ActionGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.AllInstances.ActionSetInputBindingsCreationAction">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.AllInstances.KeyComboGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MCreationBinding.AllInstances.KeyComboSetListOfKey">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.CreationBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.InputBindings.KeyBinding"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.#ctor(Strive.Client.ViewModel.InputBindings.KeyBinding)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.ActionGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.ActionSetInputBindingsKeyAction">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.ConstructorListOfKeyInputBindingsKeyAction">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.InputBindings.KeyBinding.#ctor(System.Collections.Generic.List`1{System.Windows.Input.Key},Strive.Client.ViewModel.InputBindings.KeyAction)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.KeyComboGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.KeyComboSetListOfKey">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.AllInstances.ActionGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.AllInstances.ActionSetInputBindingsKeyAction">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.Action"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.AllInstances.KeyComboGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MInputBindings.MKeyBinding.AllInstances.KeyComboSetListOfKey">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.InputBindings.KeyBinding.KeyCombo"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MPerspectiveViewModel">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.PerspectiveViewModel"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.#ctor(Strive.Client.ViewModel.PerspectiveViewModel)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.ApplyCreationActions">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.ApplyCreationActions"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.ApplyKeyBindingsDouble">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.ApplyKeyBindings(System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.Check">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.Check"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.ConstructorWorldViewModelPerspectiveViewModelKeyPressedCheck">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.#ctor(Strive.Client.ViewModel.WorldViewModel,Strive.Client.ViewModel.PerspectiveViewModel.KeyPressedCheck)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.CreateEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.CreateEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.CurrentGameCommandGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.CurrentGameCommand"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.CurrentGameCommandSetEnumSkill">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.CurrentGameCommand"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.FollowDouble">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.Follow(System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.FollowEntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.FollowEntities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.FollowSelectedGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.FollowSelected"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.FpsGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Fps"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.FpsSetInt32">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Fps"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.HeadingGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Heading"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.HeadingSetDouble">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Heading"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.HomeGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Home"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.NextFrameDuration">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.NextFrameDuration"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.PossessEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.PossessEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.PossessingIdGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.PossessingId"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.PossessingIdSetInt32">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.PossessingId"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.TiltGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Tilt"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.TiltSetDouble">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Tilt"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.WindowTitleGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.WindowTitle"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.WorldViewModelGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.WorldViewModel"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.WorldViewModelSetWorldViewModel">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.WorldViewModel"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._ApplyCreationActionsb__aInputBindingsCreationBinding">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyCreationActions&gt;b__a(Strive.Client.ViewModel.InputBindings.CreationBinding)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._ApplyCreationActionsb__bKey">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyCreationActions&gt;b__b(System.Windows.Input.Key)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._ApplyKeyBindingsb__8InputBindingsKeyBinding">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyKeyBindings&gt;b__8(Strive.Client.ViewModel.InputBindings.KeyBinding)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._ApplyKeyBindingsb__9Key">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyKeyBindings&gt;b__9(System.Windows.Input.Key)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__10EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__10(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__11EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__11(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__12EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__12(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__13EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__13(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__14EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__14(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__dEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__d(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__eEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__e(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._Followb__fEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__f(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._get_CreateEntityb__1">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_CreateEntity&gt;b__1"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._get_FollowEntitiesb__0EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_FollowEntities&gt;b__0(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._get_FollowSelectedb__5">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_FollowSelected&gt;b__5"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._get_FollowSelectedb__6EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_FollowSelected&gt;b__6(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._get_Homeb__4">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_Home&gt;b__4"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._get_PossessEntityb__2">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_PossessEntity&gt;b__2"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel._get_PossessEntityb__3">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_PossessEntity&gt;b__3"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.ApplyCreationActions">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.ApplyCreationActions"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.ApplyKeyBindingsDouble">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.ApplyKeyBindings(System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.Check">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.Check"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.CreateEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.CreateEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.CurrentGameCommandGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.CurrentGameCommand"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.CurrentGameCommandSetEnumSkill">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.CurrentGameCommand"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.FollowDouble">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.Follow(System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.FollowEntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.FollowEntities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.FollowSelectedGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.FollowSelected"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.FpsGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Fps"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.FpsSetInt32">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Fps"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.HeadingGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Heading"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.HeadingSetDouble">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Heading"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.HomeGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Home"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.NextFrameDuration">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.NextFrameDuration"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.PossessEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.PossessEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.PossessingIdGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.PossessingId"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.PossessingIdSetInt32">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.PossessingId"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.TiltGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Tilt"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.TiltSetDouble">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Tilt"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.WindowTitleGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.WindowTitle"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.WorldViewModelGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.WorldViewModel"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.WorldViewModelSetWorldViewModel">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.WorldViewModel"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._ApplyCreationActionsb__aInputBindingsCreationBinding">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyCreationActions&gt;b__a(Strive.Client.ViewModel.InputBindings.CreationBinding)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._ApplyCreationActionsb__bKey">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyCreationActions&gt;b__b(System.Windows.Input.Key)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._ApplyKeyBindingsb__8InputBindingsKeyBinding">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyKeyBindings&gt;b__8(Strive.Client.ViewModel.InputBindings.KeyBinding)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._ApplyKeyBindingsb__9Key">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;ApplyKeyBindings&gt;b__9(System.Windows.Input.Key)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._Followb__dEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;Follow&gt;b__d(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._get_CreateEntityb__1">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_CreateEntity&gt;b__1"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._get_FollowEntitiesb__0EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_FollowEntities&gt;b__0(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._get_FollowSelectedb__5">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_FollowSelected&gt;b__5"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._get_Homeb__4">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_Home&gt;b__4"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._get_PossessEntityb__2">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_PossessEntity&gt;b__2"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances._get_PossessEntityb__3">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.&lt;get_PossessEntity&gt;b__3"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MWorldNavigation">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.WorldNavigation"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldNavigation.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldNavigation.#ctor(Strive.Client.ViewModel.WorldNavigation)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldNavigation.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldNavigation.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AddSelectedEntityEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.AddSelectedEntity(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.Constructor">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.IsSelectedEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.IsSelected(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.MouseOverEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldNavigation.MouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.MouseOverEntitySetEntityModel">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldNavigation.MouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.RemoveSelectedEntityEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.RemoveSelectedEntity(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.SelectedEntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldNavigation.SelectedEntities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.SetSelectedEntityEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.SetSelectedEntity(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances.AddSelectedEntityEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.AddSelectedEntity(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances.IsSelectedEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.IsSelected(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances.MouseOverEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldNavigation.MouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances.MouseOverEntitySetEntityModel">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldNavigation.MouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances.RemoveSelectedEntityEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.RemoveSelectedEntity(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances.SelectedEntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldNavigation.SelectedEntities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldNavigation.AllInstances.SetSelectedEntityEntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldNavigation.SetSelectedEntity(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MWorldViewModel">
+            <summary>Mole type of <see cref="T:Strive.Client.ViewModel.WorldViewModel"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldViewModel.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldViewModel.#ctor(Strive.Client.ViewModel.WorldViewModel)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldViewModel.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.MWorldViewModel.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AddOrReplaceStringStringVector3DQuaternion">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.AddOrReplace(System.String,System.String,System.Windows.Media.Media3D.Vector3D,System.Windows.Media.Media3D.Quaternion)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.BindingsGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Bindings"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.BindingsSetInputBindings">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Bindings"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.ClearMouseOverEntity">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.ClearMouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.ConstructorServerConnection">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.#ctor(Strive.Network.Messaging.ServerConnection)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.EntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Entities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.IsMouseOverEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.IsMouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.MouseOverEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.MouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.NavigationGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Navigation"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.NavigationSetWorldNavigation">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Navigation"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.SelectAddString">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.SelectAdd(System.String)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.SelectString">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.Select(System.String)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.SelectedEntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.SelectedEntities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.ServerConnectionGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.ServerConnection"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.ServerConnectionSetServerConnection">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.ServerConnection"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.SetMouseOverEntityString">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.SetMouseOverEntity(System.String)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.WorldModelGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.WorldModel"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_Entitiesb__0EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_Entities&gt;b__0(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_SelectedEntitiesb__1EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_SelectedEntities&gt;b__1(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.AddOrReplaceStringStringVector3DQuaternion">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.AddOrReplace(System.String,System.String,System.Windows.Media.Media3D.Vector3D,System.Windows.Media.Media3D.Quaternion)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.BindingsGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Bindings"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.BindingsSetInputBindings">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Bindings"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.ClearMouseOverEntity">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.ClearMouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.EntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Entities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.IsMouseOverEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.IsMouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.MouseOverEntityGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.MouseOverEntity"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.NavigationGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Navigation"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.NavigationSetWorldNavigation">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Navigation"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.SelectAddString">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.SelectAdd(System.String)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.SelectString">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.Select(System.String)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.SelectedEntitiesGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.SelectedEntities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.ServerConnectionGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.ServerConnection"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.ServerConnectionSetServerConnection">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.ServerConnection"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.SetMouseOverEntityString">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.SetMouseOverEntity(System.String)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.WorldModelGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.WorldModel"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_Entitiesb__0EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_Entities&gt;b__0(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_SelectedEntitiesb__1EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_SelectedEntities&gt;b__1(Strive.Client.Model.EntityModel)"/>
+            </summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.SEntityViewModel">
+            <summary>Stub type of <see cref="T:Strive.Client.ViewModel.EntityViewModel"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SEntityViewModel.#ctor(Strive.Client.Model.EntityModel,Strive.Client.ViewModel.WorldNavigation)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SEntityViewModel.Equals(System.Object)">
+            <summary>Sets the stub of <see cref="M:Strive.Client.ViewModel.EntityViewModel.Equals(System.Object)"/>
+            </summary>
+        </member>
+        <member name="F:Strive.Client.ViewModel.Moles.SEntityViewModel.EqualsObject">
+            <summary>Sets the stub of <see cref="M:Strive.Client.ViewModel.EntityViewModel.Equals(System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SEntityViewModel.GetHashCode">
+            <summary>Sets the stub of <see cref="M:Strive.Client.ViewModel.EntityViewModel.GetHashCode"/>
+            </summary>
+        </member>
+        <member name="F:Strive.Client.ViewModel.Moles.SEntityViewModel.GetHashCode01">
+            <summary>Sets the stub of <see cref="M:Strive.Client.ViewModel.EntityViewModel.GetHashCode"/>
+            </summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SEntityViewModel.InitializeStub">
+            <summary>Initializes a new instance of type SEntityViewModel</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SEntityViewModel.ToString">
+            <summary>Sets the stub of <see cref="M:Strive.Client.ViewModel.EntityViewModel.ToString"/>
+            </summary>
+        </member>
+        <member name="F:Strive.Client.ViewModel.Moles.SEntityViewModel.ToString01">
+            <summary>Sets the stub of <see cref="M:Strive.Client.ViewModel.EntityViewModel.ToString"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SEntityViewModel.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SEntityViewModel.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.SInputBindings">
+            <summary>Stub type of <see cref="T:Strive.Client.ViewModel.InputBindings"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SInputBindings.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SInputBindings.InitializeStub">
+            <summary>Initializes a new instance of type SInputBindings</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SInputBindings.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SInputBindings.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.SPerspectiveViewModel">
+            <summary>Stub type of <see cref="T:Strive.Client.ViewModel.PerspectiveViewModel"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SPerspectiveViewModel.#ctor(Strive.Client.ViewModel.WorldViewModel,Strive.Client.ViewModel.PerspectiveViewModel.KeyPressedCheck)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SPerspectiveViewModel.InitializeStub">
+            <summary>Initializes a new instance of type SPerspectiveViewModel</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SPerspectiveViewModel.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SPerspectiveViewModel.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.SWorldNavigation">
+            <summary>Stub type of <see cref="T:Strive.Client.ViewModel.WorldNavigation"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SWorldNavigation.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SWorldNavigation.InitializeStub">
+            <summary>Initializes a new instance of type SWorldNavigation</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SWorldNavigation.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SWorldNavigation.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="T:Strive.Client.ViewModel.Moles.SWorldViewModel">
+            <summary>Stub type of <see cref="T:Strive.Client.ViewModel.WorldViewModel"/>
+            .</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SWorldViewModel.#ctor(Strive.Network.Messaging.ServerConnection)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Strive.Client.ViewModel.Moles.SWorldViewModel.InitializeStub">
+            <summary>Initializes a new instance of type SWorldViewModel</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SWorldViewModel.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.SWorldViewModel.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+    </members>
+</doc>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
+using System.Diagnostics.Contracts;
 
 
 namespace Strive.Client.ViewModel
@@ -15,14 +16,15 @@ namespace Strive.Client.ViewModel
 
         public static Vector3D Average(this IEnumerable<Vector3D> vectors)
         {
-            if (!vectors.Any())
-                throw new InvalidOperationException("Cannot compute median for an empty set.");
+            Contract.Requires<ArgumentNullException>(vectors != null);
+            Contract.Requires<ArgumentNullException>(vectors.Any());
 
             return vectors.Sum() / vectors.Count();
         }
 
         public static Vector3D Average<T>(this IEnumerable<T> vectors, Func<T,Vector3D> selector)
         {
+            Contract.Requires<ArgumentNullException>(vectors != null && vectors.Any());
             return vectors.Select(selector).Average();
         }
     }

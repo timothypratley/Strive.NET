@@ -10,7 +10,7 @@ using Strive.Client.ViewModel;
 
 namespace Strive.Client.NeoAxisView
 {
-    public class World
+    public static class World
     {
         public static WorldViewModel ViewModel;
         public static bool Init(Window mainWindow, WorldViewModel worldViewModel)
@@ -44,7 +44,7 @@ namespace Strive.Client.NeoAxisView
             return result;
         }
 
-        public void Shutdown()
+        public static void Shutdown()
         {
             WPFAppWorld.Shutdown();
         }

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 
 using Common.Logging;
+using System.Diagnostics.Contracts;
 
 namespace Strive.Common
 {
@@ -11,22 +12,23 @@ namespace Strive.Common
     public class StoppableThread
     {
         Thread _thisThread;
-        System.Threading.ThreadPriority _priority = System.Threading.ThreadPriority.Normal;
-        AutoResetEvent iHaveStopped = new AutoResetEvent(false);
+        ThreadPriority _priority = ThreadPriority.Normal;
+        readonly AutoResetEvent _iHaveStopped = new AutoResetEvent(false);
         bool _isRunning = false;
 
         public delegate void WhileRunning();
-        WhileRunning whileRunning;
 
-        public StoppableThread(WhileRunning wr)
+        readonly WhileRunning _whileRunning;
+        public StoppableThread(WhileRunning whileRunning)
         {
-            this.whileRunning = wr;
+            Contract.Requires<ArgumentNullException>(whileRunning != null);
+            _whileRunning = whileRunning;
         }
 
         public void Start()
         {
             if (_isRunning) return;
-            _thisThread = new Thread(new ThreadStart(ThreadLoop)) {Priority = _priority};
+            _thisThread = new Thread(ThreadLoop) {Priority = _priority};
             _isRunning = true;
             _thisThread.Start();
         }
@@ -38,10 +40,10 @@ namespace Strive.Common
                 return;
             }
             _isRunning = false;
-            WaitHandle.WaitAny(new AutoResetEvent[] { iHaveStopped });
+            WaitHandle.WaitAny(new[] { _iHaveStopped });
         }
 
-        public System.Threading.ThreadPriority Priority
+        public ThreadPriority Priority
         {
             get
             {
@@ -68,7 +70,7 @@ namespace Strive.Common
             {
                 try
                 {
-                    whileRunning();
+                    _whileRunning();
                 }
                 catch (Exception e)
                 {
@@ -76,7 +78,7 @@ namespace Strive.Common
                     _isRunning = false;
                 }
             }
-            iHaveStopped.Set();
+            _iHaveStopped.Set();
         }
     }
 }

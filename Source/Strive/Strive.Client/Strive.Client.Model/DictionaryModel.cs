@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UpdateControls;
 
 
@@ -7,19 +8,17 @@ namespace Strive.Client.Model
 {
     public class DictionaryModel<TKeyType, TValueType>
     {
-        private readonly Dictionary<TKeyType, TValueType> _entities;
+        private readonly Dictionary<TKeyType, TValueType> _entities = new Dictionary<TKeyType, TValueType>();
 
-        public DictionaryModel()
-        {
-            _entities = new Dictionary<TKeyType, TValueType>();
-        }
+        public DictionaryModel(){}
 
         public DictionaryModel(IEnumerable<KeyValuePair<TKeyType, TValueType>> dictionary)
         {
-            _entities = new Dictionary<TKeyType, TValueType>();
+            Contract.Requires<ArgumentNullException>(dictionary != null);
+
             foreach (var e in dictionary)
             {
-                _entities.Add(e.Key, e.Value);
+                _entities[e.Key] = e.Value;
             }
         }
 

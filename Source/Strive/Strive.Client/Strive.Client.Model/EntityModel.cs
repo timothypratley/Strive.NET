@@ -1,4 +1,6 @@
-﻿using System.Windows.Media.Media3D;
+﻿using System;
+using System.Windows.Media.Media3D;
+using System.Diagnostics.Contracts;
 
 using UpdateControls;
 
@@ -9,6 +11,8 @@ namespace Strive.Client.Model
     {
         public EntityModel(string name, string modelId, Vector3D position, Quaternion rotation)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(name));
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(modelId));
             _name = name;
             _modelId = modelId;
             _position = position;

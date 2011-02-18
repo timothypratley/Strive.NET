@@ -12,6 +12,7 @@ _ReSharper.*
 *.cache
 *.csproj.user
 *.dll
+*.pdb
 *.licx
 *.log
 *.resharper.user

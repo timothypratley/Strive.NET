@@ -5,6 +5,7 @@ using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
 using Strive.Common;
+using System.Diagnostics.Contracts;
 
 
 namespace Strive.Server.Logic
@@ -41,7 +42,11 @@ namespace Strive.Server.Logic
 
         public void CheckAndProcessMessage(ClientConnection client, dynamic message)
         {
-            // new connection... only allow login
+            //TODO: why don't these work?
+            //Contract.Requires<ArgumentNullException>(client != null);
+            //Contract.Requires<ArgumentNullException>(message != null);
+
+            // new connection... only allow login);
             if (!client.Authenticated && !(message is Login))
             {
                 _log.Warn("Non-login message " + message.GetType() + " from " + client.RemoteEndPoint);
@@ -63,7 +68,7 @@ namespace Strive.Server.Logic
                 ProcessMessage(client, message);
                 _log.Info("Processed message " + message);
             }
-            catch (Exception)
+            catch
             {
                 _log.Warn("ERROR: Unable to process message " + message);
             }
@@ -74,10 +79,10 @@ namespace Strive.Server.Logic
             if (_world.UserLookup(loginMessage.Username, loginMessage.Password, ref client.PlayerId))
             {
                 // login succeeded, check there isnt an existing connection for this player
-                foreach (ClientConnection c in _listener.Clients)
+                foreach (ClientConnection c in _listener.Clients
+                    .Where(c => c.AuthenticatedUsername == loginMessage.Username))
                 {
-                    if (c.AuthenticatedUsername == loginMessage.Username)
-                        c.Close();
+                    c.Close();
                 }
 
                 _log.Info("User " + loginMessage.Username + " logged in");

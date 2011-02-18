@@ -17,7 +17,7 @@ namespace Strive.Server.Logic
 	/// </summary>
 	public class Square
 	{
-		public static int SquareSize = Constants.objectScopeRadius;
+		public const int SquareSize = Constants.ObjectScopeRadius;
         public List<PhysicalObject> PhysicalObjects = new List<PhysicalObject>();
         public List<ClientConnection> Clients = new List<ClientConnection>();
 

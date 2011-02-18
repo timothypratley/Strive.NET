@@ -72,6 +72,11 @@ namespace Strive.Client.ViewModel
             KeyBindings.Add(new KeyBinding(keys, action));
         }
 
+        public void AddCreationBinding(List<Key> keys, CreationAction action)
+        {
+            CreationBindings.Add(new CreationBinding(keys, action));
+        }
+
         public void Default()
         {
             KeyBindings = new List<KeyBinding>();
@@ -91,6 +96,12 @@ namespace Strive.Client.ViewModel
             AddKeyBinding(new List<Key> { Key.Home }, KeyAction.Home);
             AddKeyBinding(new List<Key> { Key.G }, KeyAction.FollowSelected);
             AddKeyBinding(new List<Key> { Key.P }, KeyAction.Possess);
+
+            CreationBindings = new List<CreationBinding>();
+
+            AddCreationBinding(new List<Key> { Key.M }, CreationAction.Mobile);
+            AddCreationBinding(new List<Key> { Key.I }, CreationAction.Item);
+            AddCreationBinding(new List<Key> { Key.F }, CreationAction.Factory);
         }
     }
 }

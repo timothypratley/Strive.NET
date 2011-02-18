@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Engine.MathEx;
 using Engine.Renderer;
 using Engine.MapSystem;
@@ -6,7 +8,7 @@ using Engine.Utils;
 
 namespace Strive.Client.NeoAxisView
 {
-    class Nameplates
+    static class Nameplates
     {
         static readonly List<MapObject> TempObjects = new List<MapObject>(128);
         static bool showObjectsTips = true;
@@ -14,6 +16,9 @@ namespace Strive.Client.NeoAxisView
 
         public static void RenderObjectsTips(GuiRenderer renderer, Camera camera)
         {
+            Contract.Requires<ArgumentNullException>(camera != null);
+            Contract.Requires<ArgumentNullException>(renderer != null);
+
             if (!showObjectsTips)
                 return;
 
