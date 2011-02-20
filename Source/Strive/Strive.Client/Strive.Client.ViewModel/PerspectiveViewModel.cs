@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 
@@ -51,6 +52,11 @@ namespace Strive.Client.ViewModel
             }
         }
 
+        public void UnFollow()
+        {
+            _followEntities.Clear();
+        }
+
         public ICommand CreateEntity
         {
             get
@@ -85,7 +91,7 @@ namespace Strive.Client.ViewModel
                         Position = new Vector3D(0, 0, 23);
                         Tilt = 0;
                         Heading = 45;
-                        _followEntities.Clear();
+                        UnFollow();
                     });
             }
         }
@@ -104,7 +110,7 @@ namespace Strive.Client.ViewModel
                                     .Select(e => new KeyValuePair<string, EntityModel>(e.Name, e)));
                         else
                         {
-                            _followEntities.Clear();
+                            UnFollow();
                             _followEntities.AddEntity(target.Name, target);
                             WorldViewModel.Select(target.Name);
                         }
@@ -120,11 +126,7 @@ namespace Strive.Client.ViewModel
             get { return _heading; }
             set
             {
-                _heading = value;
-                while (_heading < 0)
-                    _heading += 360;
-                while (Heading >= 360)
-                    _heading -= 360;
+                _heading = NormalizeHeading(value);
             }
         }
 
@@ -148,7 +150,7 @@ namespace Strive.Client.ViewModel
 
             }
         }
-         
+
         public Vector3D Position;
         public Quaternion Rotation;
 
@@ -205,7 +207,7 @@ namespace Strive.Client.ViewModel
         private InputBindings.ActionState _actionState = InputBindings.ActionState.KeyAction;
 
         private void ApplyKeyBindings(double deltaT)
-        {            
+        {
             int movementPerpendicular = 0;
             int movementForward = 0;
             int movementUp = 0;
@@ -213,7 +215,7 @@ namespace Strive.Client.ViewModel
             foreach (InputBindings.KeyBinding kb in WorldViewModel.Bindings.KeyBindings
                 .Where(kb => kb.KeyCombo.All(k => _keyPressed(k))))
             {
-                _followEntities.Clear();
+                UnFollow();
 
                 if (kb.Action == InputBindings.KeyAction.Up)
                     movementUp++;
@@ -228,9 +230,9 @@ namespace Strive.Client.ViewModel
                 else if (kb.Action == InputBindings.KeyAction.TurnRight)
                     Heading -= deltaT * 200;
                 else if (kb.Action == InputBindings.KeyAction.TiltUp)
-                    Tilt -= deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
-                else if (kb.Action == InputBindings.KeyAction.TiltDown)
                     Tilt += deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
+                else if (kb.Action == InputBindings.KeyAction.TiltDown)
+                    Tilt -= deltaT * (AngleRangeHigh - AngleRangeLow) / 2.0;
                 else if (kb.Action == InputBindings.KeyAction.Walk)
                     speedModifier = 0.2;
                 else if (kb.Action == InputBindings.KeyAction.Forward)
@@ -252,7 +254,7 @@ namespace Strive.Client.ViewModel
             }
 
             // Set Position and Rotation
-            Rotation = new Quaternion(ZAxis, Heading) * new Quaternion(YAxis, Tilt);
+            Rotation = new Quaternion(ZAxis, Heading) * new Quaternion(YAxis, -Tilt);
 
             if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
             {
@@ -280,7 +282,7 @@ namespace Strive.Client.ViewModel
             {
                 if (ca.Action == InputBindings.CreationAction.Item)
                     CreateEntity.Execute(null);
-                else if(ca.Action == InputBindings.CreationAction.Mobile)
+                else if (ca.Action == InputBindings.CreationAction.Mobile)
                     CreateEntity.Execute(null);
                 else if (ca.Action == InputBindings.CreationAction.Factory)
                     CreateEntity.Execute(null);
@@ -288,6 +290,12 @@ namespace Strive.Client.ViewModel
                 else
                     throw new Exception("Unexpected creation binding " + ca.Action);
             }
+        }
+
+        static double NormalizeHeading(double degrees)
+        {
+            degrees = degrees % 360;
+            return degrees < 0 ? degrees + 360 : degrees;
         }
 
         /// <summary> Move toward or follow one or more entities </summary>
@@ -310,8 +318,38 @@ namespace Strive.Client.ViewModel
                 var minZ = _followEntities.Entities.Min(e => e.Position.Z);
                 var viewDistance = new List<double> { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
 
+                // Move toward followed
                 Vector3D target = center - (diff * viewDistance / vectorDistance);
-                Position += (target - Position) * deltaT * 2;
+                var move = target - Position;
+                if (move.Length >= 1)
+                    Position += move * deltaT * 2;
+
+                Vector3D looking = (center - Position);
+
+                // Turn heading toward followed
+                double idealHeading = Math.Atan2(looking.Y, looking.X)
+                    * 180 / Math.PI;
+                double turnLeft = NormalizeHeading(idealHeading - Heading);
+                if (turnLeft >= 1)
+                {
+                    if (turnLeft <= 180)
+                        Heading += 1; //turnLeft / looking.Length;
+                    else
+                        Heading -= 1; // (360 - turnLeft) / looking.Length;
+                }
+
+                // Tilt toward followed
+                double idealTilt = Math.Atan2(
+                    looking.Z, Math.Sqrt(looking.X * looking.X + looking.Y * looking.Y))
+                    * 180 / Math.PI;
+                double tiltUp = NormalizeHeading(idealTilt - Tilt);
+                if (tiltUp >= 1)
+                {
+                    if (tiltUp <= 180)
+                        Tilt += 0.5; //tiltUp / looking.Length;
+                    else
+                        Tilt -= 0.5; // (360 - tiltUp) / looking.Length;
+                }
             }
         }
 

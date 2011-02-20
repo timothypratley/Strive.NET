@@ -359,6 +359,10 @@
             <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.NextFrameDuration"/>
             </summary>
         </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.NormalizeHeadingDouble">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.NormalizeHeading(System.Double)"/>
+            </summary>
+        </member>
         <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.PossessEntityGet">
             <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.PossessEntity"/>
             </summary>
@@ -377,6 +381,10 @@
         </member>
         <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.TiltSetDouble">
             <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Tilt"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.UnFollow">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.UnFollow"/>
             </summary>
         </member>
         <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.WindowTitleGet">
@@ -548,6 +556,10 @@
         </member>
         <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.TiltSetDouble">
             <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.PerspectiveViewModel.Tilt"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.UnFollow">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.PerspectiveViewModel.UnFollow"/>
             </summary>
         </member>
         <member name="P:Strive.Client.ViewModel.Moles.MPerspectiveViewModel.AllInstances.WindowTitleGet">

@@ -169,10 +169,11 @@ namespace Strive.Client.NeoAxisView
                 var o = renderTarget.GetMouseRelativeModeOffset();
                 if (_ignoreFirst)
                     _ignoreFirst = false;
-                else
+                else if (o.X != 0 || o.Y != 0)
                 {
+                    _perspective.UnFollow();
                     _perspective.Heading -= o.X / 2.0;
-                    _perspective.Tilt += o.Y / 2.0;
+                    _perspective.Tilt -= o.Y / 2.0;
                 }
             }
         }
