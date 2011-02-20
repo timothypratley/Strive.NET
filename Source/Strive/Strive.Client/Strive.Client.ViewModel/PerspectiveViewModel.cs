@@ -81,7 +81,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        ICommand Home
+        public ICommand Home
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        ICommand FollowSelected
+        public ICommand FollowSelected
         {
             get
             {
@@ -321,34 +321,32 @@ namespace Strive.Client.ViewModel
                 // Move toward followed
                 Vector3D target = center - (diff * viewDistance / vectorDistance);
                 var move = target - Position;
-                if (move.Length >= 1)
+                if (move.Length > 0.1)
                     Position += move * deltaT * 2;
 
-                Vector3D looking = (center - Position);
-
                 // Turn heading toward followed
-                double idealHeading = Math.Atan2(looking.Y, looking.X)
+                double idealHeading = Math.Atan2(diff.Y, diff.X)
                     * 180 / Math.PI;
                 double turnLeft = NormalizeHeading(idealHeading - Heading);
                 if (turnLeft >= 1)
                 {
                     if (turnLeft <= 180)
-                        Heading += 1; //turnLeft / looking.Length;
+                        Heading += 1;
                     else
-                        Heading -= 1; // (360 - turnLeft) / looking.Length;
+                        Heading -= 1;
                 }
 
                 // Tilt toward followed
                 double idealTilt = Math.Atan2(
-                    looking.Z, Math.Sqrt(looking.X * looking.X + looking.Y * looking.Y))
+                    diff.Z, Math.Sqrt(diff.X * diff.X + diff.Y * diff.Y))
                     * 180 / Math.PI;
                 double tiltUp = NormalizeHeading(idealTilt - Tilt);
                 if (tiltUp >= 1)
                 {
                     if (tiltUp <= 180)
-                        Tilt += 0.5; //tiltUp / looking.Length;
+                        Tilt += 0.5;
                     else
-                        Tilt -= 0.5; // (360 - tiltUp) / looking.Length;
+                        Tilt -= 0.5;
                 }
             }
         }

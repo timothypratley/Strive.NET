@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using AvalonDock;
 using Engine;
 using Engine.EntitySystem;
 using Engine.MapSystem;
@@ -19,15 +18,15 @@ namespace Strive.Client.NeoAxisView
     /// <summary>
     /// Interaction logic for WorldView.xaml
     /// </summary>
-    public partial class WorldView : DockableContent
+    public partial class WorldView
     {
-        readonly PerspectiveViewModel _perspective;
+        public PerspectiveViewModel Perspective { get; private set; }
         readonly WorldViewModel _worldViewModel;
         public WorldView(WorldViewModel worldViewModel)
         {
             InitializeComponent();
             _worldViewModel = worldViewModel;
-            _perspective = new PerspectiveViewModel(
+            Perspective = new PerspectiveViewModel(
                 worldViewModel,
                 renderTarget.IsKeyPressed);
             renderTarget.AutomaticUpdateFPS = 60;
@@ -47,7 +46,7 @@ namespace Strive.Client.NeoAxisView
             {
                 Nameplates.RenderObjectsTips(renderer, _camera);
             }
-            string text = "FPS: " + _perspective.Fps
+            string text = "FPS: " + Perspective.Fps
                         + "    loc: " + renderTarget.CameraPosition.ToString(0)
                         + "    dir: " + renderTarget.CameraDirection.ToString(0)
                         + "    mouse: " + _mouseIntersection.ToString(2)
@@ -60,9 +59,9 @@ namespace Strive.Client.NeoAxisView
         void renderTargetUserControl1_Render(Camera camera)
         {
             _camera = camera;
-            _perspective.Check();
-            renderTarget.CameraPosition = _perspective.Position.ToVec3();
-            renderTarget.CameraDirection = _perspective.Rotation.ToQuat() * Vec3.XAxis;
+            Perspective.Check();
+            renderTarget.CameraPosition = Perspective.Position.ToVec3();
+            renderTarget.CameraDirection = Perspective.Rotation.ToQuat() * Vec3.XAxis;
                 // TODO: what does it all mean?
                 //new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
                 //* new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
@@ -171,9 +170,9 @@ namespace Strive.Client.NeoAxisView
                     _ignoreFirst = false;
                 else if (o.X != 0 || o.Y != 0)
                 {
-                    _perspective.UnFollow();
-                    _perspective.Heading -= o.X / 2.0;
-                    _perspective.Tilt -= o.Y / 2.0;
+                    Perspective.UnFollow();
+                    Perspective.Heading -= o.X / 2.0;
+                    Perspective.Tilt -= o.Y / 2.0;
                 }
             }
         }

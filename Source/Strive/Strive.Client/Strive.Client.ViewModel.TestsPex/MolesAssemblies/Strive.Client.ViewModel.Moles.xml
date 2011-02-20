@@ -739,8 +739,20 @@
             <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.#ctor(Strive.Network.Messaging.ServerConnection)"/>
             </summary>
         </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.CurrentPerspectiveGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.CurrentPerspective"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.CurrentPerspectiveSetPerspectiveViewModel">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.CurrentPerspective"/>
+            </summary>
+        </member>
         <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.EntitiesGet">
             <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Entities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.FollowSelectedGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.FollowSelected"/>
             </summary>
         </member>
         <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.IsMouseOverEntityGet">
@@ -787,12 +799,20 @@
             <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.WorldModel"/>
             </summary>
         </member>
-        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_Entitiesb__0EntityModel">
-            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_Entities&gt;b__0(Strive.Client.Model.EntityModel)"/>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_Entitiesb__2EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_Entities&gt;b__2(Strive.Client.Model.EntityModel)"/>
             </summary>
         </member>
-        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_SelectedEntitiesb__1EntityModel">
-            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_SelectedEntities&gt;b__1(Strive.Client.Model.EntityModel)"/>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_FollowSelectedb__0">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_FollowSelected&gt;b__0"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_FollowSelectedb__1">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_FollowSelected&gt;b__1"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel._get_SelectedEntitiesb__3EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_SelectedEntities&gt;b__3(Strive.Client.Model.EntityModel)"/>
             </summary>
         </member>
         <member name="T:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances">
@@ -814,8 +834,20 @@
             <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.ClearMouseOverEntity"/>
             </summary>
         </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.CurrentPerspectiveGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.CurrentPerspective"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.CurrentPerspectiveSetPerspectiveViewModel">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.CurrentPerspective"/>
+            </summary>
+        </member>
         <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.EntitiesGet">
             <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.Entities"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.FollowSelectedGet">
+            <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.FollowSelected"/>
             </summary>
         </member>
         <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances.IsMouseOverEntityGet">
@@ -862,12 +894,20 @@
             <summary>Sets the mole of <see cref="P:Strive.Client.ViewModel.WorldViewModel.WorldModel"/>
             </summary>
         </member>
-        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_Entitiesb__0EntityModel">
-            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_Entities&gt;b__0(Strive.Client.Model.EntityModel)"/>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_Entitiesb__2EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_Entities&gt;b__2(Strive.Client.Model.EntityModel)"/>
             </summary>
         </member>
-        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_SelectedEntitiesb__1EntityModel">
-            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_SelectedEntities&gt;b__1(Strive.Client.Model.EntityModel)"/>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_FollowSelectedb__0">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_FollowSelected&gt;b__0"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_FollowSelectedb__1">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_FollowSelected&gt;b__1"/>
+            </summary>
+        </member>
+        <member name="P:Strive.Client.ViewModel.Moles.MWorldViewModel.AllInstances._get_SelectedEntitiesb__3EntityModel">
+            <summary>Sets the mole of <see cref="M:Strive.Client.ViewModel.WorldViewModel.&lt;get_SelectedEntities&gt;b__3(Strive.Client.Model.EntityModel)"/>
             </summary>
         </member>
         <member name="T:Strive.Client.ViewModel.Moles.SEntityViewModel">

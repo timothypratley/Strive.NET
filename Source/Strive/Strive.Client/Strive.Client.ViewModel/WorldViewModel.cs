@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows.Media.Media3D;
 using Strive.Client.Model;
 using Strive.Network.Messaging;
+using System.Windows.Input;
+using UpdateControls.XAML;
 
 
 namespace Strive.Client.ViewModel
@@ -20,6 +22,18 @@ namespace Strive.Client.ViewModel
             Bindings = new InputBindings();
             Navigation = new WorldNavigation();
         }
+
+        public ICommand FollowSelected
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => Navigation.SelectedEntities.Any() && CurrentPerspective != null)
+                    .Do(() => CurrentPerspective.FollowSelected.Execute(null));
+            }
+        }
+
+        public PerspectiveViewModel CurrentPerspective { get; set; }
 
         public IEnumerable<EntityViewModel> Entities
         {
@@ -63,13 +77,12 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public List<EntityViewModel> SelectedEntities
+        public IEnumerable<EntityViewModel> SelectedEntities
         {
             get
             {
                 return Navigation.SelectedEntities
-                    .Select(em => new EntityViewModel(em, Navigation))
-                    .ToList();
+                    .Select(em => new EntityViewModel(em, Navigation));
             }
         }
 

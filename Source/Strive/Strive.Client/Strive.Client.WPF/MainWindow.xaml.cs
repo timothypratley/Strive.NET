@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.IO;
+using System.Collections.Generic;
 
 using UpdateControls.XAML;
 using AvalonDock;
@@ -62,6 +63,8 @@ namespace Strive.Client.WPF
         private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var view = new WorldView(World.ViewModel);
+            // TODO: this is a bit spagetti?
+            World.ViewModel.CurrentPerspective = view.Perspective;
             view.ShowAsDocument(dockManager);
             view.Focus();
         }
@@ -73,7 +76,10 @@ namespace Strive.Client.WPF
 
         private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            BindAndShow(new ResourceList(), App.WorldViewModel);
+            var r = new ResourceList();
+            r.InputBindings.Add(
+                new KeyBinding(App.WorldViewModel.FollowSelected, Key.G, ModifierKeys.Control));
+            BindAndShow(r, App.WorldViewModel);
         }
 
         private void BrowseHomeCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
