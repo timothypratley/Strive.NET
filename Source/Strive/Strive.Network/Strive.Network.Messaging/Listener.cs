@@ -19,13 +19,20 @@ namespace Strive.Network.Messaging
         {
             _localEndPoint = localEndPoint;
             _log = LogManager.GetCurrentClassLogger();
+            Clients = new List<ClientConnection>();
         }
 
         public void Start()
         {
             lock (this)
             {
-                Clients = new List<ClientConnection>();
+                if (_tcpSocket != null)
+                {
+                    _log.Info("Restarting");
+                    Stop();
+                }
+
+                Clients.Clear();
                 try
                 {
                     _tcpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Stream,
@@ -64,9 +71,7 @@ namespace Strive.Network.Messaging
                 _log.Info("Stopped listening on" + _localEndPoint);
 
                 foreach (var c in Clients)
-                {
                     c.Close();
-                }
             }
         }
 
