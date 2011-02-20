@@ -57,12 +57,14 @@ namespace Strive.Client.ViewModel
             _followEntities.Clear();
         }
 
+        // TODO: use the application random somehow
+        private Random rand = new Random();
         public ICommand CreateEntity
         {
             get
             {
                 return MakeCommand
-                    .Do(() => WorldViewModel.ServerConnection.CreateMobile(1, Position, Rotation));
+                    .Do(() => WorldViewModel.ServerConnection.CreateMobile(rand.Next(), Position, Rotation));
             }
         }
 

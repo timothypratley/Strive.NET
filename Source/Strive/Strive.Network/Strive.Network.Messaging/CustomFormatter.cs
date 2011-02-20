@@ -49,7 +49,7 @@ namespace Strive.Network.Messaging
         public static void Encode(Object obj, MemoryStream buffer, Type t)
         {
             // if the object is a basic type, encode and return
-            if (EncodeBasicType(obj, buffer)) return;
+            if (EncodeBasicType(obj, buffer, t)) return;
 
             foreach (FieldInfo fi in t.GetFields())
             {
@@ -68,9 +68,9 @@ namespace Strive.Network.Messaging
             }
         }
 
-        public static bool EncodeBasicType(dynamic obj, MemoryStream buffer)
+        /// Must pass in type t of obj even though obj is dynamic because obj might be null
+        public static bool EncodeBasicType(dynamic obj, MemoryStream buffer, Type t)
         {
-            Type t = obj.GetType();
             if (t == typeof(string))
             {
                 byte[] encodedString = Encoding.Unicode.GetBytes(obj);
@@ -91,7 +91,7 @@ namespace Strive.Network.Messaging
             }
             else if (t.IsEnum)
             {
-                byte[] encodedInt = BitConverter.GetBytes((int)obj);
+                byte[] encodedInt = BitConverter.GetBytes((Int32)obj);
                 buffer.Write(encodedInt, 0, encodedInt.Length);
             }
             else if (t == typeof(decimal))
@@ -106,7 +106,7 @@ namespace Strive.Network.Messaging
             else if (t.IsPrimitive)
             {
                 byte[] encoded = BitConverter.GetBytes(obj);
-                buffer.Write(encoded,0, encoded.Length);
+                buffer.Write(encoded, 0, encoded.Length);
             }
             else
             {
