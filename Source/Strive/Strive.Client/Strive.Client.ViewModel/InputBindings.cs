@@ -96,6 +96,7 @@ namespace Strive.Client.ViewModel
             AddKeyBinding(new List<Key> { Key.Home }, KeyAction.Home);
             AddKeyBinding(new List<Key> { Key.G }, KeyAction.FollowSelected);
             AddKeyBinding(new List<Key> { Key.P }, KeyAction.Possess);
+            AddKeyBinding(new List<Key> { Key.C }, KeyAction.Create);
 
             CreationBindings = new List<CreationBinding>();
 
