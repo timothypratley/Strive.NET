@@ -9,9 +9,9 @@ namespace Strive.Network.Messages
     public class MessageTypeMap
     {
         public const int BufferSize = 16384;	// max message size
-        public const int MessageLengthLength = 4;
-        public Dictionary<EnumMessageId, Type> MessageTypeFromId = new Dictionary<EnumMessageId, Type>();
-        public Dictionary<Type, EnumMessageId> IdFromMessageType = new Dictionary<Type, EnumMessageId>();
+        public const int MessageLengthLength = sizeof(Int16);
+        public readonly Dictionary<EnumMessageId, Type> MessageTypeFromId = new Dictionary<EnumMessageId, Type>();
+        public readonly Dictionary<Type, EnumMessageId> IdFromMessageType = new Dictionary<Type, EnumMessageId>();
 
         public enum EnumMessageId
         {

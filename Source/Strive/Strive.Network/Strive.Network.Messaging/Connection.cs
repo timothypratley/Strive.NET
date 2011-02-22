@@ -226,14 +226,14 @@ namespace Strive.Network.Messaging
                 client._tcpOffset += bytesRead;
                 while (client._tcpOffset > MessageTypeMap.MessageLengthLength)
                 {
-                    int expectedLength = BitConverter.ToInt32(client._tcpbuffer, 0);
+                    int expectedLength = BitConverter.ToInt16(client._tcpbuffer, 0);
 
                     if (client._tcpOffset >= expectedLength)
                     {
                         IMessage message;
                         try
                         {
-                            message = (IMessage)CustomFormatter.Deserialize(client._tcpbuffer, MessageTypeMap.MessageLengthLength);
+                            message = (IMessage)CustomFormatter.Deserialize(client._tcpbuffer);
                         }
                         catch (Exception e)
                         {

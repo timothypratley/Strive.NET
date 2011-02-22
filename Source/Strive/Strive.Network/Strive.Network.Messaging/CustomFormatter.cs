@@ -12,9 +12,9 @@ using Strive.Network.Messages;
 
 namespace Strive.Network.Messaging
 {
-    public class CustomFormatter
+    public static class CustomFormatter
     {
-        public static MessageTypeMap MessageTypeMap = new MessageTypeMap();
+        private static readonly MessageTypeMap MessageTypeMap = new MessageTypeMap();
 
         public static byte[] Serialize(Object obj)
         {
@@ -25,7 +25,7 @@ namespace Strive.Network.Messaging
             byte[] encodedInt;
             try
             {
-                encodedInt = BitConverter.GetBytes((int)MessageTypeMap.IdFromMessageType[t]);
+                encodedInt = BitConverter.GetBytes((Int16) MessageTypeMap.IdFromMessageType[t]);
             }
             catch (Exception)
             {
@@ -40,7 +40,7 @@ namespace Strive.Network.Messaging
             Encode(obj, buffer, t);
 
             // now fill in the length field, the first field in the message.
-            encodedInt = BitConverter.GetBytes((int)buffer.Length);
+            encodedInt = BitConverter.GetBytes((Int16)buffer.Length);
             buffer.Position = 0;
             buffer.Write(encodedInt, 0, encodedInt.Length);
             return buffer.ToArray();
@@ -91,7 +91,7 @@ namespace Strive.Network.Messaging
             }
             else if (t.IsEnum)
             {
-                byte[] encodedInt = BitConverter.GetBytes((Int32)obj);
+                byte[] encodedInt = BitConverter.GetBytes((Int16)obj);
                 buffer.Write(encodedInt, 0, encodedInt.Length);
             }
             else if (t == typeof(decimal))
@@ -115,11 +115,12 @@ namespace Strive.Network.Messaging
             return true;
         }
 
-        public static Object Deserialize(byte[] buffer, int offset)
+        public static Object Deserialize(byte[] buffer)
         {
+            int offset = MessageTypeMap.MessageLengthLength;
             Type t = MessageTypeMap.MessageTypeFromId[
-                (MessageTypeMap.EnumMessageId)BitConverter.ToInt32(buffer, offset)];
-            offset += sizeof(Int32);
+                (MessageTypeMap.EnumMessageId)BitConverter.ToInt16(buffer, offset)];
+            offset += sizeof(Int16);
 
             return Decode(t, buffer, ref offset);
         }
@@ -164,32 +165,39 @@ namespace Strive.Network.Messaging
             }
             else if (t.IsEnum)
             {
-                result = Enum.ToObject(t, BitConverter.ToInt32(buffer, offset));
-                offset += sizeof(Int32);
+                result = Enum.ToObject(t, BitConverter.ToInt16(buffer, offset));
+                offset += sizeof(Int16);
+            }
+            else if (t == typeof(Boolean))
+            {
+                // Booleans are padded to 4 bytes,
+                // so Marshal.Sizeof is no good
+                result = BitConverter.ToBoolean(buffer, offset);
+                offset += sizeof(Boolean);
             }
             else if (t.IsPrimitive)
             {
-                if (t==typeof(byte)||t==typeof(sbyte)||t==typeof(char))
+                if (t==typeof(Byte)||t==typeof(SByte)||t==typeof(Char))
                     result = BitConverter.ToChar(buffer, offset);
-                else if (t == typeof(short))
+                else if (t == typeof(Int16))
                     result = BitConverter.ToInt16(buffer, offset);
-                else if (t == typeof(ushort))
+                else if (t == typeof(UInt16))
                     result = BitConverter.ToUInt16(buffer, offset);
-                else if (t == typeof(int))
+                else if (t == typeof(Int32))
                     result = BitConverter.ToInt32(buffer, offset);
-                else if (t == typeof(uint))
+                else if (t == typeof(UInt32))
                     result = BitConverter.ToUInt32(buffer, offset);
-                else if (t == typeof(long))
+                else if (t == typeof(Int64))
                     result = BitConverter.ToInt64(buffer, offset);
-                else if (t == typeof(ulong))
+                else if (t == typeof(UInt64))
                     result = BitConverter.ToUInt64(buffer, offset);
-                else if (t == typeof(float))
+                else if (t == typeof(Single))
                     result = BitConverter.ToSingle(buffer, offset);
-                else if (t == typeof(double))
+                else if (t == typeof(Double))
                     result = BitConverter.ToDouble(buffer, offset);
-                else if (t == typeof(decimal))
+                else if (t == typeof(Decimal))
                     result = ToDecimal(buffer, offset);
-                else if (t == typeof(bool))
+                else if (t == typeof(Boolean))
                     result = BitConverter.ToBoolean(buffer, offset);
 
                 offset += Marshal.SizeOf(t);
