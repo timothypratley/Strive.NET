@@ -168,39 +168,60 @@ namespace Strive.Network.Messaging
                 result = Enum.ToObject(t, BitConverter.ToInt16(buffer, offset));
                 offset += sizeof(Int16);
             }
+            else if (t == typeof(Byte) || t == typeof(SByte) || t == typeof(Char))
+            {
+                result = BitConverter.ToChar(buffer, offset);
+                offset += sizeof(Byte);
+            }
+            else if (t == typeof(Int16))
+            {
+                result = BitConverter.ToInt16(buffer, offset);
+                offset += sizeof(Int16);
+            }
+            else if (t == typeof(UInt16))
+            {
+                result = BitConverter.ToUInt16(buffer, offset);
+                offset += sizeof(UInt16);
+            }
+            else if (t == typeof(Int32))
+            {
+                result = BitConverter.ToInt32(buffer, offset);
+                offset += sizeof(Int32);
+            }
+            else if (t == typeof(UInt32))
+            {
+                result = BitConverter.ToUInt32(buffer, offset);
+                offset += sizeof(UInt32);
+            }
+            else if (t == typeof(Int64))
+            {
+                result = BitConverter.ToInt64(buffer, offset);
+                offset += sizeof(Int64);
+            }
+            else if (t == typeof(UInt64))
+            {
+                result = BitConverter.ToUInt64(buffer, offset);
+                offset += sizeof(UInt64);
+            }
+            else if (t == typeof(Single))
+            {
+                result = BitConverter.ToSingle(buffer, offset);
+                offset += sizeof(Single);
+            }
+            else if (t == typeof(Double))
+            {
+                result = BitConverter.ToDouble(buffer, offset);
+                offset += sizeof(Double);
+            }
+            else if (t == typeof(Decimal))
+            {
+                result = ToDecimal(buffer, offset);
+                offset += sizeof(Decimal);
+            }
             else if (t == typeof(Boolean))
             {
-                // Booleans are padded to 4 bytes,
-                // so Marshal.Sizeof is no good
                 result = BitConverter.ToBoolean(buffer, offset);
                 offset += sizeof(Boolean);
-            }
-            else if (t.IsPrimitive)
-            {
-                if (t==typeof(Byte)||t==typeof(SByte)||t==typeof(Char))
-                    result = BitConverter.ToChar(buffer, offset);
-                else if (t == typeof(Int16))
-                    result = BitConverter.ToInt16(buffer, offset);
-                else if (t == typeof(UInt16))
-                    result = BitConverter.ToUInt16(buffer, offset);
-                else if (t == typeof(Int32))
-                    result = BitConverter.ToInt32(buffer, offset);
-                else if (t == typeof(UInt32))
-                    result = BitConverter.ToUInt32(buffer, offset);
-                else if (t == typeof(Int64))
-                    result = BitConverter.ToInt64(buffer, offset);
-                else if (t == typeof(UInt64))
-                    result = BitConverter.ToUInt64(buffer, offset);
-                else if (t == typeof(Single))
-                    result = BitConverter.ToSingle(buffer, offset);
-                else if (t == typeof(Double))
-                    result = BitConverter.ToDouble(buffer, offset);
-                else if (t == typeof(Decimal))
-                    result = ToDecimal(buffer, offset);
-                else if (t == typeof(Boolean))
-                    result = BitConverter.ToBoolean(buffer, offset);
-
-                offset += Marshal.SizeOf(t);
             }
 
             return result;

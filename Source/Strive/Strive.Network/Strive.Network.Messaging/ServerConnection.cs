@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using Microsoft.CSharp.RuntimeBinder;
 using Strive.Client.Model;
@@ -7,15 +8,24 @@ using Strive.Common;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messages.ToClient;
 
+
 namespace Strive.Network.Messaging
 {
     public class ServerConnection : Connection
     {
-        public DictionaryModel<string, EntityModel> WorldModel { get; private set; }
+        public readonly PersistentTreeMapModel<int, PersistentTreeMapModel<string, EntityModel>> History
+            = new PersistentTreeMapModel<int, PersistentTreeMapModel<string, EntityModel>>();
+
+        private int _worldVersion = 1;
+        public PersistentTreeMapModel<string, EntityModel> WorldModel
+        {
+            get { return History.Last(); }
+            set { History.Set(_worldVersion++, value); }
+        }
 
         public ServerConnection()
         {
-            WorldModel = new DictionaryModel<string, EntityModel>(); 
+            WorldModel = new PersistentTreeMapModel<string, EntityModel>(); 
             MessageRecieved += ConnectionMessageRecieved;
         }
 
@@ -47,6 +57,11 @@ namespace Strive.Network.Messaging
         void Process(AddMobile m)
         {
             Log.Info("Recieved message" + m);
+            WorldModel.Set(m.Mobile.ObjectInstanceId.ToString(),
+                                 new EntityModel(m.Mobile.ObjectInstanceId.ToString(),
+                                                 "Robot",
+                                                 m.Mobile.Position,
+                                                 m.Mobile.Rotation));
         }
 
         void Process(AddTerrain m)
@@ -57,7 +72,7 @@ namespace Strive.Network.Messaging
         void Process(PositionUpdate m)
         {
             Log.Trace("bar");
-            EntityModel e = WorldModel.EntityDictionary[m.InstanceId.ToString()];
+            EntityModel e = WorldModel.GetEntity(m.InstanceId.ToString());
             e.Position = m.Position;
             e.Rotation = m.Rotation;
         }

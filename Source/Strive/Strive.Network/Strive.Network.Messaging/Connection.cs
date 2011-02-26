@@ -166,7 +166,6 @@ namespace Strive.Network.Messaging
             }
         }
 
-        private IAsyncResult _expectingReadResult;
         private void BeginReading()
         {
             lock (this)
@@ -174,7 +173,7 @@ namespace Strive.Network.Messaging
                 // Begin reading
                 try
                 {
-                    _expectingReadResult = TcpSocket.BeginReceive(
+                    TcpSocket.BeginReceive(
                         _tcpbuffer, 0, MessageTypeMap.BufferSize, 0,
                         new AsyncCallback(ReceiveTcpCallback), this);
                 }
@@ -197,17 +196,16 @@ namespace Strive.Network.Messaging
                 if (client.TcpSocket == null)
                     return;
 
-                if (ar != client._expectingReadResult)
-                {
-                    // this is the result of a previous connection, we discard it
-                    return;
-                }
-
                 int bytesRead;
                 try
                 {
                     // Read data from the remote device.
                     bytesRead = client.TcpSocket.EndReceive(ar);
+                }
+                catch (ArgumentException)
+                {
+                    // this is the result of a previous connection, we discard it
+                    return;
                 }
                 catch (SocketException e)
                 {
@@ -281,7 +279,6 @@ namespace Strive.Network.Messaging
             }
         }
 
-        private IAsyncResult _expectingSendResult;
         private void BeginSending()
         {
             IMessage message;
@@ -312,7 +309,7 @@ namespace Strive.Network.Messaging
 
                 try
                 {
-                    _expectingSendResult = TcpSocket.BeginSend(
+                    TcpSocket.BeginSend(
                         buffer, 0, buffer.Length, 0,
                         new AsyncCallback(SendTcpCallback), this);
                 }
@@ -335,16 +332,15 @@ namespace Strive.Network.Messaging
                     return;
                 }
 
-                if (ar != client._expectingSendResult)
-                {
-                    // this is the result of a previous connection, we discard it
-                    return;
-                }
-
                 try
                 {
                     // Complete sending the data to the remote device.
                     client.TcpSocket.EndSend(ar);
+                }
+                catch (ArgumentException)
+                {
+                    // this is the result of a previous connection, we discard it
+                    return;
                 }
                 catch (SocketException se)
                 {

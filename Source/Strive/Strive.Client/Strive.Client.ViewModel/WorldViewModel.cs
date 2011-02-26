@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
+using System.Windows.Input;
+using System.ComponentModel;
+using UpdateControls.XAML;
 using Strive.Client.Model;
 using Strive.Network.Messaging;
-using System.Windows.Input;
-using UpdateControls.XAML;
 
 
 namespace Strive.Client.ViewModel
@@ -12,7 +14,7 @@ namespace Strive.Client.ViewModel
     public class WorldViewModel
     {
         public InputBindings Bindings { get; private set; }
-        public DictionaryModel<string, EntityModel> WorldModel { get { return ServerConnection.WorldModel; } }
+        public PersistentTreeMapModel<string, EntityModel> WorldModel { get { return ServerConnection.WorldModel; } }
         public WorldNavigation Navigation { get; private set; }
         public ServerConnection ServerConnection { get; private set; }
 
@@ -33,6 +35,17 @@ namespace Strive.Client.ViewModel
             }
         }
 
+        public ICommand CreateEntity
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(() => WorldModel.Set(
+                        "foo",
+                        new EntityModel("foo", "bar", new Vector3D(1, 2, 3), Quaternion.Identity)));
+            }
+        }
+
         public PerspectiveViewModel CurrentPerspective { get; set; }
 
         public IEnumerable<EntityViewModel> Entities
@@ -46,7 +59,9 @@ namespace Strive.Client.ViewModel
 
         public void AddOrReplace(string name, string modelId, Vector3D position, Quaternion rotation)
         {
-            WorldModel.AddEntity(name, new EntityModel(name, modelId, position, rotation));
+            // TODO: hook this up to model changes!
+            var entityModel = new EntityModel(name, modelId, position, rotation);
+            WorldModel.Set(name, entityModel);
         }
 
         public void ClearMouseOverEntity()

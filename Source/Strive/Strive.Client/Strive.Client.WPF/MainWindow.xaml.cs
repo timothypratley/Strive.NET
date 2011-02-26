@@ -62,9 +62,9 @@ namespace Strive.Client.WPF
 
         private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new WorldView(World.ViewModel);
-            // TODO: this is a bit spagetti?
-            World.ViewModel.CurrentPerspective = view.Perspective;
+            var view = new PerspectiveView(WorldView.ViewModel);
+            // TODO: this is a bit spaghetti?
+            WorldView.ViewModel.CurrentPerspective = view.Perspective;
             view.ShowAsDocument(dockManager);
             view.Focus();
         }
@@ -79,6 +79,8 @@ namespace Strive.Client.WPF
             var r = new ResourceList();
             r.InputBindings.Add(
                 new KeyBinding(App.WorldViewModel.FollowSelected, Key.G, ModifierKeys.Control));
+            r.InputBindings.Add(
+                new KeyBinding(App.WorldViewModel.CreateEntity, Key.C, ModifierKeys.Control));
             BindAndShow(r, App.WorldViewModel);
         }
 
@@ -124,7 +126,7 @@ namespace Strive.Client.WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            World.Init(this, App.WorldViewModel);
+            WorldView.Init(this, App.WorldViewModel);
             //NewCmdExecuted(null, null);
         }
 

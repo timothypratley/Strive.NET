@@ -12,14 +12,12 @@ namespace Strive.Client.Model
 
         public DictionaryModel(){}
 
-        public DictionaryModel(IEnumerable<KeyValuePair<TKeyType, TValueType>> dictionary)
+        public DictionaryModel(IEnumerable<KeyValuePair<TKeyType, TValueType>> keyValuePairs)
         {
-            Contract.Requires<ArgumentNullException>(dictionary != null);
+            Contract.Requires<ArgumentNullException>(keyValuePairs != null);
 
-            foreach (var e in dictionary)
-            {
+            foreach (var e in keyValuePairs)
                 _entities[e.Key] = e.Value;
-            }
         }
 
         #region Independent properties

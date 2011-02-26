@@ -174,9 +174,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="World.cs" />
-    <Compile Include="WorldView.xaml.cs">
-      <DependentUpon>WorldView.xaml</DependentUpon>
+    <Compile Include="WorldView.cs" />
+    <Compile Include="PerspectiveView.xaml.cs">
+      <DependentUpon>PerspectiveView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +200,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="WorldView.xaml">
+    <Page Include="PerspectiveView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
