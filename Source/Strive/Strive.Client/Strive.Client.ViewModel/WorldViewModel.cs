@@ -52,7 +52,7 @@ namespace Strive.Client.ViewModel
         {
             get
             {
-                return WorldModel.Entities
+                return WorldModel.Values
                     .Select(em => new EntityViewModel(em, Navigation));
             }
         }
@@ -71,12 +71,12 @@ namespace Strive.Client.ViewModel
 
         public void SetMouseOverEntity(string name)
         {
-            Navigation.MouseOverEntity = WorldModel.GetEntity(name);
+            Navigation.MouseOverEntity = WorldModel.Get(name);
         }
 
         public void SelectAdd(string name)
         {
-            var entity = WorldModel.GetEntity(name);
+            var entity = WorldModel.Get(name);
             if (entity != null)
             {
                 Navigation.AddSelectedEntity(entity);
@@ -85,7 +85,7 @@ namespace Strive.Client.ViewModel
 
         public void Select(string name)
         {
-            var entity = WorldModel.GetEntity(name);
+            var entity = WorldModel.Get(name);
             if (entity != null)
             {
                 Navigation.SetSelectedEntity(entity);

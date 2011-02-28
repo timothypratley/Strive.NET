@@ -63,7 +63,7 @@ namespace Strive.Network.Messaging
         void Process(PositionUpdate m)
         {
             Log.Trace("bar");
-            EntityModel e = WorldModel.GetEntity(m.InstanceId.ToString());
+            EntityModel e = WorldModel.Get(m.InstanceId.ToString());
             e.Position = m.Position;
             e.Rotation = m.Rotation;
         }
