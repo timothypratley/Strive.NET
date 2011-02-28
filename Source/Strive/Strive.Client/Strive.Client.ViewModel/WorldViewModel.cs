@@ -14,7 +14,7 @@ namespace Strive.Client.ViewModel
     public class WorldViewModel
     {
         public InputBindings Bindings { get; private set; }
-        public PersistentTreeMapModel<string, EntityModel> WorldModel { get { return ServerConnection.WorldModel; } }
+        public RecordedMapModel<string, EntityModel> WorldModel { get { return ServerConnection.WorldModel; } }
         public WorldNavigation Navigation { get; private set; }
         public ServerConnection ServerConnection { get; private set; }
 

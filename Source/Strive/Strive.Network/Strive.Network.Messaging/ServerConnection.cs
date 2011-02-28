@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using Microsoft.CSharp.RuntimeBinder;
 using Strive.Client.Model;
@@ -13,19 +12,11 @@ namespace Strive.Network.Messaging
 {
     public class ServerConnection : Connection
     {
-        public readonly PersistentTreeMapModel<int, PersistentTreeMapModel<string, EntityModel>> History
-            = new PersistentTreeMapModel<int, PersistentTreeMapModel<string, EntityModel>>();
-
-        private int _worldVersion = 1;
-        public PersistentTreeMapModel<string, EntityModel> WorldModel
-        {
-            get { return History.Last(); }
-            set { History.Set(_worldVersion++, value); }
-        }
+        public RecordedMapModel<string, EntityModel> WorldModel { get; private set; }
 
         public ServerConnection()
         {
-            WorldModel = new PersistentTreeMapModel<string, EntityModel>(); 
+            WorldModel = new RecordedMapModel<string, EntityModel>(); 
             MessageRecieved += ConnectionMessageRecieved;
         }
 

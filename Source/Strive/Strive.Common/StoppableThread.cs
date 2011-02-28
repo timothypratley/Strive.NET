@@ -14,7 +14,7 @@ namespace Strive.Common
         Thread _thisThread;
         ThreadPriority _priority = ThreadPriority.Normal;
         readonly AutoResetEvent _iHaveStopped = new AutoResetEvent(false);
-        bool _isRunning = false;
+        bool _isRunning;
 
         public delegate void WhileRunning();
 

@@ -72,8 +72,8 @@ namespace Strive.Network.Messaging
                 _messageInQueue = new BlockingCollection<IMessage>();
                 _messageOutQueue = new BlockingCollection<IMessage>();
                 BeginReading();
-                (new Thread(BeginSending)).Start();
             }
+            (new Thread(BeginSending)).Start();
         }
 
         public void Start(IPEndPoint remoteEndPoint)
@@ -81,11 +81,7 @@ namespace Strive.Network.Messaging
             lock (this)
             {
                 if (TcpSocket != null)
-                {
                     Stop();
-                    // TODO: fix the swapping and don't sleep hax
-                    Thread.Sleep(100);
-                }
 
                 // Connect to the remote endpoint.
                 TcpSocket = new Socket(remoteEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -157,7 +153,7 @@ namespace Strive.Network.Messaging
                     return;
                 }
 
-                // Start reading/writting
+                // Start reading/writing
                 client.Start(client.TcpSocket);
 
                 client.Log.Info("Connected to " + client.TcpSocket.RemoteEndPoint);
