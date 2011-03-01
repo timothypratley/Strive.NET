@@ -22,6 +22,6 @@ namespace Strive.Client.Model
             return _recordedWorld.Get(key);
         }
 
-        public IEnumerable<EntityModel> Entities { get { return _recordedWorld.Entities; } }
+        public IEnumerable<EntityModel> Values { get { return _recordedWorld.Values; } }
     }
 }
