@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Microsoft.FSharp.Collections;
+using Microsoft.FSharp.Core;
 using UpdateControls;
 using System.Linq;
 
@@ -59,10 +60,11 @@ namespace Strive.DataModel
         public TValueType Get(TKeyType id)
         {
             _indEntities.OnGet();
-            return Map[id];
+            var option = Map.TryFind(id);
+            return option == FSharpOption<TValueType>.None ? default(TValueType) : option.Value;
         }
 
-        public IEnumerable<TValueType> Entities
+        public IEnumerable<TValueType> Values
         {
             get { _indEntities.OnGet(); return Map.Select(x=>x.Value); }
         }

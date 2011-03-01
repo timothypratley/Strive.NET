@@ -64,7 +64,7 @@ namespace Strive.Network.Messaging
 
         public void Start(Socket socket)
         {
-            lock (this)
+            lock (lockObject)
             {
                 TcpSocket = socket;
                 _tcpOffset = 0;
@@ -72,13 +72,13 @@ namespace Strive.Network.Messaging
                 _messageInQueue = new BlockingCollection<IMessage>();
                 _messageOutQueue = new BlockingCollection<IMessage>();
                 BeginReading();
+                BeginSending();
             }
-            (new Thread(BeginSending)).Start();
         }
 
         public void Start(IPEndPoint remoteEndPoint)
         {
-            lock (this)
+            lock (lockObject)
             {
                 if (TcpSocket != null)
                     Stop();
@@ -104,7 +104,7 @@ namespace Strive.Network.Messaging
 
         public void Stop()
         {
-            lock (this)
+            lock (lockObject)
             {
                 if (_messageOutQueue != null)
                     _messageInQueue.CompleteAdding();
@@ -137,7 +137,7 @@ namespace Strive.Network.Messaging
         private static void ConnectTcpCallback(IAsyncResult ar)
         {
             var client = (Connection)ar.AsyncState;
-            lock (client)
+            lock (client.lockObject)
             {
                 try
                 {
@@ -164,7 +164,7 @@ namespace Strive.Network.Messaging
 
         private void BeginReading()
         {
-            lock (this)
+            lock (lockObject)
             {
                 // Begin reading
                 try
@@ -187,7 +187,7 @@ namespace Strive.Network.Messaging
             // Retrieve the state object and the client socket 
             // from the async state object.
             var client = (Connection)ar.AsyncState;
-            lock (client)
+            lock (client.lockObject)
             {
                 if (client.TcpSocket == null)
                     return;
@@ -257,9 +257,10 @@ namespace Strive.Network.Messaging
             }
         }
 
+        private object lockObject = new object();
         public virtual bool Send(IMessage message)
         {
-            lock (this)
+            lock (lockObject)
             {
                 if (Status != ConnectionStatus.Connected)
                 {
@@ -276,6 +277,11 @@ namespace Strive.Network.Messaging
         }
 
         private void BeginSending()
+        {
+            (new Thread(SendMessage)).Start();
+        }
+
+        private void SendMessage()
         {
             IMessage message;
             if (!_messageOutQueue.TryTake(out message, -1))
@@ -294,7 +300,7 @@ namespace Strive.Network.Messaging
                 return;
             }
 
-            lock (this)
+            lock (lockObject)
             {
 
                 if (TcpSocket == null || !TcpSocket.Connected)
@@ -321,7 +327,7 @@ namespace Strive.Network.Messaging
         private static void SendTcpCallback(IAsyncResult ar)
         {
             var client = (Connection)ar.AsyncState;
-            lock (client)
+            lock (client.lockObject)
             {
                 if (client.TcpSocket == null)
                 {
@@ -332,6 +338,9 @@ namespace Strive.Network.Messaging
                 {
                     // Complete sending the data to the remote device.
                     client.TcpSocket.EndSend(ar);
+
+                    // Send the next message
+                    client.BeginSending();
                 }
                 catch (ArgumentException)
                 {
@@ -344,30 +353,27 @@ namespace Strive.Network.Messaging
                     client.Stop();
                 }
             }
-
-            // Send the next message
-            client.BeginSending();
         }
 
         public IMessage PopNextMessage()
         {
-            lock (this)
-            {
-                IMessage message;
-                if (!_messageInQueue.TryTake(out message))
-                    Log.Info("In queue of messages exhausted");
+            IMessage message;
+            var x = _messageInQueue;
+            if (x == null)
+                Log.Warn("Could not pop message, no queue");
+            else if (!x.TryTake(out message))
+                Log.Info("In queue of messages exhausted");
+            else
                 return message;
-            }
+            return null;
         }
 
         public int MessageCount
         {
             get
             {
-                lock (this)
-                {
-                    return _messageInQueue == null ? 0 : _messageInQueue.Count;
-                }
+                var x = _messageInQueue;
+                return x == null ? 0 : x.Count;
             }
         }
     }

@@ -51,7 +51,7 @@ namespace Strive.Client.ViewModel
         {
             get
             {
-                return WorldModel.Entities
+                return WorldModel.Values
                     .Select(em => new EntityViewModel(em, Navigation));
             }
         }
