@@ -22,7 +22,7 @@ namespace Strive.Client.WPF
         static readonly ILog Log = LogManager.GetCurrentClassLogger();
         public static WorldViewModel WorldViewModel;
         public static ServerConnection ServerConnection;
-        public static DictionaryModel<string, EntityModel> WorldModel;
+        public static WorldModel WorldModel;
         public static LogModel LogModel;
         public static Engine ServerEngine = new Engine();
 

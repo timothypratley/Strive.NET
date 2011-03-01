@@ -14,7 +14,7 @@ namespace Strive.Client.ViewModel
     public class WorldViewModel
     {
         public InputBindings Bindings { get; private set; }
-        public RecordedMapModel<string, EntityModel> WorldModel { get { return ServerConnection.WorldModel; } }
+        public WorldModel WorldModel { get { return ServerConnection.WorldModel; } }
         public WorldNavigation Navigation { get; private set; }
         public ServerConnection ServerConnection { get; private set; }
 
@@ -41,7 +41,6 @@ namespace Strive.Client.ViewModel
             {
                 return MakeCommand
                     .Do(() => WorldModel.Set(
-                        "foo",
                         new EntityModel("foo", "bar", new Vector3D(1, 2, 3), Quaternion.Identity)));
             }
         }
@@ -57,11 +56,9 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public void AddOrReplace(string name, string modelId, Vector3D position, Quaternion rotation)
+        public void Set(string name, string modelId, Vector3D position, Quaternion rotation)
         {
-            // TODO: hook this up to model changes!
-            var entityModel = new EntityModel(name, modelId, position, rotation);
-            WorldModel.Set(name, entityModel);
+            WorldModel.Set(new EntityModel(name, modelId, position, rotation));
         }
 
         public void ClearMouseOverEntity()
@@ -71,12 +68,12 @@ namespace Strive.Client.ViewModel
 
         public void SetMouseOverEntity(string name)
         {
-            Navigation.MouseOverEntity = WorldModel.GetEntity(name);
+            Navigation.MouseOverEntity = WorldModel.Get(name);
         }
 
         public void SelectAdd(string name)
         {
-            var entity = WorldModel.GetEntity(name);
+            var entity = WorldModel.Get(name);
             if (entity != null)
             {
                 Navigation.AddSelectedEntity(entity);
@@ -85,7 +82,7 @@ namespace Strive.Client.ViewModel
 
         public void Select(string name)
         {
-            var entity = WorldModel.GetEntity(name);
+            var entity = WorldModel.Get(name);
             if (entity != null)
             {
                 Navigation.SetSelectedEntity(entity);

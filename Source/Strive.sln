@@ -26,6 +26,11 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tests", "Strive\Tests\Tests.fsproj", "{648059BF-BAF1-49E3-8FE4-4BB29898B8DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31CEEF19-BBA2-40B5-8BA7-557A30BAADB4}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Strive.vsmdi = Strive.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messaging", "Strive\Strive.Network\Strive.Network.Messaging\Strive.Network.Messaging.csproj", "{757BF7D3-B811-48D7-AE27-0842B0522536}"
 EndProject
@@ -37,7 +42,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.DataModel", "Strive\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messaging.Tests", "Strive\Strive.Network\Strive.Network.Messaging.Tests\Strive.Network.Messaging.Tests.csproj", "{21C1E2B6-18A9-4825-A43C-D2D9AD24C277}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.Model.Tests", "Strive\Strive.Client\Strive.Client.Model.Tests\Strive.Client.Model.Tests.csproj", "{777B24B3-268C-46D0-A77E-DB34003AEBB4}"
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Strive.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -305,6 +315,21 @@ Global
 		{21C1E2B6-18A9-4825-A43C-D2D9AD24C277}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{21C1E2B6-18A9-4825-A43C-D2D9AD24C277}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{21C1E2B6-18A9-4825-A43C-D2D9AD24C277}.StrongMagic|x86.ActiveCfg = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.Release|x86.ActiveCfg = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
+		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

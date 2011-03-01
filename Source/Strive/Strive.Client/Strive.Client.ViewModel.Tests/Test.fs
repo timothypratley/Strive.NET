@@ -25,6 +25,6 @@ type ``my top level text``() = class
 
     [<Test>]
     member self.``Can host``() =
-        wvm.AddOrReplace("foo","bar",new Vector3D(), new Quaternion())
+        wvm.Set("foo","bar",new Vector3D(), new Quaternion())
 
 end

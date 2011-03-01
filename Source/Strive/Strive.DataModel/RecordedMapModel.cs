@@ -5,34 +5,34 @@ using Microsoft.FSharp.Collections;
 using UpdateControls;
 using System.Linq;
 
-namespace Strive.Client.Model
+namespace Strive.DataModel
 {
+    /// <summary>
+    /// Objects stored in this Map need to be immutable to ensure they are not modified externally,
+    /// so that all changes are recorded in the history.
+    /// History is stored in an ordered map of version to state,
+    /// where the state is a map of keys to values.
+    /// </summary>
     public class RecordedMapModel<TKeyType, TValueType> : IEnumerable<TValueType>
     {
-        // TODO: choose a better data-structure for the history
-        public readonly List<FSharpMap<TKeyType, TValueType>> History = new List<FSharpMap<TKeyType, TValueType>>();
+        private FSharpMap<int, FSharpMap<TKeyType, TValueType>> _history
+            = new FSharpMap<int, FSharpMap<TKeyType, TValueType>>(
+                Enumerable.Empty<Tuple<int,FSharpMap<TKeyType,TValueType>>>());
 
         public int CurrentVersion { get; private set; }
         public RecordedMapModel()
         {
+            CurrentVersion = -1;
             Clear();
         }
 
         private FSharpMap<TKeyType, TValueType> Map
         {
-            get
-            {
-                return History.First();
-            }
-            set
-            {
-                // TODO: store the version number with the item
-                ++CurrentVersion;
-                History.Add(value);
-            }
+            get { return _history.LastOrDefault().Value; }
+            set { _history = _history.Add(++CurrentVersion, value); }
         }
 
-        public RecordedMapModel(IEnumerable<KeyValuePair<TKeyType, TValueType>> keyValuePairs)
+        public RecordedMapModel(IEnumerable<KeyValuePair<TKeyType, TValueType>> keyValuePairs) : this()
         {
             Contract.Requires<ArgumentNullException>(keyValuePairs != null);
 
@@ -53,10 +53,10 @@ namespace Strive.Client.Model
         public void Remove(TKeyType key)
         {
             _indEntities.OnSet();
-            Map.Remove(key);
+            Map = Map.Remove(key);
         }
 
-        public TValueType GetEntity(TKeyType id)
+        public TValueType Get(TKeyType id)
         {
             _indEntities.OnGet();
             return Map[id];

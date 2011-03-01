@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
-
 using UpdateControls.XAML;
-
+using Strive.DataModel;
 using Strive.Client.Model;
 using Strive.Common;
 
@@ -113,7 +111,7 @@ namespace Strive.Client.ViewModel
                         else
                         {
                             UnFollow();
-                            _followEntities.AddEntity(target.Name, target);
+                            _followEntities.Add(target.Name, target);
                             WorldViewModel.Select(target.Name);
                         }
                     });
@@ -200,9 +198,7 @@ namespace Strive.Client.ViewModel
 
                 // Send update if required
                 if (Position != initialPosition || Rotation != initialRotation)
-                {
                     WorldViewModel.ServerConnection.MyPosition(PossessingId, Position, Rotation);
-                }
             }
         }
 
@@ -258,23 +254,23 @@ namespace Strive.Client.ViewModel
             // Set Position and Rotation
             Rotation = new Quaternion(ZAxis, Heading) * new Quaternion(YAxis, -Tilt);
 
-            if (movementPerpendicular != 0 || movementForward != 0 || movementUp != 0)
-            {
-                var transformHeading = new Matrix3D();
-                transformHeading.Rotate(new Quaternion(ZAxis, Heading));
+            if (movementPerpendicular == 0 && movementForward == 0 && movementUp == 0)
+                return;
 
-                var changeInPosition = new Vector3D(
-                    movementForward * _landSpeed,
-                    movementPerpendicular * _landSpeed,
-                    movementUp * (DistanceRangeHigh - DistanceRangeLow) / 10.0);
+            var transformHeading = new Matrix3D();
+            transformHeading.Rotate(new Quaternion(ZAxis, Heading));
 
-                Position += changeInPosition * transformHeading * deltaT * speedModifier;
+            var changeInPosition = new Vector3D(
+                movementForward * _landSpeed,
+                movementPerpendicular * _landSpeed,
+                movementUp * (DistanceRangeHigh - DistanceRangeLow) / 10.0);
 
-                if (Position.Z < DistanceRangeLow)
-                    Position.Z = DistanceRangeLow;
-                else if (Position.Z > DistanceRangeHigh)
-                    Position.Z = DistanceRangeHigh;
-            }
+            Position += changeInPosition * transformHeading * deltaT * speedModifier;
+
+            if (Position.Z < DistanceRangeLow)
+                Position.Z = DistanceRangeLow;
+            else if (Position.Z > DistanceRangeHigh)
+                Position.Z = DistanceRangeHigh;
         }
 
         private void ApplyCreationActions()

@@ -12,11 +12,11 @@ namespace Strive.Network.Messaging
 {
     public class ServerConnection : Connection
     {
-        public RecordedMapModel<string, EntityModel> WorldModel { get; private set; }
+        public WorldModel WorldModel { get; private set; }
 
         public ServerConnection()
         {
-            WorldModel = new RecordedMapModel<string, EntityModel>(); 
+            WorldModel = new WorldModel(); 
             MessageRecieved += ConnectionMessageRecieved;
         }
 
@@ -42,17 +42,16 @@ namespace Strive.Network.Messaging
 
         void Process(TimeAndWeather m)
         {
-            Log.Info("Recieved Time and Weather " + m.ServerNow);
+            Log.Info("Received Time and Weather " + m.ServerNow);
         }
 
         void Process(AddMobile m)
         {
-            Log.Info("Recieved message" + m);
-            WorldModel.Set(m.Mobile.ObjectInstanceId.ToString(),
-                                 new EntityModel(m.Mobile.ObjectInstanceId.ToString(),
-                                                 "Robot",
-                                                 m.Mobile.Position,
-                                                 m.Mobile.Rotation));
+            Log.Info("Received message" + m);
+            WorldModel.Set(new EntityModel(m.Mobile.ObjectInstanceId.ToString(),
+                                           "Robot",
+                                           m.Mobile.Position,
+                                           m.Mobile.Rotation));
         }
 
         void Process(AddTerrain m)
@@ -63,9 +62,8 @@ namespace Strive.Network.Messaging
         void Process(PositionUpdate m)
         {
             Log.Trace("bar");
-            EntityModel e = WorldModel.GetEntity(m.InstanceId.ToString());
-            e.Position = m.Position;
-            e.Rotation = m.Rotation;
+            EntityModel e = WorldModel.Get(m.InstanceId.ToString());
+            WorldModel.Set(new EntityModel(e.Name, e.ModelId, m.Position, m.Rotation));
         }
 
         #endregion

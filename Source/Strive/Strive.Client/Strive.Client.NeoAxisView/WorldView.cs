@@ -57,7 +57,7 @@ namespace Strive.Client.NeoAxisView
                 for (int y = 0; y < 2; y++)
                     for (int z = 0; z < 2; z++)
                     {
-                        ViewModel.AddOrReplace(
+                        ViewModel.Set(
                             string.Concat(x,y,z),
                             "StaticBox",
                             new Vector3D(x, y, z),
@@ -85,7 +85,7 @@ namespace Strive.Client.NeoAxisView
                 if (obj.Name.Length == 0)
                     return;
 
-                ViewModel.AddOrReplace(obj.Name, obj.Type.Name, obj.Position.ToVector3D(), obj.Rotation.ToQuaternion());
+                ViewModel.Set(obj.Name, obj.Type.Name, obj.Position.ToVector3D(), obj.Rotation.ToQuaternion());
             });
             return result;
         }
