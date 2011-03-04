@@ -4,6 +4,7 @@ using System.Windows.Media.Media3D;
 using Engine.MathEx;
 using Engine.MapSystem;
 using Engine.EntitySystem;
+using GameEntities;
 using WPFAppFramework;
 using Strive.Client.ViewModel;
 using System;
@@ -27,7 +28,20 @@ namespace Strive.Client.NeoAxisView
             //observable. += observable_PropertyChanged;
             //observable.
             //+= worldViewModel_CollectionChanged;)
+
+            ViewModel.WorldChanged += ViewModel_WorldChanged;
             return result;
+        }
+
+        static void ViewModel_WorldChanged(object sender, EventArgs e)
+        {
+            foreach (EntityViewModel entity in ViewModel.Entities)
+            {
+                var unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
+                unit.Position = entity.Entity.Position.ToVec3();
+                unit.Rotation = entity.Entity.Rotation.ToQuat();
+                unit.PostCreate();
+            }
         }
 
         static void observable_PropertyChanged(object sender, PropertyChangedEventArgs e)

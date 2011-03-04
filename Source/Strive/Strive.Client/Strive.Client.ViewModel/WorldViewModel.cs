@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media.Media3D;
 using System.Windows.Input;
-using System.ComponentModel;
+using System.Windows.Media.Media3D;
+using System.Windows.Threading;
+using UpdateControls;
 using UpdateControls.XAML;
 using Strive.Client.Model;
 using Strive.Network.Messaging;
@@ -23,6 +24,21 @@ namespace Strive.Client.ViewModel
             ServerConnection = connection;
             Bindings = new InputBindings();
             Navigation = new WorldNavigation();
+
+            _depWorldModel = new Dependent(UpdateWorldModel);
+            _depWorldModel.Invalidated += () =>
+                Dispatcher.CurrentDispatcher.BeginInvoke((Action)_depWorldModel.OnGet);
+            _depWorldModel.OnGet();
+        }
+
+        public event EventHandler WorldChanged;
+        private readonly Dependent _depWorldModel;
+        void UpdateWorldModel()
+        {
+            var discard = WorldModel.Values;
+            var eh = WorldChanged;
+            if (eh != null)
+                eh(this, new EventArgs());
         }
 
         public ICommand FollowSelected
@@ -75,18 +91,14 @@ namespace Strive.Client.ViewModel
         {
             var entity = WorldModel.Get(name);
             if (entity != null)
-            {
                 Navigation.AddSelectedEntity(entity);
-            }
         }
 
         public void Select(string name)
         {
             var entity = WorldModel.Get(name);
             if (entity != null)
-            {
                 Navigation.SetSelectedEntity(entity);
-            }
         }
 
         public IEnumerable<EntityViewModel> SelectedEntities
@@ -99,13 +111,7 @@ namespace Strive.Client.ViewModel
         }
 
         // TODO: can xaml just use the MouseOverEntity instead?
-        public bool IsMouseOverEntity
-        {
-            get
-            {
-                return Navigation.MouseOverEntity != null;
-            }
-        }
+        public bool IsMouseOverEntity { get { return Navigation.MouseOverEntity != null; } }
 
         public EntityViewModel MouseOverEntity
         {
