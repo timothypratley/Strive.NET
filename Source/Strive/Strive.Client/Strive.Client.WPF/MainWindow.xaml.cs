@@ -62,9 +62,9 @@ namespace Strive.Client.WPF
 
         private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var view = new PerspectiveView(WorldView.ViewModel);
+            var view = new PerspectiveView(WorldView.WorldViewModel);
             // TODO: this is a bit spaghetti?
-            WorldView.ViewModel.CurrentPerspective = view.Perspective;
+            WorldView.WorldViewModel.CurrentPerspective = view.Perspective;
             view.ShowAsDocument(dockManager);
             view.Focus();
         }

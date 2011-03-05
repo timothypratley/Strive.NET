@@ -14,6 +14,7 @@ namespace Strive.Client.ViewModel
         {
             Contract.Requires<ArgumentNullException>(entity != null);
             Contract.Requires<ArgumentNullException>(navigation != null);
+
             _entity = entity;
             _entityNavigation = navigation;
         }

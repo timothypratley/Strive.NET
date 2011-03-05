@@ -1,23 +1,26 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Windows;
 using System.ComponentModel;
 using System.Windows.Media.Media3D;
+using System.Windows.Threading;
 using Engine.MathEx;
 using Engine.MapSystem;
 using Engine.EntitySystem;
-using GameEntities;
 using WPFAppFramework;
+using UpdateControls;
 using Strive.Client.ViewModel;
-using System;
 
 
 namespace Strive.Client.NeoAxisView
 {
     public static class WorldView
     {
-        public static WorldViewModel ViewModel;
+        public static WorldViewModel WorldViewModel;
         public static bool Init(Window mainWindow, WorldViewModel worldViewModel)
         {
-            ViewModel = worldViewModel;
+            WorldViewModel = worldViewModel;
             var result = WPFAppWorld.Init(mainWindow, "user:Logs/Strive.log") && LoadMap();
             //var result = LoadTest();
             //worldViewModel.EntityAdded += worldViewModel_EntityAdded;
@@ -29,18 +32,40 @@ namespace Strive.Client.NeoAxisView
             //observable.
             //+= worldViewModel_CollectionChanged;)
 
-            ViewModel.WorldChanged += ViewModel_WorldChanged;
             return result;
         }
 
-        static void ViewModel_WorldChanged(object sender, EventArgs e)
+        private static readonly Dependent DepWorldModel = new Dependent(UpdateWorldModel);
+
+        static WorldView()
         {
-            foreach (EntityViewModel entity in ViewModel.Entities)
+            DepWorldModel.Invalidated += () =>
+                Dispatcher.CurrentDispatcher.BeginInvoke((Action)DepWorldModel.OnGet);
+            DepWorldModel.OnGet();
+        }
+
+        static readonly HashSet<string> PreviousMembers = new HashSet<string>();
+        private static void UpdateWorldModel()
+        {
+            var discard = WorldViewModel.WorldModel.Values;
+
+            var bin = WorldViewModel.Entities;
+            foreach (var entity in bin)
             {
-                var unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
-                unit.Position = entity.Entity.Position.ToVec3();
-                unit.Rotation = entity.Entity.Rotation.ToQuat();
-                unit.PostCreate();
+                var e = (MapObject)Entities.Instance.GetByName(entity.Entity.Name);
+                if (e == null)
+                {
+                    e = (MapObject)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
+                    e.PostCreate();
+                }
+                e.Position = entity.Entity.Position.ToVec3();
+                e.Rotation = entity.Entity.Rotation.ToQuat();
+            }
+
+            var h = new HashSet<string>(bin.Select(e => e.Entity.Name));
+            foreach (var e in Entities.Instance.EntitiesCollection.Where(e => !h.Contains(e.Name)))
+            {
+                Entities.Instance.EntitiesCollection.Remove(e);
             }
         }
 
@@ -71,7 +96,7 @@ namespace Strive.Client.NeoAxisView
                 for (int y = 0; y < 2; y++)
                     for (int z = 0; z < 2; z++)
                     {
-                        ViewModel.Set(
+                        WorldViewModel.Set(
                             string.Concat(x,y,z),
                             "StaticBox",
                             new Vector3D(x, y, z),
@@ -99,7 +124,7 @@ namespace Strive.Client.NeoAxisView
                 if (obj.Name.Length == 0)
                     return;
 
-                ViewModel.Set(obj.Name, obj.Type.Name, obj.Position.ToVector3D(), obj.Rotation.ToQuaternion());
+                WorldViewModel.Set(obj.Name, obj.Type.Name, obj.Position.ToVector3D(), obj.Rotation.ToQuaternion());
             });
             return result;
         }

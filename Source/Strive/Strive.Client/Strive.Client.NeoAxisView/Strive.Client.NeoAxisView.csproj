@@ -150,6 +150,9 @@
     <Reference Include="UISystem">
       <HintPath>..\..\..\ThirdParty\NeoAxis\UISystem.dll</HintPath>
     </Reference>
+    <Reference Include="UpdateControls, Version=2.1.1.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.dll</HintPath>
+    </Reference>
     <Reference Include="UpdateControls.XAML, Version=2.1.1.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.XAML.dll</HintPath>
