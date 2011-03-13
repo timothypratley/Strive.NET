@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.FSharp.Collections;
 using Strive.DataModel;
 
 namespace Strive.Client.Model
@@ -6,6 +7,12 @@ namespace Strive.Client.Model
     public class WorldModel
     {
         private readonly RecordedMapModel<string, EntityModel> _recordedWorld = new RecordedMapModel<string, EntityModel>();
+
+        // TODO: don't pass up a fsharp map
+        public FSharpMap<string, EntityModel> Snap()
+        {
+            return _recordedWorld.Map;
+        }
 
         public bool ContainsKey(string key)
         {

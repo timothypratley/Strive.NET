@@ -11,6 +11,8 @@ using Engine.EntitySystem;
 using WPFAppFramework;
 using UpdateControls;
 using Strive.Client.ViewModel;
+using Microsoft.FSharp.Core;
+using Strive.Client.Model;
 
 
 namespace Strive.Client.NeoAxisView
@@ -21,72 +23,32 @@ namespace Strive.Client.NeoAxisView
         public static bool Init(Window mainWindow, WorldViewModel worldViewModel)
         {
             WorldViewModel = worldViewModel;
-            var result = WPFAppWorld.Init(mainWindow, "user:Logs/Strive.log") && LoadMap();
+            var result = WPFAppWorld.Init(mainWindow, "user:Logs/Strive.log")
+                && LoadMap();
             //var result = LoadTest();
-            //worldViewModel.EntityAdded += worldViewModel_EntityAdded;
-            //dynamic observable = (ObjectInstance<WorldViewModel>)ForView.Wrap(worldViewModel);
-            //observable.Entities.CollectionChanged += new CollectionChangeEventHandler(worldViewModel_CollectionChanged);
-            //var eh = observable.ClassInstance.GetEvents()["EntityAdded"];
-            //eh.AddEventHandler(observable, new CollectionChangeEventHandler(worldViewModel_CollectionChanged));
-            //observable. += observable_PropertyChanged;
-            //observable.
-            //+= worldViewModel_CollectionChanged;)
 
             return result;
         }
 
-        private static readonly Dependent DepWorldModel = new Dependent(UpdateWorldModel);
-
-        static WorldView()
+        public static void UpdateFromWorldModel()
         {
-            DepWorldModel.Invalidated += () =>
-                Dispatcher.CurrentDispatcher.BeginInvoke((Action)DepWorldModel.OnGet);
-            DepWorldModel.OnGet();
-        }
-
-        static readonly HashSet<string> PreviousMembers = new HashSet<string>();
-        private static void UpdateWorldModel()
-        {
-            var discard = WorldViewModel.WorldModel.Values;
-
-            var bin = WorldViewModel.Entities;
-            foreach (var entity in bin)
+            // add or update all entities in the current scene
+            // Remove entities that should no longer be in the scene
+            var m = WorldViewModel.WorldModel.Snap();
+            foreach (var e in Entities.Instance.EntitiesCollection
+                .Where(x => x is MapObject)
+                .Cast<MapObject>())
             {
-                var e = (MapObject)Entities.Instance.GetByName(entity.Entity.Name);
-                if (e == null)
+                // TODO: remove reference to fsharpmap use an interface?
+                var x = m.TryFind(e.Name);
+                if (x == FSharpOption<EntityModel>.None)
+                    e.SetShouldDelete();
+                else
                 {
-                    e = (MapObject)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
-                    e.PostCreate();
+                    var z = x.Value;
+                    e.Position = z.Position.ToVec3();
+                    e.Rotation = z.Rotation.ToQuat();
                 }
-                e.Position = entity.Entity.Position.ToVec3();
-                e.Rotation = entity.Entity.Rotation.ToQuat();
-            }
-
-            var h = new HashSet<string>(bin.Select(e => e.Entity.Name));
-            foreach (var e in Entities.Instance.EntitiesCollection.Where(e => !h.Contains(e.Name)))
-            {
-                Entities.Instance.EntitiesCollection.Remove(e);
-            }
-        }
-
-        static void observable_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            Console.Write(e.PropertyName);
-        }
-
-        static void worldViewModel_CollectionChanged(object sender, CollectionChangeEventArgs e)
-        {
-            if (e.Action == CollectionChangeAction.Add)
-            {
-                /*
-                foreach (EntityViewModel entity in e.NewItems)
-                {
-                    var unit = (RTSUnit) Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
-                    unit.Position = entity.Entity.Position.ToVec3();
-                    unit.Rotation = entity.Entity.Rotation.ToQuat();
-                    unit.PostCreate();
-                }
-                 */
             }
         }
 

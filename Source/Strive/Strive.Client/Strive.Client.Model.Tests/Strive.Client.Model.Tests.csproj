@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="RecordedMapModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Strive.DataModel\Strive.DataModel.csproj">

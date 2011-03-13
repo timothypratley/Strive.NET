@@ -25,15 +25,12 @@ namespace Strive.Client.NeoAxisView
             Vec3 cameraPosition = camera.Position;
 
             //generate visibled objects list 
-            //var forty = EntityTypes.Instance.GetByName("Forty");
             Map.Instance.GetObjectsByScreenRectangle(camera, new Rect(0, 0, 1, 1), delegate(MapObject obj)
             {
                 if (!obj.Visible)
                     return;
                 if (!obj.EditorSelectable)
                     return;
-                //if (obj.Type == forty)
-                //return;
 
                 float lengthSqr = (obj.Position - cameraPosition).LengthSqr();
                 if (lengthSqr > visibleDistance * visibleDistance)

@@ -27,10 +27,18 @@ namespace Strive.DataModel
             Clear();
         }
 
-        private FSharpMap<TKeyType, TValueType> Map
+        public FSharpMap<TKeyType, TValueType> Map
         {
-            get { return _history.LastOrDefault().Value; }
-            set { _history = _history.Add(++CurrentVersion, value); }
+            get
+            {
+                _indEntities.OnGet();
+                return _history.LastOrDefault().Value;
+            }
+            set
+            {
+                _indEntities.OnSet();
+                _history = _history.Add(++CurrentVersion, value);
+            }
         }
 
         public RecordedMapModel(IEnumerable<KeyValuePair<TKeyType, TValueType>> keyValuePairs) : this()
