@@ -56,8 +56,8 @@ namespace Strive.Client.ViewModel
             get
             {
                 return MakeCommand
-                    .Do(() => WorldModel.Set(
-                        new EntityModel("foo", "bar", new Vector3D(1, 2, 3), Quaternion.Identity)));
+                    .When(() => CurrentPerspective != null)
+                    .Do(() => CurrentPerspective.CreateEntity.Execute(null));
             }
         }
 

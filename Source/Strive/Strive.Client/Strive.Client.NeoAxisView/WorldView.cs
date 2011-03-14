@@ -23,72 +23,36 @@ namespace Strive.Client.NeoAxisView
         public static bool Init(Window mainWindow, WorldViewModel worldViewModel)
         {
             WorldViewModel = worldViewModel;
-            var result = WPFAppWorld.Init(mainWindow, "user:Logs/Strive.log")
-                && LoadMap();
-            //var result = LoadTest();
-
-            return result;
+            return WPFAppWorld.Init(mainWindow, "user:Logs/Strive.log")
+                && WPFAppWorld.MapLoad("Maps/Gr1d/Map.map", true);
         }
 
         public static void UpdateFromWorldModel()
         {
-            // add or update all entities in the current scene
-            // Remove entities that should no longer be in the scene
+            // TODO: remove reference to fsharpmap use an interface?
             var m = WorldViewModel.WorldModel.Snap();
-            foreach (var e in Entities.Instance.EntitiesCollection
-                .Where(x => x is MapObject)
-                .Cast<MapObject>())
+
+            // Add or update all entities in the current scene
+            foreach (var kvp in m)
             {
-                // TODO: remove reference to fsharpmap use an interface?
-                var x = m.TryFind(e.Name);
-                if (x == FSharpOption<EntityModel>.None)
-                    e.SetShouldDelete();
-                else
+                var e = kvp.Value;
+                var ee = (MapObject)Entities.Instance.GetByName(e.Name);
+                if (ee == null)
                 {
-                    var z = x.Value;
-                    e.Position = z.Position.ToVec3();
-                    e.Rotation = z.Rotation.ToQuat();
+                    ee = (MapObject)Entities.Instance.Create("StaticBox", Map.Instance);
+                    ee.Name = e.Name;
+                    ee.Position = e.Position.ToVec3();
+                    ee.Rotation = e.Rotation.ToQuat();
+                    ee.PostCreate();
                 }
+                ee.Position = e.Position.ToVec3();
+                ee.Rotation = e.Rotation.ToQuat();
             }
-        }
 
-        public static bool LoadTest()
-        {
-            for (int x = 0; x < 2; x++)
-                for (int y = 0; y < 2; y++)
-                    for (int z = 0; z < 2; z++)
-                    {
-                        WorldViewModel.Set(
-                            string.Concat(x,y,z),
-                            "StaticBox",
-                            new Vector3D(x, y, z),
-                            Quaternion.Identity);
-                    }
-            return true;
-        }
-
-        public static bool LoadMap()
-        {
-            bool result = WPFAppWorld.MapLoad("Maps/Gr1d/Map.map", true);
-            for (int x = 0; x < 10; x++)
-                for (int y = 0; y < 10; y++)
-                    for (int z = 0; z < 10; z++)
-                    {
-                        var mo = (MapObject)Entities.Instance.Create("StaticBox", Map.Instance);
-                        mo.Position = new Vec3(x * 20, y * 20, z * 20);
-                        mo.PostCreate();
-                    }
-            Map.Instance.GetObjects(new Sphere(Vec3.Zero, 100000), delegate(MapObject obj) {
-                if (!obj.Visible)
-                    return;
-                if (!obj.EditorSelectable)
-                    return;
-                if (obj.Name.Length == 0)
-                    return;
-
-                WorldViewModel.Set(obj.Name, obj.Type.Name, obj.Position.ToVector3D(), obj.Rotation.ToQuaternion());
-            });
-            return result;
+            // Remove entities that should no longer be in the scene
+            foreach (var e3 in Entities.Instance.EntitiesCollection
+                .Where(x => x is MapObject && !m.ContainsKey(x.Name)))
+                e3.SetShouldDelete();
         }
 
         public static void Shutdown()

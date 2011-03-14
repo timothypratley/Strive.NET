@@ -44,7 +44,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messaging.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.Model.Tests", "Strive\Strive.Client\Strive.Client.Model.Tests\Strive.Client.Model.Tests.csproj", "{777B24B3-268C-46D0-A77E-DB34003AEBB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.DataModel.Tests", "Strive\Strive.DataModel.Tests\Strive.DataModel.Tests.csproj", "{694FD147-F833-49B8-8400-B05BCF99222A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.NeoAxisViewTests", "Strive\Strive.Client\NeoAxisViewTests\Strive.Client.NeoAxisViewTests.csproj", "{22192140-DB43-4403-9176-EC43516D1510}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -332,21 +332,21 @@ Global
 		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{777B24B3-268C-46D0-A77E-DB34003AEBB4}.StrongMagic|x86.ActiveCfg = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.Release|x86.ActiveCfg = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
-		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|x86.ActiveCfg = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.Release|x86.ActiveCfg = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
+		{22192140-DB43-4403-9176-EC43516D1510}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

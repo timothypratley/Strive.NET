@@ -75,11 +75,12 @@ namespace Strive.Server.Logic
             _log.Info("Global.modelSchema loaded");
 
             // find highX and lowX for our world dimensions
-            // refactored in an attempt to increase performance:
-            _highX = 0;
-            _lowX = 0;
-            _highZ = 0;
-            _lowZ = 0;
+
+            // TODO: make expandable universe, don't code these values
+            _highX = 1000;
+            _lowX = -1000;
+            _highZ = 1000;
+            _lowZ = -1000;
             foreach (Schema.ObjectInstanceRow r in Global.ModelSchema.ObjectInstance.Rows)
             {
                 if (_highX == 0)

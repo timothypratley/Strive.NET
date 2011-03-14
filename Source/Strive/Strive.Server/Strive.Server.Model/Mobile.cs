@@ -3,20 +3,20 @@ using Strive.Common;
 
 namespace Strive.Server.Model
 {
-	public class Mobile : PhysicalObject
-	{
-		public int Level;
-		public int Cognition;
-		public int Willpower;
-		public int Dexterity;
-		public int Strength;
-		public int Constitution;
-		public EnumRace Race;
-		public EnumMobileSize MobileSize;
-		public EnumMobileState MobileState;
-		public bool IsPlayer;
+    public class Mobile : PhysicalObject
+    {
+        public int Level;
+        public int Cognition;
+        public int Willpower;
+        public int Dexterity;
+        public int Strength;
+        public int Constitution;
+        public EnumRace Race;
+        public EnumMobileSize MobileSize;
+        public EnumMobileState MobileState;
+        public bool IsPlayer;
 
-		public Mobile() {}
+        public Mobile() {}
         public Mobile(
             Schema.TemplateMobileRow mobile,
             Schema.TemplateObjectRow template,
@@ -39,5 +39,5 @@ namespace Strive.Server.Model
             Energy = (float) instance.EnergyCurrent;
             IsPlayer = instance.GetMobilePossesableByPlayerRows().Length > 0;
         }
-	}
+    }
 }

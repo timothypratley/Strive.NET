@@ -57,14 +57,24 @@ namespace Strive.Network.Messaging
                     continue;
                 Object field = fi.GetValue(obj);
                 if (field == null)
-                    throw new Exception("Cannot serialise object with null fields");
+                    throw new Exception("Cannot serialize object with null fields");
 
-                // NB: we encode to a specific type,
+                // We encode to a specific type,
                 // this prevents encoding derived types,
                 // which would break the message protocol.
                 // derived types will be encoded as messages of the
                 // type they were assigned in the message_id lookup.
                 Encode(field, buffer, fi.FieldType);
+            }
+
+            foreach (PropertyInfo pi in t.GetProperties())
+            {
+                if (!pi.CanWrite)
+                    continue;
+                Object p = pi.GetValue(obj, null);
+                if (p == null)
+                    throw new Exception("Cannot serialize object with null properties");
+                Encode(p, buffer, pi.PropertyType);
             }
         }
 
@@ -82,12 +92,9 @@ namespace Strive.Network.Messaging
             {
                 byte[] encodedLength = BitConverter.GetBytes(obj.Length);
                 buffer.Write(encodedLength, 0, encodedLength.Length);
-                for (int j = 0; j < obj.Length; j++)
-                {
-                    // recursively encode the objects of the array
-                    object o = obj.GetValue(j);
+                // recursively encode the objects of the array
+                foreach (var o in ((Array)obj))
                     Encode(o, buffer, o.GetType());
-                }
             }
             else if (t.IsEnum)
             {
@@ -133,11 +140,10 @@ namespace Strive.Network.Messaging
 
             obj = FormatterServices.GetUninitializedObject(t);
 
-            foreach (FieldInfo fi in t.GetFields()
-                .Where(x => !x.IsStatic))
-            {
+            foreach (FieldInfo fi in t.GetFields().Where(x => !x.IsStatic))
                 fi.SetValue(obj, Decode(fi.FieldType, buffer, ref offset));
-            }
+            foreach (PropertyInfo pi in t.GetProperties().Where(x => x.CanWrite))
+                pi.SetValue(obj, Decode(pi.PropertyType, buffer, ref offset), null);
 
             return obj;
         }

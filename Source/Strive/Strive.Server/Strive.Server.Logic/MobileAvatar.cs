@@ -77,8 +77,12 @@ namespace Strive.Server.Logic
             // TODO: this will prolly change if we use anything more
             // advance than stick to ground.
             // changing state may have moved the mobile.
-            double altitude = World.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
-            Position.Y = altitude;
+            try
+            {
+                double altitude = World.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
+                Position.Y = altitude;
+            }
+            catch (Strive.Server.Logic.World.InvalidLocationException) { }
 
             // NB: MobileState message has position info
             // as it is likely that this will have changed
