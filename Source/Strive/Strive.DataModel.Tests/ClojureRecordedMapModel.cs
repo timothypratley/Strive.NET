@@ -16,8 +16,10 @@ namespace Strive.DataModel.Tests
     public class ClojureRecordedMapModel<TKeyType, TValueType> : IEnumerable<TValueType>
     {
         private IPersistentMap _history = PersistentTreeMap.EMPTY;
+        private IPersistentMap _currentMap = PersistentTreeMap.EMPTY;
 
         public int CurrentVersion { get; private set; }
+
         public ClojureRecordedMapModel()
         {
             CurrentVersion = -1;
@@ -26,8 +28,11 @@ namespace Strive.DataModel.Tests
 
         private IPersistentMap Map
         {
-            get { return (IPersistentMap)_history.LastOrDefault().val(); }
-            set { _history = _history.assoc(++CurrentVersion, value); }
+            get { return _currentMap; }
+            set {
+                _currentMap = value;
+                _history = _history.assoc(++CurrentVersion, value);
+            }
         }
 
         public ClojureRecordedMapModel(IEnumerable<KeyValuePair<TKeyType, TValueType>> keyValuePairs)

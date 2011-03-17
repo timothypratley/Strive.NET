@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Strive.Client.NeoAxisViewTests
+namespace Strive.Client.NeoAxisView.Tests
 {
     [TestClass]
     public class UnitTest1

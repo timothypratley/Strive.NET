@@ -19,6 +19,8 @@ namespace Strive.DataModel
         private FSharpMap<int, FSharpMap<TKeyType, TValueType>> _history
             = new FSharpMap<int, FSharpMap<TKeyType, TValueType>>(
                 Enumerable.Empty<Tuple<int,FSharpMap<TKeyType,TValueType>>>());
+        private FSharpMap<TKeyType, TValueType> _currentMap
+            = new FSharpMap<TKeyType,TValueType>(Enumerable.Empty<Tuple<TKeyType,TValueType>>());
 
         public int CurrentVersion { get; private set; }
         public RecordedMapModel()
@@ -32,11 +34,12 @@ namespace Strive.DataModel
             get
             {
                 _indEntities.OnGet();
-                return _history.LastOrDefault().Value;
+                return _currentMap;
             }
             set
             {
                 _indEntities.OnSet();
+                _currentMap = value;
                 _history = _history.Add(++CurrentVersion, value);
             }
         }

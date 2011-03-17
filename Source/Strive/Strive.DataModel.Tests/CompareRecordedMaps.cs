@@ -7,68 +7,19 @@ using clojure.lang;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using Microsoft.FSharp.Collections;
+using System.Runtime.InteropServices;
 
 
 namespace Strive.DataModel.Tests
 {
-    /// <summary>
-    /// Summary description for UnitTest1
-    /// </summary>
     [TestClass]
     public class CompareRecordedMaps
     {
-        public CompareRecordedMaps()
+        public class Item
         {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        class Obj
-        {
-            public int A { get; private set; }
-            public string B { get; private set; }
-            public Obj(int a, string b)
+            public int A { get; set; }
+            public string B { get; set; }
+            public Item(int a, string b)
             {
                 A = a;
                 B = b;
@@ -76,42 +27,91 @@ namespace Strive.DataModel.Tests
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void Performance()
         {
             Var.pushThreadBindings(RT.map(RT.CURRENT_NS, RT.CURRENT_NS.deref()));
-            var m1 = new RecordedMapModel<string, Obj>();
-            var m2 = new ClojureRecordedMapModel<string, Obj>();
-            var m3 = new Dictionary<string, Obj>();
-            var m4 = new FSharpMap<string, Obj>(Enumerable.Empty<Tuple<string,Obj>>());
+            var m1 = new RecordedMapModel<string, Item>();
+            var m2 = new ClojureRecordedMapModel<string, Item>();
+            var m3 = new Dictionary<string, Item>();
+            var m4 = new FSharpMap<string, Item>(Enumerable.Empty<Tuple<string,Item>>());
             var m5 = new PersistentTreeMap();
 
-            const int size = 1000;
+            const int size = 10000;
             var s = new Stopwatch();
             s.Start();
             for (var i = 0; i < size; i++)
-                m1.Set(i.ToString(), new Obj(i, i.ToString()));
+                m1.Set(i.ToString(), new Item(i, i.ToString()));
+            for (var i = 0; i < size * 100; i++)
+                m1.Get((i%size).ToString());
+            for (var i = 0; i < size; i++)
+                m1.Remove(i.ToString());
             s.Stop();
             Console.WriteLine("RecordedMapModel took " + s.Elapsed);
+
             s.Restart();
             for (var i = 0; i < size; i++)
-                m2.Set(i.ToString(), new Obj(i, i.ToString()));
+                m2.Set(i.ToString(), new Item(i, i.ToString()));
+            for (var i = 0; i < size * 100; i++)
+                m2.Get((i % size).ToString());
+            for (var i = 0; i < size; i++)
+                m2.Remove(i.ToString());
             s.Stop();
             Console.WriteLine("ClojureRecordedMapModel took " + s.Elapsed);
+
+            m3.Clear();
             s.Restart();
-            for (var i = 0; i < size*100; i++)
-                m3[i.ToString()] = new Obj(i, i.ToString());
+            for (var i = 0; i < size; i++)
+                m3[i.ToString()] = new Item(i, i.ToString());
+            Item o;
+            for (var i = 0; i < size * 100; i++)
+                m3.TryGetValue((i % size).ToString(), out o);
+            for (var i = 0; i < size; i++)
+                m3.Remove(i.ToString());
             s.Stop();
             Console.WriteLine("Dictionary took " + s.Elapsed);
+
             s.Restart();
-            for (var i = 0; i < size*100; i++)
-                m4 = m4.Add(i.ToString(), new Obj(i, i.ToString()));
+            for (var i = 0; i < size; i++)
+            {
+                var tmp = new Dictionary<string, Item>(m3);
+                tmp[i.ToString()] = new Item(i, i.ToString());
+                m3 = tmp;
+            }
+            for (var i = 0; i < size * 100; i++) {
+                m3.TryGetValue((i % size).ToString(), out o);
+            }
+            for (var i = 0; i < size; i++)
+            {
+                var tmp = new Dictionary<string, Item>(m3);
+                tmp.Remove(i.ToString());
+                m3 = tmp;
+            }
+            s.Stop();
+            Console.WriteLine("Copy Dictionary took " + s.Elapsed);
+            //Console.WriteLine("Dictionary size " + Marshal.SizeOf(m3));
+
+            s.Restart();
+            for (var i = 0; i < size; i++)
+                m4 = m4.Add(i.ToString(), new Item(i, i.ToString()));
+            for (var i = 0; i < size * 100; i++)
+                m4.TryFind((i % size).ToString());
+            for (var i = 0; i < size; i++)
+                m4 = m4.Remove(i.ToString());
             s.Stop();
             Console.WriteLine("FSharpMap took " + s.Elapsed);
+            //Console.WriteLine("FSharpMap size " + Marshal.SizeOf(m4));
+
             s.Restart();
-            for (var i = 0; i < size*100; i++)
-                m5 = (PersistentTreeMap)m5.assoc(i.ToString(), new Obj(i, i.ToString()));
+            for (var i = 0; i < size; i++)
+                m5 = (PersistentTreeMap)m5.assoc(i.ToString(), new Item(i, i.ToString()));
+            object obj;
+            for (var i = 0; i < size * 100; i++)
+                m5.TryGetValue((i % size).ToString(), out obj);
+            for (var i = 0; i < size; i++)
+                m5 = (PersistentTreeMap)RT.dissoc(m5, i.ToString());
             s.Stop();
             Console.WriteLine("PersistentTreeMap took " + s.Elapsed);
+            //Console.WriteLine("PersistentTreeMap size " + Marshal.SizeOf(m5));
         }
     }
 }
