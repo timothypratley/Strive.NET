@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Common.Logging;
+using Strive.Common;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
 using Strive.Server.Model;
-using Strive.Common;
 
 
 namespace Strive.Server.Logic
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class SkillCommandProcessor
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
@@ -31,8 +28,7 @@ namespace Strive.Server.Logic
                 return;
             }
 
-            // If already performing a skill invokation, just queue the request
-            // for later.
+            // If already performing a skill invocation, just queue the request for later.
             if (avatar.ActivatingSkill != null)
             {
                 avatar.SkillQueue.Enqueue(message);
@@ -46,7 +42,7 @@ namespace Strive.Server.Logic
             }
             else
             {
-                // process it later, after leadtime is elapsed
+                // process it later, after lead-time has elapsed
                 avatar.ActivatingSkill = message;
                 avatar.ActivatingSkillTimestamp = Global.Now;
                 avatar.ActivatingSkillLeadTime = TimeSpan.FromSeconds(esr.LeadTime);
@@ -58,11 +54,11 @@ namespace Strive.Server.Logic
             var avatar = client.Avatar as MobileAvatar;
             if (avatar == null)
             {
-                client.LogMessage("Canceled a skill invokation, but don't have an avatar.");
+                client.LogMessage("Canceled a skill invocation, but don't have an avatar.");
                 return;
             }
 
-            // If already performing invokation, just cancel it
+            // If already performing invocation, just cancel it
             bool found = false;
             if (avatar.ActivatingSkill != null && avatar.ActivatingSkill.InvokationId == message.InvokationId)
             {
@@ -71,8 +67,8 @@ namespace Strive.Server.Logic
             }
             else
             {
-                // search for it in queued skill invokations
-                // just generate a new queue with the invokation missing
+                // search for it in queued skill invocations
+                // just generate a new queue with the invocation missing
                 var newQueue = new Queue<UseSkill>();
                 foreach (UseSkill m in avatar.SkillQueue)
                 {
@@ -87,9 +83,9 @@ namespace Strive.Server.Logic
                 avatar.SkillQueue = newQueue;
             }
             if (found)
-                client.LogMessage("Successfully canceled invokation " + message.InvokationId);
+                client.LogMessage("Successfully canceled invocation " + message.InvokationId);
             else
-                client.LogMessage("Failed to cancel invokation " + message.InvokationId);
+                client.LogMessage("Failed to cancel invocation " + message.InvokationId);
         }
 
         public static void UseSkillNow(MobileAvatar caster, UseSkill message)
@@ -107,7 +103,7 @@ namespace Strive.Server.Logic
                 return;
             }
 
-            // TODO: mek this wurk
+            // TODO: make this work
             /*
             if ( esr.EnumMobileState > caster.MobileState ) {
                 caster.SendLog( "Not while " + caster.MobileState.Name );
@@ -141,7 +137,7 @@ namespace Strive.Server.Logic
                     break;
                 default:
                     caster.SendLog("That skill does not work yet, contact admin.");
-                    Log.Error("Unhandled targettype " + esr.EnumTargetTypeID + " for skill " + esr.EnumSkillID);
+                    Log.Error("Unhandled target type " + esr.EnumTargetTypeID + " for skill " + esr.EnumSkillID);
                     return;
             }
 
@@ -198,17 +194,11 @@ namespace Strive.Server.Logic
                     break;
                 case EnumActivationType.Skill:
                     if (esr.EnumSkillID == (int)EnumSkill.Kill)
-                    {
                         DoKill(caster, target);
-                    }
                     else if (esr.EnumSkillID == (int)EnumSkill.Kick)
-                    {
                         DoKick(caster, target);
-                    }
                     else
-                    {
                         Log.Warn("Unhandled SkillID " + esr.EnumSkillID);
-                    }
                     break;
                 case EnumActivationType.Sorcery:
                     break;

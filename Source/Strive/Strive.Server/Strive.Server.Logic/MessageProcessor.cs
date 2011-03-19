@@ -4,8 +4,6 @@ using Common.Logging;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
-using Strive.Common;
-using System.Diagnostics.Contracts;
 
 
 namespace Strive.Server.Logic
@@ -173,15 +171,10 @@ namespace Strive.Server.Logic
             }
             var ma = (MobileAvatar)client.Avatar;
 
-            // don't go to running for pure heading changes
             if (message.Position != client.Avatar.Position)
-            {
                 ma.LastMoveUpdate = Global.Now;
-                if (ma.MobileState != EnumMobileState.Running)
-                {
-                    ma.SetMobileState(EnumMobileState.Running);
-                }
-            }
+            ma.SetMobileState(message.State);
+
             _world.Relocate(client.Avatar, message.Position, message.Rotation);
         }
 
@@ -199,10 +192,7 @@ namespace Strive.Server.Logic
                 ma.SendPartyTalk(message.Message);
             }
             else
-            {
                 _log.Error("Unexpected CommunicationType " + message.CommunicationType);
-            }
-            //Log.Info( "Sent communication message" );
         }
 
         void ProcessMessage(ClientConnection client, ReloadWorld message)
@@ -213,8 +203,7 @@ namespace Strive.Server.Logic
                 .Where(c => c.Avatar != null
                     && c.Status == ConnectionStatus.Connected))
             {
-                // respawn their mobile, old instance will be given over
-                // to Garbage Collector
+                // re-spawn their mobile
                 c.DropAll();
                 ProcessMessage(c, new PossessMobile(c.Avatar.ObjectInstanceId));
             }
@@ -237,6 +226,7 @@ namespace Strive.Server.Logic
                 ma.SendLog("You are currently in party '" + ma.Party.Name + "'.");
                 return;
             }
+
             ma.Party = new Party(message.Name, ma);
         }
 
@@ -245,17 +235,13 @@ namespace Strive.Server.Logic
             var ma = (MobileAvatar)client.Avatar;
             var target = _world.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
             if (target == null)
-            {
                 ma.SendLog("Invalid target");
-            }
             else if (ma.Party != target.Party)
-            {
                 ma.SendLog("You are not in the same party as " + target.TemplateObjectName);
-            }
             else
             {
                 ma.Party.Leader = target;
-                ma.SendPartyTalk("Party leadership has been transfered to " + target.TemplateObjectName);
+                ma.SendPartyTalk("Party leadership has been transferred to " + target.TemplateObjectName);
             }
         }
 
@@ -271,10 +257,13 @@ namespace Strive.Server.Logic
         {
             var ma = (MobileAvatar)client.Avatar;
             Party p = ma.Party;
-            p.Remove(ma.ObjectInstanceId);
-            ma.SendLog("You have left party '" + p.Name + "'.");
-            ma.Party = null;
-            p.SendPartyTalk(ma.TemplateObjectName + " has left your ");
+            if (p != null)
+            {
+                p.Remove(ma.ObjectInstanceId);
+                ma.SendLog("You have left party '" + p.Name + "'");
+                ma.Party = null;
+                p.SendPartyTalk(ma.TemplateObjectName + " has left your party");
+            }
         }
 
         void ProcessMessage(ClientConnection client, JoinParty message)
@@ -300,24 +289,22 @@ namespace Strive.Server.Logic
             Party p = ((MobileAvatar)client.Avatar).Party;
             if (p == null)
             {
-                client.LogMessage("You are not in a ");
+                client.LogMessage("You are not in a party");
                 return;
             }
             if (p.Leader != client.Avatar)
             {
-                client.LogMessage("You are not the party leader.");
+                client.LogMessage("You are not the party leader");
                 return;
             }
             var target = Global.World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
             if (target == null)
-            {
                 client.LogMessage("Invalid target");
-            }
             else
             {
                 target.InvitedToParty = p;
-                // TODO: probabbly want a graphical thing or something for invites
-                target.SendLog("You have been invited to party '" + p.Name + "'.");
+                // TODO: probably want a graphical thing or something for invites
+                target.SendLog("You have been invited to party '" + p.Name + "'");
             }
         }
 
@@ -340,7 +327,7 @@ namespace Strive.Server.Logic
                             Rotation = message.Rotation,
                             TemplateObjectId = message.TemplateId,
                             ObjectInstanceId = Global.Rand.Next(),
-                            TemplateObjectName = "foo"
+                            TemplateObjectName = "CreatedMobile"
                         };
             _world.Add(m);
         }

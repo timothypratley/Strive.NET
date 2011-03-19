@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
-
 using Common.Logging;
-
-using Strive.Server.Model;
-using Strive.Network.Messaging;
-using Strive.Network.Messages;
-using ToClient = Strive.Network.Messages.ToClient;
 using Strive.Common;
+using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
+using Strive.Network.Messaging;
+using Strive.Server.Model;
+using ToClient = Strive.Network.Messages.ToClient;
 
 
 namespace Strive.Server.Logic
@@ -73,8 +71,11 @@ namespace Strive.Server.Logic
 
         public void SetMobileState(EnumMobileState ms)
         {
+            if (MobileState == ms)
+                return;
+
             MobileState = ms;
-            // TODO: this will prolly change if we use anything more
+            // TODO: this will probably change if we use anything more
             // advance than stick to ground.
             // changing state may have moved the mobile.
             try
@@ -84,7 +85,7 @@ namespace Strive.Server.Logic
             }
             catch (Strive.Server.Logic.World.InvalidLocationException) { }
 
-            // NB: MobileState message has position info
+            // MobileState message has position info
             // as it is likely that this will have changed
             World.InformNearby(this, new ToClient.MobileState(this));
         }
@@ -118,33 +119,20 @@ namespace Strive.Server.Logic
                     ActivatingSkill = null;
                 }
             }
-            else
-            {
-                // check for queued skills
-                if (SkillQueue.Count > 0)
-                {
-                    ActivatingSkill = SkillQueue.Dequeue();
-                }
-            }
+            // check for queued skills
+            else if (SkillQueue.Count > 0)
+                ActivatingSkill = SkillQueue.Dequeue();
 
             if (Target != null)
-            {
                 CombatUpdate();
-            }
             else if (!IsPlayer)
-            {
                 BehaviourUpdate();
-            }
             else
             {
-                if (
-                    Global.Now - LastMoveUpdate > TimeSpan.FromSeconds(1)
+                if (Global.Now - LastMoveUpdate > TimeSpan.FromSeconds(1)
                     && (MobileState == EnumMobileState.Running
-                    || MobileState == EnumMobileState.Walking)
-                )
-                {
+                        || MobileState == EnumMobileState.Walking))
                     SetMobileState(EnumMobileState.Standing);
-                }
             }
             HealUpdate();
         }
@@ -189,7 +177,7 @@ namespace Strive.Server.Logic
             }
             if (Global.Now - LastBehaviourUpdate > TimeSpan.FromSeconds(3))
             {
-                // change behaviour?
+                // change behavior?
                 LastBehaviourUpdate = Global.Now;
                 if (MobileState > EnumMobileState.Incapacitated)
                 {
@@ -197,12 +185,12 @@ namespace Strive.Server.Logic
                     if (rand > 1 && MobileState > EnumMobileState.Sleeping)
                     {
                         SetMobileState(MobileState - 1);
-                        //Log.Info( TemplateObjectName + " changed behaviour from " + (MobileState+1) + " to " + MobileState + "." );
+                        //Log.Info( TemplateObjectName + " changed behavior from " + (MobileState+1) + " to " + MobileState + "." );
                     }
                     else if (rand < -1 && MobileState < EnumMobileState.Running)
                     {
                         SetMobileState(MobileState + 1);
-                        //Log.Info( TemplateObjectName + " changed behaviour from " + (MobileState-1) + " to " + MobileState + "." );
+                        //Log.Info( TemplateObjectName + " changed behavior from " + (MobileState-1) + " to " + MobileState + "." );
                     }
                 }
             }
@@ -213,36 +201,20 @@ namespace Strive.Server.Logic
             if (Global.Now - LastHealUpdate > TimeSpan.FromSeconds(1))
             {
                 LastHealUpdate = Global.Now;
-                if (MobileState == EnumMobileState.Incapacitated)
+                switch (MobileState)
                 {
-                    HitPoints -= 0.5F;
-                    Energy -= 0.5F;
-                }
-                else if (MobileState == EnumMobileState.Sleeping)
-                {
-                    HitPoints += Constitution / 10.0F;
-                    if (HitPoints > MaxHitPoints)
-                    {
-                        HitPoints = MaxHitPoints;
-                    }
-                    Energy += Constitution / 10.0F;
-                    if (Energy > MaxEnergy)
-                    {
-                        Energy = MaxEnergy;
-                    }
-                }
-                else if (MobileState == EnumMobileState.Resting)
-                {
-                    HitPoints += Constitution / 40.0F;
-                    if (HitPoints > MaxHitPoints)
-                    {
-                        HitPoints = MaxHitPoints;
-                    }
-                    Energy += Constitution / 40.0F;
-                    if (Energy > MaxEnergy)
-                    {
-                        Energy = MaxEnergy;
-                    }
+                    case EnumMobileState.Incapacitated:
+                        HitPoints -= 0.5F;
+                        Energy -= 0.5F;
+                        break;
+                    case EnumMobileState.Sleeping:
+                        HitPoints += Constitution / 10.0F;
+                        Energy += Constitution / 10.0F;
+                        break;
+                    case EnumMobileState.Resting:
+                        HitPoints += Constitution / 40.0F;
+                        Energy += Constitution / 40.0F;
+                        break;
                 }
             }
 
@@ -267,7 +239,7 @@ namespace Strive.Server.Logic
 
         public void Kick(PhysicalObject target)
         {
-            // TODO: would be nice to have a baseclass physical object with damage function,
+            // TODO: would be nice to have a base class physical object with damage function,
             // but needs multiple inheritance
             target.HitPoints -= 20;
             World.InformNearby(
@@ -293,27 +265,25 @@ namespace Strive.Server.Logic
                 // if not already in a fight, your opponent automatically
                 // fights back
                 if (opponent.Target == null)
-                {
                     opponent.Target = this;
-                }
 
                 // avoidance phase: ratio of Dexterity
                 if (Dexterity == 0 || Global.Rand.Next(100) <= opponent.Dexterity / Dexterity * 20)
                 {
-                    // 20% chance for equal dex player to avoid
+                    // 20% chance for equal dexterity player to avoid
                     World.InformNearby(
                         this,
                         new ToClient.CombatReport(this, Target, EnumCombatEvent.Avoids, 0));
                     return;
                 }
 
-                // hit phase: hitroll determines if you miss, hit armour, or bypass armour
+                // hit phase: hit-roll determines if you miss, hit armor, or bypass armor
                 int hitroll = 80;
                 int attackroll = Global.Rand.Next(hitroll);
 
                 if (attackroll < 20)
                 {
-                    // ~ %20 chance to miss for weapon with 100 hitroll
+                    // %20 chance to miss for weapon with 100 hit-roll
                     World.InformNearby(
                         this,
                         new ToClient.CombatReport(this, Target, EnumCombatEvent.Misses, 0));
@@ -321,11 +291,11 @@ namespace Strive.Server.Logic
 
                 // damage phase: weapon damage + bonuses
                 int damage = 10;
+                // TODO: use armor rating
                 if (attackroll < 50)
-                {
-                    damage -= 8; // opponent.ArmourRating
-                }
-                if (damage < 0) damage = 0;
+                    damage -= 8; // opponent.ArmorRating
+                if (damage < 0)
+                    damage = 0;
 
                 damage *= Strength / opponent.Constitution;
                 opponent.HitPoints -= damage;
@@ -345,16 +315,12 @@ namespace Strive.Server.Logic
                     this,
                     new ToClient.CombatReport(this, Target, EnumCombatEvent.Hits, damage));
 
+                // You destroyed the item
                 if (item.HitPoints <= 0)
-                {
-                    // omg j00 destoryed teh item!
                     World.Remove(item);
-                }
             }
             else
-            {
                 throw new Exception("ERROR: attacking a " + po.GetType() + " " + po);
-            }
         }
 
         // TODO: use dynamic instead
@@ -367,9 +333,7 @@ namespace Strive.Server.Logic
                 // if not already in a fight, your opponent automatically
                 // fights back
                 if (opponent.Target == null)
-                {
                     opponent.Target = this;
-                }
 
                 // avoidance phase: Dexterity
                 if (Global.Rand.Next(100) <= opponent.Dexterity)
@@ -396,16 +360,12 @@ namespace Strive.Server.Logic
                     this,
                     new ToClient.CombatReport(this, Target, EnumCombatEvent.Hits, damage));
 
+                // You destroyed the item
                 if (item.HitPoints <= 0)
-                {
-                    // omg j00 destoryed teh item!
                     World.Remove(item);
-                }
             }
             else
-            {
                 throw new Exception("ERROR: attacking a " + po.GetType() + " " + po);
-            }
         }
 
         public void UpdateState()
@@ -421,13 +381,9 @@ namespace Strive.Server.Logic
             else if (MobileState == EnumMobileState.Incapacitated)
             {
                 if (HitPoints <= -50)
-                {
                     Death();
-                }
                 else if (HitPoints > 0)
-                {
                     SetMobileState(EnumMobileState.Resting);
-                }
             }
         }
 
@@ -438,11 +394,11 @@ namespace Strive.Server.Logic
 
             if (IsPlayer)
             {
-                // respawn!
+                // re-spawn!
                 HitPoints = MaxHitPoints;
 
-                // TODO: where should we respawn?
-                World.Relocate(this, new Vector3D(0,0,0), Quaternion.Identity);
+                // TODO: where should we re-spawn?
+                World.Relocate(this, new Vector3D(0, 0, 0), Quaternion.Identity);
 
                 // set resting in new location to let everyone know
                 SetMobileState(EnumMobileState.Resting);
@@ -451,25 +407,18 @@ namespace Strive.Server.Logic
             {
                 // TODO: should probably stay around as a corpse
                 // world.Remove( this );
-                // but we need some decay/repop code
+                // but we need some decay/re-pop code
             }
         }
 
-        public float CurrentHeight
-        {
-            get {
-                return MobileState <= EnumMobileState.Resting ? 0 : Height;
-            }
-        }
+        public float CurrentHeight { get { return MobileState <= EnumMobileState.Resting ? 0 : Height; } }
 
         public float GetCompetancy(EnumSkill skill)
         {
             Schema.MobileHasSkillRow mhs = Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
                 TemplateObjectId, (int)skill);
             if (mhs != null)
-            {
                 return (float)mhs.Rating;
-            }
             return 0;
         }
     }

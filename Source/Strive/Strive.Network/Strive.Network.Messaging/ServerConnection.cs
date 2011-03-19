@@ -2,10 +2,10 @@ using System;
 using System.Windows.Media.Media3D;
 using Microsoft.CSharp.RuntimeBinder;
 using Strive.Client.Model;
-using Strive.Network.Messages;
 using Strive.Common;
-using Strive.Network.Messages.ToServer;
+using Strive.Network.Messages;
 using Strive.Network.Messages.ToClient;
+using Strive.Network.Messages.ToServer;
 
 
 namespace Strive.Network.Messaging
@@ -16,7 +16,7 @@ namespace Strive.Network.Messaging
 
         public ServerConnection()
         {
-            WorldModel = new WorldModel(); 
+            WorldModel = new WorldModel();
             MessageRecieved += ConnectionMessageRecieved;
         }
 
@@ -47,7 +47,6 @@ namespace Strive.Network.Messaging
 
         void Process(AddMobile m)
         {
-            Log.Info("Received message" + m);
             WorldModel.Set(new EntityModel(m.Mobile.ObjectInstanceId.ToString(),
                                            "Robot",
                                            m.Mobile.Position,
@@ -56,14 +55,18 @@ namespace Strive.Network.Messaging
 
         void Process(AddTerrain m)
         {
-            Log.Trace("Terrain " + m);
         }
 
         void Process(PositionUpdate m)
         {
-            Log.Trace("bar");
             EntityModel e = WorldModel.Get(m.InstanceId.ToString());
             WorldModel.Set(new EntityModel(e.Name, e.ModelId, m.Position, m.Rotation));
+        }
+
+        void Process(MobileState m)
+        {
+            //EntityModel e = WorldModel.Get(m.ObjectInstanceId.ToString());
+            //WorldModel.Set(new EntityModel(e.Name, e.ModelId, m.Position, m.Rotation, m.State));
         }
 
         #endregion
@@ -126,9 +129,9 @@ namespace Strive.Network.Messaging
             UseSkill((EnumSkill)skillId, invokationId, targets);
         }
 
-        public void MyPosition(int possessingId, Vector3D position, Quaternion rotation)
+        public void MyPosition(int possessingId, Vector3D position, Quaternion rotation, EnumMobileState state)
         {
-            Send(new MyPosition(possessingId, position, rotation));
+            Send(new MyPosition(possessingId, position, rotation, state));
         }
 
         public void RequestPossessable()

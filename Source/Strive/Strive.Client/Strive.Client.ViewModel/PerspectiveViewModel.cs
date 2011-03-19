@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
-using UpdateControls.XAML;
-using Strive.DataModel;
 using Strive.Client.Model;
 using Strive.Common;
+using Strive.DataModel;
+using UpdateControls.XAML;
 
 
 namespace Strive.Client.ViewModel
@@ -153,6 +153,7 @@ namespace Strive.Client.ViewModel
 
         public Vector3D Position;
         public Quaternion Rotation;
+        public EnumMobileState MobileState;
 
         private int _lastTick;
         private int _frameRate;
@@ -177,6 +178,7 @@ namespace Strive.Client.ViewModel
         }
 
         double _landSpeed = 50.0;
+        DateTime _lastPositionSent;
 
         public void Check()
         {
@@ -197,8 +199,14 @@ namespace Strive.Client.ViewModel
                 ApplyKeyBindings(deltaT);
 
                 // Send update if required
-                if (Position != initialPosition || Rotation != initialRotation)
-                    WorldViewModel.ServerConnection.MyPosition(PossessingId, Position, Rotation);
+                // TODO: use a global now, and use a dirty flag
+                if ((Position != initialPosition || Rotation != initialRotation)
+                    && DateTime.Now - _lastPositionSent > TimeSpan.FromSeconds(1))
+                {
+                    WorldViewModel.ServerConnection.MyPosition(
+                        PossessingId, Position, Rotation, MobileState);
+                    _lastPositionSent = DateTime.Now;
+                }
             }
         }
 
@@ -255,7 +263,14 @@ namespace Strive.Client.ViewModel
             Rotation = new Quaternion(ZAxis, Heading) * new Quaternion(YAxis, -Tilt);
 
             if (movementPerpendicular == 0 && movementForward == 0 && movementUp == 0)
+            {
+                MobileState = EnumMobileState.Standing;
                 return;
+            }
+            if (speedModifier < 1)
+                MobileState = EnumMobileState.Walking;
+            else
+                MobileState = EnumMobileState.Running;
 
             var transformHeading = new Matrix3D();
             transformHeading.Rotate(new Quaternion(ZAxis, Heading));
