@@ -57,7 +57,7 @@ namespace Strive.Network.Messaging.Tests
             m.Position = new Vector3D(1.2, 3, 4);
             m.Rotation = new Quaternion(1.2, 3, 4, 5);
             SerDesMessage(new AddMobile(m));
-            SerDesMessage(new CreateMobile(1, new Vector3D(1.2, 3, 4), Quaternion.Identity));
+            SerDesMessage(new CreatePhysicalObject(1, new Vector3D(1.2, 3, 4), Quaternion.Identity));
             SerDesMessage(new PositionUpdate(new Mobile()));
         }
 

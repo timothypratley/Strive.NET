@@ -78,12 +78,9 @@ namespace Strive.Server.Logic
             // TODO: this will probably change if we use anything more
             // advance than stick to ground.
             // changing state may have moved the mobile.
-            try
-            {
-                double altitude = World.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
-                Position.Y = altitude;
-            }
-            catch (Strive.Server.Logic.World.InvalidLocationException) { }
+            double? altitude = World.AltitudeAt(Position.X, Position.Z) + CurrentHeight / 2;
+            if (altitude.HasValue)
+                Position.Y = altitude.Value;
 
             // MobileState message has position info
             // as it is likely that this will have changed
@@ -125,7 +122,7 @@ namespace Strive.Server.Logic
 
             if (Target != null)
                 CombatUpdate();
-            else if (!IsPlayer)
+            else if (Client == null)
                 BehaviourUpdate();
             else
             {
@@ -392,7 +389,8 @@ namespace Strive.Server.Logic
             // RIP
             SetMobileState(EnumMobileState.Dead);
 
-            if (IsPlayer)
+            /*
+            if (Client != null)
             {
                 // re-spawn!
                 HitPoints = MaxHitPoints;
@@ -409,6 +407,7 @@ namespace Strive.Server.Logic
                 // world.Remove( this );
                 // but we need some decay/re-pop code
             }
+             */
         }
 
         public float CurrentHeight { get { return MobileState <= EnumMobileState.Resting ? 0 : Height; } }

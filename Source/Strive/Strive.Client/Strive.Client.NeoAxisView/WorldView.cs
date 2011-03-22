@@ -1,18 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Linq;
 using System.Windows;
-using System.ComponentModel;
-using System.Windows.Media.Media3D;
-using System.Windows.Threading;
-using Engine.MathEx;
-using Engine.MapSystem;
 using Engine.EntitySystem;
-using WPFAppFramework;
-using UpdateControls;
+using Engine.MapSystem;
 using Strive.Client.ViewModel;
-using Microsoft.FSharp.Core;
-using Strive.Client.Model;
+using WPFAppFramework;
 
 
 namespace Strive.Client.NeoAxisView
@@ -39,7 +30,7 @@ namespace Strive.Client.NeoAxisView
                 var ee = (MapObject)Entities.Instance.GetByName(e.Name);
                 if (ee == null)
                 {
-                    ee = (MapObject)Entities.Instance.Create("StaticBox", Map.Instance);
+                    ee = (MapObject)Entities.Instance.Create(e.ModelId, Map.Instance);
                     ee.Name = e.Name;
                     ee.Position = e.Position.ToVec3();
                     ee.Rotation = e.Rotation.ToQuat();

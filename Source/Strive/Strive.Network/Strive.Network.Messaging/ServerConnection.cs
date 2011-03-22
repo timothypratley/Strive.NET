@@ -48,9 +48,17 @@ namespace Strive.Network.Messaging
         void Process(AddMobile m)
         {
             WorldModel.Set(new EntityModel(m.Mobile.ObjectInstanceId.ToString(),
-                                           "Robot",
+                                           "RTSRobot",
                                            m.Mobile.Position,
                                            m.Mobile.Rotation));
+        }
+
+        void Process(AddJunk m)
+        {
+            WorldModel.Set(new EntityModel(m.Junk.ObjectInstanceId.ToString(),
+                                           "StaticBox",
+                                           m.Junk.Position,
+                                           m.Junk.Rotation));
         }
 
         void Process(AddTerrain m)
@@ -84,9 +92,9 @@ namespace Strive.Network.Messaging
             Send(new PossessMobile(mobileId));
         }
 
-        public void CreateMobile(int templateId, Vector3D position, Quaternion rotation)
+        public void CreatePhysicalObject(int templateId, Vector3D position, Quaternion rotation)
         {
-            Send(new CreateMobile(templateId, position, rotation));
+            Send(new CreatePhysicalObject(templateId, position, rotation));
         }
 
         public void Login(string username, string password)

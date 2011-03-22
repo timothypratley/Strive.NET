@@ -14,7 +14,7 @@ namespace Strive.Server.Model
         public EnumRace Race;
         public EnumMobileSize MobileSize;
         public EnumMobileState MobileState;
-        public bool IsPlayer;
+        public bool Possessable;
 
         public Mobile() {}
         public Mobile(
@@ -37,7 +37,7 @@ namespace Strive.Server.Model
             HitPoints = (float) instance.HitpointsCurrent;
             MaxEnergy = mobile.EnumMobileSizeID*100 + Level*Constitution/2;
             Energy = (float) instance.EnergyCurrent;
-            IsPlayer = instance.GetMobilePossesableByPlayerRows().Length > 0;
+            Possessable = instance.GetMobilePossesableByPlayerRows().Length > 0;
         }
     }
 }

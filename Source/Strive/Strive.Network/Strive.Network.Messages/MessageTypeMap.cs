@@ -110,7 +110,7 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerQueryParty, typeof(ToServer.QueryParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestWhoList, typeof(ToServer.RequestWhoList));
             MessageTypeFromId.Add(EnumMessageId.ToServerPossessMobile, typeof(ToServer.PossessMobile));
-            MessageTypeFromId.Add(EnumMessageId.ToServerCreateMobile, typeof(ToServer.CreateMobile));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCreateMobile, typeof(ToServer.CreatePhysicalObject));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogin, typeof(ToServer.Login));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogout, typeof(ToServer.Logout));
             MessageTypeFromId.Add(EnumMessageId.ToServerReloadWorld, typeof(ToServer.ReloadWorld));

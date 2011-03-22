@@ -166,7 +166,7 @@
     <Compile Include="ToServer\CancelSkill.cs" />
     <Compile Include="ToServer\ChangeStance.cs" />
     <Compile Include="ToServer\Communicate.cs" />
-    <Compile Include="ToServer\CreateMobile.cs" />
+    <Compile Include="ToServer\CreatePhysicalObject.cs" />
     <Compile Include="ToServer\CreateParty.cs" />
     <Compile Include="ToServer\Emote.cs" />
     <Compile Include="ToServer\PossessMobile.cs" />

@@ -62,7 +62,7 @@ namespace Strive.Client.ViewModel
             get
             {
                 return MakeCommand
-                    .Do(() => WorldViewModel.ServerConnection.CreateMobile(rand.Next(), Position, Rotation));
+                    .Do(() => WorldViewModel.ServerConnection.CreatePhysicalObject(rand.Next(), Position, Rotation));
             }
         }
 
@@ -190,10 +190,7 @@ namespace Strive.Client.ViewModel
             Follow(deltaT);
 
             if (_actionState == InputBindings.ActionState.CreateAction)
-            {
                 ApplyCreationActions();
-                _actionState = InputBindings.ActionState.KeyAction;
-            }
             else
             {
                 ApplyKeyBindings(deltaT);
@@ -253,7 +250,7 @@ namespace Strive.Client.ViewModel
                 else if (kb.Action == InputBindings.KeyAction.Possess)
                     PossessEntity.Execute(null);
                 else if (kb.Action == InputBindings.KeyAction.Create)
-                    CreateEntity.Execute(null);
+                    _actionState = InputBindings.ActionState.CreateAction;
 
                 else
                     throw new Exception("Unexpected keyboard binding " + kb.Action);
@@ -293,13 +290,13 @@ namespace Strive.Client.ViewModel
             foreach (InputBindings.CreationBinding ca in WorldViewModel.Bindings.CreationBindings
                 .Where(ca => ca.KeyCombo.All(k => _keyPressed(k))))
             {
+                _actionState = InputBindings.ActionState.KeyAction;
                 if (ca.Action == InputBindings.CreationAction.Item)
                     CreateEntity.Execute(null);
                 else if (ca.Action == InputBindings.CreationAction.Mobile)
                     CreateEntity.Execute(null);
                 else if (ca.Action == InputBindings.CreationAction.Factory)
                     CreateEntity.Execute(null);
-
                 else
                     throw new Exception("Unexpected creation binding " + ca.Action);
             }

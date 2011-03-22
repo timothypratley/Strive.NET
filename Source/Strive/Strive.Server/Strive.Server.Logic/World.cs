@@ -1,15 +1,14 @@
 using System;
-using System.Data;
 using System.Collections.Generic;
-using System.Windows.Media.Media3D;
+using System.Data;
 using System.Linq;
-
-using Strive.Network.Messaging;
-using Strive.Network.Messages;
-using ToClient = Strive.Network.Messages.ToClient;
-using Strive.Server.Model;
-using Strive.Common;
+using System.Windows.Media.Media3D;
 using Common.Logging;
+using Strive.Common;
+using Strive.Network.Messages;
+using Strive.Network.Messaging;
+using Strive.Server.Model;
+using ToClient = Strive.Network.Messages.ToClient;
 
 
 // todo: this object needs to be made threadsafe... why?
@@ -231,15 +230,12 @@ namespace Strive.Server.Logic
             else
             {
                 // keep everything at ground level
-                try
-                {
-                    double altitude = AltitudeAt(po.Position.X, po.Position.Z);
-                    po.Position.Y = altitude + po.Height / 2F;
-                }
-                catch (InvalidLocationException)
-                {
+                double? altitude = AltitudeAt(po.Position.X, po.Position.Z);
+                if (altitude.HasValue)
+                    po.Position.Y = altitude.Value + po.Height / 2F;
+                else
                     _log.Warn("Physical object " + po.ObjectInstanceId + " is not on terrain.");
-                }
+
                 // add the object to the world
                 PhysicalObjects.Add(po.ObjectInstanceId, po);
                 if (po is MobileAvatar)
@@ -286,23 +282,20 @@ namespace Strive.Server.Logic
             int toSquareZ = (int)(newPosition.Z - _lowZ) / Square.SquareSize;
             int i, j;
 
+            // TODO: disallow the relocation if it is outside terain
+            //return;
             // keep everything on the ground
             // TODO: refactor below ma and overload Height
-            try
+            double? altitude = AltitudeAt(newPosition.X, newPosition.Z);
+            if (altitude.HasValue)
             {
-                double altitude = AltitudeAt(newPosition.X, newPosition.Z);
                 if (po is MobileAvatar)
                     altitude += ((MobileAvatar)po).CurrentHeight / 2;
                 else
                     altitude += po.Height / 2;
-                newPosition.Y = altitude;
+                newPosition.Y = altitude.Value;
             }
-            catch (InvalidLocationException)
-            {
-                // disallow the relocation
-                return;
-            }
-
+            
             var ma = po as MobileAvatar;
 
             // check that the object can fit there
@@ -628,8 +621,7 @@ namespace Strive.Server.Logic
                 mpr.ObjectInstanceID, mpr.ObjectInstanceRow.TemplateObjectRow.TemplateObjectName)).ToArray();
         }
 
-        public class InvalidLocationException : Exception { }
-        public double AltitudeAt(double x, double z)
+        public double? AltitudeAt(double x, double z)
         {
             int terrainX = DivTruncate((int)(x - _lowX), Constants.TerrainPieceSize);
             int terrainZ = DivTruncate((int)(z - _lowZ), Constants.TerrainPieceSize);
@@ -665,7 +657,7 @@ namespace Strive.Server.Logic
                 return _terrain[terrainX, terrainZ].Position.Y + xslope * dx + zslope * dz;
             }
             // no terrain here
-            throw new InvalidLocationException();
+            return null;
         }
 
         public void CreateDefaultWorld()

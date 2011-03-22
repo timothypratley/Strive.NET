@@ -4,6 +4,7 @@ using Common.Logging;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
+using Strive.Server.Model;
 
 
 namespace Strive.Server.Logic
@@ -319,15 +320,15 @@ namespace Strive.Server.Logic
                     .ToArray());
         }
 
-        void ProcessMessage(ClientConnection client, CreateMobile message)
+        void ProcessMessage(ClientConnection client, CreatePhysicalObject message)
         {
-            var m = new MobileAvatar(_world)
+            var m = new Junk()
                         {
                             Position = message.Position,
                             Rotation = message.Rotation,
                             TemplateObjectId = message.TemplateId,
                             ObjectInstanceId = Global.Rand.Next(),
-                            TemplateObjectName = "CreatedMobile"
+                            TemplateObjectName = "CreatedJunk"
                         };
             _world.Add(m);
         }
