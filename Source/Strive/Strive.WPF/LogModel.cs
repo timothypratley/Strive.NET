@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 
 using UpdateControls;
@@ -13,9 +11,12 @@ namespace Strive.WPF
         private List<string> _logEntries = new List<string>();
         private int _maxEntries = 200;
 
-        public LogModel()
+        public LogModel() : this(true) { }
+
+        public LogModel(bool trace)
         {
-            Trace.Listeners.Add(this);
+            if (trace)
+                Trace.Listeners.Add(this);
         }
 
         private string messageSoFar = String.Empty;

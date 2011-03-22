@@ -69,6 +69,12 @@ namespace Strive.Network.Messaging
             //WorldModel.Set(new EntityModel(e.Name, e.ModelId, m.Position, m.Rotation, m.State));
         }
 
+        void Process(Communication m)
+        {
+            // TODO: make this appear in chat log, rather than regular log
+            Log.Info("[" + m.CommunicationType + "] " + m.Name + ": " + m.Message);
+        }
+
         #endregion
 
 
