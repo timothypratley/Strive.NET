@@ -319,7 +319,7 @@ namespace Strive.Client.ViewModel
                 Vector3D diff = center - Position;
                 double vectorDistance = diff.Length;
 
-                // TODO: replace with a proper bounds and fulstrum calculation
+                // TODO: replace with a proper bounds and frustum calculation
                 var maxX = _followEntities.Entities.Max(e => e.Position.X);
                 var maxY = _followEntities.Entities.Max(e => e.Position.Y);
                 var maxZ = _followEntities.Entities.Max(e => e.Position.Z);

@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
-using System.Collections.Concurrent;
 using System.Threading;
-using UpdateControls;
 using Common.Logging;
 using Strive.Network.Messages;
+using UpdateControls;
 
 
 namespace Strive.Network.Messaging
@@ -284,7 +284,8 @@ namespace Strive.Network.Messaging
         private void SendMessage()
         {
             IMessage message;
-            if (!_messageOutQueue.TryTake(out message, -1))
+            var q = _messageOutQueue;
+            if (q == null || !q.TryTake(out message, -1))
                 return;
 
             byte[] buffer;

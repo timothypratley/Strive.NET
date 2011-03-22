@@ -4,5 +4,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
              Title="Log View" Height="300" Width="300">
-        <ListView Name="listView1" AlternationCount="1" ItemsSource="{Binding Path=LogModel.LogEntries}" />
+    <Grid>
+        <Grid.Resources>
+            <AlternationConverter x:Key="BackgroundConverter">
+                <SolidColorBrush>White</SolidColorBrush>
+                <SolidColorBrush>HoneyDew</SolidColorBrush>
+                <SolidColorBrush>AliceBlue</SolidColorBrush>
+            </AlternationConverter>
+
+            <Style x:Key="alternatingWithBinding" TargetType="{x:Type ListViewItem}">
+                <Setter Property="Background" 
+                        Value="{Binding RelativeSource={RelativeSource Self},
+                              Path=(ItemsControl.AlternationIndex),
+                              Converter={StaticResource BackgroundConverter}}"/>
+            </Style>
+        </Grid.Resources>
+
+        <ListView Name="listView1" AlternationCount="3" ItemsSource="{Binding Path=LogModel.LogEntries}"
+                  ItemContainerStyle="{StaticResource alternatingWithBinding}"/>
+    </Grid>
 </ad:DockableContent>

@@ -76,7 +76,7 @@ namespace Strive.Client.WPF
 
         private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var r = new ResourceList();
+            var r = new ResourceListView();
             r.InputBindings.Add(
                 new KeyBinding(App.WorldViewModel.FollowSelected, Key.G, ModifierKeys.Control));
             r.InputBindings.Add(
@@ -117,6 +117,11 @@ namespace Strive.Client.WPF
         {
             BindAndShow(new ServerStatusView(), new ServerStatusViewModel(App.ServerEngine.ServerStatusModel));
             App.ServerEngine.Start();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            BindAndShow(new ChatLogView(App.ServerConnection), new LogViewModel(App.ChatLogModel));
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)

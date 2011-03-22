@@ -142,6 +142,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChatLogView.xaml.cs">
+      <DependentUpon>ChatLogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConnectView.xaml.cs">
       <DependentUpon>ConnectView.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
     <Compile Include="WebBrowser.xaml.cs">
       <DependentUpon>WebBrowser.xaml</DependentUpon>
     </Compile>
+    <Page Include="ChatLogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ConnectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

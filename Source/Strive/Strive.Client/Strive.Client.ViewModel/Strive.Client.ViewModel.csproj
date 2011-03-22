@@ -76,6 +76,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatLogViewModel.cs" />
     <Compile Include="EntityViewModel.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="InputBindings.cs" />

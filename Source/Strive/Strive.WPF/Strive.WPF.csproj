@@ -78,8 +78,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ResourceList.xaml.cs">
-      <DependentUpon>ResourceList.xaml</DependentUpon>
+    <Compile Include="ResourceListView.xaml.cs">
+      <DependentUpon>ResourceListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UnitModel.cs" />
     <Compile Include="FactoryModel.cs" />
@@ -99,7 +99,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ResourceList.xaml">
+    <Page Include="ResourceListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

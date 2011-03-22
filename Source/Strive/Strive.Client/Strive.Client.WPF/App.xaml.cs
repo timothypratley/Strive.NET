@@ -24,12 +24,14 @@ namespace Strive.Client.WPF
         public static ServerConnection ServerConnection;
         public static WorldModel WorldModel;
         public static LogModel LogModel;
+        public static LogModel ChatLogModel;
         public static Engine ServerEngine = new Engine();
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             LogModel = new LogModel();
+            ChatLogModel = new LogModel(false);
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
             ServerConnection = new ServerConnection();

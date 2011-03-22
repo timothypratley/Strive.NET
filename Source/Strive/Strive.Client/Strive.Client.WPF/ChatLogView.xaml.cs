@@ -3,22 +3,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using AvalonDock;
+using Strive.Network.Messaging;
 
-
-namespace Strive.WPF
+namespace Strive.Client.WPF
 {
-    /// <summary>
-    /// Interaction logic for LogView.xaml
-    /// </summary>
-    public partial class LogView : DockableContent
+    public partial class ChatLogView : DockableContent
     {
-        public LogView()
+        private ServerConnection _serverConnection;
+        public ChatLogView(ServerConnection serverConnection)
         {
+            _serverConnection = serverConnection;
             InitializeComponent();
             CommandBinding cb = new CommandBinding(ApplicationCommands.Copy, CopyCmdExecuted, CopyCmdCanExecute);
             listView1.CommandBindings.Add(cb);
         }
 
+        // TODO: re-factor this with LogView "don't repeat yourself"
         void CopyCmdExecuted(object target, ExecutedRoutedEventArgs e)
         {
             ListBox lb = e.OriginalSource as ListView;
@@ -31,7 +31,16 @@ namespace Strive.WPF
         void CopyCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             ListBox lb = e.OriginalSource as ListView;
-            e.CanExecute =  (lb.SelectedItems.Count > 0);
+            e.CanExecute = (lb.SelectedItems.Count > 0);
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                _serverConnection.Chat("Chat", textBox1.Text);
+                textBox1.Clear();
+            }
         }
     }
 }
