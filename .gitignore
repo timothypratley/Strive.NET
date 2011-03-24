@@ -25,3 +25,5 @@ Thumbs.db
 *.userprefs
 *.zip
 ~$*
+TestResults
+TestResults/*
