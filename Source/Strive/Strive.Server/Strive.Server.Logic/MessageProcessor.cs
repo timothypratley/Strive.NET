@@ -77,9 +77,9 @@ namespace Strive.Server.Logic
         {
             if (_world.UserLookup(loginMessage.Username, loginMessage.Password, ref client.PlayerId))
             {
-                // login succeeded, check there isnt an existing connection for this player
+                // login succeeded, check there is not an existing connection for this player
                 foreach (ClientConnection c in _listener.Clients
-                    .Where(c => c.AuthenticatedUsername == loginMessage.Username))
+                    .Where(c => c != client && c.AuthenticatedUsername == loginMessage.Username))
                 {
                     c.Close();
                 }
@@ -152,6 +152,9 @@ namespace Strive.Server.Logic
                     //client.Close();
                     //return;
                     avatar = new MobileAvatar(_world);
+                    avatar.ObjectInstanceId = Global.Rand.Next();
+                    //TODO: don't use the players name
+                    avatar.TemplateObjectName = client.AuthenticatedUsername;
                 }
 
                 avatar.Client = client;

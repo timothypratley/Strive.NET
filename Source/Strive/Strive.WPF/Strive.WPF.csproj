@@ -78,6 +78,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListBoxBehavior.cs" />
     <Compile Include="ResourceListView.xaml.cs">
       <DependentUpon>ResourceListView.xaml</DependentUpon>
     </Compile>

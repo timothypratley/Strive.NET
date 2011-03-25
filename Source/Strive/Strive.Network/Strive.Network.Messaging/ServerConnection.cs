@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Media.Media3D;
 using Microsoft.CSharp.RuntimeBinder;
 using Strive.Client.Model;
@@ -13,11 +15,17 @@ namespace Strive.Network.Messaging
     public class ServerConnection : Connection
     {
         public WorldModel WorldModel { get; private set; }
+        public TraceListenerCollection ChatListeners;
 
         public ServerConnection()
         {
             WorldModel = new WorldModel();
             MessageRecieved += ConnectionMessageRecieved;
+
+            // I wish there were a public constructor for TraceListenerCollection, but there is not
+            ConstructorInfo constructor = typeof(TraceListenerCollection).GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { }, null);
+            ChatListeners = (TraceListenerCollection)constructor.Invoke(new object[0] { });
         }
 
         #region message handling
@@ -79,8 +87,8 @@ namespace Strive.Network.Messaging
 
         void Process(Communication m)
         {
-            // TODO: make this appear in chat log, rather than regular log
-            Log.Info("[" + m.CommunicationType + "] " + m.Name + ": " + m.Message);
+            foreach (TraceListener listener in ChatListeners)
+                listener.WriteLine("[" + m.CommunicationType + "] " + m.Name + ": " + m.Message);
         }
 
         #endregion

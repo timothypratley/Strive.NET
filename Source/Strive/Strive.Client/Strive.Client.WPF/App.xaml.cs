@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
-using System.Reflection;
-
 using Common.Logging;
-using Strive.Client.ViewModel;
 using Strive.Client.Model;
-using Strive.WPF;
-using Strive.Server.Logic;
+using Strive.Client.ViewModel;
 using Strive.Network.Messaging;
+using Strive.Server.Logic;
+using Strive.WPF;
 
 
 namespace Strive.Client.WPF
@@ -31,11 +30,11 @@ namespace Strive.Client.WPF
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             LogModel = new LogModel();
-            ChatLogModel = new LogModel(false);
             Log.Info("Starting " + Assembly.GetExecutingAssembly().GetName().FullName);
 
             ServerConnection = new ServerConnection();
             WorldViewModel = new WorldViewModel(ServerConnection);
+            ChatLogModel = new LogModel(ServerConnection.ChatListeners);
         }
 
         private static bool ReportException(Exception ex)

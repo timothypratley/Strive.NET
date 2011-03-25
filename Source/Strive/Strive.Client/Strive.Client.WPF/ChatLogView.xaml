@@ -2,13 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:b="clr-namespace:Strive.WPF;assembly=Strive.WPF"
         Title="Chat" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListView Name="listView1" Grid.Row="0" ItemsSource="{Binding Communications}" />
+        <ListView Name="listView1" Grid.Row="0" ItemsSource="{Binding Path=LogModel.LogEntries}" b:ListBoxBehaviour.AutoCopy="True" />
         <TextBox Name="textBox1" Grid.Row="1" KeyDown="OnKeyDownHandler" SpellCheck.IsEnabled="True" Language="en-US" Height="20" />
     </Grid>
 </ad:DockableContent>

@@ -222,7 +222,7 @@ namespace Strive.Server.Logic
 
             if (po is Terrain)
             {
-                // keep terrain seperate
+                // keep terrain separate
                 int terrainX = DivTruncate((int)(po.Position.X - _lowX), Constants.TerrainPieceSize);
                 int terrainZ = DivTruncate((int)(po.Position.Z - _lowZ), Constants.TerrainPieceSize);
                 _terrain[terrainX, terrainZ] = (Terrain)po;
@@ -295,7 +295,7 @@ namespace Strive.Server.Logic
                     altitude += po.Height / 2;
                 newPosition.Y = altitude.Value;
             }
-            
+
             var ma = po as MobileAvatar;
 
             // check that the object can fit there
@@ -485,6 +485,10 @@ namespace Strive.Server.Logic
 
         public bool UserLookup(string email, string password, ref int playerId)
         {
+            // TODO: have disabled password checking for testing purposes
+            return true;
+
+            /*
             //Strive.Data.MultiverseFactory.refreshPlayerList(Global.modelSchema);
             DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + email + "'");
             if (dr.Length != 1)
@@ -499,6 +503,7 @@ namespace Strive.Server.Logic
             }
             _log.Info("Incorrect password for player with email '" + email + "'.");
             return false;
+             */
         }
 
         public void InformNearby(PhysicalObject po, IMessage message)

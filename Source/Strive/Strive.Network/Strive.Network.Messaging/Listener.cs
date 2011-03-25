@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Collections.Generic;
-using Strive.Network.Messages;
 using Common.Logging;
+using Strive.Network.Messages;
 
 namespace Strive.Network.Messaging
 {
@@ -80,14 +80,26 @@ namespace Strive.Network.Messaging
             try
             {
                 // Get the socket that handles the client request.
-                var listener = (Listener) ar.AsyncState;
+                var listener = (Listener)ar.AsyncState;
                 lock (listener)
                 {
                     if (listener._tcpSocket == null) return;
 
+                    Socket socket;
+                    try
+                    {
+                        socket = listener._tcpSocket.EndAccept(ar);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // TODO: hmmm I really wish there was a nicer way
+                        // this is the result of a previous binding, we discard it
+                        return;
+                    }
+
                     // Create the state object.
                     var client = new ClientConnection();
-                    client.Start(listener._tcpSocket.EndAccept(ar));
+                    client.Start(socket);
                     listener.Clients.Add(client);
                     listener._log.Info("New connection from " + client.RemoteEndPoint);
 

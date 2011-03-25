@@ -4,6 +4,10 @@
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         Title="Connect" Height="300" Width="300">
     <StackPanel>
+        <Label Content="Username"/>
+        <TextBox x:Name="username"/>
+        <Label Content="Password"/>
+        <PasswordBox x:Name="password"/>
         <Label Content="Host"/>
         <TextBox x:Name="hostTextBox"/>
         <Label Content="Port"/>

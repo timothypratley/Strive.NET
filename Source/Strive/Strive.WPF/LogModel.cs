@@ -11,12 +11,11 @@ namespace Strive.WPF
         private List<string> _logEntries = new List<string>();
         private int _maxEntries = 200;
 
-        public LogModel() : this(true) { }
+        public LogModel() : this(Trace.Listeners) { }
 
-        public LogModel(bool trace)
+        public LogModel(TraceListenerCollection traceListenerCollection)
         {
-            if (trace)
-                Trace.Listeners.Add(this);
+            traceListenerCollection.Add(this);
         }
 
         private string messageSoFar = String.Empty;
