@@ -80,16 +80,14 @@ namespace Strive.Server.Logic
                 // login succeeded, check there is not an existing connection for this player
                 foreach (ClientConnection c in _listener.Clients
                     .Where(c => c != client && c.AuthenticatedUsername == loginMessage.Username))
-                {
                     c.Close();
-                }
 
                 _log.Info("User " + loginMessage.Username + " logged in");
                 client.AuthenticatedUsername = loginMessage.Username;
             }
             else
             {
-                _log.Info("Login failed for username " + loginMessage.Username + " " + loginMessage.Password);
+                _log.Info("Login failed for username '" + loginMessage.Username + "'");
                 client.Close();
             }
         }
@@ -111,15 +109,13 @@ namespace Strive.Server.Logic
             client.Close();
         }
 
-
-
         void ProcessMessage(ClientConnection client, PossessMobile message)
         {
             if (_world.PhysicalObjects.ContainsKey(message.InstanceId))
             {
                 // reconnected
                 // simply replace existing connection with the new
-                // todo: the old 'connection' should timeout or die or be killed
+                // TODO: the old 'connection' should timeout or die or be killed
                 var avatar = _world.PhysicalObjects[message.InstanceId] as MobileAvatar;
                 if (avatar == null)
                 {
@@ -128,18 +124,19 @@ namespace Strive.Server.Logic
                 }
                 if (avatar.Client == client)
                 {
-                    client.LogMessage("You already possess mobile " + avatar.ObjectInstanceId);
+                    client.LogMessage("You already possess " + avatar);
                     return;
                 }
 
                 if (avatar.Client != null)
                 {
-                    _log.Info("Mobile " + avatar.ObjectInstanceId + " has been taken over by a new connection.");
+                    _log.Info("Mobile " + avatar.ObjectInstanceId + " has been taken over by " + client);
+                    avatar.Client.LogMessage("You lost control of " + avatar);
                     avatar.Client.Avatar = null;
-                    avatar.Client.Close();
                 }
                 avatar.Client = client;
                 client.Avatar = avatar;
+                client.LogMessage("You are now controlling " + avatar);
             }
             else
             {

@@ -55,7 +55,8 @@ namespace Strive.Network.Messaging
 
         void Process(AddMobile m)
         {
-            WorldModel.Set(new EntityModel(m.Mobile.ObjectInstanceId.ToString(),
+            WorldModel.Set(new EntityModel(m.Mobile.ObjectInstanceId,
+                                           m.Mobile.TemplateObjectName,
                                            "RTSRobot",
                                            m.Mobile.Position,
                                            m.Mobile.Rotation));
@@ -63,7 +64,8 @@ namespace Strive.Network.Messaging
 
         void Process(AddJunk m)
         {
-            WorldModel.Set(new EntityModel(m.Junk.ObjectInstanceId.ToString(),
+            WorldModel.Set(new EntityModel(m.Junk.ObjectInstanceId,
+                                           m.Junk.TemplateObjectName,
                                            "StaticBox",
                                            m.Junk.Position,
                                            m.Junk.Rotation));
@@ -75,8 +77,7 @@ namespace Strive.Network.Messaging
 
         void Process(PositionUpdate m)
         {
-            EntityModel e = WorldModel.Get(m.InstanceId.ToString());
-            WorldModel.Set(new EntityModel(e.Name, e.ModelId, m.Position, m.Rotation));
+            WorldModel.Move(m.InstanceId, m.Position, m.Rotation);
         }
 
         void Process(MobileState m)

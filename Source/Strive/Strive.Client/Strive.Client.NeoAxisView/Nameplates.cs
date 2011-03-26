@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using Engine.MapSystem;
 using Engine.MathEx;
 using Engine.Renderer;
-using Engine.MapSystem;
 using Engine.Utils;
 
 namespace Strive.Client.NeoAxisView
@@ -24,7 +24,7 @@ namespace Strive.Client.NeoAxisView
 
             Vec3 cameraPosition = camera.Position;
 
-            //generate visibled objects list 
+            //generate visible objects list 
             Map.Instance.GetObjectsByScreenRectangle(camera, new Rect(0, 0, 1, 1), delegate(MapObject obj)
             {
                 if (!obj.Visible)

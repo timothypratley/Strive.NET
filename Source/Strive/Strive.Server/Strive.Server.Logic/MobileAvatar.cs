@@ -44,7 +44,7 @@ namespace Strive.Server.Logic
         // any queued up skills to be executed after the current one
         public Queue<UseSkill> SkillQueue = new Queue<UseSkill>();
 
-        // todo: put these in the database schema
+        // TODO: put these in the database schema
         public float AffinityAir;
         public float AffinityEarth;
         public float AffinityFire;

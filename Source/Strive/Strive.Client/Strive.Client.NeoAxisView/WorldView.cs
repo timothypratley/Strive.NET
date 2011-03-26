@@ -2,6 +2,7 @@
 using System.Windows;
 using Engine.EntitySystem;
 using Engine.MapSystem;
+using Strive.Client.Model;
 using Strive.Client.ViewModel;
 using WPFAppFramework;
 
@@ -26,24 +27,28 @@ namespace Strive.Client.NeoAxisView
             // Add or update all entities in the current scene
             foreach (var kvp in m)
             {
-                var e = kvp.Value;
-                var ee = (MapObject)Entities.Instance.GetByName(e.Name);
-                if (ee == null)
+                var entityModel = kvp.Value;
+                var neoEntity = (MapObject)Entities.Instance.GetByName(entityModel.Name);
+                if (neoEntity == null)
                 {
-                    ee = (MapObject)Entities.Instance.Create(e.ModelId, Map.Instance);
-                    ee.Name = e.Name;
-                    ee.Position = e.Position.ToVec3();
-                    ee.Rotation = e.Rotation.ToQuat();
-                    ee.PostCreate();
+                    neoEntity = (MapObject)Entities.Instance.Create(entityModel.ModelId, Map.Instance);
+                    neoEntity.Name = entityModel.Name;
+                    neoEntity.UserData = entityModel;
+                    neoEntity.Position = entityModel.Position.ToVec3();
+                    neoEntity.Rotation = entityModel.Rotation.ToQuat();
+                    neoEntity.PostCreate();
                 }
-                ee.Position = e.Position.ToVec3();
-                ee.Rotation = e.Rotation.ToQuat();
+                neoEntity.Position = entityModel.Position.ToVec3();
+                neoEntity.Rotation = entityModel.Rotation.ToQuat();
             }
 
             // Remove entities that should no longer be in the scene
-            foreach (var e3 in Entities.Instance.EntitiesCollection
-                .Where(x => x is MapObject && !m.ContainsKey(x.Name)))
-                e3.SetShouldDelete();
+            foreach (var neoEntity in Entities.Instance.EntitiesCollection
+                .Where(x => x is MapObject
+                    && x.UserData != null
+                    && x.UserData is EntityModel
+                    && !m.ContainsKey(((EntityModel)x.UserData).Id)))
+                neoEntity.SetShouldDelete();
         }
 
         public static void Shutdown()

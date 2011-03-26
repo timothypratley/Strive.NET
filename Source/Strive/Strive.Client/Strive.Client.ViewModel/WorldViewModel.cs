@@ -72,9 +72,9 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public void Set(string name, string modelId, Vector3D position, Quaternion rotation)
+        public void Set(int id, string name, string modelId, Vector3D position, Quaternion rotation)
         {
-            WorldModel.Set(new EntityModel(name, modelId, position, rotation));
+            WorldModel.Set(new EntityModel(id, name, modelId, position, rotation));
         }
 
         public void ClearMouseOverEntity()
@@ -82,21 +82,21 @@ namespace Strive.Client.ViewModel
             Navigation.MouseOverEntity = null;
         }
 
-        public void SetMouseOverEntity(string name)
+        public void SetMouseOverEntity(int id)
         {
-            Navigation.MouseOverEntity = WorldModel.Get(name);
+            Navigation.MouseOverEntity = WorldModel.Get(id);
         }
 
-        public void SelectAdd(string name)
+        public void SelectAdd(int id)
         {
-            var entity = WorldModel.Get(name);
+            var entity = WorldModel.Get(id);
             if (entity != null)
                 Navigation.AddSelectedEntity(entity);
         }
 
-        public void Select(string name)
+        public void Select(int id)
         {
-            var entity = WorldModel.Get(name);
+            var entity = WorldModel.Get(id);
             if (entity != null)
                 Navigation.SetSelectedEntity(entity);
         }
@@ -110,7 +110,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        // TODO: can xaml just use the MouseOverEntity instead?
+        // TODO: can XAML just use the MouseOverEntity instead?
         public bool IsMouseOverEntity { get { return Navigation.MouseOverEntity != null; } }
 
         public EntityViewModel MouseOverEntity

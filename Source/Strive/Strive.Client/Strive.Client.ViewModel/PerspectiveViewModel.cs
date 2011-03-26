@@ -40,7 +40,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        DictionaryModel<string, EntityModel> _followEntities = new DictionaryModel<string, EntityModel>();
+        DictionaryModel<int, EntityModel> _followEntities = new DictionaryModel<int, EntityModel>();
         public IEnumerable<EntityViewModel> FollowEntities
         {
             get
@@ -105,14 +105,14 @@ namespace Strive.Client.ViewModel
                     {
                         var target = WorldViewModel.Navigation.MouseOverEntity;
                         if (target == null)
-                            _followEntities = new DictionaryModel<string, EntityModel>(
+                            _followEntities = new DictionaryModel<int, EntityModel>(
                                 WorldViewModel.Navigation.SelectedEntities
-                                    .Select(e => new KeyValuePair<string, EntityModel>(e.Name, e)));
+                                    .Select(e => new KeyValuePair<int, EntityModel>(e.Id, e)));
                         else
                         {
                             UnFollow();
-                            _followEntities.Add(target.Name, target);
-                            WorldViewModel.Select(target.Name);
+                            _followEntities.Add(target.Id, target);
+                            WorldViewModel.Select(target.Id);
                         }
                     });
             }
@@ -314,7 +314,7 @@ namespace Strive.Client.ViewModel
             if (_followEntities.Count > 0)
             {
                 Vector3D center = _followEntities.Entities
-                    .Where(e => WorldViewModel.WorldModel.ContainsKey(e.Name))
+                    .Where(e => WorldViewModel.WorldModel.ContainsKey(e.Id))
                     .Average(e => e.Position);
                 Vector3D diff = center - Position;
                 double vectorDistance = diff.Length;

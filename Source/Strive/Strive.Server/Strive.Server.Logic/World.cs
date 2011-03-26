@@ -11,7 +11,6 @@ using Strive.Server.Model;
 using ToClient = Strive.Network.Messages.ToClient;
 
 
-// todo: this object needs to be made threadsafe... why?
 namespace Strive.Server.Logic
 {
     public class World
@@ -28,7 +27,7 @@ namespace Strive.Server.Logic
         Square[,] _square;
         Terrain[,] _terrain;
 
-        // all physical objects are indexed in a hashtable
+        // all physical objects are indexed in a hash-table
         public Dictionary<int, PhysicalObject> PhysicalObjects { get; private set; }
         public List<MobileAvatar> Mobiles { get; private set; }
 
@@ -54,8 +53,7 @@ namespace Strive.Server.Logic
             PhysicalObjects = new Dictionary<int, PhysicalObject>();
             Mobiles = new List<MobileAvatar>();
 
-            // todo: would be nice to be able to load only the
-            // world in question... but for now load them all
+            // TODO: would be nice to be able to load only the world in question... but for now load them all
             if (Global.WorldFilename != null)
             {
                 _log.Info("Loading Global.modelSchema from file:" + Global.WorldFilename);
@@ -282,10 +280,10 @@ namespace Strive.Server.Logic
             int toSquareZ = (int)(newPosition.Z - _lowZ) / Square.SquareSize;
             int i, j;
 
-            // TODO: disallow the relocation if it is outside terain
+            // TODO: disallow the relocation if it is outside terrain
             //return;
             // keep everything on the ground
-            // TODO: refactor below ma and overload Height
+            // TODO: re-factor below ma and overload Height
             double? altitude = AltitudeAt(newPosition.X, newPosition.Z);
             if (altitude.HasValue)
             {
@@ -349,7 +347,7 @@ namespace Strive.Server.Logic
                     int tbx = DivTruncate((int)newPosition.X, Constants.TerrainPieceSize) - Constants.xRadius[k];
                     int tbz = DivTruncate((int)newPosition.Z, Constants.TerrainPieceSize) - Constants.zRadius[k];
 
-                    // Normalise to a 'grid' point
+                    // Normalize to a 'grid' point
                     tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
                     tbz = DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
 
@@ -486,7 +484,7 @@ namespace Strive.Server.Logic
         public bool UserLookup(string email, string password, ref int playerId)
         {
             // TODO: have disabled password checking for testing purposes
-            return true;
+            return !string.IsNullOrEmpty(email);
 
             /*
             //Strive.Data.MultiverseFactory.refreshPlayerList(Global.modelSchema);
@@ -517,7 +515,7 @@ namespace Strive.Server.Logic
                 int j;
                 for (j = -1; j <= 1; j++)
                 {
-                    // check that neigbour exists
+                    // check that neighbor exists
                     if (squareX + i < 0 || squareX + i >= _squaresInX
                         || squareZ + j < 0 || squareZ + j >= _squaresInZ
                         || _square[squareX + i, squareZ + j] == null)
@@ -551,13 +549,13 @@ namespace Strive.Server.Logic
             {
                 for (j = -1; j <= 1; j++)
                 {
-                    // check that neigbour exists
+                    // check that neighbor exists
                     if (squareX + i < 0 || squareX + i >= _squaresInX
                         || squareZ + j < 0 || squareZ + j >= _squaresInZ
                         || _square[squareX + i, squareZ + j] == null)
                         continue;
 
-                    // add all neighbouring physical objects
+                    // add all neighboring physical objects
                     // to the clients world view
                     // that are in scope
 
@@ -588,7 +586,7 @@ namespace Strive.Server.Logic
                 int tbx = DivTruncate((int)mob.Position.X, Constants.TerrainPieceSize) - Constants.xRadius[k];
                 int tbz = DivTruncate((int)mob.Position.Z, Constants.TerrainPieceSize) - Constants.zRadius[k];
 
-                // Normalise to a 'grid' point
+                // Normalize to a 'grid' point
                 tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
                 tbz = DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
 
@@ -641,7 +639,7 @@ namespace Strive.Server.Logic
                 double dz = z - _terrain[terrainX, terrainZ].Position.Z;
 
                 // terrain is a diagonally split square, forming two triangles
-                // which touch the altitude points of 4 neighbouring terrain
+                // which touch the altitude points of 4 neighboring terrain
                 // points, the current terrain and its xplus, zplus, xpluszplus.
                 // so for either triangle, just apply the slope in x and z
                 // to find the altitude at that point

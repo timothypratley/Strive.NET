@@ -11,6 +11,7 @@ using Engine.SoundSystem;
 using Engine.PhysicsSystem;
 using GameEntities;
 using Strive.Client.ViewModel;
+using Strive.Client.Model;
 
 
 namespace Strive.Client.NeoAxisView
@@ -107,7 +108,7 @@ namespace Strive.Client.NeoAxisView
                 Ray ray = camera.GetCameraToViewportRay(mouse);
                 Map.Instance.GetObjects(ray, delegate(MapObject obj, float scale)
                 {
-                    if (obj is StaticMesh)
+                    if (obj.UserData == null || !(obj.UserData is EntityModel))
                         return true;
                     _mouseOver = obj;
                     return false;
@@ -118,7 +119,7 @@ namespace Strive.Client.NeoAxisView
                     // Put a yellow box around it and a tooltip
                     camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
                     camera.DebugGeometry.AddBounds(_mouseOver.MapBounds);
-                    _worldViewModel.SetMouseOverEntity(_mouseOver.Name);
+                    _worldViewModel.SetMouseOverEntity(((EntityModel)_mouseOver.UserData).Id);
                 }
                 else
                     _worldViewModel.ClearMouseOverEntity();
@@ -190,13 +191,14 @@ namespace Strive.Client.NeoAxisView
             }
             if (_mouseOver != null)
             {
+                var id = ((EntityModel)_mouseOver.UserData).Id;
                 if (renderTarget.IsKeyPressed(Key.LeftShift)
                     || renderTarget.IsKeyPressed(Key.LeftCtrl)
                     || renderTarget.IsKeyPressed(Key.RightShift)
                     || renderTarget.IsKeyPressed(Key.RightCtrl))
-                    _worldViewModel.SelectAdd(_mouseOver.Name);
+                    _worldViewModel.SelectAdd(id);
                 else
-                    _worldViewModel.Select(_mouseOver.Name);
+                    _worldViewModel.Select(id);
 
                 var b = _mouseOver as RTSBuilding;
                 if (b != null)

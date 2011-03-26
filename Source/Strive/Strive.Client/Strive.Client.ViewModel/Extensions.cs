@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Windows.Media.Media3D;
-using System.Diagnostics.Contracts;
 
 
 namespace Strive.Client.ViewModel
@@ -22,9 +22,10 @@ namespace Strive.Client.ViewModel
             return vectors.Sum() / vectors.Count();
         }
 
-        public static Vector3D Average<T>(this IEnumerable<T> vectors, Func<T,Vector3D> selector)
+        public static Vector3D Average<T>(this IEnumerable<T> vectors, Func<T, Vector3D> selector)
         {
-            Contract.Requires<ArgumentNullException>(vectors != null && vectors.Any());
+            Contract.Requires<ArgumentNullException>(vectors != null);
+            Contract.Requires<ArgumentException>(vectors.Any());
             return vectors.Select(selector).Average();
         }
     }
