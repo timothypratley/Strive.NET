@@ -28,11 +28,12 @@ namespace Strive.Client.NeoAxisView
             foreach (var kvp in m)
             {
                 var entityModel = kvp.Value;
-                var neoEntity = (MapObject)Entities.Instance.GetByName(entityModel.Name);
+                var neoEntity = (MapObject)Entities.Instance.GetByName(entityModel.Id.ToString());
                 if (neoEntity == null)
                 {
                     neoEntity = (MapObject)Entities.Instance.Create(entityModel.ModelId, Map.Instance);
-                    neoEntity.Name = entityModel.Name;
+                    neoEntity.Name = entityModel.Id.ToString();
+                    neoEntity.TextUserData = entityModel.Name;
                     neoEntity.UserData = entityModel;
                     neoEntity.Position = entityModel.Position.ToVec3();
                     neoEntity.Rotation = entityModel.Rotation.ToQuat();

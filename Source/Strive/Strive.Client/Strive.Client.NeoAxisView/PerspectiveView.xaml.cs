@@ -5,13 +5,13 @@ using System.Windows.Input;
 using Engine;
 using Engine.EntitySystem;
 using Engine.MapSystem;
-using Engine.Renderer;
 using Engine.MathEx;
-using Engine.SoundSystem;
 using Engine.PhysicsSystem;
+using Engine.Renderer;
+using Engine.SoundSystem;
 using GameEntities;
-using Strive.Client.ViewModel;
 using Strive.Client.Model;
+using Strive.Client.ViewModel;
 
 
 namespace Strive.Client.NeoAxisView
@@ -60,10 +60,10 @@ namespace Strive.Client.NeoAxisView
             Perspective.Check();
             renderTarget.CameraPosition = Perspective.Position.ToVec3();
             renderTarget.CameraDirection = Perspective.Rotation.ToQuat() * Vec3.XAxis;
-                // TODO: what does it all mean?
-                //new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
-                //* new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
-                //* Vec3.XAxis;
+            // TODO: what does it all mean?
+            //new Angles(0f, 0f, MathFunctions.RadToDeg((float)_perspective.Heading)).ToQuat()
+            //* new Angles(0f, MathFunctions.RadToDeg((float)_perspective.Tilt), 0f).ToQuat()
+            //* Vec3.XAxis;
             if (SoundWorld.Instance != null)
                 SoundWorld.Instance.SetListener(camera.Position, Vec3.Zero, camera.Direction, camera.Up);
             RenderEntityOverCursor(camera);
@@ -75,7 +75,7 @@ namespace Strive.Client.NeoAxisView
         private void SetToolTipString()
         {
             var e = _worldViewModel.MouseOverEntity;
-            string newTip =  e == null ? null : e.Entity.Name;
+            string newTip = e == null ? null : e.Entity.Name;
             if (newTip != _toolTipString)
             {
                 _toolTipString = newTip;
@@ -138,12 +138,10 @@ namespace Strive.Client.NeoAxisView
             // except MouseOver as it will be yellow
             camera.DebugGeometry.Color = new ColorValue(0.5f, 0.5f, 1);
             foreach (MapObject mo in _worldViewModel.SelectedEntities
-                .Select(evm => Entities.Instance.GetByName(evm.Entity.Name))
+                .Select(evm => Entities.Instance.GetByName(evm.Entity.Id.ToString()))
                 .OfType<MapObject>()
                 .Where(mo => mo != _mouseOver))
-            {
                 camera.DebugGeometry.AddBounds(mo.MapBounds);
-            }
         }
 
         void PerspectiveViewControl_MouseEnter(object sender, EventArgs e)
@@ -211,10 +209,10 @@ namespace Strive.Client.NeoAxisView
                     else
                     {
                         Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(
-                            b.Position.ToVec2(), character.Type.Radius*2);
+                            b.Position.ToVec2(), character.Type.Radius * 2);
                         unit.Position = new Vec3(p.X, p.Y,
                                                  GridPathFindSystem.Instance.GetMotionMapHeight(p) +
-                                                 character.Type.Height*.5f);
+                                                 character.Type.Height * .5f);
                     }
 
                     if (b.Intellect != null)

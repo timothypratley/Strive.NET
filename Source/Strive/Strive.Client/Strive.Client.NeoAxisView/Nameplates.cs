@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using Engine.MapSystem;
 using Engine.MathEx;
 using Engine.Renderer;
@@ -54,7 +55,7 @@ namespace Strive.Client.NeoAxisView
             });
 
             //render objects 
-            foreach (MapObject obj in TempObjects)
+            foreach (MapObject obj in TempObjects.Where(x => !string.IsNullOrEmpty(x.TextUserData)))
             {
                 Vec2 screenPos;
                 camera.ProjectToScreenCoordinates(obj.Position + new Vec3(0, 0, obj.MapBounds.GetSize().Z + 0.2f), out screenPos);
@@ -72,7 +73,7 @@ namespace Strive.Client.NeoAxisView
 
                 Font font = FontManager.Instance.LoadFont("Default", 0.02f) ?? renderer.DefaultFont;
 
-                string text = obj.Name;
+                string text = obj.TextUserData;
                 if (text.Length != 0)
                 {
                     float textLength = font.GetTextLength(renderer, text) / renderer.AspectRatio;
