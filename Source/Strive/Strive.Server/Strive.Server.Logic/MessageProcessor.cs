@@ -65,7 +65,7 @@ namespace Strive.Server.Logic
             try
             {
                 ProcessMessage(client, message);
-                _log.Info("Processed message " + message);
+                _log.Trace("Processed message " + message);
             }
             catch
             {

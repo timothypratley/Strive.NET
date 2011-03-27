@@ -198,7 +198,7 @@ namespace Strive.Client.ViewModel
                 // Send update if required
                 // TODO: use a global now, and use a dirty flag
                 if ((Position != initialPosition || Rotation != initialRotation)
-                    && DateTime.Now - _lastPositionSent > TimeSpan.FromSeconds(1))
+                    && DateTime.Now - _lastPositionSent > TimeSpan.FromSeconds(0.1))
                 {
                     WorldViewModel.ServerConnection.MyPosition(
                         PossessingId, Position, Rotation, MobileState);

@@ -10,9 +10,6 @@ using Strive.Network.Messaging;
 
 namespace Strive.Client.WPF
 {
-    /// <summary>
-    /// Interaction logic for ResourceList.xaml
-    /// </summary>
     public partial class ConnectView : DockableContent
     {
         public ConnectView()
@@ -23,6 +20,7 @@ namespace Strive.Client.WPF
 
             // TODO: make a view model and expose connected status; holding a server connection instead of global
             DataContext = App.ServerConnection;
+            App.ServerConnection.Connect += (s, ev) => Login((ServerConnection)s);
         }
 
         // TODO: validation not hooked up
@@ -39,25 +37,34 @@ namespace Strive.Client.WPF
             }
         }
 
+        string userString;
+        string hashString;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: nicer validation
             int port;
             if (!int.TryParse(portTextBox.Text, out port))
                 port = Constants.DefaultPort;
-            App.ServerConnection.Start(new IPEndPoint(Dns.GetHostEntry(hostTextBox.Text).AddressList[0], port));
+            var host = Dns.GetHostEntry(hostTextBox.Text);
+            if (host == null || host.AddressList.Length < 1)
+                return;
+
+            userString = username.Text;
+            if (string.IsNullOrEmpty(userString))
+                userString = "Player";
 
             // TODO: Are there any encryption APIs that hash from a secure password directly? calling ToString is bad
             var service = new MD5CryptoServiceProvider();
             var bytes = service.ComputeHash(Encoding.Default.GetBytes(password.SecurePassword.ToString()));
-            var hashString = Convert.ToBase64String(bytes);
-            var userString = username.Text;
+            hashString = Convert.ToBase64String(bytes);
 
-            App.ServerConnection.Connect += (s, ev) =>
-                                                {
-                                                    var sc = ((ServerConnection)s);
-                                                    sc.Login(userString, hashString);
-                                                    sc.PossessMobile(App.Rand.Next());
-                                                };
+            App.ServerConnection.Start(new IPEndPoint(host.AddressList[0], port));
+        }
+
+        void Login(ServerConnection sc)
+        {
+            sc.Login(userString, hashString);
+            sc.PossessMobile(App.Rand.Next());
         }
     }
 }
