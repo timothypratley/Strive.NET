@@ -91,7 +91,7 @@ namespace Strive.Client.WPF
 
         private void BrowseHomeCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -113,6 +113,11 @@ namespace Strive.Client.WPF
             BindAndShow(new FactoryView(), new FactoryViewModel());
         }
 
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            BindAndShow(new UnitView(), new UnitViewModel());
+        }
+
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             BindAndShow(new ServerStatusView(), new ServerStatusViewModel(App.ServerEngine.ServerStatusModel));
@@ -124,9 +129,9 @@ namespace Strive.Client.WPF
             BindAndShow(new ChatLogView(App.ServerConnection), new LogViewModel(App.ChatLogModel));
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Button_Click_6(object sender, RoutedEventArgs e)
         {
-            BindAndShow(new UnitView(), new UnitViewModel());
+            BindAndShow(new TimeLineView(), App.WorldViewModel);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

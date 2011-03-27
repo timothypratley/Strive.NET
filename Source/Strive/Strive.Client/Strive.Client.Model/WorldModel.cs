@@ -8,6 +8,8 @@ namespace Strive.Client.Model
     public class WorldModel
     {
         private readonly RecordedMapModel<int, EntityModel> _recordedWorld = new RecordedMapModel<int, EntityModel>();
+        public RecordedMapModel<int, EntityModel> History { get { return _recordedWorld; } }
+        public IEnumerable<EntityModel> Values { get { return _recordedWorld.Values; } }
 
         public FSharpMap<int, EntityModel> Snap()
         {
@@ -33,7 +35,5 @@ namespace Strive.Client.Model
         {
             Set(Get(key).Move(position, rotation));
         }
-
-        public IEnumerable<EntityModel> Values { get { return _recordedWorld.Values; } }
     }
 }

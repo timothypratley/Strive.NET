@@ -65,12 +65,15 @@ namespace Strive.Client.ViewModel
 
         public IEnumerable<EntityViewModel> Entities
         {
-            get
-            {
-                return WorldModel.Values
-                    .Select(em => new EntityViewModel(em, Navigation));
-            }
+            get { return WorldModel.Values.Select(em => new EntityViewModel(em, Navigation)); }
         }
+
+        public int CurrentVersion
+        {
+            get { return WorldModel.History.CurrentVersion; }
+            set { WorldModel.History.CurrentVersion = value; }
+        }
+        public int MaxVersion { get { return WorldModel.History.MaxVersion; } }
 
         public void Set(int id, string name, string modelId, Vector3D position, Quaternion rotation)
         {

@@ -44,6 +44,7 @@
             <Button Content="UnitView" Click="Button_Click_3"></Button>
             <Button Content="Host" Click="Button_Click_4"></Button>
             <Button Content="Chat" Click="Button_Click_5"></Button>
+            <Button Content="History" Click="Button_Click_6"></Button>
         </ToolBar>
 
         <StatusBar DockPanel.Dock="Bottom">
