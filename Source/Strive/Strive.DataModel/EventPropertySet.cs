@@ -11,6 +11,6 @@ namespace Strive.DataModel
             Properties = properties.ToArray();
         }
 
-        public KeyValuePair<EnumProperty, object>[] Properties { get; set; }
+        public KeyValuePair<EnumProperty, object>[] Properties { get; private set; }
     }
 }
