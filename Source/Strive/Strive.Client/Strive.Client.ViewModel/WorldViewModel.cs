@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Media.Media3D;
-using System.Windows.Threading;
-using UpdateControls;
-using UpdateControls.XAML;
 using Strive.Client.Model;
 using Strive.Network.Messaging;
+using UpdateControls.XAML;
 
 
 namespace Strive.Client.ViewModel
@@ -24,21 +20,6 @@ namespace Strive.Client.ViewModel
             ServerConnection = connection;
             Bindings = new InputBindings();
             Navigation = new WorldNavigation();
-
-            _depWorldModel = new Dependent(UpdateWorldModel);
-            _depWorldModel.Invalidated += () =>
-                Dispatcher.CurrentDispatcher.BeginInvoke((Action)_depWorldModel.OnGet);
-            _depWorldModel.OnGet();
-        }
-
-        public event EventHandler WorldChanged;
-        private readonly Dependent _depWorldModel;
-        void UpdateWorldModel()
-        {
-            var discard = WorldModel.Values;
-            var eh = WorldChanged;
-            if (eh != null)
-                eh(this, new EventArgs());
         }
 
         public ICommand FollowSelected
@@ -65,20 +46,15 @@ namespace Strive.Client.ViewModel
 
         public IEnumerable<EntityViewModel> Entities
         {
-            get { return WorldModel.Values.Select(em => new EntityViewModel(em, Navigation)); }
+            get { return WorldModel.Entities.Select(em => new EntityViewModel(em, Navigation)); }
         }
 
         public int CurrentVersion
         {
-            get { return WorldModel.History.CurrentVersion; }
-            set { WorldModel.History.CurrentVersion = value; }
+            get { return WorldModel.CurrentVersion; }
+            set { WorldModel.CurrentVersion = value; }
         }
-        public int MaxVersion { get { return WorldModel.History.MaxVersion; } }
-
-        public void Set(int id, string name, string modelId, Vector3D position, Quaternion rotation)
-        {
-            WorldModel.Set(new EntityModel(id, name, modelId, position, rotation));
-        }
+        public int MaxVersion { get { return WorldModel.MaxVersion; } }
 
         public void ClearMouseOverEntity()
         {

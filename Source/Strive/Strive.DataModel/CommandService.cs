@@ -12,23 +12,16 @@ namespace Strive.DataModel
         static CommandService()
         {
             var service = new InProcessCommandService();
-            service.RegisterExecutor(new SetAttributesCommandExecutor());
+            service.RegisterExecutor(new CommandExecutorCreateJunk());
             NcqrsEnvironment.SetDefault<ICommandService>(service);
             var store = new InMemoryEventStore();
             NcqrsEnvironment.SetDefault<IEventStore>(store);
 
             // TODO: remove this is for testing only
-            Execute(new SetAttributesCommand
-                        {
-                            Attributes = new[]
-                                             {
-                                                 new KeyValuePair<EnumAttribute, object>(EnumAttribute.Location,
-                                                                                         new Vector3D(1, 2, 3))
-                                             }
-                        });
+            Execute(new CommandCreateJunk("junk", new Vector3D(1, 2 , 3), Quaternion.Identity));
         }
 
-        public static void Execute(SetAttributesCommand command)
+        public static void Execute(CommandCreateJunk command)
         {
             var service = NcqrsEnvironment.Get<ICommandService>();
             service.Execute(command);

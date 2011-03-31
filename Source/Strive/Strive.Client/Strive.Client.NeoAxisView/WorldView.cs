@@ -21,8 +21,7 @@ namespace Strive.Client.NeoAxisView
 
         public static void UpdateFromWorldModel()
         {
-            // TODO: remove reference to fsharpmap use an interface?
-            var m = WorldViewModel.WorldModel.Snap();
+            var m = WorldViewModel.WorldModel.SnapShot();
 
             // Add or update all entities in the current scene
             foreach (var kvp in m)

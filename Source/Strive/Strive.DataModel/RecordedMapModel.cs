@@ -58,6 +58,7 @@ namespace Strive.DataModel
         {
             Contract.Requires<ArgumentNullException>(keyValuePairs != null);
 
+            _indHistory.OnSet();
             foreach (var e in keyValuePairs)
                 Map = Map.Add(e.Key, e.Value);
         }
@@ -78,11 +79,26 @@ namespace Strive.DataModel
             Map = Map.Remove(key);
         }
 
-        public TValueType Get(TKeyType id)
+        public TValueType Get(TKeyType key)
         {
             _indHistory.OnGet();
-            var option = Map.TryFind(id);
-            return option == FSharpOption<TValueType>.None ? default(TValueType) : option.Value;
+            return Map[key];
+        }
+
+        public bool TryGet(TKeyType key, out TValueType value)
+        {
+            _indHistory.OnGet();
+            var option = Map.TryFind(key);
+            if (option == FSharpOption<TValueType>.None)
+            {
+                value = default(TValueType);
+                return false;
+            }
+            else
+            {
+                value = option.Value;
+                return true;
+            }
         }
 
         public IEnumerable<TValueType> Values

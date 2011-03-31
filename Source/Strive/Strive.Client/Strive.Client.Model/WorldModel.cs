@@ -8,10 +8,9 @@ namespace Strive.Client.Model
     public class WorldModel
     {
         private readonly RecordedMapModel<int, EntityModel> _recordedWorld = new RecordedMapModel<int, EntityModel>();
-        public RecordedMapModel<int, EntityModel> History { get { return _recordedWorld; } }
-        public IEnumerable<EntityModel> Values { get { return _recordedWorld.Values; } }
+        public IEnumerable<EntityModel> Entities { get { return _recordedWorld.Values; } }
 
-        public FSharpMap<int, EntityModel> Snap()
+        public FSharpMap<int, EntityModel> SnapShot()
         {
             return _recordedWorld.Map;
         }
@@ -29,6 +28,13 @@ namespace Strive.Client.Model
         public EntityModel Get(int key)
         {
             return _recordedWorld.Get(key);
+        }
+
+        public int MaxVersion { get { return _recordedWorld.MaxVersion; } }
+        public int CurrentVersion
+        {
+            get { return _recordedWorld.CurrentVersion; }
+            set { _recordedWorld.CurrentVersion = value; }
         }
 
         public void Move(int key, Vector3D position, Quaternion rotation)

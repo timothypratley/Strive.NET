@@ -6,38 +6,38 @@ using Ncqrs.Domain;
 
 namespace Strive.DataModel
 {
-    public enum EnumAttribute
+    public enum EnumProperty
     {
         Name,
         Health,
-        Location
+        Position,
+        Rotation
     }
 
     public class PhysicalObject : AggregateRootMappedByConvention
     {
-        private static IDictionary<EnumAttribute, Type> AttributeTypes = new Dictionary<EnumAttribute, Type>
+        private static IDictionary<EnumProperty, Type> PropertyTypes = new Dictionary<EnumProperty, Type>
                                                                              {
-                                                                                 {EnumAttribute.Name, typeof (string)},
-                                                                                 {EnumAttribute.Health, typeof (double)},
-                                                                                 {EnumAttribute.Location, typeof (Vector3D)}
+                                                                                 {EnumProperty.Name, typeof (string)},
+                                                                                 {EnumProperty.Health, typeof (double)},
+                                                                                 {EnumProperty.Position, typeof (Vector3D)},
+                                                                                 {EnumProperty.Rotation, typeof (Quaternion)}
                                                                              };
 
-        private readonly IDictionary<EnumAttribute, object> _attributes = new Dictionary<EnumAttribute, object>();
+        private readonly IDictionary<EnumProperty, object> _properties = new Dictionary<EnumProperty, object>();
 
         public PhysicalObject(string name)
         {
-            var e = new AttributesSetEvent
-                        {
-                            Attributes = new[] { new KeyValuePair<EnumAttribute, object>(EnumAttribute.Name, name) }
-                        };
+            var e = new EventPropertySet(
+                new Dictionary<EnumProperty, object> { { EnumProperty.Name, name } });
 
             ApplyEvent(e);
         }
 
-        protected void OnAttributesSet(AttributesSetEvent e)
+        protected void OnPropertySet(EventPropertySet e)
         {
-            foreach (KeyValuePair<EnumAttribute, object> a in e.Attributes)
-                _attributes[a.Key] = a.Value;
+            foreach (KeyValuePair<EnumProperty, object> a in e.Properties)
+                _properties[a.Key] = a.Value;
         }
     }
 }
