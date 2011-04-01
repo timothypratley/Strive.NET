@@ -33,9 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Clojure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -51,13 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CompareRecordedMaps.cs" />
-    <Compile Include="ClojureRecordedMapModel.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Strive.DataModel\Strive.DataModel.csproj">
-      <Project>{D0376168-4019-4358-BBE1-C9A2B33051BD}</Project>
-      <Name>Strive.DataModel</Name>
+    <ProjectReference Include="..\Strive.ImmutableDataModel\Strive.ImmutableDataModel.fsproj">
+      <Project>{3FE244C9-7E8C-42B0-92AF-4C5B4B9C385F}</Project>
+      <Name>Strive.ImmutableDataModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

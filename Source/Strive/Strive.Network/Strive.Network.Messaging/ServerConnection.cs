@@ -14,12 +14,12 @@ namespace Strive.Network.Messaging
 {
     public class ServerConnection : Connection
     {
-        public WorldModel WorldModel { get; private set; }
+        public History WorldModel { get; private set; }
         public TraceListenerCollection ChatListeners;
 
         public ServerConnection()
         {
-            WorldModel = new WorldModel();
+            WorldModel = new History();
             MessageRecieved += ConnectionMessageRecieved;
 
             // I wish there were a public constructor for TraceListenerCollection, but there is not

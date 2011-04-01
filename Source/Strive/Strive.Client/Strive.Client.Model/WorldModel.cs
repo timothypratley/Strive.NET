@@ -1,45 +1,56 @@
-﻿using System.Collections.Generic;
-using System.Windows.Media.Media3D;
-using Microsoft.FSharp.Collections;
-using Strive.DataModel;
+﻿using Microsoft.FSharp.Collections;
+
 
 namespace Strive.Client.Model
 {
     public class WorldModel
     {
-        private readonly RecordedMapModel<int, EntityModel> _recordedWorld = new RecordedMapModel<int, EntityModel>();
-        public IEnumerable<EntityModel> Entities { get { return _recordedWorld.Values; } }
-
-        public FSharpMap<int, EntityModel> SnapShot()
+        public WorldModel(
+            FSharpMap<int, EntityModel> entity,
+            FSharpMap<int, TaskModel> task,
+            FSharpMap<int, PlanModel> plan,
+            FSharpMap<EntityModel, FSharpSet<EntityModel>> holding,
+            FSharpMap<EntityModel, FSharpSet<TaskModel>> doing,
+            FSharpMap<TaskModel, FSharpSet<PlanModel>> belongsTo)
         {
-            return _recordedWorld.Map;
+            Entity = entity;
+            Task = task;
+            Plan = plan;
+
+            Holding = holding;
+            Doing = doing;
+            BelongsTo = belongsTo;
         }
 
-        public bool ContainsKey(int key)
+        // Tables / Nodes
+        public FSharpMap<int, EntityModel> Entity { get; private set; }
+        public FSharpMap<int, TaskModel> Task { get; private set; }
+        public FSharpMap<int, PlanModel> Plan { get; private set; }
+
+        // Relations / Edges
+        // TODO: Actually better to use ints, as we only care about the ID
+        public FSharpMap<EntityModel, FSharpSet<EntityModel>> Holding { get; private set; }
+        public FSharpMap<EntityModel, FSharpSet<TaskModel>> Doing { get; private set; }
+        public FSharpMap<TaskModel, FSharpSet<PlanModel>> BelongsTo { get; private set; }
+
+        public WorldModel Add(EntityModel entity)
         {
-            return _recordedWorld.ContainsKey(key);
+            return new WorldModel(Entity.Add(entity.Id, entity), Task, Plan, Holding, Doing, BelongsTo);
         }
 
-        public void Set(EntityModel entity)
+        public WorldModel Add(TaskModel task)
         {
-            _recordedWorld.Set(entity.Id, entity);
+            return new WorldModel(Entity, Task.Add(task.Id, task), Plan, Holding, Doing, BelongsTo);
         }
 
-        public EntityModel Get(int key)
+        public WorldModel Add(PlanModel plan)
         {
-            return _recordedWorld.Get(key);
+            return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Holding, Doing, BelongsTo);
         }
 
-        public int MaxVersion { get { return _recordedWorld.MaxVersion; } }
-        public int CurrentVersion
+        public WorldModel Put(FSharpSet<EntityModel> entities, EntityModel on)
         {
-            get { return _recordedWorld.CurrentVersion; }
-            set { _recordedWorld.CurrentVersion = value; }
-        }
-
-        public void Move(int key, Vector3D position, Quaternion rotation)
-        {
-            Set(Get(key).Move(position, rotation));
+            return new WorldModel(Entity, Task, Plan, Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, BelongsTo);
         }
     }
 }
