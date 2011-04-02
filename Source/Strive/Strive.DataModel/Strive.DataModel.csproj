@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RecordedModel.cs" />
     <Compile Include="EventPropertySet.cs" />
     <Compile Include="CommandService.cs" />
     <Compile Include="DictionaryModel.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="RecordedMapModel.cs" />
     <Compile Include="CommandCreateJunk.cs" />
     <Compile Include="CommandExecutorCreateJunk.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="WorldState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

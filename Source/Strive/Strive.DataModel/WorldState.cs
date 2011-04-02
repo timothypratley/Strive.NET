@@ -3,9 +3,9 @@
 
 namespace Strive.DataModel
 {
-    class World
+    class WorldState
     {
-        private readonly IDictionary<int,PhysicalObject> _physicalObjects = new Dictionary<int, PhysicalObject>();
+        private readonly RecordedModel<PhysicalObject> _physicalObjects;
 
         protected void OnAdd(){}
         protected void OnRemove(){}
