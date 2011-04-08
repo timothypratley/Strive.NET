@@ -1,7 +1,7 @@
 ﻿using Microsoft.FSharp.Collections;
 using UpdateControls;
 
-namespace Strive.DataModel
+namespace Strive.Client.Model
 {
     /// <summary>
     /// Objects stored in a RecordedModel should be immutable to ensure they are not modified externally,

@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messaging.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.Model.Tests", "Strive\Strive.Client\Strive.Client.Model.Tests\Strive.Client.Model.Tests.csproj", "{777B24B3-268C-46D0-A77E-DB34003AEBB4}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Strive.ImmutableDataModel", "Strive\Strive.ImmutableDataModel\Strive.ImmutableDataModel.fsproj", "{3FE244C9-7E8C-42B0-92AF-4C5B4B9C385F}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Strive.Model", "Strive\Strive.ImmutableDataModel\Strive.Model.fsproj", "{3FE244C9-7E8C-42B0-92AF-4C5B4B9C385F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.DataModel.Tests", "Strive\Strive.DataModel.Tests\Strive.DataModel.Tests.csproj", "{694FD147-F833-49B8-8400-B05BCF99222A}"
 EndProject

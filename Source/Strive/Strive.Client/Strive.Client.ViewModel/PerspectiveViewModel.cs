@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using Strive.Client.Model;
 using Strive.Common;
-using Strive.DataModel;
 using UpdateControls.XAML;
 
 
@@ -314,7 +313,7 @@ namespace Strive.Client.ViewModel
             if (_followEntities.Count > 0)
             {
                 Vector3D center = _followEntities.Entities
-                    .Where(e => WorldViewModel.WorldModel.ContainsKey(e.Id))
+                    .Where(e => WorldViewModel.WorldModel.Current.Entity.ContainsKey(e.Id))
                     .Average(e => e.Position);
                 Vector3D diff = center - Position;
                 double vectorDistance = diff.Length;

@@ -73,14 +73,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RecordedModel.cs" />
     <Compile Include="EventPropertySet.cs" />
     <Compile Include="CommandService.cs" />
-    <Compile Include="DictionaryModel.cs" />
     <Compile Include="PhysicalObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyMap.cs" />
-    <Compile Include="RecordedMapModel.cs" />
     <Compile Include="CommandCreateJunk.cs" />
     <Compile Include="CommandExecutorCreateJunk.cs" />
     <Compile Include="WorldState.cs" />
