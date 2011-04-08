@@ -310,21 +310,23 @@ namespace Strive.Client.ViewModel
         /// <summary> Move toward or follow one or more entities </summary>
         private void Follow(double deltaT)
         {
-            if (_followEntities.Count > 0)
+            // check they still exist in the world
+            var following = _followEntities.Entities
+                    .Where(e => WorldViewModel.WorldModel.ContainsKey(e.Id));
+
+            if (following.Any())
             {
-                Vector3D center = _followEntities.Entities
-                    .Where(e => WorldViewModel.WorldModel.Current.Entity.ContainsKey(e.Id))
-                    .Average(e => e.Position);
+                Vector3D center = following.Average(e => e.Position);
                 Vector3D diff = center - Position;
                 double vectorDistance = diff.Length;
 
                 // TODO: replace with a proper bounds and frustum calculation
-                var maxX = _followEntities.Entities.Max(e => e.Position.X);
-                var maxY = _followEntities.Entities.Max(e => e.Position.Y);
-                var maxZ = _followEntities.Entities.Max(e => e.Position.Z);
-                var minX = _followEntities.Entities.Min(e => e.Position.X);
-                var minY = _followEntities.Entities.Min(e => e.Position.Y);
-                var minZ = _followEntities.Entities.Min(e => e.Position.Z);
+                var maxX = following.Max(e => e.Position.X);
+                var maxY = following.Max(e => e.Position.Y);
+                var maxZ = following.Max(e => e.Position.Z);
+                var minX = following.Min(e => e.Position.X);
+                var minY = following.Min(e => e.Position.Y);
+                var minZ = following.Min(e => e.Position.Z);
                 var viewDistance = new List<double> { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
 
                 // Move toward followed

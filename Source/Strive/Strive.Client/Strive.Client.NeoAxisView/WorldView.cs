@@ -49,6 +49,7 @@ namespace Strive.Client.NeoAxisView
                     && x.UserData is EntityModel
                     && !m.ContainsKey(((EntityModel)x.UserData).Id)))
                 neoEntity.SetShouldDelete();
+            Entities.Instance.DeleteEntitiesMarkedForDeletion();
         }
 
         public static void Shutdown()
