@@ -1,13 +1,10 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Input;
-using System.IO;
-using System.Collections.Generic;
-
-using UpdateControls.XAML;
 using AvalonDock;
-
-using Strive.WPF;
 using Strive.Client.NeoAxisView;
+using Strive.WPF;
+using UpdateControls.XAML;
 
 
 namespace Strive.Client.WPF
@@ -137,7 +134,7 @@ namespace Strive.Client.WPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             WorldView.Init(this, App.WorldViewModel);
-            //NewCmdExecuted(null, null);
+            NewCmdExecuted(null, null);
         }
 
         private void BindAndShow(DockableContent view, object viewModel)

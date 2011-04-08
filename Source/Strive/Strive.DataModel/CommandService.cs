@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Media.Media3D;
 using Ncqrs;
 using Ncqrs.Commanding.ServiceModel;
 using Ncqrs.Eventing.Storage;
@@ -18,7 +17,7 @@ namespace Strive.DataModel
             NcqrsEnvironment.SetDefault<IEventStore>(store);
 
             // TODO: remove this is for testing only
-            Execute(new CommandCreateJunk("junk", new Vector3D(1, 2 , 3), Quaternion.Identity));
+            Execute(new CommandCreateJunk("junk", new Vector3D(1, 2, 3), Quaternion.Identity));
         }
 
         public static void Execute(CommandCreateJunk command)

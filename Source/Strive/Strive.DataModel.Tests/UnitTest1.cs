@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Media3D;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Strive.ImmutableDataModel;
+using Strive.Model;
 
 namespace Strive.DataModel.Tests
 {

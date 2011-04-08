@@ -63,19 +63,19 @@ namespace Strive.Client.ViewModel
 
         public void SetMouseOverEntity(int id)
         {
-            Navigation.MouseOverEntity = WorldModel.Get(id);
+            Navigation.MouseOverEntity = WorldModel.GetEntity(id);
         }
 
         public void SelectAdd(int id)
         {
-            var entity = WorldModel.Get(id);
+            var entity = WorldModel.GetEntity(id);
             if (entity != null)
                 Navigation.AddSelectedEntity(entity);
         }
 
         public void Select(int id)
         {
-            var entity = WorldModel.Get(id);
+            var entity = WorldModel.GetEntity(id);
             if (entity != null)
                 Navigation.SetSelectedEntity(entity);
         }

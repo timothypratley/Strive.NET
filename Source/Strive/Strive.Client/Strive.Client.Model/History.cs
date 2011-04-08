@@ -2,32 +2,24 @@
 using System.Windows.Media.Media3D;
 using Microsoft.FSharp.Collections;
 using Strive.DataModel;
+using System.Linq;
 
 namespace Strive.Client.Model
 {
     public class History
     {
-        private readonly RecordedMapModel<int, EntityModel> _recordedWorld = new RecordedMapModel<int, EntityModel>();
-        public IEnumerable<EntityModel> Entities { get { return _recordedWorld.Values; } }
+        private readonly RecordedModel<WorldModel> _recordedWorld = new RecordedModel<WorldModel>(WorldModel.Empty);
+        public IEnumerable<EntityModel> Entities { get { return _recordedWorld.Current.Entity.Select(x=>x.Value); } }
+        public WorldModel Current { get { return _recordedWorld.Current; } }
 
-        public FSharpMap<int, EntityModel> SnapShot()
+        public void Add(EntityModel entity)
         {
-            return _recordedWorld.Map;
+            _recordedWorld.Head = _recordedWorld.Head.Add(entity);
         }
 
-        public bool ContainsKey(int key)
+        public EntityModel GetEntity(int key)
         {
-            return _recordedWorld.ContainsKey(key);
-        }
-
-        public void Set(EntityModel entity)
-        {
-            _recordedWorld.Set(entity.Id, entity);
-        }
-
-        public EntityModel Get(int key)
-        {
-            return _recordedWorld.Get(key);
+            return _recordedWorld.Head.Entity.TryFind(key).Value;
         }
 
         public int MaxVersion { get { return _recordedWorld.MaxVersion; } }
@@ -39,7 +31,7 @@ namespace Strive.Client.Model
 
         public void Move(int key, Vector3D position, Quaternion rotation)
         {
-            Set(Get(key).Move(position, rotation));
+            Add(GetEntity(key).Move(position, rotation));
         }
     }
 }

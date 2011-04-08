@@ -1,4 +1,4 @@
-﻿namespace Strive.ImmutableDataModel
+﻿namespace Strive.Model
 open System.Windows.Media.Media3D;
 
 

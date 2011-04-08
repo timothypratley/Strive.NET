@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using UpdateControls;
 
 
-namespace Strive.DataModel
+namespace Strive.Client.Model
 {
     public class DictionaryModel<TKeyType, TValueType>
     {

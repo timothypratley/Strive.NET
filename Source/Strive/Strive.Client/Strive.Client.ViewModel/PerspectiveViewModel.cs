@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using Strive.Client.Model;
 using Strive.Common;
-using Strive.DataModel;
 using UpdateControls.XAML;
 
 
