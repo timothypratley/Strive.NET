@@ -7,7 +7,7 @@ namespace Strive.Client.Model
 {
     /// <summary>
     /// EntityModel is immutable to facilitate versioning.
-    /// All changes result in a new object which is stored in the history (RecordedMapModel).
+    /// All changes result in a new object which is stored in the history.
     /// Helpers to transition between states are located in WorldModel.
     /// </summary>
     public class EntityModel
