@@ -328,7 +328,7 @@ namespace Strive.Client.ViewModel
                 var minX = following.Min(e => e.Position.X);
                 var minY = following.Min(e => e.Position.Y);
                 var minZ = following.Min(e => e.Position.Z);
-                var viewDistance = new List<double> { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
+                var viewDistance = new[] { 10.0, maxX - minX, maxY - minY, maxZ - minZ }.Max();
 
                 // Move toward followed
                 Vector3D target = center - (diff * viewDistance / vectorDistance);
