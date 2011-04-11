@@ -155,6 +155,10 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Strive.Network\Strive.Network.Messaging\Strive.Network.Messaging.csproj">
+      <Project>{757BF7D3-B811-48D7-AE27-0842B0522536}</Project>
+      <Name>Strive.Network.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Strive.Server.Logic\Strive.Server.Logic.csproj">
       <Project>{4895086D-8485-46EF-8DED-9E4C16227D64}</Project>
       <Name>Strive.Server.Logic</Name>

@@ -112,7 +112,7 @@ namespace Strive.Server.Logic
             {
                 if (ActivatingSkillTimestamp + ActivatingSkillLeadTime <= Global.Now)
                 {
-                    SkillCommandProcessor.UseSkillNow(this, ActivatingSkill);
+                    SkillCommandProcessor.UseSkillNow(World, this, ActivatingSkill);
                     ActivatingSkill = null;
                 }
             }

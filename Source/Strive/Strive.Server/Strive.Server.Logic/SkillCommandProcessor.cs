@@ -13,7 +13,7 @@ namespace Strive.Server.Logic
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
 
-        public static void ProcessUseSkill(ClientConnection client, UseSkill message)
+        public static void ProcessUseSkill(World world, ClientConnection client, UseSkill message)
         {
             var avatar = client.Avatar as MobileAvatar;
             if (avatar == null)
@@ -38,7 +38,7 @@ namespace Strive.Server.Logic
             if (esr.LeadTime <= 0)
             {
                 // process it now
-                UseSkillNow(avatar, message);
+                UseSkillNow(world, avatar, message);
             }
             else
             {
@@ -88,7 +88,7 @@ namespace Strive.Server.Logic
                 client.LogMessage("Failed to cancel invocation " + message.InvokationId);
         }
 
-        public static void UseSkillNow(MobileAvatar caster, UseSkill message)
+        public static void UseSkillNow(World world, MobileAvatar caster, UseSkill message)
         {
             Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID(message.SkillId);
             if (esr == null)
@@ -122,7 +122,7 @@ namespace Strive.Server.Logic
                         caster.SendLog("No target specified, this skill may only be used on Mobiles.");
                         return;
                     }
-                    target = (MobileAvatar)Global.World.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
+                    target = (MobileAvatar)world.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
                     if (target == null)
                     {
                         caster.SendLog("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");

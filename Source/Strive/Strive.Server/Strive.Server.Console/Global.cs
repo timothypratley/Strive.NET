@@ -1,30 +1,32 @@
 using System;
-
 using Strive.Server.Logic;
+using Strive.Network.Messaging;
+using System.Net;
+using Strive.Common;
+using System.Threading;
 
 namespace Strive.Server.Console
 {
-	class Global
-	{
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
+    class Global
+    {
+        static readonly Engine ServerEngine = new Engine(
+            new MessageProcessor(
+                new World(1),
+                new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort))));
 
-		static readonly Engine ServerEngine = new Engine();
-
-		[STAThread]
-		static void Main()
-		{
+        [STAThread]
+        static void Main()
+        {
             System.Console.CancelKeyPress += Console_CancelKeyPress;
-			ServerEngine.Start();
-		}
+            ServerEngine.Start();
+        }
 
         static void Console_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
         {
-			System.Console.WriteLine("Cancel requested...");
-			ServerEngine.Stop();
+            System.Console.WriteLine("Cancel requested...");
+            ServerEngine.Stop();
             System.Console.WriteLine("Ready to terminate");
-            System.Threading.Thread.Sleep(100);
-		}
-	}
+            Thread.Sleep(100);
+        }
+    }
 }

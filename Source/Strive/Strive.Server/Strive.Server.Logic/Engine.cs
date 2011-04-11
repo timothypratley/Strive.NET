@@ -1,48 +1,36 @@
 using System;
 using System.Linq;
-using System.Net;
-using System.Collections.Generic;
 using System.Reflection;
 
 using Common.Logging;
 using Strive.Common;
 using Strive.Network.Messaging;
 using Strive.Server.Model;
-using Strive.Network.Messages;
 
 namespace Strive.Server.Logic
 {
     public class Engine
     {
-        int port = Constants.DefaultPort;
-        readonly Listener _listener;
-        World _world;
-        MessageProcessor _messageProcessor;
+        readonly MessageProcessor _messageProcessor;
+
         readonly StoppableThread _engineThread;
         readonly ILog _log = LogManager.GetCurrentClassLogger();
-        
+
         public ServerStatusModel ServerStatusModel { get; private set; }
 
-        public Engine()
+        public Engine(MessageProcessor messageProcessor)
         {
-            _log.Info("Creating " + Assembly.GetExecutingAssembly().GetName().FullName);
-            Global.ReadConfiguration();
-            //Global.worldFilename = "DefaultWorld.xml";
+            _log.Info("Creating " + Assembly.GetExecutingAssembly().FullName);
             _engineThread = new StoppableThread(UpdateLoop);
-            _listener = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], port));
-            _log = LogManager.GetCurrentClassLogger();
-            ServerStatusModel = new ServerStatusModel {Status = "Created"};
+            _messageProcessor = messageProcessor;
+            ServerStatusModel = new ServerStatusModel { Status = "Created" };
         }
 
         public void Start()
         {
-            ServerStatusModel.Status = "Starting"; 
-            _world = new World(Global.WorldId);
-            _messageProcessor = new MessageProcessor(_world, _listener);
-            Global.World = _world;
+            ServerStatusModel.Status = "Starting";
             ServerStatusModel.Started = Global.Now;
-            _log.Info("Listening for new connections...");
-            _listener.Start();
+            _messageProcessor.Listener.Start();
             _engineThread.Start();
             ServerStatusModel.Status = "Running";
         }
@@ -51,7 +39,7 @@ namespace Strive.Server.Logic
         {
             ServerStatusModel.Status = "Stopping";
             _engineThread.Stop();
-            _listener.Stop();
+            _messageProcessor.Listener.Stop();
             _log.Info("Server stopped.");
             ServerStatusModel.Status = "Stopped";
         }
@@ -63,7 +51,7 @@ namespace Strive.Server.Logic
             {
                 // handle world changes
                 Global.Now = DateTime.Now;
-                _world.Update();
+                _messageProcessor.World.Update();
 
                 // handle incomming messages
 
@@ -92,7 +80,7 @@ namespace Strive.Server.Logic
 
         void CleanupLinkdead()
         {
-            var remove = _listener.Clients
+            var remove = _messageProcessor.Listener.Clients
                 .Where(client => client.Status != ConnectionStatus.Connected
                     && (Global.Now - client.LastMessageTimestamp) > TimeSpan.FromSeconds(60))
                 .ToList();
@@ -101,13 +89,13 @@ namespace Strive.Server.Logic
                 if (client.Avatar != null)
                 {
                     ((MobileAvatar)client.Avatar).Client = null;
-                    _world.Remove(client.Avatar);
+                    _messageProcessor.World.Remove(client.Avatar);
                 }
                 else
                 {
                     client.Avatar = null;
                 }
-                _listener.Clients.Remove(client);
+                _messageProcessor.Listener.Clients.Remove(client);
             }
         }
     }
