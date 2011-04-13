@@ -312,7 +312,7 @@ namespace Strive.Client.ViewModel
         {
             // check they still exist in the world
             var following = _followEntities.Entities
-                    .Where(e => WorldViewModel.WorldModel.ContainsKey(e.Id));
+                    .Where(e => WorldViewModel.WorldModel.Current.Entity.ContainsKey(e.Id));
 
             if (following.Any())
             {
