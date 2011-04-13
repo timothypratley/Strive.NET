@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using Microsoft.FSharp.Collections;
-using Strive.DataModel;
 using System.Linq;
 
 namespace Strive.Client.Model

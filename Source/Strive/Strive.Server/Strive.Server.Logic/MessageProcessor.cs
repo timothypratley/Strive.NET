@@ -11,21 +11,22 @@ namespace Strive.Server.Logic
 {
     public class MessageProcessor
     {
-        readonly World _world;
-        readonly Listener _listener;
+        public World World { get; private set; }
+        public Listener Listener { get; private set; }
+
         readonly ILog _log = LogManager.GetCurrentClassLogger();
 
         public MessageProcessor(World world, Listener listener)
         {
-            _world = world;
-            _listener = listener;
+            World = world;
+            Listener = listener;
         }
 
         public void ProcessMessages()
         {
-            lock (_listener)
+            lock (Listener)
             {
-                foreach (ClientConnection client in _listener.Clients.Where(c => c.MessageCount > 0))
+                foreach (ClientConnection client in Listener.Clients.Where(c => c.MessageCount > 0))
                 {
                     try
                     {
@@ -75,10 +76,10 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, Login loginMessage)
         {
-            if (_world.UserLookup(loginMessage.Username, loginMessage.Password, ref client.PlayerId))
+            if (World.UserLookup(loginMessage.Username, loginMessage.Password, ref client.PlayerId))
             {
                 // login succeeded, check there is not an existing connection for this player
-                foreach (ClientConnection c in _listener.Clients
+                foreach (ClientConnection c in Listener.Clients
                     .Where(c => c != client && c.AuthenticatedUsername == loginMessage.Username))
                     c.Close();
 
@@ -95,7 +96,7 @@ namespace Strive.Server.Logic
         void ProcessMessage(ClientConnection client, RequestPossessable message)
         {
             //Strive.Data.MultiverseFactory.refreshMultiverseForPlayer(Global.modelSchema, client.PlayerID);
-            client.CanPossess(_world.GetPossessable(client.AuthenticatedUsername));
+            client.CanPossess(World.GetPossessable(client.AuthenticatedUsername));
         }
 
         void ProcessMessage(ClientConnection client, Logout message)
@@ -103,7 +104,7 @@ namespace Strive.Server.Logic
             if (client.Avatar != null)
             {
                 // remove from world.
-                _world.Remove(client.Avatar);
+                World.Remove(client.Avatar);
             }
             _log.Info("Logged out '" + client.AuthenticatedUsername + "'.");
             client.Close();
@@ -111,12 +112,12 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, PossessMobile message)
         {
-            if (_world.PhysicalObjects.ContainsKey(message.InstanceId))
+            if (World.PhysicalObjects.ContainsKey(message.InstanceId))
             {
                 // reconnected
                 // simply replace existing connection with the new
                 // TODO: the old 'connection' should timeout or die or be killed
-                var avatar = _world.PhysicalObjects[message.InstanceId] as MobileAvatar;
+                var avatar = World.PhysicalObjects[message.InstanceId] as MobileAvatar;
                 if (avatar == null)
                 {
                     client.LogMessage("Can only possess mobiles.");
@@ -141,14 +142,14 @@ namespace Strive.Server.Logic
             else
             {
                 // try to load the character
-                var avatar = _world.LoadMobile(message.InstanceId);
+                var avatar = World.LoadMobile(message.InstanceId);
                 if (avatar == null)
                 {
                     _log.Warn("Character " + message.InstanceId + " not found.");
                     //TODO: rely on world loading
                     //client.Close();
                     //return;
-                    avatar = new MobileAvatar(_world);
+                    avatar = new MobileAvatar(World);
                     avatar.ObjectInstanceId = Global.Rand.Next();
                     //TODO: don't use the players name
                     avatar.TemplateObjectName = client.AuthenticatedUsername;
@@ -158,9 +159,9 @@ namespace Strive.Server.Logic
                 client.Avatar = avatar;
 
                 // try to add the character to the world
-                _world.Add(avatar);
+                World.Add(avatar);
             }
-            _world.SendInitialWorldView(client);
+            World.SendInitialWorldView(client);
         }
 
         void ProcessMessage(ClientConnection client, MyPosition message)
@@ -176,14 +177,14 @@ namespace Strive.Server.Logic
                 ma.LastMoveUpdate = Global.Now;
             ma.SetMobileState(message.State);
 
-            _world.Relocate(client.Avatar, message.Position, message.Rotation);
+            World.Relocate(client.Avatar, message.Position, message.Rotation);
         }
 
         void ProcessMessage(ClientConnection client, Communicate message)
         {
             if (message.CommunicationType == CommunicationType.Chat)
             {
-                _world.NotifyMobiles(new Network.Messages.ToClient.Communication(
+                World.NotifyMobiles(new Network.Messages.ToClient.Communication(
                     client.Avatar.TemplateObjectName, message.Message,
                     message.CommunicationType));
             }
@@ -199,8 +200,8 @@ namespace Strive.Server.Logic
         void ProcessMessage(ClientConnection client, ReloadWorld message)
         {
             _log.Info("ReloadWorld received.");
-            _world.Load();
-            foreach (ClientConnection c in _listener.Clients
+            World.Load();
+            foreach (ClientConnection c in Listener.Clients
                 .Where(c => c.Avatar != null
                     && c.Status == ConnectionStatus.Connected))
             {
@@ -213,7 +214,7 @@ namespace Strive.Server.Logic
         void ProcessMessage(ClientConnection client, RequestWhoList message)
         {
             client.WhoList(
-                _listener.Clients
+                Listener.Clients
                 .Where(c => c.Avatar != null)
                 .Select(c => new Tuple<int, string>(c.Avatar.ObjectInstanceId, c.Avatar.TemplateObjectName))
                 .ToArray());
@@ -234,7 +235,7 @@ namespace Strive.Server.Logic
         void ProcessMessage(ClientConnection client, TransferPartyLeadership message)
         {
             var ma = (MobileAvatar)client.Avatar;
-            var target = _world.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
+            var target = World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
             if (target == null)
                 ma.SendLog("Invalid target");
             else if (ma.Party != target.Party)
@@ -250,8 +251,8 @@ namespace Strive.Server.Logic
         void ProcessMessage(ClientConnection client, Pong message)
         {
             client.Latency = (DateTime.Now - client.PingedAt).Milliseconds;
-            _world.Weather.Latency = client.Latency;
-            client.Send(_world.Weather);
+            World.Weather.Latency = client.Latency;
+            client.Send(World.Weather);
         }
 
         void ProcessMessage(ClientConnection client, LeaveParty message)
@@ -298,7 +299,7 @@ namespace Strive.Server.Logic
                 client.LogMessage("You are not the party leader");
                 return;
             }
-            var target = Global.World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
+            var target = World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
             if (target == null)
                 client.LogMessage("Invalid target");
             else
@@ -330,7 +331,7 @@ namespace Strive.Server.Logic
                             ObjectInstanceId = Global.Rand.Next(),
                             TemplateObjectName = "CreatedJunk"
                         };
-            _world.Add(m);
+            World.Add(m);
         }
     }
 }

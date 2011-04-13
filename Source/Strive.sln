@@ -42,6 +42,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Strive.Model", "Strive\Stri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.DataModel.Tests", "Strive\Strive.DataModel.Tests\Strive.DataModel.Tests.csproj", "{694FD147-F833-49B8-8400-B05BCF99222A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Server.Logic.Tests", "Strive\Strive.Server\Strive.Server.Logic.Tests\Strive.Server.Logic.Tests.csproj", "{9427C578-648C-4233-95CE-A34BF1226355}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Strive.vsmdi
@@ -149,6 +151,7 @@ Global
 		{138A87E7-78B2-4BDF-BB5C-06D58414A976}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{138A87E7-78B2-4BDF-BB5C-06D58414A976}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 		{D6FD917E-F96C-43FB-8211-3CA467DAF6FB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{D6FD917E-F96C-43FB-8211-3CA467DAF6FB}.Debug|Any CPU.Build.0 = Debug|x86
 		{D6FD917E-F96C-43FB-8211-3CA467DAF6FB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{D6FD917E-F96C-43FB-8211-3CA467DAF6FB}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{D6FD917E-F96C-43FB-8211-3CA467DAF6FB}.Debug|x86.ActiveCfg = Debug|x86
@@ -313,6 +316,21 @@ Global
 		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{694FD147-F833-49B8-8400-B05BCF99222A}.StrongMagic|x86.ActiveCfg = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.Release|x86.ActiveCfg = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
+		{9427C578-648C-4233-95CE-A34BF1226355}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{777B24B3-268C-46D0-A77E-DB34003AEBB4}</ProjectGuid>
+    <ProjectGuid>{9427C578-648C-4233-95CE-A34BF1226355}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Strive.Client.Model.Tests</RootNamespace>
-    <AssemblyName>Strive.Client.Model.Tests</AssemblyName>
+    <RootNamespace>Strive.Server.Logic.Tests</RootNamespace>
+    <AssemblyName>Strive.Server.Logic.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,9 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -48,16 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecordedModelTests.cs" />
+    <Compile Include="WorldTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Strive.DataModel\Strive.DataModel.csproj">
-      <Project>{D0376168-4019-4358-BBE1-C9A2B33051BD}</Project>
-      <Name>Strive.DataModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">
-      <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
-      <Name>Strive.Client.Model</Name>
+    <ProjectReference Include="..\Strive.Server.Logic\Strive.Server.Logic.csproj">
+      <Project>{4895086D-8485-46EF-8DED-9E4C16227D64}</Project>
+      <Name>Strive.Server.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

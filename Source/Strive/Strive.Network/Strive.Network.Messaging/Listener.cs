@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using Common.Logging;
@@ -13,12 +13,11 @@ namespace Strive.Network.Messaging
         public List<ClientConnection> Clients { get; private set; }
         Socket _tcpSocket;
         readonly IPEndPoint _localEndPoint;
-        readonly ILog _log;
+        readonly ILog _log = LogManager.GetCurrentClassLogger();
 
         public Listener(IPEndPoint localEndPoint)
         {
             _localEndPoint = localEndPoint;
-            _log = LogManager.GetCurrentClassLogger();
             Clients = new List<ClientConnection>();
         }
 
@@ -31,8 +30,8 @@ namespace Strive.Network.Messaging
                     _log.Info("Restarting");
                     Stop();
                 }
-
                 Clients.Clear();
+
                 try
                 {
                     _tcpSocket = new Socket(_localEndPoint.Address.AddressFamily, SocketType.Stream,
@@ -55,7 +54,6 @@ namespace Strive.Network.Messaging
                 {
                     // the underlying socket was closed
                 }
-
             }
         }
 
@@ -83,7 +81,8 @@ namespace Strive.Network.Messaging
                 var listener = (Listener)ar.AsyncState;
                 lock (listener)
                 {
-                    if (listener._tcpSocket == null) return;
+                    if (listener._tcpSocket == null)
+                        return;
 
                     Socket socket;
                     try
@@ -120,9 +119,7 @@ namespace Strive.Network.Messaging
             lock (this)
             {
                 foreach (ClientConnection c in Clients.Where(c => c.Authenticated))
-                {
                     c.Send(message);
-                }
             }
         }
     }

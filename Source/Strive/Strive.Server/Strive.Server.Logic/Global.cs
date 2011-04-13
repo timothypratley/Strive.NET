@@ -17,7 +17,6 @@ namespace Strive.Server.Logic
         public static DateTime Now = DateTime.Now;
         public static Vector3D Up = new Vector3D(0, 1, 0);
         public static Model.Schema ModelSchema;
-        public static World World;
 
         public static int WorldId;
         public static int Port;
