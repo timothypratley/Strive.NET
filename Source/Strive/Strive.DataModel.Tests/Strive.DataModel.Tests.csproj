@@ -54,9 +54,9 @@
     <Compile Include="DataModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Strive.ImmutableDataModel\Strive.Model.fsproj">
-      <Project>{3FE244C9-7E8C-42B0-92AF-4C5B4B9C385F}</Project>
-      <Name>Strive.Model</Name>
+    <ProjectReference Include="..\Strive.Common\Strive.Common.csproj">
+      <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
+      <Name>Strive.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

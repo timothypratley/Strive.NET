@@ -8,9 +8,9 @@ namespace Strive.Server.Logic
 {
     public class Party
     {
-        readonly Dictionary<int, MobileAvatar> _members = new Dictionary<int, MobileAvatar>();
+        readonly Dictionary<int, Avatar> _members = new Dictionary<int, Avatar>();
 
-        public Party(string name, MobileAvatar leader)
+        public Party(string name, Avatar leader)
         {
             Contract.Requires<ArgumentNullException>(leader != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(name));
@@ -19,7 +19,7 @@ namespace Strive.Server.Logic
             Leader = leader;
         }
 
-        public void Add(MobileAvatar m)
+        public void Add(Avatar m)
         {
             _members.Add(m.ObjectInstanceId, m);
         }
@@ -34,12 +34,12 @@ namespace Strive.Server.Logic
                 Leader = _members.Values.OrderBy(ma => ma.Level).FirstOrDefault();
         }
 
-        public IEnumerable<MobileAvatar> GetMembers()
+        public IEnumerable<Avatar> GetMembers()
         {
             return _members.Values;
         }
 
-        public MobileAvatar Leader { get; set; }
+        public Avatar Leader { get; set; }
 
         public string Name { get; private set; }
 
@@ -58,7 +58,7 @@ namespace Strive.Server.Logic
 
         public void SendPartyTalk(string sender, string message)
         {
-            foreach (MobileAvatar ma in _members.Values)
+            foreach (Avatar ma in _members.Values)
             {
                 ma.Client.Send(new Network.Messages.ToClient.Communication(sender, message, CommunicationType.PartyTalk));
             }

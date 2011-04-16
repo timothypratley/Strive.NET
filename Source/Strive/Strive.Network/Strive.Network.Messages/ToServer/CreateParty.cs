@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class CreateParty : IMessage
+    public class CreateParty
     {
         public string Name;
 

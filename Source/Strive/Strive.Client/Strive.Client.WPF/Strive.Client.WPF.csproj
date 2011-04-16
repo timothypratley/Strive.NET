@@ -150,6 +150,7 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerStatusModel.cs" />
     <Compile Include="ServerStatusView.xaml.cs">
       <DependentUpon>ServerStatusView.xaml</DependentUpon>
     </Compile>
@@ -225,17 +226,9 @@
       <Project>{4895086D-8485-46EF-8DED-9E4C16227D64}</Project>
       <Name>Strive.Server.Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Strive.Server\Strive.Server.Model\Strive.Server.Model.csproj">
-      <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
-      <Name>Strive.Server.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Strive.WPF\Strive.WPF.csproj">
       <Project>{790D523A-8C3C-480F-885B-C476238FB438}</Project>
       <Name>Strive.WPF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Strive.Client.Model\Strive.Client.Model.csproj">
-      <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
-      <Name>Strive.Client.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Strive.Client.NeoAxisView\Strive.Client.NeoAxisView.csproj">
       <Project>{138A87E7-78B2-4BDF-BB5C-06D58414A976}</Project>

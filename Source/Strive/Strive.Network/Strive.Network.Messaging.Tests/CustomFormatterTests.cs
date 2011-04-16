@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Windows.Media.Media3D;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Strive.Network.Messages;
+using Strive.Common;
+using Strive.Model;
 using Strive.Network.Messages.ToClient;
-using Strive.Server.Model;
-using Strive.Network.Messages.ToServer;
 
 namespace Strive.Network.Messaging.Tests
 {
@@ -22,7 +21,7 @@ namespace Strive.Network.Messaging.Tests
         {
             EncDecType(true);
         }
-            
+
         [TestMethod]
         public void SymmetryComplex()
         {
@@ -32,7 +31,8 @@ namespace Strive.Network.Messaging.Tests
         }
 
         [TestMethod]
-        public void SymmetryBasic() {
+        public void SymmetryBasic()
+        {
             EncDecType(0.1f);
             EncDecType(1.1);
             EncDecType(1);
@@ -53,15 +53,12 @@ namespace Strive.Network.Messaging.Tests
         [TestMethod]
         public void SymmetryMessages()
         {
-            var m = new Mobile();
-            m.Position = new Vector3D(1.2, 3, 4);
-            m.Rotation = new Quaternion(1.2, 3, 4, 5);
-            SerDesMessage(new AddMobile(m));
-            SerDesMessage(new CreatePhysicalObject(1, new Vector3D(1.2, 3, 4), Quaternion.Identity));
-            SerDesMessage(new PositionUpdate(new Mobile()));
+            var m = new EntityModel(1, "Foo", "Bar", new Vector3D(1.2, 3, 4), new Quaternion(1.2, 3, 4, 5), 100, EnumMobileState.Standing, 1.7f);
+            SerDesMessage(m);
+            SerDesMessage(new PositionUpdate(m));
         }
 
-        private static void SerDesMessage(IMessage message)
+        private static void SerDesMessage(object message)
         {
             var b = CustomFormatter.Serialize(message);
             var o = CustomFormatter.Deserialize(b);
@@ -69,7 +66,8 @@ namespace Strive.Network.Messaging.Tests
             AreEqual(message, o);
         }
 
-        private static void AreEqual(object a, object b){
+        private static void AreEqual(object a, object b)
+        {
             Type t = a.GetType();
             Assert.AreEqual(t, b.GetType());
 

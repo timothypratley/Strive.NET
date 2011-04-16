@@ -96,10 +96,6 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Strive.Server\Strive.Server.Model\Strive.Server.Model.csproj">
-      <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
-      <Name>Strive.Server.Model</Name>
-    </ProjectReference>
     <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
@@ -130,20 +126,8 @@
     <Compile Include="EnumCombatEvent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IMessage.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MessageTypeMap.cs" />
     <Compile Include="ToClient\Acknowledge.cs" />
-    <Compile Include="ToClient\AddEquipable.cs" />
-    <Compile Include="ToClient\AddJunk.cs" />
-    <Compile Include="ToClient\AddMobile.cs" />
-    <Compile Include="ToClient\AddPhysicalObject.cs" />
-    <Compile Include="ToClient\AddQuaffable.cs" />
-    <Compile Include="ToClient\AddReadable.cs" />
-    <Compile Include="ToClient\AddTerrain.cs" />
-    <Compile Include="ToClient\AddTerrainCollection.cs" />
-    <Compile Include="ToClient\AddWieldable.cs" />
     <Compile Include="ToClient\Beat.cs" />
     <Compile Include="ToClient\CanPossess.cs" />
     <Compile Include="ToClient\CombatReport.cs" />
@@ -166,7 +150,6 @@
     <Compile Include="ToServer\CancelSkill.cs" />
     <Compile Include="ToServer\ChangeStance.cs" />
     <Compile Include="ToServer\Communicate.cs" />
-    <Compile Include="ToServer\CreatePhysicalObject.cs" />
     <Compile Include="ToServer\CreateParty.cs" />
     <Compile Include="ToServer\Emote.cs" />
     <Compile Include="ToServer\PossessMobile.cs" />

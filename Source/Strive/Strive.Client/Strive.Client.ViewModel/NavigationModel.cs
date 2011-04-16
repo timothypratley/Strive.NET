@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UpdateControls;
-
-using Strive.Client.Model;
+using Strive.Model;
 
 
 namespace Strive.Client.ViewModel

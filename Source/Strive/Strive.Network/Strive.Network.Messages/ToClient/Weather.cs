@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class Weather : IMessage
+    public class Weather
     {
         public int SkyTextureId;
         public int Lighting;

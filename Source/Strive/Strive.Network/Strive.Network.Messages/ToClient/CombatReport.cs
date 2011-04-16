@@ -1,18 +1,17 @@
-using Strive.Server.Model;
-
+using Strive.Model;
 namespace Strive.Network.Messages.ToClient
 {
-    public class CombatReport : IMessage
+    public class CombatReport
     {
         public int AttackerObjectInstanceId;
         public int TargetObjectInstanceId;
         public EnumCombatEvent CombatEvent;
         public float Damage;
 
-        public CombatReport(Mobile attacker, PhysicalObject target, EnumCombatEvent combatEvent, float damage)
+        public CombatReport(EntityModel attacker, EntityModel target, EnumCombatEvent combatEvent, float damage)
         {
-            AttackerObjectInstanceId = attacker.ObjectInstanceId;
-            TargetObjectInstanceId = target == null ? 0 : target.ObjectInstanceId;
+            AttackerObjectInstanceId = attacker.Id;
+            TargetObjectInstanceId = target == null ? 0 : target.Id;
             CombatEvent = combatEvent;
             Damage = damage;
         }

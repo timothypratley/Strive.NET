@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class PartyInfo : IMessage
+    public class PartyInfo
     {
         public int[] MobileId;
         public string[] MobileName;

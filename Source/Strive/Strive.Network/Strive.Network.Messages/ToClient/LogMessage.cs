@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class LogMessage : IMessage
+    public class LogMessage
     {
         public string Message;
 

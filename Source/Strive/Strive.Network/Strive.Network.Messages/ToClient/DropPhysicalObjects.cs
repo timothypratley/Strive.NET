@@ -1,16 +1,16 @@
-using System.Linq;
 using System.Collections.Generic;
-using Strive.Server.Model;
+using System.Linq;
+using Strive.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class DropPhysicalObjects : IMessage
+    public class DropPhysicalObjects
     {
         public int[] InstanceIDs;
 
-        public DropPhysicalObjects(IEnumerable<PhysicalObject> physicalObjects)
+        public DropPhysicalObjects(IEnumerable<EntityModel> physicalObjects)
         {
-            InstanceIDs = physicalObjects.Select(po => po.ObjectInstanceId).ToArray();
+            InstanceIDs = physicalObjects.Select(po => po.Id).ToArray();
         }
     }
 }

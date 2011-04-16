@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class TransferPartyLeadership : IMessage
+    public class TransferPartyLeadership
     {
         public int ObjectInstanceId;
 

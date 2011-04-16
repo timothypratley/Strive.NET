@@ -5,7 +5,6 @@ using System.Reflection;
 using Common.Logging;
 using Strive.Common;
 using Strive.Network.Messaging;
-using Strive.Server.Model;
 
 namespace Strive.Server.Logic
 {
@@ -53,20 +52,15 @@ namespace Strive.Server.Logic
                 Global.Now = DateTime.Now;
                 _messageProcessor.World.Update();
 
-                // handle incomming messages
-
+                // handle incoming messages
                 _messageProcessor.ProcessMessages();
 
                 CleanupLinkdead();
 
                 if ((DateTime.Now - Global.Now) > TimeSpan.FromSeconds(1))
-                {
                     _log.Warn("An update cycle took longer than one second.");
-                }
                 else
-                {
                     System.Threading.Thread.Sleep(100);
-                }
             }
             catch (Exception e)
             {
@@ -88,7 +82,7 @@ namespace Strive.Server.Logic
             {
                 if (client.Avatar != null)
                 {
-                    ((MobileAvatar)client.Avatar).Client = null;
+                    ((Avatar)client.Avatar).Client = null;
                     _messageProcessor.World.Remove(client.Avatar);
                 }
                 else

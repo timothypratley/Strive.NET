@@ -3,10 +3,10 @@ using Strive.Common;
 
 namespace Strive.Network.Messages.ToServer
 {
-    public class UseSkill : IMessage
+    public class UseSkill
     {
         public int SkillId;
-        public int InvokationId;	// this is so the client can cancel specific invokations
+        public int InvokationId;	// this is so the client can cancel specific invocations
         public int[] TargetPhysicalObjectIDs;
 
         public UseSkill(EnumSkill skillId, int invokationId)

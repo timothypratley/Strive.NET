@@ -10,8 +10,8 @@ using Engine.PhysicsSystem;
 using Engine.Renderer;
 using Engine.SoundSystem;
 using GameEntities;
-using Strive.Client.Model;
 using Strive.Client.ViewModel;
+using Strive.Model;
 
 
 namespace Strive.Client.NeoAxisView

@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class Ping : IMessage
+    public class Ping
     {
         public int SequenceNumber;
 

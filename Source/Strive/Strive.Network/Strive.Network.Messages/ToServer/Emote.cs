@@ -2,7 +2,7 @@ using Strive.Common;
 
 namespace Strive.Network.Messages.ToServer
 {
-    public class Emote : IMessage
+    public class Emote
     {
         public EmoteType EmoteId;
         public int MobileId;	// optional target

@@ -2,7 +2,7 @@ using System;
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class TimeAndWeather : IMessage
+    public class TimeAndWeather
     {
         public int DaySkyTextureId;
         public int NightSkyTextureId;

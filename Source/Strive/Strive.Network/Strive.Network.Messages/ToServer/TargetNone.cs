@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class TargetNone : IMessage
+    public class TargetNone
     {
         public CommandType CommandId;
 

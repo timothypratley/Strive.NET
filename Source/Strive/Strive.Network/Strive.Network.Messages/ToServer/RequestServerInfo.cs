@@ -1,4 +1,4 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class RequestServerInfo : IMessage { }
+    public class RequestServerInfo { }
 }

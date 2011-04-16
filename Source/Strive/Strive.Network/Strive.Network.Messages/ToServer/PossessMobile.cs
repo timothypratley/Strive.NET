@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class PossessMobile : IMessage
+    public class PossessMobile
     {
         public int InstanceId;
 

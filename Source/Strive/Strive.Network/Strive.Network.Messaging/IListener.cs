@@ -7,7 +7,7 @@ namespace Strive.Network.Messaging
     public interface IListener
     {
         List<ClientConnection> Clients { get; }
-        void SendToAll(IMessage message);
+        void SendToAll(object message);
         void Start();
         void Stop();
     }

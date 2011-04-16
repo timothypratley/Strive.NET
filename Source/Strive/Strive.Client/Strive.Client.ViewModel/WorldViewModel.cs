@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using Strive.Client.Model;
 using Strive.Network.Messaging;
 using UpdateControls.XAML;
+using Strive.Model;
 
 
 namespace Strive.Client.ViewModel

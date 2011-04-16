@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class Communication : IMessage
+    public class Communication
     {
         public string Name;
         public string Message;

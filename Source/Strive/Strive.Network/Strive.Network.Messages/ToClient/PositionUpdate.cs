@@ -1,19 +1,19 @@
 using System.Windows.Media.Media3D;
-using Strive.Server.Model;
+using Strive.Model;
 
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class PositionUpdate : IMessage
+    public class PositionUpdate
     {
-        public PositionUpdate(PhysicalObject po)
+        public PositionUpdate(EntityModel e)
         {
-            InstanceId = po.ObjectInstanceId;
-            Position = po.Position;
-            Rotation = po.Rotation;
+            Id = e.Id;
+            Position = e.Position;
+            Rotation = e.Rotation;
         }
 
-        public int InstanceId;
+        public int Id;
         public Vector3D Position;
         public Quaternion Rotation;
     }

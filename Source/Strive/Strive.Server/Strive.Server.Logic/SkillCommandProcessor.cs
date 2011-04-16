@@ -4,7 +4,7 @@ using Common.Logging;
 using Strive.Common;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
-using Strive.Server.Model;
+using Strive.Model;
 
 
 namespace Strive.Server.Logic
@@ -15,7 +15,7 @@ namespace Strive.Server.Logic
 
         public static void ProcessUseSkill(World world, ClientConnection client, UseSkill message)
         {
-            var avatar = client.Avatar as MobileAvatar;
+            var avatar = client.Avatar as Avatar;
             if (avatar == null)
             {
                 client.LogMessage("Requested a skill, but doesn't have an avatar.");
@@ -51,7 +51,7 @@ namespace Strive.Server.Logic
 
         public static void ProcessCancelSkill(ClientConnection client, CancelSkill message)
         {
-            var avatar = client.Avatar as MobileAvatar;
+            var avatar = client.Avatar as Avatar;
             if (avatar == null)
             {
                 client.LogMessage("Canceled a skill invocation, but don't have an avatar.");
@@ -88,7 +88,7 @@ namespace Strive.Server.Logic
                 client.LogMessage("Failed to cancel invocation " + message.InvokationId);
         }
 
-        public static void UseSkillNow(World world, MobileAvatar caster, UseSkill message)
+        public static void UseSkillNow(World world, Avatar caster, UseSkill message)
         {
             Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID(message.SkillId);
             if (esr == null)
@@ -110,7 +110,7 @@ namespace Strive.Server.Logic
             }
             */
 
-            MobileAvatar target;
+            Avatar target;
             switch ((EnumTargetType)esr.EnumTargetTypeID)
             {
                 case EnumTargetType.TargetSelf:
@@ -122,7 +122,7 @@ namespace Strive.Server.Logic
                         caster.SendLog("No target specified, this skill may only be used on Mobiles.");
                         return;
                     }
-                    target = (MobileAvatar)world.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
+                    target = (Avatar)world.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
                     if (target == null)
                     {
                         caster.SendLog("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
@@ -155,14 +155,7 @@ namespace Strive.Server.Logic
             caster.Energy -= esr.EnergyCost;
         }
 
-        /// <summary>
-        ///  returns true on success, false on failure
-        /// </summary>
-        /// <param name="caster"></param>
-        /// <param name="target"></param>
-        /// <param name="esr"></param>
-        /// <returns></returns>
-        public static bool TargetSkill(MobileAvatar caster, MobileAvatar target, Schema.EnumSkillRow esr)
+        public static bool TargetSkill(Avatar caster, Avatar target, Schema.EnumSkillRow esr)
         {
             // test adeptness
             float competancy = caster.GetCompetancy((EnumSkill)esr.EnumSkillID);
@@ -212,12 +205,12 @@ namespace Strive.Server.Logic
             return true;
         }
 
-        public static void DoKill(MobileAvatar caster, PhysicalObject target)
+        public static void DoKill(Avatar caster, EntityModel target)
         {
             caster.Attack(target);
         }
 
-        public static void DoKick(MobileAvatar caster, PhysicalObject target)
+        public static void DoKick(Avatar caster, EntityModel target)
         {
             caster.Kick(target);
         }

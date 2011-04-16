@@ -114,7 +114,7 @@ namespace Strive.Network.Messaging
             }
         }
 
-        public void SendToAll(IMessage message)
+        public void SendToAll(object message)
         {
             lock (this)
             {

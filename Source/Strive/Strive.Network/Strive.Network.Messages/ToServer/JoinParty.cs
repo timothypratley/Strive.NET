@@ -1,13 +1,13 @@
 
 namespace Strive.Network.Messages.ToServer
 {
-    public class JoinParty : IMessage
+    public class JoinParty
     {
-        public int ObjectInstanceId;	// this is so the client can cancel specific invokations
+        public int LeaderId;	// this is so the client can cancel specific invocations
 
-        public JoinParty(int objectInstanceId)
+        public JoinParty(int leaderId)
         {
-            ObjectInstanceId = objectInstanceId; // party leader
+            LeaderId = leaderId; // party leader
         }
     }
 }

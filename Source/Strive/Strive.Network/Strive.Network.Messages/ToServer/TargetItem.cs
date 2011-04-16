@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class TargetItem : IMessage
+    public class TargetItem
     {
         public CommandType CommandId;
         public int ItemId;

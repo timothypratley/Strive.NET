@@ -2,7 +2,7 @@ using System;
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class WhoList : IMessage
+    public class WhoList
     {
         public Tuple<int, string>[] Mobiles;
 

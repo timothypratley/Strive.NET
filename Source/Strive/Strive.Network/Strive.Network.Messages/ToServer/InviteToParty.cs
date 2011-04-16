@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class InviteToParty : IMessage
+    public class InviteToParty
     {
         public int ObjectInstanceId;
 

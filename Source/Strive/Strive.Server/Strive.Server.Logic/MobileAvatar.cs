@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using Common.Logging;
 using Strive.Common;
+using Strive.Model;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
-using Strive.Server.Model;
 using ToClient = Strive.Network.Messages.ToClient;
 
 
@@ -20,7 +20,7 @@ namespace Strive.Server.Logic
     /// If a client is associated to an Avatar,
     /// that client is controlling the Mobile in question.
     /// </summary>
-    public class MobileAvatar : Mobile
+    public class Avatar : CombatantModel
     {
         public ClientConnection Client;
         public World World;
@@ -30,7 +30,7 @@ namespace Strive.Server.Logic
         public DateTime LastMoveUpdate;
 
         // if fighting someone or something
-        public PhysicalObject Target;
+        public EntityModel Target;
 
         // if in a party
         public Party Party;
@@ -53,21 +53,32 @@ namespace Strive.Server.Logic
 
         readonly ILog _log = LogManager.GetCurrentClassLogger();
 
-        public MobileAvatar(
+        public Avatar(
             World world,
-            Schema.TemplateMobileRow mobile,
-            Schema.TemplateObjectRow template,
-            Schema.ObjectInstanceRow instance
+            int id,
+            string name,
+            string modelId,
+            Vector3D position,
+            Quaternion rotation,
+            float health,
+            EnumMobileState mobileState,
+            float height,
+            int constitution,
+            int dexterity,
+            int willpower,
+            int strength
         )
-            : base(mobile, template, instance)
+            : base(id, name, modelId, position, rotation, health, mobileState, height, constitution, dexterity, willpower, strength)
         {
             World = world;
         }
 
-        public MobileAvatar(World world)
+        /**
+        public Avatar(World world)
         {
             World = world;
         }
+         */
 
         public void SetMobileState(EnumMobileState ms)
         {
@@ -92,7 +103,7 @@ namespace Strive.Server.Logic
         {
             if (Client == null)
             {
-                _log.Warn(ObjectInstanceId + ", no client: " + message);
+                _log.Warn(Id + ", no client: " + message);
             }
             else
             {
@@ -102,7 +113,7 @@ namespace Strive.Server.Logic
 
         public void SendPartyTalk(string message)
         {
-            Party.SendPartyTalk(TemplateObjectName, message);
+            Party.SendPartyTalk(Name, message);
         }
 
         public void Update()
@@ -225,7 +236,7 @@ namespace Strive.Server.Logic
             UpdateState();
         }
 
-        public void Attack(PhysicalObject target)
+        public void Attack(EntityModel target)
         {
             Target = target;
             MobileState = EnumMobileState.Fighting;
@@ -234,7 +245,7 @@ namespace Strive.Server.Logic
                 new ToClient.CombatReport(this, target, EnumCombatEvent.Attacks, 0));
         }
 
-        public void Kick(PhysicalObject target)
+        public void Kick(EntityModel target)
         {
             // TODO: would be nice to have a base class physical object with damage function,
             // but needs multiple inheritance
@@ -242,22 +253,22 @@ namespace Strive.Server.Logic
             World.InformNearby(
                 this,
                 new ToClient.CombatReport(this, target, EnumCombatEvent.Hits, 20));
-            ((MobileAvatar)target).UpdateState();
+            ((Avatar)target).UpdateState();
         }
 
         // TODO: use dynamic instead
-        public void PhysicalAttack(PhysicalObject po)
+        public void PhysicalAttack(EntityModel e)
         {
             // TODO use the real range of kill
-            if ((Position - po.Position).Length > 100)
+            if ((Position - e.Position).Length > 100)
             {
                 // target is out of range
-                SendLog(Target.TemplateObjectName + " is out of range.");
+                SendLog(Target.Name + " is out of range.");
                 return;
             }
-            if (po is MobileAvatar)
+            if (e is Avatar)
             {
-                var opponent = (MobileAvatar)po;
+                var opponent = (Avatar)e;
 
                 // if not already in a fight, your opponent automatically
                 // fights back
@@ -302,7 +313,7 @@ namespace Strive.Server.Logic
                     this,
                     new ToClient.CombatReport(this, Target, EnumCombatEvent.Hits, damage));
             }
-            else if (po is Item)
+            else if (e is Item)
             {
                 // attacking object
                 var item = Target as Item;
@@ -317,15 +328,15 @@ namespace Strive.Server.Logic
                     World.Remove(item);
             }
             else
-                throw new Exception("ERROR: attacking a " + po.GetType() + " " + po);
+                throw new Exception("ERROR: attacking a " + e.GetType() + " " + e);
         }
 
         // TODO: use dynamic instead
-        public void MagicalAttack(PhysicalObject po, float damage)
+        public void MagicalAttack(EntityModel po, float damage)
         {
-            if (po is MobileAvatar)
+            if (po is Avatar)
             {
-                var opponent = (MobileAvatar)po;
+                var opponent = (Avatar)po;
 
                 // if not already in a fight, your opponent automatically
                 // fights back
@@ -419,6 +430,11 @@ namespace Strive.Server.Logic
             if (mhs != null)
                 return (float)mhs.Rating;
             return 0;
+        }
+
+        public override string ToString()
+        {
+            return "Avatar '" + Name + "' (" + Id + ")";
         }
     }
 }

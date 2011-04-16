@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
-using Strive.Client.Model;
 using System;
+using Strive.Model;
 
 
 namespace Strive.Client.ViewModel

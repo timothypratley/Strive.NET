@@ -1,6 +1,5 @@
 using System;
 using System.Net;
-using Strive.Server.Model;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToClient;
 
@@ -18,7 +17,7 @@ namespace Strive.Network.Messaging
         public string AuthenticatedUsername { get; set; }
         public bool Authenticated { get { return AuthenticatedUsername != null; } }
 
-        public override bool Send(IMessage message)
+        public override bool Send(object message)
         {
             if (!Authenticated)
             {
@@ -34,7 +33,7 @@ namespace Strive.Network.Messaging
             AuthenticatedUsername = null;
         }
 
-        public Mobile Avatar { get; set; }
+        public dynamic Avatar { get; set; }
         public DateTime LastMessageTimestamp { get; set; }
 
         public EndPoint RemoteEndPoint
@@ -69,12 +68,12 @@ namespace Strive.Network.Messaging
             return Send(new DropAll());
         }
 
-        public bool WhoList(Tuple<int,string>[] mobiles)
+        public bool WhoList(Tuple<int, string>[] mobiles)
         {
             return Send(new WhoList(mobiles));
         }
 
-        public bool SkillList(Tuple<int,double>[] competancy)
+        public bool SkillList(Tuple<int, double>[] competancy)
         {
             return Send(new SkillList(competancy));
         }

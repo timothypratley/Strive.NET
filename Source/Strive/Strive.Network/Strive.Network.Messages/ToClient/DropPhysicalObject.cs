@@ -1,14 +1,15 @@
-using Strive.Server.Model;
+using Strive.Model;
+
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class DropPhysicalObject : IMessage
+    public class DropPhysical
     {
-        public int InstanceId;
+        public int Id;
 
-        public DropPhysicalObject(PhysicalObject po)
+        public DropPhysical(EntityModel po)
         {
-            InstanceId = po.ObjectInstanceId;
+            Id = po.Id;
         }
     }
 }

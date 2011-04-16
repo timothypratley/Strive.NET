@@ -4,7 +4,7 @@ using Strive.Common;
 
 namespace Strive.Network.Messages.ToServer
 {
-    public class MyPosition : IMessage
+    public class MyPosition
     {
         public int PossessingId;
         public Vector3D Position;

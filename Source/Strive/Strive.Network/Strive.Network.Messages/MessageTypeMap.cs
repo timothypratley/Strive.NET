@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Strive.Model;
 
 namespace Strive.Network.Messages
 {
@@ -16,13 +17,8 @@ namespace Strive.Network.Messages
         public enum EnumMessageId
         {
             ToClientAcknowledge = 1,
-            ToClientAddReadable,
-            ToClientAddEquipable,
-            ToClientAddWieldable,
-            ToClientAddJunk,
-            ToClientAddTerrain,
-            ToClientAddMobile,
-            ToClientAddQuaffable,
+            ToClientEntity,
+            ToClientTask,
             ToClientCanPossess,
             ToClientCombatReport,
             ToClientCommunication,
@@ -56,8 +52,9 @@ namespace Strive.Network.Messages
             ToServerTransferPartyLeadership,
             ToServerInviteToParty,
             ToServerRequestWhoList,
-            ToServerCreateMobile,
-            ToServerPossessMobile,
+            ToServerCreateEntity,
+            ToServerCreateTask,
+            ToServerPossess,
             ToServerLogin,
             ToServerLogout,
             ToServerReloadWorld,
@@ -71,19 +68,14 @@ namespace Strive.Network.Messages
         {
             // build the mapping between message_id and message_type
             MessageTypeFromId.Add(EnumMessageId.ToClientAcknowledge, typeof(ToClient.Acknowledge));
-            MessageTypeFromId.Add(EnumMessageId.ToClientAddReadable, typeof(ToClient.AddReadable));
-            MessageTypeFromId.Add(EnumMessageId.ToClientAddEquipable, typeof(ToClient.AddEquipable));
-            MessageTypeFromId.Add(EnumMessageId.ToClientAddWieldable, typeof(ToClient.AddWieldable));
-            MessageTypeFromId.Add(EnumMessageId.ToClientAddMobile, typeof(ToClient.AddMobile));
-            MessageTypeFromId.Add(EnumMessageId.ToClientAddJunk, typeof(ToClient.AddJunk));
-            MessageTypeFromId.Add(EnumMessageId.ToClientAddTerrain, typeof(ToClient.AddTerrain));
-            MessageTypeFromId.Add(EnumMessageId.ToClientAddQuaffable, typeof(ToClient.AddQuaffable));
+            MessageTypeFromId.Add(EnumMessageId.ToClientEntity, typeof(EntityModel));
+            MessageTypeFromId.Add(EnumMessageId.ToClientTask, typeof(TaskModel));
             MessageTypeFromId.Add(EnumMessageId.ToClientCanPossess, typeof(ToClient.CanPossess));
             MessageTypeFromId.Add(EnumMessageId.ToClientCombatReport, typeof(ToClient.CombatReport));
             MessageTypeFromId.Add(EnumMessageId.ToClientCommunication, typeof(ToClient.Communication));
             MessageTypeFromId.Add(EnumMessageId.ToClientCurrentHitpoints, typeof(ToClient.CurrentHitpoints));
             MessageTypeFromId.Add(EnumMessageId.ToClientDropAll, typeof(ToClient.DropAll));
-            MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObject, typeof(ToClient.DropPhysicalObject));
+            MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObject, typeof(ToClient.DropPhysical));
             MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObjects, typeof(ToClient.DropPhysicalObjects));
             MessageTypeFromId.Add(EnumMessageId.ToClientLogMessage, typeof(ToClient.LogMessage));
             MessageTypeFromId.Add(EnumMessageId.ToClientNegativeAcknowledge, typeof(ToClient.NegativeAcknowledge));
@@ -109,8 +101,9 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerInviteToParty, typeof(ToServer.InviteToParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerQueryParty, typeof(ToServer.QueryParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestWhoList, typeof(ToServer.RequestWhoList));
-            MessageTypeFromId.Add(EnumMessageId.ToServerPossessMobile, typeof(ToServer.PossessMobile));
-            MessageTypeFromId.Add(EnumMessageId.ToServerCreateMobile, typeof(ToServer.CreatePhysicalObject));
+            MessageTypeFromId.Add(EnumMessageId.ToServerPossess, typeof(ToServer.PossessMobile));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCreateEntity, typeof(EntityModel));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCreateTask, typeof(TaskModel));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogin, typeof(ToServer.Login));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogout, typeof(ToServer.Logout));
             MessageTypeFromId.Add(EnumMessageId.ToServerReloadWorld, typeof(ToServer.ReloadWorld));
@@ -121,9 +114,7 @@ namespace Strive.Network.Messages
 
             // build the reverse lookup
             foreach (EnumMessageId id in MessageTypeFromId.Keys)
-            {
                 IdFromMessageType.Add(MessageTypeFromId[id], id);
-            }
         }
     }
 }

@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Media.Media3D;
 using Microsoft.CSharp.RuntimeBinder;
-using Strive.Client.Model;
 using Strive.Common;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToClient;
 using Strive.Network.Messages.ToServer;
+using Strive.Model;
 
 
 namespace Strive.Network.Messaging
@@ -53,31 +53,19 @@ namespace Strive.Network.Messaging
             Log.Info("Received Time and Weather " + m.ServerNow);
         }
 
-        void Process(AddMobile m)
+        void Process(EntityModel m)
         {
-            WorldModel.Add(new EntityModel(m.Mobile.ObjectInstanceId,
-                                           m.Mobile.TemplateObjectName,
-                                           "RTSRobot",
-                                           m.Mobile.Position,
-                                           m.Mobile.Rotation));
+            WorldModel.Add(m);
         }
 
-        void Process(AddJunk m)
+        void Process(TaskModel m)
         {
-            WorldModel.Add(new EntityModel(m.Junk.ObjectInstanceId,
-                                           m.Junk.TemplateObjectName,
-                                           "StaticBox",
-                                           m.Junk.Position,
-                                           m.Junk.Rotation));
-        }
-
-        void Process(AddTerrain m)
-        {
+            WorldModel.Add(m);
         }
 
         void Process(PositionUpdate m)
         {
-            WorldModel.Move(m.InstanceId, m.Position, m.Rotation);
+            WorldModel.Move(m.Id, m.Position, m.Rotation);
         }
 
         void Process(MobileState m)
@@ -107,9 +95,9 @@ namespace Strive.Network.Messaging
             Send(new PossessMobile(mobileId));
         }
 
-        public void CreatePhysicalObject(int templateId, Vector3D position, Quaternion rotation)
+        public void CreateEntity(int templateId, Vector3D position, Quaternion rotation)
         {
-            Send(new CreatePhysicalObject(templateId, position, rotation));
+            Send(new EntityModel(templateId, "Junk", "StaticBox", position, rotation, 100, EnumMobileState.Standing, 1.7f));
         }
 
         public void Login(string username, string password)

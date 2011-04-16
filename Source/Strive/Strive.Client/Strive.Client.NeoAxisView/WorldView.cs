@@ -2,8 +2,8 @@
 using System.Windows;
 using Engine.EntitySystem;
 using Engine.MapSystem;
-using Strive.Client.Model;
 using Strive.Client.ViewModel;
+using Strive.Model;
 using WPFAppFramework;
 
 

@@ -1,4 +1,4 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class QueryParty : IMessage { }
+    public class QueryParty { }
 }

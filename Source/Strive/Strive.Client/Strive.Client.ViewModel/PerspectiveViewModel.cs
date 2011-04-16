@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
-using Strive.Client.Model;
 using Strive.Common;
 using UpdateControls.XAML;
+using Strive.Model;
 
 
 namespace Strive.Client.ViewModel
@@ -61,7 +61,7 @@ namespace Strive.Client.ViewModel
             get
             {
                 return MakeCommand
-                    .Do(() => WorldViewModel.ServerConnection.CreatePhysicalObject(rand.Next(), Position, Rotation));
+                    .Do(() => WorldViewModel.ServerConnection.CreateEntity(rand.Next(), Position, Rotation));
             }
         }
 

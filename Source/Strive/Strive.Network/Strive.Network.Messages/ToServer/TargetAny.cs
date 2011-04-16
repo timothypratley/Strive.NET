@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class TargetAny : IMessage
+    public class TargetAny
     {
         public CommandType CommandId;
         public int PhysicalObjectId;

@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class Pong : IMessage
+    public class Pong
     {
         public int SequenceNumber;
 

@@ -5,9 +5,8 @@ using System.Linq;
 using System.Windows.Media.Media3D;
 using Common.Logging;
 using Strive.Common;
-using Strive.Network.Messages;
+using Strive.Model;
 using Strive.Network.Messaging;
-using Strive.Server.Model;
 using ToClient = Strive.Network.Messages.ToClient;
 
 
@@ -28,8 +27,11 @@ namespace Strive.Server.Logic
         Terrain[,] _terrain;
 
         // all physical objects are indexed in a hash-table
-        public Dictionary<int, PhysicalObject> PhysicalObjects { get; private set; }
-        public List<MobileAvatar> Mobiles { get; private set; }
+        public Dictionary<int, EntityModel> PhysicalObjects { get; private set; }
+        public List<Avatar> Mobiles { get; private set; }
+
+        // TODO: use this!!
+        public History History = new History();
 
         // TODO: do we know the sun texture etc here?
         const int DefaultDay = 147;
@@ -50,8 +52,8 @@ namespace Strive.Server.Logic
         public class InvalidWorld : Exception { }
         public void Load()
         {
-            PhysicalObjects = new Dictionary<int, PhysicalObject>();
-            Mobiles = new List<MobileAvatar>();
+            PhysicalObjects = new Dictionary<int, EntityModel>();
+            Mobiles = new List<Avatar>();
 
             // TODO: would be nice to be able to load only the world in question... but for now load them all
             if (Global.WorldFilename != null)
@@ -139,7 +141,7 @@ namespace Strive.Server.Logic
                         .Where(oir => oir.GetMobilePossesableByPlayerRows().Length <= 0))
                     {
                         // NB: we only add avatars to our world, not mobiles
-                        Add(new MobileAvatar(this, tmr, otr, oir));
+                        Add(new Avatar(this, tmr, otr, oir));
                     }
                 }
                 foreach (Schema.TemplateItemRow tir in otr.GetTemplateItemRows())
@@ -176,7 +178,7 @@ namespace Strive.Server.Logic
 
         public void Update()
         {
-            foreach (MobileAvatar ma in PhysicalObjects.Values.OfType<MobileAvatar>())
+            foreach (Avatar ma in PhysicalObjects.Values.OfType<Avatar>())
                 ma.Update();
             WeatherUpdate();
         }
@@ -203,18 +205,18 @@ namespace Strive.Server.Logic
                 NotifyMobiles(Weather);
         }
 
-        public void NotifyMobiles(IMessage message)
+        public void NotifyMobiles(object message)
         {
-            foreach (MobileAvatar ma in Mobiles.Where(ma => ma.Client != null))
+            foreach (Avatar ma in Mobiles.Where(ma => ma.Client != null))
                 ma.Client.Send(message);
         }
 
-        public void Add(PhysicalObject po)
+        public void Add(EntityModel po)
         {
             if (po.Position.X > _highX || po.Position.Z > _highZ
                 || po.Position.X < _lowX || po.Position.Z < _lowZ)
             {
-                _log.Error("Tried to add physical object " + po.ObjectInstanceId + " outside the world.");
+                _log.Error("Tried to add physical object " + po.Id + " outside the world.");
                 return;
             }
 
@@ -232,12 +234,12 @@ namespace Strive.Server.Logic
                 if (altitude.HasValue)
                     po.Position.Y = altitude.Value + po.Height / 2F;
                 else
-                    _log.Warn("Physical object " + po.ObjectInstanceId + " is not on terrain.");
+                    _log.Warn("Physical object " + po.Id + " is not on terrain.");
 
                 // add the object to the world
-                PhysicalObjects.Add(po.ObjectInstanceId, po);
-                if (po is MobileAvatar)
-                    Mobiles.Add((MobileAvatar)po);
+                PhysicalObjects.Add(po.Id, po);
+                if (po is Avatar)
+                    Mobiles.Add((Avatar)po);
                 int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
                 int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
                 if (_square[squareX, squareZ] == null)
@@ -246,23 +248,23 @@ namespace Strive.Server.Logic
             }
             // notify all nearby clients that a new
             // physical object has entered the world
-            InformNearby(po, ToClient.AddPhysicalObject.CreateMessage(po));
+            InformNearby(po, po);
             //Log.Info( "Added new " + po.GetType() + " " + po.ObjectInstanceID + " at (" + po.Position.X + "," + po.Position.Y + "," +po.Position.Z + ") - ("+squareX+","+squareZ+")" );
         }
 
-        public void Remove(PhysicalObject po)
+        public void Remove(EntityModel po)
         {
             int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
             int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
-            InformNearby(po, new ToClient.DropPhysicalObject(po));
+            InformNearby(po, new ToClient.DropPhysical(po));
             _square[squareX, squareZ].Remove(po);
-            PhysicalObjects.Remove(po.ObjectInstanceId);
-            if (po is MobileAvatar)
-                Mobiles.Remove((MobileAvatar)po);
-            _log.Info("Removed " + po.GetType() + " " + po.ObjectInstanceId + " from the world.");
+            PhysicalObjects.Remove(po.Id);
+            if (po is Avatar)
+                Mobiles.Remove((Avatar)po);
+            _log.Info("Removed " + po.GetType() + " " + po.Id + " from the world.");
         }
 
-        public void Relocate(PhysicalObject po, Vector3D newPosition, Quaternion newRotation)
+        public void Relocate(EntityModel po, Vector3D newPosition, Quaternion newRotation)
         {
             // keep everything inside world bounds
             if (newPosition.X >= _highX)
@@ -287,14 +289,14 @@ namespace Strive.Server.Logic
             double? altitude = AltitudeAt(newPosition.X, newPosition.Z);
             if (altitude.HasValue)
             {
-                if (po is MobileAvatar)
-                    altitude += ((MobileAvatar)po).CurrentHeight / 2;
+                if (po is Avatar)
+                    altitude += ((Avatar)po).CurrentHeight / 2;
                 else
                     altitude += po.Height / 2;
                 newPosition.Y = altitude.Value;
             }
 
-            var ma = po as MobileAvatar;
+            var ma = po as Avatar;
 
             // check that the object can fit there
             // TODO: revisit
@@ -370,7 +372,7 @@ namespace Strive.Server.Logic
                                             k == (Constants.TerrainZoomOrder - 1)
                                             // this is not a higher order point
                                             || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0)
-                                            ma.Client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
+                                            ma.Client.Send(t);
                                     }
                                 }
                             }
@@ -423,16 +425,14 @@ namespace Strive.Server.Logic
                             && toSquareZ - j >= 0 && toSquareZ - j < _squaresInZ
                             && _square[toSquareX - i, toSquareZ - j] != null)
                         {
-                            _square[toSquareX - i, toSquareZ - j].NotifyClients(ToClient.AddPhysicalObject.CreateMessage(po));
+                            _square[toSquareX - i, toSquareZ - j].NotifyClients(po);
                             // if the object is a player, it needs to be made aware
                             // of its new world view
                             if (ma != null && ma.Client != null)
                             {
-                                foreach (PhysicalObject toAdd in _square[toSquareX - i, toSquareZ - j].PhysicalObjects)
-                                {
-                                    ma.Client.Send(ToClient.AddPhysicalObject.CreateMessage(toAdd));
-                                    //Log.Info( "Told client to add " + toAdd.ObjectInstanceID + "." );
-                                }
+                                foreach (EntityModel toAdd in _square[toSquareX - i, toSquareZ - j].PhysicalObjects)
+                                    ma.Client.Send(toAdd);
+                                //Log.Info( "Told client to add " + toAdd.ObjectInstanceID + "." );
                             }
                         }
                     }
@@ -467,7 +467,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        public MobileAvatar LoadMobile(int instanceId)
+        public Avatar LoadMobile(int instanceId)
         {
             Schema.ObjectInstanceRow rpr = Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceId);
             if (rpr == null)
@@ -478,7 +478,7 @@ namespace Strive.Server.Logic
             Schema.TemplateMobileRow mr = Global.ModelSchema.TemplateMobile.FindByTemplateObjectID(rpr.TemplateObjectID);
             if (mr == null)
                 return null;
-            return new MobileAvatar(this, mr, por, rpr);
+            return new Avatar(this, mr, por, rpr);
         }
 
         public bool UserLookup(string email, string password, ref int playerId)
@@ -504,7 +504,7 @@ namespace Strive.Server.Logic
              */
         }
 
-        public void InformNearby(PhysicalObject po, IMessage message)
+        public void InformNearby(EntityModel po, object message)
         {
             // notify all nearby clients
             int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
@@ -536,15 +536,15 @@ namespace Strive.Server.Logic
             // position as one of the 'nearby' mobiles.
 
             // TODO: figure out how to make client.Avatar the right type
-            var mob = (MobileAvatar)client.Avatar;
+            var mob = (Avatar)client.Avatar;
             client.Send(Weather);
 
             // TODO: zomg I don't know if this divtruncate is right
             int squareX = DivTruncate((int)(mob.Position.X - _lowX), Square.SquareSize);
             int squareZ = DivTruncate((int)(mob.Position.Z - _lowZ), Square.SquareSize);
             int i, j;
-            var nearbyPhysicalObjects = new List<PhysicalObject>();
-            // TODO: use xorder, zorder to descide the resolution?
+            var nearbyPhysicalObjects = new List<EntityModel>();
+            // TODO: use xorder, zorder to decide the resolution?
             for (i = -1; i <= 1; i++)
             {
                 for (j = -1; j <= 1; j++)
@@ -578,8 +578,8 @@ namespace Strive.Server.Logic
                 );
                 client.Send( message );
                 */
-            foreach (PhysicalObject p in nearbyPhysicalObjects)
-                client.Send(ToClient.AddPhysicalObject.CreateMessage(p));
+            foreach (EntityModel p in nearbyPhysicalObjects)
+                client.Send(p);
 
             for (int k = 0; k < Constants.TerrainZoomOrder; k++)
             {
@@ -607,7 +607,7 @@ namespace Strive.Server.Logic
                                     k == (Constants.TerrainZoomOrder - 1)
                                     // this is not a higher order point
                                     || (tx % Constants.scale[k + 1]) != 0 || (tz % Constants.scale[k + 1]) != 0)
-                                    client.Send(ToClient.AddPhysicalObject.CreateMessage(t));
+                                    client.Send(t);
                             }
                         }
                     }

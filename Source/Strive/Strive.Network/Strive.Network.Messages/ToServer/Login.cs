@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class Login : IMessage
+    public class Login
     {
         public string Username;
         public string Password;

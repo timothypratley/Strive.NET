@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class ServerInfo : IMessage
+    public class ServerInfo
     {
         public int Version;
         public int Build;

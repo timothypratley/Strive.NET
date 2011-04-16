@@ -17,6 +17,8 @@ namespace Strive.Server.Logic.Tests
 
             var w = new World(0);
             w.Load();
+            //var po = new PhysicalObject();
+            //w.Add();
         }
     }
 }

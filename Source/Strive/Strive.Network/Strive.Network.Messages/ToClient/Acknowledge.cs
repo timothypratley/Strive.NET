@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class Acknowledge : IMessage
+    public class Acknowledge
     {
         public int SequenceNumber;
 

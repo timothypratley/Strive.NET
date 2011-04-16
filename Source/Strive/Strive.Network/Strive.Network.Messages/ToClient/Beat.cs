@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToClient
 {
-    public class Beat : IMessage
+    public class Beat
     {
         public int BeatNumber;
 

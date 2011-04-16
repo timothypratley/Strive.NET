@@ -1,14 +1,14 @@
-using Strive.Server.Model;
+using Strive.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class CurrentHitpoints : IMessage
+    public class CurrentHitpoints
     {
-        public float HitPoints;
+        public float Health;
 
-        public CurrentHitpoints(PhysicalObject po)
+        public CurrentHitpoints(EntityModel e)
         {
-            HitPoints = po.HitPoints;
+            Health = e.Health;
         }
     }
 }

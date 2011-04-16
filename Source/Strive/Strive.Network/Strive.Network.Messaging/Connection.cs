@@ -19,8 +19,8 @@ namespace Strive.Network.Messaging
 
     public class MessageEventArgs : EventArgs
     {
-        public IMessage Message { get; private set; }
-        public MessageEventArgs(IMessage message)
+        public object Message { get; private set; }
+        public MessageEventArgs(object message)
         {
             Message = message;
         }
@@ -43,8 +43,8 @@ namespace Strive.Network.Messaging
         // End generated code --------------------------------
         #endregion
 
-        BlockingCollection<IMessage> _messageInQueue;
-        BlockingCollection<IMessage> _messageOutQueue;
+        BlockingCollection<object> _messageInQueue;
+        BlockingCollection<object> _messageOutQueue;
 
         protected Socket TcpSocket;
         readonly byte[] _tcpbuffer = new byte[MessageTypeMap.BufferSize];  // Receive buffer.
@@ -69,8 +69,8 @@ namespace Strive.Network.Messaging
                 TcpSocket = socket;
                 _tcpOffset = 0;
                 Status = ConnectionStatus.Connected;
-                _messageInQueue = new BlockingCollection<IMessage>();
-                _messageOutQueue = new BlockingCollection<IMessage>();
+                _messageInQueue = new BlockingCollection<object>();
+                _messageOutQueue = new BlockingCollection<object>();
                 BeginReading();
                 BeginSending();
             }
@@ -224,10 +224,10 @@ namespace Strive.Network.Messaging
 
                     if (client._tcpOffset >= expectedLength)
                     {
-                        IMessage message;
+                        object message;
                         try
                         {
-                            message = (IMessage)CustomFormatter.Deserialize(client._tcpbuffer);
+                            message = CustomFormatter.Deserialize(client._tcpbuffer);
                         }
                         catch (Exception e)
                         {
@@ -258,7 +258,7 @@ namespace Strive.Network.Messaging
         }
 
         private object lockObject = new object();
-        public virtual bool Send(IMessage message)
+        public virtual bool Send(object message)
         {
             lock (lockObject)
             {
@@ -283,7 +283,7 @@ namespace Strive.Network.Messaging
 
         private void SendMessage()
         {
-            IMessage message;
+            object message;
             var q = _messageOutQueue;
             if (q == null || !q.TryTake(out message, -1))
                 return;
@@ -356,9 +356,9 @@ namespace Strive.Network.Messaging
             }
         }
 
-        public IMessage PopNextMessage()
+        public object PopNextMessage()
         {
-            IMessage message;
+            object message;
             var x = _messageInQueue;
             if (x == null)
                 Log.Warn("Could not pop message, no queue");

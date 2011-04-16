@@ -2,7 +2,7 @@ using System;
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class CanPossess : IMessage
+    public class CanPossess
     {
         public Tuple<int, string>[] Possesable;
 

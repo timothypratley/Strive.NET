@@ -1,6 +1,6 @@
 namespace Strive.Network.Messages.ToServer
 {
-    public class Communicate : IMessage
+    public class Communicate
     {
         public string To;
         public CommunicationType CommunicationType;

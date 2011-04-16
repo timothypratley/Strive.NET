@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
+using System.Windows.Media.Media3D;
 using Common.Logging;
+using Strive.Model;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
-using Strive.Server.Model;
 
 
 namespace Strive.Server.Logic
@@ -117,7 +118,7 @@ namespace Strive.Server.Logic
                 // reconnected
                 // simply replace existing connection with the new
                 // TODO: the old 'connection' should timeout or die or be killed
-                var avatar = World.PhysicalObjects[message.InstanceId] as MobileAvatar;
+                var avatar = World.PhysicalObjects[message.InstanceId] as Avatar;
                 if (avatar == null)
                 {
                     client.LogMessage("Can only possess mobiles.");
@@ -131,7 +132,7 @@ namespace Strive.Server.Logic
 
                 if (avatar.Client != null)
                 {
-                    _log.Info("Mobile " + avatar.ObjectInstanceId + " has been taken over by " + client);
+                    _log.Info("Mobile " + avatar + " has been taken over by " + client);
                     avatar.Client.LogMessage("You lost control of " + avatar);
                     avatar.Client.Avatar = null;
                 }
@@ -149,10 +150,10 @@ namespace Strive.Server.Logic
                     //TODO: rely on world loading
                     //client.Close();
                     //return;
-                    avatar = new MobileAvatar(World);
-                    avatar.ObjectInstanceId = Global.Rand.Next();
-                    //TODO: don't use the players name
-                    avatar.TemplateObjectName = client.AuthenticatedUsername;
+                    avatar = new Avatar(World,
+                        Global.Rand.Next(), client.AuthenticatedUsername, "RTSRobot",
+                        new Vector3D(0, 0, 0), Quaternion.Identity, 100, Common.EnumMobileState.Standing, 1.7f,
+                        20, 20, 20, 20);
                 }
 
                 avatar.Client = client;
@@ -171,13 +172,14 @@ namespace Strive.Server.Logic
                 _log.Warn("Position message from client " + client.RemoteEndPoint + " who has no avatar.");
                 return;
             }
-            var ma = (MobileAvatar)client.Avatar;
+            var ma = (Avatar)client.Avatar;
 
             if (message.Position != client.Avatar.Position)
                 ma.LastMoveUpdate = Global.Now;
             ma.SetMobileState(message.State);
 
             World.Relocate(client.Avatar, message.Position, message.Rotation);
+            World.Move();
         }
 
         void ProcessMessage(ClientConnection client, Communicate message)
@@ -190,7 +192,7 @@ namespace Strive.Server.Logic
             }
             else if (message.CommunicationType == CommunicationType.PartyTalk)
             {
-                var ma = (MobileAvatar)client.Avatar;
+                var ma = (Avatar)client.Avatar;
                 ma.SendPartyTalk(message.Message);
             }
             else
@@ -222,7 +224,7 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, CreateParty message)
         {
-            var ma = (MobileAvatar)client.Avatar;
+            var ma = (Avatar)client.Avatar;
             if (ma.Party != null)
             {
                 ma.SendLog("You are currently in party '" + ma.Party.Name + "'.");
@@ -234,16 +236,16 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, TransferPartyLeadership message)
         {
-            var ma = (MobileAvatar)client.Avatar;
-            var target = World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
+            var ma = (Avatar)client.Avatar;
+            var target = World.PhysicalObjects[message.ObjectInstanceId] as Avatar;
             if (target == null)
                 ma.SendLog("Invalid target");
             else if (ma.Party != target.Party)
-                ma.SendLog("You are not in the same party as " + target.TemplateObjectName);
+                ma.SendLog("You are not in the same party as " + target.Name);
             else
             {
                 ma.Party.Leader = target;
-                ma.SendPartyTalk("Party leadership has been transferred to " + target.TemplateObjectName);
+                ma.SendPartyTalk("Party leadership has been transferred to " + target.Name);
             }
         }
 
@@ -257,29 +259,29 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, LeaveParty message)
         {
-            var ma = (MobileAvatar)client.Avatar;
+            var ma = (Avatar)client.Avatar;
             Party p = ma.Party;
             if (p != null)
             {
-                p.Remove(ma.ObjectInstanceId);
+                p.Remove(ma.Id);
                 ma.SendLog("You have left party '" + p.Name + "'");
                 ma.Party = null;
-                p.SendPartyTalk(ma.TemplateObjectName + " has left your party");
+                p.SendPartyTalk(ma.Name + " has left your party");
             }
         }
 
         void ProcessMessage(ClientConnection client, JoinParty message)
         {
-            var ma = (MobileAvatar)client.Avatar;
+            var ma = (Avatar)client.Avatar;
 
             // make sure they are trying to join the party they were invited to
-            if (message.ObjectInstanceId != ma.InvitedToParty.Leader.ObjectInstanceId)
+            if (message.LeaderId != ma.InvitedToParty.Leader.Id)
             {
                 ma.SendLog("Join party failed, get a new invitation.");
                 return;
             }
 
-            ma.InvitedToParty.SendPartyTalk(ma.TemplateObjectName + " has joined your ");
+            ma.InvitedToParty.SendPartyTalk(ma.Name + " has joined your ");
             ma.Party = ma.InvitedToParty;
             ma.Party.Add(ma);
             ma.SendLog("You are now in party '" + ma.Party.Name + "'.");
@@ -288,7 +290,7 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, InviteToParty message)
         {
-            Party p = ((MobileAvatar)client.Avatar).Party;
+            Party p = ((Avatar)client.Avatar).Party;
             if (p == null)
             {
                 client.LogMessage("You are not in a party");
@@ -299,7 +301,7 @@ namespace Strive.Server.Logic
                 client.LogMessage("You are not the party leader");
                 return;
             }
-            var target = World.PhysicalObjects[message.ObjectInstanceId] as MobileAvatar;
+            var target = World.PhysicalObjects[message.ObjectInstanceId] as Avatar;
             if (target == null)
                 client.LogMessage("Invalid target");
             else
@@ -321,17 +323,18 @@ namespace Strive.Server.Logic
                     .ToArray());
         }
 
-        void ProcessMessage(ClientConnection client, CreatePhysicalObject message)
+        void ProcessMessage(ClientConnection client, EntityModel e)
         {
-            var m = new Junk()
-                        {
-                            Position = message.Position,
-                            Rotation = message.Rotation,
-                            TemplateObjectId = message.TemplateId,
-                            ObjectInstanceId = Global.Rand.Next(),
-                            TemplateObjectName = "CreatedJunk"
-                        };
-            World.Add(m);
+            // TODO: would like to at least set the id
+            // ObjectInstanceId = Global.Rand.Next(),
+            World.Add(e);
+        }
+
+        void ProcessMessage(ClientConnection client, TaskModel t)
+        {
+            // TODO: would like to at least set the id
+            // ObjectInstanceId = Global.Rand.Next(),
+            World.WorldModel.Add(t);
         }
     }
 }
