@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using Common.Logging;
@@ -24,7 +23,7 @@ namespace Strive.Server.Logic
 
         // squares are used to group physical objects
         Square[,] _square;
-        Terrain[,] _terrain;
+        TerrainModel[,] _terrain;
 
         // all physical objects are indexed in a hash-table
         public Dictionary<int, EntityModel> PhysicalObjects { get; private set; }
@@ -46,134 +45,6 @@ namespace Strive.Server.Logic
         public World(int worldId)
         {
             _worldId = worldId;
-            Load();
-        }
-
-        public class InvalidWorld : Exception { }
-        public void Load()
-        {
-            PhysicalObjects = new Dictionary<int, EntityModel>();
-            Mobiles = new List<Avatar>();
-
-            // TODO: would be nice to be able to load only the world in question... but for now load them all
-            if (Global.WorldFilename != null)
-            {
-                _log.Info("Loading Global.modelSchema from file:" + Global.WorldFilename);
-                Global.ModelSchema = new Schema();
-                Global.ModelSchema.ReadXml(Global.WorldFilename);
-            }
-            //else if (Global.connectionstring != null)
-            //{
-            //Global.modelSchema = Strive.Data.MultiverseFactory.getMultiverseFromDatabase(Global.connectionstring);
-            //}
-            else
-            {
-                _log.Info("Creating an empty Global.modelSchema");
-                CreateDefaultWorld();
-            }
-            _log.Info("Global.modelSchema loaded");
-
-            // find highX and lowX for our world dimensions
-
-            // TODO: make expandable universe, don't code these values
-            _highX = 1000;
-            _lowX = -1000;
-            _highZ = 1000;
-            _lowZ = -1000;
-            foreach (Schema.ObjectInstanceRow r in Global.ModelSchema.ObjectInstance.Rows)
-            {
-                if (_highX == 0)
-                    _highX = r.X;
-                if (_lowX == 0)
-                    _lowX = r.X;
-                if (_highZ == 0)
-                    _highZ = r.Z;
-                if (_lowZ == 0)
-                    _lowZ = 0;
-
-                if (r.X > _highX)
-                    _highX = r.X;
-                if (r.X < _lowX)
-                    _lowX = r.X;
-                if (r.Z > _highZ)
-                    _highZ = r.Z;
-                if (r.Z < _lowZ)
-                    _lowZ = r.Z;
-            }
-            //highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
-            //lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
-            //highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
-            //lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
-            _log.Info("Global.multiverse bounds are " + _lowX + "," + _lowZ + " " + _highX + "," + _highZ);
-
-            // figure out how many squares we need
-            _squaresInX = (int)(_highX - _lowX) / Square.SquareSize + 1;
-            _squaresInZ = (int)(_highZ - _lowZ) / Square.SquareSize + 1;
-
-            //			if ( squaresInX * squaresInZ > 10000 ) {
-            //				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize + ". Please fix the database." );
-            //			}
-
-            // allocate the grid of squares used for grouping
-            // physical objects that are close to each other
-            _square = new Square[_squaresInX, _squaresInZ];
-            _terrain = new Terrain[_squaresInX * Square.SquareSize / Constants.TerrainPieceSize, _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize];
-
-            Schema.WorldRow wr = Global.ModelSchema.World.FindByWorldID(_worldId);
-            if (wr == null)
-            {
-                throw new InvalidWorld();
-            }
-
-            _log.Info("Loading world \"" + wr.WorldName + "\"...");
-            _log.Info("Loading terrain...");
-            foreach (Schema.TemplateTerrainRow ttr in Global.ModelSchema.TemplateTerrain.Rows)
-            {
-                foreach (Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows())
-                    Add(new Terrain(ttr, ttr.TemplateObjectRow, oir));
-            }
-            _log.Info("Loading physical objects...");
-            foreach (Schema.TemplateObjectRow otr in Global.ModelSchema.TemplateObject.Rows)
-            {
-                foreach (Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows())
-                {
-                    foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows()
-                        .Where(oir => oir.GetMobilePossesableByPlayerRows().Length <= 0))
-                    {
-                        // NB: we only add avatars to our world, not mobiles
-                        Add(new Avatar(this, tmr, otr, oir));
-                    }
-                }
-                foreach (Schema.TemplateItemRow tir in otr.GetTemplateItemRows())
-                {
-                    foreach (Schema.TemplateItemEquipableRow ier in tir.GetTemplateItemEquipableRows())
-                    {
-                        foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                            Add(new Equipable(ier, tir, otr, oir));
-                    }
-                    foreach (Schema.TemplateItemJunkRow ijr in tir.GetTemplateItemJunkRows())
-                    {
-                        foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                            Add(new Junk(ijr, tir, otr, oir));
-                    }
-                    foreach (Schema.TemplateItemQuaffableRow iqr in tir.GetTemplateItemQuaffableRows())
-                    {
-                        foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                            Add(new Quaffable(iqr, tir, otr, oir));
-                    }
-                    foreach (Schema.TemplateItemReadableRow irr in tir.GetTemplateItemReadableRows())
-                    {
-                        foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                            Add(new Readable(irr, tir, otr, oir));
-                    }
-                    foreach (Schema.TemplateItemWieldableRow iwr in tir.GetTemplateItemWieldableRows())
-                    {
-                        foreach (Schema.ObjectInstanceRow oir in otr.GetObjectInstanceRows())
-                            Add(new Wieldable(iwr, tir, otr, oir));
-                    }
-                }
-            }
-            _log.Info("Loaded world.");
         }
 
         public void Update()
@@ -211,6 +82,14 @@ namespace Strive.Server.Logic
                 ma.Client.Send(message);
         }
 
+        public void Add(TerrainModel t)
+        {
+            // keep terrain separate
+            int terrainX = DivTruncate((int)(t.Position.X - _lowX), Constants.TerrainPieceSize);
+            int terrainZ = DivTruncate((int)(t.Position.Z - _lowZ), Constants.TerrainPieceSize);
+            _terrain[terrainX, terrainZ] = t;
+        }
+
         public void Add(EntityModel po)
         {
             if (po.Position.X > _highX || po.Position.Z > _highZ
@@ -220,32 +99,22 @@ namespace Strive.Server.Logic
                 return;
             }
 
-            if (po is Terrain)
-            {
-                // keep terrain separate
-                int terrainX = DivTruncate((int)(po.Position.X - _lowX), Constants.TerrainPieceSize);
-                int terrainZ = DivTruncate((int)(po.Position.Z - _lowZ), Constants.TerrainPieceSize);
-                _terrain[terrainX, terrainZ] = (Terrain)po;
-            }
+            // keep everything at ground level
+            double? altitude = AltitudeAt(po.Position.X, po.Position.Z);
+            if (altitude.HasValue)
+                po.Position.Y = altitude.Value + po.Height / 2F;
             else
-            {
-                // keep everything at ground level
-                double? altitude = AltitudeAt(po.Position.X, po.Position.Z);
-                if (altitude.HasValue)
-                    po.Position.Y = altitude.Value + po.Height / 2F;
-                else
-                    _log.Warn("Physical object " + po.Id + " is not on terrain.");
+                _log.Warn("Physical object " + po.Id + " is not on terrain.");
 
-                // add the object to the world
-                PhysicalObjects.Add(po.Id, po);
-                if (po is Avatar)
-                    Mobiles.Add((Avatar)po);
-                int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
-                int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
-                if (_square[squareX, squareZ] == null)
-                    _square[squareX, squareZ] = new Square();
-                _square[squareX, squareZ].Add(po);
-            }
+            // add the object to the world
+            PhysicalObjects.Add(po.Id, po);
+            if (po is Avatar)
+                Mobiles.Add((Avatar)po);
+            int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
+            int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
+            if (_square[squareX, squareZ] == null)
+                _square[squareX, squareZ] = new Square();
+            _square[squareX, squareZ].Add(po);
             // notify all nearby clients that a new
             // physical object has entered the world
             InformNearby(po, po);
@@ -264,7 +133,7 @@ namespace Strive.Server.Logic
             _log.Info("Removed " + po.GetType() + " " + po.Id + " from the world.");
         }
 
-        public void Relocate(EntityModel po, Vector3D newPosition, Quaternion newRotation)
+        public void Relocate(EntityModel po, Vector3D newPosition, Quaternion newRotation, EnumMobileState mobileState)
         {
             // keep everything inside world bounds
             if (newPosition.X >= _highX)
@@ -365,7 +234,7 @@ namespace Strive.Server.Logic
                                 int terrainZ = tz - (int)_lowZ / Constants.TerrainPieceSize;
                                 if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.TerrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize)
                                 {
-                                    Terrain t = _terrain[terrainX, terrainZ];
+                                    TerrainModel t = _terrain[terrainX, terrainZ];
                                     if (t != null)
                                     {
                                         if (// there is no higher zoom order
@@ -467,43 +336,6 @@ namespace Strive.Server.Logic
             }
         }
 
-        public Avatar LoadMobile(int instanceId)
-        {
-            Schema.ObjectInstanceRow rpr = Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceId);
-            if (rpr == null)
-                return null;
-            Schema.TemplateObjectRow por = Global.ModelSchema.TemplateObject.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (por == null)
-                return null;
-            Schema.TemplateMobileRow mr = Global.ModelSchema.TemplateMobile.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (mr == null)
-                return null;
-            return new Avatar(this, mr, por, rpr);
-        }
-
-        public bool UserLookup(string email, string password, ref int playerId)
-        {
-            // TODO: have disabled password checking for testing purposes
-            return !string.IsNullOrEmpty(email);
-
-            /*
-            //Strive.Data.MultiverseFactory.refreshPlayerList(Global.modelSchema);
-            DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + email + "'");
-            if (dr.Length != 1)
-            {
-                _log.Error(dr.Length + " players found with email '" + email + "'.");
-                return false;
-            }
-            if (String.Compare((string)dr[0]["Password"], password) == 0)
-            {
-                playerId = (int)dr[0]["PlayerID"];
-                return true;
-            }
-            _log.Info("Incorrect password for player with email '" + email + "'.");
-            return false;
-             */
-        }
-
         public void InformNearby(EntityModel po, object message)
         {
             // notify all nearby clients
@@ -600,7 +432,7 @@ namespace Strive.Server.Logic
                         int terrainZ = tz - (int)_lowZ / Constants.TerrainPieceSize;
                         if (terrainX >= 0 && terrainX < _squaresInX * Square.SquareSize / Constants.TerrainPieceSize && terrainZ >= 0 && terrainZ < _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize)
                         {
-                            Terrain t = _terrain[terrainX, terrainZ];
+                            TerrainModel t = _terrain[terrainX, terrainZ];
                             if (t != null)
                             {
                                 if (// there is no higher zoom order
@@ -613,15 +445,6 @@ namespace Strive.Server.Logic
                     }
                 }
             }
-        }
-
-        public Tuple<int, string>[] GetPossessable(string username)
-        {
-            DataRow[] dr = Global.ModelSchema.Player.Select("Email = '" + username + "'");
-            Schema.PlayerRow pr = Global.ModelSchema.Player.FindByPlayerID((int)dr[0][0]);
-            Schema.MobilePossesableByPlayerRow[] mpbpr = pr.GetMobilePossesableByPlayerRows();
-            return mpbpr.Select(mpr => new Tuple<int, string>(
-                mpr.ObjectInstanceID, mpr.ObjectInstanceRow.TemplateObjectRow.TemplateObjectName)).ToArray();
         }
 
         public double? AltitudeAt(double x, double z)
@@ -661,15 +484,6 @@ namespace Strive.Server.Logic
             }
             // no terrain here
             return null;
-        }
-
-        public void CreateDefaultWorld()
-        {
-            Global.ModelSchema = new Schema();
-            Global.ModelSchema.World.AddWorldRow(_worldId, "Empty", "An empty world");
-            var p = Global.ModelSchema.Player.AddPlayerRow(
-                "Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob",
-                100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
         }
 
         // handle negative numbers

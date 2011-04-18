@@ -6,9 +6,9 @@ namespace Strive.Model
     public class CombatantModel : EntityModel
     {
         public CombatantModel(int id, string name, string modelId, Vector3D position, Quaternion rotation,
-            float health, EnumMobileState mobileState, float height,
+            float health, float energy, EnumMobileState mobileState, float height,
             int constitution, int dexterity, int willpower, int strength)
-            : base(id, name, modelId, position, rotation, health, mobileState, height)
+            : base(id, name, modelId, position, rotation, health, energy, mobileState, height)
         {
             Constitution = constitution;
             Dexterity = dexterity;

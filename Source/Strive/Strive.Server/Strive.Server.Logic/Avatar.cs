@@ -61,6 +61,7 @@ namespace Strive.Server.Logic
             Vector3D position,
             Quaternion rotation,
             float health,
+            float energy,
             EnumMobileState mobileState,
             float height,
             int constitution,
@@ -68,7 +69,7 @@ namespace Strive.Server.Logic
             int willpower,
             int strength
         )
-            : base(id, name, modelId, position, rotation, health, mobileState, height, constitution, dexterity, willpower, strength)
+            : base(id, name, modelId, position, rotation, health, energy, mobileState, height, constitution, dexterity, willpower, strength)
         {
             World = world;
         }
@@ -157,26 +158,29 @@ namespace Strive.Server.Logic
 
         public void BehaviourUpdate()
         {
+            Quaternion rotation = Rotation;
+            Vector3D position = Position;
+            EnumMobileState mobileState = MobileState;
             // continue doing whatever you were doing
             if (Global.Now - LastMoveUpdate > TimeSpan.FromSeconds(1))
             {
                 if (MobileState >= EnumMobileState.Standing)
                 {
-                    Rotation.Y += (float)(Global.Rand.NextDouble() * 40 - 20);
-                    while (Rotation.Y < 0) Rotation.Y += 360;
-                    while (Rotation.Y >= 360) Rotation.Y -= 360;
+                    rotation.Y += (float)(Global.Rand.NextDouble() * 40 - 20);
+                    while (Rotation.Y < 0) rotation.Y += 360;
+                    while (Rotation.Y >= 360) rotation.Y -= 360;
                 }
                 Matrix3D m = Matrix3D.Identity;
-                m.RotatePrepend(Rotation);
+                m.RotatePrepend(rotation);
                 Vector3D velocity = new Vector3D(1, 0, 0) * m;
                 switch (MobileState)
                 {
                     case EnumMobileState.Running:
                         // TODO: using timing, not constant values
-                        World.Relocate(this, (Position + 3 * velocity / 10), Rotation);
+                        position = Position + 3 * velocity / 10;
                         break;
                     case EnumMobileState.Walking:
-                        World.Relocate(this, (Position + velocity / 10), Rotation);
+                        position = Position + velocity / 10;
                         break;
                     default:
                         // do nothing
@@ -191,17 +195,13 @@ namespace Strive.Server.Logic
                 {
                     int rand = Global.Rand.Next(5) - 2;
                     if (rand > 1 && MobileState > EnumMobileState.Sleeping)
-                    {
-                        SetMobileState(MobileState - 1);
-                        //Log.Info( TemplateObjectName + " changed behavior from " + (MobileState+1) + " to " + MobileState + "." );
-                    }
+                        mobileState = MobileState - 1;
                     else if (rand < -1 && MobileState < EnumMobileState.Running)
-                    {
-                        SetMobileState(MobileState + 1);
-                        //Log.Info( TemplateObjectName + " changed behavior from " + (MobileState-1) + " to " + MobileState + "." );
-                    }
+                        mobileState = MobileState + 1;
                 }
             }
+            if (rotation != Rotation || position != Position || mobileState != MobileState)
+                World.Relocate(this, position, rotation, mobileState);
         }
 
         public void HealUpdate()

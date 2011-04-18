@@ -96,6 +96,10 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Strive.Model\Strive.Model.csproj">
+      <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
+      <Name>Strive.Model</Name>
+    </ProjectReference>
     <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
@@ -127,8 +131,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageTypeMap.cs" />
-    <Compile Include="ToClient\Acknowledge.cs" />
-    <Compile Include="ToClient\Beat.cs" />
     <Compile Include="ToClient\CanPossess.cs" />
     <Compile Include="ToClient\CombatReport.cs" />
     <Compile Include="ToClient\Communication.cs" />
@@ -138,14 +140,12 @@
     <Compile Include="ToClient\DropPhysicalObjects.cs" />
     <Compile Include="ToClient\LogMessage.cs" />
     <Compile Include="ToClient\MobileState.cs" />
-    <Compile Include="ToClient\NegativeAcknowledge.cs" />
     <Compile Include="ToClient\PartyInfo.cs" />
     <Compile Include="ToClient\Ping.cs" />
     <Compile Include="ToClient\PositionUpdate.cs" />
     <Compile Include="ToClient\ServerInfo.cs" />
     <Compile Include="ToClient\SkillList.cs" />
     <Compile Include="ToClient\TimeAndWeather.cs" />
-    <Compile Include="ToClient\Weather.cs" />
     <Compile Include="ToClient\WhoList.cs" />
     <Compile Include="ToServer\CancelSkill.cs" />
     <Compile Include="ToServer\ChangeStance.cs" />
@@ -165,10 +165,6 @@
     <Compile Include="ToServer\RequestPossessable.cs" />
     <Compile Include="ToServer\RequestServerInfo.cs" />
     <Compile Include="ToServer\RequestSkillList.cs" />
-    <Compile Include="ToServer\TargetAny.cs" />
-    <Compile Include="ToServer\TargetItem.cs" />
-    <Compile Include="ToServer\TargetMobile.cs" />
-    <Compile Include="ToServer\TargetNone.cs" />
     <Compile Include="ToServer\TransferPartyLeadership.cs" />
     <Compile Include="ToServer\UseSkill.cs" />
     <Compile Include="ToServer\RequestWhoList.cs" />

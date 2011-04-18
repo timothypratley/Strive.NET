@@ -10,7 +10,7 @@ using Strive.Network.Messaging;
 
 namespace Strive.Server.Logic
 {
-    public class MessageProcessor
+    public partial class MessageProcessor
     {
         public World World { get; private set; }
         public Listener Listener { get; private set; }
@@ -335,6 +335,16 @@ namespace Strive.Server.Logic
             // TODO: would like to at least set the id
             // ObjectInstanceId = Global.Rand.Next(),
             World.WorldModel.Add(t);
+        }
+
+        void ProcessMessage(ClientConnection client, UseSkill message)
+        {
+            SkillCommandProcessor.ProcessUseSkill(World, client, message);
+        }
+
+        void ProcessMessage(ClientConnection client, CancelSkill message)
+        {
+            SkillCommandProcessor.ProcessCancelSkill(World, client, message);
         }
     }
 }

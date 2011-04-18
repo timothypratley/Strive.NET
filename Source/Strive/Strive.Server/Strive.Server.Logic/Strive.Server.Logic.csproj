@@ -133,35 +133,48 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <Reference Include="UpdateControls, Version=2.1.1.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engine.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WorldFactory.cs" />
     <Compile Include="Global.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MobileAvatar.cs">
+    <Compile Include="Avatar.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Party.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ServerStatusModel.cs" />
     <Compile Include="SkillCommandProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Skills.cs" />
     <Compile Include="Square.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="World.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

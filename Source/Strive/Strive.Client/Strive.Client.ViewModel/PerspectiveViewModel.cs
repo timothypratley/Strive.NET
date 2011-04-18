@@ -5,8 +5,8 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using Strive.Common;
-using UpdateControls.XAML;
 using Strive.Model;
+using UpdateControls.XAML;
 
 
 namespace Strive.Client.ViewModel
@@ -175,6 +175,8 @@ namespace Strive.Client.ViewModel
             _movementTimer = new Stopwatch();
             _movementTimer.Start();
         }
+
+        public bool IsPrimary { get { return WorldViewModel.CurrentPerspective == this; } }
 
         double _landSpeed = 50.0;
         DateTime _lastPositionSent;

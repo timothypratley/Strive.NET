@@ -16,7 +16,6 @@ namespace Strive.Network.Messages
 
         public enum EnumMessageId
         {
-            ToClientAcknowledge = 1,
             ToClientEntity,
             ToClientTask,
             ToClientCanPossess,
@@ -27,9 +26,7 @@ namespace Strive.Network.Messages
             ToClientDropPhysicalObject,
             ToClientDropPhysicalObjects,
             ToClientLogMessage,
-            ToClientNegativeAcknowledge,
             ToClientPosition,
-            ToClientBeat,
             ToClientMobileState,
             ToClientServerInfo,
             ToClientSkillList,
@@ -67,7 +64,6 @@ namespace Strive.Network.Messages
         public MessageTypeMap()
         {
             // build the mapping between message_id and message_type
-            MessageTypeFromId.Add(EnumMessageId.ToClientAcknowledge, typeof(ToClient.Acknowledge));
             MessageTypeFromId.Add(EnumMessageId.ToClientEntity, typeof(EntityModel));
             MessageTypeFromId.Add(EnumMessageId.ToClientTask, typeof(TaskModel));
             MessageTypeFromId.Add(EnumMessageId.ToClientCanPossess, typeof(ToClient.CanPossess));
@@ -78,7 +74,6 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObject, typeof(ToClient.DropPhysical));
             MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObjects, typeof(ToClient.DropPhysicalObjects));
             MessageTypeFromId.Add(EnumMessageId.ToClientLogMessage, typeof(ToClient.LogMessage));
-            MessageTypeFromId.Add(EnumMessageId.ToClientNegativeAcknowledge, typeof(ToClient.NegativeAcknowledge));
             MessageTypeFromId.Add(EnumMessageId.ToClientPosition, typeof(ToClient.PositionUpdate));
             MessageTypeFromId.Add(EnumMessageId.ToClientMobileState, typeof(ToClient.MobileState));
             MessageTypeFromId.Add(EnumMessageId.ToClientServerInfo, typeof(ToClient.ServerInfo));

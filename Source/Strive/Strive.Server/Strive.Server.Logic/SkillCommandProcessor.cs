@@ -49,7 +49,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        public static void ProcessCancelSkill(ClientConnection client, CancelSkill message)
+        public static void ProcessCancelSkill(World world, ClientConnection client, CancelSkill message)
         {
             var avatar = client.Avatar as Avatar;
             if (avatar == null)

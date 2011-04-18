@@ -56,7 +56,8 @@ namespace Strive.Client.NeoAxisView
         void renderTargetUserControl_Render(Camera camera)
         {
             _camera = camera;
-            WorldView.UpdateFromWorldModel();
+            if (Perspective.IsPrimary)
+                WorldView.UpdateFromWorldModel();
             Perspective.Check();
             renderTarget.CameraPosition = Perspective.Position.ToVec3();
             renderTarget.CameraDirection = Perspective.Rotation.ToQuat() * Vec3.XAxis;

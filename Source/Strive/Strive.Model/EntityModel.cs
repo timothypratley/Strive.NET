@@ -14,7 +14,7 @@ namespace Strive.Model
     public class EntityModel
     {
         public EntityModel(int id, string name, string modelId, Vector3D position, Quaternion rotation,
-            float health, EnumMobileState mobileState, float height)
+            float health, float energy, EnumMobileState mobileState, float height)
         {
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(name));
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(modelId));
@@ -31,12 +31,18 @@ namespace Strive.Model
         public Vector3D Position { get; private set; }
         public Quaternion Rotation { get; private set; }
         public float Health { get; private set; }
+        public float Energy { get; private set; }
         public EnumMobileState MobileState { get; private set; }
         public float Height { get; private set; }
 
         public EntityModel Move(Vector3D position, Quaternion rotation)
         {
-            return new EntityModel(Id, Name, ModelId, position, rotation, Health, MobileState, Height);
+            var r = (EntityModel)this.MemberwiseClone();
+            r.Position = position;
+            r.Rotation = rotation;
+            return r;
+            // TODO: MemberwiseClone is not 
+            //return new EntityModel(Id, Name, ModelId, position, rotation, Health, MobileState, Height);
         }
     }
 }

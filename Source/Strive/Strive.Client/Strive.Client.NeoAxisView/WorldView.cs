@@ -43,7 +43,6 @@ namespace Strive.Client.NeoAxisView
             }
 
             // Remove entities that should no longer be in the scene
-            // TODO: When there are two views this causes a thread violation
             foreach (var neoEntity in Entities.Instance.EntitiesCollection
                 .Where(x => x is MapObject
                     && x.UserData != null

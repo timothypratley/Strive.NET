@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.DataModel", "Strive\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Network.Messaging.Tests", "Strive\Strive.Network\Strive.Network.Messaging.Tests\Strive.Network.Messaging.Tests.csproj", "{21C1E2B6-18A9-4825-A43C-D2D9AD24C277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.DataModel.Tests", "Strive\Strive.DataModel.Tests\Strive.DataModel.Tests.csproj", "{694FD147-F833-49B8-8400-B05BCF99222A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Model.Tests", "Strive\Strive.DataModel.Tests\Strive.Model.Tests.csproj", "{694FD147-F833-49B8-8400-B05BCF99222A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Server.Logic.Tests", "Strive\Strive.Server\Strive.Server.Logic.Tests\Strive.Server.Logic.Tests.csproj", "{9427C578-648C-4233-95CE-A34BF1226355}"
 EndProject
