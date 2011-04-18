@@ -61,7 +61,8 @@ namespace Strive.Client.WPF
         {
             var view = new PerspectiveView(WorldView.WorldViewModel);
             // TODO: this is a bit spaghetti?
-            WorldView.WorldViewModel.CurrentPerspective = view.Perspective;
+            if (WorldView.WorldViewModel.CurrentPerspective == null)
+                WorldView.WorldViewModel.CurrentPerspective = view.Perspective;
             view.ShowAsDocument(dockManager);
             view.Focus();
         }
