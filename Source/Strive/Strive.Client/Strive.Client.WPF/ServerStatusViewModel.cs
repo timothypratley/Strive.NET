@@ -1,4 +1,7 @@
-﻿namespace Strive.Client.WPF
+﻿using Strive.Server.Logic;
+
+
+namespace Strive.Client.WPF
 {
     public class ServerStatusViewModel
     {

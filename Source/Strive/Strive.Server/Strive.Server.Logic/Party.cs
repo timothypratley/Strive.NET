@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics.Contracts;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using Strive.Network.Messages;
 
 namespace Strive.Server.Logic
@@ -21,7 +21,7 @@ namespace Strive.Server.Logic
 
         public void Add(Avatar m)
         {
-            _members.Add(m.ObjectInstanceId, m);
+            _members.Add(m.Id, m);
         }
 
         public void Remove(int objectInstanceId)
@@ -31,7 +31,8 @@ namespace Strive.Server.Logic
             // find a new leader
             _members.Remove(objectInstanceId);
             if (wasLeader)
-                Leader = _members.Values.OrderBy(ma => ma.Level).FirstOrDefault();
+                Leader = _members.Values.FirstOrDefault();
+            //_members.Values.OrderBy(ma => ma.Level).FirstOrDefault();
         }
 
         public IEnumerable<Avatar> GetMembers()

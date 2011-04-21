@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using Common.Logging;
 using Strive.Common;
+using Strive.Data.Events;
+using Strive.Model;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
-using Strive.Model;
+using Strive.Server.DB;
 
 
 namespace Strive.Server.Logic
@@ -21,7 +23,7 @@ namespace Strive.Server.Logic
                 client.LogMessage("Requested a skill, but doesn't have an avatar.");
                 return;
             }
-            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID(message.SkillId);
+            Schema.EnumSkillRow esr = Global.Schema.EnumSkill.FindByEnumSkillID((int)message.SkillId);
             if (esr == null)
             {
                 client.LogMessage("Requested an invalid skill " + message.SkillId);
@@ -90,7 +92,7 @@ namespace Strive.Server.Logic
 
         public static void UseSkillNow(World world, Avatar caster, UseSkill message)
         {
-            Schema.EnumSkillRow esr = Global.ModelSchema.EnumSkill.FindByEnumSkillID(message.SkillId);
+            Schema.EnumSkillRow esr = Global.Schema.EnumSkill.FindByEnumSkillID((int)message.SkillId);
             if (esr == null)
             {
                 caster.SendLog("Requested an invalid skill " + message.SkillId);
@@ -131,7 +133,7 @@ namespace Strive.Server.Logic
                     if ((caster.Position - target.Position).Length > esr.Range)
                     {
                         // target is out of range
-                        caster.SendLog(target.TemplateObjectName + " is out of range");
+                        caster.SendLog(target.Name + " is out of range");
                         return;
                     }
                     break;
@@ -141,68 +143,78 @@ namespace Strive.Server.Logic
                     return;
             }
 
-            if (TargetSkill(caster, target, esr))
-            {
-                // successful casting affects affinity with the elements
-                caster.AffinityAir += esr.AirAffinity / 1000f;
-                caster.AffinityEarth += esr.EarthAffinity / 1000f;
-                caster.AffinityFire += esr.FireAffinity / 1000f;
-                caster.AffinityLife += esr.LifeAffinity / 1000f;
-                caster.AffinityWater += esr.WaterAffinity / 1000f;
-            }
-
-            // deduct energy regardless
-            caster.Energy -= esr.EnergyCost;
+            TargetSkill(world, caster, esr, target);
         }
 
-        public static bool TargetSkill(Avatar caster, Avatar target, Schema.EnumSkillRow esr)
+        public static void TargetSkill(World world, Avatar source, Schema.EnumSkillRow esr, Avatar target)
         {
+            var skill = (EnumSkill)esr.EnumSkillID;
             // test adeptness
-            float competancy = caster.GetCompetancy((EnumSkill)esr.EnumSkillID);
+            float competancy = GetCompetancy(source, skill);
             double roll = Global.Rand.NextDouble();
-            if (competancy < roll * 100)
-            {
-                // failed
-                caster.SendLog("You failed " + esr.EnumSkillName + ".");
-                return false;
-            }
+            bool succeeds = competancy < roll * 100;
 
-            switch ((EnumActivationType)esr.EnumActivationTypeID)
-            {
-                case EnumActivationType.AttackSpell:
-                    float damage = esr.EnergyCost;
-                    damage += esr.AirAffinity * caster.AffinityAir / target.AffinityAir;
-                    damage += esr.EarthAffinity * caster.AffinityEarth / target.AffinityEarth;
-                    damage += esr.FireAffinity * caster.AffinityFire / target.AffinityFire;
-                    damage += esr.LifeAffinity * caster.AffinityLife / target.AffinityLife;
-                    damage += esr.WaterAffinity * caster.AffinityWater / target.AffinityWater;
-                    caster.MagicalAttack(target, damage);
-                    Log.Info("Attack spell cast!");
-                    break;
-                case EnumActivationType.Enchantment:
-                    break;
-                case EnumActivationType.Glamour:
-                    break;
-                case EnumActivationType.HealingSpell:
-                    break;
-                case EnumActivationType.Skill:
-                    if (esr.EnumSkillID == (int)EnumSkill.Kill)
-                        DoKill(caster, target);
-                    else if (esr.EnumSkillID == (int)EnumSkill.Kick)
-                        DoKick(caster, target);
-                    else
-                        Log.Warn("Unhandled SkillID " + esr.EnumSkillID);
-                    break;
-                case EnumActivationType.Sorcery:
-                    break;
-                default:
-                    caster.SendLog("That skill does not work yet, contact admin.");
-                    Log.Error("Unhandled activation type " + esr.EnumActivationTypeID + " for skill " + esr.EnumSkillID);
-                    return false;
-            }
+            // deduct energy regardless
+            source = (Avatar)source.WithEnergyChange(-esr.EnergyCost);
 
-            // if we made it this far, the skill was successful :)
-            return true;
+            // successful casting affects affinity with the elements
+            if (succeeds)
+            {
+                // TODO: can remove the explicit cast here by using generics
+                source = (Avatar)source.WithAffinityChange(
+                    esr.AirAffinity / 1000f,
+                    esr.EarthAffinity / 1000f,
+                    esr.FireAffinity / 1000f,
+                    esr.LifeAffinity / 1000f,
+                    esr.WaterAffinity / 1000f);
+
+                switch ((EnumActivationType)esr.EnumActivationTypeID)
+                {
+                    case EnumActivationType.AttackSpell:
+                        float damage = esr.EnergyCost;
+                        damage += esr.AirAffinity * source.Affinity.Air / target.Affinity.Air;
+                        damage += esr.EarthAffinity * source.Affinity.Earth / target.Affinity.Earth;
+                        damage += esr.FireAffinity * source.Affinity.Fire / target.Affinity.Fire;
+                        damage += esr.LifeAffinity * source.Affinity.Life / target.Affinity.Life;
+                        damage += esr.WaterAffinity * source.Affinity.Water / target.Affinity.Water;
+                        source.MagicalAttack(target, damage, skill);
+                        Log.Info("Attack spell cast!");
+                        break;
+                    case EnumActivationType.Enchantment:
+                        break;
+                    case EnumActivationType.Glamour:
+                        break;
+                    case EnumActivationType.HealingSpell:
+                        break;
+                    case EnumActivationType.Skill:
+                        if (esr.EnumSkillID == (int)EnumSkill.Kill)
+                            DoKill(source, target);
+                        else if (esr.EnumSkillID == (int)EnumSkill.Kick)
+                            DoKick(source, target);
+                        else
+                            Log.Error("Unhandled SkillID " + esr.EnumSkillID);
+                        break;
+                    case EnumActivationType.Sorcery:
+                        break;
+                    default:
+                        source.SendLog("That skill does not work yet, contact admin.");
+                        Log.Error("Unhandled activation type " + esr.EnumActivationTypeID + " for skill " + esr.EnumSkillID);
+                        break;
+                }
+            }
+            world.Apply(new SkillEvent(source, EnumSkill.Kick, target.WithHealthChange(-20), succeeds, "Ninja Kick"));
+        }
+
+        public static float GetCompetancy(CombatantModel combatant, EnumSkill skill)
+        {
+            Schema.MobileHasSkillRow mhs = Global.Schema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
+                // TODO: do we even want templates?
+                //TemplateObjectId,
+                combatant.Id,
+                (int)skill);
+            if (mhs != null)
+                return (float)mhs.Rating;
+            return 0;
         }
 
         public static void DoKill(Avatar caster, EntityModel target)

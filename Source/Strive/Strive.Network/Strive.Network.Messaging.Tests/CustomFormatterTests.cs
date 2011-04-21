@@ -36,7 +36,7 @@ namespace Strive.Network.Messaging.Tests
             EncDecType(0.1f);
             EncDecType(1.1);
             EncDecType(1);
-            EncDecType(Messages.EnumCombatEvent.Misses);
+            EncDecType(EnumSkill.AcidBlast);
             EncDecType("");
         }
 
@@ -53,7 +53,7 @@ namespace Strive.Network.Messaging.Tests
         [TestMethod]
         public void SymmetryMessages()
         {
-            var m = new EntityModel(1, "Foo", "Bar", new Vector3D(1.2, 3, 4), new Quaternion(1.2, 3, 4, 5), 100, EnumMobileState.Standing, 1.7f);
+            var m = new EntityModel(1, "Foo", "Bar", new Vector3D(1.2, 3, 4), new Quaternion(1.2, 3, 4, 5), 100, 100, EnumMobileState.Standing, 1.7f);
             SerDesMessage(m);
             SerDesMessage(new PositionUpdate(m));
         }

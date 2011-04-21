@@ -1,7 +1,7 @@
 using Strive.Common;
 
 
-namespace Strive.Server.Schema
+namespace Strive.Server.DB
 {
     public class Mobile : PhysicalObject
     {
@@ -16,7 +16,7 @@ namespace Strive.Server.Schema
         public EnumMobileState MobileState;
         public bool Possessable;
 
-        public Mobile() {}
+        public Mobile() { }
         public Mobile(
             Schema.TemplateMobileRow mobile,
             Schema.TemplateObjectRow template,
@@ -30,13 +30,13 @@ namespace Strive.Server.Schema
             Dexterity = mobile.Dexterity;
             Strength = mobile.Strength;
             Constitution = mobile.Constitution;
-            Race = (EnumRace) mobile.EnumRaceID;
-            MobileSize = (EnumMobileSize) mobile.EnumMobileSizeID;
-            MobileState = (EnumMobileState) mobile.EnumMobileStateID;
-            MaxHitPoints = mobile.EnumMobileSizeID*100 + Level*Constitution/2;
-            HitPoints = (float) instance.HitpointsCurrent;
-            MaxEnergy = mobile.EnumMobileSizeID*100 + Level*Constitution/2;
-            Energy = (float) instance.EnergyCurrent;
+            Race = (EnumRace)mobile.EnumRaceID;
+            MobileSize = (EnumMobileSize)mobile.EnumMobileSizeID;
+            MobileState = (EnumMobileState)mobile.EnumMobileStateID;
+            MaxHealth = mobile.EnumMobileSizeID * 100 + Level * Constitution / 2;
+            Health = (float)instance.HealthCurrent;
+            MaxEnergy = mobile.EnumMobileSizeID * 100 + Level * Constitution / 2;
+            Energy = (float)instance.EnergyCurrent;
             Possessable = instance.GetMobilePossesableByPlayerRows().Length > 0;
         }
     }

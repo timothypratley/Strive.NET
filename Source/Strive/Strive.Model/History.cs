@@ -6,13 +6,18 @@ namespace Strive.Model
 {
     public class History
     {
-        private readonly RecordedModel<WorldModel> _recordedWorld = new RecordedModel<WorldModel>(WorldModel.Empty);
+        private readonly Recorded<WorldModel> _recordedWorld = new Recorded<WorldModel>(WorldModel.Empty);
         public IEnumerable<EntityModel> Entities { get { return _recordedWorld.Current.Entity.Select(x => x.Value); } }
         public WorldModel Current { get { return _recordedWorld.Current; } }
 
         public void Add(EntityModel entity)
         {
             _recordedWorld.Head = _recordedWorld.Head.Add(entity);
+        }
+
+        public void Add(IEnumerable<AModel> entities)
+        {
+            _recordedWorld.Head = entities.Aggregate(_recordedWorld.Head, (x, y) => x.Add(y));
         }
 
         public void Add(TaskModel task)

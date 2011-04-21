@@ -4,11 +4,11 @@ using UpdateControls;
 namespace Strive.Model
 {
     /// <summary>
-    /// Objects stored in a RecordedModel should be immutable to ensure they are not modified externally,
+    /// Objects stored in a Recorded should be immutable to ensure they are not modified externally,
     /// so that all changes are recorded in the history.
     /// History is stored in an ordered map of version to state.
     /// </summary>
-    public class RecordedModel<T>
+    public class Recorded<T>
     {
         private FSharpMap<int, T> _history = MapModule.Empty<int, T>();
         private T _current;
@@ -18,7 +18,7 @@ namespace Strive.Model
         private int _maxSize = 10000;
         private readonly Independent _indHistory = new Independent();
 
-        public RecordedModel(T current)
+        public Recorded(T current)
         {
             Head = current;
         }

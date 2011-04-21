@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Strive.Common;
+using Strive.Model;
+using Strive.Server.DB;
+
 
 namespace Strive.Server.Logic
 {
-    public class WorldFactory
+    public partial class World
     {
         public bool UserLookup(string email, string password, ref int playerId)
         {
@@ -32,37 +35,23 @@ namespace Strive.Server.Logic
 
         public Avatar LoadMobile(int instanceId)
         {
-            Schema.ObjectInstanceRow rpr = Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceId);
-            if (rpr == null)
+            Schema.ObjectInstanceRow instance = Global.Schema.ObjectInstance.FindByObjectInstanceID(instanceId);
+            if (instance == null)
                 return null;
-            Schema.TemplateObjectRow por = Global.ModelSchema.TemplateObject.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (por == null)
+            Schema.TemplateObjectRow template = Global.Schema.TemplateObject.FindByTemplateObjectID(instance.TemplateObjectID);
+            if (template == null)
                 return null;
-            Schema.TemplateMobileRow mr = Global.ModelSchema.TemplateMobile.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (mr == null)
+            Schema.TemplateMobileRow mobile = Global.Schema.TemplateMobile.FindByTemplateObjectID(instance.TemplateObjectID);
+            if (mobile == null)
                 return null;
-            return new Avatar(this, mr, por, rpr);
-        }
-
-        public Avatar LoadMobile(int instanceId)
-        {
-            Schema.ObjectInstanceRow rpr = Global.ModelSchema.ObjectInstance.FindByObjectInstanceID(instanceId);
-            if (rpr == null)
-                return null;
-            Schema.TemplateObjectRow por = Global.ModelSchema.TemplateObject.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (por == null)
-                return null;
-            Schema.TemplateMobileRow mr = Global.ModelSchema.TemplateMobile.FindByTemplateObjectID(rpr.TemplateObjectID);
-            if (mr == null)
-                return null;
-            return new Avatar(this, mr, por, rpr);
+            return new Avatar(this, instance, template, mobile);
         }
 
         public void CreateDefaultWorld()
         {
-            Global.ModelSchema = new Schema();
-            Global.ModelSchema.World.AddWorldRow(_worldId, "Empty", "An empty world");
-            var p = Global.ModelSchema.Player.AddPlayerRow(
+            Global.Schema = new Schema();
+            Global.Schema.World.AddWorldRow(_worldId, "Empty", "An empty world");
+            var p = Global.Schema.Player.AddPlayerRow(
                 "Bob", 35, "Bob", "Smith", "bob@smith.com", 1, "bob",
                 100, "This is Bob", -1, new Guid(), Global.Now, Global.Now);
         }
@@ -70,15 +59,15 @@ namespace Strive.Server.Logic
         public class InvalidWorld : Exception { }
         public void Load()
         {
-            PhysicalObjects = new Dictionary<int, PhysicalObject>();
-            Mobiles = new List<MobileAvatar>();
+            PhysicalObjects = new Dictionary<int, EntityModel>();
+            Mobiles = new List<Avatar>();
 
             // TODO: would be nice to be able to load only the world in question... but for now load them all
             if (Global.WorldFilename != null)
             {
                 _log.Info("Loading Global.modelSchema from file:" + Global.WorldFilename);
-                Global.ModelSchema = new Schema();
-                Global.ModelSchema.ReadXml(Global.WorldFilename);
+                Global.Schema = new Schema();
+                Global.Schema.ReadXml(Global.WorldFilename);
             }
             //else if (Global.connectionstring != null)
             //{
@@ -98,7 +87,7 @@ namespace Strive.Server.Logic
             _lowX = -1000;
             _highZ = 1000;
             _lowZ = -1000;
-            foreach (Schema.ObjectInstanceRow r in Global.ModelSchema.ObjectInstance.Rows)
+            foreach (Schema.ObjectInstanceRow r in Global.Schema.ObjectInstance.Rows)
             {
                 if (_highX == 0)
                     _highX = r.X;
@@ -135,23 +124,24 @@ namespace Strive.Server.Logic
             // allocate the grid of squares used for grouping
             // physical objects that are close to each other
             _square = new Square[_squaresInX, _squaresInZ];
-            _terrain = new Terrain[_squaresInX * Square.SquareSize / Constants.TerrainPieceSize, _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize];
+            _terrain = new TerrainModel[_squaresInX * Square.SquareSize / Constants.TerrainPieceSize, _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize];
 
-            Schema.WorldRow wr = Global.ModelSchema.World.FindByWorldID(_worldId);
+            Schema.WorldRow wr = Global.Schema.World.FindByWorldID(_worldId);
             if (wr == null)
             {
                 throw new InvalidWorld();
             }
 
+            /** TODO: support loading
             _log.Info("Loading world \"" + wr.WorldName + "\"...");
             _log.Info("Loading terrain...");
-            foreach (Schema.TemplateTerrainRow ttr in Global.ModelSchema.TemplateTerrain.Rows)
+            foreach (Schema.TemplateTerrainRow ttr in Global.Schema.TemplateTerrain.Rows)
             {
                 foreach (Schema.ObjectInstanceRow oir in ttr.TemplateObjectRow.GetObjectInstanceRows())
                     Add(new Terrain(ttr, ttr.TemplateObjectRow, oir));
             }
             _log.Info("Loading physical objects...");
-            foreach (Schema.TemplateObjectRow otr in Global.ModelSchema.TemplateObject.Rows)
+            foreach (Schema.TemplateObjectRow otr in Global.Schema.TemplateObject.Rows)
             {
                 foreach (Schema.TemplateMobileRow tmr in otr.GetTemplateMobileRows())
                 {
@@ -192,6 +182,7 @@ namespace Strive.Server.Logic
                 }
             }
             _log.Info("Loaded world.");
+             */
         }
     }
 }

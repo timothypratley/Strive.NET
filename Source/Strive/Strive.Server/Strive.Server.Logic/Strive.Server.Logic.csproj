@@ -97,6 +97,10 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Strive.Data\Strive.Data.Events\Strive.Data.Events.csproj">
+      <Project>{0D97F99D-DAEE-4C38-85A4-AFADD33D0C62}</Project>
+      <Name>Strive.Data.Events</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Model\Strive.Model.csproj">
       <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
       <Name>Strive.Model</Name>
@@ -109,6 +113,10 @@
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Messaging\Strive.Network.Messaging.csproj">
       <Project>{757BF7D3-B811-48D7-AE27-0842B0522536}</Project>
       <Name>Strive.Network.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Strive.Server.Schema\Strive.Server.DB.csproj">
+      <Project>{9FD77152-07A8-42C8-A6B3-15C9E5B442FC}</Project>
+      <Name>Strive.Server.DB</Name>
     </ProjectReference>
     <Reference Include="Common.Logging">
       <HintPath>..\..\..\ThirdParty\Common.Logging\Common.Logging.dll</HintPath>
@@ -162,7 +170,6 @@
     <Compile Include="SkillCommandProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Skills.cs" />
     <Compile Include="Square.cs">
       <SubType>Code</SubType>
     </Compile>

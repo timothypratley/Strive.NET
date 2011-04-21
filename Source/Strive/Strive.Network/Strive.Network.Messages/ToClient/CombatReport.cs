@@ -1,3 +1,4 @@
+using Strive.Common;
 using Strive.Model;
 namespace Strive.Network.Messages.ToClient
 {
@@ -5,14 +6,14 @@ namespace Strive.Network.Messages.ToClient
     {
         public int AttackerObjectInstanceId;
         public int TargetObjectInstanceId;
-        public EnumCombatEvent CombatEvent;
+        public EnumSkill Skill;
         public float Damage;
 
-        public CombatReport(EntityModel attacker, EntityModel target, EnumCombatEvent combatEvent, float damage)
+        public CombatReport(EntityModel attacker, EnumSkill skill, EntityModel target, float damage)
         {
             AttackerObjectInstanceId = attacker.Id;
             TargetObjectInstanceId = target == null ? 0 : target.Id;
-            CombatEvent = combatEvent;
+            Skill = skill;
             Damage = damage;
         }
     }

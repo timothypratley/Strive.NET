@@ -33,7 +33,7 @@ namespace Strive.Network.Messaging
             AuthenticatedUsername = null;
         }
 
-        public dynamic Avatar { get; set; }
+        public object Avatar { get; set; }
         public DateTime LastMessageTimestamp { get; set; }
 
         public EndPoint RemoteEndPoint

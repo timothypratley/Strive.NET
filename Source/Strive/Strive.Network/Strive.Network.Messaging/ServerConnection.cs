@@ -4,10 +4,10 @@ using System.Reflection;
 using System.Windows.Media.Media3D;
 using Microsoft.CSharp.RuntimeBinder;
 using Strive.Common;
+using Strive.Model;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToClient;
 using Strive.Network.Messages.ToServer;
-using Strive.Model;
 
 
 namespace Strive.Network.Messaging
@@ -97,7 +97,7 @@ namespace Strive.Network.Messaging
 
         public void CreateEntity(int templateId, Vector3D position, Quaternion rotation)
         {
-            Send(new EntityModel(templateId, "Junk", "StaticBox", position, rotation, 100, EnumMobileState.Standing, 1.7f));
+            Send(new EntityModel(templateId, "Junk", "StaticBox", position, rotation, 100, 100, EnumMobileState.Standing, 1.7f));
         }
 
         public void Login(string username, string password)

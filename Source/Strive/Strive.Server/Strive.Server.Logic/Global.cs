@@ -1,10 +1,10 @@
 using System;
 using System.Configuration;
 using System.Windows.Media.Media3D;
-
 using Common.Logging;
-
 using Strive.Common;
+using Strive.Server.DB;
+
 
 namespace Strive.Server.Logic
 {
@@ -16,7 +16,7 @@ namespace Strive.Server.Logic
         public static Random Rand = new Random();
         public static DateTime Now = DateTime.Now;
         public static Vector3D Up = new Vector3D(0, 1, 0);
-        public static Model.Schema ModelSchema;
+        public static Schema Schema;
 
         public static int WorldId;
         public static int Port;
@@ -28,7 +28,7 @@ namespace Strive.Server.Logic
 
         public static void ReadConfiguration()
         {
-            // manditory fields
+            // mandatory fields
             string s = ConfigurationManager.AppSettings["WorldID"];
             if (s == null)
             {

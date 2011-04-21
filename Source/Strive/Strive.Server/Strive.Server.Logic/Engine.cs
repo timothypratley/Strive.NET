@@ -82,13 +82,12 @@ namespace Strive.Server.Logic
             {
                 if (client.Avatar != null)
                 {
-                    ((Avatar)client.Avatar).Client = null;
-                    _messageProcessor.World.Remove(client.Avatar);
+                    var a = (Avatar)client.Avatar;
+                    a.Client = null;
+                    _messageProcessor.World.Remove(a);
                 }
                 else
-                {
                     client.Avatar = null;
-                }
                 _messageProcessor.Listener.Clients.Remove(client);
             }
         }

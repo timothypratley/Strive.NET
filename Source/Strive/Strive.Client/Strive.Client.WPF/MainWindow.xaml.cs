@@ -5,6 +5,7 @@ using AvalonDock;
 using Strive.Client.NeoAxisView;
 using Strive.WPF;
 using UpdateControls.XAML;
+using Strive.Server.Logic;
 
 
 namespace Strive.Client.WPF

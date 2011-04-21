@@ -1,7 +1,7 @@
 using Strive.Common;
 
 
-namespace Strive.Server.Schema
+namespace Strive.Server.DB
 {
     public class Terrain : PhysicalObject
     {

@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace Strive.Server.Schema {
+namespace Strive.Server.DB {
     
     
     /// <summary>
@@ -3222,7 +3222,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class AreaDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class AreaDataTable : global::System.Data.TypedTableBase<AreaRow> {
             
             private global::System.Data.DataColumn columnAreaID;
             
@@ -3435,12 +3435,6 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 AreaDataTable cln = ((AreaDataTable)(base.Clone()));
                 cln.InitVars();
@@ -3640,7 +3634,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ClanDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class ClanDataTable : global::System.Data.TypedTableBase<ClanRow> {
             
             private global::System.Data.DataColumn columnClanID;
             
@@ -3783,12 +3777,6 @@ namespace Strive.Server.Schema {
             public ClanRow FindByClanID(int ClanID) {
                 return ((ClanRow)(this.Rows.Find(new object[] {
                             ClanID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3968,7 +3956,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ClanRankDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class ClanRankDataTable : global::System.Data.TypedTableBase<ClanRankRow> {
             
             private global::System.Data.DataColumn columnClanID;
             
@@ -4129,12 +4117,6 @@ namespace Strive.Server.Schema {
                 return ((ClanRankRow)(this.Rows.Find(new object[] {
                             ClanID,
                             Rank})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4318,7 +4300,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumActivationTypeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumActivationTypeDataTable : global::System.Data.TypedTableBase<EnumActivationTypeRow> {
             
             private global::System.Data.DataColumn columnEnumActivationTypeID;
             
@@ -4436,12 +4418,6 @@ namespace Strive.Server.Schema {
             public EnumActivationTypeRow FindByEnumActivationTypeID(int EnumActivationTypeID) {
                 return ((EnumActivationTypeRow)(this.Rows.Find(new object[] {
                             EnumActivationTypeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4614,7 +4590,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumCommandDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumCommandDataTable : global::System.Data.TypedTableBase<EnumCommandRow> {
             
             private global::System.Data.DataColumn columnEnumCommandID;
             
@@ -4732,12 +4708,6 @@ namespace Strive.Server.Schema {
             public EnumCommandRow FindByEnumCommandID(int EnumCommandID) {
                 return ((EnumCommandRow)(this.Rows.Find(new object[] {
                             EnumCommandID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4910,7 +4880,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumDamageTypeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumDamageTypeDataTable : global::System.Data.TypedTableBase<EnumDamageTypeRow> {
             
             private global::System.Data.DataColumn columnEnumDamageTypeID;
             
@@ -5042,12 +5012,6 @@ namespace Strive.Server.Schema {
             public EnumDamageTypeRow FindByEnumDamageTypeID(int EnumDamageTypeID) {
                 return ((EnumDamageTypeRow)(this.Rows.Find(new object[] {
                             EnumDamageTypeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5223,7 +5187,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumEmoteDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumEmoteDataTable : global::System.Data.TypedTableBase<EnumEmoteRow> {
             
             private global::System.Data.DataColumn columnEnumEmoteID;
             
@@ -5341,12 +5305,6 @@ namespace Strive.Server.Schema {
             public EnumEmoteRow FindByEnumEmoteID(int EnumEmoteID) {
                 return ((EnumEmoteRow)(this.Rows.Find(new object[] {
                             EnumEmoteID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5519,7 +5477,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumItemDurabilityDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumItemDurabilityDataTable : global::System.Data.TypedTableBase<EnumItemDurabilityRow> {
             
             private global::System.Data.DataColumn columnEnumItemDurabilityID;
             
@@ -5527,7 +5485,7 @@ namespace Strive.Server.Schema {
             
             private global::System.Data.DataColumn columnDescription;
             
-            private global::System.Data.DataColumn columnBaseHitpointsEnergy;
+            private global::System.Data.DataColumn columnBaseHealthEnergy;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -5588,9 +5546,9 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BaseHitpointsEnergyColumn {
+            public global::System.Data.DataColumn BaseHealthEnergyColumn {
                 get {
-                    return this.columnBaseHitpointsEnergy;
+                    return this.columnBaseHealthEnergy;
                 }
             }
             
@@ -5631,13 +5589,13 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumItemDurabilityRow AddEnumItemDurabilityRow(int EnumItemDurabilityID, string EnumItemDurabilityName, string Description, int BaseHitpointsEnergy) {
+            public EnumItemDurabilityRow AddEnumItemDurabilityRow(int EnumItemDurabilityID, string EnumItemDurabilityName, string Description, int BaseHealthEnergy) {
                 EnumItemDurabilityRow rowEnumItemDurabilityRow = ((EnumItemDurabilityRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         EnumItemDurabilityID,
                         EnumItemDurabilityName,
                         Description,
-                        BaseHitpointsEnergy};
+                        BaseHealthEnergy};
                 rowEnumItemDurabilityRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEnumItemDurabilityRow);
                 return rowEnumItemDurabilityRow;
@@ -5648,12 +5606,6 @@ namespace Strive.Server.Schema {
             public EnumItemDurabilityRow FindByEnumItemDurabilityID(int EnumItemDurabilityID) {
                 return ((EnumItemDurabilityRow)(this.Rows.Find(new object[] {
                             EnumItemDurabilityID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5676,7 +5628,7 @@ namespace Strive.Server.Schema {
                 this.columnEnumItemDurabilityID = base.Columns["EnumItemDurabilityID"];
                 this.columnEnumItemDurabilityName = base.Columns["EnumItemDurabilityName"];
                 this.columnDescription = base.Columns["Description"];
-                this.columnBaseHitpointsEnergy = base.Columns["BaseHitpointsEnergy"];
+                this.columnBaseHealthEnergy = base.Columns["BaseHealthEnergy"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5688,8 +5640,8 @@ namespace Strive.Server.Schema {
                 base.Columns.Add(this.columnEnumItemDurabilityName);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
-                this.columnBaseHitpointsEnergy = new global::System.Data.DataColumn("BaseHitpointsEnergy", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBaseHitpointsEnergy);
+                this.columnBaseHealthEnergy = new global::System.Data.DataColumn("BaseHealthEnergy", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBaseHealthEnergy);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnEnumItemDurabilityID}, true));
                 this.columnEnumItemDurabilityID.AllowDBNull = false;
@@ -5697,7 +5649,7 @@ namespace Strive.Server.Schema {
                 this.columnEnumItemDurabilityName.AllowDBNull = false;
                 this.columnEnumItemDurabilityName.MaxLength = 50;
                 this.columnDescription.MaxLength = 1073741823;
-                this.columnBaseHitpointsEnergy.AllowDBNull = false;
+                this.columnBaseHealthEnergy.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5829,7 +5781,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumLiquidTypeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumLiquidTypeDataTable : global::System.Data.TypedTableBase<EnumLiquidTypeRow> {
             
             private global::System.Data.DataColumn columnEnumLiquidTypeID;
             
@@ -5961,12 +5913,6 @@ namespace Strive.Server.Schema {
             public EnumLiquidTypeRow FindByEnumLiquidTypeID(int EnumLiquidTypeID) {
                 return ((EnumLiquidTypeRow)(this.Rows.Find(new object[] {
                             EnumLiquidTypeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6142,7 +6088,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumMobileSizeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumMobileSizeDataTable : global::System.Data.TypedTableBase<EnumMobileSizeRow> {
             
             private global::System.Data.DataColumn columnEnumMobileSizeID;
             
@@ -6150,7 +6096,7 @@ namespace Strive.Server.Schema {
             
             private global::System.Data.DataColumn columnDescription;
             
-            private global::System.Data.DataColumn columnBaseHitpointsEnergy;
+            private global::System.Data.DataColumn columnBaseHealthEnergy;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -6211,9 +6157,9 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BaseHitpointsEnergyColumn {
+            public global::System.Data.DataColumn BaseHealthEnergyColumn {
                 get {
-                    return this.columnBaseHitpointsEnergy;
+                    return this.columnBaseHealthEnergy;
                 }
             }
             
@@ -6254,13 +6200,13 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnumMobileSizeRow AddEnumMobileSizeRow(int EnumMobileSizeID, string EnumMobileSizeName, string Description, int BaseHitpointsEnergy) {
+            public EnumMobileSizeRow AddEnumMobileSizeRow(int EnumMobileSizeID, string EnumMobileSizeName, string Description, int BaseHealthEnergy) {
                 EnumMobileSizeRow rowEnumMobileSizeRow = ((EnumMobileSizeRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         EnumMobileSizeID,
                         EnumMobileSizeName,
                         Description,
-                        BaseHitpointsEnergy};
+                        BaseHealthEnergy};
                 rowEnumMobileSizeRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEnumMobileSizeRow);
                 return rowEnumMobileSizeRow;
@@ -6271,12 +6217,6 @@ namespace Strive.Server.Schema {
             public EnumMobileSizeRow FindByEnumMobileSizeID(int EnumMobileSizeID) {
                 return ((EnumMobileSizeRow)(this.Rows.Find(new object[] {
                             EnumMobileSizeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6299,7 +6239,7 @@ namespace Strive.Server.Schema {
                 this.columnEnumMobileSizeID = base.Columns["EnumMobileSizeID"];
                 this.columnEnumMobileSizeName = base.Columns["EnumMobileSizeName"];
                 this.columnDescription = base.Columns["Description"];
-                this.columnBaseHitpointsEnergy = base.Columns["BaseHitpointsEnergy"];
+                this.columnBaseHealthEnergy = base.Columns["BaseHealthEnergy"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6311,8 +6251,8 @@ namespace Strive.Server.Schema {
                 base.Columns.Add(this.columnEnumMobileSizeName);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
-                this.columnBaseHitpointsEnergy = new global::System.Data.DataColumn("BaseHitpointsEnergy", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBaseHitpointsEnergy);
+                this.columnBaseHealthEnergy = new global::System.Data.DataColumn("BaseHealthEnergy", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBaseHealthEnergy);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnEnumMobileSizeID}, true));
                 this.columnEnumMobileSizeID.AllowDBNull = false;
@@ -6321,7 +6261,7 @@ namespace Strive.Server.Schema {
                 this.columnEnumMobileSizeName.MaxLength = 50;
                 this.columnDescription.AllowDBNull = false;
                 this.columnDescription.MaxLength = 1073741823;
-                this.columnBaseHitpointsEnergy.AllowDBNull = false;
+                this.columnBaseHealthEnergy.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6453,7 +6393,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumMobileStateDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumMobileStateDataTable : global::System.Data.TypedTableBase<EnumMobileStateRow> {
             
             private global::System.Data.DataColumn columnEnumMobileStateID;
             
@@ -6560,12 +6500,6 @@ namespace Strive.Server.Schema {
             public EnumMobileStateRow FindByEnumMobileStateID(int EnumMobileStateID) {
                 return ((EnumMobileStateRow)(this.Rows.Find(new object[] {
                             EnumMobileStateID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6733,7 +6667,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumRaceDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumRaceDataTable : global::System.Data.TypedTableBase<EnumRaceRow> {
             
             private global::System.Data.DataColumn columnEnumRaceID;
             
@@ -7032,12 +6966,6 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 EnumRaceDataTable cln = ((EnumRaceDataTable)(base.Clone()));
                 cln.InitVars();
@@ -7250,7 +7178,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumResourceTypeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumResourceTypeDataTable : global::System.Data.TypedTableBase<EnumResourceTypeRow> {
             
             private global::System.Data.DataColumn columnEnumResourceTypeID;
             
@@ -7357,12 +7285,6 @@ namespace Strive.Server.Schema {
             public EnumResourceTypeRow FindByEnumResourceTypeID(int EnumResourceTypeID) {
                 return ((EnumResourceTypeRow)(this.Rows.Find(new object[] {
                             EnumResourceTypeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7530,7 +7452,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumSexDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumSexDataTable : global::System.Data.TypedTableBase<EnumSexRow> {
             
             private global::System.Data.DataColumn columnEnumSexID;
             
@@ -7637,12 +7559,6 @@ namespace Strive.Server.Schema {
             public EnumSexRow FindByEnumSexID(int EnumSexID) {
                 return ((EnumSexRow)(this.Rows.Find(new object[] {
                             EnumSexID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7810,7 +7726,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumSkillDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumSkillDataTable : global::System.Data.TypedTableBase<EnumSkillRow> {
             
             private global::System.Data.DataColumn columnEnumSkillID;
             
@@ -8112,12 +8028,6 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 EnumSkillDataTable cln = ((EnumSkillDataTable)(base.Clone()));
                 cln.InitVars();
@@ -8341,7 +8251,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumSpecialisationDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumSpecialisationDataTable : global::System.Data.TypedTableBase<EnumSpecialisationRow> {
             
             private global::System.Data.DataColumn columnEnumSpecialisationID;
             
@@ -8473,12 +8383,6 @@ namespace Strive.Server.Schema {
             public EnumSpecialisationRow FindByEnumSpecialisationID(int EnumSpecialisationID) {
                 return ((EnumSpecialisationRow)(this.Rows.Find(new object[] {
                             EnumSpecialisationID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8654,7 +8558,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumTargetTypeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumTargetTypeDataTable : global::System.Data.TypedTableBase<EnumTargetTypeRow> {
             
             private global::System.Data.DataColumn columnEnumTargetTypeID;
             
@@ -8772,12 +8676,6 @@ namespace Strive.Server.Schema {
             public EnumTargetTypeRow FindByEnumTargetTypeID(int EnumTargetTypeID) {
                 return ((EnumTargetTypeRow)(this.Rows.Find(new object[] {
                             EnumTargetTypeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8950,7 +8848,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumTerrainTypeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumTerrainTypeDataTable : global::System.Data.TypedTableBase<EnumTerrainTypeRow> {
             
             private global::System.Data.DataColumn columnEnumTerrainTypeID;
             
@@ -9082,12 +8980,6 @@ namespace Strive.Server.Schema {
             public EnumTerrainTypeRow FindByEnumTerrainTypeID(int EnumTerrainTypeID) {
                 return ((EnumTerrainTypeRow)(this.Rows.Find(new object[] {
                             EnumTerrainTypeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9263,7 +9155,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumWeaponSizeDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumWeaponSizeDataTable : global::System.Data.TypedTableBase<EnumWeaponSizeRow> {
             
             private global::System.Data.DataColumn columnEnumWeaponSizeID;
             
@@ -9381,12 +9273,6 @@ namespace Strive.Server.Schema {
             public EnumWeaponSizeRow FindByEnumWeaponSizeID(int EnumWeaponSizeID) {
                 return ((EnumWeaponSizeRow)(this.Rows.Find(new object[] {
                             EnumWeaponSizeID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9559,7 +9445,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class EnumWearLocationDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class EnumWearLocationDataTable : global::System.Data.TypedTableBase<EnumWearLocationRow> {
             
             private global::System.Data.DataColumn columnEnumWearLocationID;
             
@@ -9677,12 +9563,6 @@ namespace Strive.Server.Schema {
             public EnumWearLocationRow FindByEnumWearLocationID(int EnumWearLocationID) {
                 return ((EnumWearLocationRow)(this.Rows.Find(new object[] {
                             EnumWearLocationID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9855,7 +9735,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class InventoryDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class InventoryDataTable : global::System.Data.TypedTableBase<InventoryRow> {
             
             private global::System.Data.DataColumn columnObjectInstanceID;
             
@@ -9965,12 +9845,6 @@ namespace Strive.Server.Schema {
             public InventoryRow FindByObjectInstanceID(int ObjectInstanceID) {
                 return ((InventoryRow)(this.Rows.Find(new object[] {
                             ObjectInstanceID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10137,7 +10011,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class MobileHasClanRankDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class MobileHasClanRankDataTable : global::System.Data.TypedTableBase<MobileHasClanRankRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -10270,12 +10144,6 @@ namespace Strive.Server.Schema {
                 return ((MobileHasClanRankRow)(this.Rows.Find(new object[] {
                             TemplateObjectID,
                             ClanID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10450,7 +10318,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class MobileHasSkillDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class MobileHasSkillDataTable : global::System.Data.TypedTableBase<MobileHasSkillRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -10575,12 +10443,6 @@ namespace Strive.Server.Schema {
                 return ((MobileHasSkillRow)(this.Rows.Find(new object[] {
                             TemplateObjectID,
                             EnumSkillID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10751,7 +10613,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class MobileHasSpecialisationDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class MobileHasSpecialisationDataTable : global::System.Data.TypedTableBase<MobileHasSpecialisationRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -10861,12 +10723,6 @@ namespace Strive.Server.Schema {
             public MobileHasSpecialisationRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((MobileHasSpecialisationRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11033,7 +10889,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class MobilePossesableByPlayerDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class MobilePossesableByPlayerDataTable : global::System.Data.TypedTableBase<MobilePossesableByPlayerRow> {
             
             private global::System.Data.DataColumn columnObjectInstanceID;
             
@@ -11146,12 +11002,6 @@ namespace Strive.Server.Schema {
             public MobilePossesableByPlayerRow FindByObjectInstanceID(int ObjectInstanceID) {
                 return ((MobilePossesableByPlayerRow)(this.Rows.Find(new object[] {
                             ObjectInstanceID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11318,7 +11168,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ObjectInstanceDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class ObjectInstanceDataTable : global::System.Data.TypedTableBase<ObjectInstanceRow> {
             
             private global::System.Data.DataColumn columnObjectInstanceID;
             
@@ -11340,7 +11190,7 @@ namespace Strive.Server.Schema {
             
             private global::System.Data.DataColumn columnEnergyCurrent;
             
-            private global::System.Data.DataColumn columnHitpointsCurrent;
+            private global::System.Data.DataColumn columnHealthCurrent;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -11457,9 +11307,9 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn HitpointsCurrentColumn {
+            public global::System.Data.DataColumn HealthCurrentColumn {
                 get {
-                    return this.columnHitpointsCurrent;
+                    return this.columnHealthCurrent;
                 }
             }
             
@@ -11500,7 +11350,7 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectInstanceRow AddObjectInstanceRow(TemplateObjectRow parentTemplateObjectRowByFK_TemplateObject_ObjectInstance, double X, double Y, double Z, double RotationX, double RotationY, double RotationZ, double RotationW, double EnergyCurrent, double HitpointsCurrent) {
+            public ObjectInstanceRow AddObjectInstanceRow(TemplateObjectRow parentTemplateObjectRowByFK_TemplateObject_ObjectInstance, double X, double Y, double Z, double RotationX, double RotationY, double RotationZ, double RotationW, double EnergyCurrent, double HealthCurrent) {
                 ObjectInstanceRow rowObjectInstanceRow = ((ObjectInstanceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -11513,7 +11363,7 @@ namespace Strive.Server.Schema {
                         RotationZ,
                         RotationW,
                         EnergyCurrent,
-                        HitpointsCurrent};
+                        HealthCurrent};
                 if ((parentTemplateObjectRowByFK_TemplateObject_ObjectInstance != null)) {
                     columnValuesArray[1] = parentTemplateObjectRowByFK_TemplateObject_ObjectInstance[0];
                 }
@@ -11527,12 +11377,6 @@ namespace Strive.Server.Schema {
             public ObjectInstanceRow FindByObjectInstanceID(int ObjectInstanceID) {
                 return ((ObjectInstanceRow)(this.Rows.Find(new object[] {
                             ObjectInstanceID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11562,7 +11406,7 @@ namespace Strive.Server.Schema {
                 this.columnRotationZ = base.Columns["RotationZ"];
                 this.columnRotationW = base.Columns["RotationW"];
                 this.columnEnergyCurrent = base.Columns["EnergyCurrent"];
-                this.columnHitpointsCurrent = base.Columns["HitpointsCurrent"];
+                this.columnHealthCurrent = base.Columns["HealthCurrent"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11588,8 +11432,8 @@ namespace Strive.Server.Schema {
                 base.Columns.Add(this.columnRotationW);
                 this.columnEnergyCurrent = new global::System.Data.DataColumn("EnergyCurrent", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEnergyCurrent);
-                this.columnHitpointsCurrent = new global::System.Data.DataColumn("HitpointsCurrent", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnHitpointsCurrent);
+                this.columnHealthCurrent = new global::System.Data.DataColumn("HealthCurrent", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHealthCurrent);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnObjectInstanceID}, true));
                 this.columnObjectInstanceID.AutoIncrement = true;
@@ -11605,7 +11449,7 @@ namespace Strive.Server.Schema {
                 this.columnRotationZ.AllowDBNull = false;
                 this.columnRotationW.AllowDBNull = false;
                 this.columnEnergyCurrent.AllowDBNull = false;
-                this.columnHitpointsCurrent.AllowDBNull = false;
+                this.columnHealthCurrent.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11737,7 +11581,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PlayerDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PlayerDataTable : global::System.Data.TypedTableBase<PlayerRow> {
             
             private global::System.Data.DataColumn columnPlayerID;
             
@@ -11980,12 +11824,6 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 PlayerDataTable cln = ((PlayerDataTable)(base.Clone()));
                 cln.InitVars();
@@ -12196,7 +12034,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_AnnouncementsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_AnnouncementsDataTable : global::System.Data.TypedTableBase<PO_AnnouncementsRow> {
             
             private global::System.Data.DataColumn columnItemID;
             
@@ -12383,12 +12221,6 @@ namespace Strive.Server.Schema {
             public PO_AnnouncementsRow FindByItemID(int ItemID) {
                 return ((PO_AnnouncementsRow)(this.Rows.Find(new object[] {
                             ItemID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12583,7 +12415,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_ContactsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_ContactsDataTable : global::System.Data.TypedTableBase<PO_ContactsRow> {
             
             private global::System.Data.DataColumn columnItemID;
             
@@ -12770,12 +12602,6 @@ namespace Strive.Server.Schema {
             public PO_ContactsRow FindByItemID(int ItemID) {
                 return ((PO_ContactsRow)(this.Rows.Find(new object[] {
                             ItemID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12971,7 +12797,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_DiscussionDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_DiscussionDataTable : global::System.Data.TypedTableBase<PO_DiscussionRow> {
             
             private global::System.Data.DataColumn columnItemID;
             
@@ -13136,12 +12962,6 @@ namespace Strive.Server.Schema {
             public PO_DiscussionRow FindByItemID(int ItemID) {
                 return ((PO_DiscussionRow)(this.Rows.Find(new object[] {
                             ItemID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13329,7 +13149,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_DocumentsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_DocumentsDataTable : global::System.Data.TypedTableBase<PO_DocumentsRow> {
             
             private global::System.Data.DataColumn columnItemID;
             
@@ -13531,12 +13351,6 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 PO_DocumentsDataTable cln = ((PO_DocumentsDataTable)(base.Clone()));
                 cln.InitVars();
@@ -13730,7 +13544,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_EventsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_EventsDataTable : global::System.Data.TypedTableBase<PO_EventsRow> {
             
             private global::System.Data.DataColumn columnItemID;
             
@@ -13906,12 +13720,6 @@ namespace Strive.Server.Schema {
             public PO_EventsRow FindByItemID(int ItemID) {
                 return ((PO_EventsRow)(this.Rows.Find(new object[] {
                             ItemID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14102,7 +13910,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_HtmlTextDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_HtmlTextDataTable : global::System.Data.TypedTableBase<PO_HtmlTextRow> {
             
             private global::System.Data.DataColumn columnModuleID;
             
@@ -14234,12 +14042,6 @@ namespace Strive.Server.Schema {
             public PO_HtmlTextRow FindByModuleID(int ModuleID) {
                 return ((PO_HtmlTextRow)(this.Rows.Find(new object[] {
                             ModuleID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14417,7 +14219,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_LinksDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_LinksDataTable : global::System.Data.TypedTableBase<PO_LinksRow> {
             
             private global::System.Data.DataColumn columnItemID;
             
@@ -14604,12 +14406,6 @@ namespace Strive.Server.Schema {
             public PO_LinksRow FindByItemID(int ItemID) {
                 return ((PO_LinksRow)(this.Rows.Find(new object[] {
                             ItemID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14804,7 +14600,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_ModuleDefinitionsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_ModuleDefinitionsDataTable : global::System.Data.TypedTableBase<PO_ModuleDefinitionsRow> {
             
             private global::System.Data.DataColumn columnModuleDefID;
             
@@ -14944,12 +14740,6 @@ namespace Strive.Server.Schema {
             public PO_ModuleDefinitionsRow FindByModuleDefID(int ModuleDefID) {
                 return ((PO_ModuleDefinitionsRow)(this.Rows.Find(new object[] {
                             ModuleDefID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15133,7 +14923,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_ModulesDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_ModulesDataTable : global::System.Data.TypedTableBase<PO_ModulesRow> {
             
             private global::System.Data.DataColumn columnModuleID;
             
@@ -15323,12 +15113,6 @@ namespace Strive.Server.Schema {
             public PO_ModulesRow FindByModuleID(int ModuleID) {
                 return ((PO_ModulesRow)(this.Rows.Find(new object[] {
                             ModuleID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15525,7 +15309,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_ModuleSettingsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_ModuleSettingsDataTable : global::System.Data.TypedTableBase<PO_ModuleSettingsRow> {
             
             private global::System.Data.DataColumn columnModuleID;
             
@@ -15639,12 +15423,6 @@ namespace Strive.Server.Schema {
                 rowPO_ModuleSettingsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPO_ModuleSettingsRow);
                 return rowPO_ModuleSettingsRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15814,7 +15592,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_PortalsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_PortalsDataTable : global::System.Data.TypedTableBase<PO_PortalsRow> {
             
             private global::System.Data.DataColumn columnPortalID;
             
@@ -15943,12 +15721,6 @@ namespace Strive.Server.Schema {
             public PO_PortalsRow FindByPortalID(int PortalID) {
                 return ((PO_PortalsRow)(this.Rows.Find(new object[] {
                             PortalID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16126,7 +15898,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_RolesDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_RolesDataTable : global::System.Data.TypedTableBase<PO_RolesRow> {
             
             private global::System.Data.DataColumn columnRoleID;
             
@@ -16247,12 +16019,6 @@ namespace Strive.Server.Schema {
             public PO_RolesRow FindByRoleID(int RoleID) {
                 return ((PO_RolesRow)(this.Rows.Find(new object[] {
                             RoleID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16426,7 +16192,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_TabsDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_TabsDataTable : global::System.Data.TypedTableBase<PO_TabsRow> {
             
             private global::System.Data.DataColumn columnTabID;
             
@@ -16591,12 +16357,6 @@ namespace Strive.Server.Schema {
             public PO_TabsRow FindByTabID(int TabID) {
                 return ((PO_TabsRow)(this.Rows.Find(new object[] {
                             TabID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16787,7 +16547,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_UserRolesDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_UserRolesDataTable : global::System.Data.TypedTableBase<PO_UserRolesRow> {
             
             private global::System.Data.DataColumn columnUserID;
             
@@ -16890,12 +16650,6 @@ namespace Strive.Server.Schema {
                 rowPO_UserRolesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPO_UserRolesRow);
                 return rowPO_UserRolesRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17059,7 +16813,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PO_UsersDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class PO_UsersDataTable : global::System.Data.TypedTableBase<PO_UsersRow> {
             
             private global::System.Data.DataColumn columnUserID;
             
@@ -17188,12 +16942,6 @@ namespace Strive.Server.Schema {
             public PO_UsersRow FindByUserID(int UserID) {
                 return ((PO_UsersRow)(this.Rows.Find(new object[] {
                             UserID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17372,7 +17120,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class QuoteDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class QuoteDataTable : global::System.Data.TypedTableBase<QuoteRow> {
             
             private global::System.Data.DataColumn columnQuoteID;
             
@@ -17501,12 +17249,6 @@ namespace Strive.Server.Schema {
             public QuoteRow FindByQuoteID(int QuoteID) {
                 return ((QuoteRow)(this.Rows.Find(new object[] {
                             QuoteID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17686,7 +17428,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class RaceHasEmoteDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class RaceHasEmoteDataTable : global::System.Data.TypedTableBase<RaceHasEmoteRow> {
             
             private global::System.Data.DataColumn columnEnumRaceID;
             
@@ -17799,12 +17541,6 @@ namespace Strive.Server.Schema {
             public RaceHasEmoteRow FindByEnumRaceID(int EnumRaceID) {
                 return ((RaceHasEmoteRow)(this.Rows.Find(new object[] {
                             EnumRaceID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17971,7 +17707,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ResourceDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class ResourceDataTable : global::System.Data.TypedTableBase<ResourceRow> {
             
             private global::System.Data.DataColumn columnResourceID;
             
@@ -18144,12 +17880,6 @@ namespace Strive.Server.Schema {
             public ResourceRow FindByResourceID(int ResourceID) {
                 return ((ResourceRow)(this.Rows.Find(new object[] {
                             ResourceID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18344,7 +18074,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SkillEnablesSkillDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class SkillEnablesSkillDataTable : global::System.Data.TypedTableBase<SkillEnablesSkillRow> {
             
             private global::System.Data.DataColumn columnEnumSkillID;
             
@@ -18454,12 +18184,6 @@ namespace Strive.Server.Schema {
             public SkillEnablesSkillRow FindByEnumSkillID(int EnumSkillID) {
                 return ((SkillEnablesSkillRow)(this.Rows.Find(new object[] {
                             EnumSkillID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18626,7 +18350,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SpecialisationEnablesSkillDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class SpecialisationEnablesSkillDataTable : global::System.Data.TypedTableBase<SpecialisationEnablesSkillRow> {
             
             private global::System.Data.DataColumn columnEnumSpecialisationID;
             
@@ -18739,12 +18463,6 @@ namespace Strive.Server.Schema {
             public SpecialisationEnablesSkillRow FindByEnumSpecialisationID(int EnumSpecialisationID) {
                 return ((SpecialisationEnablesSkillRow)(this.Rows.Find(new object[] {
                             EnumSpecialisationID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18911,7 +18629,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SpecialisationEnablesSpecialisationDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class SpecialisationEnablesSpecialisationDataTable : global::System.Data.TypedTableBase<SpecialisationEnablesSpecialisationRow> {
             
             private global::System.Data.DataColumn columnEnumSpecialisationID;
             
@@ -19021,12 +18739,6 @@ namespace Strive.Server.Schema {
             public SpecialisationEnablesSpecialisationRow FindByEnumSpecialisationID(int EnumSpecialisationID) {
                 return ((SpecialisationEnablesSpecialisationRow)(this.Rows.Find(new object[] {
                             EnumSpecialisationID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -19193,7 +18905,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateAffectedBySkillDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateAffectedBySkillDataTable : global::System.Data.TypedTableBase<TemplateAffectedBySkillRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -19331,12 +19043,6 @@ namespace Strive.Server.Schema {
                             EnumSkillID,
                             Duration,
                             Level})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -19513,7 +19219,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateItemDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateItemDataTable : global::System.Data.TypedTableBase<TemplateItemRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -19648,12 +19354,6 @@ namespace Strive.Server.Schema {
             public TemplateItemRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateItemRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -19828,7 +19528,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateItemEquipableDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateItemEquipableDataTable : global::System.Data.TypedTableBase<TemplateItemEquipableRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -19952,12 +19652,6 @@ namespace Strive.Server.Schema {
             public TemplateItemEquipableRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateItemEquipableRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -20128,7 +19822,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateItemJunkDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateItemJunkDataTable : global::System.Data.TypedTableBase<TemplateItemJunkRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -20238,12 +19932,6 @@ namespace Strive.Server.Schema {
             public TemplateItemJunkRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateItemJunkRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -20410,7 +20098,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateItemQuaffableDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateItemQuaffableDataTable : global::System.Data.TypedTableBase<TemplateItemQuaffableRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -20534,12 +20222,6 @@ namespace Strive.Server.Schema {
             public TemplateItemQuaffableRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateItemQuaffableRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -20710,7 +20392,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateItemReadableDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateItemReadableDataTable : global::System.Data.TypedTableBase<TemplateItemReadableRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -20831,12 +20513,6 @@ namespace Strive.Server.Schema {
             public TemplateItemReadableRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateItemReadableRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -21009,7 +20685,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateItemWieldableDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateItemWieldableDataTable : global::System.Data.TypedTableBase<TemplateItemWieldableRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -21158,12 +20834,6 @@ namespace Strive.Server.Schema {
             public TemplateItemWieldableRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateItemWieldableRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -21342,7 +21012,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateMobileDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateMobileDataTable : global::System.Data.TypedTableBase<TemplateMobileRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -21589,12 +21259,6 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 TemplateMobileDataTable cln = ((TemplateMobileDataTable)(base.Clone()));
                 cln.InitVars();
@@ -21801,7 +21465,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateObjectDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateObjectDataTable : global::System.Data.TypedTableBase<TemplateObjectRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -21980,12 +21644,6 @@ namespace Strive.Server.Schema {
             public TemplateObjectRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateObjectRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -22179,7 +21837,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class TemplateTerrainDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class TemplateTerrainDataTable : global::System.Data.TypedTableBase<TemplateTerrainRow> {
             
             private global::System.Data.DataColumn columnTemplateObjectID;
             
@@ -22306,12 +21964,6 @@ namespace Strive.Server.Schema {
             public TemplateTerrainRow FindByTemplateObjectID(int TemplateObjectID) {
                 return ((TemplateTerrainRow)(this.Rows.Find(new object[] {
                             TemplateObjectID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -22482,7 +22134,7 @@ namespace Strive.Server.Schema {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class WorldDataTable : global::System.Data.DataTable, global::System.Collections.IEnumerable {
+        public partial class WorldDataTable : global::System.Data.TypedTableBase<WorldRow> {
             
             private global::System.Data.DataColumn columnWorldID;
             
@@ -22600,12 +22252,6 @@ namespace Strive.Server.Schema {
             public WorldRow FindByWorldID(int WorldID) {
                 return ((WorldRow)(this.Rows.Find(new object[] {
                             WorldID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public virtual global::System.Collections.IEnumerator GetEnumerator() {
-                return this.Rows.GetEnumerator();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -23517,12 +23163,12 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int BaseHitpointsEnergy {
+            public int BaseHealthEnergy {
                 get {
-                    return ((int)(this[this.tableEnumItemDurability.BaseHitpointsEnergyColumn]));
+                    return ((int)(this[this.tableEnumItemDurability.BaseHealthEnergyColumn]));
                 }
                 set {
-                    this[this.tableEnumItemDurability.BaseHitpointsEnergyColumn] = value;
+                    this[this.tableEnumItemDurability.BaseHealthEnergyColumn] = value;
                 }
             }
             
@@ -23697,12 +23343,12 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int BaseHitpointsEnergy {
+            public int BaseHealthEnergy {
                 get {
-                    return ((int)(this[this.tableEnumMobileSize.BaseHitpointsEnergyColumn]));
+                    return ((int)(this[this.tableEnumMobileSize.BaseHealthEnergyColumn]));
                 }
                 set {
-                    this[this.tableEnumMobileSize.BaseHitpointsEnergyColumn] = value;
+                    this[this.tableEnumMobileSize.BaseHealthEnergyColumn] = value;
                 }
             }
             
@@ -25435,12 +25081,12 @@ namespace Strive.Server.Schema {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double HitpointsCurrent {
+            public double HealthCurrent {
                 get {
-                    return ((double)(this[this.tableObjectInstance.HitpointsCurrentColumn]));
+                    return ((double)(this[this.tableObjectInstance.HealthCurrentColumn]));
                 }
                 set {
-                    this[this.tableObjectInstance.HitpointsCurrentColumn] = value;
+                    this[this.tableObjectInstance.HealthCurrentColumn] = value;
                 }
             }
             

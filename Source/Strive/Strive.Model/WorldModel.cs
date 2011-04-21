@@ -1,4 +1,5 @@
-﻿using Microsoft.FSharp.Collections;
+﻿using System;
+using Microsoft.FSharp.Collections;
 
 
 namespace Strive.Model
@@ -59,6 +60,11 @@ namespace Strive.Model
         public WorldModel Add(PlanModel plan)
         {
             return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Holding, Doing, BelongsTo);
+        }
+
+        public WorldModel Add(AModel m)
+        {
+            throw new NotSupportedException("Don't know how to add a " + m.GetType());
         }
 
         public WorldModel Put(FSharpSet<int> entities, int on)

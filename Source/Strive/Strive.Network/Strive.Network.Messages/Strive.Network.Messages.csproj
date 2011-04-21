@@ -127,9 +127,6 @@
     <Compile Include="CommunicationType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EnumCombatEvent.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MessageTypeMap.cs" />
     <Compile Include="ToClient\CanPossess.cs" />
     <Compile Include="ToClient\CombatReport.cs" />

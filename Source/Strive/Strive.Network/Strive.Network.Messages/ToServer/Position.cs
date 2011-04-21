@@ -9,14 +9,14 @@ namespace Strive.Network.Messages.ToServer
         public int PossessingId;
         public Vector3D Position;
         public Quaternion Rotation;
-        public EnumMobileState State;
+        public EnumMobileState MobileState;
 
-        public MyPosition(int possessingId, Vector3D position, Quaternion rotation, EnumMobileState state)
+        public MyPosition(int possessingId, Vector3D position, Quaternion rotation, EnumMobileState mobileState)
         {
             PossessingId = possessingId;
             Position = position;
             Rotation = rotation;
-            State = state;
+            MobileState = mobileState;
         }
     }
 }

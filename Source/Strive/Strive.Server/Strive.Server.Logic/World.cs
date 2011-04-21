@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Media.Media3D;
 using Common.Logging;
 using Strive.Common;
+using Strive.Data.Events;
 using Strive.Model;
 using Strive.Network.Messaging;
 using ToClient = Strive.Network.Messages.ToClient;
@@ -11,7 +12,7 @@ using ToClient = Strive.Network.Messages.ToClient;
 
 namespace Strive.Server.Logic
 {
-    public class World
+    public partial class World
     {
         double _highX;
         double _highZ;
@@ -82,6 +83,32 @@ namespace Strive.Server.Logic
                 ma.Client.Send(message);
         }
 
+        public void Apply(EntityUpdateEvent e)
+        {
+            _log.Debug(e.GetType() + e.Description);
+            History.Add(e.Entity);
+            Add(e.Entity);
+        }
+
+        public void Apply(TaskUpdateEvent e)
+        {
+            _log.Debug(e.GetType() + e.Description);
+            History.Add(e.Task);
+        }
+
+        public void Apply(SkillEvent e)
+        {
+            _log.Debug(e.GetType() + e.Description);
+            History.Add(new[] { e.Source, e.Target });
+
+            // TODO: yikes! just send the entire entity??
+            // TODO: perhaps I can accumulate all changes in a 'tick' and send out 'dirty'
+            InformNearby(
+                e.Source,
+                new ToClient.CombatReport(e.Source, e.Skill, e.Target, 20));
+        }
+
+
         public void Add(TerrainModel t)
         {
             // keep terrain separate
@@ -92,19 +119,23 @@ namespace Strive.Server.Logic
 
         public void Add(EntityModel po)
         {
+            // keep everything at ground level
+            /*
+            double? altitude = AltitudeAt(po.Position.X, po.Position.Z);
+            if (altitude.HasValue)
+                po.Position.Y = altitude.Value + po.Height / 2F;
+            else
+                _log.Warn("Physical object " + po.Id + " is not on terrain.");
+             */
+
+            History.Add(po);
+
             if (po.Position.X > _highX || po.Position.Z > _highZ
                 || po.Position.X < _lowX || po.Position.Z < _lowZ)
             {
                 _log.Error("Tried to add physical object " + po.Id + " outside the world.");
                 return;
             }
-
-            // keep everything at ground level
-            double? altitude = AltitudeAt(po.Position.X, po.Position.Z);
-            if (altitude.HasValue)
-                po.Position.Y = altitude.Value + po.Height / 2F;
-            else
-                _log.Warn("Physical object " + po.Id + " is not on terrain.");
 
             // add the object to the world
             PhysicalObjects.Add(po.Id, po);
@@ -115,6 +146,7 @@ namespace Strive.Server.Logic
             if (_square[squareX, squareZ] == null)
                 _square[squareX, squareZ] = new Square();
             _square[squareX, squareZ].Add(po);
+
             // notify all nearby clients that a new
             // physical object has entered the world
             InformNearby(po, po);
@@ -251,8 +283,8 @@ namespace Strive.Server.Logic
             }
             //}
 
-            po.Position = newPosition;
-            po.Rotation = newRotation;
+            // TODO: This will result in too many messages, should only send messages in one place
+            Add(po.Move(newPosition, newRotation));
 
             for (i = -1; i <= 1; i++)
             {
@@ -371,46 +403,7 @@ namespace Strive.Server.Logic
             var mob = (Avatar)client.Avatar;
             client.Send(Weather);
 
-            // TODO: zomg I don't know if this divtruncate is right
-            int squareX = DivTruncate((int)(mob.Position.X - _lowX), Square.SquareSize);
-            int squareZ = DivTruncate((int)(mob.Position.Z - _lowZ), Square.SquareSize);
-            int i, j;
-            var nearbyPhysicalObjects = new List<EntityModel>();
-            // TODO: use xorder, zorder to decide the resolution?
-            for (i = -1; i <= 1; i++)
-            {
-                for (j = -1; j <= 1; j++)
-                {
-                    // check that neighbor exists
-                    if (squareX + i < 0 || squareX + i >= _squaresInX
-                        || squareZ + j < 0 || squareZ + j >= _squaresInZ
-                        || _square[squareX + i, squareZ + j] == null)
-                        continue;
-
-                    // add all neighboring physical objects
-                    // to the clients world view
-                    // that are in scope
-
-                    /** TODO:
-     * could only send based upon a radius, but this makes
-     * relocations harder... maybe be better to just use squares
-    // NB: using Manhattan distance not Cartesian
-    float distx = Math.Abs(p.Position.X - mob.Position.X);
-    float distz = Math.Abs(p.Position.Z - mob.Position.Z);
-    if ( distx <= Constants.objectScopeRadius && distz <= Constants.objectScopeRadius )
-    */
-
-                    nearbyPhysicalObjects.AddRange(
-                        _square[squareX + i, squareZ + j].PhysicalObjects);
-                }
-            }
-            /*
-                ToClient.AddPhysicalObjects message = new ToClient.AddPhysicalObjects(
-                    nearbyPhysicalObjects
-                );
-                client.Send( message );
-                */
-            foreach (EntityModel p in nearbyPhysicalObjects)
+            foreach (EntityModel p in GetNearby(mob))
                 client.Send(p);
 
             for (int k = 0; k < Constants.TerrainZoomOrder; k++)
@@ -422,9 +415,9 @@ namespace Strive.Server.Logic
                 tbx = DivTruncate(tbx, Constants.scale[k]) * Constants.scale[k];
                 tbz = DivTruncate(tbz, Constants.scale[k]) * Constants.scale[k];
 
-                for (i = 0; i <= Constants.xRadius[k] * 2; i += Constants.scale[k])
+                for (int i = 0; i <= Constants.xRadius[k] * 2; i += Constants.scale[k])
                 {
-                    for (j = 0; j <= Constants.zRadius[k] * 2; j += Constants.scale[k])
+                    for (int j = 0; j <= Constants.zRadius[k] * 2; j += Constants.scale[k])
                     {
                         int tx = tbx + i;
                         int tz = tbz + j;
@@ -443,6 +436,32 @@ namespace Strive.Server.Logic
                             }
                         }
                     }
+                }
+            }
+        }
+
+        private IEnumerable<EntityModel> GetNearby(Avatar mob)
+        {
+            // TODO: zomg I don't know if this div truncate is right
+            int squareX = DivTruncate((int)(mob.Position.X - _lowX), Square.SquareSize);
+            int squareZ = DivTruncate((int)(mob.Position.Z - _lowZ), Square.SquareSize);
+
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    // check that neighbor exists
+                    if (squareX + i < 0 || squareX + i >= _squaresInX
+                        || squareZ + j < 0 || squareZ + j >= _squaresInZ
+                        || _square[squareX + i, squareZ + j] == null)
+                        continue;
+
+                    // all neighboring physical objects
+                    // to the clients world view
+                    // that are in scope
+
+                    foreach (var p in _square[squareX + i, squareZ + j].PhysicalObjects)
+                        yield return p;
                 }
             }
         }

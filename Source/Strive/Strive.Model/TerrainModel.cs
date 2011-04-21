@@ -2,7 +2,7 @@
 
 namespace Strive.Model
 {
-    public class TerrainModel
+    public class TerrainModel : AModel
     {
         public TerrainModel(Vector3D position, int textureId)
         {

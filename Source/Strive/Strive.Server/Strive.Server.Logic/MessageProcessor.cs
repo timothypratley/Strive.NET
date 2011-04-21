@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using Common.Logging;
@@ -6,6 +7,7 @@ using Strive.Model;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
+using Strive.Server.DB;
 
 
 namespace Strive.Server.Logic
@@ -94,10 +96,19 @@ namespace Strive.Server.Logic
             }
         }
 
+        public Tuple<int, string>[] GetPossessable(string username)
+        {
+            DataRow[] dr = Global.Schema.Player.Select("Email = '" + username + "'");
+            Schema.PlayerRow pr = Global.Schema.Player.FindByPlayerID((int)dr[0][0]);
+            Schema.MobilePossesableByPlayerRow[] mpbpr = pr.GetMobilePossesableByPlayerRows();
+            return mpbpr.Select(mpr => new Tuple<int, string>(
+                mpr.ObjectInstanceID, mpr.ObjectInstanceRow.TemplateObjectRow.TemplateObjectName)).ToArray();
+        }
+
         void ProcessMessage(ClientConnection client, RequestPossessable message)
         {
             //Strive.Data.MultiverseFactory.refreshMultiverseForPlayer(Global.modelSchema, client.PlayerID);
-            client.CanPossess(World.GetPossessable(client.AuthenticatedUsername));
+            client.CanPossess(GetPossessable(client.AuthenticatedUsername));
         }
 
         void ProcessMessage(ClientConnection client, Logout message)
@@ -105,7 +116,7 @@ namespace Strive.Server.Logic
             if (client.Avatar != null)
             {
                 // remove from world.
-                World.Remove(client.Avatar);
+                World.Remove((Avatar)client.Avatar);
             }
             _log.Info("Logged out '" + client.AuthenticatedUsername + "'.");
             client.Close();
@@ -152,8 +163,8 @@ namespace Strive.Server.Logic
                     //return;
                     avatar = new Avatar(World,
                         Global.Rand.Next(), client.AuthenticatedUsername, "RTSRobot",
-                        new Vector3D(0, 0, 0), Quaternion.Identity, 100, Common.EnumMobileState.Standing, 1.7f,
-                        20, 20, 20, 20);
+                        new Vector3D(0, 0, 0), Quaternion.Identity, 100, 100, Common.EnumMobileState.Standing, 1.7f,
+                        20, 20, 20, 20, 20);
                 }
 
                 avatar.Client = client;
@@ -174,27 +185,23 @@ namespace Strive.Server.Logic
             }
             var ma = (Avatar)client.Avatar;
 
-            if (message.Position != client.Avatar.Position)
+            if (message.Position != ma.Position)
                 ma.LastMoveUpdate = Global.Now;
-            ma.SetMobileState(message.State);
 
-            World.Relocate(client.Avatar, message.Position, message.Rotation);
-            World.Move();
+            World.History.Add(ma.Move(message.Position, message.Rotation).WithState(message.MobileState));
+
+            World.Relocate(ma, message.Position, message.Rotation, message.MobileState);
         }
 
         void ProcessMessage(ClientConnection client, Communicate message)
         {
+            var ma = (Avatar)client.Avatar;
+
             if (message.CommunicationType == CommunicationType.Chat)
-            {
                 World.NotifyMobiles(new Network.Messages.ToClient.Communication(
-                    client.Avatar.TemplateObjectName, message.Message,
-                    message.CommunicationType));
-            }
+                    ma.Name, message.Message, message.CommunicationType));
             else if (message.CommunicationType == CommunicationType.PartyTalk)
-            {
-                var ma = (Avatar)client.Avatar;
                 ma.SendPartyTalk(message.Message);
-            }
             else
                 _log.Error("Unexpected CommunicationType " + message.CommunicationType);
         }
@@ -209,7 +216,7 @@ namespace Strive.Server.Logic
             {
                 // re-spawn their mobile
                 c.DropAll();
-                ProcessMessage(c, new PossessMobile(c.Avatar.ObjectInstanceId));
+                ProcessMessage(c, new PossessMobile(((Avatar)c.Avatar).Id));
             }
         }
 
@@ -217,8 +224,10 @@ namespace Strive.Server.Logic
         {
             client.WhoList(
                 Listener.Clients
-                .Where(c => c.Avatar != null)
-                .Select(c => new Tuple<int, string>(c.Avatar.ObjectInstanceId, c.Avatar.TemplateObjectName))
+                .Select(c => c.Avatar)
+                .Except(null)
+                .Cast<Avatar>()
+                .Select(a => new Tuple<int, string>(a.Id, a.Name))
                 .ToArray());
         }
 
@@ -315,9 +324,9 @@ namespace Strive.Server.Logic
         void ProcessMessage(ClientConnection client, RequestSkillList message)
         {
             client.SkillList(
-                Global.ModelSchema.EnumSkill
-                    .Select(e => Global.ModelSchema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
-                        client.Avatar.TemplateObjectId, e.EnumSkillID))
+                Global.Schema.EnumSkill
+                    .Select(e => Global.Schema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
+                        ((Avatar)client.Avatar).Id, (int)e.EnumSkillID))
                     .Where(mhs => mhs != null)
                     .Select(mhs => new Tuple<int, double>(mhs.EnumSkillID, mhs.Rating))
                     .ToArray());
@@ -334,7 +343,7 @@ namespace Strive.Server.Logic
         {
             // TODO: would like to at least set the id
             // ObjectInstanceId = Global.Rand.Next(),
-            World.WorldModel.Add(t);
+            World.History.Add(t);
         }
 
         void ProcessMessage(ClientConnection client, UseSkill message)

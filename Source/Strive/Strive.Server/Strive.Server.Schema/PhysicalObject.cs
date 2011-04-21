@@ -1,7 +1,7 @@
 using System.Windows.Media.Media3D;
 
 
-namespace Strive.Server.Schema
+namespace Strive.Server.DB
 {
     public abstract class PhysicalObject
     {
@@ -12,19 +12,19 @@ namespace Strive.Server.Schema
         public float Height;
         public Vector3D Position = new Vector3D(0, 0, 0);
         public Quaternion Rotation = Quaternion.Identity;
-        public int MaxHitPoints = 1;
+        public int MaxHealth = 1;
         public int MaxEnergy = 1;
         public float BoundingSphereRadiusSquared;
-        private float _hitPoints = 1;
-        public float HitPoints
+        private float _Health = 1;
+        public float Health
         {
-            get { return _hitPoints; }
+            get { return _Health; }
             set
             {
-                if (value > MaxHitPoints)
-                    _hitPoints = MaxHitPoints;
+                if (value > MaxHealth)
+                    _Health = MaxHealth;
                 else
-                    _hitPoints = value;
+                    _Health = value;
             }
         }
         private float _energy = 1;

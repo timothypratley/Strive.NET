@@ -150,7 +150,6 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ServerStatusModel.cs" />
     <Compile Include="ServerStatusView.xaml.cs">
       <DependentUpon>ServerStatusView.xaml</DependentUpon>
     </Compile>

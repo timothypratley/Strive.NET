@@ -8,9 +8,14 @@ namespace Strive.DataModel
     {
         public EventPropertySet(Dictionary<EnumProperty, object> properties)
         {
+
             Properties = properties.ToArray();
         }
 
+        public int ActorID;
+        public string ActorName;
+        public int Action;
+        public int TargetID;
         public KeyValuePair<EnumProperty, object>[] Properties { get; private set; }
     }
 }

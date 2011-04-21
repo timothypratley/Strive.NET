@@ -3,7 +3,7 @@
 
 namespace Strive.Model
 {
-    public class TaskModel
+    public class TaskModel : AModel
     {
         public TaskModel(int id, Vector3D start, Vector3D finish)
         {

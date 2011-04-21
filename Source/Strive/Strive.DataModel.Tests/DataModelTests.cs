@@ -23,7 +23,7 @@ namespace Strive.Model.Tests
                 .Should().BeOfType<EntityModel>();
             CombatantModel c = new CombatantModel(
                 2, "Baz", "bar", new Vector3D(), Quaternion.Identity, 100, 100, EnumMobileState.Standing, 1.7f,
-                20, 20, 20, 20);
+                20, 20, 20, 20, 20);
             c.Move(new Vector3D(1, 2, 3), Quaternion.Identity)
                 .Should().BeOfType<CombatantModel>();
         }

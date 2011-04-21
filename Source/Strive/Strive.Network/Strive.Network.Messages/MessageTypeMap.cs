@@ -21,7 +21,7 @@ namespace Strive.Network.Messages
             ToClientCanPossess,
             ToClientCombatReport,
             ToClientCommunication,
-            ToClientCurrentHitpoints,
+            ToClientCurrentHealth,
             ToClientDropAll,
             ToClientDropPhysicalObject,
             ToClientDropPhysicalObjects,
@@ -69,7 +69,7 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToClientCanPossess, typeof(ToClient.CanPossess));
             MessageTypeFromId.Add(EnumMessageId.ToClientCombatReport, typeof(ToClient.CombatReport));
             MessageTypeFromId.Add(EnumMessageId.ToClientCommunication, typeof(ToClient.Communication));
-            MessageTypeFromId.Add(EnumMessageId.ToClientCurrentHitpoints, typeof(ToClient.CurrentHitpoints));
+            MessageTypeFromId.Add(EnumMessageId.ToClientCurrentHealth, typeof(ToClient.CurrentHealth));
             MessageTypeFromId.Add(EnumMessageId.ToClientDropAll, typeof(ToClient.DropAll));
             MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObject, typeof(ToClient.DropPhysical));
             MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObjects, typeof(ToClient.DropPhysicalObjects));

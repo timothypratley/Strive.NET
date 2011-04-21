@@ -1,11 +1,9 @@
-﻿using System;
-using System.Windows.Media.Media3D;
-using System.Diagnostics.Contracts;
+﻿using System.Windows.Media.Media3D;
 
 
 namespace Strive.Model
 {
-    public class PlanModel
+    public class PlanModel : AModel
     {
         public PlanModel(int id, Vector3D start, Vector3D finish)
         {
@@ -16,6 +14,6 @@ namespace Strive.Model
 
         public int Id { get; private set; }
         public Vector3D Start { get; private set; }
-        public Vector3D Finish{ get; private set; }
+        public Vector3D Finish { get; private set; }
     }
 }

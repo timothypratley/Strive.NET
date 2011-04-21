@@ -191,7 +191,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="BaseHitpointsEnergy" msprop:Generator_ColumnVarNameInTable="columnBaseHitpointsEnergy" msprop:Generator_ColumnPropNameInRow="BaseHitpointsEnergy" msprop:Generator_ColumnPropNameInTable="BaseHitpointsEnergyColumn" msprop:Generator_UserColumnName="BaseHitpointsEnergy" type="xs:int" />
+              <xs:element name="BaseHealthEnergy" msprop:Generator_ColumnVarNameInTable="columnBaseHealthEnergy" msprop:Generator_ColumnPropNameInRow="BaseHealthEnergy" msprop:Generator_ColumnPropNameInTable="BaseHealthEnergyColumn" msprop:Generator_UserColumnName="BaseHealthEnergy" type="xs:int" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -235,7 +235,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="BaseHitpointsEnergy" msprop:Generator_ColumnVarNameInTable="columnBaseHitpointsEnergy" msprop:Generator_ColumnPropNameInRow="BaseHitpointsEnergy" msprop:Generator_ColumnPropNameInTable="BaseHitpointsEnergyColumn" msprop:Generator_UserColumnName="BaseHitpointsEnergy" type="xs:int" />
+              <xs:element name="BaseHealthEnergy" msprop:Generator_ColumnVarNameInTable="columnBaseHealthEnergy" msprop:Generator_ColumnPropNameInRow="BaseHealthEnergy" msprop:Generator_ColumnPropNameInTable="BaseHealthEnergyColumn" msprop:Generator_UserColumnName="BaseHealthEnergy" type="xs:int" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -514,7 +514,7 @@
               <xs:element name="RotationZ" msprop:Generator_ColumnVarNameInTable="columnRotationZ" msprop:Generator_ColumnPropNameInRow="RotationZ" msprop:Generator_ColumnPropNameInTable="RotationZColumn" msprop:Generator_UserColumnName="RotationZ" type="xs:double" />
               <xs:element name="RotationW" msprop:Generator_ColumnVarNameInTable="columnRotationW" msprop:Generator_ColumnPropNameInRow="RotationW" msprop:Generator_ColumnPropNameInTable="RotationWColumn" msprop:Generator_UserColumnName="RotationW" type="xs:double" />
               <xs:element name="EnergyCurrent" msprop:Generator_ColumnVarNameInTable="columnEnergyCurrent" msprop:Generator_ColumnPropNameInRow="EnergyCurrent" msprop:Generator_ColumnPropNameInTable="EnergyCurrentColumn" msprop:Generator_UserColumnName="EnergyCurrent" type="xs:double" />
-              <xs:element name="HitpointsCurrent" msprop:Generator_ColumnVarNameInTable="columnHitpointsCurrent" msprop:Generator_ColumnPropNameInRow="HitpointsCurrent" msprop:Generator_ColumnPropNameInTable="HitpointsCurrentColumn" msprop:Generator_UserColumnName="HitpointsCurrent" type="xs:double" />
+              <xs:element name="HealthCurrent" msprop:Generator_ColumnVarNameInTable="columnHealthCurrent" msprop:Generator_ColumnPropNameInRow="HealthCurrent" msprop:Generator_ColumnPropNameInTable="HealthCurrentColumn" msprop:Generator_UserColumnName="HealthCurrent" type="xs:double" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
