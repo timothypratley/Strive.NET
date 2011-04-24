@@ -28,7 +28,7 @@ namespace Strive.Server.Logic
 
         // all physical objects are indexed in a hash-table
         public Dictionary<int, EntityModel> PhysicalObjects { get; private set; }
-        public List<Avatar> Mobiles { get; private set; }
+        public List<CombatantModel> Mobiles { get; private set; }
 
         // TODO: use this!!
         public History History = new History();
@@ -46,14 +46,16 @@ namespace Strive.Server.Logic
         public World(int worldId)
         {
             _worldId = worldId;
+            Load();
         }
 
         public void Update()
         {
-            foreach (Avatar ma in PhysicalObjects.Values.OfType<Avatar>())
-                ma.Update();
+            foreach (CombatantModel c in PhysicalObjects.Values.OfType<CombatantModel>())
+                this.Updatee(c);
             WeatherUpdate();
         }
+
 
         void WeatherUpdate()
         {
@@ -103,6 +105,7 @@ namespace Strive.Server.Logic
 
             // TODO: yikes! just send the entire entity??
             // TODO: perhaps I can accumulate all changes in a 'tick' and send out 'dirty'
+            // TODO: should inform near the target as well
             InformNearby(
                 e.Source,
                 new ToClient.CombatReport(e.Source, e.Skill, e.Target, 20));
@@ -139,8 +142,8 @@ namespace Strive.Server.Logic
 
             // add the object to the world
             PhysicalObjects.Add(po.Id, po);
-            if (po is Avatar)
-                Mobiles.Add((Avatar)po);
+            if (po is CombatantModel)
+                Mobiles.Add((CombatantModel)po);
             int squareX = (int)(po.Position.X - _lowX) / Square.SquareSize;
             int squareZ = (int)(po.Position.Z - _lowZ) / Square.SquareSize;
             if (_square[squareX, squareZ] == null)
@@ -165,6 +168,7 @@ namespace Strive.Server.Logic
             _log.Info("Removed " + po.GetType() + " " + po.Id + " from the world.");
         }
 
+#if false
         public void Relocate(EntityModel po, Vector3D newPosition, Quaternion newRotation, EnumMobileState mobileState)
         {
             // keep everything inside world bounds
@@ -367,6 +371,7 @@ namespace Strive.Server.Logic
                 _square[toSquareX, toSquareZ].Add(po);
             }
         }
+#endif
 
         public void InformNearby(EntityModel po, object message)
         {
@@ -509,6 +514,13 @@ namespace Strive.Server.Logic
         static public int DivTruncate(int x, int y)
         {
             return (x / y - ((x < 0 && (x % y != 0)) ? 1 : 0));
+        }
+
+        public void Set(EntityModel entity, EnumMobileState state)
+        {
+            // TODO: Should apply an event
+            if (entity.MobileState != state)
+                Add(entity.WithState(state));
         }
     }
 }

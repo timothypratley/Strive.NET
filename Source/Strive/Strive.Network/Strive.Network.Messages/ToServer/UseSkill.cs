@@ -5,19 +5,19 @@ namespace Strive.Network.Messages.ToServer
 {
     public class UseSkill
     {
-        public EnumSkill SkillId;
+        public EnumSkill Skill;
         public int InvokationId;	// this is so the client can cancel specific invocations
         public int[] TargetPhysicalObjectIDs;
 
-        public UseSkill(EnumSkill skillId, int invokationId)
+        public UseSkill(EnumSkill skill, int invokationId)
         {
-            SkillId = skillId;
+            Skill = skill;
             InvokationId = invokationId;
             TargetPhysicalObjectIDs = new int[0];
         }
-        public UseSkill(EnumSkill skillId, int invokationId, int[] targetPhysicalObjectIDs)
+        public UseSkill(EnumSkill skill, int invokationId, int[] targetPhysicalObjectIDs)
         {
-            SkillId = skillId;
+            Skill = skill;
             InvokationId = invokationId;
             TargetPhysicalObjectIDs = targetPhysicalObjectIDs;
         }

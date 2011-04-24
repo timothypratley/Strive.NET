@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.Contracts;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -260,6 +261,8 @@ namespace Strive.Network.Messaging
         private object lockObject = new object();
         public virtual bool Send(object message)
         {
+            Contract.Requires<ArgumentException>(CustomFormatter.MessageTypeMap.IdFromMessageType.ContainsKey(message.GetType()));
+
             lock (lockObject)
             {
                 if (Status != ConnectionStatus.Connected)

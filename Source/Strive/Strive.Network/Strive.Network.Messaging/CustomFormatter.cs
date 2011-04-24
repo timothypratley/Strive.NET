@@ -1,20 +1,19 @@
 using System;
-using System.Linq;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Collections;
 using System.Diagnostics.Contracts;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text;
 using Strive.Network.Messages;
 
 namespace Strive.Network.Messaging
 {
     public static class CustomFormatter
     {
-        private static readonly MessageTypeMap MessageTypeMap = new MessageTypeMap();
+        public static readonly MessageTypeMap MessageTypeMap = new MessageTypeMap();
 
         public static byte[] Serialize(Object obj)
         {
@@ -25,7 +24,7 @@ namespace Strive.Network.Messaging
             byte[] encodedInt;
             try
             {
-                encodedInt = BitConverter.GetBytes((Int16) MessageTypeMap.IdFromMessageType[t]);
+                encodedInt = BitConverter.GetBytes((Int16)MessageTypeMap.IdFromMessageType[t]);
             }
             catch (Exception)
             {

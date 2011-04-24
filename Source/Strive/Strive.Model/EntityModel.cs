@@ -25,16 +25,16 @@ namespace Strive.Model
             Rotation = rotation;
         }
 
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string ModelId { get; private set; }
-        public Vector3D Position { get; private set; }
-        public Quaternion Rotation { get; private set; }
-        public float Health { get; private set; }
-        public float Energy { get; private set; }
-        public EnumMobileState MobileState { get; private set; }
-        public float Height { get; private set; }
-        public Affinity Affinity { get; private set; }
+        public int Id { get; protected set; }
+        public string Name { get; protected set; }
+        public string ModelId { get; protected set; }
+        public Vector3D Position { get; protected set; }
+        public Quaternion Rotation { get; protected set; }
+        public float Health { get; protected set; }
+        public float Energy { get; protected set; }
+        public EnumMobileState MobileState { get; protected set; }
+        public float Height { get; protected set; }
+        public Affinity Affinity { get; protected set; }
 
         public EntityModel Move(Vector3D position, Quaternion rotation)
         {
@@ -86,6 +86,7 @@ namespace Strive.Model
 
         public EntityModel WithEnergyChange(float change)
         {
+            // TODO: enforce min/max
             return WithEnergy(Energy + change);
         }
 
@@ -105,5 +106,14 @@ namespace Strive.Model
                 Affinity.Life + lifeChange,
                 Affinity.Water + waterChange);
         }
+
+        public float CurrentHeight { get { return MobileState <= EnumMobileState.Resting ? 0.3f : Height; } }
+
+        public override string ToString()
+        {
+            return GetType().ToString() + " '" + Name + "' (" + Id + ")";
+        }
+
+        // TODO: equals and hashcode
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Common.Logging;
 using Strive.Common;
 using Strive.Data.Events;
@@ -11,49 +10,68 @@ using Strive.Server.DB;
 
 namespace Strive.Server.Logic
 {
-    public class SkillCommandProcessor
+    // TODO: should this just be a partial class instead of using extension methods??
+    public static class SkillCommandProcessor
     {
         static ILog Log = LogManager.GetCurrentClassLogger();
 
-        public static void ProcessUseSkill(World world, ClientConnection client, UseSkill message)
+        public static void ProcessUseSkill(this World world, ClientConnection client, UseSkill message)
         {
-            var avatar = client.Avatar as Avatar;
-            if (avatar == null)
+            var source = client.Avatar as CombatantModel;
+            if (source == null)
             {
-                client.LogMessage("Requested a skill, but doesn't have an avatar.");
+                client.LogMessage("Requested a skill without an avatar.");
                 return;
             }
-            Schema.EnumSkillRow esr = Global.Schema.EnumSkill.FindByEnumSkillID((int)message.SkillId);
+
+            Schema.EnumSkillRow esr = Global.Schema.EnumSkill.FindByEnumSkillID((int)message.Skill);
             if (esr == null)
             {
-                client.LogMessage("Requested an invalid skill " + message.SkillId);
+                client.LogMessage("Requested an invalid skill " + message.Skill);
                 return;
             }
 
-            // If already performing a skill invocation, just queue the request for later.
-            if (avatar.ActivatingSkill != null)
+            EntityModel target;
+            switch ((EnumTargetType)esr.EnumTargetTypeID)
             {
-                avatar.SkillQueue.Enqueue(message);
-                return;
+                case EnumTargetType.TargetSelf:
+                    target = source;
+                    break;
+                case EnumTargetType.TargetMobile:
+                    if (message.TargetPhysicalObjectIDs.Length == 0)
+                    {
+                        source.LogMessage("No target specified, this skill may only be used on Mobiles.");
+                        return;
+                    }
+                    target = world.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
+                    if (target == null)
+                    {
+                        source.LogMessage("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
+                        return;
+                    }
+                    break;
+                default:
+                    source.LogMessage("That skill has an unsupported target type " + esr.EnumTargetTypeID);
+                    Log.Error("Unhandled target type " + esr.EnumTargetTypeID + " for skill " + esr.EnumSkillID + " " + esr.EnumSkillName);
+                    return;
             }
 
-            if (esr.LeadTime <= 0)
-            {
-                // process it now
-                UseSkillNow(world, avatar, message);
-            }
-            else
-            {
-                // process it later, after lead-time has elapsed
-                avatar.ActivatingSkill = message;
-                avatar.ActivatingSkillTimestamp = Global.Now;
-                avatar.ActivatingSkillLeadTime = TimeSpan.FromSeconds(esr.LeadTime);
-            }
+
+            if (source.ActivatingSkill != null)         // queue the request for later.
+                world.Apply(new EntityUpdateEvent(
+                    source.SkillQueue.EnqueueSkill(message.Skill, target),
+                    "Enqueuing Skill " + message.Skill));
+            else if (esr.LeadTime <= 0)                 // process it now
+                world.UseSkillNow(source, esr, target);
+            else                                        // process it later, after lead-time has elapsed
+                world.Apply(new EntityUpdateEvent(
+                    source.StartSkill(message.Skill, target, Global.Now, TimeSpan.FromSeconds(esr.LeadTime)),
+                    "Activating Skill " + message.Skill));
         }
 
-        public static void ProcessCancelSkill(World world, ClientConnection client, CancelSkill message)
+        public static void ProcessCancelSkill(this World world, ClientConnection client, CancelSkill message)
         {
-            var avatar = client.Avatar as Avatar;
+            var avatar = client.Avatar as CombatantModel;
             if (avatar == null)
             {
                 client.LogMessage("Canceled a skill invocation, but don't have an avatar.");
@@ -62,15 +80,18 @@ namespace Strive.Server.Logic
 
             // If already performing invocation, just cancel it
             bool found = false;
-            if (avatar.ActivatingSkill != null && avatar.ActivatingSkill.InvokationId == message.InvokationId)
+            if (avatar.ActivatingSkill != null)
+            // TODO:
+            //&& avatar.ActivatingSkill.InvokationId == message.InvokationId)
             {
-                avatar.ActivatingSkill = null;
+                world.Add(avatar.StartSkill(EnumSkill.None, null, Global.Now, TimeSpan.FromSeconds(0)));
                 found = true;
             }
             else
             {
-                // search for it in queued skill invocations
+                // TODO: search for it in queued skill invocations
                 // just generate a new queue with the invocation missing
+                /*
                 var newQueue = new Queue<UseSkill>();
                 foreach (UseSkill m in avatar.SkillQueue)
                 {
@@ -83,6 +104,8 @@ namespace Strive.Server.Logic
                         newQueue.Enqueue(m);
                 }
                 avatar.SkillQueue = newQueue;
+                 */
+                avatar.EmptyQueue();
             }
             if (found)
                 client.LogMessage("Successfully canceled invocation " + message.InvokationId);
@@ -90,141 +113,222 @@ namespace Strive.Server.Logic
                 client.LogMessage("Failed to cancel invocation " + message.InvokationId);
         }
 
-        public static void UseSkillNow(World world, Avatar caster, UseSkill message)
+        public static void UseSkillNow(this World world, CombatantModel source, Schema.EnumSkillRow skill, EntityModel target)
         {
-            Schema.EnumSkillRow esr = Global.Schema.EnumSkill.FindByEnumSkillID((int)message.SkillId);
-            if (esr == null)
+            if (source.MobileState == EnumMobileState.Dead || source.MobileState == EnumMobileState.Incapacitated)
             {
-                caster.SendLog("Requested an invalid skill " + message.SkillId);
+                source.LogMessage("Unable to use " + skill.EnumSkillName + " while " + source.MobileState);
                 return;
             }
 
-            if (esr.EnergyCost > caster.Energy)
-            {
-                caster.SendLog("Not enough energy to use " + esr.EnumSkillName + ", require " + esr.EnergyCost + ".");
-                return;
-            }
-
-            // TODO: make this work
-            /*
-            if ( esr.EnumMobileState > caster.MobileState ) {
+            /* TODO: skill specific states
+            if ( skill.EnumMobileState > caster.MobileState ) {
                 caster.SendLog( "Not while " + caster.MobileState.Name );
             }
-            */
+             */
 
-            Avatar target;
-            switch ((EnumTargetType)esr.EnumTargetTypeID)
+            if ((source.Position - target.Position).Length > skill.Range)
             {
-                case EnumTargetType.TargetSelf:
-                    target = caster;
-                    break;
-                case EnumTargetType.TargetMobile:
-                    if (message.TargetPhysicalObjectIDs.Length == 0)
-                    {
-                        caster.SendLog("No target specified, this skill may only be used on Mobiles.");
-                        return;
-                    }
-                    target = (Avatar)world.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
-                    if (target == null)
-                    {
-                        caster.SendLog("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
-                        return;
-                    }
-                    if ((caster.Position - target.Position).Length > esr.Range)
-                    {
-                        // target is out of range
-                        caster.SendLog(target.Name + " is out of range");
-                        return;
-                    }
-                    break;
-                default:
-                    caster.SendLog("That skill does not work yet, contact admin.");
-                    Log.Error("Unhandled target type " + esr.EnumTargetTypeID + " for skill " + esr.EnumSkillID);
-                    return;
+                source.LogMessage(target.Name + " is out of range");
+                return;
             }
 
-            TargetSkill(world, caster, esr, target);
-        }
-
-        public static void TargetSkill(World world, Avatar source, Schema.EnumSkillRow esr, Avatar target)
-        {
-            var skill = (EnumSkill)esr.EnumSkillID;
-            // test adeptness
-            float competancy = GetCompetancy(source, skill);
-            double roll = Global.Rand.NextDouble();
-            bool succeeds = competancy < roll * 100;
-
+            if (skill.EnergyCost > source.Energy)
+            {
+                source.LogMessage("Not enough energy to use " + skill.EnumSkillName + ", requires " + skill.EnergyCost);
+                return;
+            }
+            
             // deduct energy regardless
-            source = (Avatar)source.WithEnergyChange(-esr.EnergyCost);
+            // TODO: can remove the explicit cast here by using generics
+            source = (CombatantModel)source.WithEnergyChange(-skill.EnergyCost);
+
+            bool succeeds = source.Succeeds(skill);
+
+            bool hits = source.Hits(target, skill);
+
+            bool avoids = target.Avoids(source, skill);
 
             // successful casting affects affinity with the elements
-            if (succeeds)
+            if (succeeds && hits && !avoids)
             {
                 // TODO: can remove the explicit cast here by using generics
-                source = (Avatar)source.WithAffinityChange(
-                    esr.AirAffinity / 1000f,
-                    esr.EarthAffinity / 1000f,
-                    esr.FireAffinity / 1000f,
-                    esr.LifeAffinity / 1000f,
-                    esr.WaterAffinity / 1000f);
+                source = (CombatantModel)source.WithAffinityChange(
+                    skill.AirAffinity / 1000f,
+                    skill.EarthAffinity / 1000f,
+                    skill.FireAffinity / 1000f,
+                    skill.LifeAffinity / 1000f,
+                    skill.WaterAffinity / 1000f);
 
-                switch ((EnumActivationType)esr.EnumActivationTypeID)
+                // TODO: just get the damage number instead??
+
+                switch ((EnumActivationType)skill.EnumActivationTypeID)
                 {
                     case EnumActivationType.AttackSpell:
-                        float damage = esr.EnergyCost;
-                        damage += esr.AirAffinity * source.Affinity.Air / target.Affinity.Air;
-                        damage += esr.EarthAffinity * source.Affinity.Earth / target.Affinity.Earth;
-                        damage += esr.FireAffinity * source.Affinity.Fire / target.Affinity.Fire;
-                        damage += esr.LifeAffinity * source.Affinity.Life / target.Affinity.Life;
-                        damage += esr.WaterAffinity * source.Affinity.Water / target.Affinity.Water;
-                        source.MagicalAttack(target, damage, skill);
-                        Log.Info("Attack spell cast!");
+                        target = target.MagicallyDamagedBy(source, skill);
                         break;
                     case EnumActivationType.Enchantment:
+                        target = target.EnchantedBy(source, skill);
                         break;
                     case EnumActivationType.Glamour:
+                        source.Activates(skill, target);
                         break;
                     case EnumActivationType.HealingSpell:
+                        target = target.HealedBy(source, skill);
                         break;
                     case EnumActivationType.Skill:
-                        if (esr.EnumSkillID == (int)EnumSkill.Kill)
-                            DoKill(source, target);
-                        else if (esr.EnumSkillID == (int)EnumSkill.Kick)
-                            DoKick(source, target);
-                        else
-                            Log.Error("Unhandled SkillID " + esr.EnumSkillID);
+                        target = target.DamagedBy(source, skill);
+                        target = target.AffectedBy(source, skill);
+                        source.Activates(skill, target);
                         break;
                     case EnumActivationType.Sorcery:
                         break;
                     default:
-                        source.SendLog("That skill does not work yet, contact admin.");
-                        Log.Error("Unhandled activation type " + esr.EnumActivationTypeID + " for skill " + esr.EnumSkillID);
+                        source.LogMessage("That skill does not work yet, contact admin.");
+                        Log.Error("Unhandled activation type " + (EnumActivationType)skill.EnumActivationTypeID + " for skill " + skill.EnumSkillName);
                         break;
                 }
             }
-            world.Apply(new SkillEvent(source, EnumSkill.Kick, target.WithHealthChange(-20), succeeds, "Ninja Kick"));
+
+            source = source.FinishSkill();
+            string description = avoids ? "Avoided" : !hits ? "Missed" : !succeeds ? "Failed" : "Success";
+            world.Apply(new SkillEvent(source, (EnumSkill)skill.EnumSkillID, target, succeeds, hits, avoids, description));
         }
 
-        public static float GetCompetancy(CombatantModel combatant, EnumSkill skill)
+        public static bool Avoids(this EntityModel target, CombatantModel source, Schema.EnumSkillRow skill)
+        {
+            var opponent = target as CombatantModel;
+            if (opponent == null || opponent != source)
+                return false;
+            else if ((EnumActivationType)skill.EnumActivationTypeID == EnumActivationType.Skill)
+                // physical attack: ratio of Dexterity
+                // 20% chance for equal dexterity player to avoid
+                return (source.Dexterity == 0 || Global.Rand.Next(100) <= opponent.Dexterity / source.Dexterity * 20);
+            else
+                // magical attack: Dexterity
+                return (Global.Rand.Next(100) <= opponent.Dexterity);
+        }
+
+        public static bool Succeeds(this CombatantModel source, Schema.EnumSkillRow skill)
+        {
+            return GetCompetancy(source, skill) < Global.Rand.Next(100);
+        }
+
+        public static bool Hits(this CombatantModel source, EntityModel target, Schema.EnumSkillRow skill)
+        {
+            // TODO: use actual hitroll
+            int hitroll = 80;
+
+            // %20 chance to miss for weapon with 100 hit-roll
+            return (Global.Rand.Next(hitroll) >= 20);
+        }
+
+        public static EntityModel MagicallyDamagedBy(this EntityModel target, CombatantModel source, Schema.EnumSkillRow skill)
+        {
+            float damage = skill.EnergyCost * 2;
+            damage += Math.Max(skill.AirAffinity * source.Affinity.Air / target.Affinity.Air, 0);
+            damage += Math.Max(skill.EarthAffinity * source.Affinity.Earth / target.Affinity.Earth, 0);
+            damage += Math.Max(skill.FireAffinity * source.Affinity.Fire / target.Affinity.Fire, 0);
+            damage += Math.Max(skill.LifeAffinity * source.Affinity.Life / target.Affinity.Life, 0);
+            damage += Math.Max(skill.WaterAffinity * source.Affinity.Water / target.Affinity.Water, 0);
+
+            var opponent = target as CombatantModel;
+            if (opponent != null)
+                damage *= source.Cognition / opponent.Willpower;
+
+            return target.WithHealthChange(-damage);
+        }
+
+        public static EntityModel DamagedBy(this EntityModel target, CombatantModel source, Schema.EnumSkillRow skill)
+        {
+            // TODO: use actual damage and hitroll
+            float damage = skill.EnergyCost * 2;
+            int hitroll = 80;
+
+            // hit armor, or bypass armor
+            // TODO: use armor rating
+            if (Global.Rand.Next(hitroll) < 50)
+                damage -= 8; // opponent.ArmorRating
+            if (damage < 0)
+                damage = 0;
+
+            var opponent = target as CombatantModel;
+            if (opponent != null)
+                damage *= source.Strength / opponent.Constitution;
+
+            target = target.WithHealthChange(-damage);
+
+            if (target.MobileState != EnumMobileState.Dead
+                && target.MobileState != EnumMobileState.Incapacitated
+                && target.MobileState != EnumMobileState.Fighting)
+            {
+                target = target.WithState(EnumMobileState.Fighting);
+                if (opponent != null && opponent.Target == null)
+                    target = opponent.WithTarget(source);
+            }
+
+            return target;
+        }
+
+        public static EntityModel HealedBy(this EntityModel target, EntityModel source, Schema.EnumSkillRow skill)
+        {
+            return target.WithHealthChange(skill.EnergyCost * 2);
+        }
+
+        public static EntityModel AffectedBy(this EntityModel target, EntityModel source, Schema.EnumSkillRow skill)
+        {
+            // TODO: add affects
+            return target;
+        }
+
+        public static EntityModel EnchantedBy(this EntityModel target, EntityModel source, Schema.EnumSkillRow skill)
+        {
+            // TODO: add enchantments
+            return target;
+        }
+
+        public static double GetCompetancy(CombatantModel combatant, Schema.EnumSkillRow skill)
         {
             Schema.MobileHasSkillRow mhs = Global.Schema.MobileHasSkill.FindByTemplateObjectIDEnumSkillID(
                 // TODO: do we even want templates?
                 //TemplateObjectId,
                 combatant.Id,
-                (int)skill);
+                skill.EnumSkillID);
             if (mhs != null)
-                return (float)mhs.Rating;
+                return mhs.Rating;
             return 0;
         }
 
-        public static void DoKill(Avatar caster, EntityModel target)
+        public static void Activates(this CombatantModel source, Schema.EnumSkillRow skill, EntityModel target)
         {
-            caster.Attack(target);
+
+            switch ((EnumSkill)skill.EnumSkillID)
+            {
+                case EnumSkill.Kill:
+                    DoKill(source, target);
+                    break;
+                case EnumSkill.Kick:
+                    DoKick(source, target);
+                    break;
+                default:
+                    Log.Error("Unhandled Skill " + skill.EnumSkillName + ", SkillID " + skill.EnumSkillID);
+                    break;
+            }
         }
 
-        public static void DoKick(Avatar caster, EntityModel target)
+        public static CombatantModel FinishSkill(this CombatantModel source)
         {
-            caster.Kick(target);
+            return source.StartSkill(EnumSkill.None, null, Global.Now, TimeSpan.MinValue);
+        }
+
+        public static void DoKill(CombatantModel source, EntityModel target)
+        {
+            //source.Attack(target);
+        }
+
+        public static void DoKick(CombatantModel source, EntityModel target)
+        {
+            //source.Kick(target);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using Strive.Model;
 using Strive.Network.Messages;
 using Strive.Network.Messages.ToClient;
 
@@ -8,14 +9,13 @@ namespace Strive.Network.Messaging
 {
     public class ClientConnection : Connection
     {
-        public int PlayerId;
-
         public int Latency;
         public DateTime PingedAt;
         public int PingSequence = -1;
 
         public string AuthenticatedUsername { get; set; }
         public bool Authenticated { get { return AuthenticatedUsername != null; } }
+        public string Party { get; set; }
 
         public override bool Send(object message)
         {
@@ -33,7 +33,7 @@ namespace Strive.Network.Messaging
             AuthenticatedUsername = null;
         }
 
-        public object Avatar { get; set; }
+        public EntityModel Avatar { get; set; }
         public DateTime LastMessageTimestamp { get; set; }
 
         public EndPoint RemoteEndPoint

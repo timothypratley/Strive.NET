@@ -97,8 +97,8 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerQueryParty, typeof(ToServer.QueryParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestWhoList, typeof(ToServer.RequestWhoList));
             MessageTypeFromId.Add(EnumMessageId.ToServerPossess, typeof(ToServer.PossessMobile));
-            MessageTypeFromId.Add(EnumMessageId.ToServerCreateEntity, typeof(EntityModel));
-            MessageTypeFromId.Add(EnumMessageId.ToServerCreateTask, typeof(TaskModel));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCreateEntity, typeof(ToServer.CreateEntity));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCreateTask, typeof(ToServer.CreateTask));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogin, typeof(ToServer.Login));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogout, typeof(ToServer.Logout));
             MessageTypeFromId.Add(EnumMessageId.ToServerReloadWorld, typeof(ToServer.ReloadWorld));

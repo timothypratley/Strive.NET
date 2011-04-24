@@ -160,7 +160,7 @@
     <Compile Include="MessageProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Avatar.cs">
+    <Compile Include="AvatarExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Party.cs">

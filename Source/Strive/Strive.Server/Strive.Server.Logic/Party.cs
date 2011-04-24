@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Strive.Network.Messages;
+using Strive.Model;
 
 namespace Strive.Server.Logic
 {
     public class Party
     {
-        readonly Dictionary<int, Avatar> _members = new Dictionary<int, Avatar>();
+        readonly Dictionary<int, CombatantModel> _members = new Dictionary<int, CombatantModel>();
 
-        public Party(string name, Avatar leader)
+        public Party(string name, CombatantModel leader)
         {
             Contract.Requires<ArgumentNullException>(leader != null);
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(name));
@@ -19,9 +20,9 @@ namespace Strive.Server.Logic
             Leader = leader;
         }
 
-        public void Add(Avatar m)
+        public void Add(CombatantModel member)
         {
-            _members.Add(m.Id, m);
+            _members.Add(member.Id, member);
         }
 
         public void Remove(int objectInstanceId)
@@ -35,12 +36,12 @@ namespace Strive.Server.Logic
             //_members.Values.OrderBy(ma => ma.Level).FirstOrDefault();
         }
 
-        public IEnumerable<Avatar> GetMembers()
+        public IEnumerable<CombatantModel> GetMembers()
         {
             return _members.Values;
         }
 
-        public Avatar Leader { get; set; }
+        public CombatantModel Leader { get; set; }
 
         public string Name { get; private set; }
 
@@ -59,9 +60,10 @@ namespace Strive.Server.Logic
 
         public void SendPartyTalk(string sender, string message)
         {
-            foreach (Avatar ma in _members.Values)
+            foreach (var ma in _members.Values)
             {
-                ma.Client.Send(new Network.Messages.ToClient.Communication(sender, message, CommunicationType.PartyTalk));
+                // TODO: lookup the client
+                //ma.Client.Send(new Network.Messages.ToClient.Communication(sender, message, CommunicationType.PartyTalk));
             }
         }
     }

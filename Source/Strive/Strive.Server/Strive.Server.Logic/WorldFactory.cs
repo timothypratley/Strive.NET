@@ -4,13 +4,14 @@ using System.Linq;
 using Strive.Common;
 using Strive.Model;
 using Strive.Server.DB;
+using System.Windows.Media.Media3D;
 
 
 namespace Strive.Server.Logic
 {
     public partial class World
     {
-        public bool UserLookup(string email, string password, ref int playerId)
+        public bool UserLookup(string email, string password)
         {
             // TODO: have disabled password checking for testing purposes
             return !string.IsNullOrEmpty(email);
@@ -33,7 +34,7 @@ namespace Strive.Server.Logic
              */
         }
 
-        public Avatar LoadMobile(int instanceId)
+        public CombatantModel LoadMobile(int instanceId)
         {
             Schema.ObjectInstanceRow instance = Global.Schema.ObjectInstance.FindByObjectInstanceID(instanceId);
             if (instance == null)
@@ -44,7 +45,12 @@ namespace Strive.Server.Logic
             Schema.TemplateMobileRow mobile = Global.Schema.TemplateMobile.FindByTemplateObjectID(instance.TemplateObjectID);
             if (mobile == null)
                 return null;
-            return new Avatar(this, instance, template, mobile);
+            return new CombatantModel(instance.ObjectInstanceID, template.TemplateObjectName, template.TemplateObjectName,
+                new Vector3D(instance.X, instance.Y, instance.Z),
+                new Quaternion(instance.RotationX, instance.RotationY, instance.RotationZ, instance.RotationW),
+                (float)instance.HealthCurrent, (float)instance.EnergyCurrent,
+                (EnumMobileState)mobile.EnumMobileStateID, template.Height,
+                mobile.Constitution, mobile.Dexterity, mobile.Willpower, mobile.Cognition, mobile.Strength);
         }
 
         public void CreateDefaultWorld()
@@ -60,7 +66,7 @@ namespace Strive.Server.Logic
         public void Load()
         {
             PhysicalObjects = new Dictionary<int, EntityModel>();
-            Mobiles = new List<Avatar>();
+            Mobiles = new List<CombatantModel>();
 
             // TODO: would be nice to be able to load only the world in question... but for now load them all
             if (Global.WorldFilename != null)
