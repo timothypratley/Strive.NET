@@ -15,7 +15,6 @@ namespace Strive.Network.Messaging
 
         public string AuthenticatedUsername { get; set; }
         public bool Authenticated { get { return AuthenticatedUsername != null; } }
-        public string Party { get; set; }
 
         public override bool Send(object message)
         {
@@ -66,6 +65,11 @@ namespace Strive.Network.Messaging
         public bool DropAll()
         {
             return Send(new DropAll());
+        }
+
+        public bool Drop(EntityModel e)
+        {
+            return Send(new DropPhysical(e));
         }
 
         public bool WhoList(Tuple<int, string>[] mobiles)

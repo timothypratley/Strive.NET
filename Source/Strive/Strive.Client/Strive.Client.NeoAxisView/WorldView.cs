@@ -21,7 +21,7 @@ namespace Strive.Client.NeoAxisView
 
         public static void UpdateFromWorldModel()
         {
-            var m = WorldViewModel.WorldModel.Current.Entity;
+            var m = WorldViewModel.History.Current.Entity;
 
             // Add or update all entities in the current scene
             foreach (var kvp in m)

@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataModelTests.cs" />
+    <Compile Include="ModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Strive.Common\Strive.Common.csproj">

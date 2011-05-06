@@ -14,74 +14,9 @@ namespace Strive.Network.Messaging
 {
     public class ServerConnection : Connection
     {
-        public History WorldModel { get; private set; }
-        public TraceListenerCollection ChatListeners;
-
         public ServerConnection()
         {
-            WorldModel = new History();
-            MessageRecieved += ConnectionMessageRecieved;
-
-            // I wish there were a public constructor for TraceListenerCollection, but there is not
-            ConstructorInfo constructor = typeof(TraceListenerCollection).GetConstructor(
-                BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { }, null);
-            ChatListeners = (TraceListenerCollection)constructor.Invoke(new object[0] { });
         }
-
-        #region message handling
-
-        void ConnectionMessageRecieved(object sender, EventArgs e)
-        {
-            dynamic m = PopNextMessage();
-            Log.Trace("Processing " + m.GetType() + " message: " + m);
-            try
-            {
-                Process(m);
-            }
-            catch (RuntimeBinderException)
-            {
-                Log.Error("Received unknown message type " + m);
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Failed to process message " + m, ex);
-            }
-        }
-
-        void Process(TimeAndWeather m)
-        {
-            Log.Info("Received Time and Weather " + m.ServerNow);
-        }
-
-        void Process(EntityModel m)
-        {
-            WorldModel.Add(m);
-        }
-
-        void Process(TaskModel m)
-        {
-            WorldModel.Add(m);
-        }
-
-        void Process(PositionUpdate m)
-        {
-            WorldModel.Move(m.Id, m.Position, m.Rotation);
-        }
-
-        void Process(MobileState m)
-        {
-            //EntityModel e = WorldModel.Get(m.ObjectInstanceId.ToString());
-            //WorldModel.Set(new EntityModel(e.Name, e.ModelId, m.Position, m.Rotation, m.State));
-        }
-
-        void Process(Communication m)
-        {
-            foreach (TraceListener listener in ChatListeners)
-                listener.WriteLine("[" + m.CommunicationType + "] " + m.Name + ": " + m.Message);
-        }
-
-        #endregion
-
 
         #region message sending
 

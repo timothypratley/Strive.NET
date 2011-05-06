@@ -10,7 +10,7 @@ namespace Strive.Server.DB
         public string TemplateObjectName = "";
         public int ResourceId;
         public float Height;
-        public Vector3D Position = new Vector3D(0, 0, 0);
+        public Vector3D Position = new Vector3D();
         public Quaternion Rotation = Quaternion.Identity;
         public int MaxHealth = 1;
         public int MaxEnergy = 1;

@@ -20,16 +20,10 @@ namespace Strive.Server.Logic
                 client.LogMessage(message);
         }
 
-        public static void SendPartyTalk(this EntityModel entity, string message)
-        {
-            // TODO: implement party lookup
-            //Party.SendPartyTalk(entity.Name, message);
-        }
-
-        public static void Updatee(this World world, CombatantModel c)
+        public static void UpdateCombatant(this World world, CombatantModel c)
         {
             // check for activating skills
-            if (c.ActivatingSkill != null
+            if (c.ActivatingSkill != EnumSkill.None
                 && c.ActivatingSkillTimestamp + c.ActivatingSkillLeadTime <= Global.Now)
                 world.UseSkillNow(
                     c,
@@ -37,15 +31,16 @@ namespace Strive.Server.Logic
                     Global.Schema.EnumSkill.FindByEnumSkillID((int)c.ActivatingSkill),
                     c.Target);
 
+            // TODO:
             // check for queued skills
-            else if (c.SkillQueue.Count > 0)
-                c.ActivatingSkill = c.SkillQueue.Dequeue();
+            //else if (c.SkillQueue.Length > 0)
+            //c.ActivatingSkill = c.SkillQueue.Head;
 
             if (c.Target != null)
                 world.CheckAttack(c);
             // TODO: enable behavior updates
             //else if (listener.Client[c] == null)
-                //c = world.BehaviourUpdate(c);
+            //c = world.BehaviourUpdate(c);
             else if (Global.Now - c.LastMoveUpdate > TimeSpan.FromSeconds(1)
                 && (c.MobileState == EnumMobileState.Running
                 || c.MobileState == EnumMobileState.Walking))
@@ -115,7 +110,7 @@ namespace Strive.Server.Logic
             }
             if (rotation != combatant.Rotation || position != combatant.Position || mobileState != combatant.MobileState)
                 world.Apply(new EntityUpdateEvent(
-                    combatant.Move(position, rotation).WithState(mobileState),
+                    combatant.Move(mobileState, position, rotation, Global.Now),
                     "AI"));
         }
 

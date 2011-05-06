@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using Strive.Model;
 using Strive.Network.Messaging;
 using UpdateControls.XAML;
-using Strive.Model;
 
 
 namespace Strive.Client.ViewModel
 {
     public class WorldViewModel
     {
-        public InputBindings Bindings { get; private set; }
-        public History WorldModel { get { return ServerConnection.WorldModel; } }
-        public WorldNavigation Navigation { get; private set; }
         public ServerConnection ServerConnection { get; private set; }
+        public History History { get; private set; }
+        public WorldNavigation WorldNavigation { get; private set; }
+        public InputBindings InputBindings { get; private set; }
 
-        public WorldViewModel(ServerConnection connection)
+        public WorldViewModel(ServerConnection connection, History history, WorldNavigation worldNavigation, InputBindings inputBindings)
         {
             ServerConnection = connection;
-            Bindings = new InputBindings();
-            Navigation = new WorldNavigation();
+            History = history;
+            WorldNavigation = worldNavigation;
+            InputBindings = inputBindings;
         }
 
         public ICommand FollowSelected
@@ -27,7 +28,7 @@ namespace Strive.Client.ViewModel
             get
             {
                 return MakeCommand
-                    .When(() => Navigation.SelectedEntities.Any() && CurrentPerspective != null)
+                    .When(() => WorldNavigation.SelectedEntities.Any() && CurrentPerspective != null)
                     .Do(() => CurrentPerspective.FollowSelected.Execute(null));
             }
         }
@@ -46,58 +47,58 @@ namespace Strive.Client.ViewModel
 
         public IEnumerable<EntityViewModel> Entities
         {
-            get { return WorldModel.Entities.Select(em => new EntityViewModel(em, Navigation)); }
+            get { return History.Entities.Select(em => new EntityViewModel(em, WorldNavigation)); }
         }
 
         public int CurrentVersion
         {
-            get { return WorldModel.CurrentVersion; }
-            set { WorldModel.CurrentVersion = value; }
+            get { return History.CurrentVersion; }
+            set { History.CurrentVersion = value; }
         }
-        public int MaxVersion { get { return WorldModel.MaxVersion; } }
+        public int MaxVersion { get { return History.MaxVersion; } }
 
         public void ClearMouseOverEntity()
         {
-            Navigation.MouseOverEntity = null;
+            WorldNavigation.MouseOverEntity = null;
         }
 
         public void SetMouseOverEntity(int id)
         {
-            Navigation.MouseOverEntity = WorldModel.GetEntity(id);
+            WorldNavigation.MouseOverEntity = History.GetEntity(id);
         }
 
         public void SelectAdd(int id)
         {
-            var entity = WorldModel.GetEntity(id);
+            var entity = History.GetEntity(id);
             if (entity != null)
-                Navigation.AddSelectedEntity(entity);
+                WorldNavigation.AddSelectedEntity(entity);
         }
 
         public void Select(int id)
         {
-            var entity = WorldModel.GetEntity(id);
+            var entity = History.GetEntity(id);
             if (entity != null)
-                Navigation.SetSelectedEntity(entity);
+                WorldNavigation.SetSelectedEntity(entity);
         }
 
         public IEnumerable<EntityViewModel> SelectedEntities
         {
             get
             {
-                return Navigation.SelectedEntities
-                    .Select(em => new EntityViewModel(em, Navigation));
+                return WorldNavigation.SelectedEntities
+                    .Select(em => new EntityViewModel(em, WorldNavigation));
             }
         }
 
         // TODO: can XAML just use the MouseOverEntity instead?
-        public bool IsMouseOverEntity { get { return Navigation.MouseOverEntity != null; } }
+        public bool IsMouseOverEntity { get { return WorldNavigation.MouseOverEntity != null; } }
 
         public EntityViewModel MouseOverEntity
         {
             get
             {
-                return Navigation.MouseOverEntity == null ? null
-                    : new EntityViewModel(Navigation.MouseOverEntity, Navigation);
+                return WorldNavigation.MouseOverEntity == null ? null
+                    : new EntityViewModel(WorldNavigation.MouseOverEntity, WorldNavigation);
             }
         }
     }

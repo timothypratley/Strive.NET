@@ -1,16 +1,17 @@
 using System;
-using System.Net;
+using System.Diagnostics.Contracts;
 
 namespace Strive.Common
 {
-   public class Constants
+    public class Constants
     {
         public const int DefaultPort = 8888;
 
-        public const int TerrainPieceSize = 10;
+        public const int ChunkSize = 80;
+        public const int Horizon = 2;
+
         public const int TerrainHeightsPerChunk = 8;
-        public const int WorldBuilderTerrainPieceSize = 75;
-        public const int WorldBuilderTerrainSquareSize = 10;
+        public const int TerrainPieceSize = ChunkSize / TerrainHeightsPerChunk;
         public const int TerrainPieceTextureWidth = 32;
 
         // TODO: these should be settable per client
@@ -28,6 +29,9 @@ namespace Strive.Common
 
         static Constants()
         {
+            Contract.Assert(ChunkSize % TerrainPieceSize == 0,
+                "ChunkSize must be divisible by TerrainPieceSize");
+
             // set up terrain radius values
             int k;
             for (k = 0; k < TerrainZoomOrder; k++)

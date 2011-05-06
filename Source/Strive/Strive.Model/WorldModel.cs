@@ -1,7 +1,10 @@
 ﻿using System;
-using System.Linq;
-using Microsoft.FSharp.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Windows.Media.Media3D;
+using Microsoft.FSharp.Collections;
+using Strive.Common;
 
 
 namespace Strive.Model
@@ -14,7 +17,8 @@ namespace Strive.Model
             FSharpMap<int, PlanModel> plan,
             FSharpMap<int, FSharpSet<int>> holding,
             FSharpMap<int, FSharpSet<int>> doing,
-            FSharpMap<int, FSharpSet<int>> requires)
+            FSharpMap<int, FSharpSet<int>> requires,
+            FSharpMap<int, FSharpSet<EntityModel>> entityCube)
         {
             Entity = entity;
             Task = task;
@@ -23,6 +27,8 @@ namespace Strive.Model
             Holding = holding;
             Doing = doing;
             Requires = requires;
+
+            EntityCube = entityCube;
         }
 
         public static WorldModel Empty
@@ -35,7 +41,8 @@ namespace Strive.Model
                     MapModule.Empty<int, PlanModel>(),
                     MapModule.Empty<int, FSharpSet<int>>(),
                     MapModule.Empty<int, FSharpSet<int>>(),
-                    MapModule.Empty<int, FSharpSet<int>>());
+                    MapModule.Empty<int, FSharpSet<int>>(),
+                    MapModule.Empty<int, FSharpSet<EntityModel>>());
             }
         }
 
@@ -49,19 +56,89 @@ namespace Strive.Model
         public FSharpMap<int, FSharpSet<int>> Doing { get; private set; }
         public FSharpMap<int, FSharpSet<int>> Requires { get; private set; }
 
+        // Indexes
+        public FSharpMap<int, FSharpSet<EntityModel>> EntityCube { get; private set; }
+
+        /// <summary>
+        /// Using a simple hashing because Vector3D is not comparable,
+        /// hence not suitable as a key to an FSharpMap.
+        /// Instead we generate a unique integer based upon the position.
+        /// </summary>
+        /// <param name="entity">The entity whose position will be used to calculate a cube key.</param>
+        /// <returns>A cube key which can be used to lookup the set of Entities in that cube.</returns>
+        public static int GetCubeKey(Vector3D position)
+        {
+            return
+                (int)Math.Floor(position.X / Constants.ChunkSize)
+                + ((int)Math.Floor(position.Y / Constants.ChunkSize) << 8)
+                + ((int)Math.Floor(position.Z / Constants.ChunkSize) << 16);
+        }
+
+        public static IEnumerable<int> GetNearbyCubeKeys(Vector3D position)
+        {
+            var key = GetCubeKey(position);
+            var range = Enumerable.Range(-Constants.Horizon, Constants.Horizon * 2 + 1);
+            return (from x in range
+                    from y in range
+                    from z in range
+                    select key + x + (y << 8) + (z << 16));
+        }
+
+        /// <summary>
+        /// Find nearby Entities by position
+        /// </summary>
+        public FSharpSet<EntityModel> GetCube(Vector3D position)
+        {
+            var r = EntityCube.TryFind(GetCubeKey(position));
+            if (r != null)
+                return r.Value;
+            return null;
+        }
+
+        public IEnumerable<EntityModel> GetNearby(Vector3D position)
+        {
+            var key = GetCubeKey(position);
+            var range = Enumerable.Range(-Constants.Horizon, Constants.Horizon * 2 + 1);
+            return (from x in range
+                    from y in range
+                    from z in range
+                    select EntityCube.TryFind(key + x + (y << 8) + (z << 16)))
+                    .Where(o => o != null)
+                    .SelectMany(o => o.Value);
+        }
+
         public WorldModel Add(EntityModel entity)
         {
-            return new WorldModel(Entity.Add(entity.Id, entity), Task, Plan, Holding, Doing, Requires);
+            var newCube = GetCubeKey(entity.Position);
+            var option = EntityCube.TryFind(newCube);
+            var newSet = (option == null ? SetModule.Empty<EntityModel>() : option.Value)
+                .Add(entity);
+
+            var newEntityCube = EntityCube;
+
+            var old = Entity.TryFind(entity.Id);
+            if (old != null)
+            {
+                var oldCube = GetCubeKey(old.Value.Position);
+                newEntityCube = EntityCube.Add(oldCube, EntityCube[oldCube].Remove(old.Value));
+            }
+
+            newEntityCube = newEntityCube.Add(newCube, newSet);
+
+            return new WorldModel(
+                Entity.Add(entity.Id, entity),
+                Task, Plan, Holding, Doing, Requires,
+                newEntityCube);
         }
 
         public WorldModel Add(TaskModel task)
         {
-            return new WorldModel(Entity, Task.Add(task.Id, task), Plan, Holding, Doing, Requires);
+            return new WorldModel(Entity, Task.Add(task.Id, task), Plan, Holding, Doing, Requires, EntityCube);
         }
 
         public WorldModel Add(PlanModel plan)
         {
-            return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Holding, Doing, Requires);
+            return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Holding, Doing, Requires, EntityCube);
         }
 
         public WorldModel Add(AModel m)
@@ -71,11 +148,11 @@ namespace Strive.Model
 
         public WorldModel Put(FSharpSet<int> entities, int on)
         {
-            return new WorldModel(Entity, Task, Plan, Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, Requires);
+            return new WorldModel(Entity, Task, Plan, Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, Requires, EntityCube);
         }
 
         [ContractInvariantMethod]
-        protected void ObjectInvariant()
+        private void ObjectInvariant()
         {
             Contract.Invariant(
                 Holding.All(
@@ -91,6 +168,8 @@ namespace Strive.Model
                 Requires.All(
                     x => Plan.ContainsKey(x.Key)
                         && x.Value.All(y => Task.ContainsKey(y))));
+
+            Contract.Invariant(EntityCube.Sum(x => x.Value.Count) == Entity.Count);
         }
     }
 }

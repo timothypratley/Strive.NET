@@ -137,7 +137,6 @@
     </Compile>
     <Compile Include="Connection.cs" />
     <Compile Include="CustomFormatter.cs" />
-    <Compile Include="IListener.cs" />
     <Compile Include="Listener.cs">
       <SubType>Code</SubType>
     </Compile>

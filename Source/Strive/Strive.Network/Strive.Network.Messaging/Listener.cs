@@ -10,7 +10,7 @@ namespace Strive.Network.Messaging
 {
     public class Listener
     {
-        public List<ClientConnection> Clients { get; private set; }
+        public HashSet<ClientConnection> Clients { get; private set; }
         Socket _tcpSocket;
         readonly IPEndPoint _localEndPoint;
         readonly ILog _log = LogManager.GetCurrentClassLogger();
@@ -18,7 +18,7 @@ namespace Strive.Network.Messaging
         public Listener(IPEndPoint localEndPoint)
         {
             _localEndPoint = localEndPoint;
-            Clients = new List<ClientConnection>();
+            Clients = new HashSet<ClientConnection>();
         }
 
         public void Start()
@@ -111,15 +111,6 @@ namespace Strive.Network.Messaging
             catch (ObjectDisposedException)
             {
                 // the underlying socket was closed
-            }
-        }
-
-        public void SendToAll(object message)
-        {
-            lock (this)
-            {
-                foreach (ClientConnection c in Clients.Where(c => c.Authenticated))
-                    c.Send(message);
             }
         }
     }

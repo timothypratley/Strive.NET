@@ -13,17 +13,16 @@ namespace Strive.Server.WindowsService
         /// </summary>
         private System.ComponentModel.Container components = null;
 
-        Engine striveEngine = new Engine(
-            new MessageProcessor(
-                new World(Global.WorldId),
-                new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort))));
+        Engine striveEngine;
 
         public StriveService()
         {
             // This call is required by the Windows.Forms Component Designer.
             InitializeComponent();
 
-            // TODO: Add any initialization after the InitComponent call
+            Listener listener = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort));
+            striveEngine = new Engine(
+                new MessageProcessor(new World(listener, Global.WorldId), listener));
         }
 
         // The main entry point for the process

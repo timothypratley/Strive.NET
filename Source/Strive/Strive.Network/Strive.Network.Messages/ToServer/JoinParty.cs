@@ -3,11 +3,11 @@ namespace Strive.Network.Messages.ToServer
 {
     public class JoinParty
     {
-        public int LeaderId;	// this is so the client can cancel specific invocations
+        public string Leader;	// this is so the client can cancel specific invocations
 
-        public JoinParty(int leaderId)
+        public JoinParty(string leader)
         {
-            LeaderId = leaderId; // party leader
+            Leader = leader; // party leader
         }
     }
 }

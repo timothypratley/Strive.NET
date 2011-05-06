@@ -45,7 +45,7 @@ namespace Strive.Client.ViewModel
             get
             {
                 return _followEntities.Entities
-                    .Select(em => new EntityViewModel(em, WorldViewModel.Navigation));
+                    .Select(em => new EntityViewModel(em, WorldViewModel.WorldNavigation));
             }
         }
 
@@ -102,10 +102,10 @@ namespace Strive.Client.ViewModel
                 return MakeCommand
                     .Do(() =>
                     {
-                        var target = WorldViewModel.Navigation.MouseOverEntity;
+                        var target = WorldViewModel.WorldNavigation.MouseOverEntity;
                         if (target == null)
                             _followEntities = new DictionaryModel<int, EntityModel>(
-                                WorldViewModel.Navigation.SelectedEntities
+                                WorldViewModel.WorldNavigation.SelectedEntities
                                     .Select(e => new KeyValuePair<int, EntityModel>(e.Id, e)));
                         else
                         {
@@ -216,7 +216,7 @@ namespace Strive.Client.ViewModel
             int movementForward = 0;
             int movementUp = 0;
             double speedModifier = 1;
-            foreach (InputBindings.KeyBinding kb in WorldViewModel.Bindings.KeyBindings
+            foreach (InputBindings.KeyBinding kb in WorldViewModel.InputBindings.KeyBindings
                 .Where(kb => kb.KeyCombo.All(k => _keyPressed(k))))
             {
                 UnFollow();
@@ -288,7 +288,7 @@ namespace Strive.Client.ViewModel
 
         private void ApplyCreationActions()
         {
-            foreach (InputBindings.CreationBinding ca in WorldViewModel.Bindings.CreationBindings
+            foreach (InputBindings.CreationBinding ca in WorldViewModel.InputBindings.CreationBindings
                 .Where(ca => ca.KeyCombo.All(k => _keyPressed(k))))
             {
                 _actionState = InputBindings.ActionState.KeyAction;
@@ -314,7 +314,7 @@ namespace Strive.Client.ViewModel
         {
             // check they still exist in the world
             var following = _followEntities.Entities
-                    .Where(e => WorldViewModel.WorldModel.Current.Entity.ContainsKey(e.Id));
+                    .Where(e => WorldViewModel.History.Current.Entity.ContainsKey(e.Id));
 
             if (following.Any())
             {

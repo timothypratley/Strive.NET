@@ -2,11 +2,11 @@ namespace Strive.Network.Messages.ToServer
 {
     public class InviteToParty
     {
-        public int ObjectInstanceId;
+        public string User;
 
-        public InviteToParty(int objectInstanceId)
+        public InviteToParty(string user)
         {
-            ObjectInstanceId = objectInstanceId;
+            User = user;
         }
     }
 }

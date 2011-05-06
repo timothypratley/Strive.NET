@@ -2,11 +2,11 @@ namespace Strive.Network.Messages.ToServer
 {
     public class TransferPartyLeadership
     {
-        public int ObjectInstanceId;
+        public string Leader;
 
-        public TransferPartyLeadership(int objectInstanceId)
+        public TransferPartyLeadership(string leader)
         {
-            ObjectInstanceId = objectInstanceId;
+            Leader = leader;
         }
     }
 }

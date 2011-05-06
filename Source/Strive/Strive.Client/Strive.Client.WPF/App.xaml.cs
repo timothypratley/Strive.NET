@@ -4,8 +4,10 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 using Common.Logging;
+using Strive.Client.Logic;
 using Strive.Client.ViewModel;
 using Strive.Common;
+using Strive.Model;
 using Strive.Network.Messaging;
 using Strive.Server.Logic;
 using Strive.WPF;
@@ -21,15 +23,24 @@ namespace Strive.Client.WPF
         public static readonly Random Rand = new Random();
         public static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        public static readonly ServerConnection ServerConnection = new ServerConnection();
-        public static readonly WorldViewModel WorldViewModel = new WorldViewModel(ServerConnection);
-        public static readonly LogModel LogModel = new LogModel();
-        public static readonly LogModel ChatLogModel = new LogModel(ServerConnection.ChatListeners);
+        // Server side components
+        public static readonly History History = new History();
+        public static readonly Listener Listener = new Listener(
+            new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort));
+        public static readonly MessageProcessor MessageProcessor = new MessageProcessor(
+            new World(Listener, Global.WorldId), Listener);
 
-        public static readonly Engine ServerEngine = new Engine(
-            new MessageProcessor(
-                new World(Global.WorldId),
-                new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort))));
+        // Client side components
+        public static readonly ServerConnection ServerConnection = new ServerConnection();
+        public static readonly ClientSideMessageProcessor ClientSideMessageProcessor = new ClientSideMessageProcessor(
+            ServerConnection);
+        public static readonly WorldViewModel WorldViewModel = new WorldViewModel(
+            ServerConnection, History, new WorldNavigation(), new InputBindings());
+
+        public static readonly LogModel LogModel = new LogModel();
+        public static readonly LogModel ChatLogModel = new LogModel(ClientSideMessageProcessor.ChatListeners);
+
+        public static readonly Engine ServerEngine = new Engine(MessageProcessor);
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {

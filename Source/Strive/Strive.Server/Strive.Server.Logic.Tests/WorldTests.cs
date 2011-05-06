@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Strive.Server.Logic.Tests
 {
@@ -15,9 +17,19 @@ namespace Strive.Server.Logic.Tests
                     new MockListener()));
              */
 
-            var w = new World(0);
+            var w = new World(null, 0);
             //var po = new PhysicalObject();
             //w.Add();
         }
+
+        [TestMethod]
+        public void Arithmatic()
+        {
+            Math.Floor(1.5f).Should().Equals(1f);
+            Math.Truncate(1.5f).Should().Equals(1f);
+            Math.Floor(-1.5f).Should().Equals(2f);
+            Math.Truncate(-1.5f).Should().Equals(2f);
+        }
     }
 }
+;

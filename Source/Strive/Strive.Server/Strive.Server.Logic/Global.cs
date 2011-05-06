@@ -4,6 +4,9 @@ using System.Windows.Media.Media3D;
 using Common.Logging;
 using Strive.Common;
 using Strive.Server.DB;
+using Strive.Network.Messaging;
+using System.Collections.Generic;
+using Strive.Model;
 
 
 namespace Strive.Server.Logic
@@ -17,6 +20,7 @@ namespace Strive.Server.Logic
         public static DateTime Now = DateTime.Now;
         public static Vector3D Up = new Vector3D(0, 1, 0);
         public static Schema Schema;
+        public static Listener _listener;
 
         public static int WorldId;
         public static int Port;

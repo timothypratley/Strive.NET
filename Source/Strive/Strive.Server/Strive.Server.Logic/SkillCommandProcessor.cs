@@ -43,7 +43,8 @@ namespace Strive.Server.Logic
                         source.LogMessage("No target specified, this skill may only be used on Mobiles.");
                         return;
                     }
-                    target = world.PhysicalObjects[message.TargetPhysicalObjectIDs[0]];
+                    var o = world.History.Head.Entity.TryFind(message.TargetPhysicalObjectIDs[0]);
+                    target = o == null ? null : o.Value;
                     if (target == null)
                     {
                         source.LogMessage("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
@@ -57,9 +58,9 @@ namespace Strive.Server.Logic
             }
 
 
-            if (source.ActivatingSkill != null)         // queue the request for later.
+            if (source.ActivatingSkill != EnumSkill.None)         // queue the request for later.
                 world.Apply(new EntityUpdateEvent(
-                    source.SkillQueue.EnqueueSkill(message.Skill, target),
+                    source.EnqueueSkill(message.Skill, target),
                     "Enqueuing Skill " + message.Skill));
             else if (esr.LeadTime <= 0)                 // process it now
                 world.UseSkillNow(source, esr, target);
@@ -80,11 +81,12 @@ namespace Strive.Server.Logic
 
             // If already performing invocation, just cancel it
             bool found = false;
-            if (avatar.ActivatingSkill != null)
+            if (avatar.ActivatingSkill != EnumSkill.None)
             // TODO:
             //&& avatar.ActivatingSkill.InvokationId == message.InvokationId)
             {
-                world.Add(avatar.StartSkill(EnumSkill.None, null, Global.Now, TimeSpan.FromSeconds(0)));
+                world.Apply(new EntityUpdateEvent(avatar.StartSkill(EnumSkill.None, null, Global.Now, TimeSpan.FromSeconds(0)),
+                    "Started using skill"));
                 found = true;
             }
             else

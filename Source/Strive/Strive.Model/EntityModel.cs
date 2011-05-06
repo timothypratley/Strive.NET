@@ -11,7 +11,7 @@ namespace Strive.Model
     /// All changes result in a new object which is stored in the history.
     /// Helpers to transition between states are located in WorldModel.
     /// </summary>
-    public class EntityModel : AModel
+    public class EntityModel : AModel, IComparable<EntityModel>, IEquatable<EntityModel>, IComparable
     {
         public EntityModel(int id, string name, string modelId, Vector3D position, Quaternion rotation,
             float health, float energy, EnumMobileState mobileState, float height)
@@ -35,12 +35,15 @@ namespace Strive.Model
         public EnumMobileState MobileState { get; protected set; }
         public float Height { get; protected set; }
         public Affinity Affinity { get; protected set; }
+        public DateTime LastMoveUpdate { get; private set; }
 
-        public EntityModel Move(Vector3D position, Quaternion rotation)
+        public EntityModel Move(EnumMobileState state, Vector3D position, Quaternion rotation, DateTime when)
         {
             var r = (EntityModel)this.MemberwiseClone();
+            r.MobileState = state;
             r.Position = position;
             r.Rotation = rotation;
+            r.LastMoveUpdate = when;
             return r;
             // TODO: MemberwiseClone is not 
             //return new EntityModel(Id, Name, ModelId, position, rotation, Health, MobileState, Height);
@@ -114,6 +117,41 @@ namespace Strive.Model
             return GetType().ToString() + " '" + Name + "' (" + Id + ")";
         }
 
-        // TODO: equals and hashcode
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as EntityModel;
+            if (obj == null)
+                return false;
+            return Id == other.Id;
+        }
+
+        bool IEquatable<EntityModel>.Equals(EntityModel other)
+        {
+            if (other == null)
+                return false;
+            return Id == other.Id;
+        }
+
+        int IComparable<EntityModel>.CompareTo(EntityModel other)
+        {
+            if (other == null)
+                return 1;
+            return Id.CompareTo(other.Id);
+        }
+
+        int IComparable.CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+            var other = obj as EntityModel;
+            if (obj == null)
+                throw new ArgumentException("Object is not an EntityModel");
+            return Id.CompareTo(other.Id);
+        }
     }
 }

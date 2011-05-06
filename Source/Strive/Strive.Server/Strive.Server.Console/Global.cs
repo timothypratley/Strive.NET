@@ -1,18 +1,20 @@
 using System;
-using Strive.Server.Logic;
-using Strive.Network.Messaging;
 using System.Net;
-using Strive.Common;
 using System.Threading;
+using Strive.Common;
+using Strive.Network.Messaging;
+using Strive.Server.Logic;
 
 namespace Strive.Server.Console
 {
     class Global
     {
+        static readonly Listener Listener = new Listener(
+            new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort));
         static readonly Engine ServerEngine = new Engine(
             new MessageProcessor(
-                new World(1),
-                new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort))));
+                new World(Listener, 0),
+                Listener));
 
         [STAThread]
         static void Main()

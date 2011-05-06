@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\..\..\ThirdParty\FluentAssertions\FluentAssertions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -49,6 +52,10 @@
     <Compile Include="WorldTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Strive.Network\Strive.Network.Messaging\Strive.Network.Messaging.csproj">
+      <Project>{757BF7D3-B811-48D7-AE27-0842B0522536}</Project>
+      <Name>Strive.Network.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Strive.Server.Logic\Strive.Server.Logic.csproj">
       <Project>{4895086D-8485-46EF-8DED-9E4C16227D64}</Project>
       <Name>Strive.Server.Logic</Name>

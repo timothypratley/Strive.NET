@@ -213,6 +213,10 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Strive.Model\Strive.Model.csproj">
+      <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
+      <Name>Strive.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Network\Strive.Network.Messages\Strive.Network.Messages.csproj">
       <Project>{EEEC18D5-063D-4DDD-8328-5182F1BA7F26}</Project>
       <Name>Strive.Network.Messages</Name>
@@ -228,6 +232,10 @@
     <ProjectReference Include="..\..\Strive.WPF\Strive.WPF.csproj">
       <Project>{790D523A-8C3C-480F-885B-C476238FB438}</Project>
       <Name>Strive.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Strive.Client.Logic\Strive.Client.Logic.csproj">
+      <Project>{70800FCC-1029-456A-A81C-DBF4A21C5DEE}</Project>
+      <Name>Strive.Client.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\Strive.Client.NeoAxisView\Strive.Client.NeoAxisView.csproj">
       <Project>{138A87E7-78B2-4BDF-BB5C-06D58414A976}</Project>
@@ -287,92 +295,92 @@
   <ItemGroup>
     <PublishFile Include="EngineApp">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="EntitySystem">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="FileSystem">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Log">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="MapSystem">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="MathEx">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Renderer">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="UISystem">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Utils">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>

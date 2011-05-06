@@ -42,7 +42,6 @@ namespace Strive.Network.Messages
             ToServerRequestSkillList,
             ToServerUseSkill,
             ToServerCancelSkill,
-            ToServerCreateParty,
             ToServerLeaveParty,
             ToServerJoinParty,
             ToServerQueryParty,
@@ -89,7 +88,6 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestSkillList, typeof(ToServer.RequestSkillList));
             MessageTypeFromId.Add(EnumMessageId.ToServerUseSkill, typeof(ToServer.UseSkill));
             MessageTypeFromId.Add(EnumMessageId.ToServerCancelSkill, typeof(ToServer.CancelSkill));
-            MessageTypeFromId.Add(EnumMessageId.ToServerCreateParty, typeof(ToServer.CreateParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerLeaveParty, typeof(ToServer.LeaveParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerJoinParty, typeof(ToServer.JoinParty));
             MessageTypeFromId.Add(EnumMessageId.ToServerTransferPartyLeadership, typeof(ToServer.TransferPartyLeadership));

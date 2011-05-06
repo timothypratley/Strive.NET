@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Media.Media3D;
 using Strive.Common;
 using Strive.Model;
 using Strive.Server.DB;
-using System.Windows.Media.Media3D;
 
 
 namespace Strive.Server.Logic
@@ -65,8 +63,7 @@ namespace Strive.Server.Logic
         public class InvalidWorld : Exception { }
         public void Load()
         {
-            PhysicalObjects = new Dictionary<int, EntityModel>();
-            Mobiles = new List<CombatantModel>();
+            History.Head = WorldModel.Empty;
 
             // TODO: would be nice to be able to load only the world in question... but for now load them all
             if (Global.WorldFilename != null)
@@ -86,57 +83,9 @@ namespace Strive.Server.Logic
             }
             _log.Info("Global.modelSchema loaded");
 
-            // find highX and lowX for our world dimensions
-
-            // TODO: make expandable universe, don't code these values
-            _highX = 1000;
-            _lowX = -1000;
-            _highZ = 1000;
-            _lowZ = -1000;
-            foreach (Schema.ObjectInstanceRow r in Global.Schema.ObjectInstance.Rows)
-            {
-                if (_highX == 0)
-                    _highX = r.X;
-                if (_lowX == 0)
-                    _lowX = r.X;
-                if (_highZ == 0)
-                    _highZ = r.Z;
-                if (_lowZ == 0)
-                    _lowZ = 0;
-
-                if (r.X > _highX)
-                    _highX = r.X;
-                if (r.X < _lowX)
-                    _lowX = r.X;
-                if (r.Z > _highZ)
-                    _highZ = r.Z;
-                if (r.Z < _lowZ)
-                    _lowZ = r.Z;
-            }
-            //highX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = max(X)" )[0]).X;
-            //lowX = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "X = min(X)" )[0]).X;
-            //highZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = max(Z)" )[0]).Z;
-            //lowZ = ((Schema.ObjectInstanceRow)Global.multiverse.ObjectInstance.Select( "Z = min(Z)" )[0]).Z;
-            _log.Info("Global.multiverse bounds are " + _lowX + "," + _lowZ + " " + _highX + "," + _highZ);
-
-            // figure out how many squares we need
-            _squaresInX = (int)(_highX - _lowX) / Square.SquareSize + 1;
-            _squaresInZ = (int)(_highZ - _lowZ) / Square.SquareSize + 1;
-
-            //			if ( squaresInX * squaresInZ > 10000 ) {
-            //				throw new Exception( "World is too big. Total area must not exceed " + 10000*Square.squareSize + ". Please fix the database." );
-            //			}
-
-            // allocate the grid of squares used for grouping
-            // physical objects that are close to each other
-            _square = new Square[_squaresInX, _squaresInZ];
-            _terrain = new TerrainModel[_squaresInX * Square.SquareSize / Constants.TerrainPieceSize, _squaresInZ * Square.SquareSize / Constants.TerrainPieceSize];
-
             Schema.WorldRow wr = Global.Schema.World.FindByWorldID(_worldId);
             if (wr == null)
-            {
                 throw new InvalidWorld();
-            }
 
             /** TODO: support loading
             _log.Info("Loading world \"" + wr.WorldName + "\"...");

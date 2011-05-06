@@ -82,9 +82,10 @@ namespace Strive.Server.Logic
             {
                 if (client.Avatar != null)
                 {
-                    var a = (Avatar)client.Avatar;
-                    a.Client = null;
-                    _messageProcessor.World.Remove(a);
+                    var a = client.Avatar;
+                    _messageProcessor.World.RemoveClient(client);
+                    // TODO: do I want their avatar removed or not?
+                    //_messageProcessor.World.Remove(a);
                 }
                 else
                     client.Avatar = null;

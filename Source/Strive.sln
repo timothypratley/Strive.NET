@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Data.Events", "Striv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Data.Commands", "Strive\Strive.Data\Strive.Data.Commands\Strive.Data.Commands.csproj", "{5DAB068C-FF73-4821-96C9-DC872DDAB76D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Client.Logic", "Strive\Strive.Client\Strive.Client.Logic\Strive.Client.Logic.csproj", "{70800FCC-1029-456A-A81C-DBF4A21C5DEE}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Strive.vsmdi
@@ -348,6 +350,21 @@ Global
 		{5DAB068C-FF73-4821-96C9-DC872DDAB76D}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5DAB068C-FF73-4821-96C9-DC872DDAB76D}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
 		{5DAB068C-FF73-4821-96C9-DC872DDAB76D}.StrongMagic|x86.ActiveCfg = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.StrongMagic|Any CPU.ActiveCfg = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.StrongMagic|Any CPU.Build.0 = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.StrongMagic|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.StrongMagic|Mixed Platforms.Build.0 = Release|Any CPU
+		{70800FCC-1029-456A-A81C-DBF4A21C5DEE}.StrongMagic|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
