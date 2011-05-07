@@ -3,7 +3,7 @@
 
 namespace Strive.Model
 {
-    public class PlanModel : AModel
+    public class PlanModel
     {
         public PlanModel(int id, Vector3D start, Vector3D finish)
         {

@@ -3,6 +3,7 @@ using System.Net;
 using Strive.Common;
 using Strive.Network.Messaging;
 using Strive.Server.Logic;
+using Strive.Model;
 
 namespace Strive.Server.WindowsService
 {
@@ -22,7 +23,7 @@ namespace Strive.Server.WindowsService
 
             Listener listener = new Listener(new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort));
             striveEngine = new Engine(
-                new MessageProcessor(new World(listener, Global.WorldId), listener));
+                new MessageProcessor(new World(listener, Global.WorldId, new History()), listener));
         }
 
         // The main entry point for the process

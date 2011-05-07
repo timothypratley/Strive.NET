@@ -18,7 +18,7 @@ namespace Strive.Model
             _recordedWorld.Head = _recordedWorld.Head.Add(entity);
         }
 
-        public void Add(IEnumerable<AModel> entities)
+        public void Add(IEnumerable<EntityModel> entities)
         {
             _recordedWorld.Head = entities.Aggregate(_recordedWorld.Head, (x, y) => x.Add(y));
         }

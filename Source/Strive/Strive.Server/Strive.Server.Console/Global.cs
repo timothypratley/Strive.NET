@@ -4,6 +4,7 @@ using System.Threading;
 using Strive.Common;
 using Strive.Network.Messaging;
 using Strive.Server.Logic;
+using Strive.Model;
 
 namespace Strive.Server.Console
 {
@@ -13,7 +14,7 @@ namespace Strive.Server.Console
             new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort));
         static readonly Engine ServerEngine = new Engine(
             new MessageProcessor(
-                new World(Listener, 0),
+                new World(Listener, 0, new History()),
                 Listener));
 
         [STAThread]

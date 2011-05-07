@@ -74,9 +74,8 @@ namespace Strive.Model
                 + ((int)Math.Floor(position.Z / Constants.ChunkSize) << 16);
         }
 
-        public static IEnumerable<int> GetNearbyCubeKeys(Vector3D position)
+        public static IEnumerable<int> GetNearbyCubeKeys(int key)
         {
-            var key = GetCubeKey(position);
             var range = Enumerable.Range(-Constants.Horizon, Constants.Horizon * 2 + 1);
             return (from x in range
                     from y in range
@@ -139,11 +138,6 @@ namespace Strive.Model
         public WorldModel Add(PlanModel plan)
         {
             return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Holding, Doing, Requires, EntityCube);
-        }
-
-        public WorldModel Add(AModel m)
-        {
-            throw new NotSupportedException("Don't know how to add a " + m.GetType());
         }
 
         public WorldModel Put(FSharpSet<int> entities, int on)

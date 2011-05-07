@@ -19,10 +19,10 @@ namespace Strive.Client.Logic
 
         readonly ILog _log = LogManager.GetCurrentClassLogger();
 
-        public ClientSideMessageProcessor(ServerConnection connection)
+        public ClientSideMessageProcessor(ServerConnection connection, History history)
         {
             ServerConnection = connection;
-            History = new History();
+            History = history;
             ServerConnection.MessageRecieved += ConnectionMessageRecieved;
 
             // I wish there were a public constructor for TraceListenerCollection, but there is not

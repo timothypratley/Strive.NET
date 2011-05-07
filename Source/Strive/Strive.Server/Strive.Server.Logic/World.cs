@@ -35,10 +35,11 @@ namespace Strive.Server.Logic
 
         readonly ILog _log = LogManager.GetCurrentClassLogger();
 
-        public World(Listener listener, int worldId)
+        public World(Listener listener, int worldId, History history)
         {
-            History = new History();
+            History = history;
             CubeClients = new Dictionary<int, HashSet<ClientConnection>>();
+            ClientCubes = new Dictionary<ClientConnection, HashSet<int>>();
             Listener = listener;
             Weather = new ToClient.TimeAndWeather(
                 Global.Now, 0, DefaultDay, DefaultNight, DefaultCusp, DefaultSun, 0, 0);
@@ -91,26 +92,60 @@ namespace Strive.Server.Logic
 
             var old = History.Head.Entity.TryFind(e.Entity.Id);
             History.Add(e.Entity);
-
-            ClientConnection client = old == null ? null : client = Possession[old.Value.Id];
+            int newCube = WorldModel.GetCubeKey(e.Entity.Position);
 
             // update client cubes if the entity was possessed
+            ClientConnection client;
+            Possession.TryGetValue(e.Entity.Id, out client);
             if (client != null)
             {
-                var currentCubes = ClientCubes[client];
-                var newCubes = new HashSet<int>(WorldModel.GetNearbyCubeKeys(e.Entity.Position));
-                foreach (var c in currentCubes.Except(newCubes))
-                    CubeClients[c].Remove(client);
+                var newCubes = new HashSet<int>(WorldModel.GetNearbyCubeKeys(newCube));
+
+                HashSet<int> oldCubes;
+                HashSet<ClientConnection> clients;
+                IEnumerable<int> add;
+                if (ClientCubes.TryGetValue(client, out oldCubes))
+                {
+                    foreach (var cube in oldCubes.Except(newCubes))
+                    {
+                        if (CubeClients.TryGetValue(cube, out clients))
+                        {
+                            clients.Remove(client);
+                            if (clients.Count == 0)
+                                CubeClients.Remove(cube);
+                        }
+                    }
+                    add = newCubes.Except(oldCubes);
+                }
+                else
+                    add = newCubes;
+
+                foreach (var cube in add)
+                    if (CubeClients.TryGetValue(cube, out clients))
+                        clients.Add(client);
+                    else
+                        CubeClients.Add(cube, new HashSet<ClientConnection> { client });
+
                 ClientCubes[client] = newCubes;
             }
 
             // notify all clients subsribed to the relevant cubes
-            int oldCube = old == null ? 0 : WorldModel.GetCubeKey(old.Value.Position);
-            int newCube = WorldModel.GetCubeKey(e.Entity.Position);
-            if (old != null && oldCube != newCube)
-                foreach (var c in CubeClients[oldCube].Except(CubeClients[newCube]))
-                    c.Drop(e.Entity);
-            foreach (var c in CubeClients[newCube])
+            HashSet<ClientConnection> newClients;
+            if (!CubeClients.TryGetValue(newCube, out newClients))
+                newClients = new HashSet<ClientConnection>();
+
+            if (old != null)
+            {
+                int oldCube = WorldModel.GetCubeKey(old.Value.Position);
+                HashSet<ClientConnection> oldClients;
+                if (!CubeClients.TryGetValue(oldCube, out oldClients))
+                    oldClients = new HashSet<ClientConnection>();
+                if (oldCube != newCube)
+                    foreach (var c in oldClients.Except(newClients))
+                        c.Drop(e.Entity);
+            }
+
+            foreach (var c in newClients.Where(x => x != client))
                 c.Send(e.Entity);
         }
 
@@ -126,9 +161,15 @@ namespace Strive.Server.Logic
             History.Add(new[] { e.Source, e.Target });
 
             var sourceCube = WorldModel.GetCubeKey(e.Source.Position);
+            HashSet<ClientConnection> sourceClients;
+            if (!CubeClients.TryGetValue(sourceCube, out sourceClients))
+                sourceClients = new HashSet<ClientConnection>();
             var targetCube = WorldModel.GetCubeKey(e.Target.Position);
-            var clients = sourceCube == targetCube ? CubeClients[sourceCube] : CubeClients[sourceCube].Union(CubeClients[targetCube]);
-            foreach (var c in clients)
+            HashSet<ClientConnection> targetClients;
+            if (!CubeClients.TryGetValue(targetCube, out targetClients))
+                targetClients = new HashSet<ClientConnection>();
+
+            foreach (var c in sourceClients.Union(targetClients))
                 c.Send(new ToClient.CombatReport(e.Source, e.Skill, e.Target, 20));
         }
 
@@ -195,8 +236,8 @@ namespace Strive.Server.Logic
 
         internal void RemoveClient(ClientConnection client)
         {
-            var party = Party[client.AuthenticatedUsername];
-            if (party != null)
+            HashSet<string> party;
+            if (Party.TryGetValue(client.AuthenticatedUsername, out party))
                 TransferLeadership(client.AuthenticatedUsername, party.First());
             Users.Remove(client.AuthenticatedUsername);
         }

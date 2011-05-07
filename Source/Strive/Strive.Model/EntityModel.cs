@@ -11,7 +11,7 @@ namespace Strive.Model
     /// All changes result in a new object which is stored in the history.
     /// Helpers to transition between states are located in WorldModel.
     /// </summary>
-    public class EntityModel : AModel, IComparable<EntityModel>, IEquatable<EntityModel>, IComparable
+    public class EntityModel : IComparable<EntityModel>, IEquatable<EntityModel>, IComparable
     {
         public EntityModel(int id, string name, string modelId, Vector3D position, Quaternion rotation,
             float health, float energy, EnumMobileState mobileState, float height)
@@ -23,6 +23,11 @@ namespace Strive.Model
             ModelId = modelId;
             Position = position;
             Rotation = rotation;
+            Health = health;
+            Energy = energy;
+            MobileState = mobileState;
+            Height = height;
+            Affinity = new Affinity(0, 0, 0, 0, 0);
         }
 
         public int Id { get; protected set; }

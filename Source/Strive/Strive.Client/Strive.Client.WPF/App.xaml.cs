@@ -24,18 +24,19 @@ namespace Strive.Client.WPF
         public static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         // Server side components
-        public static readonly History History = new History();
+        public static readonly History ServerHistory = new History();
         public static readonly Listener Listener = new Listener(
             new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList[0], Constants.DefaultPort));
         public static readonly MessageProcessor MessageProcessor = new MessageProcessor(
-            new World(Listener, Global.WorldId), Listener);
+            new World(Listener, Global.WorldId, ServerHistory), Listener);
 
         // Client side components
         public static readonly ServerConnection ServerConnection = new ServerConnection();
+        public static readonly History ClientHistory = new History();
         public static readonly ClientSideMessageProcessor ClientSideMessageProcessor = new ClientSideMessageProcessor(
-            ServerConnection);
+            ServerConnection, ClientHistory);
         public static readonly WorldViewModel WorldViewModel = new WorldViewModel(
-            ServerConnection, History, new WorldNavigation(), new InputBindings());
+            ServerConnection, ClientHistory, new WorldNavigation(), new InputBindings());
 
         public static readonly LogModel LogModel = new LogModel();
         public static readonly LogModel ChatLogModel = new LogModel(ClientSideMessageProcessor.ChatListeners);

@@ -71,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Affinity.cs" />
-    <Compile Include="AModel.cs" />
     <Compile Include="CombatantModel.cs" />
     <Compile Include="DictionaryModel.cs" />
     <Compile Include="PlanModel.cs" />
