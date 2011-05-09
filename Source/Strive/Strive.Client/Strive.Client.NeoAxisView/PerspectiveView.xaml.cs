@@ -209,11 +209,16 @@ namespace Strive.Client.NeoAxisView
                         Log.Fatal("RTSBuilding: Create character == null");
                     else
                     {
+                        unit.Position = b.Position;
+
+                        // TODO: use GridPathFindSystem or something better
+                        /*
                         Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(
                             b.Position.ToVec2(), character.Type.Radius * 2);
                         unit.Position = new Vec3(p.X, p.Y,
                                                  GridPathFindSystem.Instance.GetMotionMapHeight(p) +
                                                  character.Type.Height * .5f);
+                         */
                     }
 
                     if (b.Intellect != null)

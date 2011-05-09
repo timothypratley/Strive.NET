@@ -31,16 +31,15 @@ namespace Strive.Server.Logic
                     Global.Schema.EnumSkill.FindByEnumSkillID((int)c.ActivatingSkill),
                     c.Target);
 
-            // TODO:
-            // check for queued skills
+            // TODO: check for queued skills
             //else if (c.SkillQueue.Length > 0)
             //c.ActivatingSkill = c.SkillQueue.Head;
 
             if (c.Target != null)
                 world.CheckAttack(c);
-            // TODO: enable behavior updates
-            //else if (listener.Client[c] == null)
-            //c = world.BehaviourUpdate(c);
+            
+            if (!world.Possession.ContainsKey(c.Id))
+                c = world.BehaviourUpdate(c);
             else if (Global.Now - c.LastMoveUpdate > TimeSpan.FromSeconds(1)
                 && (c.MobileState == EnumMobileState.Running
                 || c.MobileState == EnumMobileState.Walking))
@@ -63,7 +62,7 @@ namespace Strive.Server.Logic
             }
         }
 
-        public static void BehaviourUpdate(this World world, CombatantModel combatant)
+        public static CombatantModel BehaviourUpdate(this World world, CombatantModel combatant)
         {
             Quaternion rotation = combatant.Rotation;
             Vector3D position = combatant.Position;
@@ -109,9 +108,9 @@ namespace Strive.Server.Logic
                 }
             }
             if (rotation != combatant.Rotation || position != combatant.Position || mobileState != combatant.MobileState)
-                world.Apply(new EntityUpdateEvent(
-                    combatant.Move(mobileState, position, rotation, Global.Now),
-                    "AI"));
+                return (CombatantModel)combatant.Move(mobileState, position, rotation, Global.Now);
+            else
+                return combatant;
         }
 
         public static CombatantModel HealUpdate(this CombatantModel combatant)

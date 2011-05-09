@@ -30,9 +30,9 @@ namespace Strive.Network.Messaging
             Send(new PossessMobile(mobileId));
         }
 
-        public void CreateEntity(int templateId, Vector3D position, Quaternion rotation)
+        public void CreateEntity(int id, string name, string modelId, Vector3D position, Quaternion rotation)
         {
-            Send(new EntityModel(templateId, "Junk", "StaticBox", position, rotation, 100, 100, EnumMobileState.Standing, 1.7f));
+            Send(new EntityModel(id, name, modelId, position, rotation, 100, 100, EnumMobileState.Standing, 1.7f));
         }
 
         public void Login(string username, string password)

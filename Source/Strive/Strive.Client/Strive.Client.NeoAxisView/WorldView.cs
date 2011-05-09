@@ -42,6 +42,7 @@ namespace Strive.Client.NeoAxisView
                 neoEntity.Rotation = entityModel.Rotation.ToQuat();
             }
 
+            // TODO: this still crashes when using timeline - why? (collection modified)
             // Remove entities that should no longer be in the scene
             foreach (var neoEntity in Entities.Instance.EntitiesCollection
                 .Where(x => x is MapObject

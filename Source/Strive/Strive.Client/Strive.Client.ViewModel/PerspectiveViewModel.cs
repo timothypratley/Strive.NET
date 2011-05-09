@@ -61,7 +61,28 @@ namespace Strive.Client.ViewModel
             get
             {
                 return MakeCommand
-                    .Do(() => WorldViewModel.ServerConnection.CreateEntity(rand.Next(), Position, Rotation));
+                    .Do(() => WorldViewModel.ServerConnection.CreateEntity(
+                        rand.Next(), "Junk", "StaticBox", Position, Rotation));
+            }
+        }
+
+        public ICommand CreateFactory
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(() => WorldViewModel.ServerConnection.CreateEntity(
+                        rand.Next(), "Factory", "RTSFactory", Position, Rotation));
+            }
+        }
+
+        public ICommand CreateMobile
+        {
+            get
+            {
+                return MakeCommand
+                    .Do(() => WorldViewModel.ServerConnection.CreateEntity(
+                        rand.Next(), "Robot", "RTSRobot", Position, Rotation));
             }
         }
 
@@ -295,9 +316,9 @@ namespace Strive.Client.ViewModel
                 if (ca.Action == InputBindings.CreationAction.Item)
                     CreateEntity.Execute(null);
                 else if (ca.Action == InputBindings.CreationAction.Mobile)
-                    CreateEntity.Execute(null);
+                    CreateMobile.Execute(null);
                 else if (ca.Action == InputBindings.CreationAction.Factory)
-                    CreateEntity.Execute(null);
+                    CreateFactory.Execute(null);
                 else
                     throw new Exception("Unexpected creation binding " + ca.Action);
             }
