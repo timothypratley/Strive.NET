@@ -5,7 +5,6 @@ using AvalonDock;
 using Strive.Client.NeoAxisView;
 using Strive.WPF;
 using UpdateControls.XAML;
-using Strive.Server.Logic;
 
 
 namespace Strive.Client.WPF
@@ -80,6 +79,10 @@ namespace Strive.Client.WPF
                 new KeyBinding(App.WorldViewModel.FollowSelected, Key.G, ModifierKeys.Control));
             r.InputBindings.Add(
                 new KeyBinding(App.WorldViewModel.CreateEntity, Key.C, ModifierKeys.Control));
+            r.InputBindings.Add(
+                new KeyBinding(App.WorldViewModel.CreateMobile, Key.M, ModifierKeys.Control));
+            r.InputBindings.Add(
+                new KeyBinding(App.WorldViewModel.CreateFactory, Key.F, ModifierKeys.Control));
             BindAndShow(r, App.WorldViewModel);
         }
 

@@ -147,6 +147,7 @@
     <Compile Include="ToServer\CancelSkill.cs" />
     <Compile Include="ToServer\ChangeStance.cs" />
     <Compile Include="ToServer\Communicate.cs" />
+    <Compile Include="ToServer\ProduceEntity.cs" />
     <Compile Include="ToServer\CreateEntity.cs" />
     <Compile Include="ToServer\CreateTask.cs" />
     <Compile Include="ToServer\Emote.cs" />

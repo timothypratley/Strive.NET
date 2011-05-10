@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Windows.Media.Media3D;
+using Microsoft.FSharp.Collections;
 using Strive.Common;
 
 
@@ -28,6 +29,7 @@ namespace Strive.Model
             MobileState = mobileState;
             Height = height;
             Affinity = new Affinity(0, 0, 0, 0, 0);
+            Production = new Production(1, ListModule.Empty<int>(), 0, 0);
         }
 
         public int Id { get; protected set; }
@@ -39,8 +41,9 @@ namespace Strive.Model
         public float Energy { get; protected set; }
         public EnumMobileState MobileState { get; protected set; }
         public float Height { get; protected set; }
+        public DateTime LastMoveUpdate { get; protected set; }
         public Affinity Affinity { get; protected set; }
-        public DateTime LastMoveUpdate { get; private set; }
+        public Production Production { get; protected set; }
 
         public EntityModel Move(EnumMobileState state, Vector3D position, Quaternion rotation, DateTime when)
         {
@@ -113,6 +116,27 @@ namespace Strive.Model
                 Affinity.Fire + fireChange,
                 Affinity.Life + lifeChange,
                 Affinity.Water + waterChange);
+        }
+
+        public EntityModel WithProduction(int id, DateTime when)
+        {
+            var r = (EntityModel)this.MemberwiseClone();
+            r.Production = Production.WithProduction(id, when);
+            return r;
+        }
+
+        public EntityModel WithProductionComplete(DateTime when)
+        {
+            var r = (EntityModel)this.MemberwiseClone();
+            r.Production = Production.WithProductionComplete(when);
+            return r;
+        }
+
+        public EntityModel WithProductionProgressChange(float progressChange, DateTime when)
+        {
+            var r = (EntityModel)this.MemberwiseClone();
+            r.Production = Production.WithProgressChange(progressChange, when);
+            return r;
         }
 
         public float CurrentHeight { get { return MobileState <= EnumMobileState.Resting ? 0.3f : Height; } }

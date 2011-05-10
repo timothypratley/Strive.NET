@@ -349,6 +349,20 @@ namespace Strive.Server.Logic
             World.Apply(new TaskUpdateEvent(t, "Created by " + client.AuthenticatedUsername));
         }
 
+        void ProcessMessage(ClientConnection client, ProduceEntity p)
+        {
+            var factory = World.History.Head.Entity.TryFind(p.FactoryId);
+            if (factory == null)
+            {
+                client.LogMessage("Could not find factory " + p.FactoryId);
+                return;
+            }
+
+            World.Apply(new EntityUpdateEvent(
+                factory.Value.WithProduction(p.Id, Global.Now),
+                client.AuthenticatedUsername + " producing " + p.Name + " from " + factory));
+        }
+
         void ProcessMessage(ClientConnection client, UseSkill message)
         {
             World.ProcessUseSkill(client, message);

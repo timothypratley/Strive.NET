@@ -43,6 +43,36 @@ namespace Strive.Client.ViewModel
             }
         }
 
+        public ICommand CreateMobile
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => CurrentPerspective != null)
+                    .Do(() => CurrentPerspective.CreateMobile.Execute(null));
+            }
+        }
+
+        public ICommand CreateFactory
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => CurrentPerspective != null)
+                    .Do(() => CurrentPerspective.CreateFactory.Execute(null));
+            }
+        }
+
+        public ICommand ProduceEntity
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => CurrentPerspective != null)
+                    .Do(() => CurrentPerspective.ProduceEntity.Execute(null));
+            }
+        }
+
         public PerspectiveViewModel CurrentPerspective { get; set; }
 
         public IEnumerable<EntityViewModel> Entities

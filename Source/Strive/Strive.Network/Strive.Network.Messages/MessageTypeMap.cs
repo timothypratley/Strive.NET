@@ -51,6 +51,7 @@ namespace Strive.Network.Messages
             ToServerCreateEntity,
             ToServerCreateTask,
             ToServerPossess,
+            ToServerProduceEntity,
             ToServerLogin,
             ToServerLogout,
             ToServerReloadWorld,
@@ -97,6 +98,7 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerPossess, typeof(ToServer.PossessMobile));
             MessageTypeFromId.Add(EnumMessageId.ToServerCreateEntity, typeof(ToServer.CreateEntity));
             MessageTypeFromId.Add(EnumMessageId.ToServerCreateTask, typeof(ToServer.CreateTask));
+            MessageTypeFromId.Add(EnumMessageId.ToServerProduceEntity, typeof(ToServer.ProduceEntity));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogin, typeof(ToServer.Login));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogout, typeof(ToServer.Logout));
             MessageTypeFromId.Add(EnumMessageId.ToServerReloadWorld, typeof(ToServer.ReloadWorld));

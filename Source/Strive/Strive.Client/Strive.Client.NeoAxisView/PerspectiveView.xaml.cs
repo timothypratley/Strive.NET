@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Engine;
 using Engine.EntitySystem;
 using Engine.MapSystem;
 using Engine.MathEx;
@@ -199,44 +198,26 @@ namespace Strive.Client.NeoAxisView
                 else
                     _worldViewModel.Select(id);
 
+                // TODO: Find the nearest free position (server-side?)
+                /*
+                Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(
+                    b.Position.ToVec2(), character.Type.Radius * 2);
+                unit.Position = new Vec3(p.X, p.Y,
+                                         GridPathFindSystem.Instance.GetMotionMapHeight(p) +
+                                         character.Type.Height * .5f);
+                 */
+
                 var b = _mouseOver as RTSBuilding;
                 if (b != null)
-                {
-                    var unit = (RTSUnit)Entities.Instance.Create(EntityTypes.Instance.GetByName("RTSRobot"), Map.Instance);
-
-                    var character = unit as RTSCharacter;
-                    if (character == null)
-                        Log.Fatal("RTSBuilding: Create character == null");
-                    else
-                    {
-                        unit.Position = b.Position;
-
-                        // TODO: use GridPathFindSystem or something better
-                        /*
-                        Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(
-                            b.Position.ToVec2(), character.Type.Radius * 2);
-                        unit.Position = new Vec3(p.X, p.Y,
-                                                 GridPathFindSystem.Instance.GetMotionMapHeight(p) +
-                                                 character.Type.Height * .5f);
-                         */
-                    }
-
-                    if (b.Intellect != null)
-                        unit.InitialFaction = b.Intellect.Faction;
-
-                    unit.Move(Vec3.Zero);
-
-                    unit.PostCreate();
-                }
+                    _worldViewModel.ProduceEntity.Execute(b.UserData);
             }
 
+            // TODO: This is just for fun, will remove it later
             if (_mouseOver != null && _mouseOver.PhysicsModel != null)
-            {
                 foreach (Body b in _mouseOver.PhysicsModel.Bodies)
-                {
-                    b.AddForce(ForceType.Global, 0f, new Vec3(_rand.Next(500) - 250, _rand.Next(500) - 250, _rand.Next(1000) + 250), Vec3.Zero);
-                }
-            }
+                    b.AddForce(ForceType.Global, 0f,
+                        new Vec3(_rand.Next(500) - 250, _rand.Next(500) - 250, _rand.Next(1000) + 250),
+                        Vec3.Zero);
         }
     }
 }

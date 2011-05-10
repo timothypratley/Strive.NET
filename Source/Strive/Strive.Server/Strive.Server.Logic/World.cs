@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Logging;
+using Microsoft.FSharp.Core;
+using Strive.Common;
 using Strive.Data.Events;
 using Strive.Model;
 using Strive.Network.Messaging;
@@ -58,6 +60,29 @@ namespace Strive.Server.Logic
             WeatherUpdate();
         }
 
+        public void UpdateEntity(EntityModel entity)
+        {
+            if (!entity.Production.Queue.IsEmpty)
+            {
+                var progressChange = entity.Production.Rate * (float)(Global.Now - entity.Production.LastUpdated).TotalSeconds;
+                if (entity.Production.Progress + progressChange >= entity.Production.Target)
+                {
+                    var creation = new EntityModel(entity.Production.Queue.First(),
+                        "Creation", "RTSRobot", entity.Position, entity.Rotation, 100, 100, EnumMobileState.Standing, 1.7f);
+                    entity = entity.WithProductionComplete(Global.Now);
+                    Apply(new EntityUpdateEvent(
+                        new[] { entity, creation },
+                        "Production of " + creation.Name + " by " + entity.Name + " complete"));
+                }
+                else
+                {
+                    entity = entity.WithProductionProgressChange(progressChange, Global.Now);
+                    Apply(new EntityUpdateEvent(entity, "Production update"));
+                }
+            }
+        }
+
+        // TODO: Make weather recorded
         void WeatherUpdate()
         {
             Weather.ServerNow = Global.Now.Ticks;
@@ -90,13 +115,19 @@ namespace Strive.Server.Logic
         {
             _log.Debug(e.GetType() + e.Description);
 
-            var old = History.Head.Entity.TryFind(e.Entity.Id);
-            History.Add(e.Entity);
-            int newCube = WorldModel.GetCubeKey(e.Entity.Position);
+            foreach (var entity in e.Entities)
+                UpdateCubes(entity, History.Head.Entity.TryFind(entity.Id));
+
+            History.Add(e.Entities);
+        }
+
+        public void UpdateCubes(EntityModel entity, FSharpOption<EntityModel> old)
+        {
+            int newCube = WorldModel.GetCubeKey(entity.Position);
 
             // update client cubes if the entity was possessed
             ClientConnection client;
-            Possession.TryGetValue(e.Entity.Id, out client);
+            Possession.TryGetValue(entity.Id, out client);
             if (client != null)
             {
                 var newCubes = new HashSet<int>(WorldModel.GetNearbyCubeKeys(newCube));
@@ -129,7 +160,7 @@ namespace Strive.Server.Logic
                 ClientCubes[client] = newCubes;
             }
 
-            // notify all clients subsribed to the relevant cubes
+            // notify all clients subscribed to the relevant cubes
             HashSet<ClientConnection> newClients;
             if (!CubeClients.TryGetValue(newCube, out newClients))
                 newClients = new HashSet<ClientConnection>();
@@ -142,11 +173,11 @@ namespace Strive.Server.Logic
                     oldClients = new HashSet<ClientConnection>();
                 if (oldCube != newCube)
                     foreach (var c in oldClients.Except(newClients))
-                        c.Drop(e.Entity);
+                        c.Drop(entity);
             }
 
             foreach (var c in newClients.Where(x => x != client))
-                c.Send(e.Entity);
+                c.Send(entity);
         }
 
         public void Apply(TaskUpdateEvent e)

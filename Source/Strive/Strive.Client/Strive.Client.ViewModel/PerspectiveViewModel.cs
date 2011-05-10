@@ -86,6 +86,17 @@ namespace Strive.Client.ViewModel
             }
         }
 
+        public ICommand ProduceEntity
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => WorldViewModel.IsMouseOverEntity)
+                    .Do(() => WorldViewModel.ServerConnection.ProduceEntity(
+                        rand.Next(), "Robot", "RTSRobot", WorldViewModel.MouseOverEntity.Entity));
+            }
+        }
+
         public ICommand PossessEntity
         {
             get

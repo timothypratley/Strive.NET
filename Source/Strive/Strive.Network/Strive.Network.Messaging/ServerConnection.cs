@@ -35,6 +35,12 @@ namespace Strive.Network.Messaging
             Send(new EntityModel(id, name, modelId, position, rotation, 100, 100, EnumMobileState.Standing, 1.7f));
         }
 
+        public void ProduceEntity(int id, string name, string modelId, EntityModel factory)
+        {
+            Send(new ProduceEntity(id, name, modelId, factory.Id));
+        }
+
+
         public void Login(string username, string password)
         {
             Send(new Login(username, password));

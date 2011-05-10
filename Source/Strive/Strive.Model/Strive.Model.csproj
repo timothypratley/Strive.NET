@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Affinity.cs" />
     <Compile Include="CombatantModel.cs" />
+    <Compile Include="Production.cs" />
     <Compile Include="DictionaryModel.cs" />
     <Compile Include="PlanModel.cs" />
     <Compile Include="Recorded.cs" />
