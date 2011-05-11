@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 using Strive.Model;
 using Strive.Network.Messaging;
 using UpdateControls.XAML;
@@ -63,21 +65,43 @@ namespace Strive.Client.ViewModel
             }
         }
 
+        // TODO: use the application random somehow
+        private Random rand = new Random();
         public ICommand ProduceEntity
         {
             get
             {
                 return MakeCommand
-                    .When(() => CurrentPerspective != null)
-                    .Do(() => CurrentPerspective.ProduceEntity.Execute(null));
+                    .When(() => IsMouseOverEntity)
+                    .Do(() => ServerConnection.ProduceEntity(
+                        rand.Next(), "Robot", "RTSRobot", MouseOverEntity.Entity));
             }
         }
+
+        public ICommand CreatePlan
+        {
+            get
+            {
+                // TODO: use real values, remember entities are actually filters (make explicit)
+                var e = new EntityModel(rand.Next(), "Foo", "Bar", new Vector3D(), Quaternion.Identity, 100, 100, Common.EnumMobileState.Standing, 1.7f);
+                return MakeCommand
+                    .When(() => WorldNavigation.SelectedEntities.Any())
+                    .Do(() => ServerConnection.CreatePlan(
+                        rand.Next(), EnumPlanAction.Move, e, DateTime.Now, e, DateTime.Now, e, 0.2f));
+            }
+        }
+
 
         public PerspectiveViewModel CurrentPerspective { get; set; }
 
         public IEnumerable<EntityViewModel> Entities
         {
-            get { return History.Entities.Select(em => new EntityViewModel(em, WorldNavigation)); }
+            get { return History.Current.Entity.Select(e => new EntityViewModel(e.Value, WorldNavigation)); }
+        }
+
+        public IEnumerable<PlanViewModel> Plans
+        {
+            get { return History.Current.Plan.Select(p => new PlanViewModel(p.Value, WorldNavigation)); }
         }
 
         public int CurrentVersion
@@ -92,43 +116,16 @@ namespace Strive.Client.ViewModel
             WorldNavigation.MouseOverEntity = null;
         }
 
-        public void SetMouseOverEntity(int id)
-        {
-            WorldNavigation.MouseOverEntity = History.GetEntity(id);
-        }
-
-        public void SelectAdd(int id)
-        {
-            var entity = History.GetEntity(id);
-            if (entity != null)
-                WorldNavigation.AddSelectedEntity(entity);
-        }
-
-        public void Select(int id)
-        {
-            var entity = History.GetEntity(id);
-            if (entity != null)
-                WorldNavigation.SetSelectedEntity(entity);
-        }
-
-        public IEnumerable<EntityViewModel> SelectedEntities
-        {
-            get
-            {
-                return WorldNavigation.SelectedEntities
-                    .Select(em => new EntityViewModel(em, WorldNavigation));
-            }
-        }
-
         // TODO: can XAML just use the MouseOverEntity instead?
-        public bool IsMouseOverEntity { get { return WorldNavigation.MouseOverEntity != null; } }
+        public bool IsMouseOverEntity { get { return WorldNavigation.MouseOverEntity.HasValue; } }
 
         public EntityViewModel MouseOverEntity
         {
             get
             {
-                return WorldNavigation.MouseOverEntity == null ? null
-                    : new EntityViewModel(WorldNavigation.MouseOverEntity, WorldNavigation);
+                return WorldNavigation.MouseOverEntity.HasValue
+                    ? new EntityViewModel(History.Current.Entity[WorldNavigation.MouseOverEntity.Value], WorldNavigation)
+                    : null;
             }
         }
     }

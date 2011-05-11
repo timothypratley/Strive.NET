@@ -186,6 +186,12 @@ namespace Strive.Server.Logic
             History.Add(e.Task);
         }
 
+        public void Apply(PlanUpdateEvent e)
+        {
+            _log.Debug(e.GetType() + e.Description);
+            History.Add(e.Plan);
+        }
+
         public void Apply(SkillEvent e)
         {
             _log.Debug(e.GetType() + e.Description);

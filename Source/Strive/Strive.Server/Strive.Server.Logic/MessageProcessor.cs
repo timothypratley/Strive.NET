@@ -335,18 +335,18 @@ namespace Strive.Server.Logic
                     .ToArray());
         }
 
-        void ProcessMessage(ClientConnection client, EntityModel e)
+        void ProcessMessage(ClientConnection client, CreateEntity c)
         {
             // TODO: would like to at least set the id
             // ObjectInstanceId = Global.Rand.Next(),
-            World.Apply(new EntityUpdateEvent(e, "Created by " + client.AuthenticatedUsername));
+            World.Apply(new EntityUpdateEvent(c.Entity, "Created by " + client.AuthenticatedUsername));
         }
 
-        void ProcessMessage(ClientConnection client, TaskModel t)
+        void ProcessMessage(ClientConnection client, CreatePlan c)
         {
             // TODO: would like to at least set the id
             // ObjectInstanceId = Global.Rand.Next(),
-            World.Apply(new TaskUpdateEvent(t, "Created by " + client.AuthenticatedUsername));
+            World.Apply(new PlanUpdateEvent(c.Plan, "Created by " + client.AuthenticatedUsername));
         }
 
         void ProcessMessage(ClientConnection client, ProduceEntity p)

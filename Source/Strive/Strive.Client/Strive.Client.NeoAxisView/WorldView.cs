@@ -3,7 +3,6 @@ using System.Windows;
 using Engine.EntitySystem;
 using Engine.MapSystem;
 using Strive.Client.ViewModel;
-using Strive.Model;
 using WPFAppFramework;
 
 
@@ -33,7 +32,7 @@ namespace Strive.Client.NeoAxisView
                     neoEntity = (MapObject)Entities.Instance.Create(entityModel.ModelId, Map.Instance);
                     neoEntity.Name = entityModel.Id.ToString();
                     neoEntity.TextUserData = entityModel.Name;
-                    neoEntity.UserData = entityModel;
+                    neoEntity.UserData = entityModel.Id;
                     neoEntity.Position = entityModel.Position.ToVec3();
                     neoEntity.Rotation = entityModel.Rotation.ToQuat();
                     neoEntity.PostCreate();
@@ -42,13 +41,12 @@ namespace Strive.Client.NeoAxisView
                 neoEntity.Rotation = entityModel.Rotation.ToQuat();
             }
 
-            // TODO: this still crashes when using timeline - why? (collection modified)
             // Remove entities that should no longer be in the scene
+            // TODO: this still crashes when using timeline - why? (collection modified)
             foreach (var neoEntity in Entities.Instance.EntitiesCollection
                 .Where(x => x is MapObject
-                    && x.UserData != null
-                    && x.UserData is EntityModel
-                    && !m.ContainsKey(((EntityModel)x.UserData).Id)))
+                    && x.UserData is int
+                    && !m.ContainsKey((int)x.UserData)))
                 neoEntity.SetShouldDelete();
             Entities.Instance.DeleteEntitiesMarkedForDeletion();
         }

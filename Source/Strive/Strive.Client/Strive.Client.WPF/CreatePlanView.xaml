@@ -1,0 +1,17 @@
+﻿<ad:DockableContent x:Class="Strive.Client.WPF.CreatePlanView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        Title="Create Plan" Height="300" Width="300">
+    <StackPanel>
+        <Label Content="Action"/>
+        <ComboBox x:Name="action">
+            <ComboBoxItem>Move</ComboBoxItem>
+            <ComboBoxItem>Destroy</ComboBoxItem>
+            <ComboBoxItem>Build</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Target"/>
+        <PasswordBox x:Name="target"/>
+        <Button Content="Create Plan" Click="Button_Click"/>
+    </StackPanel>
+</ad:DockableContent>

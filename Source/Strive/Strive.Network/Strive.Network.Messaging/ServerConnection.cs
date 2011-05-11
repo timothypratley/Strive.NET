@@ -1,12 +1,8 @@
 using System;
-using System.Diagnostics;
-using System.Reflection;
 using System.Windows.Media.Media3D;
-using Microsoft.CSharp.RuntimeBinder;
 using Strive.Common;
 using Strive.Model;
 using Strive.Network.Messages;
-using Strive.Network.Messages.ToClient;
 using Strive.Network.Messages.ToServer;
 
 
@@ -32,7 +28,12 @@ namespace Strive.Network.Messaging
 
         public void CreateEntity(int id, string name, string modelId, Vector3D position, Quaternion rotation)
         {
-            Send(new EntityModel(id, name, modelId, position, rotation, 100, 100, EnumMobileState.Standing, 1.7f));
+            Send(new CreateEntity(new EntityModel(id, name, modelId, position, rotation, 100, 100, EnumMobileState.Standing, 1.7f)));
+        }
+
+        public void CreatePlan(int id, EnumPlanAction action, EntityModel protagonist, DateTime startTime, EntityModel start, DateTime finishTime, EntityModel finish, float lateFee)
+        {
+            Send(new CreatePlan(new PlanModel(id, action, protagonist, startTime, start, finishTime, finish, lateFee)));
         }
 
         public void ProduceEntity(int id, string name, string modelId, EntityModel factory)

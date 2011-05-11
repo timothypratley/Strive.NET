@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using Strive.Common;
-using Strive.Model;
 using UpdateControls.XAML;
 
 
@@ -39,15 +38,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        DictionaryModel<int, EntityModel> _followEntities = new DictionaryModel<int, EntityModel>();
-        public IEnumerable<EntityViewModel> FollowEntities
-        {
-            get
-            {
-                return _followEntities.Entities
-                    .Select(em => new EntityViewModel(em, WorldViewModel.WorldNavigation));
-            }
-        }
+        HashSet<int> _followEntities = new HashSet<int>();
 
         public void UnFollow()
         {
@@ -83,17 +74,6 @@ namespace Strive.Client.ViewModel
                 return MakeCommand
                     .Do(() => WorldViewModel.ServerConnection.CreateEntity(
                         rand.Next(), "Robot", "RTSRobot", Position, Rotation));
-            }
-        }
-
-        public ICommand ProduceEntity
-        {
-            get
-            {
-                return MakeCommand
-                    .When(() => WorldViewModel.IsMouseOverEntity)
-                    .Do(() => WorldViewModel.ServerConnection.ProduceEntity(
-                        rand.Next(), "Robot", "RTSRobot", WorldViewModel.MouseOverEntity.Entity));
             }
         }
 
@@ -135,16 +115,14 @@ namespace Strive.Client.ViewModel
                     .Do(() =>
                     {
                         var target = WorldViewModel.WorldNavigation.MouseOverEntity;
-                        if (target == null)
-                            _followEntities = new DictionaryModel<int, EntityModel>(
-                                WorldViewModel.WorldNavigation.SelectedEntities
-                                    .Select(e => new KeyValuePair<int, EntityModel>(e.Id, e)));
-                        else
+                        if (target.HasValue)
                         {
                             UnFollow();
-                            _followEntities.Add(target.Id, target);
-                            WorldViewModel.Select(target.Id);
+                            _followEntities.Add(target.Value);
+                            WorldViewModel.WorldNavigation.SetSelectedEntity(target.Value);
                         }
+                        else
+                            _followEntities = new HashSet<int>(WorldViewModel.WorldNavigation.SelectedEntities);
                     });
             }
         }
@@ -344,9 +322,11 @@ namespace Strive.Client.ViewModel
         /// <summary> Move toward or follow one or more entities </summary>
         private void Follow(double deltaT)
         {
-            // check they still exist in the world
-            var following = _followEntities.Entities
-                    .Where(e => WorldViewModel.History.Current.Entity.ContainsKey(e.Id));
+            // check they still exist in the world and get their current details
+            var following = _followEntities
+                .Select(WorldViewModel.History.Current.Entity.TryFind)
+                .Where(x => x != null)
+                .Select(x => x.Value);
 
             if (following.Any())
             {

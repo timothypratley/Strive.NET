@@ -74,7 +74,7 @@ namespace Strive.Client.WPF
 
         private void SearchCmdExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var r = new ResourceListView();
+            var r = new EntityListView();
             r.InputBindings.Add(
                 new KeyBinding(App.WorldViewModel.FollowSelected, Key.G, ModifierKeys.Control));
             r.InputBindings.Add(
@@ -110,16 +110,6 @@ namespace Strive.Client.WPF
             wb.Focus();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            BindAndShow(new FactoryView(), new FactoryViewModel());
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            BindAndShow(new UnitView(), new UnitViewModel());
-        }
-
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             BindAndShow(new ServerStatusView(), new ServerStatusViewModel(App.ServerEngine.ServerStatusModel));
@@ -147,6 +137,14 @@ namespace Strive.Client.WPF
             view.DataContext = ForView.Wrap(viewModel);
             view.ShowAsDocument(dockManager);
             view.Focus();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            var r = new PlanListView();
+            //r.InputBindings.Add(
+            //new KeyBinding(App.WorldViewModel.CreateEntity, Key.C, ModifierKeys.Control));
+            BindAndShow(r, App.WorldViewModel);
         }
     }
 }

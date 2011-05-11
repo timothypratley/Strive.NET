@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using Strive.Common;
-using System;
 
 namespace Strive.Model
 {
     public class History
     {
         private readonly Recorded<WorldModel> _recordedWorld = new Recorded<WorldModel>(WorldModel.Empty);
-        public IEnumerable<EntityModel> Entities { get { return _recordedWorld.Current.Entity.Select(x => x.Value); } }
         public WorldModel Current { get { return _recordedWorld.Current; } }
         public WorldModel Head { get { return _recordedWorld.Head; } set { _recordedWorld.Head = value; } }
 
@@ -28,10 +27,15 @@ namespace Strive.Model
             _recordedWorld.Head = _recordedWorld.Head.Add(task);
         }
 
+        public void Add(PlanModel plan)
+        {
+            _recordedWorld.Head = _recordedWorld.Head.Add(plan);
+        }
+
         public EntityModel GetEntity(int key)
         {
             var r = _recordedWorld.Head.Entity.TryFind(key);
-            if (r!=null)
+            if (r != null)
                 return r.Value;
             return null;
         }

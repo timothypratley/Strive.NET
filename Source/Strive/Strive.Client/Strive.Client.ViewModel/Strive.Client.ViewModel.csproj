@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatLogViewModel.cs" />
+    <Compile Include="PlanViewModel.cs" />
     <Compile Include="EntityViewModel.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="InputBindings.cs" />

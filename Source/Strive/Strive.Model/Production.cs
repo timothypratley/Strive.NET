@@ -10,7 +10,7 @@ namespace Strive.Model
         public Production(float rate, FSharpList<int> queue, float target, float progress)
         {
             Contract.Requires<ArgumentException>(rate >= 0);
-            Contract.Requires<ArgumentException>(progress < target);
+            Contract.Requires<ArgumentException>(queue.IsEmpty || progress < target);
 
             Rate = rate;
             Queue = queue;

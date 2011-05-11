@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlanUpdateEvent.cs" />
     <Compile Include="SkillEvent.cs" />
     <Compile Include="EntityUpdateEvent.cs" />
     <Compile Include="Event.cs" />

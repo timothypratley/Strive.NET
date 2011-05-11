@@ -10,7 +10,6 @@ using Engine.Renderer;
 using Engine.SoundSystem;
 using GameEntities;
 using Strive.Client.ViewModel;
-using Strive.Model;
 
 
 namespace Strive.Client.NeoAxisView
@@ -108,7 +107,7 @@ namespace Strive.Client.NeoAxisView
                 Ray ray = camera.GetCameraToViewportRay(mouse);
                 Map.Instance.GetObjects(ray, delegate(MapObject obj, float scale)
                 {
-                    if (obj.UserData == null || !(obj.UserData is EntityModel))
+                    if (obj.UserData is int)
                         return true;
                     _mouseOver = obj;
                     return false;
@@ -119,7 +118,7 @@ namespace Strive.Client.NeoAxisView
                     // Put a yellow box around it and a tooltip
                     camera.DebugGeometry.Color = new ColorValue(1, 1, 0);
                     camera.DebugGeometry.AddBounds(_mouseOver.MapBounds);
-                    _worldViewModel.SetMouseOverEntity(((EntityModel)_mouseOver.UserData).Id);
+                    _worldViewModel.WorldNavigation.MouseOverEntity = (int)_mouseOver.UserData;
                 }
                 else
                     _worldViewModel.ClearMouseOverEntity();
@@ -137,8 +136,8 @@ namespace Strive.Client.NeoAxisView
             // Show all selected entities with a blue box around them
             // except MouseOver as it will be yellow
             camera.DebugGeometry.Color = new ColorValue(0.5f, 0.5f, 1);
-            foreach (MapObject mo in _worldViewModel.SelectedEntities
-                .Select(evm => Entities.Instance.GetByName(evm.Entity.Id.ToString()))
+            foreach (MapObject mo in _worldViewModel.WorldNavigation.SelectedEntities
+                .Select(x => Entities.Instance.GetByName(x.ToString()))
                 .OfType<MapObject>()
                 .Where(mo => mo != _mouseOver))
                 camera.DebugGeometry.AddBounds(mo.MapBounds);
@@ -182,34 +181,20 @@ namespace Strive.Client.NeoAxisView
                 _ignoreFirst = true;
             }
 
-            EntityViewModel evm = _worldViewModel.SelectedEntities.FirstOrDefault();
-            if (evm != null)
-            {
-                // TODO: set the target
-            }
             if (_mouseOver != null)
             {
-                var id = ((EntityModel)_mouseOver.UserData).Id;
+                var id = (int)_mouseOver.UserData;
                 if (renderTarget.IsKeyPressed(Key.LeftShift)
                     || renderTarget.IsKeyPressed(Key.LeftCtrl)
                     || renderTarget.IsKeyPressed(Key.RightShift)
                     || renderTarget.IsKeyPressed(Key.RightCtrl))
-                    _worldViewModel.SelectAdd(id);
+                    _worldViewModel.WorldNavigation.AddSelectedEntity(id);
                 else
-                    _worldViewModel.Select(id);
+                    _worldViewModel.WorldNavigation.SetSelectedEntity(id);
 
-                // TODO: Find the nearest free position (server-side?)
-                /*
-                Vec2 p = GridPathFindSystem.Instance.GetNearestFreePosition(
-                    b.Position.ToVec2(), character.Type.Radius * 2);
-                unit.Position = new Vec3(p.X, p.Y,
-                                         GridPathFindSystem.Instance.GetMotionMapHeight(p) +
-                                         character.Type.Height * .5f);
-                 */
-
-                var b = _mouseOver as RTSBuilding;
-                if (b != null)
-                    _worldViewModel.ProduceEntity.Execute(b.UserData);
+                // TODO: this is a spaghetti way to fire the command, fix it
+                if (_mouseOver is RTSBuilding)
+                    _worldViewModel.ProduceEntity.Execute(null);
             }
 
             // TODO: This is just for fun, will remove it later

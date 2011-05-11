@@ -1,0 +1,16 @@
+﻿<ad:DockableContent x:Class="Strive.WPF.PlanListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:b="clr-namespace:Strive.WPF"
+        Title="Resource List" Height="300" Width="300">
+    <ListView Name="listView1" ItemsSource="{Binding Plans}"
+              IsSynchronizedWithCurrentItem="True"
+              b:ListBoxBehaviour.AutoCopy="True">
+        <ListView.Resources>
+            <Style TargetType="{x:Type ListViewItem}">
+                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+            </Style>
+        </ListView.Resources>
+    </ListView>
+</ad:DockableContent>

@@ -1,5 +1,5 @@
-﻿using System.Diagnostics.Contracts;
-using System;
+﻿using System;
+using System.Diagnostics.Contracts;
 using Strive.Model;
 
 
@@ -21,13 +21,15 @@ namespace Strive.Client.ViewModel
 
         public EntityModel Entity { get { return _entity; } }
 
-        public bool IsSelected {
+        public bool IsSelected
+        {
             get { return _entityNavigation.IsSelected(_entity); }
-            set {
+            set
+            {
                 if (value)
-                    _entityNavigation.AddSelectedEntity(_entity);
+                    _entityNavigation.AddSelected(_entity);
                 else
-                    _entityNavigation.RemoveSelectedEntity(_entity);
+                    _entityNavigation.RemoveSelected(_entity);
             }
         }
 
