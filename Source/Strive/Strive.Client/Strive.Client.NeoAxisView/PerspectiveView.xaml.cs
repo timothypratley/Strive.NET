@@ -107,7 +107,7 @@ namespace Strive.Client.NeoAxisView
                 Ray ray = camera.GetCameraToViewportRay(mouse);
                 Map.Instance.GetObjects(ray, delegate(MapObject obj, float scale)
                 {
-                    if (obj.UserData is int)
+                    if (!(obj.UserData is int))
                         return true;
                     _mouseOver = obj;
                     return false;
@@ -123,6 +123,7 @@ namespace Strive.Client.NeoAxisView
                 else
                     _worldViewModel.ClearMouseOverEntity();
 
+                // TODO: after removing the physical bodies, this ray-cast never hits anything of course...
                 RayCastResult result = PhysicsWorld.Instance.RayCast(ray, (int)ContactGroup.CastOnlyCollision);
                 _mouseIntersection = result.Position;
                 if (result.Shape != null)

@@ -4,6 +4,7 @@ using Engine.EntitySystem;
 using Engine.MapSystem;
 using Strive.Client.ViewModel;
 using WPFAppFramework;
+using GameEntities;
 
 
 namespace Strive.Client.NeoAxisView
@@ -39,6 +40,9 @@ namespace Strive.Client.NeoAxisView
                 }
                 neoEntity.Position = entityModel.Position.ToVec3();
                 neoEntity.Rotation = entityModel.Rotation.ToQuat();
+                if (entityModel.Production.Queue.Any() && neoEntity is RTSBuilding && ((RTSBuilding)neoEntity).BuildedProgress <= 0)
+                    ((RTSBuilding)neoEntity).StartProductUnit(new RTSUnitType());
+
             }
 
             // Remove entities that should no longer be in the scene
@@ -46,7 +50,8 @@ namespace Strive.Client.NeoAxisView
             foreach (var neoEntity in Entities.Instance.EntitiesCollection
                 .Where(x => x is MapObject
                     && x.UserData is int
-                    && !m.ContainsKey((int)x.UserData)))
+                    && !m.ContainsKey((int)x.UserData))
+                .ToArray())
                 neoEntity.SetShouldDelete();
             Entities.Instance.DeleteEntitiesMarkedForDeletion();
         }

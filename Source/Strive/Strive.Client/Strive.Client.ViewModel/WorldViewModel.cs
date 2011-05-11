@@ -71,6 +71,7 @@ namespace Strive.Client.ViewModel
         {
             get
             {
+                // TODO: There is a race condition where MouseOverEntity can be updated between the when and do
                 return MakeCommand
                     .When(() => IsMouseOverEntity)
                     .Do(() => ServerConnection.ProduceEntity(

@@ -65,8 +65,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="UpdateControls, Version=2.1.1.0, Culture=neutral, PublicKeyToken=19e83a8289e31a8f, processorArchitecture=MSIL">
-      <HintPath>..\..\..\ThirdParty\UpdateControls\UpdateControls.dll</HintPath>
+    <Reference Include="UpdateControls">
+      <HintPath>..\..\ThirdParty\UpdateControls\UpdateControls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -57,6 +57,8 @@ namespace Strive.Server.Logic
         {
             foreach (CombatantModel c in History.Head.Entity.OfType<CombatantModel>())
                 this.UpdateCombatant(c);
+            foreach (var e in History.Head.Entity)
+                UpdateEntity(e.Value);
             WeatherUpdate();
         }
 
