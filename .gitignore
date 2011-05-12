@@ -18,6 +18,7 @@ _ReSharper.*
 *.resharper.user
 *.resharper
 *.suo
+*.docstates
 *.swp
 *.user
 Thumbs.db
