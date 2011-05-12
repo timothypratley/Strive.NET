@@ -55,14 +55,42 @@ namespace Strive.Server.Logic
 
         public void Update()
         {
-            foreach (CombatantModel c in History.Head.Entity.OfType<CombatantModel>())
-                this.UpdateCombatant(c);
-            foreach (var e in History.Head.Entity)
-                UpdateEntity(e.Value);
+            UpdatePlanTasks();
+
+            foreach (var e in History.Head.Entity.Select(p => p.Value))
+            {
+                if (e is CombatantModel)
+                    this.UpdateCombatant((CombatantModel)e);
+                if (!e.Production.Queue.IsEmpty)
+                    UpdateProduction(e);
+            }
+
             WeatherUpdate();
         }
 
-        public void UpdateEntity(EntityModel entity)
+        public void UpdatePlanTasks()
+        {
+            foreach (var plan in History.Head.Plan.Select(o => o.Value))
+            {
+                var tasks = History.Head.Requires.TryFind(plan.Id);
+                if (tasks == null)
+                {
+                    Apply(new TaskUpdateEvent(
+                        new TaskModel(Global.Rand.Next(), plan.Id, plan.Start.Position, plan.Finish.Position),
+                        "Added task for " + plan.Action + " plan"));
+                }
+            }
+        }
+
+        public TaskModel DoingTask(EntityModel entity)
+        {
+            var doing = History.Head.Doing.TryFind(entity.Id);
+            if (doing == null)
+                return null;
+            return History.Head.Task[doing.Value.First()];
+        }
+
+        public void UpdateProduction(EntityModel entity)
         {
             if (!entity.Production.Queue.IsEmpty)
             {
@@ -189,6 +217,18 @@ namespace Strive.Server.Logic
         }
 
         public void Apply(PlanUpdateEvent e)
+        {
+            _log.Debug(e.GetType() + e.Description);
+            History.Add(e.Plan);
+        }
+
+        public void Apply(TaskCompleteEvent e)
+        {
+            _log.Debug(e.GetType() + e.Description);
+            History.Complete(e.Doer, e.Task);
+        }
+
+        public void Apply(PlanCompleteEvent e)
         {
             _log.Debug(e.GetType() + e.Description);
             History.Add(e.Plan);

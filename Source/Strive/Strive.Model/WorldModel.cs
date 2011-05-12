@@ -132,7 +132,41 @@ namespace Strive.Model
 
         public WorldModel Add(TaskModel task)
         {
-            return new WorldModel(Entity, Task.Add(task.Id, task), Plan, Holding, Doing, Requires, EntityCube);
+            var o = Requires.TryFind(task.PlanId);
+            var tasks = o == null
+                ? new FSharpSet<int>(new[] { task.Id })
+                : o.Value.Add(task.Id);
+
+            return new WorldModel(Entity,
+                Task.Add(task.Id, task), Plan, Holding, Doing,
+                Requires.Add(task.PlanId, tasks), EntityCube);
+        }
+
+        public FSharpMap<int, FSharpSet<int>> Dissoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
+        {
+                var o = map.TryFind(key);
+                var set = o == null
+                    ? SetModule.Empty<int>()
+                    : o.Value.Remove(id);
+                return set.IsEmpty ? map.Remove(key) : map.Add(key, set);
+        }
+
+        public WorldModel Complete(EntityModel doer, TaskModel task)
+        {
+            Contract.Ensures(!Doing.Select(d => d.Value).Any(tasks => tasks.Contains(task.Id)));
+
+            var doing = doer == null
+                ? Doing
+                : Dissoc(Doing, doer.Id, task.Id);
+            var requires = Dissoc(Requires, task.PlanId, task.Id);
+            return new WorldModel(Entity, Task.Remove(task.Id), Plan, Holding, doing, requires, EntityCube);
+        }
+
+        public WorldModel Complete(PlanModel plan)
+        {
+            Contract.Requires<ArgumentException>(!Task.Any(t => t.Value.PlanId == plan.Id));
+
+            return new WorldModel(Entity, Task, Plan.Remove(plan.Id), Holding, Doing, Requires, EntityCube);
         }
 
         public WorldModel Add(PlanModel plan)
@@ -145,23 +179,48 @@ namespace Strive.Model
             return new WorldModel(Entity, Task, Plan, Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, Requires, EntityCube);
         }
 
+        // TODO: These three functions are just to suppress a warning from code contracts, can it be fixed a better way?
+        [Pure]
+        private bool ContainsKey(FSharpMap<int, EntityModel> map, int key)
+        {
+            return map.ContainsKey(key);
+        }
+
+        [Pure]
+        private bool ContainsKey(FSharpMap<int, PlanModel> map, int key)
+        {
+            return map.ContainsKey(key);
+        }
+
+        [Pure]
+        private bool ContainsKey(FSharpMap<int, TaskModel> map, int key)
+        {
+            return map.ContainsKey(key);
+        }
+
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
+            // an Entity exists for every Holding (entities hold entities)
+            // and every Entity being held by an Entity can be found
             Contract.Invariant(
                 Holding.All(
-                    x => Entity.ContainsKey(x.Key)
-                        && x.Value.All(y => Entity.ContainsKey(y))));
+                    x => ContainsKey(Entity, x.Key)
+                        && x.Value.All(y => ContainsKey(Entity, y))));
 
+            // an Entity exists for every Doing (entities do tasks)
+            // and every Task being done by an Entity can be found
             Contract.Invariant(
                 Doing.All(
-                    x => Entity.ContainsKey(x.Key)
-                        && x.Value.All(y => Task.ContainsKey(y))));
+                    x => ContainsKey(Entity, x.Key)
+                        && x.Value.All(y => ContainsKey(Task, y))));
 
+            // a Plan exists for every Require  (plans require tasks)
+            // and every Task required by a Plan can be found
             Contract.Invariant(
                 Requires.All(
-                    x => Plan.ContainsKey(x.Key)
-                        && x.Value.All(y => Task.ContainsKey(y))));
+                    x => ContainsKey(Plan, x.Key)
+                        && x.Value.All(y => ContainsKey(Task, y))));
 
             Contract.Invariant(EntityCube.Sum(x => x.Value.Count) == Entity.Count);
         }

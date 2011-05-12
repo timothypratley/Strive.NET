@@ -39,6 +39,7 @@ namespace Strive.Model
         }
 
         public int Id { get; private set; }
+        public string Owner { get; private set; }
         public EnumPlanAction Action { get; private set; }
         public EntityModel Protagonist { get; private set; }
 

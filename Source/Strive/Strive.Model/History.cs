@@ -32,6 +32,16 @@ namespace Strive.Model
             _recordedWorld.Head = _recordedWorld.Head.Add(plan);
         }
 
+        public void Complete(EntityModel entity, TaskModel task)
+        {
+            _recordedWorld.Head = _recordedWorld.Head.Complete(entity, task);
+        }
+
+        public void Complete(PlanModel plan)
+        {
+            _recordedWorld.Head = _recordedWorld.Head.Complete(plan);
+        }
+
         public EntityModel GetEntity(int key)
         {
             var r = _recordedWorld.Head.Entity.TryFind(key);

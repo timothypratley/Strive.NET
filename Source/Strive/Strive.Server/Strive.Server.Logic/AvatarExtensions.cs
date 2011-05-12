@@ -37,7 +37,7 @@ namespace Strive.Server.Logic
 
             if (c.Target != null)
                 world.CheckAttack(c);
-            
+
             if (!world.Possession.ContainsKey(c.Id))
                 c = world.BehaviourUpdate(c);
             else if (Global.Now - c.LastMoveUpdate > TimeSpan.FromSeconds(1)
@@ -67,14 +67,27 @@ namespace Strive.Server.Logic
             Quaternion rotation = combatant.Rotation;
             Vector3D position = combatant.Position;
             EnumMobileState mobileState = combatant.MobileState;
+            var task = world.DoingTask(combatant);
+
             // continue doing whatever you were doing
             if (Global.Now - combatant.LastMoveUpdate > TimeSpan.FromSeconds(1))
             {
                 if (combatant.MobileState >= EnumMobileState.Standing)
                 {
-                    rotation.Y += (float)(Global.Rand.NextDouble() * 40 - 20);
-                    while (combatant.Rotation.Y < 0) rotation.Y += 360;
-                    while (combatant.Rotation.Y >= 360) rotation.Y -= 360;
+                    if (task != null)
+                    {
+                        // move toward goal
+                        var goalVector = (task.Finish - combatant.Position);
+                        rotation.Y = Math.Atan2(goalVector.Y, goalVector.X) * 180 / Math.PI;
+                    }
+                    else
+                    {
+                        // move randomly
+                        rotation.Y += (float)(Global.Rand.NextDouble() * 40 - 20)
+                            * combatant.MoveTurnSpeed;
+                        while (combatant.Rotation.Y < 0) rotation.Y += 360;
+                        while (combatant.Rotation.Y >= 360) rotation.Y -= 360;
+                    }
                 }
                 Matrix3D m = Matrix3D.Identity;
                 m.RotatePrepend(rotation);
@@ -83,29 +96,24 @@ namespace Strive.Server.Logic
                 {
                     case EnumMobileState.Running:
                         // TODO: using timing, not constant values
-                        position = combatant.Position + 3 * velocity / 10;
+                        position = combatant.Position + combatant.MoveRunSpeed * velocity / 3;
                         break;
                     case EnumMobileState.Walking:
-                        position = combatant.Position + velocity / 10;
+                        position = combatant.Position + combatant.MoveRunSpeed * velocity / 10;
                         break;
                     default:
                         // do nothing
                         break;
                 }
             }
-            if (Global.Now - combatant.LastBehaviourUpdate > TimeSpan.FromSeconds(3))
+            if (combatant.MobileState > EnumMobileState.Incapacitated
+                && Global.Now - combatant.LastMobileStateUpdate > TimeSpan.FromSeconds(3))
             {
-                // change behavior?
-                // TODO: record behavior change time
-                //combatant.LastBehaviourUpdate = Global.Now;
-                if (combatant.MobileState > EnumMobileState.Incapacitated)
-                {
-                    int rand = Global.Rand.Next(5) - 2;
-                    if (rand > 1 && combatant.MobileState > EnumMobileState.Sleeping)
-                        mobileState = combatant.MobileState - 1;
-                    else if (rand < -1 && combatant.MobileState < EnumMobileState.Running)
-                        mobileState = combatant.MobileState + 1;
-                }
+                int rand = Global.Rand.Next(5) - 2;
+                if (task == null && rand > 1 && combatant.MobileState > EnumMobileState.Sleeping)
+                    mobileState = combatant.MobileState - 1;
+                else if (rand < -1 && combatant.MobileState < EnumMobileState.Running)
+                    mobileState = combatant.MobileState + 1;
             }
             if (rotation != combatant.Rotation || position != combatant.Position || mobileState != combatant.MobileState)
                 return (CombatantModel)combatant.Move(mobileState, position, rotation, Global.Now);

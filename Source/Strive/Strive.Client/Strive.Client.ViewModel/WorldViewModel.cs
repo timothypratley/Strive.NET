@@ -6,6 +6,7 @@ using System.Windows.Media.Media3D;
 using Strive.Model;
 using Strive.Network.Messaging;
 using UpdateControls.XAML;
+using System.Windows.Threading;
 
 
 namespace Strive.Client.ViewModel
@@ -84,11 +85,13 @@ namespace Strive.Client.ViewModel
             get
             {
                 // TODO: use real values, remember entities are actually filters (make explicit)
-                var e = new EntityModel(rand.Next(), "Foo", "Bar", new Vector3D(), Quaternion.Identity, 100, 100, Common.EnumMobileState.Standing, 1.7f);
+                var e = new EntityModel(rand.Next(), "Protagonist", "Bar", new Vector3D(), Quaternion.Identity, 100, 100, Common.EnumMobileState.Standing, 1.7f);
                 return MakeCommand
-                    .When(() => WorldNavigation.SelectedEntities.Any())
+                    .When(() => WorldNavigation.SelectedEntities.Any() && IsMouseOverEntity)
                     .Do(() => ServerConnection.CreatePlan(
-                        rand.Next(), EnumPlanAction.Move, e, DateTime.Now, e, DateTime.Now, e, 0.2f));
+                        rand.Next(), EnumPlanAction.Move, e,
+                        DateTime.Now, History.Current.Entity[WorldNavigation.SelectedEntities.First()],
+                        DateTime.Now + TimeSpan.FromMinutes(1), MouseOverEntity.Entity, 0.2f));
             }
         }
 
@@ -114,7 +117,9 @@ namespace Strive.Client.ViewModel
 
         public void ClearMouseOverEntity()
         {
-            WorldNavigation.MouseOverEntity = null;
+            Dispatcher.CurrentDispatcher.BeginInvoke(
+                new Action<WorldViewModel>((sender) => { WorldNavigation.MouseOverEntity = null; }),
+                null);
         }
 
         // TODO: can XAML just use the MouseOverEntity instead?

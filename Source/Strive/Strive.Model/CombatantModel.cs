@@ -31,7 +31,6 @@ namespace Strive.Model
         public int Strength { get; private set; }
         public DateTime LastAttackUpdate { get; private set; }
         public DateTime LastHealUpdate { get; private set; }
-        public DateTime LastBehaviourUpdate { get; private set; }
         public EnumSkill ActivatingSkill { get; private set; }
         // TODO: Skill target and current target can be different
         public EntityModel Target { get; private set; }
