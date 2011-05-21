@@ -11,7 +11,7 @@ namespace Strive.Client.WPF
         public WebBrowser()
         {
             InitializeComponent();
-            myBrowser.Navigate(new Uri("http://gr1d.org"));
+            myBrowser.Navigate(new Uri("http://sourceforge.net/projects/strive"));
         }
     }
 }

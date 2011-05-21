@@ -1,25 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using Strive.Common;
 using Strive.Data.Events;
 using Strive.Model;
-using Strive.Network.Messaging;
 
 
 namespace Strive.Server.Logic
 {
     public static class AvatarExtensions
     {
-        public static Dictionary<EntityModel, ClientConnection> Clients;
-
-        public static void LogMessage(this EntityModel entity, string message)
-        {
-            var client = Clients[entity];
-            if (client != null)
-                client.LogMessage(message);
-        }
-
         public static void UpdateCombatant(this World world, CombatantModel c)
         {
             // check for activating skills

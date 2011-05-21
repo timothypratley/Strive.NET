@@ -21,6 +21,9 @@ namespace Strive.Server.Logic
         public Listener Listener { get; private set; }
         public ToClient.TimeAndWeather Weather { get; private set; }
 
+        /// <summary>
+        /// Entity id maps to a client connection if that entity is currently possessed by a user
+        /// </summary>
         public Dictionary<int, ClientConnection> Possession { get; private set; }
         public Dictionary<string, HashSet<string>> Party { get; private set; }
         public Dictionary<string, Dictionary<string, DateTime>> InvitedToParty { get; private set; }
@@ -139,6 +142,13 @@ namespace Strive.Server.Logic
         {
             foreach (var client in Users.Values)
                 client.Send(message);
+        }
+
+        public void LogMessage(EntityModel entity, string message)
+        {
+            ClientConnection client;
+            if (Possession.TryGetValue(entity.Id, out client))
+                client.LogMessage(message);
         }
 
         public void Apply(EntityUpdateEvent e)

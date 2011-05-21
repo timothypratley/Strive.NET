@@ -69,27 +69,20 @@ namespace Strive.Client.NeoAxisView
         }
 
         // Would like to do this in XAML - it must be possible but not sure how 
-        string _toolTipString;
-
         private void SetToolTipString()
         {
             var e = _worldViewModel.MouseOverEntity;
-            string newTip = e == null ? null : e.Entity.Name;
-            if (newTip != _toolTipString)
+            var tt = ToolTip as ToolTip;
+            if (tt == null)
+                ToolTip = tt = new ToolTip();
+            if (_worldViewModel.IsMouseOverEntity)
             {
-                _toolTipString = newTip;
-                if (newTip == null)
-                {
-                    if (ToolTip != null)
-                    {
-                        ((ToolTip)ToolTip).IsOpen = false;
-                    }
-                    ToolTip = null;
-                }
-                else
-                {
-                    ToolTip = new ToolTip { Content = _toolTipString, IsOpen = true, StaysOpen = true };
-                }
+                tt.Content = _worldViewModel.MouseOverEntity.Entity.Name;
+                tt.IsOpen = true;
+            }
+            else
+            {
+                tt.IsOpen = false;
             }
         }
 
@@ -182,7 +175,7 @@ namespace Strive.Client.NeoAxisView
                 _ignoreFirst = true;
             }
 
-            if (_mouseOver != null)
+            if (_mouseOver != null && e.LeftButton == MouseButtonState.Pressed)
             {
                 var id = (int)_mouseOver.UserData;
                 if (renderTarget.IsKeyPressed(Key.LeftShift)

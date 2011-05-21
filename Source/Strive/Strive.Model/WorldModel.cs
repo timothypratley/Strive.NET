@@ -144,16 +144,16 @@ namespace Strive.Model
 
         public FSharpMap<int, FSharpSet<int>> Dissoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
         {
-                var o = map.TryFind(key);
-                var set = o == null
-                    ? SetModule.Empty<int>()
-                    : o.Value.Remove(id);
-                return set.IsEmpty ? map.Remove(key) : map.Add(key, set);
+            var o = map.TryFind(key);
+            var set = o == null
+                ? SetModule.Empty<int>()
+                : o.Value.Remove(id);
+            return set.IsEmpty ? map.Remove(key) : map.Add(key, set);
         }
 
         public WorldModel Complete(EntityModel doer, TaskModel task)
         {
-            Contract.Ensures(!Doing.Select(d => d.Value).Any(tasks => tasks.Contains(task.Id)));
+            Contract.Ensures(!Doing.Select(d => d.Value).Any(tasks => Contains(tasks, task.Id)));
 
             var doing = doer == null
                 ? Doing
@@ -179,7 +179,7 @@ namespace Strive.Model
             return new WorldModel(Entity, Task, Plan, Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, Requires, EntityCube);
         }
 
-        // TODO: These three functions are just to suppress a warning from code contracts, can it be fixed a better way?
+        // TODO: These pure wrapper functions are just to suppress a warning from code contracts, can it be fixed a better way?
         [Pure]
         private bool ContainsKey(FSharpMap<int, EntityModel> map, int key)
         {
@@ -196,6 +196,12 @@ namespace Strive.Model
         private bool ContainsKey(FSharpMap<int, TaskModel> map, int key)
         {
             return map.ContainsKey(key);
+        }
+
+        [Pure]
+        private bool Contains(FSharpSet<int> set, int value)
+        {
+            return set.Contains(value);
         }
 
         [ContractInvariantMethod]

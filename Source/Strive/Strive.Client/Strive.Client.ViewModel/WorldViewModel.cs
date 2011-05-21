@@ -6,7 +6,6 @@ using System.Windows.Media.Media3D;
 using Strive.Model;
 using Strive.Network.Messaging;
 using UpdateControls.XAML;
-using System.Windows.Threading;
 
 
 namespace Strive.Client.ViewModel
@@ -75,8 +74,14 @@ namespace Strive.Client.ViewModel
                 // TODO: There is a race condition where MouseOverEntity can be updated between the when and do
                 return MakeCommand
                     .When(() => IsMouseOverEntity)
-                    .Do(() => ServerConnection.ProduceEntity(
-                        rand.Next(), "Robot", "RTSRobot", MouseOverEntity.Entity));
+                    .Do(() =>
+                    {
+                        var x = MouseOverEntity;
+                        if (x == null)
+                            return;
+                        ServerConnection.ProduceEntity(
+                        rand.Next(), "Robot", "RTSRobot", x.Entity);
+                    });
             }
         }
 
@@ -117,9 +122,7 @@ namespace Strive.Client.ViewModel
 
         public void ClearMouseOverEntity()
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(
-                new Action<WorldViewModel>((sender) => { WorldNavigation.MouseOverEntity = null; }),
-                null);
+            WorldNavigation.MouseOverEntity = null;
         }
 
         // TODO: can XAML just use the MouseOverEntity instead?

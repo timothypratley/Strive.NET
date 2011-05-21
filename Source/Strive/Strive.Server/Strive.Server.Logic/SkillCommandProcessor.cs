@@ -40,19 +40,19 @@ namespace Strive.Server.Logic
                 case EnumTargetType.TargetMobile:
                     if (message.TargetPhysicalObjectIDs.Length == 0)
                     {
-                        source.LogMessage("No target specified, this skill may only be used on Mobiles.");
+                        world.LogMessage(source, "No target specified, this skill may only be used on Mobiles.");
                         return;
                     }
                     var o = world.History.Head.Entity.TryFind(message.TargetPhysicalObjectIDs[0]);
                     target = o == null ? null : o.Value;
                     if (target == null)
                     {
-                        source.LogMessage("Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
+                        world.LogMessage(source, "Target " + message.TargetPhysicalObjectIDs[0] + " not found.");
                         return;
                     }
                     break;
                 default:
-                    source.LogMessage("That skill has an unsupported target type " + esr.EnumTargetTypeID);
+                    world.LogMessage(source, "That skill has an unsupported target type " + esr.EnumTargetTypeID);
                     Log.Error("Unhandled target type " + esr.EnumTargetTypeID + " for skill " + esr.EnumSkillID + " " + esr.EnumSkillName);
                     return;
             }
@@ -119,7 +119,7 @@ namespace Strive.Server.Logic
         {
             if (source.MobileState == EnumMobileState.Dead || source.MobileState == EnumMobileState.Incapacitated)
             {
-                source.LogMessage("Unable to use " + skill.EnumSkillName + " while " + source.MobileState);
+                world.LogMessage(source, "Unable to use " + skill.EnumSkillName + " while " + source.MobileState);
                 return;
             }
 
@@ -131,13 +131,13 @@ namespace Strive.Server.Logic
 
             if ((source.Position - target.Position).Length > skill.Range)
             {
-                source.LogMessage(target.Name + " is out of range");
+                world.LogMessage(source, target.Name + " is out of range");
                 return;
             }
 
             if (skill.EnergyCost > source.Energy)
             {
-                source.LogMessage("Not enough energy to use " + skill.EnumSkillName + ", requires " + skill.EnergyCost);
+                world.LogMessage(source, "Not enough energy to use " + skill.EnumSkillName + ", requires " + skill.EnergyCost);
                 return;
             }
             
@@ -186,7 +186,7 @@ namespace Strive.Server.Logic
                     case EnumActivationType.Sorcery:
                         break;
                     default:
-                        source.LogMessage("That skill does not work yet, contact admin.");
+                        world.LogMessage(source, "That skill does not work yet, contact admin.");
                         Log.Error("Unhandled activation type " + (EnumActivationType)skill.EnumActivationTypeID + " for skill " + skill.EnumSkillName);
                         break;
                 }
