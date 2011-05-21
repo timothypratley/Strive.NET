@@ -24,6 +24,10 @@ namespace Strive.Model
         public float Progress { get; private set; }
         public DateTime LastUpdated { get; private set; }
 
+        private static Production _empty = new Production(0, ListModule.Empty<int>(), 0, 0);
+
+        public static Production Empty { get { return _empty; } }
+
         public Production WithProduction(int id, DateTime when)
         {
             var r = (Production)this.MemberwiseClone();

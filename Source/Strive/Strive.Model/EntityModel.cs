@@ -30,7 +30,6 @@ namespace Strive.Model
             MobileState = mobileState;
             Height = height;
             Affinity = new Affinity(0, 0, 0, 0, 0);
-            Production = new Production(1, ListModule.Empty<int>(), 0, 0);
             MoveRunSpeed = 1;
             MoveTurnSpeed = 1;
         }
@@ -48,7 +47,6 @@ namespace Strive.Model
         public DateTime LastMoveUpdate { get; protected set; }
         public DateTime LastMobileStateUpdate { get; protected set; }
         public Affinity Affinity { get; protected set; }
-        public Production Production { get; protected set; }
         public float MoveRunSpeed { get; protected set; }
         public float MoveTurnSpeed { get; protected set; }
 
@@ -132,27 +130,6 @@ namespace Strive.Model
                 Affinity.Fire + fireChange,
                 Affinity.Life + lifeChange,
                 Affinity.Water + waterChange);
-        }
-
-        public EntityModel WithProduction(int id, DateTime when)
-        {
-            var r = (EntityModel)this.MemberwiseClone();
-            r.Production = Production.WithProduction(id, when);
-            return r;
-        }
-
-        public EntityModel WithProductionComplete(DateTime when)
-        {
-            var r = (EntityModel)this.MemberwiseClone();
-            r.Production = Production.WithProductionComplete(when);
-            return r;
-        }
-
-        public EntityModel WithProductionProgressChange(float progressChange, DateTime when)
-        {
-            var r = (EntityModel)this.MemberwiseClone();
-            r.Production = Production.WithProgressChange(progressChange, when);
-            return r;
         }
 
         public float CurrentHeight { get { return MobileState <= EnumMobileState.Resting ? 0.3f : Height; } }

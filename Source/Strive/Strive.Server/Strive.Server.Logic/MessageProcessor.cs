@@ -358,8 +358,8 @@ namespace Strive.Server.Logic
                 return;
             }
 
-            World.Apply(new EntityUpdateEvent(
-                factory.Value.WithProduction(p.Id, Global.Now),
+            World.Apply(new ProductionStartedEvent(
+                p.FactoryId, p.Id,
                 client.AuthenticatedUsername + " producing " + p.Name + " from " + factory));
         }
 
