@@ -4,7 +4,6 @@ using Engine.EntitySystem;
 using Engine.MapSystem;
 using Strive.Client.ViewModel;
 using WPFAppFramework;
-using GameEntities;
 
 
 namespace Strive.Client.NeoAxisView
@@ -40,9 +39,13 @@ namespace Strive.Client.NeoAxisView
                 }
                 neoEntity.Position = entityModel.Position.ToVec3();
                 neoEntity.Rotation = entityModel.Rotation.ToQuat();
-                if (entityModel.Production.Queue.Any() && neoEntity is RTSBuilding && ((RTSBuilding)neoEntity).BuildedProgress <= 0)
-                    ((RTSBuilding)neoEntity).StartProductUnit(new RTSUnitType());
 
+                /* TODO: want this for animiation... but maybe use MobileState 'producing' instead?
+                if (entityModel.Production.Queue.Any()
+                    && neoEntity is RTSBuilding
+                    && ((RTSBuilding)neoEntity).BuildedProgress <= 0)
+                    ((RTSBuilding)neoEntity).StartProductUnit(new RTSUnitType());
+                 */
             }
 
             // Remove entities that should no longer be in the scene

@@ -61,9 +61,9 @@ namespace Strive.Server.Logic
             {
                 if (e is CombatantModel)
                     this.UpdateCombatant((CombatantModel)e);
-                if (!e.Production.Queue.IsEmpty)
-                    UpdateProduction(e);
             }
+
+            UpdateProduction();
 
             WeatherUpdate();
         }
@@ -90,24 +90,23 @@ namespace Strive.Server.Logic
             return History.Head.Task[doing.Value.First()];
         }
 
-        public void UpdateProduction(EntityModel entity)
+        public void UpdateProduction()
         {
-            if (!entity.Production.Queue.IsEmpty)
+            foreach (var p in History.Head.Producing)
             {
-                var progressChange = entity.Production.Rate * (float)(Global.Now - entity.Production.LastUpdated).TotalSeconds;
-                if (entity.Production.Progress + progressChange >= entity.Production.Target)
+                var factory = History.Head.Entity.TryFind(p.Key);
+                var progressChange = p.Value.Rate * (float)(Global.Now - p.Value.LastUpdated).TotalSeconds;
+                if (p.Value.Progress + progressChange >= p.Value.Target)
                 {
-                    var creation = new EntityModel(entity.Production.Queue.First(),
-                        "Creation", "RTSRobot", entity.Position, entity.Rotation, 100, 100, EnumMobileState.Standing, 1.7f);
-                    entity = entity.WithProductionComplete(Global.Now);
-                    Apply(new EntityUpdateEvent(
-                        new[] { entity, creation },
-                        "Production of " + creation.Name + " by " + entity.Name + " complete"));
+                    var creation = new EntityModel(p.Value.Queue.First(),
+                        "Creation", "RTSRobot", factory.Value.Position, factory.Value.Rotation, 100, 100, EnumMobileState.Standing, 1.7f);
+                    Apply(new ProductionCompleteEvent(p.Key, creation,
+                        "Production of " + creation.Name + " by " + factory.Value.Name + " complete"));
                 }
                 else
                 {
-                    entity = entity.WithProductionProgressChange(progressChange, Global.Now);
-                    Apply(new EntityUpdateEvent(entity, "Production update"));
+                    var produce = p.Value.WithProgressChange(progressChange, Global.Now);
+                    Apply(new ProductionUpdateEvent(p.Key, progressChange, "Production update"));
                 }
             }
         }
@@ -143,15 +142,16 @@ namespace Strive.Server.Logic
 
         public void Apply(EntityUpdateEvent e)
         {
-            _log.Debug(e.GetType() + e.Description);
+            _log.Debug(e.GetType() + " " + e.Description);
 
-            foreach (var entity in e.Entities)
-                UpdateCubes(entity, History.Head.Entity.TryFind(entity.Id));
+            var oldEntities = e.Entities.Select(entity => History.Head.Entity.TryFind(entity.Id)).ToArray();
 
             History.Add(e.Entities);
+
+            e.Entities.Zip(oldEntities, (ee, old) => UpdateCubes(ee, old)).LastOrDefault();
         }
 
-        public void UpdateCubes(EntityModel entity, FSharpOption<EntityModel> old)
+        public int UpdateCubes(EntityModel entity, FSharpOption<EntityModel> old)
         {
             int newCube = WorldModel.GetCubeKey(entity.Position);
 
@@ -208,35 +208,37 @@ namespace Strive.Server.Logic
 
             foreach (var c in newClients.Where(x => x != client))
                 c.Send(entity);
+
+            return newCube;
         }
 
         public void Apply(TaskUpdateEvent e)
         {
-            _log.Debug(e.GetType() + e.Description);
+            _log.Debug(e.GetType() + " " + e.Description);
             History.Add(e.Task);
         }
 
         public void Apply(PlanUpdateEvent e)
         {
-            _log.Debug(e.GetType() + e.Description);
+            _log.Debug(e.GetType() + " " + e.Description);
             History.Add(e.Plan);
         }
 
         public void Apply(TaskCompleteEvent e)
         {
-            _log.Debug(e.GetType() + e.Description);
+            _log.Debug(e.GetType() + " " + e.Description);
             History.Complete(e.Doer, e.Task);
         }
 
         public void Apply(PlanCompleteEvent e)
         {
-            _log.Debug(e.GetType() + e.Description);
+            _log.Debug(e.GetType() + " " + e.Description);
             History.Add(e.Plan);
         }
 
         public void Apply(SkillEvent e)
         {
-            _log.Debug(e.GetType() + e.Description);
+            _log.Debug(e.GetType() + " " + e.Description);
             History.Add(new[] { e.Source, e.Target });
 
             var sourceCube = WorldModel.GetCubeKey(e.Source.Position);
@@ -250,6 +252,25 @@ namespace Strive.Server.Logic
 
             foreach (var c in sourceClients.Union(targetClients))
                 c.Send(new ToClient.CombatReport(e.Source, e.Skill, e.Target, 20));
+        }
+
+        public void Apply(ProductionStartedEvent e)
+        {
+            _log.Debug(e.GetType() + " " + e.Description);
+            History.Head = History.Head.WithProduction(e.ProducerId, e.ProductId, Global.Now);
+        }
+
+        public void Apply(ProductionUpdateEvent e)
+        {
+            _log.Debug(e.GetType() + " " + e.Description);
+            History.Head = History.Head.WithProductionProgressChange(e.EntityId, e.ProgressChange, Global.Now);
+        }
+
+        public void Apply(ProductionCompleteEvent e)
+        {
+            _log.Debug(e.GetType() + " " + e.Description);
+            History.Head = History.Head.WithProductionComplete(e.ProducerId, e.Entity, Global.Now);
+            UpdateCubes(e.Entity, null);
         }
 
         /// <summary>

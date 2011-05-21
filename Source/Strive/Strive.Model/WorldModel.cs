@@ -15,6 +15,7 @@ namespace Strive.Model
             FSharpMap<int, EntityModel> entity,
             FSharpMap<int, TaskModel> task,
             FSharpMap<int, PlanModel> plan,
+            FSharpMap<int, Production> producing,
             FSharpMap<int, FSharpSet<int>> holding,
             FSharpMap<int, FSharpSet<int>> doing,
             FSharpMap<int, FSharpSet<int>> requires,
@@ -24,26 +25,12 @@ namespace Strive.Model
             Task = task;
             Plan = plan;
 
+            Producing = producing;
             Holding = holding;
             Doing = doing;
             Requires = requires;
 
             EntityCube = entityCube;
-        }
-
-        public static WorldModel Empty
-        {
-            get
-            {
-                return new WorldModel(
-                    MapModule.Empty<int, EntityModel>(),
-                    MapModule.Empty<int, TaskModel>(),
-                    MapModule.Empty<int, PlanModel>(),
-                    MapModule.Empty<int, FSharpSet<int>>(),
-                    MapModule.Empty<int, FSharpSet<int>>(),
-                    MapModule.Empty<int, FSharpSet<int>>(),
-                    MapModule.Empty<int, FSharpSet<EntityModel>>());
-            }
         }
 
         // Tables / Nodes
@@ -52,12 +39,25 @@ namespace Strive.Model
         public FSharpMap<int, PlanModel> Plan { get; private set; }
 
         // Relations / Edges
+        public FSharpMap<int, Production> Producing { get; private set; }
         public FSharpMap<int, FSharpSet<int>> Holding { get; private set; }
         public FSharpMap<int, FSharpSet<int>> Doing { get; private set; }
         public FSharpMap<int, FSharpSet<int>> Requires { get; private set; }
 
         // Indexes
         public FSharpMap<int, FSharpSet<EntityModel>> EntityCube { get; private set; }
+
+        private static WorldModel _empty = new WorldModel(
+                    MapModule.Empty<int, EntityModel>(),
+                    MapModule.Empty<int, TaskModel>(),
+                    MapModule.Empty<int, PlanModel>(),
+                    MapModule.Empty<int, Production>(),
+                    MapModule.Empty<int, FSharpSet<int>>(),
+                    MapModule.Empty<int, FSharpSet<int>>(),
+                    MapModule.Empty<int, FSharpSet<int>>(),
+                    MapModule.Empty<int, FSharpSet<EntityModel>>());
+
+        public static WorldModel Empty { get { return _empty; } }
 
         /// <summary>
         /// Using a simple hashing because Vector3D is not comparable,
@@ -83,9 +83,6 @@ namespace Strive.Model
                     select key + x + (y << 8) + (z << 16));
         }
 
-        /// <summary>
-        /// Find nearby Entities by position
-        /// </summary>
         public FSharpSet<EntityModel> GetCube(Vector3D position)
         {
             var r = EntityCube.TryFind(GetCubeKey(position));
@@ -126,7 +123,7 @@ namespace Strive.Model
 
             return new WorldModel(
                 Entity.Add(entity.Id, entity),
-                Task, Plan, Holding, Doing, Requires,
+                Task, Plan, Producing, Holding, Doing, Requires,
                 newEntityCube);
         }
 
@@ -138,17 +135,18 @@ namespace Strive.Model
                 : o.Value.Add(task.Id);
 
             return new WorldModel(Entity,
-                Task.Add(task.Id, task), Plan, Holding, Doing,
+                Task.Add(task.Id, task), Plan,
+                Producing, Holding, Doing,
                 Requires.Add(task.PlanId, tasks), EntityCube);
         }
 
         public FSharpMap<int, FSharpSet<int>> Dissoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
         {
-                var o = map.TryFind(key);
-                var set = o == null
-                    ? SetModule.Empty<int>()
-                    : o.Value.Remove(id);
-                return set.IsEmpty ? map.Remove(key) : map.Add(key, set);
+            var o = map.TryFind(key);
+            var set = o == null
+                ? SetModule.Empty<int>()
+                : o.Value.Remove(id);
+            return set.IsEmpty ? map.Remove(key) : map.Add(key, set);
         }
 
         public WorldModel Complete(EntityModel doer, TaskModel task)
@@ -159,27 +157,71 @@ namespace Strive.Model
                 ? Doing
                 : Dissoc(Doing, doer.Id, task.Id);
             var requires = Dissoc(Requires, task.PlanId, task.Id);
-            return new WorldModel(Entity, Task.Remove(task.Id), Plan, Holding, doing, requires, EntityCube);
+            return new WorldModel(Entity, Task.Remove(task.Id), Plan, Producing, Holding, doing, requires, EntityCube);
         }
 
         public WorldModel Complete(PlanModel plan)
         {
             Contract.Requires<ArgumentException>(!Task.Any(t => t.Value.PlanId == plan.Id));
 
-            return new WorldModel(Entity, Task, Plan.Remove(plan.Id), Holding, Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Plan.Remove(plan.Id), Producing, Holding, Doing, Requires, EntityCube);
         }
 
         public WorldModel Add(PlanModel plan)
         {
-            return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Holding, Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Producing, Holding, Doing, Requires, EntityCube);
         }
 
         public WorldModel Put(FSharpSet<int> entities, int on)
         {
-            return new WorldModel(Entity, Task, Plan, Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Plan, Producing,
+                Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, Requires, EntityCube);
         }
 
-        // TODO: These three functions are just to suppress a warning from code contracts, can it be fixed a better way?
+
+        public WorldModel WithProduction(int producerId, int productId, DateTime when)
+        {
+            Contract.Requires<ArgumentException>(Entity.ContainsKey(producerId));
+
+            var current = Producing.TryFind(producerId);
+            Production produce = (current == null)
+                ? produce = Production.Empty
+                : produce = current.Value.WithProduction(productId, when);
+            return new WorldModel(Entity, Task, Plan,
+                Producing.Add(producerId, produce), Holding, Doing, Requires, EntityCube);
+        }
+
+        public WorldModel WithProductionComplete(int producerId, EntityModel entity, DateTime when)
+        {
+            Contract.Requires<ArgumentException>(Entity.ContainsKey(producerId));
+            Contract.Requires<ArgumentException>(!Entity.ContainsKey(entity.Id));
+            Contract.Requires<ArgumentException>(Producing.ContainsKey(producerId));
+
+            var current = Producing.TryFind(producerId);
+            if (current == null)
+                return this;
+            var produce = current.Value.WithProductionComplete(when);
+            return new WorldModel(Entity.Add(entity.Id, entity), Task, Plan,
+                produce.Queue.IsEmpty ? Producing.Remove(producerId) : Producing.Add(producerId, produce),
+                Holding, Doing, Requires, EntityCube);
+        }
+
+        public WorldModel WithProductionProgressChange(int producerId, float progressChange, DateTime when)
+        {
+            Contract.Requires<ArgumentException>(Entity.ContainsKey(producerId));
+            Contract.Requires<ArgumentException>(Producing.ContainsKey(producerId));
+
+            var current = Producing.TryFind(producerId);
+            if (current == null)
+                return this;
+            return new WorldModel(Entity, Task, Plan,
+                Producing.Add(producerId, current.Value.WithProgressChange(progressChange, when)),
+                Holding, Doing, Requires, EntityCube);
+        }
+
+        #region CodeContractsInvariant
+
+        // TODO: These pure functions are just to suppress a warning from code contracts, can it be fixed a better way?
         [Pure]
         private bool ContainsKey(FSharpMap<int, EntityModel> map, int key)
         {
@@ -224,5 +266,7 @@ namespace Strive.Model
 
             Contract.Invariant(EntityCube.Sum(x => x.Value.Count) == Entity.Count);
         }
+
+        #endregion
     }
 }
