@@ -77,6 +77,16 @@ namespace Strive.Client.ViewModel
             }
         }
 
+        public ICommand CreatePlan
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => WorldViewModel.WorldNavigation.SelectedEntities.Any() && WorldViewModel.IsMouseOverEntity)
+                    .Do(() => WorldViewModel.CreatePlan.Execute(null));
+            }
+        }
+
         public ICommand PossessEntity
         {
             get
@@ -85,9 +95,12 @@ namespace Strive.Client.ViewModel
                     .When(() => WorldViewModel.MouseOverEntity != null)
                     .Do(() =>
                             {
-                                var id = int.Parse(WorldViewModel.MouseOverEntity.Entity.Name);
-                                WorldViewModel.ServerConnection.PossessMobile(id);
-                                PossessingId = id;
+                                var mo = WorldViewModel.MouseOverEntity;
+                                if (mo != null)
+                                {
+                                    WorldViewModel.ServerConnection.PossessMobile(mo.Entity.Id);
+                                    PossessingId = mo.Entity.Id;
+                                }
                             });
             }
         }
@@ -308,6 +321,8 @@ namespace Strive.Client.ViewModel
                     CreateMobile.Execute(null);
                 else if (ca.Action == InputBindings.CreationAction.Factory)
                     CreateFactory.Execute(null);
+                else if (ca.Action == InputBindings.CreationAction.Plan)
+                    CreatePlan.Execute(null);
                 else
                     throw new Exception("Unexpected creation binding " + ca.Action);
             }

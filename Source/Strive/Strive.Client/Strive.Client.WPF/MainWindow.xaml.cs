@@ -83,6 +83,7 @@ namespace Strive.Client.WPF
                 new KeyBinding(App.WorldViewModel.CreateMobile, Key.M, ModifierKeys.Control));
             r.InputBindings.Add(
                 new KeyBinding(App.WorldViewModel.CreateFactory, Key.F, ModifierKeys.Control));
+            r.MouseDoubleClick += (s, ev) => App.WorldViewModel.FollowSelected.Execute(null);
             BindAndShow(r, App.WorldViewModel);
         }
 
@@ -142,8 +143,8 @@ namespace Strive.Client.WPF
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             var r = new PlanListView();
-            //r.InputBindings.Add(
-            //new KeyBinding(App.WorldViewModel.CreateEntity, Key.C, ModifierKeys.Control));
+            r.InputBindings.Add(
+                new KeyBinding(App.WorldViewModel.CreatePlan, Key.C, ModifierKeys.Control));
             BindAndShow(r, App.WorldViewModel);
         }
     }

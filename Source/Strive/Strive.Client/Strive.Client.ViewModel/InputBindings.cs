@@ -34,7 +34,8 @@ namespace Strive.Client.ViewModel
         {
             Item,
             Mobile,
-            Factory
+            Factory,
+            Plan
         };
 
         public class KeyBinding
@@ -103,6 +104,7 @@ namespace Strive.Client.ViewModel
             AddCreationBinding(new List<Key> { Key.M }, CreationAction.Mobile);
             AddCreationBinding(new List<Key> { Key.I }, CreationAction.Item);
             AddCreationBinding(new List<Key> { Key.F }, CreationAction.Factory);
+            AddCreationBinding(new List<Key> { Key.P }, CreationAction.Plan);
         }
     }
 }

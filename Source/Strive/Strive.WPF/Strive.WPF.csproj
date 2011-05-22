@@ -58,6 +58,7 @@
     <Reference Include="AvalonDock">
       <HintPath>..\..\ThirdParty\AvalonDock\AvalonDock.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />

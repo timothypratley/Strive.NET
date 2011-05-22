@@ -29,6 +29,7 @@ namespace Strive.Model
             DateTime startTime, EntityModel start, DateTime finishTime, EntityModel finish, float lateFee)
         {
             Id = id;
+            Owner = String.Empty;
             Action = action;
             Protagonist = protagonist;
             StartTime = startTime;

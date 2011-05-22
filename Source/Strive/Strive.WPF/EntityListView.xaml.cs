@@ -1,4 +1,5 @@
-﻿using AvalonDock;
+﻿using System.Windows;
+using AvalonDock;
 
 
 namespace Strive.WPF

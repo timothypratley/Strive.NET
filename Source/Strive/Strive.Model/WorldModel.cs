@@ -181,21 +181,23 @@ namespace Strive.Model
 
         public WorldModel WithProduction(int producerId, int productId, DateTime when)
         {
-            Contract.Requires<ArgumentException>(Entity.ContainsKey(producerId));
+            Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
+            Contract.Ensures(Producing.All(p => !p.Value.Queue.IsEmpty));
 
             var current = Producing.TryFind(producerId);
-            Production produce = (current == null)
-                ? produce = Production.Empty
-                : produce = current.Value.WithProduction(productId, when);
+            var production = ((current == null)
+                ? Production.Empty
+                : current.Value)
+                .WithProduction(productId, when);
             return new WorldModel(Entity, Task, Plan,
-                Producing.Add(producerId, produce), Holding, Doing, Requires, EntityCube);
+                Producing.Add(producerId, production), Holding, Doing, Requires, EntityCube);
         }
 
         public WorldModel WithProductionComplete(int producerId, EntityModel entity, DateTime when)
         {
-            Contract.Requires<ArgumentException>(Entity.ContainsKey(producerId));
-            Contract.Requires<ArgumentException>(!Entity.ContainsKey(entity.Id));
-            Contract.Requires<ArgumentException>(Producing.ContainsKey(producerId));
+            Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
+            Contract.Requires<ArgumentException>(!ContainsKey(Entity, entity.Id));
+            Contract.Requires<ArgumentException>(ContainsKey(Producing, producerId));
 
             var current = Producing.TryFind(producerId);
             if (current == null)
@@ -208,8 +210,8 @@ namespace Strive.Model
 
         public WorldModel WithProductionProgressChange(int producerId, float progressChange, DateTime when)
         {
-            Contract.Requires<ArgumentException>(Entity.ContainsKey(producerId));
-            Contract.Requires<ArgumentException>(Producing.ContainsKey(producerId));
+            Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
+            Contract.Requires<ArgumentException>(ContainsKey(Producing, producerId));
 
             var current = Producing.TryFind(producerId);
             if (current == null)
@@ -223,25 +225,13 @@ namespace Strive.Model
 
         // TODO: These pure functions are just to suppress a warning from code contracts, can it be fixed a better way?
         [Pure]
-        private bool ContainsKey(FSharpMap<int, EntityModel> map, int key)
+        public bool ContainsKey<KeyType, ValueType>(FSharpMap<KeyType, ValueType> map, KeyType key)
         {
             return map.ContainsKey(key);
         }
 
         [Pure]
-        private bool ContainsKey(FSharpMap<int, PlanModel> map, int key)
-        {
-            return map.ContainsKey(key);
-        }
-
-        [Pure]
-        private bool ContainsKey(FSharpMap<int, TaskModel> map, int key)
-        {
-            return map.ContainsKey(key);
-        }
-
-        [Pure]
-        private bool Contains(FSharpSet<int> set, int value)
+        public bool Contains<T>(FSharpSet<T> set, T value)
         {
             return set.Contains(value);
         }

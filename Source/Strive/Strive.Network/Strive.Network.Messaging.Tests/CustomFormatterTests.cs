@@ -53,9 +53,11 @@ namespace Strive.Network.Messaging.Tests
         [TestMethod]
         public void SymmetryMessages()
         {
+            // TODO: Have a central factory for creating test entities
             var m = new EntityModel(1, "Foo", "Bar", new Vector3D(1.2, 3, 4), new Quaternion(1.2, 3, 4, 5), 100, 100, EnumMobileState.Standing, 1.7f);
             SerDesMessage(m);
             SerDesMessage(new PositionUpdate(m));
+            SerDesMessage(new PlanModel(1, EnumPlanAction.Move, m, DateTime.Now, m, DateTime.Now, m, 0.5f));
         }
 
         private static void SerDesMessage(object message)

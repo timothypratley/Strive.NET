@@ -33,6 +33,7 @@ namespace Strive.Client.NeoAxisView
             renderTarget.MouseDown += PerspectiveViewControl_MouseDown;
             renderTarget.MouseUp += PerspectiveViewControl_MouseUp;
             renderTarget.MouseMove += PerspectiveViewControl_MouseMove;
+            renderTarget.MouseDoubleClick += (s, e) => _worldViewModel.FollowSelected.Execute(null);
         }
 
         Camera _camera;

@@ -31,7 +31,11 @@ namespace Strive.Client.ViewModel
             {
                 return MakeCommand
                     .When(() => WorldNavigation.SelectedEntities.Any() && CurrentPerspective != null)
-                    .Do(() => CurrentPerspective.FollowSelected.Execute(null));
+                    .Do(() => {
+                        var p = CurrentPerspective;
+                        if (p != null)
+                            p.FollowSelected.Execute(null);
+                    });
             }
         }
 
@@ -71,7 +75,6 @@ namespace Strive.Client.ViewModel
         {
             get
             {
-                // TODO: There is a race condition where MouseOverEntity can be updated between the when and do
                 return MakeCommand
                     .When(() => IsMouseOverEntity)
                     .Do(() =>
@@ -80,7 +83,7 @@ namespace Strive.Client.ViewModel
                         if (x == null)
                             return;
                         ServerConnection.ProduceEntity(
-                        rand.Next(), "Robot", "RTSRobot", x.Entity);
+                            rand.Next(), "Robot", "RTSRobot", x.Entity);
                     });
             }
         }
@@ -89,17 +92,23 @@ namespace Strive.Client.ViewModel
         {
             get
             {
-                // TODO: use real values, remember entities are actually filters (make explicit)
-                var e = new EntityModel(rand.Next(), "Protagonist", "Bar", new Vector3D(), Quaternion.Identity, 100, 100, Common.EnumMobileState.Standing, 1.7f);
                 return MakeCommand
                     .When(() => WorldNavigation.SelectedEntities.Any() && IsMouseOverEntity)
-                    .Do(() => ServerConnection.CreatePlan(
-                        rand.Next(), EnumPlanAction.Move, e,
-                        DateTime.Now, History.Current.Entity[WorldNavigation.SelectedEntities.First()],
-                        DateTime.Now + TimeSpan.FromMinutes(1), MouseOverEntity.Entity, 0.2f));
+                    .Do(() =>
+                    {
+                        var selected = WorldNavigation.SelectedEntities;
+                        var mouseOver = MouseOverEntity;
+                        if (!selected.Any() || mouseOver == null)
+                            return;
+
+                        ServerConnection.CreatePlan(
+                                    rand.Next(), EnumPlanAction.Move,
+                                    new EntityModel(rand.Next(), "Protagonist", "Bar", new Vector3D(), Quaternion.Identity, 100, 100, Common.EnumMobileState.Standing, 1.7f),
+                                    DateTime.Now, History.Current.Entity[selected.First()],
+                                    DateTime.Now + TimeSpan.FromMinutes(1), mouseOver.Entity, 0.2f);
+                    });
             }
         }
-
 
         public PerspectiveViewModel CurrentPerspective { get; set; }
 
@@ -125,7 +134,6 @@ namespace Strive.Client.ViewModel
             WorldNavigation.MouseOverEntity = null;
         }
 
-        // TODO: can XAML just use the MouseOverEntity instead?
         public bool IsMouseOverEntity { get { return WorldNavigation.MouseOverEntity.HasValue; } }
 
         public EntityViewModel MouseOverEntity
