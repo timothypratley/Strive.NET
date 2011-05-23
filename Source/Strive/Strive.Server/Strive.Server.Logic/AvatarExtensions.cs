@@ -9,35 +9,42 @@ namespace Strive.Server.Logic
 {
     public static class AvatarExtensions
     {
-        public static void UpdateCombatant(this World world, CombatantModel c)
+        public static void UpdateEntity(this World world, EntityModel entity)
         {
-            // check for activating skills
-            if (c.ActivatingSkill != EnumSkill.None
-                && c.ActivatingSkillTimestamp + c.ActivatingSkillLeadTime <= Global.Now)
-                world.UseSkillNow(
-                    c,
-                    // TODO: avoid looking it up?
-                    Global.Schema.EnumSkill.FindByEnumSkillID((int)c.ActivatingSkill),
-                    c.Target);
+            if (!world.Possession.ContainsKey(entity.Id))
+                entity = world.BehaviourUpdate(entity);
 
-            // TODO: check for queued skills
-            //else if (c.SkillQueue.Length > 0)
-            //c.ActivatingSkill = c.SkillQueue.Head;
+            var c = entity as CombatantModel;
+            if (c != null)
+            {
+                // check for activating skills
+                if (c.ActivatingSkill != EnumSkill.None
+                    && c.ActivatingSkillTimestamp + c.ActivatingSkillLeadTime <= Global.Now)
+                    world.UseSkillNow(
+                        c,
+                        // TODO: avoid looking it up?
+                        Global.Schema.EnumSkill.FindByEnumSkillID((int)c.ActivatingSkill),
+                        c.Target);
 
-            if (c.Target != null)
-                world.CheckAttack(c);
+                // TODO: check for queued skills
+                //else if (c.SkillQueue.Length > 0)
+                //c.ActivatingSkill = c.SkillQueue.Head;
 
-            if (!world.Possession.ContainsKey(c.Id))
-                c = world.BehaviourUpdate(c);
-            else if (Global.Now - c.LastMoveUpdate > TimeSpan.FromSeconds(1)
-                && (c.MobileState == EnumMobileState.Running
-                || c.MobileState == EnumMobileState.Walking))
-                // TODO: where to check if changed?, also can remove cast with generics
-                c = (CombatantModel)c.WithState(EnumMobileState.Standing);
+                if (c.Target != null)
+                    world.CheckAttack(c);
 
-            c = c.HealUpdate();
+                else if (Global.Now - c.LastMoveUpdate > TimeSpan.FromSeconds(1)
+                    && (c.MobileState == EnumMobileState.Running
+                    || c.MobileState == EnumMobileState.Walking))
+                    // TODO: where to check if changed?, also can remove cast with generics
+                    c = (CombatantModel)c.WithState(EnumMobileState.Standing);
 
-            world.Apply(new EntityUpdateEvent(c, "Update"));
+                c = c.HealUpdate();
+
+                entity = c;
+            }
+
+            world.Apply(new EntityUpdateEvent(entity, "Update"));
         }
 
         public static void CheckAttack(this World world, CombatantModel me)
@@ -51,63 +58,63 @@ namespace Strive.Server.Logic
             }
         }
 
-        public static CombatantModel BehaviourUpdate(this World world, CombatantModel combatant)
+        public static EntityModel BehaviourUpdate(this World world, EntityModel entity)
         {
-            Quaternion rotation = combatant.Rotation;
-            Vector3D position = combatant.Position;
-            EnumMobileState mobileState = combatant.MobileState;
-            var task = world.DoingTask(combatant);
+            Quaternion rotation = entity.Rotation;
+            Vector3D position = entity.Position;
+            EnumMobileState mobileState = entity.MobileState;
+            var task = world.DoingTask(entity);
 
             // continue doing whatever you were doing
-            if (Global.Now - combatant.LastMoveUpdate > TimeSpan.FromSeconds(1))
+            if (Global.Now - entity.LastMoveUpdate > TimeSpan.FromSeconds(1))
             {
-                if (combatant.MobileState >= EnumMobileState.Standing)
+                if (entity.MobileState >= EnumMobileState.Standing)
                 {
                     if (task != null)
                     {
                         // move toward goal
-                        var goalVector = (task.Finish - combatant.Position);
+                        var goalVector = (task.Finish - entity.Position);
                         rotation.Y = Math.Atan2(goalVector.Y, goalVector.X) * 180 / Math.PI;
                     }
                     else
                     {
                         // move randomly
-                        rotation.Y += (float)(Global.Rand.NextDouble() * 40 - 20)
-                            * combatant.MoveTurnSpeed;
-                        while (combatant.Rotation.Y < 0) rotation.Y += 360;
-                        while (combatant.Rotation.Y >= 360) rotation.Y -= 360;
+                        rotation.Y += (float)(Global.Rand.NextDouble() * 10 - 5)
+                            * entity.MoveTurnSpeed;
+                        while (rotation.Y < 0) rotation.Y += 360;
+                        while (rotation.Y >= 360) rotation.Y -= 360;
                     }
                 }
                 Matrix3D m = Matrix3D.Identity;
                 m.RotatePrepend(rotation);
                 Vector3D velocity = new Vector3D(1, 0, 0) * m;
-                switch (combatant.MobileState)
+                switch (entity.MobileState)
                 {
                     case EnumMobileState.Running:
                         // TODO: using timing, not constant values
-                        position = combatant.Position + combatant.MoveRunSpeed * velocity / 3;
+                        position = entity.Position + entity.MoveRunSpeed * velocity / 30;
                         break;
                     case EnumMobileState.Walking:
-                        position = combatant.Position + combatant.MoveRunSpeed * velocity / 10;
+                        position = entity.Position + entity.MoveRunSpeed * velocity / 100;
                         break;
                     default:
                         // do nothing
                         break;
                 }
             }
-            if (combatant.MobileState > EnumMobileState.Incapacitated
-                && Global.Now - combatant.LastMobileStateUpdate > TimeSpan.FromSeconds(3))
+            if (entity.MobileState > EnumMobileState.Incapacitated
+                && Global.Now - entity.LastMobileStateUpdate > TimeSpan.FromSeconds(3))
             {
                 int rand = Global.Rand.Next(5) - 2;
-                if (task == null && rand > 1 && combatant.MobileState > EnumMobileState.Sleeping)
-                    mobileState = combatant.MobileState - 1;
-                else if (rand < -1 && combatant.MobileState < EnumMobileState.Running)
-                    mobileState = combatant.MobileState + 1;
+                if (task == null && rand > 1 && entity.MobileState > EnumMobileState.Sleeping)
+                    mobileState = entity.MobileState - 1;
+                else if (rand < -1 && entity.MobileState < EnumMobileState.Running)
+                    mobileState = entity.MobileState + 1;
             }
-            if (rotation != combatant.Rotation || position != combatant.Position || mobileState != combatant.MobileState)
-                return (CombatantModel)combatant.Move(mobileState, position, rotation, Global.Now);
+            if (rotation != entity.Rotation || position != entity.Position || mobileState != entity.MobileState)
+                return entity.Move(mobileState, position, rotation, Global.Now);
             else
-                return combatant;
+                return entity;
         }
 
         public static CombatantModel HealUpdate(this CombatantModel combatant)

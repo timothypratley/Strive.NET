@@ -17,5 +17,11 @@ namespace Strive.Model
         public int PlanId { get; private set; }
         public Vector3D Start { get; private set; }
         public Vector3D Finish { get; private set; }
+
+        public bool Matches(TaskModel t)
+        {
+            return t.Start == Start
+                && t.Finish == Finish;
+        }
     }
 }

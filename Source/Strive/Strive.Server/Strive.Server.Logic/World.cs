@@ -9,6 +9,7 @@ using Strive.Data.Events;
 using Strive.Model;
 using Strive.Network.Messaging;
 using ToClient = Strive.Network.Messages.ToClient;
+using Microsoft.FSharp.Collections;
 
 
 namespace Strive.Server.Logic
@@ -58,31 +59,48 @@ namespace Strive.Server.Logic
 
         public void Update()
         {
-            UpdatePlanTasks();
+            UpdatePlans();
 
             foreach (var e in History.Head.Entity.Select(p => p.Value))
-            {
-                if (e is CombatantModel)
-                    this.UpdateCombatant((CombatantModel)e);
-            }
+                this.UpdateEntity(e);
 
             UpdateProduction();
 
             WeatherUpdate();
         }
 
-        public void UpdatePlanTasks()
+        public void UpdatePlans()
         {
             foreach (var plan in History.Head.Plan.Select(o => o.Value))
+                UpdatePlanTasks(plan);
+        }
+
+        private void UpdatePlanTasks(PlanModel plan)
+        {
+            // What task chains exist to satisfy this plan?
+            // Build a graph of connections from current state to final state
+
+            // Which task chain should I choose?
+            // Shortest path search of the graph
+
+            var tasks = new List<TaskModel>();
+            var task = new TaskModel(Global.Rand.Next(), plan.Id, plan.Start.Position, plan.Finish.Position);
+            tasks.Add(task);
+
+            // Does this match my current task allocation?
+            // Only change if there is a significant reason to
+            IEnumerable<TaskModel> old;
+            var optTaskIds = History.Head.Requires.TryFind(plan.Id);
+            if (optTaskIds == null)
+                old = Enumerable.Empty<TaskModel>();
+            else
             {
-                var tasks = History.Head.Requires.TryFind(plan.Id);
-                if (tasks == null)
-                {
-                    Apply(new TaskUpdateEvent(
-                        new TaskModel(Global.Rand.Next(), plan.Id, plan.Start.Position, plan.Finish.Position),
-                        "Added task for " + plan.Action + " plan"));
-                }
+                old = optTaskIds.Value.Select(id => History.Head.Task[id]);
+                foreach (var t in old.Where(x => !tasks.Any(y => y.Matches(x))))
+                    Apply(new TaskCompleteEvent(null, t, "Remove task for " + plan.Action + " plan"));
             }
+            foreach (var t in tasks.Where(x => !old.Any(y => y.Matches(x))))
+                Apply(new TaskUpdateEvent(t, "Added task for " + plan.Action + " plan"));
         }
 
         public TaskModel DoingTask(EntityModel entity)
@@ -226,12 +244,7 @@ namespace Strive.Server.Logic
         {
             _log.Debug(e.GetType() + " " + e.Description);
             History.Add(e.Task);
-        }
-
-        public void Apply(PlanUpdateEvent e)
-        {
-            _log.Debug(e.GetType() + " " + e.Description);
-            History.Add(e.Plan);
+            SendToUsers(e.Task);
         }
 
         public void Apply(TaskCompleteEvent e)
@@ -240,10 +253,18 @@ namespace Strive.Server.Logic
             History.Complete(e.Doer, e.Task);
         }
 
+        public void Apply(PlanUpdateEvent e)
+        {
+            _log.Debug(e.GetType() + " " + e.Description);
+            History.Add(e.Plan);
+            SendToUsers(e.Plan);
+        }
+
         public void Apply(PlanCompleteEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
             History.Add(e.Plan);
+            // TODO: SendToUsers(new ToClient.DropPlan(e.Plan.Id));
         }
 
         public void Apply(SkillEvent e)

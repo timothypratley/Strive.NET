@@ -94,6 +94,11 @@ namespace Strive.Client.Logic
             History.Add(m);
         }
 
+        void Process(PlanModel m)
+        {
+            History.Add(m);
+        }
+
         void Process(PositionUpdate m)
         {
             History.Move(m.Id, m.State, m.Position, m.Rotation, DateTime.Now);
