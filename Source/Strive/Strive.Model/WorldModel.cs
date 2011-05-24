@@ -180,6 +180,7 @@ namespace Strive.Model
 
         public WorldModel Complete(PlanModel plan)
         {
+            // TODO: remove the tasks
             Contract.Requires<ArgumentException>(!Task.Any(t => t.Value.PlanId == plan.Id));
 
             return new WorldModel(Entity, Task, Plan.Remove(plan.Id), Producing, Holding, Doing, Requires, EntityCube);
@@ -227,9 +228,10 @@ namespace Strive.Model
             if (current == null)
                 return this;
             var produce = current.Value.WithProductionComplete(when);
-            return new WorldModel(Entity.Add(entity.Id, entity), Task, Plan,
+            return new WorldModel(Entity, Task, Plan,
                 produce.Queue.IsEmpty ? Producing.Remove(producerId) : Producing.Add(producerId, produce),
-                Holding, Doing, Requires, EntityCube);
+                Holding, Doing, Requires, EntityCube)
+                .Add(entity);
         }
 
         public WorldModel WithProductionProgressChange(int producerId, float progressChange, DateTime when)
@@ -247,7 +249,7 @@ namespace Strive.Model
 
         #region CodeContractsInvariant
 
-        // TODO: These pure functions are just to suppress a warning from code contracts, can it be fixed a better way?
+        // These pure functions are just to suppress a warning from code contracts
         [Pure]
         public bool ContainsKey<KeyType, ValueType>(FSharpMap<KeyType, ValueType> map, KeyType key)
         {

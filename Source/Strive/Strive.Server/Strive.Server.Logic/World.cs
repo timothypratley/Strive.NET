@@ -87,6 +87,13 @@ namespace Strive.Server.Logic
 
         private void UpdatePlanTasks(PlanModel plan)
         {
+            // Has this plan been completed?
+            if (History.Head.Entity[plan.Protagonist.Id].Position == plan.Finish.Position)
+            {
+                Apply(new PlanCompleteEvent(plan, "Finished plan"));
+                return;
+            }
+
             // What task chains exist to satisfy this plan?
             // Build a graph of connections from current state to final state
 
@@ -280,7 +287,7 @@ namespace Strive.Server.Logic
         public void Apply(PlanCompleteEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
-            History.Add(e.Plan);
+            History.Complete(e.Plan);
             // TODO: SendToUsers(new ToClient.DropPlan(e.Plan.Id));
         }
 

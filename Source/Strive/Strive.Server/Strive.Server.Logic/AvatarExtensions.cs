@@ -75,17 +75,23 @@ namespace Strive.Server.Logic
                     if (task != null)
                     {
                         // move toward goal
+                        var forward = new Vector3D(1, 0, 0);
                         var goalVector = (task.Finish - entity.Position);
                         if (goalVector.LengthSquared > 0)
-                            rotation.Y = Math.Atan2(goalVector.Y, goalVector.X) * 180 / Math.PI;
+                        {
+                            goalVector.Normalize();
+                            Vector3D axis = Vector3D.CrossProduct(goalVector, forward);
+                            double angle = Vector3D.AngleBetween(goalVector, forward);
+                            rotation = new Quaternion(axis, -angle);
+                        }
                     }
                     else
                     {
                         // move randomly
-                        rotation.Y += (float)(Global.Rand.NextDouble() * 10 - 5)
+                        rotation.W += (float)(Global.Rand.NextDouble() * 40 - 20)
                             * entity.MoveTurnSpeed;
-                        while (rotation.Y < 0) rotation.Y += 360;
-                        while (rotation.Y >= 360) rotation.Y -= 360;
+                        while (rotation.W < 0) rotation.W += 360;
+                        while (rotation.W >= 360) rotation.W -= 360;
                     }
                 }
                 Matrix3D m = Matrix3D.Identity;
@@ -95,10 +101,10 @@ namespace Strive.Server.Logic
                 {
                     case EnumMobileState.Running:
                         // TODO: using timing, not constant values
-                        position = entity.Position + entity.MoveRunSpeed * velocity / 30;
+                        position = entity.Position + entity.MoveRunSpeed * velocity / 3;
                         break;
                     case EnumMobileState.Walking:
-                        position = entity.Position + entity.MoveRunSpeed * velocity / 100;
+                        position = entity.Position + entity.MoveRunSpeed * velocity / 10;
                         break;
                     default:
                         // do nothing
