@@ -9,7 +9,6 @@ using Strive.Data.Events;
 using Strive.Model;
 using Strive.Network.Messaging;
 using ToClient = Strive.Network.Messages.ToClient;
-using Microsoft.FSharp.Collections;
 
 
 namespace Strive.Server.Logic
@@ -73,6 +72,17 @@ namespace Strive.Server.Logic
         {
             foreach (var plan in History.Head.Plan.Select(o => o.Value))
                 UpdatePlanTasks(plan);
+            foreach (var task in History.Head.Task.Select(o => o.Value))
+                AssignTask(task);
+        }
+
+        private void AssignTask(TaskModel task)
+        {
+            var protagonist = History.Head.Plan[task.PlanId].Protagonist;
+            var pId = protagonist.Id;
+            var o = History.Head.Doing.TryFind(pId);
+            if (o == null || !o.Value.Contains(task.Id))
+                Apply(new TaskAssignmentEvent(task, protagonist,"Task " + task + " assigned to " + protagonist));
         }
 
         private void UpdatePlanTasks(PlanModel plan)
@@ -97,7 +107,7 @@ namespace Strive.Server.Logic
             {
                 old = optTaskIds.Value.Select(id => History.Head.Task[id]);
                 foreach (var t in old.Where(x => !tasks.Any(y => y.Matches(x))))
-                    Apply(new TaskCompleteEvent(null, t, "Remove task for " + plan.Action + " plan"));
+                    Apply(new TaskCompleteEvent(t, null, "Remove task for " + plan.Action + " plan"));
             }
             foreach (var t in tasks.Where(x => !old.Any(y => y.Matches(x))))
                 Apply(new TaskUpdateEvent(t, "Added task for " + plan.Action + " plan"));
@@ -251,6 +261,13 @@ namespace Strive.Server.Logic
         {
             _log.Debug(e.GetType() + " " + e.Description);
             History.Complete(e.Doer, e.Task);
+        }
+
+        private void Apply(TaskAssignmentEvent e)
+        {
+            _log.Debug(e.GetType() + " " + e.Description);
+            History.Assign(e.Task, e.Doer);
+            // TODO: SendToUsers(new ToClient.DropPlan(e.Plan.Id));
         }
 
         public void Apply(PlanUpdateEvent e)

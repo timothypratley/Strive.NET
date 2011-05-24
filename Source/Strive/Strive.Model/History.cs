@@ -32,6 +32,11 @@ namespace Strive.Model
             _recordedWorld.Head = _recordedWorld.Head.Add(plan);
         }
 
+        public void Assign(TaskModel task, EntityModel entity)
+        {
+            _recordedWorld.Head = _recordedWorld.Head.Assign(task.Id, entity.Id);
+        }
+
         public void Complete(EntityModel entity, TaskModel task)
         {
             _recordedWorld.Head = _recordedWorld.Head.Complete(entity, task);

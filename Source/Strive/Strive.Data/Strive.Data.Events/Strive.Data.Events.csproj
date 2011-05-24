@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TaskAssignmentEvent.cs" />
     <Compile Include="ProductionStartedEvent.cs" />
     <Compile Include="ProductionCompleteEvent.cs" />
     <Compile Include="ProductionUpdateEvent.cs" />

@@ -140,7 +140,25 @@ namespace Strive.Model
                 Requires.Add(task.PlanId, tasks), EntityCube);
         }
 
-        public FSharpMap<int, FSharpSet<int>> Dissoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
+        public static FSharpMap<int, FSharpSet<int>> Assoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
+        {
+            var o = map.TryFind(key);
+            var set = o == null
+                ? SetModule.Empty<int>()
+                : o.Value;
+            return map.Add(key, set.Add(id));
+        }
+
+        public static FSharpMap<int, FSharpSet<int>> Assoc(FSharpMap<int, FSharpSet<int>> map, int key, FSharpSet<int> ids)
+        {
+            var o = map.TryFind(key);
+            var set = o == null
+                ? SetModule.Empty<int>()
+                : o.Value;
+            return map.Add(key, SetModule.Union(set, ids));
+        }
+
+        public static FSharpMap<int, FSharpSet<int>> Dissoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
         {
             var o = map.TryFind(key);
             var set = o == null
@@ -175,7 +193,13 @@ namespace Strive.Model
         public WorldModel Put(FSharpSet<int> entities, int on)
         {
             return new WorldModel(Entity, Task, Plan, Producing,
-                Holding.Add(on, SetModule.Union(Holding[on], entities)), Doing, Requires, EntityCube);
+                Assoc(Holding, on, entities), Doing, Requires, EntityCube);
+        }
+
+        public WorldModel Assign(int taskId, int entityId)
+        {
+            return new WorldModel(Entity, Task, Plan, Producing,
+                Holding, Assoc(Doing, entityId, taskId), Requires, EntityCube);
         }
 
 

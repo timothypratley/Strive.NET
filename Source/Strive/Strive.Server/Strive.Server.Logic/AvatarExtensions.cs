@@ -16,35 +16,37 @@ namespace Strive.Server.Logic
 
             var c = entity as CombatantModel;
             if (c != null)
-            {
-                // check for activating skills
-                if (c.ActivatingSkill != EnumSkill.None
-                    && c.ActivatingSkillTimestamp + c.ActivatingSkillLeadTime <= Global.Now)
-                    world.UseSkillNow(
-                        c,
-                        // TODO: avoid looking it up?
-                        Global.Schema.EnumSkill.FindByEnumSkillID((int)c.ActivatingSkill),
-                        c.Target);
-
-                // TODO: check for queued skills
-                //else if (c.SkillQueue.Length > 0)
-                //c.ActivatingSkill = c.SkillQueue.Head;
-
-                if (c.Target != null)
-                    world.CheckAttack(c);
-
-                else if (Global.Now - c.LastMoveUpdate > TimeSpan.FromSeconds(1)
-                    && (c.MobileState == EnumMobileState.Running
-                    || c.MobileState == EnumMobileState.Walking))
-                    // TODO: where to check if changed?, also can remove cast with generics
-                    c = (CombatantModel)c.WithState(EnumMobileState.Standing);
-
-                c = c.HealUpdate();
-
-                entity = c;
-            }
+                entity = UpdateCombatant(world, c);
 
             world.Apply(new EntityUpdateEvent(entity, "Update"));
+        }
+
+        private static CombatantModel UpdateCombatant(World world, CombatantModel c)
+        {
+            // check for activating skills
+            if (c.ActivatingSkill != EnumSkill.None
+                && c.ActivatingSkillTimestamp + c.ActivatingSkillLeadTime <= Global.Now)
+                world.UseSkillNow(
+                    c,
+                    // TODO: avoid looking it up?
+                    Global.Schema.EnumSkill.FindByEnumSkillID((int)c.ActivatingSkill),
+                    c.Target);
+
+            // TODO: check for queued skills
+            //else if (c.SkillQueue.Length > 0)
+            //c.ActivatingSkill = c.SkillQueue.Head;
+
+            if (c.Target != null)
+                world.CheckAttack(c);
+
+            else if (Global.Now - c.LastMoveUpdate > TimeSpan.FromSeconds(1)
+                && (c.MobileState == EnumMobileState.Running
+                || c.MobileState == EnumMobileState.Walking))
+                // TODO: where to check if changed?, also can remove cast with generics
+                c = (CombatantModel)c.WithState(EnumMobileState.Standing);
+
+            c = c.HealUpdate();
+            return c;
         }
 
         public static void CheckAttack(this World world, CombatantModel me)
@@ -74,7 +76,8 @@ namespace Strive.Server.Logic
                     {
                         // move toward goal
                         var goalVector = (task.Finish - entity.Position);
-                        rotation.Y = Math.Atan2(goalVector.Y, goalVector.X) * 180 / Math.PI;
+                        if (goalVector.LengthSquared > 0)
+                            rotation.Y = Math.Atan2(goalVector.Y, goalVector.X) * 180 / Math.PI;
                     }
                     else
                     {

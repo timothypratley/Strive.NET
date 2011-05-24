@@ -2,9 +2,9 @@
 
 namespace Strive.Data.Events
 {
-    public class TaskCompleteEvent : Event
+    public class TaskAssignmentEvent : Event
     {
-        public TaskCompleteEvent(TaskModel task, EntityModel doer, string description)
+        public TaskAssignmentEvent(TaskModel task, EntityModel doer, string description)
         {
             Task = task;
             Doer = doer;
