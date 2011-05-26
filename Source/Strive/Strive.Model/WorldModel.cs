@@ -167,10 +167,8 @@ namespace Strive.Model
             return set.IsEmpty ? map.Remove(key) : map.Add(key, set);
         }
 
-        public WorldModel Complete(EntityModel doer, TaskModel task)
+        public WorldModel Complete(TaskModel task, EntityModel doer)
         {
-            Contract.Ensures(!Doing.Select(d => d.Value).Any(tasks => Contains(tasks, task.Id)));
-
             var doing = doer == null
                 ? Doing
                 : Dissoc(Doing, doer.Id, task.Id);
@@ -180,7 +178,6 @@ namespace Strive.Model
 
         public WorldModel Complete(PlanModel plan)
         {
-            // TODO: remove the tasks
             Contract.Requires<ArgumentException>(!Task.Any(t => t.Value.PlanId == plan.Id));
 
             return new WorldModel(Entity, Task, Plan.Remove(plan.Id), Producing, Holding, Doing, Requires, EntityCube);

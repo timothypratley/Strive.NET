@@ -37,14 +37,19 @@ namespace Strive.Model
             _recordedWorld.Head = _recordedWorld.Head.Assign(task.Id, entity.Id);
         }
 
-        public void Complete(EntityModel entity, TaskModel task)
+        public void Complete(TaskModel task, EntityModel entity)
         {
-            _recordedWorld.Head = _recordedWorld.Head.Complete(entity, task);
+            _recordedWorld.Head = _recordedWorld.Head.Complete(task, entity);
         }
 
         public void Complete(PlanModel plan)
         {
-            _recordedWorld.Head = _recordedWorld.Head.Complete(plan);
+            var world = _recordedWorld.Head;
+            var opt = world.Requires.TryFind(plan.Id);
+            if (opt != null)
+                foreach (var t in opt.Value)
+                    world = world.Complete(world.Task[t], null);
+            _recordedWorld.Head = world.Complete(plan);
         }
 
         public EntityModel GetEntity(int key)

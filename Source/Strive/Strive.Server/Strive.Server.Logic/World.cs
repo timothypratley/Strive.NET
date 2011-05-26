@@ -82,13 +82,26 @@ namespace Strive.Server.Logic
             var pId = protagonist.Id;
             var o = History.Head.Doing.TryFind(pId);
             if (o == null || !o.Value.Contains(task.Id))
-                Apply(new TaskAssignmentEvent(task, protagonist,"Task " + task + " assigned to " + protagonist));
+                Apply(new TaskAssignmentEvent(task, protagonist, "Task " + task + " assigned to " + protagonist));
         }
 
         private void UpdatePlanTasks(PlanModel plan)
         {
+            var world = History.Head;
+            var doer = world.Entity[plan.Protagonist.Id];
+            IEnumerable<TaskModel> old;
+            var optTaskIds = world.Requires.TryFind(plan.Id);
+
+            // Have any plan tasks been completed?
+            if (optTaskIds != null)
+                foreach (var t in optTaskIds.Value
+                    .Select(id => world.Task[id])
+                    .Where(x => doer.Position == x.Finish))
+                    Apply(new TaskCompleteEvent(t, doer, "Finished task"));
+            // TODO: need additional consistency checks that the doer was doing that task etc
+
             // Has this plan been completed?
-            if (History.Head.Entity[plan.Protagonist.Id].Position == plan.Finish.Position)
+            if (doer.Position == plan.Finish.Position)
             {
                 Apply(new PlanCompleteEvent(plan, "Finished plan"));
                 return;
@@ -106,13 +119,11 @@ namespace Strive.Server.Logic
 
             // Does this match my current task allocation?
             // Only change if there is a significant reason to
-            IEnumerable<TaskModel> old;
-            var optTaskIds = History.Head.Requires.TryFind(plan.Id);
             if (optTaskIds == null)
                 old = Enumerable.Empty<TaskModel>();
             else
             {
-                old = optTaskIds.Value.Select(id => History.Head.Task[id]);
+                old = optTaskIds.Value.Select(id => world.Task[id]);
                 foreach (var t in old.Where(x => !tasks.Any(y => y.Matches(x))))
                     Apply(new TaskCompleteEvent(t, null, "Remove task for " + plan.Action + " plan"));
             }
@@ -267,7 +278,7 @@ namespace Strive.Server.Logic
         public void Apply(TaskCompleteEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
-            History.Complete(e.Doer, e.Task);
+            History.Complete(e.Task, e.Doer);
         }
 
         private void Apply(TaskAssignmentEvent e)

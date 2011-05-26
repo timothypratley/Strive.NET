@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Strive.Common;
 using Strive.Data.Events;
 using Strive.Model;
-using Microsoft.FSharp.Collections;
 
 namespace Strive.Server.Logic.Tests
 {
@@ -70,10 +69,16 @@ namespace Strive.Server.Logic.Tests
             var world = new World(null, 0, new History());
             var e1 = new CombatantModel(0, "Combatant", "bar", new Vector3D(), Quaternion.Identity, 10, 10, EnumMobileState.Running, 2, 20, 20, 20, 20, 20);
             var e2 = new EntityModel(1, "Entity", "bar", new Vector3D(10, 10, 10), Quaternion.Identity, 10, 10, EnumMobileState.Standing, 2);
-            var plan = new PlanModel(0, EnumPlanAction.Move, e2, DateTime.Now, e2, DateTime.Now, e2, 1);
+            var plan = new PlanModel(0, EnumPlanAction.Move, e1, DateTime.Now, e1, DateTime.Now, e2, 1);
             world.Apply(new EntityUpdateEvent(e1, "Test entity event"));
             world.Apply(new PlanUpdateEvent(plan, "Test plan event"));
             world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
+
+            world.Update();
+            world.History.Head.Task.Count
+                .Should().Be(1);
+
+            world.Apply(new EntityUpdateEvent(e1.Move(e1.MobileState, e2.Position, e2.Rotation, DateTime.Now), "Test move to target"));
 
             world.Update();
             world.History.Head.Task.Count
