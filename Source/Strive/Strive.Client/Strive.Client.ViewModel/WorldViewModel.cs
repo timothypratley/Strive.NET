@@ -122,6 +122,11 @@ namespace Strive.Client.ViewModel
             get { return History.Current.Plan.Select(p => new PlanViewModel(p.Value, WorldNavigation)); }
         }
 
+        public IEnumerable<TaskViewModel> Tasks
+        {
+            get { return History.Current.Task.Select(p => new TaskViewModel(p.Value, WorldNavigation)); }
+        }
+
         public int CurrentVersion
         {
             get { return History.CurrentVersion; }

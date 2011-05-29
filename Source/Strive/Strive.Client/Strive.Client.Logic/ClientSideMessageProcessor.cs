@@ -117,5 +117,10 @@ namespace Strive.Client.Logic
             foreach (TraceListener listener in ChatListeners)
                 listener.WriteLine("[" + m.CommunicationType + "] " + m.Name + ": " + m.Message);
         }
+
+        void Process(LogMessage m)
+        {
+            _log.Info(m.Message);
+        }
     }
 }

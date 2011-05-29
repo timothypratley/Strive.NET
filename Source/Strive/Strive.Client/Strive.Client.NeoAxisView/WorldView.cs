@@ -40,6 +40,16 @@ namespace Strive.Client.NeoAxisView
                 neoEntity.Position = entityModel.Position.ToVec3();
                 neoEntity.Rotation = entityModel.Rotation.ToQuat();
 
+                /* TODO: how do you animate units??
+                var u = neoEntity as Unit;
+                if (u != null)
+                {
+                    if (entityModel.MobileState == EnumMobileState.Walking)
+                        u.SetForceAnimation("walkAgressive", true);
+                    else if (entityModel.MobileState == EnumMobileState.Running)
+                        u.SetForceAnimation("walkAgressive", true);
+                }
+                 */
                 /* TODO: want this for animiation... but maybe use MobileState 'producing' instead?
                 if (entityModel.Production.Queue.Any()
                     && neoEntity is RTSBuilding

@@ -88,10 +88,7 @@ namespace Strive.Server.Logic
                     else
                     {
                         // move randomly
-                        rotation.W += (float)(Global.Rand.NextDouble() * 40 - 20)
-                            * entity.MoveTurnSpeed;
-                        while (rotation.W < 0) rotation.W += 360;
-                        while (rotation.W >= 360) rotation.W -= 360;
+                        rotation *= new Quaternion(Global.Up, (Global.Rand.NextDouble() * 40 - 20) * entity.MoveTurnSpeed);
                     }
                 }
                 Matrix3D m = Matrix3D.Identity;

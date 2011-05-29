@@ -79,6 +79,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TaskListView.xaml.cs">
+      <DependentUpon>TaskListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlanListView.xaml.cs">
       <DependentUpon>PlanListView.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="TaskListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PlanListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

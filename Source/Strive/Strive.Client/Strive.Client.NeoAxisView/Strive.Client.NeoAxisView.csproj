@@ -196,6 +196,10 @@
     <None Include="Resources\WorldMap.gif" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Strive.Common\Strive.Common.csproj">
+      <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
+      <Name>Strive.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Strive.Model\Strive.Model.csproj">
       <Project>{81F8F1E4-640B-45B7-9000-072D4C96F8A0}</Project>
       <Name>Strive.Model</Name>

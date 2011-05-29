@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Media.Media3D;
@@ -9,7 +10,6 @@ using Strive.Network.Messages;
 using Strive.Network.Messages.ToServer;
 using Strive.Network.Messaging;
 using Strive.Server.DB;
-using System.Collections.Generic;
 
 
 namespace Strive.Server.Logic
@@ -133,17 +133,26 @@ namespace Strive.Server.Logic
             {
                 // reconnected, replace existing connection with the new
                 var avatar = e.Value;
-                var possessedBy = World.Possession[avatar.Id];
-                if (possessedBy == client)
+                ClientConnection possessedBy;
+                if (World.Possession.TryGetValue(avatar.Id, out possessedBy))
                 {
-                    client.LogMessage("You already possess " + avatar);
-                    return;
+                    if (possessedBy == client)
+                    {
+                        client.LogMessage("You already possess " + avatar);
+                        return;
+                    }
+                    else
+                    {
+                        _log.Info("Mobile " + avatar + " has been taken over by " + client);
+                        possessedBy.LogMessage("You lost control of " + avatar);
+                        possessedBy.Avatar = null;
+                    }
                 }
-                else if (possessedBy != null)
+                if (client.Avatar != null && client.Avatar.Id != avatar.Id)
                 {
-                    _log.Info("Mobile " + avatar + " has been taken over by " + client);
-                    possessedBy.LogMessage("You lost control of " + avatar);
-                    possessedBy.Avatar = null;
+                    // TODO: omg releasing this sends a combatant which crashes
+                    // release control of previous avatar
+                    //World.Possession.Remove(client.Avatar.Id);
                 }
                 World.Possession[avatar.Id] = client;
                 client.Avatar = avatar;

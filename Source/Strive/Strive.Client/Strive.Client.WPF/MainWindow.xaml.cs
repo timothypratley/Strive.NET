@@ -147,5 +147,10 @@ namespace Strive.Client.WPF
                 new KeyBinding(App.WorldViewModel.CreatePlan, Key.C, ModifierKeys.Control));
             BindAndShow(r, App.WorldViewModel);
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            BindAndShow(new TaskListView(), App.WorldViewModel);
+        }
     }
 }

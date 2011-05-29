@@ -78,17 +78,16 @@ namespace Strive.Server.Logic
 
         private void AssignTask(TaskModel task)
         {
-            var protagonist = History.Head.Plan[task.PlanId].Protagonist;
-            var pId = protagonist.Id;
-            var o = History.Head.Doing.TryFind(pId);
+            var doer = History.Head.Plan[task.PlanId].Start;
+            var o = History.Head.Doing.TryFind(doer.Id);
             if (o == null || !o.Value.Contains(task.Id))
-                Apply(new TaskAssignmentEvent(task, protagonist, "Task " + task + " assigned to " + protagonist));
+                Apply(new TaskAssignmentEvent(task, doer, "Task " + task + " assigned to " + doer));
         }
 
         private void UpdatePlanTasks(PlanModel plan)
         {
             var world = History.Head;
-            var doer = world.Entity[plan.Protagonist.Id];
+            var doer = world.Entity[plan.Start.Id];
             IEnumerable<TaskModel> old;
             var optTaskIds = world.Requires.TryFind(plan.Id);
 
@@ -101,7 +100,7 @@ namespace Strive.Server.Logic
             // TODO: need additional consistency checks that the doer was doing that task etc
 
             // Has this plan been completed?
-            if (doer.Position == plan.Finish.Position)
+            if ((doer.Position - plan.Finish.Position).Length < 1)
             {
                 Apply(new PlanCompleteEvent(plan, "Finished plan"));
                 return;

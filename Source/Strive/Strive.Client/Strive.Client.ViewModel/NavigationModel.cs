@@ -8,8 +8,10 @@ namespace Strive.Client.ViewModel
     public class WorldNavigation
     {
         // storing only the id, as the objects get replaced entirely
+        // TODO: as these all behave the same, can they be made generic?
         private readonly HashSet<int> _selectedEntities = new HashSet<int>();
         private readonly HashSet<int> _selectedPlans = new HashSet<int>();
+        private readonly HashSet<int> _selectedTasks = new HashSet<int>(); 
         private int? _mouseOverEntity;
 
         #region Independent properties
@@ -17,6 +19,7 @@ namespace Strive.Client.ViewModel
         private readonly Independent _indMouseOverEntity = new Independent();
         private readonly Independent _indSelectedEntities = new Independent();
         private readonly Independent _indSelectedPlans = new Independent();
+        private readonly Independent _indSelectedTasks = new Independent();
 
         public void SetSelected(EntityModel e) { SetSelectedEntity(e.Id); }
         public void SetSelectedEntity(int id)
@@ -90,6 +93,40 @@ namespace Strive.Client.ViewModel
         public IEnumerable<int> SelectedPlans
         {
             get { _indSelectedPlans.OnGet(); return _selectedPlans; }
+        }
+
+        public void SetSelected(TaskModel task) { SetSelectedTask(task.Id); }
+        public void SetSelectedTask(int id)
+        {
+            _indSelectedTasks.OnSet();
+            _selectedTasks.Clear();
+            _selectedTasks.Add(id);
+        }
+
+        public void AddSelected(TaskModel task) { AddSelectedTask(task.Id); }
+        public void AddSelectedTask(int id)
+        {
+            _indSelectedTasks.OnSet();
+            _selectedTasks.Add(id);
+        }
+
+        public void RemoveSelected(TaskModel task) { RemoveSelectedTask(task.Id); }
+        public void RemoveSelectedTask(int id)
+        {
+            _indSelectedTasks.OnSet();
+            _selectedTasks.Remove(id);
+        }
+
+        public bool IsSelected(TaskModel task) { return IsSelectedTask(task.Id); }
+        public bool IsSelectedTask(int id)
+        {
+            _indSelectedTasks.OnGet();
+            return _selectedTasks.Contains(id);
+        }
+
+        public IEnumerable<int> SelectedTasks
+        {
+            get { _indSelectedTasks.OnGet(); return _selectedTasks; }
         }
         // End generated code --------------------------------
         #endregion
