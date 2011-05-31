@@ -56,14 +56,14 @@ namespace Strive.Server.Logic
             Load();
         }
 
-        public void Update()
+        public void Update(DateTime time)
         {
             UpdatePlans();
 
             foreach (var e in History.Head.Entity.Select(p => p.Value))
                 this.UpdateEntity(e);
 
-            UpdateProduction();
+            UpdateProduction(time);
 
             WeatherUpdate();
         }
@@ -138,12 +138,12 @@ namespace Strive.Server.Logic
             return History.Head.Task[doing.Value.First()];
         }
 
-        public void UpdateProduction()
+        public void UpdateProduction(DateTime time)
         {
             foreach (var p in History.Head.Producing)
             {
                 var factory = History.Head.Entity.TryFind(p.Key);
-                var progressChange = p.Value.Rate * (float)(Global.Now - p.Value.LastUpdated).TotalSeconds;
+                var progressChange = p.Value.Rate * (float)(time - p.Value.LastUpdated).TotalSeconds;
                 if (p.Value.Progress + progressChange >= p.Value.Target)
                 {
                     var creation = new EntityModel(p.Value.Queue.First(),
@@ -322,7 +322,8 @@ namespace Strive.Server.Logic
         public void Apply(ProductionStartedEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
-            History.Head = History.Head.WithProduction(e.ProducerId, e.ProductId, Global.Now);
+            // TODO: lookup the actual target build time required
+            History.Head = History.Head.WithProduction(e.ProducerId, e.ProductId, 3, Global.Now);
         }
 
         public void Apply(ProductionUpdateEvent e)

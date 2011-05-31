@@ -201,7 +201,7 @@ namespace Strive.Model
         }
 
 
-        public WorldModel WithProduction(int producerId, int productId, DateTime when)
+        public WorldModel WithProduction(int producerId, int productId, float target, DateTime when)
         {
             Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
             Contract.Ensures(Producing.All(p => !p.Value.Queue.IsEmpty));
@@ -210,7 +210,7 @@ namespace Strive.Model
             var production = ((current == null)
                 ? Production.Empty
                 : current.Value)
-                .WithProduction(productId, when);
+                .WithProduction(productId, target, when);
             return new WorldModel(Entity, Task, Plan,
                 Producing.Add(producerId, production), Holding, Doing, Requires, EntityCube);
         }

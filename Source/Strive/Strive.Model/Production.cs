@@ -28,12 +28,15 @@ namespace Strive.Model
 
         public static Production Empty { get { return _empty; } }
 
-        public Production WithProduction(int id, DateTime when)
+        public Production WithProduction(int id, float target, DateTime when)
         {
             var r = (Production)this.MemberwiseClone();
             if (Queue.IsEmpty)
                 r.Progress = 0;
             r.Queue = ListModule.Append(r.Queue, ListModule.OfArray(new[] { id }));
+            r.Target = target;
+            // TODO: use a specific rate
+            r.Rate = 1;
             r.LastUpdated = when;
             return r;
         }

@@ -54,7 +54,7 @@ namespace Strive.Server.Logic.Tests
             world.Apply(new PlanUpdateEvent(plan, "Test plan event"));
             world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
 
-            world.Update();
+            world.Update(DateTime.Now);
             world.History.Head.Task.Count
                 .Should().Be(1);
 
@@ -74,15 +74,34 @@ namespace Strive.Server.Logic.Tests
             world.Apply(new PlanUpdateEvent(plan, "Test plan event"));
             world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
 
-            world.Update();
+            world.Update(DateTime.Now);
             world.History.Head.Task.Count
                 .Should().Be(1);
 
             world.Apply(new EntityUpdateEvent(e1.Move(e1.MobileState, e2.Position, e2.Rotation, DateTime.Now), "Test move to target"));
 
-            world.Update();
+            world.Update(DateTime.Now);
             world.History.Head.Task.Count
                 .Should().Be(0);
+        }
+
+        [TestMethod]
+        public void FactoryProduction()
+        {
+            var world = new World(null, 0, new History());
+            var e2 = new EntityModel(1, "Entity", "bar", new Vector3D(10, 10, 10), Quaternion.Identity, 10, 10, EnumMobileState.Standing, 2);
+            world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
+            world.Apply(new ProductionStartedEvent(1, 2, "Test factory production"));
+            world.Update(DateTime.Now + TimeSpan.FromSeconds(1));
+            world.History.Head.Producing.Count
+                .Should().Be(1);
+            world.History.Head.Entity.Count
+                .Should().Be(1);
+            world.Update(DateTime.Now + TimeSpan.FromSeconds(10));
+            world.History.Head.Producing.Count
+                .Should().Be(0);
+            world.History.Head.Entity.Count
+                .Should().Be(2);
         }
 
         [TestMethod]

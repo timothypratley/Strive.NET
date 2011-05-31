@@ -50,7 +50,7 @@ namespace Strive.Server.Logic
             {
                 // handle world changes
                 Global.Now = DateTime.Now;
-                _messageProcessor.World.Update();
+                _messageProcessor.World.Update(Global.Now);
 
                 // handle incoming messages
                 _messageProcessor.ProcessMessages();
