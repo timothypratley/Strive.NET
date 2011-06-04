@@ -3,9 +3,9 @@
 
 namespace Strive.WPF
 {
-    public partial class PlanListView : DockableContent
+    public partial class MissionListView : DockableContent
     {
-        public PlanListView()
+        public MissionListView()
         {
             InitializeComponent();
         }

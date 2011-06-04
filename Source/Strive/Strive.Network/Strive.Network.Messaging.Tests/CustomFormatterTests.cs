@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Media.Media3D;
+using Microsoft.FSharp.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Strive.Common;
 using Strive.Model;
@@ -57,7 +58,7 @@ namespace Strive.Network.Messaging.Tests
             var m = new EntityModel(1, "Foo", "Bar", new Vector3D(1.2, 3, 4), new Quaternion(1.2, 3, 4, 5), 100, 100, EnumMobileState.Standing, 1.7f);
             SerDesMessage(m);
             SerDesMessage(new PositionUpdate(m));
-            SerDesMessage(new PlanModel(1, EnumPlanAction.Move, m, DateTime.Now, m, DateTime.Now, m, 0.5f));
+            SerDesMessage(new MissionModel(1, EnumMissionAction.Move, m.Id, DateTime.Now, SetModule.Empty<int>(), DateTime.Now, m.Position, 0.5f));
         }
 
         private static void SerDesMessage(object message)

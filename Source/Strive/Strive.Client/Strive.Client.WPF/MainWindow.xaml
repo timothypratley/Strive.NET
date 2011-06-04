@@ -36,7 +36,7 @@
         <ToolBar Name="ButtonBar" DockPanel.Dock="top">
             <Button Content="New View" Command="ApplicationCommands.New"></Button>
             <Button Content="Entities" Command="NavigationCommands.Search"></Button>
-            <Button Content="Plans" Click="Button_Click_2"></Button>
+            <Button Content="Missions" Click="Button_Click_2"></Button>
             <Button Content="Tasks" Click="Button_Click_3"></Button>
             <Button Content="Home" Command="NavigationCommands.BrowseHome"></Button>
             <Button Content="Log" Command="Open"></Button>

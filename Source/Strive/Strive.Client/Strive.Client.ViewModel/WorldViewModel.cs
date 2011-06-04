@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Media.Media3D;
+using Microsoft.FSharp.Collections;
 using Strive.Model;
 using Strive.Network.Messaging;
 using UpdateControls.XAML;
@@ -31,7 +31,8 @@ namespace Strive.Client.ViewModel
             {
                 return MakeCommand
                     .When(() => WorldNavigation.SelectedEntities.Any() && CurrentPerspective != null)
-                    .Do(() => {
+                    .Do(() =>
+                    {
                         var p = CurrentPerspective;
                         if (p != null)
                             p.FollowSelected.Execute(null);
@@ -88,7 +89,7 @@ namespace Strive.Client.ViewModel
             }
         }
 
-        public ICommand CreatePlan
+        public ICommand CreateMission
         {
             get
             {
@@ -97,15 +98,16 @@ namespace Strive.Client.ViewModel
                     .Do(() =>
                     {
                         var selected = WorldNavigation.SelectedEntities;
-                        var mouseOver = MouseOverEntity;
-                        if (!selected.Any() || mouseOver == null)
+                        if (!selected.Any())
                             return;
 
-                        ServerConnection.CreatePlan(
-                                    rand.Next(), EnumPlanAction.Move,
-                                    new EntityModel(rand.Next(), "Protagonist", "Bar", new Vector3D(), Quaternion.Identity, 100, 100, Common.EnumMobileState.Standing, 1.7f),
-                                    DateTime.Now, History.Current.Entity[selected.First()],
-                                    DateTime.Now + TimeSpan.FromMinutes(1), mouseOver.Entity, 0.2f);
+                        var mouseOver = MouseOverEntity;
+                        var destination = mouseOver.Entity.Position;
+
+                        ServerConnection.CreateMission(
+                                    rand.Next(), EnumMissionAction.Move, selected.First(),
+                                    DateTime.Now, SetModule.Empty<int>(),
+                                    DateTime.Now + TimeSpan.FromMinutes(1), destination, 0.2f);
                     });
             }
         }
@@ -117,9 +119,9 @@ namespace Strive.Client.ViewModel
             get { return History.Current.Entity.Select(e => new EntityViewModel(e.Value, WorldNavigation)); }
         }
 
-        public IEnumerable<PlanViewModel> Plans
+        public IEnumerable<MissionViewModel> Missions
         {
-            get { return History.Current.Plan.Select(p => new PlanViewModel(p.Value, WorldNavigation)); }
+            get { return History.Current.Mission.Select(p => new MissionViewModel(p.Value, WorldNavigation)); }
         }
 
         public IEnumerable<TaskViewModel> Tasks

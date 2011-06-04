@@ -5,22 +5,20 @@ namespace Strive.Model
 {
     public class TaskModel
     {
-        public TaskModel(int id, int planId, Vector3D start, Vector3D finish)
+        public TaskModel(int id, int missionId, Vector3D finish)
         {
             Id = id;
-            PlanId = planId;
-            Start = start;
+            MissionId = missionId;
             Finish = finish;
         }
 
         public int Id { get; private set; }
-        public int PlanId { get; private set; }
-        public Vector3D Start { get; private set; }
+        public int MissionId { get; private set; }
         public Vector3D Finish { get; private set; }
 
         public bool Matches(TaskModel t)
         {
-            return t.Start == Start
+            return t.MissionId == MissionId
                 && t.Finish == Finish;
         }
     }

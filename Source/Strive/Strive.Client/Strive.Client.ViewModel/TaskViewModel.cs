@@ -35,7 +35,7 @@ namespace Strive.Client.ViewModel
 
         public override string ToString()
         {
-            return _task.Start + " to " + _task.Finish;
+            return "Go to " + _task.Finish;
         }
 
         public override bool Equals(object obj)

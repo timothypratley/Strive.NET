@@ -142,9 +142,9 @@ namespace Strive.Client.WPF
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            var r = new PlanListView();
+            var r = new MissionListView();
             r.InputBindings.Add(
-                new KeyBinding(App.WorldViewModel.CreatePlan, Key.C, ModifierKeys.Control));
+                new KeyBinding(App.WorldViewModel.CreateMission, Key.C, ModifierKeys.Control));
             BindAndShow(r, App.WorldViewModel);
         }
 

@@ -58,7 +58,7 @@ namespace Strive.Server.Logic
 
         public void Update(DateTime time)
         {
-            UpdatePlans();
+            UpdateMissions();
 
             foreach (var e in History.Head.Entity.Select(p => p.Value))
                 this.UpdateEntity(e);
@@ -68,52 +68,55 @@ namespace Strive.Server.Logic
             WeatherUpdate();
         }
 
-        public void UpdatePlans()
+        public void UpdateMissions()
         {
-            foreach (var plan in History.Head.Plan.Select(o => o.Value))
-                UpdatePlanTasks(plan);
+            foreach (var m in History.Head.Mission.Select(o => o.Value))
+                UpdateMissionTasks(m);
             foreach (var task in History.Head.Task.Select(o => o.Value))
                 AssignTask(task);
         }
 
         private void AssignTask(TaskModel task)
         {
-            var doer = History.Head.Plan[task.PlanId].Start;
-            var o = History.Head.Doing.TryFind(doer.Id);
+            var world = History.Head;
+            var doerId = world.Mission[task.MissionId].ActorId;
+            var o = world.Doing.TryFind(doerId);
             if (o == null || !o.Value.Contains(task.Id))
-                Apply(new TaskAssignmentEvent(task, doer, "Task " + task + " assigned to " + doer));
+                Apply(new TaskAssignmentEvent(task, doerId, "Task " + task + " assigned to " + world.Entity[doerId]));
+            //else
+            // TODO: find an appropriate entity
         }
 
-        private void UpdatePlanTasks(PlanModel plan)
+        private void UpdateMissionTasks(MissionModel mission)
         {
             var world = History.Head;
-            var doer = world.Entity[plan.Start.Id];
+            var doer = world.Entity[mission.ActorId];
             IEnumerable<TaskModel> old;
-            var optTaskIds = world.Requires.TryFind(plan.Id);
+            var optTaskIds = world.Requires.TryFind(mission.Id);
 
-            // Have any plan tasks been completed?
+            // Have any mission tasks been completed?
             if (optTaskIds != null)
                 foreach (var t in optTaskIds.Value
                     .Select(id => world.Task[id])
                     .Where(x => doer.Position == x.Finish))
-                    Apply(new TaskCompleteEvent(t, doer, "Finished task"));
+                    Apply(new TaskCompleteEvent(t, doer, "Finished " + t + " by " + doer));
             // TODO: need additional consistency checks that the doer was doing that task etc
 
-            // Has this plan been completed?
-            if ((doer.Position - plan.Finish.Position).Length < 1)
+            // Has this mission been completed?
+            if (IsMissionComplete(mission, doer))
             {
-                Apply(new PlanCompleteEvent(plan, "Finished plan"));
+                Apply(new MissionCompleteEvent(mission, "Finished " + mission));
                 return;
             }
 
-            // What task chains exist to satisfy this plan?
+            // What task chains exist to satisfy this mission?
             // Build a graph of connections from current state to final state
 
             // Which task chain should I choose?
             // Shortest path search of the graph
 
             var tasks = new List<TaskModel>();
-            var task = new TaskModel(Global.Rand.Next(), plan.Id, plan.Start.Position, plan.Finish.Position);
+            var task = new TaskModel(Global.Rand.Next(), mission.Id, mission.Destination);
             tasks.Add(task);
 
             // Does this match my current task allocation?
@@ -124,10 +127,46 @@ namespace Strive.Server.Logic
             {
                 old = optTaskIds.Value.Select(id => world.Task[id]);
                 foreach (var t in old.Where(x => !tasks.Any(y => y.Matches(x))))
-                    Apply(new TaskCompleteEvent(t, null, "Remove task for " + plan.Action + " plan"));
+                    Apply(new TaskCompleteEvent(t, null, "Remove task " + t + " of " + mission));
             }
             foreach (var t in tasks.Where(x => !old.Any(y => y.Matches(x))))
-                Apply(new TaskUpdateEvent(t, "Added task for " + plan.Action + " plan"));
+                Apply(new TaskUpdateEvent(t, "Added task " + t + " of " + mission));
+        }
+
+        // TODO: Might be useful to differentiate between success and failure reason for completion
+        private bool IsMissionComplete(MissionModel mission, EntityModel doer)
+        {
+            if ((doer.Position - mission.Destination).Length > 1)
+                return false;
+
+            var world = History.Head;
+            var o = world.Holding.TryFind(doer.Id);
+            var holding = o == null ? Enumerable.Empty<int>() : o.Value;
+
+            switch (mission.Action)
+            {
+                case EnumMissionAction.Move:
+                    return !mission.Targets.Except(holding).Any();
+                case EnumMissionAction.Destroy:
+                    return !mission.Targets.Any();
+                case EnumMissionAction.Protect:
+                    return !mission.Targets.Any();
+                case EnumMissionAction.Build:
+                    // TODO: hmmm targets are not built yet
+                    return true;
+                case EnumMissionAction.Capture:
+                    return mission.Targets.All(t =>
+                    {
+                        var oo = world.Entity.TryFind(t);
+                        return oo == null || oo.Value.Owner == doer.Owner;
+                    });
+                case EnumMissionAction.Harvest:
+                    return false;
+                default:
+                    Contract.Assert(false, "Unexpected " + mission.Action);
+                    return false;
+            }
+
         }
 
         public TaskModel DoingTask(EntityModel entity)
@@ -283,22 +322,22 @@ namespace Strive.Server.Logic
         private void Apply(TaskAssignmentEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
-            History.Assign(e.Task, e.Doer);
-            // TODO: SendToUsers(new ToClient.DropPlan(e.Plan.Id));
+            History.Assign(e.Task, e.DoerId);
+            // TODO: SendToUsers(new ToClient.DropMission(e.Mission.Id));
         }
 
-        public void Apply(PlanUpdateEvent e)
+        public void Apply(MissionUpdateEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
-            History.Add(e.Plan);
-            SendToUsers(e.Plan);
+            History.Add(e.Mission);
+            SendToUsers(e.Mission);
         }
 
-        public void Apply(PlanCompleteEvent e)
+        public void Apply(MissionCompleteEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
-            History.Complete(e.Plan);
-            // TODO: SendToUsers(new ToClient.DropPlan(e.Plan.Id));
+            History.Complete(e.Mission);
+            // TODO: SendToUsers(new ToClient.DropMission(e.Mission.Id));
         }
 
         public void Apply(SkillEvent e)

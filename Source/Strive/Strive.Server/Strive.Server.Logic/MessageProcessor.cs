@@ -75,7 +75,7 @@ namespace Strive.Server.Logic
             }
             catch
             {
-                _log.Warn("ERROR: Unable to process message " + message);
+                _log.Warn("Unable to process message " + message);
             }
         }
 
@@ -351,11 +351,11 @@ namespace Strive.Server.Logic
             World.Apply(new EntityUpdateEvent(c.Entity, "Created by " + client.AuthenticatedUsername));
         }
 
-        void ProcessMessage(ClientConnection client, CreatePlan c)
+        void ProcessMessage(ClientConnection client, CreateMission c)
         {
             // TODO: would like to at least set the id
             // ObjectInstanceId = Global.Rand.Next(),
-            World.Apply(new PlanUpdateEvent(c.Plan, "Created by " + client.AuthenticatedUsername));
+            World.Apply(new MissionUpdateEvent(c.Mission, "Created by " + client.AuthenticatedUsername));
         }
 
         void ProcessMessage(ClientConnection client, ProduceEntity p)

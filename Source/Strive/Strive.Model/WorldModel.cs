@@ -14,7 +14,7 @@ namespace Strive.Model
         public WorldModel(
             FSharpMap<int, EntityModel> entity,
             FSharpMap<int, TaskModel> task,
-            FSharpMap<int, PlanModel> plan,
+            FSharpMap<int, MissionModel> mission,
             FSharpMap<int, Production> producing,
             FSharpMap<int, FSharpSet<int>> holding,
             FSharpMap<int, FSharpSet<int>> doing,
@@ -23,7 +23,7 @@ namespace Strive.Model
         {
             Entity = entity;
             Task = task;
-            Plan = plan;
+            Mission = mission;
 
             Producing = producing;
             Holding = holding;
@@ -36,7 +36,7 @@ namespace Strive.Model
         // Tables / Nodes
         public FSharpMap<int, EntityModel> Entity { get; private set; }
         public FSharpMap<int, TaskModel> Task { get; private set; }
-        public FSharpMap<int, PlanModel> Plan { get; private set; }
+        public FSharpMap<int, MissionModel> Mission { get; private set; }
 
         // Relations / Edges
         public FSharpMap<int, Production> Producing { get; private set; }
@@ -50,7 +50,7 @@ namespace Strive.Model
         private static WorldModel _empty = new WorldModel(
                     MapModule.Empty<int, EntityModel>(),
                     MapModule.Empty<int, TaskModel>(),
-                    MapModule.Empty<int, PlanModel>(),
+                    MapModule.Empty<int, MissionModel>(),
                     MapModule.Empty<int, Production>(),
                     MapModule.Empty<int, FSharpSet<int>>(),
                     MapModule.Empty<int, FSharpSet<int>>(),
@@ -123,21 +123,21 @@ namespace Strive.Model
 
             return new WorldModel(
                 Entity.Add(entity.Id, entity),
-                Task, Plan, Producing, Holding, Doing, Requires,
+                Task, Mission, Producing, Holding, Doing, Requires,
                 newEntityCube);
         }
 
         public WorldModel Add(TaskModel task)
         {
-            var o = Requires.TryFind(task.PlanId);
+            var o = Requires.TryFind(task.MissionId);
             var tasks = o == null
                 ? new FSharpSet<int>(new[] { task.Id })
                 : o.Value.Add(task.Id);
 
             return new WorldModel(Entity,
-                Task.Add(task.Id, task), Plan,
+                Task.Add(task.Id, task), Mission,
                 Producing, Holding, Doing,
-                Requires.Add(task.PlanId, tasks), EntityCube);
+                Requires.Add(task.MissionId, tasks), EntityCube);
         }
 
         public static FSharpMap<int, FSharpSet<int>> Assoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
@@ -172,31 +172,31 @@ namespace Strive.Model
             var doing = doer == null
                 ? Doing
                 : Dissoc(Doing, doer.Id, task.Id);
-            var requires = Dissoc(Requires, task.PlanId, task.Id);
-            return new WorldModel(Entity, Task.Remove(task.Id), Plan, Producing, Holding, doing, requires, EntityCube);
+            var requires = Dissoc(Requires, task.MissionId, task.Id);
+            return new WorldModel(Entity, Task.Remove(task.Id), Mission, Producing, Holding, doing, requires, EntityCube);
         }
 
-        public WorldModel Complete(PlanModel plan)
+        public WorldModel Complete(MissionModel mission)
         {
-            Contract.Requires<ArgumentException>(!Task.Any(t => t.Value.PlanId == plan.Id));
+            Contract.Requires<ArgumentException>(!Task.Any(t => t.Value.MissionId == mission.Id));
 
-            return new WorldModel(Entity, Task, Plan.Remove(plan.Id), Producing, Holding, Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Mission.Remove(mission.Id), Producing, Holding, Doing, Requires, EntityCube);
         }
 
-        public WorldModel Add(PlanModel plan)
+        public WorldModel Add(MissionModel mission)
         {
-            return new WorldModel(Entity, Task, Plan.Add(plan.Id, plan), Producing, Holding, Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Mission.Add(mission.Id, mission), Producing, Holding, Doing, Requires, EntityCube);
         }
 
         public WorldModel Put(FSharpSet<int> entities, int on)
         {
-            return new WorldModel(Entity, Task, Plan, Producing,
+            return new WorldModel(Entity, Task, Mission, Producing,
                 Assoc(Holding, on, entities), Doing, Requires, EntityCube);
         }
 
         public WorldModel Assign(int taskId, int entityId)
         {
-            return new WorldModel(Entity, Task, Plan, Producing,
+            return new WorldModel(Entity, Task, Mission, Producing,
                 Holding, Assoc(Doing, entityId, taskId), Requires, EntityCube);
         }
 
@@ -211,7 +211,7 @@ namespace Strive.Model
                 ? Production.Empty
                 : current.Value)
                 .WithProduction(productId, target, when);
-            return new WorldModel(Entity, Task, Plan,
+            return new WorldModel(Entity, Task, Mission,
                 Producing.Add(producerId, production), Holding, Doing, Requires, EntityCube);
         }
 
@@ -225,7 +225,7 @@ namespace Strive.Model
             if (current == null)
                 return this;
             var produce = current.Value.WithProductionComplete(when);
-            return new WorldModel(Entity, Task, Plan,
+            return new WorldModel(Entity, Task, Mission,
                 produce.Queue.IsEmpty ? Producing.Remove(producerId) : Producing.Add(producerId, produce),
                 Holding, Doing, Requires, EntityCube)
                 .Add(entity);
@@ -239,7 +239,7 @@ namespace Strive.Model
             var current = Producing.TryFind(producerId);
             if (current == null)
                 return this;
-            return new WorldModel(Entity, Task, Plan,
+            return new WorldModel(Entity, Task, Mission,
                 Producing.Add(producerId, current.Value.WithProgressChange(progressChange, when)),
                 Holding, Doing, Requires, EntityCube);
         }
@@ -276,11 +276,11 @@ namespace Strive.Model
                     x => ContainsKey(Entity, x.Key)
                         && x.Value.All(y => ContainsKey(Task, y))));
 
-            // a Plan exists for every Require  (plans require tasks)
-            // and every Task required by a Plan can be found
+            // a Mission exists for every Require  (missions require tasks)
+            // and every Task required by a Mission can be found
             Contract.Invariant(
                 Requires.All(
-                    x => ContainsKey(Plan, x.Key)
+                    x => ContainsKey(Mission, x.Key)
                         && x.Value.All(y => ContainsKey(Task, y))));
 
             Contract.Invariant(EntityCube.Sum(x => x.Value.Count) == Entity.Count);

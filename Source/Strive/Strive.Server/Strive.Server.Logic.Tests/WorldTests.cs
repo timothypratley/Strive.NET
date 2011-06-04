@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
 using FluentAssertions;
+using Microsoft.FSharp.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Strive.Common;
 using Strive.Data.Events;
@@ -32,13 +33,13 @@ namespace Strive.Server.Logic.Tests
             var world = new World(null, 0, new History());
             var e1 = new CombatantModel(0, "Combatant", "bar", new Vector3D(), Quaternion.Identity, 10, 10, EnumMobileState.Standing, 2, 20, 20, 20, 20, 20);
             var e2 = new EntityModel(1, "Entity", "bar", new Vector3D(), Quaternion.Identity, 10, 10, EnumMobileState.Standing, 2);
-            var plan = new PlanModel(0, EnumPlanAction.Move, e1, DateTime.Now, e2, DateTime.Now, e2, 1);
-            var task = new TaskModel(0, 0, new Vector3D(), new Vector3D());
+            var mission = new MissionModel(0, EnumMissionAction.Move, e1.Id, DateTime.Now, SetModule.Empty<int>(), DateTime.Now, e2.Position, 1);
+            var task = new TaskModel(0, 0, new Vector3D());
             world.Apply(new EntityUpdateEvent(e1, "Test entity event"));
-            world.Apply(new PlanUpdateEvent(plan, "Test plan event"));
+            world.Apply(new MissionUpdateEvent(mission, "Test mission event"));
             world.Apply(new TaskUpdateEvent(task, "Test task event"));
             world.Apply(new TaskCompleteEvent(task, null, "Test task complete event"));
-            world.Apply(new PlanCompleteEvent(plan, "Test task complete event"));
+            world.Apply(new MissionCompleteEvent(mission, "Test task complete event"));
             world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
             world.Apply(new SkillEvent(e1, EnumSkill.AcidBlast, e2, true, true, false, "Test skill event"));
         }
@@ -49,9 +50,9 @@ namespace Strive.Server.Logic.Tests
             var world = new World(null, 0, new History());
             var e1 = new CombatantModel(0, "Combatant", "bar", new Vector3D(), Quaternion.Identity, 10, 10, EnumMobileState.Running, 2, 20, 20, 20, 20, 20);
             var e2 = new EntityModel(1, "Entity", "bar", new Vector3D(10, 10, 10), Quaternion.Identity, 10, 10, EnumMobileState.Standing, 2);
-            var plan = new PlanModel(0, EnumPlanAction.Move, e1, DateTime.Now, e1, DateTime.Now, e2, 1);
+            var mission = new MissionModel(0, EnumMissionAction.Move, e1.Id, DateTime.Now, SetModule.Empty<int>(), DateTime.Now, e2.Position, 1);
             world.Apply(new EntityUpdateEvent(e1, "Test entity event"));
-            world.Apply(new PlanUpdateEvent(plan, "Test plan event"));
+            world.Apply(new MissionUpdateEvent(mission, "Test mission event"));
             world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
 
             world.Update(DateTime.Now);
@@ -69,9 +70,9 @@ namespace Strive.Server.Logic.Tests
             var world = new World(null, 0, new History());
             var e1 = new CombatantModel(0, "Combatant", "bar", new Vector3D(), Quaternion.Identity, 10, 10, EnumMobileState.Running, 2, 20, 20, 20, 20, 20);
             var e2 = new EntityModel(1, "Entity", "bar", new Vector3D(10, 10, 10), Quaternion.Identity, 10, 10, EnumMobileState.Standing, 2);
-            var plan = new PlanModel(0, EnumPlanAction.Move, e1, DateTime.Now, e1, DateTime.Now, e2, 1);
+            var mission = new MissionModel(0, EnumMissionAction.Move, e1.Id, DateTime.Now, SetModule.Empty<int>(), DateTime.Now, e2.Position, 1);
             world.Apply(new EntityUpdateEvent(e1, "Test entity event"));
-            world.Apply(new PlanUpdateEvent(plan, "Test plan event"));
+            world.Apply(new MissionUpdateEvent(mission, "Test mission event"));
             world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
 
             world.Update(DateTime.Now);

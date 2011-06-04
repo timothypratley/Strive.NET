@@ -4,14 +4,14 @@ namespace Strive.Data.Events
 {
     public class TaskAssignmentEvent : Event
     {
-        public TaskAssignmentEvent(TaskModel task, EntityModel doer, string description)
+        public TaskAssignmentEvent(TaskModel task, int doerId, string description)
         {
             Task = task;
-            Doer = doer;
+            DoerId = doerId;
             Description = description;
         }
 
         public TaskModel Task { get; set; }
-        public EntityModel Doer { get; set; }
+        public int DoerId { get; set; }
     }
 }

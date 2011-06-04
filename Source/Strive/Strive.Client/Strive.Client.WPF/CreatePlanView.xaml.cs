@@ -12,7 +12,7 @@ namespace Strive.Client.WPF
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            App.WorldViewModel.CreatePlan.Execute(null);
+            App.WorldViewModel.CreateMission.Execute(null);
         }
     }
 }

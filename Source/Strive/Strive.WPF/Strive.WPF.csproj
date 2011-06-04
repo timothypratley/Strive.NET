@@ -82,8 +82,8 @@
     <Compile Include="TaskListView.xaml.cs">
       <DependentUpon>TaskListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlanListView.xaml.cs">
-      <DependentUpon>PlanListView.xaml</DependentUpon>
+    <Compile Include="MissionListView.xaml.cs">
+      <DependentUpon>MissionListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TimeLineView.xaml.cs">
       <DependentUpon>TimeLineView.xaml</DependentUpon>
@@ -104,7 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PlanListView.xaml">
+    <Page Include="MissionListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

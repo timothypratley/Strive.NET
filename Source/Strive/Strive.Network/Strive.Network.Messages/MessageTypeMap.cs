@@ -17,7 +17,7 @@ namespace Strive.Network.Messages
         public enum EnumMessageId
         {
             ToClientEntity,
-            ToClientPlan,
+            ToClientMission,
             ToClientTask,
             ToClientCanPossess,
             ToClientCombatReport,
@@ -50,7 +50,7 @@ namespace Strive.Network.Messages
             ToServerInviteToParty,
             ToServerRequestWhoList,
             ToServerCreateEntity,
-            ToServerCreatePlan,
+            ToServerCreateMission,
             ToServerPossess,
             ToServerProduceEntity,
             ToServerLogin,
@@ -66,7 +66,7 @@ namespace Strive.Network.Messages
         {
             // build the mapping between message_id and message_type
             MessageTypeFromId.Add(EnumMessageId.ToClientEntity, typeof(EntityModel));
-            MessageTypeFromId.Add(EnumMessageId.ToClientPlan, typeof(PlanModel));
+            MessageTypeFromId.Add(EnumMessageId.ToClientMission, typeof(MissionModel));
             MessageTypeFromId.Add(EnumMessageId.ToClientTask, typeof(TaskModel));
             MessageTypeFromId.Add(EnumMessageId.ToClientCanPossess, typeof(ToClient.CanPossess));
             MessageTypeFromId.Add(EnumMessageId.ToClientCombatReport, typeof(ToClient.CombatReport));
@@ -99,7 +99,7 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToServerRequestWhoList, typeof(ToServer.RequestWhoList));
             MessageTypeFromId.Add(EnumMessageId.ToServerPossess, typeof(ToServer.PossessMobile));
             MessageTypeFromId.Add(EnumMessageId.ToServerCreateEntity, typeof(ToServer.CreateEntity));
-            MessageTypeFromId.Add(EnumMessageId.ToServerCreatePlan, typeof(ToServer.CreatePlan));
+            MessageTypeFromId.Add(EnumMessageId.ToServerCreateMission, typeof(ToServer.CreateMission));
             MessageTypeFromId.Add(EnumMessageId.ToServerProduceEntity, typeof(ToServer.ProduceEntity));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogin, typeof(ToServer.Login));
             MessageTypeFromId.Add(EnumMessageId.ToServerLogout, typeof(ToServer.Logout));

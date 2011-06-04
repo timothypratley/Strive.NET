@@ -74,7 +74,7 @@
     <Compile Include="CombatantModel.cs" />
     <Compile Include="Production.cs" />
     <Compile Include="DictionaryModel.cs" />
-    <Compile Include="PlanModel.cs" />
+    <Compile Include="MissionModel.cs" />
     <Compile Include="Recorded.cs" />
     <Compile Include="TaskModel.cs" />
     <Compile Include="EntityModel.cs" />

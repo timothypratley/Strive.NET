@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Media.Media3D;
+using Microsoft.FSharp.Collections;
 using Strive.Common;
 using Strive.Model;
 using Strive.Network.Messages;
@@ -31,9 +32,9 @@ namespace Strive.Network.Messaging
             Send(new CreateEntity(new EntityModel(id, name, modelId, position, rotation, 100, 100, EnumMobileState.Standing, 1.7f)));
         }
 
-        public void CreatePlan(int id, EnumPlanAction action, EntityModel protagonist, DateTime startTime, EntityModel start, DateTime finishTime, EntityModel finish, float lateFee)
+        public void CreateMission(int id, EnumMissionAction action, int actorId, DateTime startTime, FSharpSet<int> targets, DateTime finishTime, Vector3D destination, float lateFee)
         {
-            Send(new CreatePlan(new PlanModel(id, action, protagonist, startTime, start, finishTime, finish, lateFee)));
+            Send(new CreateMission(new MissionModel(id, action, actorId, startTime, targets, finishTime, destination, lateFee)));
         }
 
         public void ProduceEntity(int id, string name, string modelId, EntityModel factory)

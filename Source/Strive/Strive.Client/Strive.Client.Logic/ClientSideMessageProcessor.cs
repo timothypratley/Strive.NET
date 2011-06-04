@@ -94,7 +94,7 @@ namespace Strive.Client.Logic
             History.Add(m);
         }
 
-        void Process(PlanModel m)
+        void Process(MissionModel m)
         {
             History.Add(m);
         }

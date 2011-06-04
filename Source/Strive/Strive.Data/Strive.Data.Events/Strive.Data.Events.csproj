@@ -69,9 +69,9 @@
     <Compile Include="ProductionStartedEvent.cs" />
     <Compile Include="ProductionCompleteEvent.cs" />
     <Compile Include="ProductionUpdateEvent.cs" />
-    <Compile Include="PlanCompleteEvent.cs" />
+    <Compile Include="MissionCompleteEvent.cs" />
     <Compile Include="TaskCompleteEvent.cs" />
-    <Compile Include="PlanUpdateEvent.cs" />
+    <Compile Include="MissionUpdateEvent.cs" />
     <Compile Include="SkillEvent.cs" />
     <Compile Include="EntityUpdateEvent.cs" />
     <Compile Include="Event.cs" />
