@@ -95,21 +95,48 @@ namespace Strive.Client.ViewModel
             {
                 return MakeCommand
                     .When(() => WorldNavigation.SelectedEntities.Any() && IsMouseOverEntity)
-                    .Do(() =>
-                    {
-                        var selected = WorldNavigation.SelectedEntities;
-                        if (!selected.Any())
-                            return;
-
-                        var mouseOver = MouseOverEntity;
-                        var destination = mouseOver.Entity.Position;
-
-                        ServerConnection.CreateMission(
-                                    rand.Next(), EnumMissionAction.Move, selected.First(),
-                                    DateTime.Now, SetModule.Empty<int>(),
-                                    DateTime.Now + TimeSpan.FromMinutes(1), destination, 0.2f);
-                    });
+                    .Do(() => Mission(EnumMissionAction.Move));
             }
+        }
+
+        public ICommand CreateMissionMove
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => WorldNavigation.SelectedEntities.Any() && IsMouseOverEntity)
+                    .Do(() => Mission(EnumMissionAction.Move));
+            }
+        }
+
+        public ICommand CreateMissionDestroy
+        {
+            get
+            {
+                return MakeCommand
+                    .When(() => WorldNavigation.SelectedEntities.Any() && IsMouseOverEntity)
+                    .Do(() => Mission(EnumMissionAction.Destroy));
+            }
+        }
+
+        // TODO: other missions or find a better way
+
+        void Mission(EnumMissionAction action)
+        {
+            var selected = WorldNavigation.SelectedEntities;
+            if (!selected.Any())
+                return;
+
+            var mouseOver = MouseOverEntity;
+            if (mouseOver == null)
+                return;
+
+            var destination = mouseOver.Entity.Position;
+
+            ServerConnection.CreateMission(
+                        rand.Next(), action, selected,
+                        DateTime.Now, SetModule.Empty<int>(),
+                        DateTime.Now + TimeSpan.FromMinutes(1), destination, 0.2f);
         }
 
         public PerspectiveViewModel CurrentPerspective { get; set; }

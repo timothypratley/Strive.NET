@@ -25,10 +25,10 @@ namespace Strive.Model
             Task = task;
             Mission = mission;
 
-            Producing = producing;
-            Holding = holding;
-            Doing = doing;
-            Requires = requires;
+            EntityProducing = producing;
+            EntityHoldingEntities = holding;
+            EntityDoingTasks = doing;
+            MissionRequiresTasks = requires;
 
             EntityCube = entityCube;
         }
@@ -39,10 +39,10 @@ namespace Strive.Model
         public FSharpMap<int, MissionModel> Mission { get; private set; }
 
         // Relations / Edges
-        public FSharpMap<int, Production> Producing { get; private set; }
-        public FSharpMap<int, FSharpSet<int>> Holding { get; private set; }
-        public FSharpMap<int, FSharpSet<int>> Doing { get; private set; }
-        public FSharpMap<int, FSharpSet<int>> Requires { get; private set; }
+        public FSharpMap<int, Production> EntityProducing { get; private set; }
+        public FSharpMap<int, FSharpSet<int>> EntityHoldingEntities { get; private set; }
+        public FSharpMap<int, FSharpSet<int>> EntityDoingTasks { get; private set; }
+        public FSharpMap<int, FSharpSet<int>> MissionRequiresTasks { get; private set; }
 
         // Indexes
         public FSharpMap<int, FSharpSet<EntityModel>> EntityCube { get; private set; }
@@ -123,21 +123,21 @@ namespace Strive.Model
 
             return new WorldModel(
                 Entity.Add(entity.Id, entity),
-                Task, Mission, Producing, Holding, Doing, Requires,
+                Task, Mission, EntityProducing, EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks,
                 newEntityCube);
         }
 
         public WorldModel Add(TaskModel task)
         {
-            var o = Requires.TryFind(task.MissionId);
+            var o = MissionRequiresTasks.TryFind(task.MissionId);
             var tasks = o == null
                 ? new FSharpSet<int>(new[] { task.Id })
                 : o.Value.Add(task.Id);
 
             return new WorldModel(Entity,
                 Task.Add(task.Id, task), Mission,
-                Producing, Holding, Doing,
-                Requires.Add(task.MissionId, tasks), EntityCube);
+                EntityProducing, EntityHoldingEntities, EntityDoingTasks,
+                MissionRequiresTasks.Add(task.MissionId, tasks), EntityCube);
         }
 
         public static FSharpMap<int, FSharpSet<int>> Assoc(FSharpMap<int, FSharpSet<int>> map, int key, int id)
@@ -170,78 +170,78 @@ namespace Strive.Model
         public WorldModel Complete(TaskModel task, EntityModel doer)
         {
             var doing = doer == null
-                ? Doing
-                : Dissoc(Doing, doer.Id, task.Id);
-            var requires = Dissoc(Requires, task.MissionId, task.Id);
-            return new WorldModel(Entity, Task.Remove(task.Id), Mission, Producing, Holding, doing, requires, EntityCube);
+                ? EntityDoingTasks
+                : Dissoc(EntityDoingTasks, doer.Id, task.Id);
+            var requires = Dissoc(MissionRequiresTasks, task.MissionId, task.Id);
+            return new WorldModel(Entity, Task.Remove(task.Id), Mission, EntityProducing, EntityHoldingEntities, doing, requires, EntityCube);
         }
 
         public WorldModel Complete(MissionModel mission)
         {
             Contract.Requires<ArgumentException>(!Task.Any(t => t.Value.MissionId == mission.Id));
 
-            return new WorldModel(Entity, Task, Mission.Remove(mission.Id), Producing, Holding, Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Mission.Remove(mission.Id), EntityProducing, EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube);
         }
 
         public WorldModel Add(MissionModel mission)
         {
-            return new WorldModel(Entity, Task, Mission.Add(mission.Id, mission), Producing, Holding, Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Mission.Add(mission.Id, mission), EntityProducing, EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube);
         }
 
         public WorldModel Put(FSharpSet<int> entities, int on)
         {
-            return new WorldModel(Entity, Task, Mission, Producing,
-                Assoc(Holding, on, entities), Doing, Requires, EntityCube);
+            return new WorldModel(Entity, Task, Mission, EntityProducing,
+                Assoc(EntityHoldingEntities, on, entities), EntityDoingTasks, MissionRequiresTasks, EntityCube);
         }
 
         public WorldModel Assign(int taskId, int entityId)
         {
-            return new WorldModel(Entity, Task, Mission, Producing,
-                Holding, Assoc(Doing, entityId, taskId), Requires, EntityCube);
+            return new WorldModel(Entity, Task, Mission, EntityProducing,
+                EntityHoldingEntities, Assoc(EntityDoingTasks, entityId, taskId), MissionRequiresTasks, EntityCube);
         }
 
 
         public WorldModel WithProduction(int producerId, int productId, float target, DateTime when)
         {
             Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
-            Contract.Ensures(Producing.All(p => !p.Value.Queue.IsEmpty));
+            Contract.Ensures(EntityProducing.All(p => !p.Value.Queue.IsEmpty));
 
-            var current = Producing.TryFind(producerId);
+            var current = EntityProducing.TryFind(producerId);
             var production = ((current == null)
                 ? Production.Empty
                 : current.Value)
                 .WithProduction(productId, target, when);
             return new WorldModel(Entity, Task, Mission,
-                Producing.Add(producerId, production), Holding, Doing, Requires, EntityCube);
+                EntityProducing.Add(producerId, production), EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube);
         }
 
         public WorldModel WithProductionComplete(int producerId, EntityModel entity, DateTime when)
         {
             Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
             Contract.Requires<ArgumentException>(!ContainsKey(Entity, entity.Id));
-            Contract.Requires<ArgumentException>(ContainsKey(Producing, producerId));
+            Contract.Requires<ArgumentException>(ContainsKey(EntityProducing, producerId));
 
-            var current = Producing.TryFind(producerId);
+            var current = EntityProducing.TryFind(producerId);
             if (current == null)
                 return this;
             var produce = current.Value.WithProductionComplete(when);
             return new WorldModel(Entity, Task, Mission,
-                produce.Queue.IsEmpty ? Producing.Remove(producerId) : Producing.Add(producerId, produce),
-                Holding, Doing, Requires, EntityCube)
+                produce.Queue.IsEmpty ? EntityProducing.Remove(producerId) : EntityProducing.Add(producerId, produce),
+                EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube)
                 .Add(entity);
         }
 
         public WorldModel WithProductionProgressChange(int producerId, float progressChange, DateTime when)
         {
             Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
-            Contract.Requires<ArgumentException>(ContainsKey(Producing, producerId));
+            Contract.Requires<ArgumentException>(ContainsKey(EntityProducing, producerId));
 
-            var current = Producing.TryFind(producerId);
+            var current = EntityProducing.TryFind(producerId);
             if (current == null)
                 return this;
             return new WorldModel(Entity, Task, Mission,
-                Producing.Add(producerId, current.Value.WithProgressChange(progressChange, when)),
-                Holding, Doing, Requires, EntityCube);
+                EntityProducing.Add(producerId, current.Value.WithProgressChange(progressChange, when)),
+                EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube);
         }
 
         #region CodeContractsInvariant
@@ -265,21 +265,21 @@ namespace Strive.Model
             // an Entity exists for every Holding (entities hold entities)
             // and every Entity being held by an Entity can be found
             Contract.Invariant(
-                Holding.All(
+                EntityHoldingEntities.All(
                     x => ContainsKey(Entity, x.Key)
                         && x.Value.All(y => ContainsKey(Entity, y))));
 
             // an Entity exists for every Doing (entities do tasks)
             // and every Task being done by an Entity can be found
             Contract.Invariant(
-                Doing.All(
+                EntityDoingTasks.All(
                     x => ContainsKey(Entity, x.Key)
                         && x.Value.All(y => ContainsKey(Task, y))));
 
             // a Mission exists for every Require  (missions require tasks)
             // and every Task required by a Mission can be found
             Contract.Invariant(
-                Requires.All(
+                MissionRequiresTasks.All(
                     x => ContainsKey(Mission, x.Key)
                         && x.Value.All(y => ContainsKey(Task, y))));
 

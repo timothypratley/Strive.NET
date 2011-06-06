@@ -94,12 +94,12 @@ namespace Strive.Server.Logic.Tests
             world.Apply(new EntityUpdateEvent(e2, "Test entity event"));
             world.Apply(new ProductionStartedEvent(1, 2, "Test factory production"));
             world.Update(DateTime.Now + TimeSpan.FromSeconds(1));
-            world.History.Head.Producing.Count
+            world.History.Head.EntityProducing.Count
                 .Should().Be(1);
             world.History.Head.Entity.Count
                 .Should().Be(1);
             world.Update(DateTime.Now + TimeSpan.FromSeconds(10));
-            world.History.Head.Producing.Count
+            world.History.Head.EntityProducing.Count
                 .Should().Be(0);
             world.History.Head.Entity.Count
                 .Should().Be(2);
@@ -108,11 +108,21 @@ namespace Strive.Server.Logic.Tests
         [TestMethod]
         public void Arithmatic()
         {
-            Math.Floor(1.5f).Should().Equals(1f);
-            Math.Truncate(1.5f).Should().Equals(1f);
-            Math.Floor(-1.5f).Should().Equals(2f);
-            Math.Truncate(-1.5f).Should().Equals(2f);
+            Math.Floor(1.5f)
+                .Should().Equals(1f);
+            Math.Truncate(1.5f)
+                .Should().Equals(1f);
+            Math.Floor(-1.5f)
+                .Should().Equals(2f);
+            Math.Truncate(-1.5f)
+                .Should().Equals(2f);
+        }
+
+        [TestMethod]
+        public void DefaultFSharpMap()
+        {
+            MapModule.Empty<int, FSharpSet<int>>().ValueOrDefault(5)
+                .Should().BeNull();
         }
     }
 }
-;

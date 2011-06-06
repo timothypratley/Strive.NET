@@ -32,9 +32,9 @@ namespace Strive.Network.Messaging
             Send(new CreateEntity(new EntityModel(id, name, modelId, position, rotation, 100, 100, EnumMobileState.Standing, 1.7f)));
         }
 
-        public void CreateMission(int id, EnumMissionAction action, int actorId, DateTime startTime, FSharpSet<int> targets, DateTime finishTime, Vector3D destination, float lateFee)
+        public void CreateMission(int id, EnumMissionAction action, FSharpSet<int> doerIds, DateTime startTime, FSharpSet<int> targets, DateTime finishTime, Vector3D destination, float lateFee)
         {
-            Send(new CreateMission(new MissionModel(id, action, actorId, startTime, targets, finishTime, destination, lateFee)));
+            Send(new CreateMission(new MissionModel(id, action, doerIds, startTime, targets, finishTime, destination, lateFee)));
         }
 
         public void ProduceEntity(int id, string name, string modelId, EntityModel factory)

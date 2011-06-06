@@ -96,6 +96,7 @@
       <Project>{FCB073C1-253E-46D8-BCE4-79B1C1616058}</Project>
       <Name>Strive.Common</Name>
     </ProjectReference>
+    <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="System">
       <Name>System</Name>

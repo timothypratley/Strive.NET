@@ -27,13 +27,13 @@ namespace Strive.Model
         /// <param name="finishTime">when the mission should be finished</param>
         /// <param name="destination">entity target finish state</param>
         /// <param name="lateFee">how important it is to finish on time</param>
-        public MissionModel(int id, EnumMissionAction action, int protagonistId,
+        public MissionModel(int id, EnumMissionAction action, FSharpSet<int> doerIds,
             DateTime startTime, FSharpSet<int> targets, DateTime finishTime, Vector3D destination, float lateFee)
         {
             Id = id;
             Owner = String.Empty;
             Action = action;
-            ActorId = protagonistId;
+            DoerIds = doerIds;
             StartTime = startTime;
             Targets = targets;
             FinishTime = finishTime;
@@ -41,10 +41,15 @@ namespace Strive.Model
             LateFee = LateFee;
         }
 
+        // convenience constructor often only one actor is involved
+        public MissionModel(int id, EnumMissionAction action, int doerId,
+            DateTime startTime, FSharpSet<int> targets, DateTime finishTime, Vector3D destination, float lateFee)
+            : this(id, action, new FSharpSet<int>(new[] { doerId }), startTime, targets, finishTime, destination, lateFee) { }
+
         public int Id { get; private set; }
         public string Owner { get; private set; }
         public EnumMissionAction Action { get; private set; }
-        public int ActorId { get; private set; }
+        public FSharpSet<int> DoerIds { get; private set; }
 
         public DateTime StartTime { get; private set; }
         public FSharpSet<int> Targets { get; private set; }

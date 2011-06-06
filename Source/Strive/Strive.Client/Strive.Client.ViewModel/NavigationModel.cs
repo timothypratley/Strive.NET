@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using UpdateControls;
+using Microsoft.FSharp.Collections;
 using Strive.Model;
+using UpdateControls;
 
 
 namespace Strive.Client.ViewModel
@@ -9,9 +10,9 @@ namespace Strive.Client.ViewModel
     {
         // storing only the id, as the objects get replaced entirely
         // TODO: as these all behave the same, can they be made generic?
-        private readonly HashSet<int> _selectedEntities = new HashSet<int>();
-        private readonly HashSet<int> _selectedMissions = new HashSet<int>();
-        private readonly HashSet<int> _selectedTasks = new HashSet<int>(); 
+        private FSharpSet<int> _selectedEntities = SetModule.Empty<int>();
+        private FSharpSet<int> _selectedMissions = SetModule.Empty<int>();
+        private FSharpSet<int> _selectedTasks = SetModule.Empty<int>();
         private int? _mouseOverEntity;
 
         #region Independent properties
@@ -25,22 +26,21 @@ namespace Strive.Client.ViewModel
         public void SetSelectedEntity(int id)
         {
             _indSelectedEntities.OnSet();
-            _selectedEntities.Clear();
-            _selectedEntities.Add(id);
+            _selectedEntities = new FSharpSet<int>(new[] { id });
         }
 
         public void AddSelected(EntityModel e) { AddSelectedEntity(e.Id); }
         public void AddSelectedEntity(int id)
         {
             _indSelectedEntities.OnSet();
-            _selectedEntities.Add(id);
+            _selectedEntities = _selectedEntities.Add(id);
         }
 
         public void RemoveSelected(EntityModel e) { RemoveSelectedEntity(e.Id); }
         public void RemoveSelectedEntity(int id)
         {
             _indSelectedEntities.OnSet();
-            _selectedEntities.Remove(id);
+            _selectedEntities = _selectedEntities.Remove(id);
         }
 
         public bool IsSelected(EntityModel e) { return IsSelectedEntity(e.Id); }
@@ -50,7 +50,7 @@ namespace Strive.Client.ViewModel
             return _selectedEntities.Contains(id);
         }
 
-        public IEnumerable<int> SelectedEntities
+        public FSharpSet<int> SelectedEntities
         {
             get { _indSelectedEntities.OnGet(); return _selectedEntities; }
         }
@@ -65,22 +65,21 @@ namespace Strive.Client.ViewModel
         public void SetSelectedMission(int id)
         {
             _indSelectedMissions.OnSet();
-            _selectedMissions.Clear();
-            _selectedMissions.Add(id);
+            _selectedMissions = new FSharpSet<int>(new[] { id });
         }
 
         public void AddSelected(MissionModel mission) { AddSelectedMission(mission.Id); }
         public void AddSelectedMission(int id)
         {
             _indSelectedMissions.OnSet();
-            _selectedMissions.Add(id);
+            _selectedMissions = _selectedMissions.Add(id);
         }
 
         public void RemoveSelected(MissionModel mission) { RemoveSelectedMission(mission.Id); }
         public void RemoveSelectedMission(int id)
         {
             _indSelectedMissions.OnSet();
-            _selectedMissions.Remove(id);
+            _selectedMissions = _selectedMissions.Remove(id);
         }
 
         public bool IsSelected(MissionModel mission) { return IsSelectedMission(mission.Id); }
@@ -99,22 +98,21 @@ namespace Strive.Client.ViewModel
         public void SetSelectedTask(int id)
         {
             _indSelectedTasks.OnSet();
-            _selectedTasks.Clear();
-            _selectedTasks.Add(id);
+            _selectedTasks = new FSharpSet<int>(new[] { id });
         }
 
         public void AddSelected(TaskModel task) { AddSelectedTask(task.Id); }
         public void AddSelectedTask(int id)
         {
             _indSelectedTasks.OnSet();
-            _selectedTasks.Add(id);
+            _selectedTasks = _selectedTasks.Add(id);
         }
 
         public void RemoveSelected(TaskModel task) { RemoveSelectedTask(task.Id); }
         public void RemoveSelectedTask(int id)
         {
             _indSelectedTasks.OnSet();
-            _selectedTasks.Remove(id);
+            _selectedTasks = _selectedTasks.Remove(id);
         }
 
         public bool IsSelected(TaskModel task) { return IsSelectedTask(task.Id); }

@@ -45,9 +45,9 @@ namespace Strive.Model
         public void Complete(MissionModel mission)
         {
             var world = _recordedWorld.Head;
-            var opt = world.Requires.TryFind(mission.Id);
-            if (opt != null)
-                foreach (var t in opt.Value)
+            var tasks = world.MissionRequiresTasks.ValueOrDefault(mission.Id);
+            if (tasks != null)
+                foreach (var t in tasks)
                     world = world.Complete(world.Task[t], null);
             _recordedWorld.Head = world.Complete(mission);
         }

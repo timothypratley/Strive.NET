@@ -70,40 +70,45 @@ namespace Strive.Server.Logic
 
         public void UpdateMissions()
         {
-            foreach (var m in History.Head.Mission.Select(o => o.Value))
-                UpdateMissionTasks(m);
-            foreach (var task in History.Head.Task.Select(o => o.Value))
-                AssignTask(task);
+            foreach (var doing in  History.Head.EntityDoingTasks)
+                UpdateDoingTasks(doing);
+            foreach (var mission in  History.Head.Mission.Values())
+                UpdateMission(mission);
+            foreach (var task in  History.Head.Task.Values())
+                AssignTaskToNearestEntity(task);
         }
 
-        private void AssignTask(TaskModel task)
+        EntityModel ClosestToTask(TaskModel task, EntityModel e1, EntityModel e2)
         {
-            var world = History.Head;
-            var doerId = world.Mission[task.MissionId].ActorId;
-            var o = world.Doing.TryFind(doerId);
-            if (o == null || !o.Value.Contains(task.Id))
-                Apply(new TaskAssignmentEvent(task, doerId, "Task " + task + " assigned to " + world.Entity[doerId]));
-            //else
-            // TODO: find an appropriate entity
+            return (e1.Position - task.Finish).Length <= (e2.Position - task.Finish).Length
+                ? e1
+                : e2;
         }
 
-        private void UpdateMissionTasks(MissionModel mission)
+        void AssignTaskToNearestEntity(TaskModel task)
         {
             var world = History.Head;
-            var doer = world.Entity[mission.ActorId];
-            IEnumerable<TaskModel> old;
-            var optTaskIds = world.Requires.TryFind(mission.Id);
+            var mission = world.Mission[task.MissionId];
+            if (mission.DoerIds.IsEmpty)
+            {
+                // TODO: find an appropriate entity
+            }
+            else
+            {
+                var doer = mission.DoerIds
+                    .Select(z => world.Entity[z])
+                    .Aggregate((x, y) => ClosestToTask(task, x, y));
+                Apply(new TaskAssignmentEvent(task, doer.Id, "Task " + task + " assigned to " + doer));
+            }
+        }
 
-            // Have any mission tasks been completed?
-            if (optTaskIds != null)
-                foreach (var t in optTaskIds.Value
-                    .Select(id => world.Task[id])
-                    .Where(x => doer.Position == x.Finish))
-                    Apply(new TaskCompleteEvent(t, doer, "Finished " + t + " by " + doer));
-            // TODO: need additional consistency checks that the doer was doing that task etc
+        void UpdateMission(MissionModel mission)
+        {
+            var world = History.Head;
+            var doers = mission.DoerIds.Select(x => world.Entity[x]);
 
             // Has this mission been completed?
-            if (IsMissionComplete(mission, doer))
+            if (doers.Any(d => IsMissionComplete(mission, d)))
             {
                 Apply(new MissionCompleteEvent(mission, "Finished " + mission));
                 return;
@@ -121,11 +126,14 @@ namespace Strive.Server.Logic
 
             // Does this match my current task allocation?
             // Only change if there is a significant reason to
-            if (optTaskIds == null)
+            IEnumerable<TaskModel> old;
+            var TaskIds = world.MissionRequiresTasks.ValueOrDefault(mission.Id);
+
+            if (TaskIds == null)
                 old = Enumerable.Empty<TaskModel>();
             else
             {
-                old = optTaskIds.Value.Select(id => world.Task[id]);
+                old = TaskIds.Select(id => world.Task[id]);
                 foreach (var t in old.Where(x => !tasks.Any(y => y.Matches(x))))
                     Apply(new TaskCompleteEvent(t, null, "Remove task " + t + " of " + mission));
             }
@@ -133,14 +141,28 @@ namespace Strive.Server.Logic
                 Apply(new TaskUpdateEvent(t, "Added task " + t + " of " + mission));
         }
 
+        void UpdateDoingTasks(KeyValuePair<int, Microsoft.FSharp.Collections.FSharpSet<int>> doing)
+        {
+            var world = History.Head;
+            var doer = world.Entity[doing.Key];
+            var tasks = doing.Value.Select(id => world.Task[id]);
+            foreach (var task in tasks.Where(t => IsTaskComplete(t, doer)))
+                Apply(new TaskCompleteEvent(task, doer, "Finished " + task + " by " + doer));
+        }
+
+        bool IsTaskComplete(TaskModel task, EntityModel doer)
+        {
+            return (doer.Position - task.Finish).Length <= 1;
+        }
+
         // TODO: Might be useful to differentiate between success and failure reason for completion
-        private bool IsMissionComplete(MissionModel mission, EntityModel doer)
+        bool IsMissionComplete(MissionModel mission, EntityModel doer)
         {
             if ((doer.Position - mission.Destination).Length > 1)
                 return false;
 
             var world = History.Head;
-            var o = world.Holding.TryFind(doer.Id);
+            var o = world.EntityHoldingEntities.TryFind(doer.Id);
             var holding = o == null ? Enumerable.Empty<int>() : o.Value;
 
             switch (mission.Action)
@@ -171,7 +193,7 @@ namespace Strive.Server.Logic
 
         public TaskModel DoingTask(EntityModel entity)
         {
-            var doing = History.Head.Doing.TryFind(entity.Id);
+            var doing = History.Head.EntityDoingTasks.TryFind(entity.Id);
             if (doing == null)
                 return null;
             return History.Head.Task[doing.Value.First()];
@@ -179,7 +201,7 @@ namespace Strive.Server.Logic
 
         public void UpdateProduction(DateTime time)
         {
-            foreach (var p in History.Head.Producing)
+            foreach (var p in History.Head.EntityProducing)
             {
                 var factory = History.Head.Entity.TryFind(p.Key);
                 var progressChange = p.Value.Rate * (float)(time - p.Value.LastUpdated).TotalSeconds;
