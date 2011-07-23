@@ -185,7 +185,9 @@ namespace Strive.Model
 
         public WorldModel Add(MissionModel mission)
         {
-            return new WorldModel(Entity, Task, Mission.Add(mission.Id, mission), EntityProducing, EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube);
+            return new WorldModel(Entity, Task,
+                Mission.Add(mission.Id, mission),
+                EntityProducing, EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube);
         }
 
         public WorldModel Put(FSharpSet<int> entities, int on)
@@ -196,7 +198,9 @@ namespace Strive.Model
 
         public WorldModel Assign(int taskId, int entityId)
         {
-            return new WorldModel(Entity, Task, Mission, EntityProducing,
+            return new WorldModel(Entity,
+                Task.Add(taskId, Task[taskId].WithDoer(entityId)),
+                Mission, EntityProducing,
                 EntityHoldingEntities, Assoc(EntityDoingTasks, entityId, taskId), MissionRequiresTasks, EntityCube);
         }
 

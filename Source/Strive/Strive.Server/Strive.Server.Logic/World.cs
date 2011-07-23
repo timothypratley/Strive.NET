@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Logging;
+using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using Strive.Common;
 using Strive.Data.Events;
@@ -56,25 +57,25 @@ namespace Strive.Server.Logic
             Load();
         }
 
-        public void Update(DateTime time)
+        public void Update(DateTime when)
         {
             UpdateMissions();
 
             foreach (var e in History.Head.Entity.Select(p => p.Value))
-                this.UpdateEntity(e);
+                this.UpdateEntity(e, when);
 
-            UpdateProduction(time);
+            UpdateProduction(when);
 
-            WeatherUpdate();
+            WeatherUpdate(when);
         }
 
         public void UpdateMissions()
         {
-            foreach (var doing in  History.Head.EntityDoingTasks)
+            foreach (var doing in History.Head.EntityDoingTasks)
                 UpdateDoingTasks(doing);
-            foreach (var mission in  History.Head.Mission.Values())
+            foreach (var mission in History.Head.Mission.Values())
                 UpdateMission(mission);
-            foreach (var task in  History.Head.Task.Values())
+            foreach (var task in History.Head.Task.Values())
                 AssignTaskToNearestEntity(task);
         }
 
@@ -121,7 +122,7 @@ namespace Strive.Server.Logic
             // Shortest path search of the graph
 
             var tasks = new List<TaskModel>();
-            var task = new TaskModel(Global.Rand.Next(), mission.Id, mission.Destination);
+            var task = new TaskModel(Global.Rand.Next(), mission.Id, mission.Destination, null);
             tasks.Add(task);
 
             // Does this match my current task allocation?
@@ -162,8 +163,7 @@ namespace Strive.Server.Logic
                 return false;
 
             var world = History.Head;
-            var o = world.EntityHoldingEntities.TryFind(doer.Id);
-            var holding = o == null ? Enumerable.Empty<int>() : o.Value;
+            var holding = world.EntityHoldingEntities.ValueOr(doer.Id, SetModule.Empty<int>());
 
             switch (mission.Action)
             {
@@ -199,33 +199,34 @@ namespace Strive.Server.Logic
             return History.Head.Task[doing.Value.First()];
         }
 
-        public void UpdateProduction(DateTime time)
+        public void UpdateProduction(DateTime when)
         {
             foreach (var p in History.Head.EntityProducing)
             {
-                var factory = History.Head.Entity.TryFind(p.Key);
-                var progressChange = p.Value.Rate * (float)(time - p.Value.LastUpdated).TotalSeconds;
-                if (p.Value.Progress + progressChange >= p.Value.Target)
+                var factory = History.Head.Entity[p.Key];
+                var progressChange = p.Value.Rate * (float)(when - p.Value.LastUpdated).TotalSeconds;
+                if (p.Value.Progress + progressChange >= p.Value.Span)
                 {
                     var creation = new EntityModel(p.Value.Queue.First(),
-                        "Creation", "RTSRobot", factory.Value.Position, factory.Value.Rotation, 100, 100, EnumMobileState.Standing, 1.7f);
+                        "Creation", "RTSRobot", factory.Position, factory.Rotation, 100, 100, EnumMobileState.Standing, 1.7f);
                     Apply(new ProductionCompleteEvent(p.Key, creation,
-                        "Production of " + creation.Name + " by " + factory.Value.Name + " complete"));
+                        "Production of " + creation.Name + " by " + factory.Name + " complete"));
                 }
                 else
                 {
-                    var produce = p.Value.WithProgressChange(progressChange, Global.Now);
+                    var produce = p.Value.WithProgressChange(progressChange, when);
                     Apply(new ProductionUpdateEvent(p.Key, progressChange, "Production update"));
                 }
             }
         }
 
         // TODO: Make weather recorded
-        void WeatherUpdate()
+        void WeatherUpdate(DateTime when)
         {
-            Weather.ServerNow = Global.Now.Ticks;
-            if ((Global.Now.Ticks - Weather.ServerNow) < 1)
+            if ((when.Ticks - Weather.ServerNow) < 1)
                 return;
+
+            Weather.ServerNow = when.Ticks;
 
             bool weatherChanged = false;
             if (Global.Rand.NextDouble() > 0.995)
@@ -384,7 +385,8 @@ namespace Strive.Server.Logic
         {
             _log.Debug(e.GetType() + " " + e.Description);
             // TODO: lookup the actual target build time required
-            History.Head = History.Head.WithProduction(e.ProducerId, e.ProductId, 3, Global.Now);
+            var span = 3;
+            History.Head = History.Head.WithProduction(e.ProducerId, e.ProductId, span, Global.Now);
         }
 
         public void Apply(ProductionUpdateEvent e)

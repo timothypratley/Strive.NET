@@ -45,7 +45,6 @@ namespace Strive.Server.Logic
 
         public void UpdateLoop()
         {
-            // need to send a beat message every MillisecondsPerBeat milliseconds:
             try
             {
                 // handle world changes
@@ -65,7 +64,6 @@ namespace Strive.Server.Logic
             catch (Exception e)
             {
                 ServerStatusModel.Status = "Crashing";
-                // Just log exceptions and stop all threads
                 _log.Error("Update loop exception caught", e);
                 Stop();
                 ServerStatusModel.Status = "Crashed";

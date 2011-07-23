@@ -7,34 +7,36 @@ namespace Strive.Model
 {
     public class Production
     {
-        public Production(float rate, FSharpList<int> queue, float target, float progress)
+        public Production(FSharpList<int> queue, bool repeat, float progress, float span, float rate)
         {
             Contract.Requires<ArgumentException>(rate >= 0);
-            Contract.Requires<ArgumentException>(queue.IsEmpty || progress < target);
+            Contract.Requires<ArgumentException>(queue.IsEmpty || progress < span);
 
-            Rate = rate;
             Queue = queue;
-            Target = target;
+            Repeat = repeat;
             Progress = progress;
+            Span = span;
+            Rate = rate;
         }
 
         public float Rate { get; private set; }
         public FSharpList<int> Queue { get; private set; }
-        public float Target { get; private set; }
+        public bool Repeat { get; private set; }
+        public float Span { get; private set; }
         public float Progress { get; private set; }
         public DateTime LastUpdated { get; private set; }
 
-        private static Production _empty = new Production(0, ListModule.Empty<int>(), 0, 0);
+        private static Production _empty = new Production(ListModule.Empty<int>(), true, 0, 0, 0);
 
         public static Production Empty { get { return _empty; } }
 
-        public Production WithProduction(int id, float target, DateTime when)
+        public Production WithProduction(int id, float span, DateTime when)
         {
             var r = (Production)this.MemberwiseClone();
             if (Queue.IsEmpty)
                 r.Progress = 0;
             r.Queue = ListModule.Append(r.Queue, ListModule.OfArray(new[] { id }));
-            r.Target = target;
+            r.Span = span;
             // TODO: use a specific rate
             r.Rate = 1;
             r.LastUpdated = when;
@@ -44,7 +46,12 @@ namespace Strive.Model
         public Production WithProductionComplete(DateTime when)
         {
             var r = (Production)this.MemberwiseClone();
-            r.Queue = ListModule.OfSeq(SeqModule.Take(r.Queue.Length - 1, r.Queue));
+            if (r.Repeat)
+                r.Queue = ListModule.Reverse(
+                    new FSharpList<int>(r.Queue.Head, ListModule.Reverse(r.Queue.Tail)));
+            else
+                r.Queue = r.Queue.Tail;
+
             r.LastUpdated = when;
             return r;
         }

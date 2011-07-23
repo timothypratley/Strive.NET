@@ -153,7 +153,12 @@ namespace Strive.Client.ViewModel
 
         public IEnumerable<TaskViewModel> Tasks
         {
-            get { return History.Current.Task.Select(p => new TaskViewModel(p.Value, WorldNavigation)); }
+            get {
+                var world = History.Current;
+                return world.Task.Select(p => new TaskViewModel(p.Value, WorldNavigation,
+                                    world.Entity[world.EntityDoingTasks.FirstOrDefault(kvp => kvp.Value.Contains(p.Value.Id)).Key]
+
+                )); }
         }
 
         public int CurrentVersion

@@ -8,18 +8,21 @@ namespace Strive.Client.ViewModel
     public class TaskViewModel
     {
         private readonly TaskModel _task;
+        private readonly EntityModel _doer;
         private readonly WorldNavigation _entityNavigation;
 
-        public TaskViewModel(TaskModel task, WorldNavigation navigation)
+        public TaskViewModel(TaskModel task, WorldNavigation navigation, EntityModel doer)
         {
             Contract.Requires<ArgumentNullException>(task != null);
             Contract.Requires<ArgumentNullException>(navigation != null);
 
             _task = task;
+            _doer = doer;
             _entityNavigation = navigation;
         }
 
         public TaskModel Task { get { return _task; } }
+        public EntityModel Doer { get { return _doer; } }
 
         public bool IsSelected
         {
