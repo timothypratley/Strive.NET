@@ -60,12 +60,8 @@ namespace Strive.Server.Logic
         public void Update(DateTime when)
         {
             UpdateMissions();
-
-            foreach (var e in History.Head.Entity.Select(p => p.Value))
-                this.UpdateEntity(e, when);
-
+            UpdateEntities(when);
             UpdateProduction(when);
-
             WeatherUpdate(when);
         }
 
@@ -77,6 +73,12 @@ namespace Strive.Server.Logic
                 UpdateMission(mission);
             foreach (var task in History.Head.Task.Values())
                 AssignTaskToNearestEntity(task);
+        }
+
+        public void UpdateEntities(DateTime when)
+        {
+            foreach (var e in History.Head.Entity.Values())
+                e.UpdateEntity(this, when);
         }
 
         EntityModel ClosestToTask(TaskModel task, EntityModel e1, EntityModel e2)
@@ -188,7 +190,6 @@ namespace Strive.Server.Logic
                     Contract.Assert(false, "Unexpected " + mission.Action);
                     return false;
             }
-
         }
 
         public TaskModel DoingTask(EntityModel entity)
@@ -203,19 +204,20 @@ namespace Strive.Server.Logic
         {
             foreach (var p in History.Head.EntityProducing)
             {
-                var factory = History.Head.Entity[p.Key];
+                var producerId = p.Key;
+                var production = p.Value;
+                var factory = History.Head.Entity[producerId];
                 var progressChange = p.Value.Rate * (float)(when - p.Value.LastUpdated).TotalSeconds;
-                if (p.Value.Progress + progressChange >= p.Value.Span)
+                if (production.Progress + progressChange >= p.Value.Span)
                 {
-                    var creation = new EntityModel(p.Value.Queue.First(),
+                    var creation = new EntityModel(production.Queue.First(),
                         "Creation", "RTSRobot", factory.Position, factory.Rotation, 100, 100, EnumMobileState.Standing, 1.7f);
-                    Apply(new ProductionCompleteEvent(p.Key, creation,
+                    Apply(new ProductionCompleteEvent(producerId, creation,
                         "Production of " + creation.Name + " by " + factory.Name + " complete"));
                 }
                 else
                 {
-                    var produce = p.Value.WithProgressChange(progressChange, when);
-                    Apply(new ProductionUpdateEvent(p.Key, progressChange, "Production update"));
+                    Apply(new ProductionUpdateEvent(producerId, progressChange, "Production update"));
                 }
             }
         }

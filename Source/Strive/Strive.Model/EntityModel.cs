@@ -30,7 +30,7 @@ namespace Strive.Model
             MobileState = mobileState;
             Height = height;
             Affinity = new Affinity(0, 0, 0, 0, 0);
-            MoveRunSpeed = 1;
+            MoveRunSpeed = 5.5f;
             MoveTurnSpeed = 1;
         }
 

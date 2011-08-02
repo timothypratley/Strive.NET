@@ -7,11 +7,13 @@ using Strive.Model;
 
 namespace Strive.Server.Logic
 {
-    public static class AvatarExtensions
+    public static class EntityExtensions
     {
-        public static void UpdateEntity(this World world, EntityModel entity, DateTime when)
+        public static void UpdateEntity(this EntityModel entity, World world, DateTime when)
         {
-            if (!world.Possession.ContainsKey(entity.Id))
+            if (!world.Possession.ContainsKey(entity.Id)
+                && entity.MobileState > EnumMobileState.Incapacitated
+                && (when - entity.LastMoveUpdate).TotalSeconds > 1)
                 entity = entity.BehaviourUpdate(world, when);
 
             var c = entity as CombatantModel;
@@ -38,10 +40,9 @@ namespace Strive.Server.Logic
 
             if (combatant.Target != null)
                 combatant.CheckAttack(world, when);
-
-            else if (when - combatant.LastMoveUpdate > TimeSpan.FromSeconds(1)
+            else if ((when - combatant.LastMoveUpdate).TotalSeconds > 1
                 && (combatant.MobileState == EnumMobileState.Running
-                || combatant.MobileState == EnumMobileState.Walking))
+                    || combatant.MobileState == EnumMobileState.Walking))
                 // TODO: where to check if changed?, also can remove cast with generics
                 combatant = (CombatantModel)combatant.WithState(EnumMobileState.Standing);
 
@@ -51,7 +52,7 @@ namespace Strive.Server.Logic
 
         public static void CheckAttack(this CombatantModel combatant, World world, DateTime when)
         {
-            if (when - combatant.LastAttackUpdate > TimeSpan.FromSeconds(3))
+            if ((when - combatant.LastAttackUpdate).TotalSeconds > 3)
             {
                 // TODO: don't look it up every time
                 var esr = Global.Schema.EnumSkill.FindByEnumSkillID((int)EnumSkill.Kill);
@@ -65,57 +66,67 @@ namespace Strive.Server.Logic
             Vector3D position = entity.Position;
             EnumMobileState mobileState = entity.MobileState;
             var task = world.DoingTask(entity);
+            var sinceSeconds = Math.Min(2, (when - entity.LastMobileStateUpdate).TotalSeconds);
 
-            // continue doing whatever you were doing
-            if (when - entity.LastMoveUpdate > TimeSpan.FromSeconds(1))
+            // Mobile state
+            if (task == null)
             {
-                if (entity.MobileState >= EnumMobileState.Standing)
+                if (sinceSeconds > 3)
                 {
-                    if (task != null)
-                    {
-                        // move toward goal
-                        var forward = new Vector3D(1, 0, 0);
-                        var goalVector = (task.Finish - entity.Position);
-                        if (goalVector.LengthSquared > 0)
-                        {
-                            goalVector.Normalize();
-                            Vector3D axis = Vector3D.CrossProduct(goalVector, forward);
-                            double angle = Vector3D.AngleBetween(goalVector, forward);
-                            rotation = new Quaternion(axis, -angle);
-                        }
-                    }
-                    else
-                    {
-                        // move randomly
-                        rotation *= new Quaternion(Global.Up, (Global.Rand.NextDouble() * 40 - 20) * entity.MoveTurnSpeed);
-                    }
-                }
-                Matrix3D m = Matrix3D.Identity;
-                m.RotatePrepend(rotation);
-                Vector3D velocity = new Vector3D(1, 0, 0) * m;
-                switch (entity.MobileState)
-                {
-                    case EnumMobileState.Running:
-                        // TODO: using timing, not constant values
-                        position = entity.Position + entity.MoveRunSpeed * velocity / 3;
-                        break;
-                    case EnumMobileState.Walking:
-                        position = entity.Position + entity.MoveRunSpeed * velocity / 10;
-                        break;
-                    default:
-                        // do nothing
-                        break;
+                    int rand = Global.Rand.Next(5) - 2;
+                    if (rand > 1 && mobileState > EnumMobileState.Sleeping)
+                        mobileState = mobileState - 1;
+                    else if (rand < -1 && mobileState < EnumMobileState.Running)
+                        mobileState = mobileState + 1;
                 }
             }
-            if (entity.MobileState > EnumMobileState.Incapacitated
-                && when - entity.LastMobileStateUpdate > TimeSpan.FromSeconds(3))
+            else if (mobileState != EnumMobileState.Fighting)
             {
-                int rand = Global.Rand.Next(5) - 2;
-                if (task == null && rand > 1 && entity.MobileState > EnumMobileState.Sleeping)
-                    mobileState = entity.MobileState - 1;
-                else if (rand < -1 && entity.MobileState < EnumMobileState.Running)
-                    mobileState = entity.MobileState + 1;
+                var goalVector = (task.Finish - entity.Position);
+                if (goalVector.Length < entity.MoveRunSpeed * 2)
+                    mobileState = EnumMobileState.Walking;
+                else
+                    mobileState = EnumMobileState.Running;
             }
+
+            // Movement
+            if (mobileState >= EnumMobileState.Standing)
+            {
+                if (task == null)
+                {
+                    // move randomly
+                    rotation *= new Quaternion(Global.Up, (Global.Rand.NextDouble() * 40 - 20) * entity.MoveTurnSpeed);
+                }
+                else
+                {
+                    // move toward goal
+                    var forward = new Vector3D(1, 0, 0);
+                    var goalVector = (task.Finish - entity.Position);
+                    if (goalVector.LengthSquared > 0)
+                    {
+                        goalVector.Normalize();
+                        Vector3D axis = Vector3D.CrossProduct(goalVector, forward);
+                        double angle = Vector3D.AngleBetween(goalVector, forward);
+                        rotation = new Quaternion(axis, -angle);
+                    }
+                }
+            }
+            Matrix3D m = Matrix3D.Identity;
+            m.RotatePrepend(rotation);
+            Vector3D velocity = new Vector3D(1, 0, 0) * m;
+            switch (mobileState)
+            {
+                case EnumMobileState.Running:
+                    position = entity.Position + entity.MoveRunSpeed * velocity * sinceSeconds;
+                    break;
+                case EnumMobileState.Walking:
+                    position = entity.Position + entity.MoveRunSpeed * velocity * sinceSeconds / 3;
+                    break;
+                default:
+                    // do nothing
+                    break;
+            }
+
             if (rotation != entity.Rotation || position != entity.Position || mobileState != entity.MobileState)
                 return entity.Move(mobileState, position, rotation, when);
             else
@@ -124,7 +135,7 @@ namespace Strive.Server.Logic
 
         public static CombatantModel HealUpdate(this CombatantModel combatant, DateTime when)
         {
-            if (when - combatant.LastHealUpdate > TimeSpan.FromSeconds(5))
+            if ((when - combatant.LastHealUpdate).TotalSeconds > 5)
             {
                 switch (combatant.MobileState)
                 {

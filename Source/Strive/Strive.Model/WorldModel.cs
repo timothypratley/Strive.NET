@@ -11,6 +11,20 @@ namespace Strive.Model
 {
     public class WorldModel
     {
+        // Tables / Nodes
+        public FSharpMap<int, EntityModel> Entity { get; private set; }
+        public FSharpMap<int, TaskModel> Task { get; private set; }
+        public FSharpMap<int, MissionModel> Mission { get; private set; }
+
+        // Relations / Edges
+        public FSharpMap<int, Production> EntityProducing { get; private set; }
+        public FSharpMap<int, FSharpSet<int>> EntityHoldingEntities { get; private set; }
+        public FSharpMap<int, FSharpSet<int>> EntityDoingTasks { get; private set; }
+        public FSharpMap<int, FSharpSet<int>> MissionRequiresTasks { get; private set; }
+
+        // Indexes
+        public FSharpMap<int, FSharpSet<EntityModel>> EntityCube { get; private set; }
+        
         public WorldModel(
             FSharpMap<int, EntityModel> entity,
             FSharpMap<int, TaskModel> task,
@@ -33,21 +47,7 @@ namespace Strive.Model
             EntityCube = entityCube;
         }
 
-        // Tables / Nodes
-        public FSharpMap<int, EntityModel> Entity { get; private set; }
-        public FSharpMap<int, TaskModel> Task { get; private set; }
-        public FSharpMap<int, MissionModel> Mission { get; private set; }
-
-        // Relations / Edges
-        public FSharpMap<int, Production> EntityProducing { get; private set; }
-        public FSharpMap<int, FSharpSet<int>> EntityHoldingEntities { get; private set; }
-        public FSharpMap<int, FSharpSet<int>> EntityDoingTasks { get; private set; }
-        public FSharpMap<int, FSharpSet<int>> MissionRequiresTasks { get; private set; }
-
-        // Indexes
-        public FSharpMap<int, FSharpSet<EntityModel>> EntityCube { get; private set; }
-
-        private static WorldModel _empty = new WorldModel(
+        private static readonly WorldModel _empty = new WorldModel(
                     MapModule.Empty<int, EntityModel>(),
                     MapModule.Empty<int, TaskModel>(),
                     MapModule.Empty<int, MissionModel>(),

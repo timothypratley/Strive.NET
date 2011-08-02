@@ -35,7 +35,7 @@ namespace Strive.Common
         public static TValue ValueOr<TKey, TValue>(this FSharpMap<TKey, TValue> map, TKey key, TValue notFound)
         {
             var option = map.TryFind(key);
-            return option == null ? default(TValue) : option.Value;
+            return option == null ? notFound : option.Value;
         }
 
         public static IEnumerable<TValue> Values<TKey, TValue>(this FSharpMap<TKey, TValue> map)

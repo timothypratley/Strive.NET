@@ -56,7 +56,7 @@ namespace Strive.Server.Logic
 
                 CleanupLinkdead();
 
-                if ((DateTime.Now - Global.Now) > TimeSpan.FromSeconds(1))
+                if ((DateTime.Now - Global.Now).TotalSeconds > 1)
                     _log.Warn("An update cycle took longer than one second.");
                 else
                     System.Threading.Thread.Sleep(100);
@@ -74,7 +74,7 @@ namespace Strive.Server.Logic
         {
             var remove = _messageProcessor.Listener.Clients
                 .Where(client => client.Status != ConnectionStatus.Connected
-                    && (Global.Now - client.LastMessageTimestamp) > TimeSpan.FromSeconds(60))
+                    && (Global.Now - client.LastMessageTimestamp).TotalMinutes > 1)
                 .ToList();
             foreach (ClientConnection client in remove)
             {

@@ -24,9 +24,11 @@ namespace Strive.Model
                 && task.Finish == Finish;
         }
 
-        internal TaskModel WithDoer(int entityId)
+        internal TaskModel WithDoer(int? doerId)
         {
-            throw new System.NotImplementedException();
+            var r = (TaskModel)MemberwiseClone();
+            r.DoerId = doerId;
+            return r;
         }
     }
 }
