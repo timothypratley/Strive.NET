@@ -143,20 +143,20 @@ namespace Strive.Client.ViewModel
 
         public IEnumerable<EntityViewModel> Entities
         {
-            get { return History.Current.Entity.Select(e => new EntityViewModel(e.Value, WorldNavigation)); }
+            get { return History.Current.Entities.Select(e => new EntityViewModel(e.Value, WorldNavigation)); }
         }
 
         public IEnumerable<MissionViewModel> Missions
         {
-            get { return History.Current.Mission.Select(p => new MissionViewModel(p.Value, WorldNavigation)); }
+            get { return History.Current.Missions.Select(p => new MissionViewModel(p.Value, WorldNavigation)); }
         }
 
         public IEnumerable<TaskViewModel> Tasks
         {
             get {
                 var world = History.Current;
-                return world.Task.Select(p => new TaskViewModel(p.Value, WorldNavigation,
-                                    world.Entity[world.EntityDoingTasks.FirstOrDefault(kvp => kvp.Value.Contains(p.Value.Id)).Key]
+                return world.Tasks.Select(p => new TaskViewModel(p.Value, WorldNavigation,
+                                    world.Entities[world.EntityDoingTasks.FirstOrDefault(kvp => kvp.Value.Contains(p.Value.Id)).Key]
 
                 )); }
         }
@@ -180,7 +180,7 @@ namespace Strive.Client.ViewModel
             get
             {
                 return WorldNavigation.MouseOverEntity.HasValue
-                    ? new EntityViewModel(History.Current.Entity[WorldNavigation.MouseOverEntity.Value], WorldNavigation)
+                    ? new EntityViewModel(History.Current.Entities[WorldNavigation.MouseOverEntity.Value], WorldNavigation)
                     : null;
             }
         }

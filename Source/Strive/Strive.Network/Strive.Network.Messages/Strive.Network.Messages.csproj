@@ -131,10 +131,11 @@
     <Compile Include="ToClient\CanPossess.cs" />
     <Compile Include="ToClient\CombatReport.cs" />
     <Compile Include="ToClient\Communication.cs" />
+    <Compile Include="ToClient\DropTerrain.cs" />
     <Compile Include="ToClient\CurrentHitpoints.cs" />
-    <Compile Include="ToClient\DropPhysicalObject.cs" />
+    <Compile Include="ToClient\DropEntity.cs" />
     <Compile Include="ToClient\DropAll.cs" />
-    <Compile Include="ToClient\DropPhysicalObjects.cs" />
+    <Compile Include="ToClient\DropEntities.cs" />
     <Compile Include="ToClient\LogMessage.cs" />
     <Compile Include="ToClient\MobileState.cs" />
     <Compile Include="ToClient\PartyInfo.cs" />

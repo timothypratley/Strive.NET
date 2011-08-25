@@ -339,7 +339,7 @@ namespace Strive.Client.ViewModel
         {
             // check they still exist in the world and get their current details
             var following = _followEntities
-                .Select(WorldViewModel.History.Current.Entity.TryFind)
+                .Select(WorldViewModel.History.Current.Entities.TryFind)
                 .Where(x => x != null)
                 .Select(x => x.Value);
 

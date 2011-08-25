@@ -62,10 +62,10 @@ namespace Strive.Server.Logic.Tests
             world.Apply(new EntityUpdateEvent(entity, "Test entity event"));
 
             world.Update(DateTime.Now);
-            world.History.Head.Task.Count
+            world.History.Head.Tasks.Count
                 .Should().Be(1);
 
-            var newPosition = world.History.Head.Entity[combatant.Id].Position;
+            var newPosition = world.History.Head.Entities[combatant.Id].Position;
             (entity.Position - newPosition).Length
                 .Should().BeLessThan((entity.Position - combatant.Position).Length);
         }
@@ -79,13 +79,13 @@ namespace Strive.Server.Logic.Tests
             world.Apply(new EntityUpdateEvent(entity, "Test entity event"));
 
             world.Update(DateTime.Now);
-            world.History.Head.Task.Count
+            world.History.Head.Tasks.Count
                 .Should().Be(1);
 
             world.Apply(new EntityUpdateEvent(combatant.Move(combatant.MobileState, entity.Position, entity.Rotation, DateTime.Now), "Test move to target"));
 
             world.Update(DateTime.Now);
-            world.History.Head.Task.Count
+            world.History.Head.Tasks.Count
                 .Should().Be(0);
         }
 
@@ -98,12 +98,12 @@ namespace Strive.Server.Logic.Tests
             world.Update(when + TimeSpan.FromSeconds(1));
             world.History.Head.EntityProducing.Count
                 .Should().Be(1);
-            world.History.Head.Entity.Count
+            world.History.Head.Entities.Count
                 .Should().Be(1);
             world.Update(when + TimeSpan.FromSeconds(10));
             world.History.Head.EntityProducing.Count
                 .Should().Be(1);
-            world.History.Head.Entity.Count
+            world.History.Head.Entities.Count
                 .Should().Be(2);
         }
     }

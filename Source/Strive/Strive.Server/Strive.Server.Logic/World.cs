@@ -69,15 +69,15 @@ namespace Strive.Server.Logic
         {
             foreach (var doing in History.Head.EntityDoingTasks)
                 UpdateDoingTasks(doing);
-            foreach (var mission in History.Head.Mission.Values())
+            foreach (var mission in History.Head.Missions.Values())
                 UpdateMission(mission);
-            foreach (var task in History.Head.Task.Values())
+            foreach (var task in History.Head.Tasks.Values())
                 AssignTaskToNearestEntity(task);
         }
 
         public void UpdateEntities(DateTime when)
         {
-            foreach (var e in History.Head.Entity.Values())
+            foreach (var e in History.Head.Entities.Values())
                 e.UpdateEntity(this, when);
         }
 
@@ -91,7 +91,7 @@ namespace Strive.Server.Logic
         void AssignTaskToNearestEntity(TaskModel task)
         {
             var world = History.Head;
-            var mission = world.Mission[task.MissionId];
+            var mission = world.Missions[task.MissionId];
             if (mission.DoerIds.IsEmpty)
             {
                 // TODO: find an appropriate entity
@@ -99,7 +99,7 @@ namespace Strive.Server.Logic
             else
             {
                 var doer = mission.DoerIds
-                    .Select(z => world.Entity[z])
+                    .Select(z => world.Entities[z])
                     .Aggregate((x, y) => ClosestToTask(task, x, y));
                 Apply(new TaskAssignmentEvent(task, doer.Id, "Task " + task + " assigned to " + doer));
             }
@@ -108,7 +108,7 @@ namespace Strive.Server.Logic
         void UpdateMission(MissionModel mission)
         {
             var world = History.Head;
-            var doers = mission.DoerIds.Select(x => world.Entity[x]);
+            var doers = mission.DoerIds.Select(x => world.Entities[x]);
 
             // Has this mission been completed?
             if (doers.Any(d => IsMissionComplete(mission, d)))
@@ -136,7 +136,7 @@ namespace Strive.Server.Logic
                 old = Enumerable.Empty<TaskModel>();
             else
             {
-                old = TaskIds.Select(id => world.Task[id]);
+                old = TaskIds.Select(id => world.Tasks[id]);
                 foreach (var t in old.Where(x => !tasks.Any(y => y.Matches(x))))
                     Apply(new TaskCompleteEvent(t, null, "Remove task " + t + " of " + mission));
             }
@@ -147,8 +147,8 @@ namespace Strive.Server.Logic
         void UpdateDoingTasks(KeyValuePair<int, Microsoft.FSharp.Collections.FSharpSet<int>> doing)
         {
             var world = History.Head;
-            var doer = world.Entity[doing.Key];
-            var tasks = doing.Value.Select(id => world.Task[id]);
+            var doer = world.Entities[doing.Key];
+            var tasks = doing.Value.Select(id => world.Tasks[id]);
             foreach (var task in tasks.Where(t => IsTaskComplete(t, doer)))
                 Apply(new TaskCompleteEvent(task, doer, "Finished " + task + " by " + doer));
         }
@@ -181,7 +181,7 @@ namespace Strive.Server.Logic
                 case EnumMissionAction.Capture:
                     return mission.Targets.All(t =>
                     {
-                        var oo = world.Entity.TryFind(t);
+                        var oo = world.Entities.TryFind(t);
                         return oo == null || oo.Value.Owner == doer.Owner;
                     });
                 case EnumMissionAction.Harvest:
@@ -197,7 +197,7 @@ namespace Strive.Server.Logic
             var doing = History.Head.EntityDoingTasks.TryFind(entity.Id);
             if (doing == null)
                 return null;
-            return History.Head.Task[doing.Value.First()];
+            return History.Head.Tasks[doing.Value.First()];
         }
 
         public void UpdateProduction(DateTime when)
@@ -206,7 +206,7 @@ namespace Strive.Server.Logic
             {
                 var producerId = p.Key;
                 var production = p.Value;
-                var factory = History.Head.Entity[producerId];
+                var factory = History.Head.Entities[producerId];
                 var progressChange = p.Value.Rate * (float)(when - p.Value.LastUpdated).TotalSeconds;
                 if (production.Progress + progressChange >= p.Value.Span)
                 {
@@ -263,22 +263,20 @@ namespace Strive.Server.Logic
         {
             _log.Debug(e.GetType() + " " + e.Description);
 
-            var oldEntities = e.Entities.Select(entity => History.Head.Entity.TryFind(entity.Id)).ToArray();
+            var oldEntities = e.Entities.Select(entity => History.Head.Entities.TryFind(entity.Id)).ToArray();
 
             History.Add(e.Entities);
 
-            e.Entities.Zip(oldEntities, (ee, old) => UpdateCubes(ee, old)).LastOrDefault();
+            e.Entities.Zip(oldEntities, (ee, old) => UpdateEntityCubes(ee, old)).LastOrDefault();
         }
 
-        public int UpdateCubes(EntityModel entity, FSharpOption<EntityModel> old)
+        public int UpdateEntityCubes(EntityModel entity, FSharpOption<EntityModel> old)
         {
             int newCube = WorldModel.GetCubeKey(entity.Position);
 
             // update client cubes if the entity was possessed
             ClientConnection client;
-            Possession.TryGetValue(entity.Id, out client);
-            if (client != null)
-            {
+            if (Possession.TryGetValue(entity.Id, out client)) { 
                 var newCubes = new HashSet<int>(WorldModel.GetNearbyCubeKeys(newCube));
 
                 HashSet<int> oldCubes;
@@ -330,6 +328,32 @@ namespace Strive.Server.Logic
 
             return newCube;
         }
+
+        public int UpdateTerrainCubes(TerrainModel terrain, FSharpOption<TerrainModel> old)
+        {
+            HashSet<ClientConnection> newClients;
+            int newCube = WorldModel.GetCubeKey(terrain.Position);
+
+            if (!CubeClients.TryGetValue(newCube, out newClients))
+                newClients = new HashSet<ClientConnection>();
+
+            if (old != null)
+            {
+                int oldCube = WorldModel.GetCubeKey(old.Value.Position);
+                HashSet<ClientConnection> oldClients;
+                if (!CubeClients.TryGetValue(oldCube, out oldClients))
+                    oldClients = new HashSet<ClientConnection>();
+                if (oldCube != newCube)
+                    foreach (var c in oldClients.Except(newClients))
+                        c.Drop(terrain);
+            }
+
+            foreach (var c in newClients)
+                c.Send(terrain);
+
+            return newCube;
+        }
+
 
         public void Apply(TaskUpdateEvent e)
         {
@@ -401,7 +425,7 @@ namespace Strive.Server.Logic
         {
             _log.Debug(e.GetType() + " " + e.Description);
             History.Head = History.Head.WithProductionComplete(e.ProducerId, e.Entity, Global.Now);
-            UpdateCubes(e.Entity, null);
+            UpdateEntityCubes(e.Entity, null);
         }
 
         /// <summary>

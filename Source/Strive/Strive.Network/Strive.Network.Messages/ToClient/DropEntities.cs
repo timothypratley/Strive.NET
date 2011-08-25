@@ -4,13 +4,13 @@ using Strive.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class DropPhysicalObjects
+    public class DropEntities
     {
         public int[] InstanceIDs;
 
-        public DropPhysicalObjects(IEnumerable<EntityModel> physicalObjects)
+        public DropEntities(IEnumerable<EntityModel> entities)
         {
-            InstanceIDs = physicalObjects.Select(po => po.Id).ToArray();
+            InstanceIDs = entities.Select(po => po.Id).ToArray();
         }
     }
 }

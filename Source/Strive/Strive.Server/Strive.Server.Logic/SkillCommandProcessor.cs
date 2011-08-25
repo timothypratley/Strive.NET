@@ -43,7 +43,7 @@ namespace Strive.Server.Logic
                         world.LogMessage(source, "No target specified, this skill may only be used on Mobiles.");
                         return;
                     }
-                    target = world.History.Head.Entity.ValueOrDefault(message.TargetPhysicalObjectIDs[0]);
+                    target = world.History.Head.Entities.ValueOrDefault(message.TargetPhysicalObjectIDs[0]);
                     if (target == null)
                     {
                         world.LogMessage(source, "Target " + message.TargetPhysicalObjectIDs[0] + " not found.");

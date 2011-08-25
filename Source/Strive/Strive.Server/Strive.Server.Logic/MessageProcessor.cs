@@ -129,7 +129,7 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, PossessMobile message)
         {
-            var avatar = World.History.Head.Entity.ValueOrDefault(message.InstanceId);
+            var avatar = World.History.Head.Entities.ValueOrDefault(message.InstanceId);
             if (avatar != null)
             {
                 // reconnected, replace existing connection with the new
@@ -360,7 +360,7 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, ProduceEntity p)
         {
-            var factory = World.History.Head.Entity.ValueOrDefault(p.FactoryId);
+            var factory = World.History.Head.Entities.ValueOrDefault(p.FactoryId);
             if (factory == null)
             {
                 client.LogMessage("Could not find factory " + p.FactoryId);

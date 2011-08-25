@@ -48,13 +48,13 @@ namespace Strive.Model
             var tasks = world.MissionRequiresTasks.ValueOrDefault(mission.Id);
             if (tasks != null)
                 foreach (var t in tasks)
-                    world = world.Complete(world.Task[t], null);
+                    world = world.Complete(world.Tasks[t], null);
             _recordedWorld.Head = world.Complete(mission);
         }
 
         public EntityModel GetEntity(int key)
         {
-            var r = _recordedWorld.Head.Entity.TryFind(key);
+            var r = _recordedWorld.Head.Entities.TryFind(key);
             if (r != null)
                 return r.Value;
             return null;
