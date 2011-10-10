@@ -14,7 +14,7 @@ using Strive.Server.DB;
 
 namespace Strive.Server.Logic
 {
-    public partial class MessageProcessor
+    public class MessageProcessor
     {
         public World World { get; private set; }
         public Listener Listener { get; private set; }

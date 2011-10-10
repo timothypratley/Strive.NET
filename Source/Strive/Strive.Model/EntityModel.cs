@@ -50,6 +50,12 @@ namespace Strive.Model
         public float MoveRunSpeed { get; protected set; }
         public float MoveTurnSpeed { get; protected set; }
 
+        public EntityModel WithId(int id) {
+            var r = (EntityModel)this.MemberwiseClone();
+            r.Id = id;
+            return r;
+        }
+
         public EntityModel Move(EnumMobileState state, Vector3D position, Quaternion rotation, DateTime when)
         {
             var r = (EntityModel)this.MemberwiseClone();

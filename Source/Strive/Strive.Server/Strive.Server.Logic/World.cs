@@ -9,6 +9,7 @@ using Strive.Data.Events;
 using Strive.Model;
 using Strive.Network.Messaging;
 using ToClient = Strive.Network.Messages.ToClient;
+using System.Windows.Media.Media3D;
 
 
 namespace Strive.Server.Logic
@@ -203,21 +204,27 @@ namespace Strive.Server.Logic
         {
             foreach (var p in History.Head.EntityProducing)
             {
-                var factory = History.Head.Entity.TryFind(p.Key);
+                var factory = History.Head.Entity[p.Key];
                 var progressChange = p.Value.Rate * (float)(time - p.Value.LastUpdated).TotalSeconds;
                 if (p.Value.Progress + progressChange >= p.Value.Target)
                 {
-                    var creation = new EntityModel(p.Value.Queue.First(),
-                        "Creation", "RTSRobot", factory.Value.Position, factory.Value.Rotation, 100, 100, EnumMobileState.Standing, 1.7f);
+                    var creation = CreateEntityFromTemplate(p.Value.Queue.First(), factory.Position, factory.Rotation, EnumMobileState.Running);
                     Apply(new ProductionCompleteEvent(p.Key, creation,
-                        "Production of " + creation.Name + " by " + factory.Value.Name + " complete"));
+                        "Production of " + creation.Name + " by " + factory.Name + " complete"));
                 }
                 else
                 {
-                    var produce = p.Value.WithProgressChange(progressChange, Global.Now);
                     Apply(new ProductionUpdateEvent(p.Key, progressChange, "Production update"));
                 }
             }
+        }
+
+        private EntityModel CreateEntityFromTemplate(int templateId, Vector3D position, Quaternion rotation, EnumMobileState mobileState) {
+            var id = Global.Rand.Next();
+            while (History.Head.Entity.ContainsKey(id)) {
+                id = Global.Rand.Next();
+            }
+            return new EntityModel(id, "Creation"+templateId, "RTSRobot", position, rotation, 100, 100, mobileState, 1.7f);
         }
 
         // TODO: Make weather recorded
@@ -396,8 +403,8 @@ namespace Strive.Server.Logic
         public void Apply(ProductionCompleteEvent e)
         {
             _log.Debug(e.GetType() + " " + e.Description);
-            History.Head = History.Head.WithProductionComplete(e.ProducerId, e.Entity, Global.Now);
-            UpdateCubes(e.Entity, null);
+            History.Head = History.Head.WithProductionComplete(e.ProducerId, e.Product, Global.Now);
+            UpdateCubes(e.Product, null);
         }
 
         /// <summary>

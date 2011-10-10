@@ -215,20 +215,17 @@ namespace Strive.Model
                 EntityProducing.Add(producerId, production), EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube);
         }
 
-        public WorldModel WithProductionComplete(int producerId, EntityModel entity, DateTime when)
+        public WorldModel WithProductionComplete(int producerId, EntityModel product, DateTime when)
         {
             Contract.Requires<ArgumentException>(ContainsKey(Entity, producerId));
-            Contract.Requires<ArgumentException>(!ContainsKey(Entity, entity.Id));
+            Contract.Requires<ArgumentException>(!ContainsKey(Entity, product.Id));
             Contract.Requires<ArgumentException>(ContainsKey(EntityProducing, producerId));
 
-            var current = EntityProducing.TryFind(producerId);
-            if (current == null)
-                return this;
-            var produce = current.Value.WithProductionComplete(when);
+            var produce = EntityProducing[producerId].WithProductionComplete(when);
             return new WorldModel(Entity, Task, Mission,
                 produce.Queue.IsEmpty ? EntityProducing.Remove(producerId) : EntityProducing.Add(producerId, produce),
                 EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks, EntityCube)
-                .Add(entity);
+                .Add(product);
         }
 
         public WorldModel WithProductionProgressChange(int producerId, float progressChange, DateTime when)

@@ -44,7 +44,9 @@ namespace Strive.Model
         public Production WithProductionComplete(DateTime when)
         {
             var r = (Production)this.MemberwiseClone();
-            r.Queue = ListModule.OfSeq(SeqModule.Take(r.Queue.Length - 1, r.Queue));
+            // cycle through the production queue
+            r.Queue = ListModule.Append(r.Queue.Tail, ListModule.OfArray(new [] {r.Queue.Head}));
+            r.Progress = 0;
             r.LastUpdated = when;
             return r;
         }
