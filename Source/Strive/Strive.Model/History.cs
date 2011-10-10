@@ -12,35 +12,13 @@ namespace Strive.Model
         public WorldModel Current { get { return _recordedWorld.Current; } }
         public WorldModel Head { get { return _recordedWorld.Head; } set { _recordedWorld.Head = value; } }
 
-        public void Add(EntityModel entity)
-        {
-            _recordedWorld.Head = _recordedWorld.Head.Add(entity);
-        }
-
-        public void Add(IEnumerable<EntityModel> entities)
-        {
-            _recordedWorld.Head = entities.Aggregate(_recordedWorld.Head, (x, y) => x.Add(y));
-        }
-
-        public void Add(TaskModel task)
-        {
-            _recordedWorld.Head = _recordedWorld.Head.Add(task);
-        }
-
-        public void Add(MissionModel mission)
-        {
-            _recordedWorld.Head = _recordedWorld.Head.Add(mission);
-        }
-
-        public void Assign(TaskModel task, int doerId)
-        {
-            _recordedWorld.Head = _recordedWorld.Head.Assign(task.Id, doerId);
-        }
-
-        public void Complete(TaskModel task, EntityModel entity)
-        {
-            _recordedWorld.Head = _recordedWorld.Head.Complete(task, entity);
-        }
+        public void Add(EntityModel entity) { _recordedWorld.Head = _recordedWorld.Head.Add(entity); }
+        public void Remove(EntityModel entity) { _recordedWorld.Head = _recordedWorld.Head.Remove(entity); }
+        public void Add(IEnumerable<EntityModel> entities) { _recordedWorld.Head = entities.Aggregate(_recordedWorld.Head, (x, y) => x.Add(y)); }
+        public void Add(TaskModel task) { _recordedWorld.Head = _recordedWorld.Head.Add(task); }
+        public void Add(MissionModel mission) { _recordedWorld.Head = _recordedWorld.Head.Add(mission); }
+        public void Assign(TaskModel task, int doerId) { _recordedWorld.Head = _recordedWorld.Head.Assign(task.Id, doerId); }
+        public void Complete(TaskModel task, EntityModel entity) { _recordedWorld.Head = _recordedWorld.Head.Complete(task, entity); }
 
         public void Complete(MissionModel mission)
         {

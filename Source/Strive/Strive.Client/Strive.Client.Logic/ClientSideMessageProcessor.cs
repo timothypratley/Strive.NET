@@ -118,6 +118,15 @@ namespace Strive.Client.Logic
                 listener.WriteLine("[" + m.CommunicationType + "] " + m.Name + ": " + m.Message);
         }
 
+        void Process(DropEntity m)
+        {
+            EntityModel e = History.GetEntity(m.Id);
+            if (e == null)
+                _log.Error("Could not find entity " + m.Id + " to update.");
+            // TODO: this is occuring... I think because the cube contents are not sent when entering a new cube
+            History.Remove(e);
+        }
+
         void Process(LogMessage m)
         {
             _log.Info(m.Message);

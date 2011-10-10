@@ -224,7 +224,7 @@ namespace Strive.Server.Logic
 
         private EntityModel CreateEntityFromTemplate(int templateId, Vector3D position, Quaternion rotation, EnumMobileState mobileState) {
             var id = Global.Rand.Next();
-            while (History.Head.Entity.ContainsKey(id)) {
+            while (History.Head.Entities.ContainsKey(id)) {
                 id = Global.Rand.Next();
             }
             return new EntityModel(id, "Creation"+templateId, "RTSRobot", position, rotation, 100, 100, mobileState, 1.7f);

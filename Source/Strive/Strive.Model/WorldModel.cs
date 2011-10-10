@@ -135,6 +135,14 @@ namespace Strive.Model
                 newEntityCube, TerrainCube);
         }
 
+        public WorldModel Remove(EntityModel entity) {
+            var cube = GetCubeKey(entity.Position);
+            return new WorldModel(
+                Entities.Remove(entity.Id), Terrain, Tasks, Missions,
+                EntityProducing, EntityHoldingEntities, EntityDoingTasks, MissionRequiresTasks,
+                EntityCube.Add(cube, EntityCube[cube].Remove(entity)), TerrainCube);
+        }
+
         public WorldModel Add(TerrainModel terrain)
         {
             var newCube = GetCubeKey(terrain.Position);
@@ -262,7 +270,7 @@ namespace Strive.Model
         public WorldModel WithProductionComplete(int producerId, EntityModel product, DateTime when)
         {
             Contract.Requires<ArgumentException>(ContainsKey(Entities, producerId));
-            Contract.Requires<ArgumentException>(!ContainsKey(Entity, product.Id));
+            Contract.Requires<ArgumentException>(!ContainsKey(Entities, product.Id));
             Contract.Requires<ArgumentException>(ContainsKey(EntityProducing, producerId));
 
             var produce = EntityProducing[producerId].WithProductionComplete(when);

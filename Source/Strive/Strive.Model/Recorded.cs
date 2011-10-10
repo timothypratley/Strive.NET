@@ -15,7 +15,7 @@ namespace Strive.Model
         private int _currentVersion;
         private int _maxVersion;
         private int _minVersion = 1;
-        private int _maxSize = 10000;
+        private int _maxSize = 1000;
         private readonly Independent _indHistory = new Independent();
 
         public Recorded(T current)
@@ -52,6 +52,10 @@ namespace Strive.Model
                     ++_minVersion;
                 }
             }
+        }
+
+        public FSharpMap<int, T> History {
+            get { _indHistory.OnGet(); return _history; }
         }
     }
 }
