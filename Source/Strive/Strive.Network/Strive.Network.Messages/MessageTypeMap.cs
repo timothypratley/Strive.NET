@@ -24,8 +24,9 @@ namespace Strive.Network.Messages
             ToClientCommunication,
             ToClientCurrentHealth,
             ToClientDropAll,
-            ToClientDropPhysicalObject,
-            ToClientDropPhysicalObjects,
+            ToClientDropEntity,
+            ToClientDropEntities,
+            ToClientDropTerrain,
             ToClientLogMessage,
             ToClientPosition,
             ToClientMobileState,
@@ -73,8 +74,9 @@ namespace Strive.Network.Messages
             MessageTypeFromId.Add(EnumMessageId.ToClientCommunication, typeof(ToClient.Communication));
             MessageTypeFromId.Add(EnumMessageId.ToClientCurrentHealth, typeof(ToClient.CurrentHealth));
             MessageTypeFromId.Add(EnumMessageId.ToClientDropAll, typeof(ToClient.DropAll));
-            MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObject, typeof(ToClient.DropPhysical));
-            MessageTypeFromId.Add(EnumMessageId.ToClientDropPhysicalObjects, typeof(ToClient.DropPhysicalObjects));
+            MessageTypeFromId.Add(EnumMessageId.ToClientDropEntity, typeof(ToClient.DropEntity));
+            MessageTypeFromId.Add(EnumMessageId.ToClientDropEntities, typeof(ToClient.DropEntities));
+            MessageTypeFromId.Add(EnumMessageId.ToClientDropTerrain, typeof(ToClient.DropTerrain));
             MessageTypeFromId.Add(EnumMessageId.ToClientLogMessage, typeof(ToClient.LogMessage));
             MessageTypeFromId.Add(EnumMessageId.ToClientPosition, typeof(ToClient.PositionUpdate));
             MessageTypeFromId.Add(EnumMessageId.ToClientMobileState, typeof(ToClient.MobileState));

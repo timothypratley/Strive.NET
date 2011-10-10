@@ -45,7 +45,6 @@ namespace Strive.Server.Logic
 
         public void UpdateLoop()
         {
-            // need to send a beat message every MillisecondsPerBeat milliseconds:
             try
             {
                 // handle world changes
@@ -57,7 +56,7 @@ namespace Strive.Server.Logic
 
                 CleanupLinkdead();
 
-                if ((DateTime.Now - Global.Now) > TimeSpan.FromSeconds(1))
+                if ((DateTime.Now - Global.Now).TotalSeconds > 1)
                     _log.Warn("An update cycle took longer than one second.");
                 else
                     System.Threading.Thread.Sleep(100);
@@ -65,7 +64,6 @@ namespace Strive.Server.Logic
             catch (Exception e)
             {
                 ServerStatusModel.Status = "Crashing";
-                // Just log exceptions and stop all threads
                 _log.Error("Update loop exception caught", e);
                 Stop();
                 ServerStatusModel.Status = "Crashed";
@@ -76,7 +74,7 @@ namespace Strive.Server.Logic
         {
             var remove = _messageProcessor.Listener.Clients
                 .Where(client => client.Status != ConnectionStatus.Connected
-                    && (Global.Now - client.LastMessageTimestamp) > TimeSpan.FromSeconds(60))
+                    && (Global.Now - client.LastMessageTimestamp).TotalMinutes > 1)
                 .ToList();
             foreach (ClientConnection client in remove)
             {

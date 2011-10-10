@@ -3,13 +3,13 @@ using Strive.Model;
 
 namespace Strive.Network.Messages.ToClient
 {
-    public class DropPhysical
+    public class DropEntity
     {
         public int Id;
 
-        public DropPhysical(EntityModel po)
+        public DropEntity(EntityModel e)
         {
-            Id = po.Id;
+            Id = e.Id;
         }
     }
 }

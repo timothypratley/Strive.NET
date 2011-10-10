@@ -20,7 +20,7 @@ namespace Strive.Client.NeoAxisView
 
         public static void UpdateFromWorldModel()
         {
-            var m = WorldViewModel.History.Current.Entity;
+            var m = WorldViewModel.History.Current.Entities;
 
             // Add or update all entities in the current scene
             foreach (var kvp in m)
@@ -40,16 +40,18 @@ namespace Strive.Client.NeoAxisView
                 neoEntity.Position = entityModel.Position.ToVec3();
                 neoEntity.Rotation = entityModel.Rotation.ToQuat();
 
-                /* TODO: how do you animate units??
+                /*
+                var dest = neoEntity.Position + new Vec3(10, 0, 0) * neoEntity.Rotation;
                 var u = neoEntity as Unit;
                 if (u != null)
                 {
-                    if (entityModel.MobileState == EnumMobileState.Walking)
-                        u.SetForceAnimation("walkAgressive", true);
-                    else if (entityModel.MobileState == EnumMobileState.Running)
-                        u.SetForceAnimation("walkAgressive", true);
+                    var intellect = u.Intellect as RTSUnitAI;
+                    if (intellect != null
+                        && (entityModel.MobileState == EnumMobileState.Running
+                            || entityModel.MobileState == EnumMobileState.Walking))
+                        intellect.DoTask(new RTSUnitAI.Task(RTSUnitAI.Task.Types.Move, dest), false);
                 }
-                 */
+                */
                 /* TODO: want this for animiation... but maybe use MobileState 'producing' instead?
                 if (entityModel.Production.Queue.Any()
                     && neoEntity is RTSBuilding

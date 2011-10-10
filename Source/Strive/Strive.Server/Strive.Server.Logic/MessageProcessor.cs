@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using Common.Logging;
+using Strive.Common;
 using Strive.Data.Events;
 using Strive.Model;
 using Strive.Network.Messages;
@@ -128,11 +129,10 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, PossessMobile message)
         {
-            var e = World.History.Head.Entity.TryFind(message.InstanceId);
-            if (e != null)
+            var avatar = World.History.Head.Entities.ValueOrDefault(message.InstanceId);
+            if (avatar != null)
             {
                 // reconnected, replace existing connection with the new
-                var avatar = e.Value;
                 ClientConnection possessedBy;
                 if (World.Possession.TryGetValue(avatar.Id, out possessedBy))
                 {
@@ -161,7 +161,7 @@ namespace Strive.Server.Logic
             else
             {
                 // try to load the character
-                var avatar = World.LoadMobile(message.InstanceId);
+                avatar = World.LoadMobile(message.InstanceId);
                 if (avatar == null)
                 {
                     _log.Warn("Character " + message.InstanceId + " not found.");
@@ -360,7 +360,7 @@ namespace Strive.Server.Logic
 
         void ProcessMessage(ClientConnection client, ProduceEntity p)
         {
-            var factory = World.History.Head.Entity.TryFind(p.FactoryId);
+            var factory = World.History.Head.Entities.ValueOrDefault(p.FactoryId);
             if (factory == null)
             {
                 client.LogMessage("Could not find factory " + p.FactoryId);
@@ -368,7 +368,7 @@ namespace Strive.Server.Logic
             }
 
             World.Apply(new ProductionStartedEvent(
-                p.FactoryId, p.Id,
+                factory.Id, p.Id,
                 client.AuthenticatedUsername + " producing " + p.Name + " from " + factory));
         }
 

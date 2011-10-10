@@ -69,7 +69,12 @@ namespace Strive.Network.Messaging
 
         public bool Drop(EntityModel e)
         {
-            return Send(new DropPhysical(e));
+            return Send(new DropEntity(e));
+        }
+
+        public bool Drop(TerrainModel t)
+        {
+            return Send(new DropTerrain(t));
         }
 
         public bool WhoList(Tuple<int, string>[] mobiles)

@@ -222,7 +222,7 @@ namespace Strive.Client.ViewModel
                 // Send update if required
                 // TODO: use a global now, and use a dirty flag
                 if ((Position != initialPosition || Rotation != initialRotation)
-                    && DateTime.Now - _lastPositionSent > TimeSpan.FromSeconds(0.1))
+                    && (DateTime.Now - _lastPositionSent).TotalSeconds > 0.1)
                 {
                     WorldViewModel.ServerConnection.MyPosition(
                         PossessingId, Position, Rotation, MobileState);
@@ -339,7 +339,7 @@ namespace Strive.Client.ViewModel
         {
             // check they still exist in the world and get their current details
             var following = _followEntities
-                .Select(WorldViewModel.History.Current.Entity.TryFind)
+                .Select(WorldViewModel.History.Current.Entities.TryFind)
                 .Where(x => x != null)
                 .Select(x => x.Value);
 
