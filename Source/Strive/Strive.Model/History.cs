@@ -39,6 +39,7 @@ namespace Strive.Model
         }
 
         public int MaxVersion { get { return _recordedWorld.MaxVersion; } }
+        public int MinVersion { get { return _recordedWorld.MinVersion; } }
         public int CurrentVersion
         {
             get { return _recordedWorld.CurrentVersion; }

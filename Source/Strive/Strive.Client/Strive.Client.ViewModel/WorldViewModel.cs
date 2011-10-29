@@ -167,6 +167,7 @@ namespace Strive.Client.ViewModel
             set { History.CurrentVersion = value; }
         }
         public int MaxVersion { get { return History.MaxVersion; } }
+        public int MinVersion { get { return History.MinVersion; } }
 
         public void ClearMouseOverEntity()
         {

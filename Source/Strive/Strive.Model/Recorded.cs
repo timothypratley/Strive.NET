@@ -15,7 +15,7 @@ namespace Strive.Model
         private int _currentVersion;
         private int _maxVersion;
         private int _minVersion = 1;
-        private int _maxSize = 1000;
+        private int _maxSize = 2000;
         private readonly Independent _indHistory = new Independent();
 
         public Recorded(T current)
@@ -26,7 +26,15 @@ namespace Strive.Model
         public int CurrentVersion
         {
             get { _indHistory.OnGet(); return _currentVersion; }
-            set { _indHistory.OnSet(); _currentVersion = value; _current = _history[value]; }
+            set
+            {
+                if (value >= _minVersion && value <= _maxVersion)
+                {
+                    _indHistory.OnSet();
+                    _currentVersion = value;
+                    _current = _history[value];
+                }
+            }
         }
 
         public int MaxVersion { get { _indHistory.OnGet(); return _maxVersion; } }
